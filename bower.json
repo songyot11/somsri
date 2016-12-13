@@ -1,0 +1,15 @@
+{
+  "name": "somsri-payroll",
+  "version": "0.0.1",
+  "authors": [
+    "Kraiwut Arayangkura <kraiwut@bananacoding.com>"
+  ],
+  "ignore": [],
+  "dependencies": {
+    "angular": "1.5.9",
+    "angular-ui-router.stateHelper": "",
+    "ocLazyLoad": "",
+    "bootstrap": "",
+    "angular-bootstrap": ""
+  }
+}

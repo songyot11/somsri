@@ -12,5 +12,10 @@
 //
 //= require jquery
 //= require jquery_ujs
-//= require turbolinks
+//= require angular
+//= require bootstrap
+//= require angular-bootstrap
+//= require angular-ui-router
+//= require angular-ui-router.stateHelper
+//= require ocLazyLoad/dist/ocLazyLoad.min
 //= require_tree .
