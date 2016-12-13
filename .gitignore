@@ -21,3 +21,8 @@
 .byebug_history
 
 /test/*
+/vendor/assets/bower_components/*
+/config/database.yml
+
+# Ignore application configuration
+/config/application.yml
