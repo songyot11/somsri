@@ -1,24 +1,48 @@
-# README
+# Somsri-Payroll
 
-This README would normally document whatever steps are necessary to get the
-application up and running.
+### technologies
+- RoR
+- Angular 1.5
 
-Things you may want to cover:
+### package managers
+- ruby gem
+- bundler gem, you can install by running `gem install bundler`
+- bower
 
-* Ruby version
+### directories
+- angular code: app/assets/javascripts/angular
+- bower library: vendor/assets/bower_components
 
-* System dependencies
+### how to start?
+##### prerequisite
+- rbenv and ruby
+- bower
 
-* Configuration
+##### setup project
+- go to root directory
+- run `bower install`
+- run `bundle install`
+- create database.yml or make a copy by running command
+`cp config/database_sample.yml config/database.yml`
+- run `rake db:create` to create database
+- run `rake db:migrate` to build the schema
+- run `rake db:seed` to generate sample data
 
-* Database creation
+##### heroku
+  since we are using bower and rails, we have to setup Heroku multiple build packs by using this command
+```
+heroku config:add BUILDPACK_URL=https://github.com/ddollar/heroku-buildpack-multi.git
+```
+  and another command for auto migrate
+```
+  heroku config:set DEPLOY_TASKS='db:migrate'
+```
 
-* Database initialization
+##### environment variables (ENV)
+  We're using Figaro, so please create your own 'config/application.yml' by running
+```
+bundle exec figaro install
+```
+  you can see the required ENV in 'config/initializer/figaro.rb'
 
-* How to run the test suite
-
-* Services (job queues, cache servers, search engines, etc.)
-
-* Deployment instructions
-
-* ...
+  ps. please also check 'config/application_sample.yml'
