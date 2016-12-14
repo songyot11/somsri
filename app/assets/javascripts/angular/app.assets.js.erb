@@ -1,0 +1,16 @@
+(function() {
+  'use strict';
+  angular.module('somsri.payroll.assets', []).
+  constant('ASSETS', {
+    'somsri': {
+      'payroll': {
+        'home': {
+          name: 'somsri.payroll.home',
+          files: [
+            "<%= asset_path('angular/components/home/homeCtrl.js') %>"
+          ]
+        }
+      }
+    }
+  });
+})();

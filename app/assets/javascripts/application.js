@@ -18,4 +18,6 @@
 //= require angular-ui-router
 //= require angular-ui-router.stateHelper
 //= require ocLazyLoad/dist/ocLazyLoad.min
+//= require angular/app.module
+//= require angular/app.assets
 //= require_tree .
