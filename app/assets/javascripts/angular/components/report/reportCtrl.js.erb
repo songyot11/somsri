@@ -3,5 +3,101 @@
   angular.module('somsri.payroll.report', [
   ])
   .controller('reportCtrl', [function() {
+    var ctrl = this
+    ctrl.total = 0
+    ctrl.employees = []
+    ctrl.monthName = ""
+
+    ctrl.datas = [
+      {
+        month: 1,
+        name: "มกราคม",
+        year: "2016",
+        employees: [
+          {
+            code: "0001",
+            name: "pond",
+            accountNumber: "11111111",
+            salary: 50000,
+            extraFee: 100,
+            extraPay: 1000, 
+          },
+          {
+            code: "0002",
+            name: "pon2",
+            accountNumber: "111111111",
+            salary: 50000,
+            extraFee: 100,
+            extraPay: 1200, 
+          }
+        ]
+      },
+      {
+        month: 2,
+        name: "กุมพาพันธ์",
+        year: "2016",
+        employees: [
+          {
+            code: "0001",
+            name: "pond",
+            accountNumber: "11111111",
+            salary: 500000,
+            extraFee: 1000,
+            extraPay: 10000, 
+          },
+          {
+            code: "0002",
+            name: "pon2",
+            accountNumber: "111111111",
+            salary: 500000,
+            extraFee: 1000,
+            extraPay: 12000, 
+          }
+        ]
+      },
+    ]
+
+
+  
+    ctrl.getNetSalary = function(employee) {
+      return employee.salary - employee.extraFee + employee.extraPay;
+    }
+
+    ctrl.getMonthName = function(month) {
+      return month.name + " " + month.year
+    }
+
+    function getTotalSalary(employees)  {
+      var totalSalary = 0
+      var totalExtraFee = 0
+      var totalExtraPay = 0
+
+      employees.forEach(function(employee) {
+        totalSalary += employee.salary
+        totalExtraFee += employee.extraFee
+        totalExtraPay += employee.extraPay
+      })
+
+      return {
+        salary: totalSalary,
+        extraFee: totalExtraFee,
+        extraPay: totalExtraPay,
+        netSalary: totalSalary - totalExtraFee + totalExtraPay
+      }
+    }
+
+    ctrl.switchMonth = function(month) {
+      ctrl.datas.forEach(function(data) {
+        if (data.month === month) {
+          ctrl.employees = data.employees
+          ctrl.monthName = ctrl.getMonthName(data)
+        }
+      })
+    }
+
+    ctrl.employees = ctrl.datas[0].employees
+    ctrl.total = getTotalSalary(ctrl.employees);
+    ctrl.monthName = ctrl.getMonthName(ctrl.datas[0])
+
   }]);
 })();

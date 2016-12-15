@@ -1,1 +1,54 @@
-Report
+<div id="payroll-report" class="row">
+  <div class="col-lg-8 col-lg-offset-2">
+    <div class="dropdown">
+      <h2 id="month-list" data-toggle="dropdown" ng-model="monthName">
+        ประจำเดือน{{report.monthName}}
+        <span class="caret"></span>
+      </h2>
+      <ul class="dropdown-menu" aria-labelledby="month-list">
+        <li ng-repeat="data in report.datas">
+          <a ng-click="report.switchMonth(data.month)">
+            {{report.getMonthName(data)}}
+          </a>
+        </li>
+      </ul>
+    </div>
+    <div class="row report-content container-fluid">
+      <table class="table text-right">
+        <thead>
+         <tr>
+            <th>รหัส</th>
+            <th>ชื่อ</th>
+            <th class="text-center">เลขบัญชี</th>
+            <th class="text-center">เงินเดือน</th>
+            <th class="text-center">เงินหัก</th>
+            <th class="text-center">เงินเพิ่ม</th>
+            <th class="text-center">เงินเดือนสุทธิ</th>
+         </tr>
+        </thead>  
+        <tbody>
+          <tr ng-repeat="employee in report.employees"> 
+            <td class="text-left">{{employee.code}}</td>
+            <td class="text-left">{{employee.name}}</td>
+            <th class="text-center">{{employee.accountNumber}}</th>
+            <td>{{employee.salary | currency: ""}}</td>
+            <td class="text-green">{{employee.extraFee | currency: ""}}</td>
+            <td class="text-red">{{employee.extraPay | currency: ""}}</td>
+            <td class="text-green">{{report.getNetSalary(employee) | currency: ""}}</td>
+          </tr>
+        </tbody>
+        <tfoot>
+          <tr>
+            <td></td>
+            <td></td>
+            <td class="text-center">รวมทั้งหมด</td>
+            <td>{{report.total.salary | currency: ""}}</td>
+            <td>{{report.total.extraFee | currency: ""}}</td>
+            <td>{{report.total.extraPay | currency: ""}}</td>
+            <td>{{report.total.netSalary | currency: ""}}</td>
+          </tr>
+        </tfoot>
+      </table>
+    </div>
+  </div>
+</div>
