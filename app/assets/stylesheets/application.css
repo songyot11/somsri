@@ -52,14 +52,8 @@ body {
   margin-top: calc(50vh - 50px);
 }
 
-.main-menu .main-menu-box {
-  text-align: center;
-}
-
 .main-menu-item {
   text-align: center;
-  position: relative;
-  align-items: center;
   display: table;
   margin: auto;
 }
@@ -71,7 +65,6 @@ body {
 }
 
 .main-menu-item .main-menu-button {
-  margin: auto;
   background-color: #F2F2F2;
   width: 100px;
   height: 100px;
@@ -80,9 +73,6 @@ body {
   text-align: center;
   vertical-align: middle;
   display: table-cell;
-}
-
-.main-menu-item .main-menu-button .main-menu-image {
 }
 
 .main-menu-item .main-menu-button .main-menu-image.employees {
