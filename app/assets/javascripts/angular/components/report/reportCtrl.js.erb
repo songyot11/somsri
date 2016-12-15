@@ -2,6 +2,57 @@
   'use strict';
   angular.module('somsri.payroll.report', [
   ])
-  .controller('reportCtrl', [function() {
+  .controller('reportCtrl', ['reportService', function(reportService) {
+    var ctrl = this
+    ctrl.total = 0
+    ctrl.employees = []
+    ctrl.currentMonth = ""
+
+    ctrl.getNetSalary = function(employee) {
+      return employee.salary - employee.extra_fee + employee.extra_pay;
+    }
+
+    ctrl.getMonthName = function(month) {
+      return month.name + " " + month.year
+    }
+
+    function getTotalSalary(employees)  {
+      var totalSalary = 0
+      var totalExtraFee = 0
+      var totalExtraPay = 0
+
+      employees.forEach(function(employee) {
+        totalSalary += employee.salary
+        totalExtraFee += employee.extra_fee
+        totalExtraPay += employee.extra_pay
+      })
+
+      return {
+        salary: totalSalary,
+        extraFee: totalExtraFee,
+        extraPay: totalExtraPay,
+        netSalary: totalSalary - totalExtraFee + totalExtraPay
+      }
+    }
+
+    ctrl.switchMonth = function(month) {
+      reportService.getPayroll(month.year, month.month).then(function(resp) {
+        ctrl.employees = resp.data
+        ctrl.total = getTotalSalary(ctrl.employees);
+        ctrl.currentMonth = ctrl.getMonthName(month)
+      });
+    }
+
+    reportService.getMonths().then(function(resp) {
+      ctrl.months = resp.data
+      ctrl.currentMonth = ctrl.getMonthName(ctrl.months[ctrl.months.length - 1])
+    });
+
+    var date = new Date()
+    console.log(ctrl.currentMonth)
+    reportService.getPayroll(ctrl.currentMonth.month, ctrl.currentMonth.year).then(function(resp) {
+      ctrl.employees = resp.data
+      ctrl.total = getTotalSalary(ctrl.employees);
+    });
   }]);
 })();
