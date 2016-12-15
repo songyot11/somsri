@@ -8,4 +8,5 @@ Rails.application.routes.draw do
   # end
 
   get "/" => "home#index"
+  get "/reports" => "report#index"
 end
