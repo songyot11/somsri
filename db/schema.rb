@@ -10,10 +10,57 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20161213041146) do
+ActiveRecord::Schema.define(version: 20161215101443) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
+
+  create_table "employees", force: :cascade do |t|
+    t.integer "school_id"
+    t.string  "first_name",      default: "",    null: false
+    t.string  "last_name",       default: "",    null: false
+    t.string  "middle_name",     default: "",    null: false
+    t.string  "prefix",          default: "",    null: false
+    t.integer "sex",             default: 0,     null: false
+    t.string  "position",        default: ""
+    t.string  "personal_id",     default: ""
+    t.string  "passport_number", default: ""
+    t.string  "race",            default: ""
+    t.string  "nationality",     default: ""
+    t.string  "bank_name",       default: ""
+    t.string  "bank_branch",     default: ""
+    t.string  "account_number",  default: ""
+    t.decimal "salary",          default: "0.0", null: false
+    t.string  "img_url",         default: ""
+    t.index ["school_id"], name: "index_employees_on_school_id", using: :btree
+  end
+
+  create_table "payrolls", force: :cascade do |t|
+    t.integer  "employee_id"
+    t.decimal  "salary",             default: "0.0", null: false
+    t.decimal  "allowance",          default: "0.0", null: false
+    t.decimal  "attendance_bonus",   default: "0.0", null: false
+    t.decimal  "ot",                 default: "0.0", null: false
+    t.decimal  "bonus",              default: "0.0", null: false
+    t.decimal  "position_allowance", default: "0.0", null: false
+    t.decimal  "extra_etc",          default: "0.0", null: false
+    t.decimal  "absence",            default: "0.0", null: false
+    t.decimal  "late",               default: "0.0", null: false
+    t.decimal  "tax",                default: "0.0", null: false
+    t.decimal  "social_insurance",   default: "0.0", null: false
+    t.decimal  "fee_etc",            default: "0.0", null: false
+    t.decimal  "pvf",                default: "0.0", null: false
+    t.decimal  "advance_payment",    default: "0.0", null: false
+    t.datetime "created_at",                         null: false
+    t.datetime "updated_at",                         null: false
+    t.index ["employee_id"], name: "index_payrolls_on_employee_id", using: :btree
+  end
+
+  create_table "schools", force: :cascade do |t|
+    t.string   "name",       default: "", null: false
+    t.datetime "created_at",              null: false
+    t.datetime "updated_at",              null: false
+  end
 
   create_table "users", force: :cascade do |t|
     t.string   "email",                  default: "", null: false
@@ -28,8 +75,11 @@ ActiveRecord::Schema.define(version: 20161213041146) do
     t.inet     "last_sign_in_ip"
     t.datetime "created_at",                          null: false
     t.datetime "updated_at",                          null: false
+    t.integer  "school_id"
     t.index ["email"], name: "index_users_on_email", unique: true, using: :btree
     t.index ["reset_password_token"], name: "index_users_on_reset_password_token", unique: true, using: :btree
+    t.index ["school_id"], name: "index_users_on_school_id", using: :btree
   end
 
+  add_foreign_key "users", "schools"
 end
