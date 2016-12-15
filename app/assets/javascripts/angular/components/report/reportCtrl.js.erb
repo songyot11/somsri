@@ -10,6 +10,7 @@
 
 
     reportService.getReports().then(function(resp) {
+      ctrl.datas = resp.data
       ctrl.employees = resp.data[0].employees
       ctrl.total = getTotalSalary(ctrl.employees);
       ctrl.monthName = ctrl.getMonthName(resp.data[0])
