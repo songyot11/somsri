@@ -8,7 +8,7 @@
       <ul class="dropdown-menu" aria-labelledby="month-list">
         <li ng-repeat="month in report.months">
           <a ng-click="report.switchMonth(month)">
-            {{report.getMonthName(month)}}
+            <button>{{report.getMonthName(month)}}</button>
           </a>
         </li>
       </ul>

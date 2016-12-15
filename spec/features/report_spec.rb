@@ -10,6 +10,16 @@ describe 'Payroll Report', js: true do
     visit "/#/report"
 
     find('#month-list').click
-    eventually { expect(page).to have_content 'มกราคม 2016 กุมพาพันธ์ 2016' }
+    
+    eventually { expect(page).to have_content 'มกราคม 2016 กุมภาพันธ์ 2016' }
+  end
+
+  it 'should switch month' do
+    visit "/#/report"
+    find('#month-list').click
+    click_on("มกราคม 2016")
+
+    eventually { expect(page).to have_content 'รหัส ชื่อ เลขบัญชี เงินเดือน เงินหัก เงินเพิ่ม เงินเดือนสุทธิ' }
+    eventually { expect(page).to have_content '8,000.00' }
   end
 end
