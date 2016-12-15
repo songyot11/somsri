@@ -22,6 +22,32 @@
             ]);
           }]
         }
+      }).
+      state({
+        url: '/',
+        name: 'employees',
+        templateUrl: "<%= asset_path('angular/components/employees/employeesView.html') %>",
+        controller: 'employeesCtrl as employees',
+        resolve: {
+          resources: ['$ocLazyLoad', function($ocLazyLoad) {
+            return $ocLazyLoad.load([
+              ASSETS.somsri.payroll.employees
+            ]);
+          }]
+        }
+      }).
+      state({
+        url: '/report',
+        name: 'report',
+        templateUrl: "<%= asset_path('angular/components/report/reportView.html') %>",
+        controller: 'reportCtrl as report',
+        resolve: {
+          resources: ['$ocLazyLoad', function($ocLazyLoad) {
+            return $ocLazyLoad.load([
+              ASSETS.somsri.payroll.report
+            ]);
+          }]
+        }
       });
 
     $urlRouterProvider.when("", "/");
