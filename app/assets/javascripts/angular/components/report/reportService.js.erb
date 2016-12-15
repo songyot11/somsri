@@ -4,8 +4,12 @@
   angular.module('somsri.payroll.service', [
   ])
   .service('reportService', ['$http', function($http) {
-    this.getReports = function() {
-      return $http.get('/reports');
+    this.getPayroll = function(year, month) {
+      return $http.get('/reports/' + year + "/" + month);
+    }
+
+    this.getMonths = function() {
+      return $http.get('/reports/months/');
     }
   }]);
 })();

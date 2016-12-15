@@ -6,18 +6,10 @@
     var ctrl = this
     ctrl.total = 0
     ctrl.employees = []
-    ctrl.monthName = ""
-
-
-    reportService.getReports().then(function(resp) {
-      ctrl.datas = resp.data
-      ctrl.employees = resp.data[0].employees
-      ctrl.total = getTotalSalary(ctrl.employees);
-      ctrl.monthName = ctrl.getMonthName(resp.data[0])
-    });
+    ctrl.currentMonth = ""
 
     ctrl.getNetSalary = function(employee) {
-      return employee.salary - employee.extraFee + employee.extraPay;
+      return employee.salary - employee.extra_fee + employee.extra_pay;
     }
 
     ctrl.getMonthName = function(month) {
@@ -31,8 +23,8 @@
 
       employees.forEach(function(employee) {
         totalSalary += employee.salary
-        totalExtraFee += employee.extraFee
-        totalExtraPay += employee.extraPay
+        totalExtraFee += employee.extra_fee
+        totalExtraPay += employee.extra_pay
       })
 
       return {
@@ -44,17 +36,26 @@
     }
 
     ctrl.switchMonth = function(month) {
-      ctrl.datas.forEach(function(data) {
-        if (data.month === month) {
-          ctrl.employees = data.employees
-          ctrl.monthName = ctrl.getMonthName(data)
-        }
-      })
+      reportService.getPayroll(month.year, month.month).then(function(resp) {
+        ctrl.employees = resp.data
+        ctrl.total = getTotalSalary(ctrl.employees);
+        ctrl.currentMonth = ctrl.getMonthName(month)
+      });
     }
 
-    ctrl.employees = ctrl.datas[0].employees
-    ctrl.total = getTotalSalary(ctrl.employees);
-    ctrl.monthName = ctrl.getMonthName(ctrl.datas[0])
+    reportService.getMonths().then(function(resp) {
+      ctrl.months = resp.data
+      ctrl.currentMonth = ctrl.getMonthName(ctrl.months[ctrl.months.length - 1])
+    });
+
+    var date = new Date()
+    console.log(ctrl.currentMonth)
+    reportService.getPayroll(ctrl.currentMonth.month, ctrl.currentMonth.year).then(function(resp) {
+      ctrl.employees = resp.data
+      ctrl.total = getTotalSalary(ctrl.employees);
+    });
+
+
 
   }]);
 })();

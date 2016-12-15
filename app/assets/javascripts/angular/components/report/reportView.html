@@ -1,14 +1,14 @@
 <div id="payroll-report" class="row">
   <div class="col-lg-8 col-lg-offset-2">
     <div class="dropdown">
-      <h2 id="month-list" data-toggle="dropdown" ng-model="monthName">
-        ประจำเดือน{{report.monthName}}
+      <h2 id="month-list" data-toggle="dropdown">
+        ประจำเดือน{{report.currentMonth}}
         <span class="caret"></span>
       </h2>
       <ul class="dropdown-menu" aria-labelledby="month-list">
-        <li ng-repeat="data in report.datas">
-          <a ng-click="report.switchMonth(data.month)">
-            {{report.getMonthName(data)}}
+        <li ng-repeat="month in report.months">
+          <a ng-click="report.switchMonth(month)">
+            {{report.getMonthName(month)}}
           </a>
         </li>
       </ul>
@@ -30,10 +30,10 @@
           <tr ng-repeat="employee in report.employees"> 
             <td class="text-left">{{employee.code}}</td>
             <td class="text-left">{{employee.name}}</td>
-            <th class="text-center">{{employee.accountNumber}}</th>
+            <th class="text-center">{{employee.account_number}}</th>
             <td>{{employee.salary | currency: ""}}</td>
-            <td class="text-green">{{employee.extraFee | currency: ""}}</td>
-            <td class="text-red">{{employee.extraPay | currency: ""}}</td>
+            <td class="text-green">{{employee.extra_fee | currency: ""}}</td>
+            <td class="text-red">{{employee.extra_pay | currency: ""}}</td>
             <td class="text-green">{{report.getNetSalary(employee) | currency: ""}}</td>
           </tr>
         </tbody>
