@@ -52,6 +52,10 @@ body {
   margin-top: calc(50vh - 50px);
 }
 
+.main-menu .main-menu-box {
+  text-align: center;
+}
+
 .main-menu-item {
   text-align: center;
   display: table;
