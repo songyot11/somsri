@@ -15,9 +15,10 @@
  *= require_self
  */
 
-
 body {
   background-color: #F3F9FC;
+  font-family: 'Maitree', serif;
+  color: #595959;
 }
 
 #payroll-report .report-content {
@@ -45,4 +46,50 @@ body {
 
 .text-red {
   color: #E70A0E;
+}
+
+.main-menu {
+  margin-top: calc(50vh - 50px);
+}
+
+.main-menu .main-menu-box {
+  text-align: center;
+}
+
+.main-menu-item {
+  text-align: center;
+  display: table;
+  margin: auto;
+}
+
+.main-menu-item .main-menu-title {
+  font-size: 18px;
+  margin-top: 15px;
+  font-weight: bold;
+  cursor: pointer;
+}
+
+.main-menu-item .main-menu-button {
+  background-color: #F2F2F2;
+  width: 100px;
+  height: 100px;
+  border-radius: 5px;
+  box-shadow: 3px 3px 3px #E2E2E2;
+  text-align: center;
+  vertical-align: middle;
+  display: table-cell;
+  cursor: pointer;
+}
+
+.main-menu-item .main-menu-button .main-menu-image {
+}
+
+.main-menu-item .main-menu-button .main-menu-image.employees {
+  width: 60px;
+  height: 60px;
+}
+
+.main-menu-item .main-menu-button .main-menu-image.report {
+  width: 45px;
+  height: 45px;
 }
