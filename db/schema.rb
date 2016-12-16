@@ -16,22 +16,24 @@ ActiveRecord::Schema.define(version: 20161215101443) do
   enable_extension "plpgsql"
 
   create_table "employees", force: :cascade do |t|
-    t.integer "school_id"
-    t.string  "first_name",      default: "",    null: false
-    t.string  "last_name",       default: "",    null: false
-    t.string  "middle_name",     default: "",    null: false
-    t.string  "prefix",          default: "",    null: false
-    t.integer "sex",             default: 0,     null: false
-    t.string  "position",        default: ""
-    t.string  "personal_id",     default: ""
-    t.string  "passport_number", default: ""
-    t.string  "race",            default: ""
-    t.string  "nationality",     default: ""
-    t.string  "bank_name",       default: ""
-    t.string  "bank_branch",     default: ""
-    t.string  "account_number",  default: ""
-    t.decimal "salary",          default: "0.0", null: false
-    t.string  "img_url",         default: ""
+    t.integer  "school_id"
+    t.string   "first_name",      default: "",    null: false
+    t.string   "last_name",       default: "",    null: false
+    t.string   "middle_name",     default: "",    null: false
+    t.string   "prefix",          default: "",    null: false
+    t.integer  "sex",             default: 0,     null: false
+    t.string   "position",        default: ""
+    t.string   "personal_id",     default: ""
+    t.string   "passport_number", default: ""
+    t.string   "race",            default: ""
+    t.string   "nationality",     default: ""
+    t.string   "bank_name",       default: ""
+    t.string   "bank_branch",     default: ""
+    t.string   "account_number",  default: ""
+    t.decimal  "salary",          default: "0.0", null: false
+    t.string   "img_url",         default: ""
+    t.datetime "created_at",                      null: false
+    t.datetime "updated_at",                      null: false
     t.index ["school_id"], name: "index_employees_on_school_id", using: :btree
   end
 

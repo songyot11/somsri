@@ -11,7 +11,6 @@ Rails.application.routes.draw do
   resources :reports, only: :index do
     collection do
       get 'payroll', path: "/:year/:month"
-      get 'months'
     end
   end
 end

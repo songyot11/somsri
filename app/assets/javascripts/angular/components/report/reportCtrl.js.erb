@@ -6,6 +6,7 @@
     var ctrl = this
     ctrl.total = 0
     ctrl.employees = []
+    ctrl.months = []
     ctrl.currentMonth = ""
 
     ctrl.getNetSalary = function(employee) {
@@ -45,14 +46,13 @@
 
     reportService.getMonths().then(function(resp) {
       ctrl.months = resp.data
-      ctrl.currentMonth = ctrl.getMonthName(ctrl.months[ctrl.months.length - 1])
-    });
+      ctrl.currentMonth = ctrl.months[0]
 
-    var date = new Date()
-    console.log(ctrl.currentMonth)
-    reportService.getPayroll(ctrl.currentMonth.month, ctrl.currentMonth.year).then(function(resp) {
-      ctrl.employees = resp.data
-      ctrl.total = getTotalSalary(ctrl.employees);
+      reportService.getPayroll(ctrl.currentMonth.year, ctrl.currentMonth.month).then(function(resp) {
+        ctrl.employees = resp.data
+        ctrl.total = getTotalSalary(ctrl.employees);
+        ctrl.currentMonth = ctrl.getMonthName(ctrl.months[0])
+      });
     });
   }]);
 })();

@@ -1,75 +1,32 @@
 class ReportsController < ApplicationController
   # GET /reports
   def index
-  end
-
-  # GET /reports/months
-  def months
-    data = [
-      {
-        month: 1, 
-        name: "มกราคม",
-        year: "2016",
-      },
-      {
-        month: 2, 
-        name: "กุมภาพันธ์",
-        year: "2016",
-      }
-    ]
-
-    render json: data, status: :ok
+    getMonths()
   end
 
   # GET /reports/:year/:month
   def payroll
     year = params[:year].to_i
     month = params[:month].to_i
+    start_month = Date.new(year, month, 1)
+    end_month = start_month.end_of_month
+    payrolls = Payroll.where(created_at: start_month.beginning_of_day..end_month.end_of_day).as_json('report')
 
-    if month == 1
-      data = [
-        {
-          code: "0001",
-          prefix: "Mr.",
-          name: "Theeraphat Jantakat",
-          account_number: "1111111111",
-          salary: 50000,
-          extra_fee: 2000,
-          extra_pay: 5000,
-        },
-        {
-          code: "0002",
-          prefix: "Mr.",
-          name: "Theeraphat2 Jantakat",
-          account_number: "22222222",
-          salary: 100000,
-          extra_fee: 8000,
-          extra_pay: 10000,
-        },
-      ]
-    else 
-      data = [
-        {
-          code: "0001",
-          prefix: "Mr.",
-          name: "Theeraphat Jantakat",
-          account_number: "1111111111",
-          salary: 1000000,
-          extra_fee: 0,
-          extra_pay: 5000,
-        },
-        {
-          code: "0002",
-          prefix: "Mr.",
-          name: "Theeraphat2 Jantakat",
-          account_number: "22222222",
-          salary: 1000000,
-          extra_fee: 0,
-          extra_pay: 10000,
-        },
-      ]
-    end
-
-    render json: data, status: :ok
+    render json: payrolls, status: :ok
   end
+
+  private
+    def getMonths
+      months = Payroll.order("created_at DESC").map { |d| I18n.l(d.created_at, format: "%m %B %Y").split(" ") }.uniq
+
+      months = months.collect { |x| 
+        {
+          month: x[0].to_i,
+          name: x[1],
+          year: x[2],
+        }
+      }
+
+      render json: months, status: :ok
+    end
 end

@@ -21,8 +21,8 @@
             <th>ชื่อ</th>
             <th class="text-center">เลขบัญชี</th>
             <th class="text-center">เงินเดือน</th>
-            <th class="text-center">เงินหัก</th>
             <th class="text-center">เงินเพิ่ม</th>
+            <th class="text-center">เงินหัก</th>
             <th class="text-center">เงินเดือนสุทธิ</th>
          </tr>
         </thead>  
@@ -32,8 +32,8 @@
             <td class="text-left">{{employee.name}}</td>
             <th class="text-center">{{employee.account_number}}</th>
             <td>{{employee.salary | currency: ""}}</td>
-            <td class="text-green">{{employee.extra_fee | currency: ""}}</td>
-            <td class="text-red">{{employee.extra_pay | currency: ""}}</td>
+            <td class="text-green">{{employee.extra_pay | currency: ""}}</td>
+            <td class="text-red">{{employee.extra_fee | currency: ""}}</td>
             <td class="text-green">{{report.getNetSalary(employee) | currency: ""}}</td>
           </tr>
         </tbody>
@@ -43,9 +43,9 @@
             <td></td>
             <td class="text-center">รวมทั้งหมด</td>
             <td>{{report.total.salary | currency: ""}}</td>
-            <td>{{report.total.extraFee | currency: ""}}</td>
-            <td>{{report.total.extraPay | currency: ""}}</td>
-            <td>{{report.total.netSalary | currency: ""}}</td>
+            <td class="text-green">{{report.total.extraPay | currency: ""}}</td>
+            <td class="text-red">{{report.total.extraFee | currency: ""}}</td>
+            <td class="text-green">{{report.total.netSalary | currency: ""}}</td>
           </tr>
         </tfoot>
       </table>

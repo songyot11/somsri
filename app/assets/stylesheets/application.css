@@ -21,6 +21,20 @@ body {
   color: #595959;
 }
 
+.navbar-default {
+  background-color: #ffffff;
+  border: 0px;
+}
+
+.navbar-brand {
+  padding: 0px;
+}
+
+.navbar .dropdown-toggle {
+  height: 80px;
+  line-height: 50px;
+}
+
 #payroll-report .report-content {
   padding-top: 30px;
   background-color: #fff;
@@ -46,6 +60,10 @@ body {
 
 .text-red {
   color: #E70A0E;
+}
+
+.text-yellow {
+  color: #FFAA00;
 }
 
 .main-menu {
