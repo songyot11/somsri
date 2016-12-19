@@ -34,9 +34,11 @@ describe 'Payroll Report', js: true do
                             created_at: DateTime.new(2016, 11, 1)}),
     ]
   end
-  it 'should see header table' do
-    payrolls
 
+  before do 
+    payrolls
+  end
+  it 'should see header table' do
     visit "/#/report"
     eventually { expect(page).to have_content 'รหัส ชื่อ เลขบัญชี เงินเดือน เงินเพิ่ม เงินหัก เงินเดือนสุทธิ' }
     eventually { expect(page).to have_content 'รวมทั้งหมด' }
