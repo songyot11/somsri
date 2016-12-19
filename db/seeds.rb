@@ -18,8 +18,10 @@ user.save!
 
 em1 = Employee.create({
   school_id: school.id,
-  first_name: "สมศรี",
-  last_name: "เป็นชื่อแอพ",
+  first_name: "Somsri",
+  last_name: "Penchueapp",
+  first_name_thai: "สมศรี",
+  last_name_thai: "เป็นชื่อแอพ",
   prefix: "นาง",
   sex: 1,
   position: "ครูน้อย",
@@ -30,13 +32,16 @@ em1 = Employee.create({
   bank_name: "กสิกรไทย",
   bank_branch: "ใจกลางเมืองเชียงใหม่",
   account_number: "5-234-34532-2342",
-  salary: 50000
+  salary: 50000,
+  img_url: "http://pm1.narvii.com/5817/029f4148b86a82717ff26e7b8bf2340457f32ae8_hq.jpg"
 })
 
 em2 = Employee.create({
   school_id: school.id,
-  first_name: "สมศักดิ์",
-  last_name: "เป็นใคร",
+  first_name: "Somsak",
+  last_name: "Penkai",
+  first_name_thai: "สมศักดิ์",
+  last_name_thai: "เป็นใคร",
   prefix: "นาย",
   sex: 0,
   position: "ภารโรง",
@@ -83,7 +88,8 @@ em4 = Employee.create({
   bank_name: "ขุดหลุมฝัง",
   bank_branch: "ข้างๆต้นไม้หน้าถ้ำ",
   account_number: "5-124-222222-2342",
-  salary: 1
+  salary: 1,
+  img_url: "http://static.zerochan.net/Takimoto.Hifumi.full.2031929.jpg"
 })
 
 pr1 = Payroll.create({
