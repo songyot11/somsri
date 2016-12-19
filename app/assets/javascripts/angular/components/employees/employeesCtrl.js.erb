@@ -2,6 +2,26 @@
   'use strict';
   angular.module('somsri.payroll.employees', [
   ])
-  .controller('employeesCtrl', [function() {
+  .controller('employeesCtrl', ['reportService','$log', function(reportService, $log) {
+    var ctrl = this
+    var dateNow = new Date();
+    ctrl.xyz = dateNow;
+    getPayroll(dateNow.getMonth() + 1, dateNow.getFullYear());
+    function getPayroll(month, year){
+      reportService.getPayroll(year, month).then(function(resp) {
+        ctrl.datas = resp.data;
+        ctrl.display_datas = []
+        for(var i = 0; i < ctrl.datas.length; i++) {
+          var data = ctrl.datas[i];
+          ctrl.display_datas.push({
+            full_name: data['prefix'] + " " + data['name'],
+            salary: data['salary'],
+            fee: data['extra_fee'],
+            extra: data['extra_pay'],
+            imgUrl: data['img_url']
+          });
+        }
+      });
+    }
   }]);
 })();

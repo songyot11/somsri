@@ -11,6 +11,7 @@
  * It is generally better to create a new file per style scope.
  *
  *= require bootstrap/dist/css/bootstrap.min.css
+ *= require font-awesome
  *= require_tree .
  *= require_self
  */
@@ -110,4 +111,76 @@ body {
 .main-menu-item .main-menu-button .main-menu-image.report {
   width: 45px;
   height: 45px;
+}
+.bg-light-gray {
+  background-color: #DDD;
+}
+
+.img-bg {
+  width: 100%;
+  padding-bottom: 100%;
+  background-size: 100% !important;
+  background-repeat: no-repeat !important;
+  background-position: center center !important;
+}
+
+.circle {
+  border-radius: 50%;
+}
+
+.line-space5{
+  padding-top: 5px;
+  padding-bottom: 5px;
+}
+
+.employees-list .card {
+  background-color: #FFF;
+  padding-left: 30px;
+  padding-right: 30px;
+  padding-top: 15px;
+  padding-bottom: 15px;
+  border-bottom: 5px solid;
+  border-bottom-color: #42e2f4;
+  margin-top: 15px;
+  margin-bottom: 15px;
+  height: 100%;
+}
+
+.center {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+}
+
+.employees-list .img-profile {
+  position: relative;
+}
+
+.font-size-40 {
+  font-size: 40px;
+}
+
+.font-white {
+  color: #FFF;
+}
+
+.font-light-gray {
+  color: #AAA;
+}
+
+.padding0{
+  padding: 0px !important;
+}
+
+.row.same-height {
+  display: -webkit-box;
+  display: -webkit-flex;
+  display: -ms-flexbox;
+  display:         flex;
+  flex-wrap: wrap;
+}
+.row.same-height > [class*='col-'] {
+  display: flex;
+  flex-direction: column;
 }

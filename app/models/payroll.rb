@@ -19,6 +19,7 @@ class Payroll < ApplicationRecord
         salary: self.salary.to_f,
         extra_pay: extra_pay.to_f,
         extra_fee: extra_fee.to_f,
+        img_url: self.employee.img_url,
       }
     else
       super()

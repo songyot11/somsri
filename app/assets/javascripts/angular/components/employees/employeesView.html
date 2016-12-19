@@ -1,1 +1,54 @@
-Employees
+<div class="container employees-list">
+  <div class="row same-height">
+    <div class="col-md-3" ng-repeat="data in employees.display_datas">
+      <div class="card">
+
+        <div class="row line-space5">
+          <div class="col-md-12">
+            <div class="img-profile">
+              <div ng-switch on="data.imgUrl.length > 0">
+                <div ng-switch-when="true">
+                  <div class="img-bg circle" style="background: url('{{ data.imgUrl }}')"></div>
+                </div>
+                <div ng-switch-default>
+                  <i class="fa fa-camera center font-size-40 font-white" aria-hidden="true"></i>
+                  <div class="img-bg bg-light-gray circle"></div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="row line-space5">
+          <div class="col-md-12">
+            <div class="text-center">{{ data.full_name }}</div>
+          </div>
+        </div>
+        <div class="row">
+          <div class="col-md-6 padding0">
+            <div class="pull-right line-space5">เงินเดือน :</div>
+          </div>
+          <div class="col-md-6 padding0">
+            <div class="line-space5"><span>&nbsp;{{ data.salary.toLocaleString() }}</span> บาท</div>
+          </div>
+        </div>
+        <div class="row">
+          <div class="col-md-6 padding0">
+            <div class="pull-right line-space5 font-light-gray">เงินหัก :</div>
+          </div>
+          <div class="col-md-6 padding0">
+            <div class="line-space5 font-light-gray"><span>&nbsp;{{ data.fee.toLocaleString() }}</span> บาท</div>
+          </div>
+        </div>
+        <div class="row">
+          <div class="col-md-6 padding0">
+            <div class="pull-right line-space5 font-light-gray">เงินเพิ่ม :</div>
+          </div>
+          <div class="col-md-6 padding0">
+            <div class="line-space5 font-light-gray"><span>&nbsp;{{ data.extra.toLocaleString() }}</span> บาท</div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
