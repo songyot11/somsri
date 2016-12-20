@@ -1,0 +1,130 @@
+<div id="payroll-slip">
+  <div class="row">
+    <div class="col-lg-10 col-lg-offset-1">
+      <div class="row">
+        <div class="col-sm-6">
+          <h2>
+            <i class="glyphicon glyphicon-arrow-left"></i>
+            {{slip.employee.name}}
+          </h2>
+        </div>
+        <div class="col col-sm-6 text-right">
+          <button class="btn btn-print">
+            <i class="glyphicon glyphicon-print"></i>
+            พิมใบจ่ายเงินเดือน
+          </button>
+        </div>
+      </div>
+    
+      <div class="row slip-content">
+        <!-- line 1 -->
+        <div class="col-sm-5 col-sm-offset-7">
+          <p class="">
+            <strong>เลขบัตรประจำตัวประชาชน</strong>
+            {{slip.employee.personal_id}}
+          </p>
+        </div>
+
+        <!-- line 2 -->
+        <div class="col-sm-3">
+          <strong>รหัส</strong>
+          {{slip.employee.code}}
+        </div>
+        <div class="col-sm-4">
+          <strong>ชื่อ</strong>
+          {{slip.employee.name}}
+        </div>
+        <div class="col-sm-5">
+          <strong>ตำแหน่ง</strong>
+          {{slip.employee.position}}
+        </div>
+
+        <!-- Table -->
+        <div class="col-sm-9">
+          <!-- Left Table -->
+          <table class="table table-bordered">
+            <thead>
+              <tr>
+                <th>รายได้</th>
+                <th class="text-center">จำนวนเงิน</th>
+                <th>รายการหัก</th>
+                <th class="text-center">จำนวนเงิน</th>
+              </tr>
+            </thead>
+            <tbody id="order"> 
+              <tr>
+                <td>
+                  <p ng-repeat="pay in slip.employee.payroll.pay_orders"">
+                    {{pay.name}}
+                  </p>
+                </td>
+                <td class="text-right">
+                  <p ng-repeat="pay in slip.employee.payroll.pay_orders">
+                    {{pay.value | currency: ""}}
+                  </p>
+                </td>
+                <td>
+                  <p ng-repeat="fee in slip.employee.payroll.fee_orders">
+                    {{fee.name}}
+                  </p>
+                </td>
+                <td class="text-right">
+                  <p ng-repeat="fee in slip.employee.payroll.fee_orders">
+                    {{fee.value | currency: ""}}
+                  </p>
+                </td>
+              </tr>
+            </tbody>
+            <tfoot>
+              <td class="text-right bg-gray">รวมรายได้</td>
+              <td>{{slip.employee.extra_pay | currency: ""}}</td>
+              <td class="text-right bg-gray">รวมรายการหัก</td>
+              <td>{{slip.employee.extra_fee | currency: ""}}</td>
+            </tfoot>
+          </table>
+        </div>
+        <div class="col-sm-3">
+          <!-- Right Table -->
+          <table class="table table-bordered text-center">
+            <thead>
+              <tr>
+                <td>วัน/เดือน/ปี</td>
+              </tr>
+            </thead>
+            <tr>
+              <td>{{slip.employee.payroll.date}}</td>
+            </tr>
+          </table>
+          <table class="table table-bordered text-center">
+            <thead>
+              <tr>
+                <td>เงินรับสุทธิ</td>
+              </tr>
+            </thead>  
+            <tr>
+              <td>{{slip.employee.extra_pay - slip.employee.extra_fee | currency: ""}}</td>
+            </tr>
+          </table>
+        </div>
+
+        <!-- Result Table -->
+        <div class="col-sm-7 ">
+        <table class="table table-bordered text-center">
+          <thead>
+            <tr>
+              <th class="text-center">รายได้สะสมต่อปี</th>
+              <th class="text-center">ภาษีสะสมต่อปี</th>
+              <th class="text-center">เงินประกันสังคมสะสมต่อปี</th>
+            </tr>
+          </thead>
+            <tr>
+              <td width="33.33%">{{slip.employee.annual_income_outcome.total_salary | currency: ""}}</td>
+              <td width="33.33%">{{slip.employee.annual_income_outcome.total_tax | currency: ""}}</td>
+              <td width="33.33%">{{slip.employee.annual_income_outcome.total_social_insurance | currency: ""}}</td>
+            </tr>
+          </table>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

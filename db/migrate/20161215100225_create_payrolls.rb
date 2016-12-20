@@ -13,8 +13,8 @@ class CreatePayrolls < ActiveRecord::Migration[5.0]
       #เงินหัก
       t.decimal :absence, null: false, default: 0
       t.decimal :late, null: false, default: 0
-      t.decimal :tax, null: false, default: 0
-      t.decimal :social_insurance, null: false, default: 0
+      t.decimal :tax, null: false, default: 0 #ภาษี
+      t.decimal :social_insurance, null: false, default: 0 #เง้นประกันสังคม
       t.decimal :fee_etc, null: false, default: 0
       t.decimal :pvf, null: false, default: 0
       t.decimal :advance_payment, null: false, default: 0 #เงินผ่อนจ่ายค่าเบิกล่วงหน้า

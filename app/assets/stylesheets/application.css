@@ -112,8 +112,14 @@ body {
   width: 45px;
   height: 45px;
 }
+
 .bg-light-gray {
   background-color: #DDD;
+}
+
+.bg-gray {
+  background-color: #4A4A4A;
+  color: #fff;
 }
 
 .img-bg {
@@ -183,4 +189,36 @@ body {
 .row.same-height > [class*='col-'] {
   display: flex;
   flex-direction: column;
+}
+
+#payroll-slip .btn-print {
+  background-color: #FFAA00;
+  color: #ffffff;
+  margin-top: 20px;
+}
+
+#payroll-slip .slip-content {
+  background-color: #fff;
+  padding: 60px 0px 20px 0px;
+}
+
+#payroll-slip thead {
+  background-color: #4A4A4A;
+  color: #fff;
+}
+
+#payroll-slip tbody#order td {
+  border-bottom: 0px;
+  border-top: 0px;
+  padding: 5px 20px;
+}
+
+#payroll-slip td,
+#payroll-slip th {
+  vertical-align: middle;
+  padding: 15px 20px;
+}
+
+#payroll-slip #order td {
+  vertical-align: top !important;
 }

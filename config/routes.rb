@@ -13,4 +13,10 @@ Rails.application.routes.draw do
       get 'payroll', path: "/:year/:month"
     end
   end
+
+  resources :employees, only: :index do
+    member do
+      get 'slip'
+    end
+  end
 end

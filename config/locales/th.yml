@@ -21,5 +21,24 @@
 
 th:
   hello: "สวัสดีครับ"
+  activerecord:
+    attributes:
+      payroll:
+        salary: "เงินเดือน"
+        allowance: "เบี้ยเลี้ยง"
+        attendance_bonus: "เบี้ยขยัน"
+        ot: "ค่าล่วงเวลา"
+        bonus: "โบนัส" 
+        position_allowance: "ค่าตำแหน่ง"
+        extra_etc: "รายได้อื่นๆ"
+        absence: "ขาดงาน"
+        late: "สาย"
+        tax: "ภาษี"
+        social_insurance: "ประกันสังคม"
+        fee_etc: "หักอื่นๆ"
+        pvf: "เงินสะสมเข้ากองทุน PVF"
+        advance_payment: "เบิกล่วงหน้า"
+
   date:
     month_names: [~, มกราคม, กุมภาพันธ์, มีนาคม, เมษายน, พฤษภาคม, มิถุนายน, กรกฎาคม, สิงหาคม, กันยายน, ตุลาคม, พฤศจิกายน, ธันวาคม]
+    abbr_month_names: [~, ม.ค., ก.พ., มี.ค., เม.ย., พ.ค., มิ.ย., ก.ค., ส.ค., ก.ย., ต.ค., พ.ย., ธ.ค.]

@@ -1,0 +1,14 @@
+(function() {
+  'use strict';
+  angular.module('somsri.payroll.slip', [
+  ])
+  .controller('slipCtrl', ['slipService', '$state', function(slipService, $state) {
+    var ctrl = this
+    var employeeId = $state.params.id
+    ctrl.employee = []
+
+    slipService.employeeSlip(employeeId).then(function(resp) {
+      ctrl.employee = resp.data    
+    });    
+  }]);
+})();

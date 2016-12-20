@@ -12,5 +12,6 @@ module SomsriPayroll
     # Application configuration should go into files in config/initializers
     # -- all .rb files in that directory are automatically loaded.
     config.i18n.default_locale = :th
+    config.i18n.available_locales = [:th, :en]
   end
 end

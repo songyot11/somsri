@@ -48,6 +48,19 @@
             ]);
           }]
         }
+      }).
+      state({
+        url: '/employees/:id/slip',
+        name: 'slip',
+        templateUrl: "<%= asset_path('angular/components/slip/slipView.html') %>",
+        controller: 'slipCtrl as slip',
+        resolve: {
+          resources: ['$ocLazyLoad', function($ocLazyLoad) {
+            return $ocLazyLoad.load([
+              ASSETS.somsri.payroll.slip
+            ]);
+          }]
+        }
       });
 
     $urlRouterProvider.when("", "/");

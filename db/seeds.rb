@@ -6,6 +6,9 @@
 #   movies = Movie.create([{ name: 'Star Wars' }, { name: 'Lord of the Rings' }])
 #   Character.create(name: 'Luke', movie: movies.first)
 
+Employee.delete_all
+Payroll.delete_all
+
 school = School.create({ name: "โรงเรียนแห่งหนึ่ง" })
 
 user = User.new
@@ -14,7 +17,7 @@ user.encrypted_password = '$2a$11$PA6IWsalB0R4rDa1yHYBcuaKFyz2MgR8.d1G2TQk0qIm0Q
 user.password = 'valid_password'
 user.password_confirmation = 'valid_password'
 user.school_id = school.id
-user.save!
+user.save
 
 em1 = Employee.create({
   school_id: school.id,
@@ -94,10 +97,28 @@ em4 = Employee.create({
   img_url: "http://static.zerochan.net/Takimoto.Hifumi.full.2031929.jpg"
 })
 
-pr1 = Payroll.create({
+pr1_1 = Payroll.create({
   employee_id: em1.id,
-  salary: 50000,
-  tax: 100
+  salary:25_000,
+  tax: 100,
+  created_at: Date.new(2016, 1, 16)
+})
+
+pr1_2 = Payroll.create({
+  employee_id: em1.id,
+  salary: 25_000,
+  allowance: 2_500, 
+  tax: 968,
+  social_insurance: 750, 
+  late: 500,
+  created_at: Date.new(2016, 3, 16)
+})
+
+pr1_3 = Payroll.create({
+  employee_id: em1.id,
+  salary:25_000,
+  tax: 100,
+  created_at: Date.new(2016, 2, 1)
 })
 
 pr2 = Payroll.create({
