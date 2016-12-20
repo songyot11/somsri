@@ -2,13 +2,30 @@
   'use strict';
   angular.module('somsri.payroll.slip', [
   ])
-  .controller('slipCtrl', ['slipService', '$state', function(slipService, $state) {
+  .controller('slipCtrl', ['slipService', '$state', '$compile', '$scope', function(slipService, $state, $compile, $scope) {
     var ctrl = this
     var employeeId = $state.params.id
+    ctrl.isDuplicate = false
     ctrl.employee = []
 
     slipService.employeeSlip(employeeId).then(function(resp) {
       ctrl.employee = resp.data    
     });    
+
+    ctrl.repeat = function() {
+      if (!ctrl.isDuplicate) {
+        var containerDiv = $('#payroll-slip .col-lg-10')
+        var slipContent = $compile('<slip-content info=slip title="สำหรับพนักงาน" class="for_print"/>');
+        var slipContentDiv = slipContent($scope);
+
+        angular.element(containerDiv).append(slipContentDiv);
+
+        ctrl.isDuplicate = true
+      }
+
+      setTimeout(function() { 
+        window.print() 
+      }, 500);
+    }
   }]);
 })();

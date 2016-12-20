@@ -248,9 +248,25 @@ body {
   margin-bottom: 163px;
 }
 
+#payroll-slip #signature {
+  margin-top: 100px;
+  border-top: 1px solid;
+  text-align: center;
+}
+
+#payroll-slip .for_print {
+  display: none;
+}
+
+#payroll-slip .separate {
+  margin-top: 10px;
+  margin-bottom: 10px;
+  border: 0;
+  border-top: 1px dashed #000 !important;
+}
 
 @print {
-  -webkit-print-color-adjust: exact !important
+  margin: 0px;
 }
 
 @media print {
@@ -275,7 +291,7 @@ body {
   #payroll-slip #order tbody td {
     border-bottom: 0px;
     border-top: 0px;
-    height: 200px;
+    height: 190px;
     vertical-align: top !important;
   }
 
@@ -287,5 +303,17 @@ body {
   #payroll-slip thead th {
     background-color: #4A4A4A !important;
     color: #fff !important;
+  }
+
+  #payroll-slip .for_print {
+    display: block;
+  }
+
+  #payroll-slip #slipLogo {
+    width: 200px;
+  }
+
+  #payroll-slip td.big {
+    height: 45px
   }
 }
