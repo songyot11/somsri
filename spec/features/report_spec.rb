@@ -56,7 +56,7 @@ describe 'Payroll Report', js: true do
     visit "/#/report"
 
     find('#month-list').click
-    
+    sleep(1)
     eventually { expect(page).to have_content 'ธันวาคม 2016 พฤศจิกายน 2016' }
   end
 
