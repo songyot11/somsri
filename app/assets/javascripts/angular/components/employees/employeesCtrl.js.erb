@@ -2,7 +2,9 @@
   'use strict';
   angular.module('somsri.payroll.employees', [
   ])
-  .controller('employeesCtrl', ['reportService','$log', function(reportService, $log) {
+  .controller('employeesCtrl', ['$rootScope', 'reportService','$log', function($rootScope, reportService, $log) {
+    $rootScope.menu = "Employee"
+    
     var ctrl = this
     var dateNow = new Date();
     ctrl.xyz = dateNow;

@@ -28,14 +28,15 @@
         <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
           <ul class="nav navbar-nav">
             <li class="dropdown">
-              <a class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">
+              <a id="menu" ng-show="menu" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">
                 <span class="text-yellow">
-                  Report
+                  {{menu}}
                   <span class="caret"></span>
                 </span>
               </a>
               <ul class="dropdown-menu">
-                <li><a >Employee</a></li>
+                <li><a href="/#/employees">Employee</a></li>
+                <li><a href="/#/report">Report</a></li>
               </ul>
             </li>
           </ul>
