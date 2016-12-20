@@ -207,18 +207,22 @@ body {
   color: #fff;
 }
 
-#payroll-slip tbody#order td {
-  border-bottom: 0px;
-  border-top: 0px;
-  padding: 5px 20px;
-}
-
 #payroll-slip td,
 #payroll-slip th {
   vertical-align: middle;
-  padding: 15px 20px;
 }
 
-#payroll-slip #order td {
+#payroll-slip td.big {
+  height: 50px
+}
+
+#payroll-slip #order tbody td {
+  border-bottom: 0px;
+  border-top: 0px;
+  height: 250px;
   vertical-align: top !important;
+}
+
+#payroll-slip #order thead th {
+  padding: 15px 20px;
 }

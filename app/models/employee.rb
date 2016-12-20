@@ -27,11 +27,11 @@ class Employee < ApplicationRecord
   def as_json(options={})
     if options["slip"]
       {
-        code: self.id,
+        code: format("%05d", self.id),
         prefix: self.prefix,
         name: self.full_name,
         position: self.position,
-        personal_id: self.personal_id,
+        account_number: self.account_number,
         extra_fee: self.payrolls.order("created_at ASC").last.extra_fee.to_f,
         extra_pay: self.payrolls.order("created_at ASC").last.extra_pay.to_f + 
                    self.payrolls.order("created_at ASC").last.salary.to_f,

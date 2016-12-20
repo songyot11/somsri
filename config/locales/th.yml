@@ -24,20 +24,20 @@ th:
   activerecord:
     attributes:
       payroll:
-        salary: "เงินเดือน"
-        allowance: "เบี้ยเลี้ยง"
-        attendance_bonus: "เบี้ยขยัน"
-        ot: "ค่าล่วงเวลา"
-        bonus: "โบนัส" 
-        position_allowance: "ค่าตำแหน่ง"
-        extra_etc: "รายได้อื่นๆ"
-        absence: "ขาดงาน"
-        late: "สาย"
-        tax: "ภาษี"
-        social_insurance: "ประกันสังคม"
-        fee_etc: "หักอื่นๆ"
-        pvf: "เงินสะสมเข้ากองทุน PVF"
-        advance_payment: "เบิกล่วงหน้า"
+        salary: "เงินเดือน / Salary"
+        allowance: "เบี้ยเลี้ยง / Shift"
+        attendance_bonus: "เบี้ยขยัน / Attendance Bonus"
+        ot: "ค่าล่วงเวลา / OT."
+        bonus: "โบนัส / Bonus" 
+        position_allowance: "ค่าตำแหน่ง / Posticion"
+        extra_etc: "รายได้อื่นๆ / Etc."
+        absence: "ขาดงาน / Absence"
+        late: "สาย / Late"
+        tax: "ภาษี / Tax"
+        social_insurance: "ประกันสังคม / Social Sec."
+        fee_etc: "หักอื่นๆ / Etc."
+        pvf: "เงินสะสมเข้ากองทุน PVF/ PVF."
+        advance_payment: "เบิกล่วงหน้า / Adv. Payment"
 
   date:
     month_names: [~, มกราคม, กุมภาพันธ์, มีนาคม, เมษายน, พฤษภาคม, มิถุนายน, กรกฎาคม, สิงหาคม, กันยายน, ตุลาคม, พฤศจิกายน, ธันวาคม]
