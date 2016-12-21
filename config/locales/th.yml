@@ -36,7 +36,7 @@ th:
         tax: "ภาษี / Tax"
         social_insurance: "ประกันสังคม / Social Sec."
         fee_etc: "หักอื่นๆ / Etc."
-        pvf: "เงินสะสมเข้ากองทุน PVF/ PVF."
+        pvf: "เงินสะสมกองทุนสงเคราะห์ / Private Teacher Aid fund"
         advance_payment: "เบิกล่วงหน้า / Adv. Payment"
 
   date:

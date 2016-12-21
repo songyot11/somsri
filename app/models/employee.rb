@@ -20,7 +20,8 @@ class Employee < ApplicationRecord
         |mem, var| mem + var[:salary] + var[:extra_pay] - var[:extra_fee] 
       },
       total_tax: payrolls.sum(:tax),
-      total_social_insurance: payrolls.sum(:social_insurance)
+      total_social_insurance: payrolls.sum(:social_insurance),
+      total_aid_fund: payrolls.sum(:pvf)
     }
   end
 

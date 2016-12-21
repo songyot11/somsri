@@ -33,6 +33,14 @@ class Payroll < ApplicationRecord
             """,
             value: self.salary.to_f,
           },
+          ot: {
+            name: I18n.t('activerecord.attributes.payroll.ot'),
+            value: self.ot.to_f,
+          },
+          position_allowance: {
+            name: I18n.t('activerecord.attributes.payroll.position_allowance'),
+            value: self.position_allowance.to_f,
+          },
           allowance: {
             name: I18n.t('activerecord.attributes.payroll.allowance'),
             value: self.allowance.to_f,
@@ -41,17 +49,9 @@ class Payroll < ApplicationRecord
             name: I18n.t('activerecord.attributes.payroll.attendance_bonus'),
             value: self.attendance_bonus.to_f,
           },
-          ot: {
-            name: I18n.t('activerecord.attributes.payroll.ot'),
-            value: self.ot.to_f,
-          },
           bonus: {
             name: I18n.t('activerecord.attributes.payroll.bonus'),
             value: self.bonus.to_f,
-          },
-          position_allowance: {
-            name: I18n.t('activerecord.attributes.payroll.position_allowance'),
-            value: self.position_allowance.to_f,
           },
           extra_etc: {
             name: I18n.t('activerecord.attributes.payroll.extra_etc'),
@@ -59,34 +59,35 @@ class Payroll < ApplicationRecord
           },
         },
         fee_orders: {
-          absence: {
-            name: I18n.t('activerecord.attributes.payroll.absence'),
-            value: self.absence.to_f,
-            },
-          late: {
-            name: I18n.t('activerecord.attributes.payroll.late'),
-            value: self.late.to_f,
-            },
           tax: {
             name: I18n.t('activerecord.attributes.payroll.tax'),
             value: self.tax.to_f,
-            },
+          },
           social_insurance: {
             name: I18n.t('activerecord.attributes.payroll.social_insurance'),
             value: self.social_insurance.to_f,
-            },
-          fee_etc: {
-            name: I18n.t('activerecord.attributes.payroll.fee_etc'),
-            value: self.fee_etc.to_f,
-            },
-          pvf: {
-            name: I18n.t('activerecord.attributes.payroll.pvf'),
-            value: self.pvf.to_f,
-            },
+          },          
+          absence: {
+            name: I18n.t('activerecord.attributes.payroll.absence'),
+            value: self.absence.to_f,
+          },
+          late: {
+            name: I18n.t('activerecord.attributes.payroll.late'),
+            value: self.late.to_f,
+          },
+
           advance_payment: {
             name: I18n.t('activerecord.attributes.payroll.advance_payment'),
             value: self.advance_payment.to_f,
-            },
+          },
+          fee_etc: {
+            name: I18n.t('activerecord.attributes.payroll.fee_etc'),
+            value: self.fee_etc.to_f,
+          },
+          pvf: {
+            name: I18n.t('activerecord.attributes.payroll.pvf'),
+            value: self.pvf.to_f,
+          },
         },
       }
     else 
