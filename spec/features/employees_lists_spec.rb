@@ -1,4 +1,4 @@
-describe 'Payroll Report', js: true do
+describe 'Employee Lists', js: true do
   let(:school) { school = School.make!({ name: "โรงเรียนแห่งหนึ่ง" }) }
 
   let(:employees) do

@@ -43,4 +43,8 @@ class Employee < ApplicationRecord
       super()
     end
   end
+
+  def lastest_payroll
+     Payroll.where({ employee_id: self.id }).order(created_at: :desc).first
+  end
 end

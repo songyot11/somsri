@@ -27,4 +27,3 @@ Payroll.blueprint do
   tax { Faker::Number.positive }
   created_at { Faker::Date }
 end
-

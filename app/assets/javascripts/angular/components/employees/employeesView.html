@@ -1,7 +1,7 @@
 <div class="container employees-list">
   <div class="row same-height">
     <div class="col-md-3" ng-repeat="data in employees.display_datas">
-      <div class="card">
+      <div class="card cursor-pointer" ng-click="employees.openEmployeeDetails(data.id)">
 
         <div class="row line-space5">
           <div class="col-md-12">

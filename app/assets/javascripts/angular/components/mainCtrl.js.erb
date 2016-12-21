@@ -10,5 +10,14 @@
     $rootScope.openEmployees = function () {
       $state.go('employees')
     };
+
+    $rootScope.openEmployeeDetails = function (id) {
+      $state.go('employee_details',{ id: id });
+    };
+
+    $rootScope.openSlip = function (id) {
+      $state.go('slip',{ id: id });
+    };
+
   }]);
 })();
