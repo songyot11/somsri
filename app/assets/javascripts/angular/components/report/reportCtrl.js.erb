@@ -49,9 +49,9 @@
     reportService.getMonths().then(function(resp) {
       if (resp.data.length > 0) {
         ctrl.months = resp.data
-        ctrl.currentMonth = ctrl.months[0]
+        var current = ctrl.months[0]
 
-        reportService.getPayroll(ctrl.currentMonth.year, ctrl.currentMonth.month).then(function(resp) {
+        reportService.getPayroll(current.year, current.month).then(function(resp) {
           ctrl.employees = resp.data
           ctrl.total = getTotalSalary(ctrl.employees);
           ctrl.currentMonth = ctrl.getMonthName(ctrl.months[0])

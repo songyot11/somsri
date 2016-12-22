@@ -2,6 +2,7 @@
   'use strict';
   angular.module('somsri.payroll.home', [
   ])
-  .controller('homeCtrl', [function() {
+  .controller('homeCtrl', ['$rootScope', function($rootScope) {
+    $rootScope.menu = ""
   }]);
 })();

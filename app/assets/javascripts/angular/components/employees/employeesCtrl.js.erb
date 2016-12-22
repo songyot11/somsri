@@ -8,21 +8,29 @@
     var dateNow = new Date();
     getPayroll(dateNow.getMonth() + 1, dateNow.getFullYear());
     function getPayroll(month, year){
-      reportService.getPayroll(year, month).then(function(resp) {
-        ctrl.datas = resp.data;
-        ctrl.display_datas = [];
-        for(var i = 0; i < ctrl.datas.length; i++) {
-          var data = ctrl.datas[i];
-          ctrl.display_datas.push({
-            full_name: data['name'],
-            id: data['code'],
-            salary: data['salary'],
-            fee: data['extra_fee'],
-            extra: data['extra_pay'],
-            imgUrl: data['img_url']
+      // Get last month on database
+      reportService.getMonths().then(function(resp) {
+        if (resp.data.length > 0) {
+          ctrl.months = resp.data
+          ctrl.currentMonth = ctrl.months[0]
+
+          reportService.getPayroll(ctrl.currentMonth.year, ctrl.currentMonth.month).then(function(resp) {
+            ctrl.datas = resp.data;
+            ctrl.display_datas = [];
+            for(var i = 0; i < ctrl.datas.length; i++) {
+              var data = ctrl.datas[i];
+              ctrl.display_datas.push({
+                full_name: data['name'],
+                id: data['code'],
+                salary: data['salary'],
+                fee: data['extra_fee'],
+                extra: data['extra_pay'],
+                imgUrl: data['img_url']
+              });
+            }
           });
         }
-      });
+      })
     }
 
     ctrl.openEmployeeDetails = function(id){

@@ -10,7 +10,9 @@ class ReportsController < ApplicationController
     month = params[:month].to_i
     start_month = Date.new(year, month, 1)
     end_month = start_month.end_of_month
-    payrolls = Payroll.where(created_at: start_month.beginning_of_day..end_month.end_of_day).as_json('report')
+    payrolls = Payroll.where(created_at: start_month.beginning_of_day..end_month.end_of_day)
+                      .order("id ASC")
+                      .as_json('report')
 
     render json: payrolls, status: :ok
   end

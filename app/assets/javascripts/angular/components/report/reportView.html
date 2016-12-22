@@ -2,7 +2,7 @@
   <div class="col-lg-10 col-lg-offset-1">
     <div class="dropdown">
       <h2 id="month-list" data-toggle="dropdown">
-        ประจำเดือน{{report.currentMonth}}
+        ประจำเดือน<span ng-bind="report.currentMonth" ></span>
         <span class="caret"></span>
       </h2>
       <ul class="dropdown-menu" aria-labelledby="month-list">
@@ -29,8 +29,12 @@
         <tbody>
           <tr ng-repeat="employee in report.employees"> 
             <td class="text-left">{{employee.code}}</td>
-            <td class="text-left">{{employee.name}}</td>
-            <th class="text-center">{{employee.account_number}}</th>
+            <td class="text-left">
+              <a href="/#/employees/{{employee.code}}">
+                <strong>{{employee.name}}</strong>
+              </a>
+            </td>
+            <td class="text-center">{{employee.account_number}}</td>
             <td>{{employee.salary | currency: ""}}</td>
             <td class="text-green">{{employee.extra_pay | currency: ""}}</td>
             <td class="text-red">{{employee.extra_fee | currency: ""}}</td>
