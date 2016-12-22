@@ -3,9 +3,13 @@ describe 'Payroll Report', js: true do
   let(:employee1) {employee1 = Employee.make!(
     {     
       school_id: school.id,
-      first_name: "สมศรี",
-      last_name: "เป็นชื่อแอพ",
-      prefix: "นาง",
+      first_name: "Somsri",
+      middle_name: "Is",
+      last_name: "Appname",
+      prefix: "Mrs.",
+      first_name_thai: "สมศรี",
+      last_name_thai: "เป็นชื่อแอพ",
+      prefix_thai: "นาง",
       sex: 1,
       account_number: "5-234-34532-2342",
       salary: 50000
@@ -14,12 +18,16 @@ describe 'Payroll Report', js: true do
   let(:employee2) {employee2 = Employee.make!(
     {     
       school_id: school.id,
-      first_name: "สมจิตร",
-      last_name: "เป็นนักมวย",
-      prefix: "นาย",
+      first_name: "Somchit",
+      middle_name: "Is",
+      last_name: "Boxing",
+      prefix: "Mr",
+      first_name_thai: "สมจิตร",
+      last_name_thai: "เป็นนักมวย",
+      prefix_thai: "นาย",
       sex: 1,
       account_number: "5-234-34532-2342",
-      salary: 50000
+      salary: 20000
     }
   )}
   let(:payrolls) do

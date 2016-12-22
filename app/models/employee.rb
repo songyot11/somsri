@@ -3,13 +3,17 @@ class Employee < ApplicationRecord
   has_many :payrolls, dependent: :destroy
 
   def full_name
-    [self.prefix, self.first_name, self.middle_name, self.last_name].join(" ")
+    if self.first_name_thai && self.prefix_thai && self.last_name_thai
+      [self.prefix_thai, self.first_name_thai, self.last_name_thai].join(" ")
+    else
+      [self.prefix, self.first_name, self.middle_name, self.last_name].join(" ")
+    end
   end
 
   def annual_income_outcome(id)
     employee = Employee.find(id)
 
-    year = employee.payrolls.order("created_at ASC").last.created_at.year
+    year = employee.payrolls.latest.created_at.year
     start_year = Date.new(year, 1, 1)
     end_year = Date.new(year, 12, 31)
 
@@ -33,11 +37,16 @@ class Employee < ApplicationRecord
         name: self.full_name,
         position: self.position,
         account_number: self.account_number,
-        extra_fee: self.payrolls.order("created_at ASC").last.extra_fee.to_f,
-        extra_pay: self.payrolls.order("created_at ASC").last.extra_pay.to_f + 
-                   self.payrolls.order("created_at ASC").last.salary.to_f,
+        extra_fee: self.payrolls.latest.extra_fee.to_f,
+        extra_pay: self.payrolls.latest.extra_pay.to_f + 
+                   self.payrolls.latest.salary.to_f,
         annual_income_outcome: self.annual_income_outcome(self.id),
-        payroll: self.payrolls.order("created_at ASC").last.as_json("slip")
+        payroll: self.payrolls.latest.as_json("slip")
+      }
+    elsif options["name_lists"]
+      {
+        id: self.id,
+        name: self.full_name,
       }
     else
       super()
@@ -47,4 +56,5 @@ class Employee < ApplicationRecord
   def lastest_payroll
      Payroll.where({ employee_id: self.id }).order(created_at: :desc).first
   end
+
 end

@@ -1,5 +1,19 @@
 <div class="container employee-details">
-  <h1>{{ employee.displayName }}</h1>
+  <div class="dropdown">
+    <small>Select employee</small>
+    <h1 id="employeeName" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="true">
+      <span ng-bind="employee.displayName"></span>
+      <span class="caret"></span>
+    </h1>
+    <ul class="dropdown-menu">
+      <li ng-repeat="data in employee.employee_lists">
+        <a ng-click="employee.openEmployeeDetails(data.id)" href="javascript:void(0)">
+          {{data.name}}
+        </a>
+      </li>
+    </ul>
+  
+  </div>
   <form name="createProjectForm" ng-submit="employee.submit(employee.datas)">
     <div class="paragraph cyan employee">
       <div class="row">

@@ -5,6 +5,10 @@ describe 'Employee Details', js: true do
     [
       Employee.make!({
         school_id: school.id,
+        first_name: "Somsri",
+        middle_name: "Is",
+        last_name: "Appname",
+        prefix: "Mrs.",
         first_name_thai: "สมศรี",
         last_name_thai: "เป็นชื่อแอพ",
         prefix_thai: "นาง",
@@ -12,6 +16,10 @@ describe 'Employee Details', js: true do
       }),
       Employee.make!({
         school_id: school.id,
+        first_name: "Somchit",
+        middle_name: "Is",
+        last_name: "Boxing",
+        prefix: "Mr",
         first_name_thai: "สมจิตร",
         last_name_thai: "เป็นนักมวย",
         prefix_thai: "นาย",

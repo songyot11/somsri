@@ -1,7 +1,9 @@
 class Payroll < ApplicationRecord
   belongs_to :employee
-  validate :already_payroll_on_month
+  validate :already_payroll_on_month, on: :create
   before_validation :set_created_at
+
+  scope :latest, -> { order("created_at ASC").last }
 
   def already_payroll_on_month
     payrolls = Payroll.where(employee_id: self.employee_id).collect{ |x| [x.created_at.month, x.created_at.year]}

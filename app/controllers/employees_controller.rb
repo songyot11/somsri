@@ -1,6 +1,13 @@
 class EmployeesController < ApplicationController
   skip_before_action :verify_authenticity_token, :only => [:update]
 
+  # GET /employees
+  def index
+    employee = Employee.order("created_at ASC").as_json("name_lists")
+
+    render json: employee, status: :ok
+  end
+
   # GET /employees/:id/slip
   def slip
     employee = Employee.find(params[:id]).as_json("slip")

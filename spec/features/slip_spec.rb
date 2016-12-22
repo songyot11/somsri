@@ -3,10 +3,13 @@ describe 'Payroll Slip', js: true do
   let(:employee) {employee = Employee.make!(
     {     
       school_id: school.id,
-      first_name: "สมศรี",
-      last_name: "เป็นชื่อแอพ",
-      prefix: "นาง",
-      sex: 1,
+      first_name: "Somsri",
+      middle_name: "Is",
+      last_name: "Appname",
+      prefix: "Mrs.",
+      first_name_thai: "สมศรี",
+      last_name_thai: "เป็นชื่อแอพ",
+      prefix_thai: "นาง",
       personal_id: "1409733340586",
       position: "ครูน้อย",
       account_number: "5-234-34532-2342",

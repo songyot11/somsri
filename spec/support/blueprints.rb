@@ -16,6 +16,9 @@ Employee.blueprint do
   first_name { Faker::Name.first_name }
   last_name { Faker::Name.last_name }
   prefix { Faker::Name.title }
+  first_name_thai { Faker::Name.first_name }
+  last_name_thai { Faker::Name.last_name }
+  prefix_thai { Faker::Name.title }
   sex { Faker::Number.positive }
   account_number { Faker::Lorem.word }
   salary { Faker::Number.positive }

@@ -368,6 +368,15 @@ body {
   padding-bottom: -20px;
 }
 
+.employee-details h1#employeeName {
+  margin-top: 0px !important;
+}
+
+.employee-details .dropdown small {
+  color: #A6A6A7;
+}
+
+
 .space20{
   height: 20px;
 }

@@ -79,6 +79,21 @@
       });
     }
 
+    // Get all employee
+    function getAllEmployee() {
+      service.getAllEmployee().then(function(resp) {
+        // data not empty
+        if (resp.data.length > 0) {
+          ctrl.employee_lists = resp.data
+          console.log(ctrl.employee_lists)
+        }
+      })
+    }
+
+    ctrl.openEmployeeDetails = function(id){
+      $rootScope.openEmployeeDetails(id);
+    }
+
     ctrl.cancle = function(){
       if(isDataChange()){
         openConfirmationModal(function(){
@@ -123,6 +138,7 @@
       if(p.fee_etc){ ctrl.total -= p.fee_etc}
     }
 
+    getAllEmployee()
     getEmployee(employeeId);
 
   }]);
