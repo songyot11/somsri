@@ -111,20 +111,22 @@ pr1_2 = Payroll.create({
   tax: 968,
   social_insurance: 750, 
   late: 500,
-  created_at: Date.new(2016, 3, 16)
-})
-
-pr1_3 = Payroll.create({
-  employee_id: em1.id,
-  salary:25_000,
-  tax: 100,
-  created_at: Date.new(2016, 2, 1)
+  created_at: Date.new(2016, 2, 16)
 })
 
 pr2 = Payroll.create({
   employee_id: em2.id,
   salary: 250000,
-  tax: 500000
+  tax: 500000,
+  social_insurance: 750, 
+  created_at: Date.new(2016, 1, 16)
+})
+
+pr2_2 = Payroll.create({
+  employee_id: em2.id,
+  salary: 250000,
+  tax: 500000,
+  created_at: Date.new(2016, 2, 16)
 })
 
 pr3 = Payroll.create({
@@ -132,12 +134,31 @@ pr3 = Payroll.create({
   salary: 25,
   tax: 1,
   allowance: 1000000,
-  ot: 200
+  ot: 200,
+  created_at: Date.new(2016, 1, 16)
 })
 
-pr3 = Payroll.create({
+pr3_2 = Payroll.create({
+  employee_id: em3.id,
+  salary: 25,
+  tax: 1,
+  allowance: 1000000,
+  ot: 200,
+  created_at: Date.new(2016, 2, 16)
+})
+
+pr4 = Payroll.create({
   employee_id: em4.id,
   salary: 1,
   tax: 1,
-  fee_etc: 1000000
+  fee_etc: 1000000,
+  created_at: Date.new(2016, 1, 1)
+})
+
+pr4_2 = Payroll.create({
+  employee_id: em4.id,
+  salary: 1,
+  tax: 1,
+  fee_etc: 1000000,
+  created_at: Date.new(2016, 2, 1)
 })

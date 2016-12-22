@@ -2,9 +2,12 @@ ENV["RAILS_ENV"] ||= 'test'
 require File.expand_path("../../config/environment", __FILE__)
 require 'rspec/rails'
 require 'devise'
-include Warden::Test::Helpers
 require 'capybara/rspec'
 require 'database_cleaner'
+require 'rake'
+
+include Warden::Test::Helpers
+
 RSpec.configure do |config|
   config.include Devise::Test::ControllerHelpers, :type => :controller
   config.infer_spec_type_from_file_location!

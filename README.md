@@ -35,7 +35,7 @@ heroku config:add BUILDPACK_URL=https://github.com/ddollar/heroku-buildpack-mult
 ```
   and another command for auto migrate
 ```
-  heroku config:set DEPLOY_TASKS='db:migrate'
+heroku config:set DEPLOY_TASKS='db:migrate'
 ```
 
 ##### environment variables (ENV)
@@ -46,3 +46,14 @@ bundle exec figaro install
   you can see the required ENV in 'config/initializer/figaro.rb'
 
   ps. please also check 'config/application_sample.yml'
+
+### rake command
+  We're creating employee's payroll by using this command for create date now
+```
+rake payroll:generate:now
+```
+  and another command for create by month and year
+```
+rake payroll:generate:on[<month>,<year>]
+```
+example: rake payroll:generate:on[1,2016]

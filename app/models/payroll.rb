@@ -1,5 +1,18 @@
 class Payroll < ApplicationRecord
   belongs_to :employee
+  validate :already_payroll_on_month
+  before_validation :set_created_at
+
+  def already_payroll_on_month
+    payrolls = Payroll.where(employee_id: self.employee_id).collect{ |x| [x.created_at.month, x.created_at.year]}
+    if payrolls.include?([self.created_at.month, self.created_at.year])
+      errors.add(:created_at, "This month and this year have a payroll already.")
+    end
+  end    
+
+  def set_created_at
+    self.created_at ||= DateTime.now
+  end
 
   def extra_fee
     absence + late + tax + social_insurance + fee_etc + pvf + advance_payment
