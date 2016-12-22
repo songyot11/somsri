@@ -1,63 +1,96 @@
 <!DOCTYPE html>
 <html ng-app="somsri.payroll">
-  <head>
-    <title>SomsriPayroll</title>
-    <%= csrf_meta_tags %>
-    <link href="https://fonts.googleapis.com/css?family=Maitree:400,700" rel="stylesheet">
-    <%= stylesheet_link_tag    'application', media: 'all' %>
-    <%= javascript_include_tag 'application' %>
-  </head>
+    <head>
+        <title>SomsriPayroll</title>
+        <%= csrf_meta_tags %>
 
-  <body ng-controller="mainCtrl as main">
-    <nav class="navbar navbar-default">
-      <div class="container-fluid">
-        <!-- Brand and toggle get grouped for better mobile display -->
-        <div class="navbar-header">
-          <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1" aria-expanded="false">
-            <span class="sr-only">Toggle navigation</span>
-            <span class="icon-bar"></span>
-            <span class="icon-bar"></span>
-            <span class="icon-bar"></span>
-          </button>
-          <a class="navbar-brand" href="#">
-            <%= image_tag("somsri.png") %>
-          </a>
-        </div>
+        <%= favicon_link_tag 'apple-touch-icon-57x57.png', rel: 'apple-touch-icon-precomposed', type: 'image/png', size: '57x57' %>
+        <%= favicon_link_tag 'apple-touch-icon-114x114.png', rel: 'apple-touch-icon-precomposed', type: 'image/png', size: '114x114' %>
+        <%= favicon_link_tag 'apple-touch-icon-72x72.png', rel: 'apple-touch-icon-precomposed', type: 'image/png', size: '72x72' %>
+        <%= favicon_link_tag 'apple-touch-icon-144x144.png', rel: 'apple-touch-icon-precomposed', type: 'image/png', size: '144x144' %>
+        <%= favicon_link_tag 'apple-touch-icon-60x60.png', rel: 'apple-touch-icon-precomposed', type: 'image/png', size: '60x60' %>
+        <%= favicon_link_tag 'apple-touch-icon-120x120.png', rel: 'apple-touch-icon-precomposed', type: 'image/png', size: '120x120' %>
+        <%= favicon_link_tag 'apple-touch-icon-76x76.png', rel: 'apple-touch-icon-precomposed', type: 'image/png', size: '76x76' %>
+        <%= favicon_link_tag 'apple-touch-icon-152x152.png', rel: 'apple-touch-icon-precomposed', type: 'image/png', size: '152x152' %>
+        <%= favicon_link_tag 'favicon-196x196.png', rel: 'icon', type: 'image/png', size: '196x196' %>
+        <%= favicon_link_tag 'favicon-196x196.png', rel: 'icon', type: 'image/png', size: '96x96' %>
+        <%= favicon_link_tag 'favicon-196x196.png', rel: 'icon', type: 'image/png', size: '32x32' %>
+        <%= favicon_link_tag 'favicon-196x196.png', rel: 'icon', type: 'image/png', size: '16x16' %>
+        <%= favicon_link_tag 'favicon-196x196.png', rel: 'icon', type: 'image/png', size: '128x128' %>
+        <%= favicon_link_tag 'favicon.ico' %>
+        <meta name="application-name" content="&nbsp;"/>
+        <meta name="msapplication-TileColor" content="#FFFFFF"/>
+        <meta name="msapplication-TileImage" content="<%= image_path('mstile-144x144.png') %>"/>
+        <meta name="msapplication-square70x70logo" content="<%= image_path('mstile-70x70.png') %>"/>
+        <meta name="msapplication-square150x150logo" content="<%= image_path('mstile-150x150.png') %>"/>
+        <meta name="msapplication-wide310x150logo" content="<%= image_path('mstile-310x150.png') %>"/>
+        <meta name="msapplication-square310x310logo" content="<%= image_path('mstile-310x310.png') %>"/>
 
-        <!-- Collect the nav links, forms, and other content for toggling -->
-        <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
-          <ul class="nav navbar-nav">
-            <li class="dropdown">
-              <a id="menu" ng-show="menu" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">
-                <span class="text-yellow">
-                  <span ng-bind="menu"></span>
-                  <span class="caret"></span>
-                </span>
-              </a>
-              <ul class="dropdown-menu">
-                <li><a href="/#/employees">Employees</a></li>
-                <li><a href="/#/report">Report</a></li>
-              </ul>
-            </li>
-          </ul>
-          <ul class="nav navbar-nav navbar-right">
-            <li class="dropdown">
-              <a  class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">
-                Welcome
-                <span class="text-yellow">
-                  Jacob Ramirez
-                  <span class="caret"></span>
-                </span>
-              </a>
-              <ul class="dropdown-menu">
-                <li><a>setting</a></li>
-                <li><a>logout</a></li>
-              </ul>
-            </li>
-          </ul>
-        </div><!-- /.navbar-collapse -->
-      </div><!-- /.container-fluid -->
-    </nav>
-    <%= yield %>
-  </body>
+        <link href="https://fonts.googleapis.com/css?family=Maitree:400,700" rel="stylesheet">
+        <%= stylesheet_link_tag    'application', media: 'all' %>
+        <%= javascript_include_tag 'application' %>
+    </head>
+
+    <body ng-controller="mainCtrl as main">
+        <nav class="navbar navbar-default">
+            <div class="container-fluid">
+                <!-- Brand and toggle get grouped for better mobile display -->
+                <div class="navbar-header">
+                    <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1" aria-expanded="false">
+                        <span class="sr-only">Toggle navigation</span>
+                        <span class="icon-bar"></span>
+                        <span class="icon-bar"></span>
+                        <span class="icon-bar"></span>
+                    </button>
+                    <a class="navbar-brand" href="#">
+                        <%= image_tag("somsri.png") %>
+                    </a>
+                </div>
+
+                <!-- Collect the nav links, forms, and other content for toggling -->
+                <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
+                    <ul class="nav navbar-nav">
+                        <li class="dropdown">
+                            <a id="menu" ng-show="menu" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">
+                                <span class="text-yellow">
+                                    <span ng-bind="menu"></span>
+                                    <span class="caret"></span>
+                                </span>
+                            </a>
+                            <ul class="dropdown-menu">
+                                <li>
+                                    <a href="/#/employees">Employees</a>
+                                </li>
+                                <li>
+                                    <a href="/#/report">Report</a>
+                                </li>
+                            </ul>
+                        </li>
+                    </ul>
+                    <ul class="nav navbar-nav navbar-right">
+                        <li class="dropdown">
+                            <a class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">
+                                Welcome
+                                <span class="text-yellow">
+                                    Jacob Ramirez
+                                    <span class="caret"></span>
+                                </span>
+                            </a>
+                            <ul class="dropdown-menu">
+                                <li>
+                                    <a>setting</a>
+                                </li>
+                                <li>
+                                    <a>logout</a>
+                                </li>
+                            </ul>
+                        </li>
+                    </ul>
+                </div>
+                <!-- /.navbar-collapse -->
+            </div>
+            <!-- /.container-fluid -->
+        </nav>
+        <%= yield %>
+    </body>
 </html>
