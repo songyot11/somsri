@@ -107,18 +107,24 @@ pr1_1 = Payroll.create({
 pr1_2 = Payroll.create({
   employee_id: em1.id,
   salary: 25_000,
-  allowance: 2_500, 
+  allowance: 2_500,
   tax: 968,
-  social_insurance: 750, 
+  social_insurance: 750,
   late: 500,
   created_at: Date.new(2016, 2, 16)
+})
+
+pr1_4 = Payroll.create({
+  employee_id: em1.id,
+  salary:25_000,
+  tax: 100
 })
 
 pr2 = Payroll.create({
   employee_id: em2.id,
   salary: 250000,
   tax: 500000,
-  social_insurance: 750, 
+  social_insurance: 750,
   created_at: Date.new(2016, 1, 16)
 })
 

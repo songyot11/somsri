@@ -98,7 +98,7 @@ describe 'Employee Details', js: true do
     page.fill_in 'ค่าล่วงเวลา', :with => '500000'
     page.fill_in 'ประกันสังคม', :with => '300000'
     page.fill_in 'ค่าตำแหน่ง', :with => '70000'
-    page.fill_in 'เงินสะสมเข้ากองทุน PVF', :with => '40000'
+    page.fill_in 'เงินสะสมเข้ากองทุนสงเคราะห์', :with => '40000'
     page.fill_in 'ค่ากะ / ค่าเบี้ยเลี้ยง', :with => '5000'
     page.fill_in 'ขาดงาน', :with => '1000'
     page.fill_in 'เบี้ยขยัน', :with => '500'

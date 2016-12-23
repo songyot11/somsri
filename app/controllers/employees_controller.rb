@@ -66,6 +66,8 @@ class EmployeesController < ApplicationController
       :bank_branch,
       :account_number,
       :salary,
+      :nickname,
+      :start_date,
       :img_url
     ]).to_h
     result[:salary] = 0 if result[:salary].blank?

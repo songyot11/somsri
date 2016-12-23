@@ -51,6 +51,7 @@
     function getEmployee(id){
       service.getEmployee(id).then(function(resp) {
         ctrl.datas = resp.data;
+
         // convert string to float
         var keys = Object.keys(ctrl.datas.payroll)
         for(var i = 1; i < keys.length; i++){
@@ -75,7 +76,11 @@
           if(e.middle_name && e.middle_name.length > 0){ ctrl.displayName += e.middle_name + " " }
           ctrl.displayName += e.last_name;
         }
-
+        if(e.start_date){
+          ctrl.datas.employee.start_date = new Date(ctrl.datas.employee.start_date);
+        }else{
+          ctrl.datas.employee.start_date = new Date(ctrl.datas.employee.created_at);
+        }
       });
     }
 

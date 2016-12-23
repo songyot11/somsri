@@ -22,19 +22,19 @@
             <div class="col-md-2">
               <div class="form-group">
                 <label for="prefix_thai">คำนำหน้า</label>
-                <input type="text" class="form-control" id="prefix_thai" ng-model="employee.datas.employee.prefix_thai" ng-change="employee.calTotal()" required>
+                <input type="text" class="form-control" id="prefix_thai" ng-model="employee.datas.employee.prefix_thai" ng-change="employee.calTotal()">
               </div>
             </div>
             <div class="col-md-5">
               <div class="form-group">
                 <label for="first_name_thai">ชื่อ</label>
-                <input type="text" class="form-control" id="first_name_thai" ng-model="employee.datas.employee.first_name_thai" required>
+                <input type="text" class="form-control" id="first_name_thai" ng-model="employee.datas.employee.first_name_thai">
               </div>
             </div>
             <div class="col-md-5">
               <div class="form-group">
                 <label for="last_name_thai">นามสกุล</label>
-                <input type="text" class="form-control" id="last_name_thai" ng-model="employee.datas.employee.last_name_thai" required>
+                <input type="text" class="form-control" id="last_name_thai" ng-model="employee.datas.employee.last_name_thai">
               </div>
             </div>
           </div>
@@ -42,13 +42,13 @@
             <div class="col-md-2">
               <div class="form-group">
                 <label for="prefix">Prefix</label>
-                <input type="text" class="form-control" id="prefix" ng-model="employee.datas.employee.prefix" required>
+                <input type="text" class="form-control" id="prefix" ng-model="employee.datas.employee.prefix">
               </div>
             </div>
             <div class="col-md-3">
               <div class="form-group">
                 <label for="first_name">First Name</label>
-                <input type="text" class="form-control" id="first_name" ng-model="employee.datas.employee.first_name" required>
+                <input type="text" class="form-control" id="first_name" ng-model="employee.datas.employee.first_name">
               </div>
             </div>
             <div class="col-md-3">
@@ -60,7 +60,7 @@
             <div class="col-md-4">
               <div class="form-group">
                 <label for="last_name">Surname</label>
-                <input type="text" class="form-control" id="last_name" ng-model="employee.datas.employee.last_name" required>
+                <input type="text" class="form-control" id="last_name" ng-model="employee.datas.employee.last_name">
               </div>
             </div>
           </div>
@@ -75,6 +75,20 @@
               <div class="form-group">
                 <label for="passport_number">Passport No.</label>
                 <input type="text" class="form-control" id="passport_number" ng-model="employee.datas.employee.passport_number">
+              </div>
+            </div>
+          </div>
+          <div class="row">
+            <div class="col-md-6">
+              <div class="form-group">
+                <label for="nickname">ชื่อเล่น</label>
+                <input type="text" class="form-control" id="nickname" ng-model="employee.datas.employee.nickname">
+              </div>
+            </div>
+            <div class="col-md-6">
+              <div class="form-group">
+                <label for="start_date">วันที่เริ่มทำงาน</label>
+                <div><md-datepicker ng-model="employee.datas.employee.start_date"></md-datepicker></div>
               </div>
             </div>
           </div>
@@ -97,19 +111,19 @@
         <div class="col-md-4">
           <div class="form-group">
             <label for="race">เชื้อชาติ</label>
-            <input type="text" class="form-control" id="race" ng-model="employee.datas.employee.race" required>
+            <input type="text" class="form-control" id="race" ng-model="employee.datas.employee.race">
           </div>
         </div>
         <div class="col-md-4">
           <div class="form-group">
             <label for="nationality">สัญชาติ</label>
-            <input type="text" class="form-control" id="nationality" ng-model="employee.datas.employee.nationality" required>
+            <input type="text" class="form-control" id="nationality" ng-model="employee.datas.employee.nationality">
           </div>
         </div>
         <div class="col-md-4">
           <div class="form-group">
             <label for="position">ตำแหน่ง</label>
-            <input type="text" class="form-control" id="position" ng-model="employee.datas.employee.position" required>
+            <input type="text" class="form-control" id="position" ng-model="employee.datas.employee.position">
           </div>
         </div>
       </div>
@@ -187,7 +201,7 @@
         </div>
         <div class="col-md-4">
           <div class="form-group">
-            <label for="pvf">เงินสะสมเข้ากองทุน PVF</label>
+            <label for="pvf">เงินสะสมเข้ากองทุนสงเคราะห์</label>
             <input type="number" class="form-control text-red" id="pvf" ng-model="employee.datas.payroll.pvf"  ng-change="employee.calTotal()">
           </div>
         </div>

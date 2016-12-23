@@ -13,11 +13,14 @@
 //= require jquery
 //= require jquery_ujs
 //= require angular
+//= require angular-aria
+//= require angular-animate
+//= require angular-material
 //= require bootstrap
 //= require angular-bootstrap
 //= require angular-ui-router
 //= require angular-ui-router.stateHelper
 //= require ocLazyLoad/dist/ocLazyLoad.min
+//= require angular/components/mainCtrl.js.erb
 //= require angular/app.module
 //= require angular/app.assets
-//= require_tree .
