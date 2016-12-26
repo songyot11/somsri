@@ -9,6 +9,7 @@
     var employeeId = $state.params.id;
     ctrl.isEdit = employeeId > 0 ? true : false
     ctrl.data = { employee: {}}
+    ctrl.isSubmit = false
 
     function openConfirmationModal(success, dismiss) {
       $scope.message = "คุณต้องการออกจากหน้านี้โดยไม่บันทึกค่าหรือไม่?";
@@ -115,6 +116,7 @@
     }
 
     ctrl.submit = function(parm){
+      ctrl.isSubmit = true
       if (ctrl.isEdit) {
         if(isDataChange()){
           service.saveEmployee(ctrl.datas.employee.id, ctrl.datas).then(function(resp) {
@@ -123,10 +125,12 @@
           });
         }else{
           $log.info("NOTHING CHANGE!!!");
+          ctrl.isSubmit = false
           $rootScope.openEmployees();
         }
       } else {
         service.createEmployee(parm).then(function(resp) {
+          ctrl.isSubmit = false
           $rootScope.openEmployees();
         });
       }

@@ -280,7 +280,7 @@
         <button ng-show="false" type="button" class="btn btn-lg btn-block btn-memo">บันทึกช่วยจำ</button>
       </div>
       <div class="col-md-2 text-right">
-        <button type="submit" class="btn btn-lg btn-block btn-submit">บันทึก</button>
+        <button type="submit" class="btn btn-lg btn-block btn-submit" ng-disabled="employee.isSubmit">บันทึก</button>
       </div>
       <div class="col-md-2 text-right">
         <button type="button" class="btn btn-lg btn-block btn-cancel" ng-click="employee.cancle()">ยกเลิก</button>
