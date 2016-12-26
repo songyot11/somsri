@@ -20,6 +20,8 @@
 //= require angular-bootstrap
 //= require angular-ui-router
 //= require angular-ui-router.stateHelper
+//= require moment
+//= require angular-moment
 //= require ocLazyLoad/dist/ocLazyLoad.min
 //= require angular/components/mainCtrl.js.erb
 //= require angular/app.module
