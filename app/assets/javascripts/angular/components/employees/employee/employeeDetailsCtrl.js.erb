@@ -127,6 +127,7 @@
               $rootScope.openEmployees();
             });
           }, function(){
+            ctrl.isSubmit = false
             $log.info("DISMISS!!");
           });
         }else{
