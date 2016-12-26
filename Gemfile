@@ -25,6 +25,8 @@ gem 'jbuilder', '~> 2.5'
 
 gem 'devise'
 
+gem 'cancancan'
+
 gem 'font-awesome-rails'
 
 gem 'rails-i18n', '~> 5.0.0'

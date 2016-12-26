@@ -30,6 +30,7 @@ body {
 }
 
 .navbar-brand {
+  height: 100%;
   padding: 0px;
 }
 

@@ -1,7 +1,8 @@
-describe 'Payroll Slip', js: true do  
+describe 'Payroll Slip', js: true do
   let(:school) {school = School.make!({ name: "โรงเรียนแห่งหนึ่ง" })}
+  let(:user) { User.make!({ school_id: school.id }) }
   let(:employee) {employee = Employee.make!(
-    {     
+    {
       school_id: school.id,
       first_name: "Somsri",
       middle_name: "Is",
@@ -21,9 +22,9 @@ describe 'Payroll Slip', js: true do
       pr1 = Payroll.make!({
         employee_id: employee.id,
         salary: 25_000,
-        allowance: 2_500, 
+        allowance: 2_500,
         tax: 968,
-        social_insurance: 750, 
+        social_insurance: 750,
         late: 500,
         pvf: 100,
         created_at: DateTime.new(2015, 2, 11)
@@ -31,27 +32,28 @@ describe 'Payroll Slip', js: true do
       pr2 = Payroll.make!({
         employee_id: employee.id,
         salary: 25_000,
-        allowance: 2_500, 
+        allowance: 2_500,
         tax: 968,
-        social_insurance: 750, 
+        social_insurance: 750,
         late: 500,
         pvf: 1000,
         created_at: DateTime.new(2016, 2, 16)
       }),
       pr3 = Payroll.make!({
-        employee_id: employee.id, 
-        salary: 50_000, 
-        tax: 100, 
+        employee_id: employee.id,
+        salary: 50_000,
+        tax: 100,
         pvf: 100,
         created_at: DateTime.new(2016, 1, 1)
       }),
     ]
   end
 
-  before do 
+  before do
     payrolls
+    login_as(user, scope: :user)
   end
-  
+
   it 'should see label and data in employee slip' do
     visit "/#/employees/#{employee.id}/slip"
     sleep(1)

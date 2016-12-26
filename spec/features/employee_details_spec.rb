@@ -1,6 +1,8 @@
 describe 'Employee Details', js: true do
   let(:school) { school = School.make!({ name: "โรงเรียนแห่งหนึ่ง" }) }
 
+  let(:user) { User.make!({ school_id: school.id }) }
+
   let(:employees) do
     [
       Employee.make!({
@@ -70,6 +72,7 @@ describe 'Employee Details', js: true do
 
   before do
     payrolls
+    login_as(user, scope: :user)
   end
 
   it 'should goto employee details when click employee' do

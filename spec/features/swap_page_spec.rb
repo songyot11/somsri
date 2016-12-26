@@ -1,5 +1,12 @@
 describe 'Payroll Swap Page', js: true do
 
+  let(:school) {school = School.make!({ name: "โรงเรียนแห่งหนึ่ง" })}
+  let(:user) { User.make!({ school_id: school.id }) }
+
+  before do
+    login_as(user, scope: :user)
+  end
+
   it 'should not see two menu on homepage' do
     visit "/#/"
 

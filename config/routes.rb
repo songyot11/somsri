@@ -1,6 +1,6 @@
 Rails.application.routes.draw do
-  # devise_for :users
-  #
+  devise_for :users, :skip => [:passwords, :registrations]
+
   # unauthenticated :user do
   #   devise_scope :user do
   #     get "/" => "devise/sessions#new"

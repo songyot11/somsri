@@ -10,6 +10,7 @@ Employee.delete_all
 Payroll.delete_all
 
 school = School.create({ name: "โรงเรียนแห่งหนึ่ง" })
+school2 = School.create({ name: "โรงเรียนแห่ง2" })
 
 user = User.new
 user.email = 'test@test.com'
@@ -17,6 +18,14 @@ user.encrypted_password = '$2a$11$PA6IWsalB0R4rDa1yHYBcuaKFyz2MgR8.d1G2TQk0qIm0Q
 user.password = 'valid_password'
 user.password_confirmation = 'valid_password'
 user.school_id = school.id
+user.save
+
+user = User.new
+user.email = 'test2@test.com'
+user.encrypted_password = '$2a$11$PA6IWsalB0R4rDa1yHYBcuaKFyz2MgR8.d1G2TQk0qIm0QINhpjSa'
+user.password = 'valid_password'
+user.password_confirmation = 'valid_password'
+user.school_id = school2.id
 user.save
 
 em1 = Employee.create({
@@ -79,7 +88,7 @@ em3 = Employee.create({
 })
 
 em4 = Employee.create({
-  school_id: school.id,
+  school_id: school2.id,
   first_name: "King",
   last_name: "Akiyama",
   middle_name: "Britannia",

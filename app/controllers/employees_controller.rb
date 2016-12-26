@@ -1,16 +1,16 @@
 class EmployeesController < ApplicationController
+  load_and_authorize_resource
   skip_before_action :verify_authenticity_token, :only => [:update, :create]
 
   # GET /employees
   def index
-    employee = Employee.order(created_at: :asc).as_json("name_lists")
-
+    employee = @employees.order(created_at: :asc).as_json("name_lists")
     render json: employee, status: :ok
   end
 
   # GET /employees/:id/slip
   def slip
-    employee = Employee.find(params[:id]).as_json("slip")
+    employee = @employee.as_json("slip")
     employee[:payroll][:fee_orders] = employee[:payroll][:fee_orders]
                                                       .select { |key, value| value[:value] > 0}
     employee[:payroll][:pay_orders] = employee[:payroll][:pay_orders]
@@ -21,15 +21,15 @@ class EmployeesController < ApplicationController
 
   # GET /employees/:id
   def show
-    employee = Employee.where({ id: params[:id] }).first
     render json: {
-      employee: employee,
-      payroll: employee.lastest_payroll
+      employee: @employee,
+      payroll: @employee.lastest_payroll
     }
   end
 
   def create
-    school = School.first
+    school = current_user.school
+    render json: employee.errors, status: 500 and return if !school
     employee = school.employees.new(employee_params)
     if employee.save
       payroll = employee.payrolls.new()

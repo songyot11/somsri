@@ -1,4 +1,5 @@
 class ReportsController < ApplicationController
+  authorize_resource :class => :report
   # GET /reports
   def index
     getMonths()
@@ -10,7 +11,8 @@ class ReportsController < ApplicationController
     month = params[:month].to_i
     start_month = Date.new(year, month, 1)
     end_month = start_month.end_of_month
-    payrolls = Payroll.joins(:employee).where(created_at: start_month.beginning_of_day..end_month.end_of_day)
+    employees = Employee.where(school_id: current_user.school.id)
+    payrolls = Payroll.joins(:employee).where(employee_id: employees, created_at: start_month.beginning_of_day..end_month.end_of_day)
                       .as_json("report")
                       .sort{ |x, y| x["start_date"]<=>y["start_date"]}
     puts payrolls
@@ -19,9 +21,10 @@ class ReportsController < ApplicationController
 
   private
     def getMonths
-      months = Payroll.order("created_at DESC").map { |d| I18n.l(d.created_at, format: "%m %B %Y").split(" ") }.uniq
+      employee_ids = Employee.where(school_id: current_user.school.id)
+      months = Payroll.where(employee_id: employee_ids).order("created_at DESC").map { |d| I18n.l(d.created_at, format: "%m %B %Y").split(" ") }.uniq
 
-      months = months.collect { |x| 
+      months = months.collect { |x|
         {
           month: x[0].to_i,
           name: x[1],

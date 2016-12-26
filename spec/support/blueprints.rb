@@ -1,11 +1,10 @@
 require 'machinist/active_record'
 
-# User.blueprint do
-#   provider { 'github' }
-#   uid      { "1234#{sn}" }
-#   email    { Faker::Internet.email }
-#   password { 'password' }
-# end
+User.blueprint do
+  name { Faker::Name.first_name }
+  email { Faker::Internet.email }
+  password { 'password' }
+end
 
 School.blueprint do
   name { Faker::Lorem.word }
