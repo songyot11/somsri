@@ -75,7 +75,7 @@ body {
 }
 
 .main-menu {
-  margin-top: calc(50vh - 50px);
+  margin-top: calc(50vh - 130px);
 }
 
 .main-menu .main-menu-box {
@@ -145,6 +145,19 @@ body {
   color: #D7283E;
   border: 1px solid #D7283E;
   border-radius: 0px
+}
+
+.btn-print {
+  background-color: #FFAA00;
+  color: #ffffff;
+  border-radius: 0px  
+}
+
+.btn-memo {
+  background-color: #fff;
+  border: 2px solid #4893DC;
+  color: #4893DC;
+  border-radius: 0px  
 }
 
 .img-bg {
@@ -220,6 +233,7 @@ body {
   background-color: #FFAA00;
   color: #ffffff;
   margin-top: 20px;
+  border-radius: 0px  
 }
 
 #payroll-slip .btn-print:hover,

@@ -30,6 +30,7 @@ class EmployeesController < ApplicationController
   def create
     school = current_user.school
     render json: employee.errors, status: 500 and return if !school
+
     employee = school.employees.new(employee_params)
     if employee.save
       payroll = employee.payrolls.new()

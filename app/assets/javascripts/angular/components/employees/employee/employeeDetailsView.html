@@ -1,7 +1,7 @@
 <div class="container employee-details">
   <div class="row">
     <div class="col-md-9">
-      <div class="dropdown">
+      <div class="dropdown" ng-show="employee.isEdit">
         <small>Select employee</small>
         <h1 id="employeeName" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="true">
           <span ng-bind="employee.displayName"></span>
@@ -16,8 +16,8 @@
         </ul>
       </div>
     </div>
-    <div class="col-md-3"  style="line-height: 69px;">
-      <a ng-click="openEmployeeNew()" href="javascript:void(0)" class="btn btn-lg btn-block bg-yellow">
+    <div class="col-md-3" style="line-height: 69px;" ng-show="employee.isEdit">
+      <a ng-click="employee.openEmployeeDetails(0)" href="javascript:void(0)" class="btn btn-lg btn-block bg-yellow">
         + เพิ่มพนักงานใหม่
       </a>
     </div>
@@ -157,7 +157,7 @@
         </div>
       </div>
     </div>
-    <div class="paragraph orange payroll">
+    <div class="paragraph orange payroll" ng-show="employee.isEdit">
       <div class="row">
         <div class="col-md-4"><h3>รายการเงินได้</h3></div>
         <div class="col-md-4"><h3>รายการเงินหัก</h3></div>
@@ -273,14 +273,17 @@
       </div>
     </div>
     <div class="footer-menu row">
-      <div class="col-md-6">
-        <button type="button" class="btn btn-info" ng-click="openSlip(employee.datas.employee.id)">พิมพ์ใบจ่ายเงินเดือน</button>
+      <div class="col-md-4">
+        <button ng-show="employee.isEdit" type="button" class="btn btn-lg btn-block btn-print" ng-click="openSlip(employee.datas.employee.id)">พิมพ์ใบจ่ายเงินเดือน</button>
       </div>
-      <div class="col-md-6">
-        <div class="pull-right">
-          <button type="submit" class="btn btn-success">บันทึก</button>
-          <button type="button" class="btn btn-danger" ng-click="employee.cancle()">ยกเลิก</button>
-        </div>
+      <div class="col-md-offset-2 col-md-2">
+        <button ng-show="employee.isEdit" type="button" class="btn btn-lg btn-block btn-memo">บันทึกช่วยจำ</button>
+      </div>
+      <div class="col-md-2 text-right">
+        <button type="submit" class="btn btn-lg btn-block btn-submit">บันทึก</button>
+      </div>
+      <div class="col-md-2 text-right">
+        <button type="button" class="btn btn-lg btn-block btn-cancel" ng-click="employee.cancle()">ยกเลิก</button>
       </div>
     </div>
   </form>

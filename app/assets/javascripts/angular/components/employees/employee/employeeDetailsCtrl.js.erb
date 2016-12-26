@@ -7,6 +7,8 @@
     var ctrl = this
     var dateNow = new Date();
     var employeeId = $state.params.id;
+    ctrl.isEdit = employeeId > 0 ? true : false
+    ctrl.data = { employee: {}}
 
     function openConfirmationModal(success, dismiss) {
       $scope.message = "คุณต้องการออกจากหน้านี้โดยไม่บันทึกค่าหรือไม่?";
@@ -90,7 +92,6 @@
         // data not empty
         if (resp.data.length > 0) {
           ctrl.employee_lists = resp.data
-          console.log(ctrl.employee_lists)
         }
       })
     }
@@ -100,51 +101,63 @@
     }
 
     ctrl.cancle = function(){
-      if(isDataChange()){
-        openConfirmationModal(function(){
-          $rootScope.openEmployees();
-        }, function(){
-          $log.info("DISMISS!!");
-        })
-      }else{
+      if (ctrl.isEdit) {
+        if(isDataChange()){
+          openConfirmationModal(function(){
+            $rootScope.openEmployees();
+          }, function(){
+            $log.info("DISMISS!!");
+          })
+        }
+      } else {
         $rootScope.openEmployees();
       }
     }
 
     ctrl.submit = function(parm){
-      if(isDataChange()){
-        service.saveEmployee(ctrl.datas.employee.id, ctrl.datas).then(function(resp) {
-          $log.info("SAVE!!!");
+      if (ctrl.isEdit) {
+        if(isDataChange()){
+          service.saveEmployee(ctrl.datas.employee.id, ctrl.datas).then(function(resp) {
+            $log.info("SAVE!!!");
+            $rootScope.openEmployees();
+          });
+        }else{
+          $log.info("NOTHING CHANGE!!!");
+          $rootScope.openEmployees();
+        }
+      } else {
+        service.createEmployee(parm).then(function(resp) {
           $rootScope.openEmployees();
         });
-      }else{
-        $log.info("NOTHING CHANGE!!!");
-        $rootScope.openEmployees();
       }
     }
 
     ctrl.calTotal = function(){
-      var p = ctrl.datas.payroll;
-      var e = ctrl.datas.employee;
-      ctrl.total = 0;
-      if(e.salary){ ctrl.total += e.salary }
-      if(p.ot){ ctrl.total += p.ot }
-      if(p.position_allowance){ ctrl.total += p.position_allowance }
-      if(p.allowance ){ ctrl.total += p.allowance }
-      if(p.attendance_bonus){ ctrl.total += p.attendance_bonus}
-      if(p.bonus){ ctrl.total += p.bonus}
-      if(p.extra_etc){ ctrl.total += p.extra_etc}
-      if(p.tax){ ctrl.total -= p.tax}
-      if(p.social_insurance){ ctrl.total -= p.social_insurance}
-      if(p.pvf){ ctrl.total -= p.pvf}
-      if(p.absence){ ctrl.total -= p.absence}
-      if(p.late){ ctrl.total -= p.late}
-      if(p.advance_payment){ ctrl.total -= p.advance_payment}
-      if(p.fee_etc){ ctrl.total -= p.fee_etc}
+      if (ctrl.isEdit) {
+        var p = ctrl.datas.payroll;
+        var e = ctrl.datas.employee;
+        ctrl.total = 0;
+        if(e.salary){ ctrl.total += e.salary }
+        if(p.ot){ ctrl.total += p.ot }
+        if(p.position_allowance){ ctrl.total += p.position_allowance }
+        if(p.allowance ){ ctrl.total += p.allowance }
+        if(p.attendance_bonus){ ctrl.total += p.attendance_bonus}
+        if(p.bonus){ ctrl.total += p.bonus}
+        if(p.extra_etc){ ctrl.total += p.extra_etc}
+        if(p.tax){ ctrl.total -= p.tax}
+        if(p.social_insurance){ ctrl.total -= p.social_insurance}
+        if(p.pvf){ ctrl.total -= p.pvf}
+        if(p.absence){ ctrl.total -= p.absence}
+        if(p.late){ ctrl.total -= p.late}
+        if(p.advance_payment){ ctrl.total -= p.advance_payment}
+        if(p.fee_etc){ ctrl.total -= p.fee_etc}
+      }
     }
 
     getAllEmployee()
-    getEmployee(employeeId);
+    if (ctrl.isEdit) {
+      getEmployee(employeeId);
+    } 
 
   }]);
 })();

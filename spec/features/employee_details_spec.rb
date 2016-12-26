@@ -115,6 +115,7 @@ describe 'Employee Details', js: true do
 
   it 'should diplay confirmation modal when change detail and click ยกเลิก' do
     visit "/#/employees/#{employees[0].id}"
+
     sleep(1)
     page.fill_in 'First Name', :with => 'Eve'
     page.fill_in 'โบนัส', :with => 99999999

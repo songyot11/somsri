@@ -38,19 +38,6 @@
         }
       }).
       state({
-        url: '/employees/new',
-        name: 'employee_new',
-        templateUrl: "<%= asset_path('angular/components/employees/employeeNew/employeeNewView.html') %>",
-        controller: 'employeeNewCtrl as employee',
-        resolve: {
-          resources: ['$ocLazyLoad', function($ocLazyLoad) {
-            return $ocLazyLoad.load([
-              ASSETS.somsri.payroll.employee_new
-            ]);
-          }]
-        }
-      }).
-      state({
         url: '/employees/:id',
         name: 'employee_details',
         templateUrl: "<%= asset_path('angular/components/employees/employee/employeeDetailsView.html') %>",
