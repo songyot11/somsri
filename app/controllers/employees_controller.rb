@@ -1,5 +1,5 @@
 class EmployeesController < ApplicationController
-  skip_before_action :verify_authenticity_token, :only => [:update]
+  skip_before_action :verify_authenticity_token, :only => [:update, :create]
 
   # GET /employees
   def index
@@ -26,6 +26,24 @@ class EmployeesController < ApplicationController
       employee: employee,
       payroll: employee.lastest_payroll
     }
+  end
+
+  def create
+    school = School.first
+    employee = school.employees.new(employee_params)
+    if employee.save
+      payroll = employee.payrolls.new()
+      if payroll.save
+        render json: {
+          employee: employee,
+          payroll: employee.lastest_payroll
+        }, status: :ok
+      else
+        render json: employee.errors, status: 500
+      end
+    else
+      render json: employee.errors, status: 500
+    end
   end
 
   # PATCH /employees/:id

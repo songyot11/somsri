@@ -1,5 +1,10 @@
 <div class="container employees-list">
   <div class="row same-height">
+    <div class="col-md-3 col-md-offset-9">
+      <a ng-click="openEmployeeNew()" href="javascript:void(0)" class="btn btn-lg bg-yellow">
+        + เพิ่มพนักงานใหม่
+      </a>
+    </div>
     <div class="col-md-3" ng-repeat="data in employees.display_datas">
       <div class="card cursor-pointer" ng-click="employees.openEmployeeDetails(data.id)">
 

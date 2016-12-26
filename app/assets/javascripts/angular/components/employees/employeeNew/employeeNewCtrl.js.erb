@@ -1,0 +1,40 @@
+(function() {
+  'use strict';
+  angular.module('somsri.payroll.employee_new', [
+  ])
+  .controller('employeeNewCtrl', ['employeesService', '$rootScope', function(service, $rootScope) {
+    $rootScope.menu = "Employees"
+
+    var ctrl = this
+    ctrl.data = { employee: {}}
+    ctrl.employee_lists = []
+
+    // Get all employee
+    function getAllEmployee() {
+      service.getAllEmployee().then(function(resp) {
+        // data not empty
+        console.log(resp.data.length)
+        if (resp.data.length > 0) {
+          ctrl.employee_lists = resp.data
+          console.log(ctrl.employee_lists)
+        }
+      })
+    }
+    
+    console.log(ctrl.data)
+    ctrl.submit = function(){
+      console.log(ctrl.data)
+      service.createEmployee(ctrl.data).then(function(resp) {
+        console.log(resp)
+        $rootScope.openEmployees();
+      });
+    }
+
+    ctrl.openEmployeeDetails = function(id){
+      $rootScope.openEmployeeDetails(id);
+    }
+
+    getAllEmployee()
+    
+  }]);
+})();

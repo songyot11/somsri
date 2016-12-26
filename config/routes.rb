@@ -14,7 +14,7 @@ Rails.application.routes.draw do
     end
   end
 
-  resources :employees, only: [:index, :show, :update]  do
+  resources :employees, only: [:index, :create, :show, :update]  do
     member do
       get 'slip'
     end

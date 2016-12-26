@@ -15,5 +15,9 @@
     this.saveEmployee = function(id, data) {
       return $http.patch('/employees/' + id, data);
     };
+
+    this.createEmployee = function(data) {
+      return $http.post('/employees/', data);
+    };
   }]);
 })();

@@ -11,6 +11,10 @@
       $state.go('employees')
     };
 
+    $rootScope.openEmployeeNew = function () {
+      $state.go('employee_new');
+    };
+
     $rootScope.openEmployeeDetails = function (id) {
       $state.go('employee_details',{ id: id });
     };
