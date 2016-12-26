@@ -57,3 +57,8 @@ rake payroll:generate:now
 rake payroll:generate:on[<month>,<year>]
 ```
 example: rake payroll:generate:on[1,2016]
+
+  user following command to create a new user
+```
+rake user:create[<email>,<password>]
+```
