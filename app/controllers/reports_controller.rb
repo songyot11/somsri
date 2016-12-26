@@ -12,9 +12,10 @@ class ReportsController < ApplicationController
     start_month = Date.new(year, month, 1)
     end_month = start_month.end_of_month
     employees = Employee.where(school_id: current_user.school.id)
-    payrolls = Payroll.joins(:employee).where(employee_id: employees, created_at: start_month.beginning_of_day..end_month.end_of_day)
+    payrolls = Payroll.joins(:employee)
+                      .where(employee_id: employees, created_at: start_month.beginning_of_day..end_month.end_of_day)
+                      .order('employees.start_date ASC, employees.created_at ASC')
                       .as_json("report")
-                      .sort{ |x, y| x["start_date"]<=>y["start_date"]}
     puts payrolls
     render json: payrolls, status: :ok
   end
