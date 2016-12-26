@@ -75,7 +75,7 @@ em3 = Employee.create({
   bank_name: "ธนาคารเหลือง",
   bank_branch: "หลัก",
   account_number: "5-124-11111-2342",
-  salary: 10
+  salary: 25_000
 })
 
 em4 = Employee.create({
@@ -93,7 +93,7 @@ em4 = Employee.create({
   bank_name: "ขุดหลุมฝัง",
   bank_branch: "ข้างๆต้นไม้หน้าถ้ำ",
   account_number: "5-124-222222-2342",
-  salary: 1,
+  salary: 25_000,
   img_url: "http://static.zerochan.net/Takimoto.Hifumi.full.2031929.jpg"
 })
 
@@ -114,12 +114,6 @@ pr1_2 = Payroll.create({
   created_at: Date.new(2016, 2, 16)
 })
 
-pr1_4 = Payroll.create({
-  employee_id: em1.id,
-  salary:25_000,
-  tax: 100
-})
-
 pr2 = Payroll.create({
   employee_id: em2.id,
   salary: 250000,
@@ -137,7 +131,7 @@ pr2_2 = Payroll.create({
 
 pr3 = Payroll.create({
   employee_id: em3.id,
-  salary: 25,
+  salary: 25_000,
   tax: 1,
   allowance: 1000000,
   ot: 200,
@@ -146,8 +140,8 @@ pr3 = Payroll.create({
 
 pr3_2 = Payroll.create({
   employee_id: em3.id,
-  salary: 25,
-  tax: 1,
+  salary: 25_000,
+  tax: 750,
   allowance: 1000000,
   ot: 200,
   created_at: Date.new(2016, 2, 16)
@@ -155,16 +149,16 @@ pr3_2 = Payroll.create({
 
 pr4 = Payroll.create({
   employee_id: em4.id,
-  salary: 1,
-  tax: 1,
+  salary: 25_000,
+  tax: 750,
   fee_etc: 1000000,
   created_at: Date.new(2016, 1, 1)
 })
 
 pr4_2 = Payroll.create({
   employee_id: em4.id,
-  salary: 1,
-  tax: 1,
+  salary: 25_000,
+  tax: 750,
   fee_etc: 1000000,
   created_at: Date.new(2016, 2, 1)
 })

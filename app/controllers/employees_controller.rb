@@ -3,7 +3,7 @@ class EmployeesController < ApplicationController
 
   # GET /employees
   def index
-    employee = Employee.order("created_at ASC").as_json("name_lists")
+    employee = Employee.order(created_at: :asc).as_json("name_lists")
 
     render json: employee, status: :ok
   end

@@ -34,7 +34,8 @@ class Payroll < ApplicationRecord
         salary: self.salary.to_f,
         extra_pay: extra_pay.to_f,
         extra_fee: extra_fee.to_f,
-        img_url: self.employee.img_url,
+        start_date: self.employee.start_date,
+        img_url: self.employee.img_url
       }
     elsif options["slip"]
       {
