@@ -11,8 +11,8 @@
     ctrl.data = { employee: {}}
     ctrl.isSubmit = false
 
-    function openConfirmationModal(success, dismiss) {
-      $scope.message = "คุณต้องการออกจากหน้านี้โดยไม่บันทึกค่าหรือไม่?";
+    function openConfirmationModal(message, success, dismiss) {
+      $scope.message = message;
       $uibModal.open({
         animation: true,
         backdrop: 'static',
@@ -62,13 +62,18 @@
             ctrl.datas.payroll[keys[i]] = parseFloat(ctrl.datas.payroll[keys[i]]);
           }
         }
+        var e = resp.data.employee
         ctrl.datas.employee.salary = parseFloat(ctrl.datas.employee.salary);
+        if(e.start_date){
+          ctrl.datas.employee.start_date = new Date(ctrl.datas.employee.start_date);
+        }else{
+          ctrl.datas.employee.start_date = new Date(ctrl.datas.employee.created_at);
+        }
 
         ctrl.datas_original = $.extend(true, {}, ctrl.datas);
         ctrl.calTotal();
 
         // set display name
-        var e = resp.data.employee
         var hasPrefixThai = e.prefix_thai && e.prefix_thai.length > 0
         var hasFirstNameThai = e.first_name_thai && e.first_name_thai.length > 0
         var hasLastNameThai = e.last_name_thai && e.last_name_thai.length > 0
@@ -78,11 +83,6 @@
           ctrl.displayName = e.prefix + " " + e.first_name + " ";
           if(e.middle_name && e.middle_name.length > 0){ ctrl.displayName += e.middle_name + " " }
           ctrl.displayName += e.last_name;
-        }
-        if(e.start_date){
-          ctrl.datas.employee.start_date = new Date(ctrl.datas.employee.start_date);
-        }else{
-          ctrl.datas.employee.start_date = new Date(ctrl.datas.employee.created_at);
         }
       });
     }
@@ -104,11 +104,13 @@
     ctrl.cancle = function(){
       if (ctrl.isEdit) {
         if(isDataChange()){
-          openConfirmationModal(function(){
+          openConfirmationModal("คุณต้องการออกจากหน้านี้โดยไม่บันทึกค่าหรือไม่?", function(){
             $rootScope.openEmployees();
           }, function(){
             $log.info("DISMISS!!");
           })
+        }else{
+          $rootScope.openEmployees();
         }
       } else {
         $rootScope.openEmployees();
@@ -119,9 +121,13 @@
       ctrl.isSubmit = true
       if (ctrl.isEdit) {
         if(isDataChange()){
-          service.saveEmployee(ctrl.datas.employee.id, ctrl.datas).then(function(resp) {
-            $log.info("SAVE!!!");
-            $rootScope.openEmployees();
+          openConfirmationModal("คุณต้องการบันทึกการเปลี่ยนแปลงครั้งนี้หรือไม่?", function(){
+            service.saveEmployee(ctrl.datas.employee.id, ctrl.datas).then(function(resp) {
+              $log.info("SAVE!!!");
+              $rootScope.openEmployees();
+            });
+          }, function(){
+            $log.info("DISMISS!!");
           });
         }else{
           $log.info("NOTHING CHANGE!!!");

@@ -133,6 +133,8 @@ describe 'Employee Details', js: true do
     sleep(1)
     click_button('บันทึก')
     sleep(1)
+    click_button('ตกลง')
+    sleep(1)
 
     employee = Employee.find(employees[0].id)
     payroll = Payroll.find(payrolls[0].id)
