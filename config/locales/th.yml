@@ -27,7 +27,7 @@ th:
         salary: "เงินเดือน / Salary"
         allowance: "เบี้ยเลี้ยง / Shift"
         attendance_bonus: "เบี้ยขยัน / Attendance Bonus"
-        ot: "ค่าล่วงเวลา / OT."
+        ot: "เงินสอนพิเศษ / After School Class"
         bonus: "โบนัส / Bonus" 
         position_allowance: "ค่าตำแหน่ง / Posticion"
         extra_etc: "รายได้อื่นๆ / Etc."

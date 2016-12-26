@@ -79,7 +79,7 @@ describe 'Payroll Slip', js: true do
     visit "/#/employees/#{employee.id}/slip"
 
     eventually { expect(page).to have_no_content 'เบี้ยขยัน / Attendance Bonus' }
-    eventually { expect(page).to have_no_content 'ค่าล่วงเวลา / OT.' }
+    eventually { expect(page).to have_no_content 'เงินสอนพิเศษ / After School Class' }
     eventually { expect(page).to have_no_content 'โบนัส / Bonus' }
     eventually { expect(page).to have_no_content 'ค่าตำแหน่ง / Position' }
     eventually { expect(page).to have_no_content 'รายได้อื่นๆ / Etc.' }

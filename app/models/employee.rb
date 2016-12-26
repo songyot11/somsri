@@ -3,7 +3,7 @@ class Employee < ApplicationRecord
   has_many :payrolls, dependent: :destroy
 
   def full_name
-    if self.first_name_thai && self.prefix_thai && self.last_name_thai
+    if !self.first_name_thai.blank? && !self.prefix_thai.blank? && !self.last_name_thai.blank?
       [self.prefix_thai, self.first_name_thai, self.last_name_thai].join(" ")
     else
       [self.prefix, self.first_name, self.middle_name, self.last_name].join(" ")

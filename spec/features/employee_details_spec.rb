@@ -98,7 +98,7 @@ describe 'Employee Details', js: true do
     sleep(1)
     page.fill_in 'ค่าแรง / เงินเดือนปัจจุบัน', :with => '2000000'
     page.fill_in 'ภาษี', :with => '1000000'
-    page.fill_in 'ค่าล่วงเวลา', :with => '500000'
+    page.fill_in 'เงินสอนพิเศษ', :with => '500000'
     page.fill_in 'ประกันสังคม', :with => '300000'
     page.fill_in 'ค่าตำแหน่ง', :with => '70000'
     page.fill_in 'เงินสะสมเข้ากองทุนสงเคราะห์', :with => '40000'

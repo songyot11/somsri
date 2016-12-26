@@ -92,7 +92,9 @@ describe 'Payroll Report', js: true do
   it 'should switch month' do
     visit "/#/report"
     find('#month-list').click
+    sleep(1)
     click_on("พฤศจิกายน 2016")
+    sleep(1)
 
     eventually { expect(page).to have_content 'รหัส ชื่อ เลขบัญชี เงินเดือน เงินเพิ่ม เงินหัก เงินเดือนสุทธิ' }
     eventually { expect(page).to have_content 'สมศรี เป็นชื่อแอพ 5-234-34532-2342 50,000.00 0.00 100.00 49,900.00' }
