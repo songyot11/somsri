@@ -85,21 +85,31 @@
           if(e.middle_name && e.middle_name.length > 0){ ctrl.displayName += e.middle_name + " " }
           ctrl.displayName += e.last_name;
         }
+
+        // get others employee
+        service.getAllEmployee().then(function(resp) {
+          if (resp.data.length > 0) {
+            ctrl.employee_lists = resp.data
+            for(var i = 0; i < ctrl.employee_lists.length; i++){
+              if (ctrl.employee_lists[i].name == ctrl.displayName){
+                ctrl.employee_lists.splice(i, 1);
+              }
+            }
+          }
+        })
       });
     }
 
-    // Get all employee
-    function getAllEmployee() {
-      service.getAllEmployee().then(function(resp) {
-        // data not empty
-        if (resp.data.length > 0) {
-          ctrl.employee_lists = resp.data
-        }
-      })
-    }
-
     ctrl.openEmployeeDetails = function(id){
-      $rootScope.openEmployeeDetails(id);
+      if(isDataChange()){
+        openConfirmationModal("คุณต้องการออกจากหน้านี้โดยไม่บันทึกค่าหรือไม่?", function(){
+          $rootScope.openEmployeeDetails(id);
+        }, function(){
+          $log.info("DISMISS!!");
+        })
+      }else{
+        $rootScope.openEmployeeDetails(id);
+      }
     }
 
     ctrl.cancle = function(){
@@ -176,7 +186,6 @@
       })
     }
 
-    getAllEmployee()
     if (ctrl.isEdit) {
       getEmployee(employeeId);
     }
