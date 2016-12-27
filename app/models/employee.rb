@@ -51,8 +51,7 @@ class Employee < ApplicationRecord
         name: self.full_name,
         salary: self.payrolls.latest.salary.to_f,
         extra_fee: self.payrolls.latest.extra_fee.to_f,
-        extra_pay: self.payrolls.latest.extra_pay.to_f + 
-                   self.payrolls.latest.salary.to_f,
+        extra_pay: self.payrolls.latest.extra_pay.to_f,
         img: self.img_url
       }
   else

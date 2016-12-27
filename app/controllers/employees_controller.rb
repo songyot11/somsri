@@ -4,8 +4,9 @@ class EmployeesController < ApplicationController
 
   # GET /employees
   def index
-    employee = @employees.active.order('employees.start_date ASC, employees.created_at ASC')
-                         .as_json("employee_list")
+    school = current_user.school
+    employee = shool.employees.active.order('employees.start_date ASC, employees.created_at ASC')
+                              .as_json("employee_list")
     render json: employee, status: :ok
   end
 
