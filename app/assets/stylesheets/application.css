@@ -436,3 +436,19 @@ body {
 .cursor-pointer {
   cursor: pointer;
 }
+
+#payroll .payroll-content {
+  padding-top: 30px;
+  background-color: #fff;
+  border-left: 4px solid #00D2D7;
+}
+
+#payroll th,
+#payroll td {
+  border: 1px solid gray;
+  vertical-align: middle;
+}
+
+#payroll {
+  margin: 0px 10px;
+}
