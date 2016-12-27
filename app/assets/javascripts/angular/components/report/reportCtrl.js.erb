@@ -38,29 +38,20 @@
       reportService.getPayroll(month.year, month.month).then(function(resp) {
         ctrl.employees = resp.data
         ctrl.total = getTotalSalary(ctrl.employees);
-        ctrl.currentMonth = month.name
+        ctrl.currentMonth = month
       });
     }
 
     reportService.getMonths().then(function(resp) {
       if (resp.data.length > 0) {
-        var months = resp.data
-        var current = months[0]
-
-        months.forEach(function(month) {
-          ctrl.months.push({
-            month: month.month,
-            name: $filter('get_month_name')(month),
-            year: month.year
-          })
-        })
-        console.log(ctrl.months)
+        ctrl.months = resp.data
+        var current = ctrl.months[0]
 
         reportService.getPayroll(current.year, current.month).then(function(resp) {
           ctrl.employees = resp.data
           ctrl.total = getTotalSalary(ctrl.employees);
           getTotalSalary(ctrl.employees)
-          ctrl.currentMonth = ctrl.months[0].name
+          ctrl.currentMonth = $filter('get_month_name')(ctrl.months[0])
         });
       }
     });
