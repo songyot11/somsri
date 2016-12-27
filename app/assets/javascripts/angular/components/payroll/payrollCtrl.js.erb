@@ -81,6 +81,7 @@
         ctrl.employees = resp.data
         ctrl.total = getTotalSalary(ctrl.employees);
         ctrl.currentMonth = ctrl.getMonthName(month)
+        getTotalSalary(ctrl.employees)
       });
     }
 

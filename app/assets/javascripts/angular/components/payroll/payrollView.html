@@ -1,27 +1,39 @@
 <div id="payroll" class="row">
   <div class="col-lg-12">
-    <div class="dropdown">
-      <h2 id="month-list" data-toggle="dropdown">
-        ประจำเดือน<span ng-bind="report.currentMonth" ></span>
-        <span class="caret"></span>
-      </h2>
-      <ul class="dropdown-menu" aria-labelledby="month-list">
-        <li ng-repeat="month in report.months">
-          <a ng-click="report.switchMonth(month)">
-            <button>{{report.getMonthName(month)}}</button>
-          </a>
-        </li>
-      </ul>
+    <div class="row">
+      <div class="col-lg-10">
+        <div class="dropdown">
+          <h2 id="month-list" data-toggle="dropdown">
+            ประจำเดือน<span ng-bind="payroll.currentMonth" ></span>
+            <span class="caret"></span>
+          </h2>
+          <ul class="dropdown-menu" aria-labelledby="month-list">
+            <li ng-repeat="month in payroll.months">
+              <a ng-click="payroll.switchMonth(month)">
+                <button>{{payroll.getMonthName(month)}}</button>
+              </a>
+            </li>
+          </ul>
+        </div>
+      </div>
+      <div class="col-lg-2">
+        <button type="button" class="btn btn-lg bg-yellow btn-block">
+          <i class="glyphicon glyphicon-open"></i>
+          Export for bank</button>
+      </div>
     </div>
     <div class="row payroll-content container-fluid">
+      <p class="text-right">
+        แก้ไขล่าสุด 25 ธ.ค. 59 10:50 โดย Somkid
+      </p>
       <table class="table text-right">
         <thead>
           <tr>
             <th></th>
             <th></th>
             <th></th>
-            <th colspan="7" class="text-center">รายการได้</th>
-            <th colspan="7" class="text-center">รายการหัก</th>
+            <th colspan="7" class="income text-center">รายการได้</th>
+            <th colspan="7" class="outcome text-center">รายการหัก</th>
             <th></th>
          </tr>
          <tr>
@@ -30,21 +42,22 @@
             <th>ชื่อ</th>
             <th class="text-center">เลขบัญชีธนาคาร</th>
             <!-- Income -->
-            <th class="text-center">เงินเดือน</th>
-            <th class="text-center">เงินสอนพิเศษ</th>
-            <th class="text-center">ค่าตำแหน่ง</th>
-            <th class="text-center">เบี้ยเลี้ยง</th>
-            <th class="text-center">เบี้ยขยัน</th>
-            <th class="text-center">โบนัส</th>
-            <th class="text-center">อื่น</th>
+            <th class="text-center bordered">เงินเดือน</th>
+            <th class="text-center bordered">เงินสอนพิเศษ</th>
+            <th class="text-center bordered">ค่าตำแหน่ง</th>
+            <th class="text-center bordered">เบี้ยเลี้ยง</th>
+            <th class="text-center bordered">เบี้ยขยัน</th>
+            <th class="text-center bordered">โบนัส</th>
+            <th class="text-center bordered">อื่น</th>
             <!-- Outcome -->
-            <th class="text-center">ภาษี</th>
-            <th class="text-center">ประกันสังคม</th>
-            <th class="text-center">เงินสะสม</th>
-            <th class="text-center">ขาดงาน</th>
-            <th class="text-center">สาย</th>
-            <th class="text-center">เบิกล่วงหน้า</th>
-            <th class="text-center">อืนๆ</th>
+            <th class="text-center bordered">ภาษี</th>
+            <th class="text-center bordered">ประกันสังคม</th>
+            <th class="text-center bordered">เงินสะสม</th>
+            <th class="text-center bordered">ขาดงาน</th>
+            <th class="text-center bordered">สาย</th>
+            <th class="text-center bordered">เบิกล่วงหน้า</th>
+            <th class="text-center bordered">อืนๆ</th>
+            <!-- Result -->
             <th class="text-center">เงินเดือนสุทธิ</th>
          </tr>
         </thead>  
@@ -59,21 +72,21 @@
             </td>
             <td class="text-center">{{employee.account_number}}</td>
             <!-- Income -->
-            <td class="text-green">{{employee.salary | currency: ""}}</td>
-            <td class="text-green">{{employee.ot | currency: ""}}</td>
-            <td class="text-green">{{employee.position_allowance | currency: ""}}</td>
-            <td class="text-green">{{employee.allowance | currency: ""}}</td>
-            <td class="text-green">{{employee.attendance_bonus | currency: ""}}</td>
-            <td class="text-green">{{employee.bonus | currency: ""}}</td>
-            <td class="text-green">{{employee.extra_etc | currency: ""}}</td>
+            <td class="text-green bordered" >{{employee.salary | currency: ""}}</td>
+            <td class="text-green bordered" >{{employee.ot | currency: ""}}</td>
+            <td class="text-green bordered" >{{employee.position_allowance | currency: ""}}</td>
+            <td class="text-green bordered" >{{employee.allowance | currency: ""}}</td>
+            <td class="text-green bordered" >{{employee.attendance_bonus | currency: ""}}</td>
+            <td class="text-green bordered" >{{employee.bonus | currency: ""}}</td>
+            <td class="text-green bordered" >{{employee.extra_etc | currency: ""}}</td>
             <!-- Outcome -->
-            <td class="text-red">{{employee.tax | currency: ""}}</td>
-            <td class="text-red">{{employee.social_insurance | currency: ""}}</td>
-            <td class="text-red">{{employee.pvf | currency: ""}}</td>
-            <td class="text-red">{{employee.absence | currency: ""}}</td>
-            <td class="text-red">{{employee.late | currency: ""}}</td>
-            <td class="text-red">{{employee.advance_payment | currency: ""}}</td>
-            <td class="text-red">{{employee.fee_etc | currency: ""}}</td>
+            <td class="text-red bordered" >{{employee.tax | currency: ""}}</td>
+            <td class="text-red bordered" >{{employee.social_insurance | currency: ""}}</td>
+            <td class="text-red bordered" >{{employee.pvf | currency: ""}}</td>
+            <td class="text-red bordered" >{{employee.absence | currency: ""}}</td>
+            <td class="text-red bordered" >{{employee.late | currency: ""}}</td>
+            <td class="text-red bordered" >{{employee.advance_payment | currency: ""}}</td>
+            <td class="text-red bordered" >{{employee.fee_etc | currency: ""}}</td>
             <!-- Result -->
             <td class="text-green">{{payroll.getNetSalary(employee) | currency: ""}}</td>
           </tr>
@@ -84,21 +97,21 @@
             <td></td>
             <td class="text-center"><strong>รวมทั้งหมด</strong></td>
             <!-- Income -->
-            <td class="text-green"><strong>{{payroll.total.salary | currency: "" }}</strong></td>
-            <td class="text-green"><strong>{{payroll.total.ot | currency: "" }}</strong></td>
-            <td class="text-green"><strong>{{payroll.total.position_allowance | currency: "" }}</strong></td>
-            <td class="text-green"><strong>{{payroll.total.allowance | currency: "" }}</strong></td>
-            <td class="text-green"><strong>{{payroll.total.attendance_bonus | currency: "" }}</strong></td>
-            <td class="text-green"><strong>{{payroll.total.bonus | currency: "" }}</strong></td>
-            <td class="text-green"><strong>{{payroll.total.extra_etc | currency: "" }}</strong></td>
+            <td class="text-green bordered"><strong>{{payroll.total.salary | currency: "" }}</strong></td>
+            <td class="text-green bordered"><strong>{{payroll.total.ot | currency: "" }}</strong></td>
+            <td class="text-green bordered"><strong>{{payroll.total.position_allowance | currency: "" }}</strong></td>
+            <td class="text-green bordered"><strong>{{payroll.total.allowance | currency: "" }}</strong></td>
+            <td class="text-green bordered"><strong>{{payroll.total.attendance_bonus | currency: "" }}</strong></td>
+            <td class="text-green bordered"><strong>{{payroll.total.bonus | currency: "" }}</strong></td>
+            <td class="text-green bordered"><strong>{{payroll.total.extra_etc | currency: "" }}</strong></td>
             <!-- Outcome -->
-            <td class="text-red"><strong>{{payroll.total.tax | currency: "" }}</strong></td>
-            <td class="text-red"><strong>{{payroll.total.social_insurance | currency: "" }}</strong></td>
-            <td class="text-red"><strong>{{payroll.total.pvf | currency: "" }}</strong></td>
-            <td class="text-red"><strong>{{payroll.total.absence | currency: "" }}</strong></td>
-            <td class="text-red"><strong>{{payroll.total.late | currency: "" }}</strong></td>
-            <td class="text-red"><strong>{{payroll.total.advance_payment | currency: "" }}</strong></td>
-            <td class="text-red"><strong>{{payroll.total.fee_etc | currency: "" }}</strong></td>
+            <td class="text-red bordered"><strong>{{payroll.total.tax | currency: "" }}</strong></td>
+            <td class="text-red bordered"><strong>{{payroll.total.social_insurance | currency: "" }}</strong></td>
+            <td class="text-red bordered"><strong>{{payroll.total.pvf | currency: "" }}</strong></td>
+            <td class="text-red bordered"><strong>{{payroll.total.absence | currency: "" }}</strong></td>
+            <td class="text-red bordered"><strong>{{payroll.total.late | currency: "" }}</strong></td>
+            <td class="text-red bordered"><strong>{{payroll.total.advance_payment | currency: "" }}</strong></td>
+            <td class="text-red bordered"><strong>{{payroll.total.fee_etc | currency: "" }}</strong></td>
             <!-- Result -->
             <td class="text-green"><strong>{{payroll.total.netSalary | currency: "" }}</strong></td>
           </tr>

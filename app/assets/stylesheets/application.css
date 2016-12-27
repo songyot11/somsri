@@ -139,6 +139,7 @@ body {
 .bg-yellow {
   background-color: #FFAA00;
   color: #fff;
+  border-radius: 0px
 }
 
 .btn-submit {
@@ -437,6 +438,11 @@ body {
   cursor: pointer;
 }
 
+
+#payroll {
+  margin: 0px 10px;
+}
+
 #payroll .payroll-content {
   padding-top: 30px;
   background-color: #fff;
@@ -445,10 +451,30 @@ body {
 
 #payroll th,
 #payroll td {
-  border: 1px solid gray;
   vertical-align: middle;
 }
 
-#payroll {
-  margin: 0px 10px;
+#payroll tfoot td.text-green,
+#payroll tfoot td.text-center,
+#payroll tfoot td.bordered {
+  border-bottom: 2px solid #FFAA00;
+}
+
+#payroll .dropdown-menu button {
+  background-color: transparent;
+  border: 0px;
+}
+
+#payroll th.income {
+  border-top: 1px solid #C8C8C8;
+  border-right: 1px solid #C8C8C8;
+}
+#payroll th.outcome {
+  border-top: 1px solid #C8C8C8;
+  border-left: 1px solid #C8C8C8;
+}
+
+#payroll th.bordered,
+#payroll td.bordered {
+  border: 1px solid #C8C8C8;
 }
