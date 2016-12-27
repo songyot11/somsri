@@ -276,7 +276,8 @@
       <div class="col-md-4">
         <button ng-show="employee.isEdit" type="button" class="btn btn-lg btn-block btn-print" ng-click="openSlip(employee.datas.employee.id)">พิมพ์ใบจ่ายเงินเดือน</button>
       </div>
-      <div class="col-md-offset-2 col-md-2">
+
+      <div class="col-md-2 {{employee.isEdit ? '': 'col-md-offset-2'}}">
         <button ng-show="false" type="button" class="btn btn-lg btn-block btn-memo">บันทึกช่วยจำ</button>
       </div>
       <div class="col-md-2 text-right">
@@ -284,6 +285,9 @@
       </div>
       <div class="col-md-2 text-right">
         <button type="button" class="btn btn-lg btn-block btn-cancel" ng-click="employee.cancle()">ยกเลิก</button>
+      </div>
+      <div ng-show="employee.isEdit" class="col-md-2 text-right">
+        <button type="button" class="btn btn-lg btn-block btn-danger" ng-click="employee.deleteEmployee(employee.empId)">ลบ</button>
       </div>
     </div>
   </form>

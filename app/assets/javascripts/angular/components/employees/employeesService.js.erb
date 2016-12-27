@@ -19,5 +19,9 @@
     this.createEmployee = function(data) {
       return $http.post('/employees/', data);
     };
+
+    this.deleteEmployee = function(id) {
+      return $http.delete('/employees/' + id);
+    };
   }]);
 })();

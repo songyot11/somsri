@@ -153,11 +153,22 @@ body {
   border-radius: 0px  
 }
 
+
+.btn-danger {
+  border-radius: 0px  
+}
+
 .btn-memo {
   background-color: #fff;
   border: 2px solid #4893DC;
   color: #4893DC;
   border-radius: 0px  
+}
+
+.btn-print {
+  background-color: #FFAA00;
+  color: #ffffff;
+  border-radius: 0px;
 }
 
 .img-bg {
