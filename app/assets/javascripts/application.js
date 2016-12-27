@@ -26,3 +26,4 @@
 //= require angular/components/mainCtrl.js.erb
 //= require angular/app.module
 //= require angular/app.assets
+//= require angular/shared/filters

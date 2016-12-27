@@ -2,7 +2,7 @@
   'use strict';
   angular.module('somsri.payroll.payroll', [
   ])
-  .controller('payrollCtrl', ['reportService', '$rootScope', function(reportService, $rootScope) {
+  .controller('payrollCtrl', ['$filter', 'reportService', '$rootScope', function($filter, reportService, $rootScope) {
     $rootScope.menu = "Payroll"
     
      var ctrl = this
@@ -14,10 +14,6 @@
 
     ctrl.getNetSalary = function(employee) {
       return employee.salary - employee.extra_fee + employee.extra_pay;
-    }
-
-    ctrl.getMonthName = function(month) {
-      return month.name + " " + month.year
     }
 
     function getTotalSalary(employees)  {
@@ -80,8 +76,8 @@
       reportService.getPayroll(month.year, month.month).then(function(resp) {
         ctrl.employees = resp.data
         ctrl.total = getTotalSalary(ctrl.employees);
-        ctrl.currentMonth = ctrl.getMonthName(month)
         getTotalSalary(ctrl.employees)
+        ctrl.currentMonth = $filter('get_month_name')(month)
       });
     }
 
@@ -93,8 +89,8 @@
         reportService.getPayroll(current.year, current.month).then(function(resp) {
           ctrl.employees = resp.data
           ctrl.total = getTotalSalary(ctrl.employees);
-          ctrl.currentMonth = ctrl.getMonthName(ctrl.months[0])
           getTotalSalary(ctrl.employees)
+          ctrl.currentMonth = $filter('get_month_name')(ctrl.months[0])
         });
       }
     });
