@@ -28,6 +28,14 @@
 - run `rake db:migrate` to build the schema
 - run `rake db:seed` to generate sample data
 
+##### To run project with Docker go to the project's directory
+```
+docker-compose build
+docker-compose run app rails db:create db:migrate db:seed
+docker-compose run app bower --allow-root install
+docker-compose up
+```
+
 ##### heroku
   since we are using bower and rails, we have to setup Heroku multiple build packs by using this command
 ```
