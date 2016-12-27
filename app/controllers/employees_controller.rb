@@ -1,17 +1,17 @@
 class EmployeesController < ApplicationController
   load_and_authorize_resource
-  skip_before_action :verify_authenticity_token, :only => [:update, :create]
+  skip_before_action :verify_authenticity_token, :only => [:update, :create, :destroy]
 
   # GET /employees
   def index
-    employee = @employees.order('employees.start_date ASC, employees.created_at ASC')
+    employee = @employees.active.order('employees.start_date ASC, employees.created_at ASC')
                          .as_json("name_lists")
     render json: employee, status: :ok
   end
 
   # GET /employees/:id/slip
   def slip
-    employee = @employee.as_json("slip")
+    employee = Employee.active.find(params[:id]).as_json("slip")
     employee[:payroll][:fee_orders] = employee[:payroll][:fee_orders]
                                                       .select { |key, value| value[:value] > 0}
     employee[:payroll][:pay_orders] = employee[:payroll][:pay_orders]
@@ -22,6 +22,7 @@ class EmployeesController < ApplicationController
 
   # GET /employees/:id
   def show
+    @employee = Employee.active.find(params[:id])
     render json: {
       employee: @employee,
       payroll: @employee.lastest_payroll
@@ -64,6 +65,14 @@ class EmployeesController < ApplicationController
       employee: employee,
       payroll: employee.lastest_payroll
     }
+  end
+
+  # DELETE /employees/:id
+  def destroy
+    @employee.update(deleted: true)
+
+    data = {status: "success"}
+    render json: data, status: :ok
   end
 
   private

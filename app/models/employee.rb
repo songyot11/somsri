@@ -2,6 +2,8 @@ class Employee < ApplicationRecord
   belongs_to :school
   has_many :payrolls, dependent: :destroy
 
+  scope :active, -> { where(deleted: false ) }
+
   def full_name
     if !self.first_name_thai.blank? && !self.last_name_thai.blank?
       [self.prefix_thai, self.first_name_thai, self.last_name_thai].join(" ")
@@ -11,7 +13,7 @@ class Employee < ApplicationRecord
   end
 
   def annual_income_outcome(id)
-    employee = Employee.find(id)
+    employee = Employee.active.find(id)
 
     year = employee.payrolls.latest.created_at.year
     start_year = Date.new(year, 1, 1)
@@ -48,7 +50,7 @@ class Employee < ApplicationRecord
         id: self.id,
         name: self.full_name,
       }
-    else
+  else
       super()
     end
   end

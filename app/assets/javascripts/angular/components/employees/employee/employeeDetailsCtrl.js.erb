@@ -7,6 +7,7 @@
     var ctrl = this
     var dateNow = new Date();
     var employeeId = $state.params.id;
+    ctrl.empId = employeeId
     ctrl.isEdit = employeeId > 0 ? true : false
     ctrl.data = { employee: {}}
     ctrl.isSubmit = false
@@ -163,6 +164,16 @@
         if(p.advance_payment){ ctrl.total -= p.advance_payment}
         if(p.fee_etc){ ctrl.total -= p.fee_etc}
       }
+    }
+
+    ctrl.deleteEmployee = function(id) {
+      openConfirmationModal("คุณต้องการลบพนักงานหรือไม่?", function() {
+        service.deleteEmployee(id).then(function(resp) {
+          $rootScope.openEmployees();
+        })
+      }, function(){
+        $log.info("DISMISS!!");
+      })
     }
 
     getAllEmployee()
