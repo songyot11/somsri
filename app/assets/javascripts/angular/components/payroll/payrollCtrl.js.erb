@@ -1,0 +1,8 @@
+(function() {
+  'use strict';
+  angular.module('somsri.payroll.payroll', [
+  ])
+  .controller('payrollCtrl', ['payrollService', '$rootScope', function(payrollService, $rootScope) {
+    $rootScope.menu = "Payroll"
+  }]);
+})();

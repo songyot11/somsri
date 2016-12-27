@@ -75,7 +75,7 @@ body {
 }
 
 .main-menu {
-  margin-top: calc(50vh - 130px);
+  margin-top: calc(50vh - 200px);
 }
 
 .main-menu .main-menu-box {
@@ -110,8 +110,15 @@ body {
 .main-menu-item .main-menu-button .main-menu-image {
 }
 
+
+.main-menu-item .main-menu-button .main-menu-image.setting,
 .main-menu-item .main-menu-button .main-menu-image.employees {
   width: 60px;
+  height: 60px;
+}
+
+.main-menu-item .main-menu-button .main-menu-image.payroll {
+  width: 50px;
   height: 60px;
 }
 

@@ -11,6 +11,10 @@
       $state.go('employees')
     };
 
+    $rootScope.openPayroll = function () {
+      $state.go('payroll')
+    };
+
     $rootScope.openEmployeeDetails = function (id) {
       $state.go('employee_details',{ id: id });
     };
