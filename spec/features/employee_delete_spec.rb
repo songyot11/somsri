@@ -59,7 +59,7 @@ describe 'Employee delete', js: true do
   end
 
   describe 'when confirmed modal' do
-    before do 
+    before do
       visit "/#/employees/#{employee1.id}"
       click_button("ลบ")
       sleep(1)
@@ -72,7 +72,7 @@ describe 'Employee delete', js: true do
       eventually { expect(page).to have_no_content('นาง สมศรี เป็นชื่อแอพ') }
     end
 
-    it 'should have this employee in database' do    
+    it 'should have this employee in database' do
       eventually { expect(Employee.count).to eq 2 }
     end
 
@@ -84,11 +84,11 @@ describe 'Employee delete', js: true do
 
     it 'should not display on employee dropdown' do
       visit "/#/employees/#{employee2.id}"
-      
+
       find('#employeeName').click
       sleep(1)
 
-      eventually { expect(page).to have_selector('.dropdown-menu li', count: 1) }
+      eventually { expect(page).to have_selector('.dropdown-menu li', count: 0) }
     end
 
     it 'should not display on report' do
