@@ -2,7 +2,7 @@
   'use strict';
   angular.module('somsri.payroll.payroll', [
   ])
-  .controller('payrollCtrl', ['$filter', 'reportService', '$rootScope', function($filter, reportService, $rootScope) {
+  .controller('payrollCtrl', ['$log', '$filter', 'reportService', '$rootScope', function($log, $filter, reportService, $rootScope) {
     $rootScope.menu = "Payroll"
     
      var ctrl = this
@@ -80,6 +80,16 @@
         ctrl.currentMonth = $filter('get_month_name')(month)
       });
     }
+
+    ctrl.updatePaytoll = function(code, value, field) {
+      var payroll = {}
+      payroll[field] = value
+      var data = {payroll}
+
+      reportService.updatePayroll(code, data).then(function(resp) {
+        $log.info("UPDATED!!");
+      })
+    };
 
     reportService.getMonths().then(function(resp) {
       if (resp.data.length > 0) {

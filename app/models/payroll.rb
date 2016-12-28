@@ -27,6 +27,7 @@ class Payroll < ApplicationRecord
   def as_json(options={})
     if options["report"]
       {
+        payroll_id: self.id,
         code: self.employee.id,
         prefix: self.employee.prefix,
         name: self.employee.full_name,

@@ -1,5 +1,7 @@
 class ReportsController < ApplicationController
   authorize_resource :class => :report
+  skip_before_action :verify_authenticity_token, :only => [:update]
+
   # GET /reports
   def index
     getMonths()
@@ -20,6 +22,16 @@ class ReportsController < ApplicationController
     render json: payrolls, status: :ok
   end
 
+  # PATCH /reports/:id
+  def update
+    payroll = Payroll.find(params[:id])
+    if payroll.update(params_payroll)
+      render json: payroll, status: :ok
+    else
+      render json: {error: payroll.errors.full_message}, status: :bad_request
+    end
+  end
+
   private
     def getMonths
       employee_ids = Employee.active.where(school_id: current_user.school.id)
@@ -34,5 +46,9 @@ class ReportsController < ApplicationController
       }
 
       render json: months, status: :ok
+    end
+
+    def params_payroll
+      params.require(:payroll).permit(:salary)
     end
 end
