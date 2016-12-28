@@ -77,7 +77,7 @@
         ctrl.employees = resp.data
         ctrl.total = getTotalSalary(ctrl.employees);
         getTotalSalary(ctrl.employees)
-        ctrl.currentMonth = month
+        ctrl.currentMonth = $filter('get_month_name')(month)
       });
     }
 
@@ -88,12 +88,12 @@
 
         reportService.getPayroll(current.year, current.month).then(function(resp) {
           ctrl.employees = resp.data
+
           ctrl.total = getTotalSalary(ctrl.employees);
           getTotalSalary(ctrl.employees)
           ctrl.currentMonth = $filter('get_month_name')(ctrl.months[0])
         });
       }
     });
-    
   }]);
 })();

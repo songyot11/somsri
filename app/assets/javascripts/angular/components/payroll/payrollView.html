@@ -1,3 +1,14 @@
+<!-- <table bs-table-control="payroll.bsTableControl">
+  <thead>
+    <tr>
+        <th data-field="id">ID</th>
+        <th data-field="name" data-editable="true">Item Name</th>
+    </tr>
+  </thead>
+</table> -->
+
+
+
 <div id="payroll" class="row">
   <div class="col-lg-12">
     <div class="row">
@@ -72,21 +83,105 @@
             </td>
             <td class="text-center">{{employee.account_number}}</td>
             <!-- Income -->
-            <td class="text-green bordered" >{{employee.salary | currency: ""}}</td>
-            <td class="text-green bordered" >{{employee.ot | currency: ""}}</td>
-            <td class="text-green bordered" >{{employee.position_allowance | currency: ""}}</td>
-            <td class="text-green bordered" >{{employee.allowance | currency: ""}}</td>
-            <td class="text-green bordered" >{{employee.attendance_bonus | currency: ""}}</td>
-            <td class="text-green bordered" >{{employee.bonus | currency: ""}}</td>
-            <td class="text-green bordered" >{{employee.extra_etc | currency: ""}}</td>
+            <td class="bordered">
+              <div class="popover-wrapper">
+                <a href="#" editable-text="employee.salary" class="text-green">
+                  {{employee.salary | currency: ""}}
+                </a>
+              </div>
+            </td>
+            <td class="bordered">
+              <div class="popover-wrapper">
+                <a href="#" editable-text="employee.ot" class="text-green">
+                  {{employee.ot | currency: ""}}
+                </a>
+              </div>
+            </td>
+            <td class="bordered">
+              <div class="popover-wrapper">
+                <a href="#" editable-text="employee.position_allowance" class="text-green">
+                  {{employee.position_allowance | currency: ""}}
+                </a>
+              </div>
+            </td>
+            <td class="bordered">
+              <div class="popover-wrapper">
+                <a href="#" editable-text="employee.allowance" class="text-green">
+                  {{employee.allowance | currency: ""}}
+                </a>
+              </div>
+            </td>
+            <td class="bordered">
+              <div class="popover-wrapper">
+                <a href="#" editable-text="employee.attendance_bonus" class="text-green">
+                  {{employee.attendance_bonus | currency: ""}}
+                </a>
+              </div>
+            </td>
+            <td class="bordered">
+              <div class="popover-wrapper">
+                <a href="#" editable-text="employee.bonus" class="text-green">
+                  {{employee.bonus | currency: ""}}
+                </a>
+              </div>
+            </td>
+            <td class="bordered">
+              <div class="popover-wrapper">
+                <a href="#" editable-text="employee.extra_etc" class="text-green">
+                  {{employee.extra_etc | currency: ""}}
+                </a>
+              </div>
+            </td>
             <!-- Outcome -->
-            <td class="text-red bordered" >{{employee.tax | currency: ""}}</td>
-            <td class="text-red bordered" >{{employee.social_insurance | currency: ""}}</td>
-            <td class="text-red bordered" >{{employee.pvf | currency: ""}}</td>
-            <td class="text-red bordered" >{{employee.absence | currency: ""}}</td>
-            <td class="text-red bordered" >{{employee.late | currency: ""}}</td>
-            <td class="text-red bordered" >{{employee.advance_payment | currency: ""}}</td>
-            <td class="text-red bordered" >{{employee.fee_etc | currency: ""}}</td>
+            <td class="bordered">
+              <div class="popover-wrapper">
+                <a href="#" editable-text="employee.tax" class="text-red">
+                  {{employee.tax | currency: ""}}
+                </a>
+              </div>
+            </td>
+            <td class="bordered">
+              <div class="popover-wrapper">
+                <a href="#" editable-text="employee.social_insurance" class="text-red">
+                  {{employee.social_insurance | currency: ""}}
+                </a>
+              </div>
+            </td>
+            <td class="bordered">
+              <div class="popover-wrapper">
+                <a href="#" editable-text="employee.pvf" class="text-red">
+                  {{employee.pvf | currency: ""}}
+                </a>
+              </div>
+            </td>
+            <td class="bordered">
+              <div class="popover-wrapper">
+                <a href="#" editable-text="employee.absence" class="text-red">
+                  {{employee.absence | currency: ""}}
+                </a>
+              </div>
+            </td>
+            <td class="bordered">
+              <div class="popover-wrapper">
+                <a href="#" editable-text="employee.late" class="text-red">
+                  {{employee.late | currency: ""}}
+                </a>
+              </div>
+            </td>
+            <td class="bordered">
+              <div class="popover-wrapper">
+                <a href="#" editable-text="employee.advance_payment" class="text-red">
+                  {{employee.advance_payment | currency: ""}}
+                </a>
+              </div>
+            </td>
+            <td class="bordered">
+              <div class="popover-wrapper">
+                <a href="#" editable-text="employee.fee_etc" class="text-red">
+                  {{employee.fee_etc | currency: ""}}
+                </a>
+              </div>
+            </td>
             <!-- Result -->
             <td class="text-green">{{payroll.getNetSalary(employee) | currency: ""}}</td>
           </tr>
