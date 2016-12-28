@@ -1,8 +1,7 @@
 <div class="container">
   <div class="row main-menu">
-    <div class="col-md-3">
-    </div>
-    <div class="col-md-3 main-menu-box">
+    <!-- Employee -->
+    <div class="col-md-2 col-md-offset-4 main-menu-box">
       <div class="main-menu-item" ng-click="openEmployees()">
         <table class="main-menu-grid">
           <tr>
@@ -14,13 +13,41 @@
           </tr>
           <tr>
             <td>
-              <div class="main-menu-title">Employees</div>
+              <div class="main-menu-title">
+                <p>Employees</p>
+                <br>
+              </div>
             </td>
           </tr>
         </table>
       </div>
     </div>
-    <div class="col-md-3">
+
+    <!-- Payroll -->
+    <div class="col-md-2">
+      <div class="main-menu-item" ng-click="openPayroll()">
+        <table>
+          <tr>
+            <td>
+              <div class="main-menu-button">
+                <%= image_tag 'payroll.png', class: "main-menu-image payroll" %>
+              </div>
+            </td>
+          </tr>
+          <tr>
+            <td>
+              <div class="main-menu-title">
+                <p>Payroll</p>
+                <br>
+              </div>
+            </td>
+          </tr>
+        </table>
+      </div>
+    </div>
+    
+    <!-- Report -->
+    <div class="col-md-2 col-md-offset-4 main-menu-box">
       <div class="main-menu-item" ng-click="openReport()">
         <table>
           <tr>
@@ -38,7 +65,25 @@
         </table>
       </div>
     </div>
-    <div class="col-md-3">
+
+    <!-- Setting -->
+    <div class="col-md-2 main-menu-box">
+      <div class="main-menu-item" ng-click="openSetting()" ng-show="false">
+        <table>
+          <tr>
+            <td>
+              <div class="main-menu-button">
+                <%= image_tag 'setting.png', class: "main-menu-image setting" %>
+              </div>
+            </td>
+          </tr>
+          <tr>
+            <td>
+              <div class="main-menu-title">Setting</div>
+            </td>
+          </tr>
+        </table>
+      </div>
     </div>
   <div>
 <div>

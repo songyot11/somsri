@@ -21,7 +21,7 @@
           name: 'somsri.payroll.employees',
           files: [
             "<%= asset_path('angular/components/employees/employeesCtrl.js') %>",
-            "<%= asset_path('angular/components/report/reportService.js') %>"
+            "<%= asset_path('angular/components/employees/employeesService.js') %>"
           ]
         },
         'slip': {
@@ -44,7 +44,14 @@
           files: [
             "<%= asset_path('angular/components/modal/confirm/confirmModalCtrl.js') %>"
           ]
-        }
+        },
+        'payroll': {
+          name: 'somsri.payroll.payroll',
+          files: [
+            "<%= asset_path('angular/components/payroll/payrollCtrl.js') %>",
+            "<%= asset_path('angular/components/report/reportService.js') %>"
+          ]
+        },
       }
     }
   });

@@ -1,0 +1,99 @@
+(function() {
+  'use strict';
+  angular.module('somsri.payroll.payroll', [
+  ])
+  .controller('payrollCtrl', ['$filter', 'reportService', '$rootScope', function($filter, reportService, $rootScope) {
+    $rootScope.menu = "Payroll"
+    
+     var ctrl = this
+    ctrl.total = 0
+    ctrl.employees = []
+    ctrl.months = []
+    ctrl.currentMonth = ""
+    ctrl.total = {}
+
+    ctrl.getNetSalary = function(employee) {
+      return employee.salary - employee.extra_fee + employee.extra_pay;
+    }
+
+    function getTotalSalary(employees)  {
+      var totalSalary = 0
+      var totalExtraFee = 0
+      var totalExtraPay = 0
+      var totalOt = 0
+      var totalPositionAllowance = 0
+      var totalAllowance = 0
+      var totalAttendanceBonus = 0
+      var totalBonus = 0
+      var totalExtra_etc = 0
+      var totalTax = 0
+      var totalSocialInsurance = 0
+      var totalAbsence = 0
+      var totalLate = 0
+      var totalAdvancePayment = 0
+      var totalFee_etc = 0
+      var totalPvf = 0
+
+      employees.forEach(function(employee) {
+        totalSalary += employee.salary
+        totalExtraFee += employee.extra_fee
+        totalExtraPay += employee.extra_pay
+        totalOt += employee.ot
+        totalPositionAllowance += employee.position_allowance
+        totalAllowance += employee.allowance
+        totalAttendanceBonus += employee.attendance_bonus
+        totalBonus += employee.bonus
+        totalExtra_etc += employee.extra_etc
+        totalTax += employee.tax
+        totalSocialInsurance += employee.social_insurance
+        totalAbsence += employee.absence
+        totalLate += employee.late
+        totalAdvancePayment += employee.advance_payment
+        totalFee_etc += employee.fee_etc
+        totalPvf += employee.pvf
+      })
+
+      ctrl.total =  {
+        salary: totalSalary,
+        netSalary: totalSalary - totalExtraFee + totalExtraPay,
+        ot: totalOt,
+        position_allowance: totalPositionAllowance,
+        allowance: totalAllowance,
+        attendance_bonus: totalAttendanceBonus,
+        bonus: totalBonus,
+        extra_etc: totalExtra_etc,
+        tax: totalTax,
+        social_insurance: totalSocialInsurance,
+        absence: totalAbsence,
+        late: totalLate,
+        advance_payment: totalAdvancePayment,
+        fee_etc: totalFee_etc,
+        pvf: totalPvf,
+      }
+    }
+
+    ctrl.switchMonth = function(month) {
+      reportService.getPayroll(month.year, month.month).then(function(resp) {
+        ctrl.employees = resp.data
+        ctrl.total = getTotalSalary(ctrl.employees);
+        getTotalSalary(ctrl.employees)
+        ctrl.currentMonth = month
+      });
+    }
+
+    reportService.getMonths().then(function(resp) {
+      if (resp.data.length > 0) {
+        ctrl.months = resp.data
+        var current = ctrl.months[0]
+
+        reportService.getPayroll(current.year, current.month).then(function(resp) {
+          ctrl.employees = resp.data
+          ctrl.total = getTotalSalary(ctrl.employees);
+          getTotalSalary(ctrl.employees)
+          ctrl.currentMonth = $filter('get_month_name')(ctrl.months[0])
+        });
+      }
+    });
+    
+  }]);
+})();

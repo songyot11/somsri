@@ -7,7 +7,8 @@
     'ui.bootstrap',
     'somsri.payroll.main',
     'ngMaterial',
-    'angularMoment'
+    'angularMoment',
+    'somsri.payroll.filters'
   ]);
 
   app.config(['stateHelperProvider', 'ASSETS', '$urlRouterProvider', function(stateHelperProvider, ASSETS, $urlRouterProvider) {
@@ -76,7 +77,20 @@
             ]);
           }]
         }
-      });
+      }).
+      state({
+        url: '/payroll',
+        name: 'payroll',
+        templateUrl: "<%= asset_path('angular/components/payroll/payrollView.html') %>",
+        controller: 'payrollCtrl as payroll',
+        resolve: {
+          resources: ['$ocLazyLoad', function($ocLazyLoad) {
+            return $ocLazyLoad.load([
+              ASSETS.somsri.payroll.payroll
+            ]);
+          }]
+        }
+      })
 
     $urlRouterProvider.when("", "/");
   }]);

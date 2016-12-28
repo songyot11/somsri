@@ -45,10 +45,14 @@ class Employee < ApplicationRecord
         annual_income_outcome: self.annual_income_outcome(self.id),
         payroll: self.payrolls.latest.as_json("slip")
       }
-    elsif options["name_lists"]
-      {
+    elsif options["employee_list"] 
+       {
         id: self.id,
         name: self.full_name,
+        salary: self.payrolls.latest.salary.to_f,
+        extra_fee: self.payrolls.latest.extra_fee.to_f,
+        extra_pay: self.payrolls.latest.extra_pay.to_f,
+        img: self.img_url
       }
   else
       super()

@@ -35,7 +35,23 @@ class Payroll < ApplicationRecord
         extra_pay: extra_pay.to_f,
         extra_fee: extra_fee.to_f,
         start_date: self.employee.start_date,
-        img_url: self.employee.img_url
+        # Income
+        salary: self.salary.to_f,
+        ot: self.ot.to_f,
+        position_allowance: self.position_allowance.to_f,
+        allowance: self.allowance.to_f,
+        attendance_bonus: self.attendance_bonus.to_f,
+        bonus: self.bonus.to_f,
+        extra_etc: self.extra_etc.to_f,
+        # Outcome
+        tax: self.tax.to_f,
+        social_insurance: self.social_insurance.to_f,          
+        absence: self.absence.to_f,
+        late: self.late.to_f,
+        advance_payment: self.advance_payment.to_f,
+        fee_etc: self.fee_etc.to_f,
+        pvf: self.pvf.to_f,
+
       }
     elsif options["slip"]
       {
