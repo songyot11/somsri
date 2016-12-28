@@ -10,7 +10,7 @@ class Payroll < ApplicationRecord
     if payrolls.include?([self.created_at.month, self.created_at.year])
       errors.add(:created_at, "This month and this year have a payroll already.")
     end
-  end    
+  end
 
   def set_created_at
     self.created_at ||= DateTime.now
@@ -31,7 +31,6 @@ class Payroll < ApplicationRecord
         prefix: self.employee.prefix,
         name: self.employee.full_name,
         account_number: self.employee.account_number,
-        salary: self.salary.to_f,
         extra_pay: extra_pay.to_f,
         extra_fee: extra_fee.to_f,
         start_date: self.employee.start_date,
@@ -45,7 +44,7 @@ class Payroll < ApplicationRecord
         extra_etc: self.extra_etc.to_f,
         # Outcome
         tax: self.tax.to_f,
-        social_insurance: self.social_insurance.to_f,          
+        social_insurance: self.social_insurance.to_f,
         absence: self.absence.to_f,
         late: self.late.to_f,
         advance_payment: self.advance_payment.to_f,
@@ -98,7 +97,7 @@ class Payroll < ApplicationRecord
           social_insurance: {
             name: I18n.t('activerecord.attributes.payroll.social_insurance'),
             value: self.social_insurance.to_f,
-          },          
+          },
           absence: {
             name: I18n.t('activerecord.attributes.payroll.absence'),
             value: self.absence.to_f,
@@ -122,7 +121,7 @@ class Payroll < ApplicationRecord
           },
         },
       }
-    else 
+    else
       super()
     end
   end
