@@ -84,9 +84,9 @@
       
       var payroll = {}
       payroll[field] = value
-      var data = { data: payroll }
+      var data = { payroll: payroll }
 
-      reportService.updatePayroll(id, data.data).then(function(resp) {
+      reportService.updatePayroll(id, data).then(function(resp) {
         // Calculate Net Salary
         var field_selector = $("a#" + index + "-" + field)
 

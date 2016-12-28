@@ -70,6 +70,14 @@ describe 'Payroll Edit', js: true do
 
   it 'should edit salary' do
     visit "/#/payroll"
+
+    payroll = Payroll.find(payrolls[0].id)
+
+    eventually { expect(payroll.salary).to eq 1_000_000.00 }
+    eventually { expect(page).to have_content 'สมศรี เป็นชื่อแอพ 5-234-34532-2342 1,000,000.00 0.00 0.00 0.00 0.00 0.00 0.00 100.00 0.00 0.00 0.00 0.00 0.00 0.00 999,900.00' }
+    eventually { expect(page).to have_content 'รวมทั้งหมด 2,000,000.00 0.00 0.00 0.00 0.00 0.00 0.00 200.00 0.00 0.00 0.00 0.00 0.00 0.00 1,999,800.00' }
+
+    sleep(1)
     first('a[editable-number="employee.salary"]').click
     sleep(1)
     find(:css, "input").set(5000)
@@ -80,39 +88,339 @@ describe 'Payroll Edit', js: true do
     payroll = Payroll.find(payrolls[0].id)
 
     eventually { expect(payroll.salary).to eq 5000.00 }
+    eventually { expect(page).to have_content 'สมศรี เป็นชื่อแอพ 5-234-34532-2342 5,000.00 0.00 0.00 0.00 0.00 0.00 0.00 100.00 0.00 0.00 0.00 0.00 0.00 0.00 4,900.00' }
+    eventually { expect(page).to have_content 'รวมทั้งหมด 1,005,000.00 0.00 0.00 0.00 0.00 0.00 0.00 200.00 0.00 0.00 0.00 0.00 0.00 0.00 1,004,800.00' }
   end
 
-  # it 'should see month latest' do
-  #   visit "/#/payroll"
+  it 'should edit allowance' do
+    visit "/#/payroll"
 
-  #   eventually { expect(page).to have_content 'สมศรี เป็นชื่อแอพ 5-234-34532-2342 1,000,000.00 0.00 0.00 0.00 0.00 0.00 0.00 100.00 0.00 0.00 0.00 0.00 0.00 0.00 999,900.00' }
-  #   eventually { expect(page).to have_content 'สมจิตร เป็นนักมวย 5-234-34532-2341 1,000,000.00 0.00 0.00 0.00 0.00 0.00 0.00 100.00 0.00 0.00 0.00 0.00 0.00 0.00 999,900.00' }
-  #   eventually { expect(page).to have_content 'รวมทั้งหมด 2,000,000.00 0.00 0.00 0.00 0.00 0.00 0.00 200.00 0.00 0.00 0.00 0.00 0.00 0.00 1,999,800.00' }
-  # end
+    payroll = Payroll.find(payrolls[0].id)
 
-  # it 'should see month list' do
-  #   visit "/#/payroll"
+    eventually { expect(payroll.allowance).to eq 0.00 }
+    eventually { expect(page).to have_content 'สมศรี เป็นชื่อแอพ 5-234-34532-2342 1,000,000.00 0.00 0.00 0.00 0.00 0.00 0.00 100.00 0.00 0.00 0.00 0.00 0.00 0.00 999,900.00' }
+    eventually { expect(page).to have_content 'รวมทั้งหมด 2,000,000.00 0.00 0.00 0.00 0.00 0.00 0.00 200.00 0.00 0.00 0.00 0.00 0.00 0.00 1,999,800.00' }
 
-  #   find('#month-list').click
-  #   sleep(1)
-  #   eventually { expect(page).to have_content 'ธันวาคม 2016 พฤศจิกายน 2016' }
-  # end
+    sleep(1)
+    sleep(1)
+    first('a[editable-number="employee.allowance"]').click
+    sleep(1)
+    find(:css, "input").set(5000)
+    sleep(1)
+    find('button[type="submit"]').click
+    sleep(1)
 
-  # it 'should switch month' do
-  #   visit "/#/payroll"
-  #   find('#month-list').click
-  #   sleep(1)
-  #   click_on("พฤศจิกายน 2016")
-  #   sleep(1)
+    payroll = Payroll.find(payrolls[0].id)
 
-  #   eventually { expect(page).to have_content 'รายการได้ รายการหัก' }
-  #   eventually { expect(page).to have_content 'รหัส ชื่อ เลขบัญชีธนาคาร' }
-  #   eventually { expect(page).to have_content 'เงินเดือน เงินสอนพิเศษ ค่าตำแหน่ง เบี้ยเลี้ยง เบี้ยขยัน โบนัส อื่นๆ' }
-  #   eventually { expect(page).to have_content 'ภาษี ประกันสังคม เงินสะสม ขาดงาน สาย เบิกล่วงหน้า อืนๆ เงินเดือนสุทธิ' }
-  #   eventually { expect(page).to have_content 'สมศรี เป็นชื่อแอพ 5-234-34532-2342 50,000.00 0.00 0.00 0.00 0.00 0.00 0.00 100.00 0.00 0.00 0.00 0.00 0.00 0.00 49,900.00' }
-  #   eventually { expect(page).to have_content 'สมจิตร เป็นนักมวย 5-234-34532-2341 50,000.00 0.00 0.00 0.00 0.00 0.00 0.00 100.00 0.00 0.00 0.00 0.00 0.00 0.00 49,900.00' }
-  #   eventually { expect(page).not_to have_content 'ฮาราบาส' }
-  #   eventually { expect(page).not_to have_content 'Harabas' }
-  #   eventually { expect(page).to have_content 'รวมทั้งหมด 100,000.00 0.00 0.00 0.00 0.00 0.00 0.00 200.00 0.00 0.00 0.00 0.00 0.00 0.00 99,800.00' }
-  # end
+    eventually { expect(payroll.allowance).to eq 5000.00 }
+    eventually { expect(page).to have_content 'สมศรี เป็นชื่อแอพ 5-234-34532-2342 1,000,000.00 0.00 0.00 5,000.00 0.00 0.00 0.00 100.00 0.00 0.00 0.00 0.00 0.00 0.00 1,004,900.00' }
+    eventually { expect(page).to have_content 'รวมทั้งหมด 2,000,000.00 0.00 0.00 5,000.00 0.00 0.00 0.00 200.00 0.00 0.00 0.00 0.00 0.00 0.00 2,004,800.00' }
+  end
+
+  it 'should edit attendance_bonus' do
+    visit "/#/payroll"
+
+    payroll = Payroll.find(payrolls[0].id)
+
+    eventually { expect(payroll.attendance_bonus).to eq 0.00 }
+    eventually { expect(page).to have_content 'สมศรี เป็นชื่อแอพ 5-234-34532-2342 1,000,000.00 0.00 0.00 0.00 0.00 0.00 0.00 100.00 0.00 0.00 0.00 0.00 0.00 0.00 999,900.00' }
+    eventually { expect(page).to have_content 'รวมทั้งหมด 2,000,000.00 0.00 0.00 0.00 0.00 0.00 0.00 200.00 0.00 0.00 0.00 0.00 0.00 0.00 1,999,800.00' }
+
+    sleep(1)
+    first('a[editable-number="employee.attendance_bonus"]').click
+    sleep(1)
+    find(:css, "input").set(5000)
+    sleep(1)
+    find('button[type="submit"]').click
+    sleep(1)
+
+    payroll = Payroll.find(payrolls[0].id)
+
+    eventually { expect(payroll.attendance_bonus).to eq 5000.00 }
+    eventually { expect(page).to have_content 'สมศรี เป็นชื่อแอพ 5-234-34532-2342 1,000,000.00 0.00 0.00 0.00 5,000.00 0.00 0.00 100.00 0.00 0.00 0.00 0.00 0.00 0.00 1,004,900.00' }
+    eventually { expect(page).to have_content 'รวมทั้งหมด 2,000,000.00 0.00 0.00 0.00 5,000.00 0.00 0.00 200.00 0.00 0.00 0.00 0.00 0.00 0.00 2,004,800.00' }
+  end
+
+  it 'should edit ot' do
+    visit "/#/payroll"
+
+    payroll = Payroll.find(payrolls[0].id)
+
+    eventually { expect(payroll.ot).to eq 0.00 }
+    eventually { expect(page).to have_content 'สมศรี เป็นชื่อแอพ 5-234-34532-2342 1,000,000.00 0.00 0.00 0.00 0.00 0.00 0.00 100.00 0.00 0.00 0.00 0.00 0.00 0.00 999,900.00' }
+    eventually { expect(page).to have_content 'รวมทั้งหมด 2,000,000.00 0.00 0.00 0.00 0.00 0.00 0.00 200.00 0.00 0.00 0.00 0.00 0.00 0.00 1,999,800.00' }
+
+    sleep(1)
+    first('a[editable-number="employee.ot"]').click
+    sleep(1)
+    find(:css, "input").set(5000)
+    sleep(1)
+    find('button[type="submit"]').click
+    sleep(1)
+
+    payroll = Payroll.find(payrolls[0].id)
+
+    eventually { expect(payroll.ot).to eq 5000.00 }
+    eventually { expect(page).to have_content 'สมศรี เป็นชื่อแอพ 5-234-34532-2342 1,000,000.00 5,000.00 0.00 0.00 0.00 0.00 0.00 100.00 0.00 0.00 0.00 0.00 0.00 0.00 1,004,900.00' }
+    eventually { expect(page).to have_content 'รวมทั้งหมด 2,000,000.00 5,000.00 0.00 0.00 0.00 0.00 0.00 200.00 0.00 0.00 0.00 0.00 0.00 0.00 2,004,800.00' }
+  end
+
+  it 'should edit bonus' do
+    visit "/#/payroll"
+
+    payroll = Payroll.find(payrolls[0].id)
+
+    eventually { expect(payroll.bonus).to eq 0.00 }
+    eventually { expect(page).to have_content 'สมศรี เป็นชื่อแอพ 5-234-34532-2342 1,000,000.00 0.00 0.00 0.00 0.00 0.00 0.00 100.00 0.00 0.00 0.00 0.00 0.00 0.00 999,900.00' }
+    eventually { expect(page).to have_content 'รวมทั้งหมด 2,000,000.00 0.00 0.00 0.00 0.00 0.00 0.00 200.00 0.00 0.00 0.00 0.00 0.00 0.00 1,999,800.00' }
+
+    sleep(1)
+    first('a[editable-number="employee.bonus"]').click
+    sleep(1)
+    find(:css, "input").set(5000)
+    sleep(1)
+    find('button[type="submit"]').click
+    sleep(1)
+
+    payroll = Payroll.find(payrolls[0].id)
+
+    eventually { expect(payroll.bonus).to eq 5000.00 }
+    eventually { expect(page).to have_content 'สมศรี เป็นชื่อแอพ 5-234-34532-2342 1,000,000.00 0.00 0.00 0.00 0.00 5,000.00 0.00 100.00 0.00 0.00 0.00 0.00 0.00 0.00 1,004,900.00' }
+    eventually { expect(page).to have_content 'รวมทั้งหมด 2,000,000.00 0.00 0.00 0.00 0.00 5,000.00 0.00 200.00 0.00 0.00 0.00 0.00 0.00 0.00 2,004,800.00' }
+  end
+
+  it 'should edit position_allowance' do
+    visit "/#/payroll"
+
+    payroll = Payroll.find(payrolls[0].id)
+
+    eventually { expect(payroll.position_allowance).to eq 0.00 }
+    eventually { expect(page).to have_content 'สมศรี เป็นชื่อแอพ 5-234-34532-2342 1,000,000.00 0.00 0.00 0.00 0.00 0.00 0.00 100.00 0.00 0.00 0.00 0.00 0.00 0.00 999,900.00' }
+    eventually { expect(page).to have_content 'รวมทั้งหมด 2,000,000.00 0.00 0.00 0.00 0.00 0.00 0.00 200.00 0.00 0.00 0.00 0.00 0.00 0.00 1,999,800.00' }
+
+    sleep(1)
+    first('a[editable-number="employee.position_allowance"]').click
+    sleep(1)
+    find(:css, "input").set(5000)
+    sleep(1)
+    find('button[type="submit"]').click
+    sleep(1)
+
+    payroll = Payroll.find(payrolls[0].id)
+
+    eventually { expect(payroll.position_allowance).to eq 5000.00 }
+    eventually { expect(page).to have_content 'สมศรี เป็นชื่อแอพ 5-234-34532-2342 1,000,000.00 0.00 5,000.00 0.00 0.00 0.00 0.00 100.00 0.00 0.00 0.00 0.00 0.00 0.00 1,004,900.00' }
+    eventually { expect(page).to have_content 'รวมทั้งหมด 2,000,000.00 0.00 5,000.00 0.00 0.00 0.00 0.00 200.00 0.00 0.00 0.00 0.00 0.00 0.00 2,004,800.00' }
+  end
+
+  it 'should edit extra_etc' do
+    visit "/#/payroll"
+
+    payroll = Payroll.find(payrolls[0].id)
+
+    eventually { expect(payroll.extra_etc).to eq 0.00 }
+    eventually { expect(page).to have_content 'สมศรี เป็นชื่อแอพ 5-234-34532-2342 1,000,000.00 0.00 0.00 0.00 0.00 0.00 0.00 100.00 0.00 0.00 0.00 0.00 0.00 0.00 999,900.00' }
+    eventually { expect(page).to have_content 'รวมทั้งหมด 2,000,000.00 0.00 0.00 0.00 0.00 0.00 0.00 200.00 0.00 0.00 0.00 0.00 0.00 0.00 1,999,800.00' }
+
+    sleep(1)
+    first('a[editable-number="employee.extra_etc"]').click
+    sleep(1)
+    find(:css, "input").set(5000)
+    sleep(1)
+    find('button[type="submit"]').click
+    sleep(1)
+
+    payroll = Payroll.find(payrolls[0].id)
+
+    eventually { expect(payroll.extra_etc).to eq 5000.00 }
+    eventually { expect(page).to have_content 'สมศรี เป็นชื่อแอพ 5-234-34532-2342 1,000,000.00 0.00 0.00 0.00 0.00 0.00 5,000.00  100.00 0.00 0.00 0.00 0.00 0.00 0.00 1,004,900.00' }
+    eventually { expect(page).to have_content 'รวมทั้งหมด 2,000,000.00 0.00 0.00 0.00 0.00 0.00 5,000.00 200.00 0.00 0.00 0.00 0.00 0.00 0.00 2,004,800.00' }
+  end
+
+  it 'should edit absence' do
+    visit "/#/payroll"
+
+    payroll = Payroll.find(payrolls[0].id)
+
+    eventually { expect(payroll.absence).to eq 0.00 }
+    eventually { expect(page).to have_content 'สมศรี เป็นชื่อแอพ 5-234-34532-2342 1,000,000.00 0.00 0.00 0.00 0.00 0.00 0.00 100.00 0.00 0.00 0.00 0.00 0.00 0.00 999,900.00' }
+    eventually { expect(page).to have_content 'รวมทั้งหมด 2,000,000.00 0.00 0.00 0.00 0.00 0.00 0.00 200.00 0.00 0.00 0.00 0.00 0.00 0.00 1,999,800.00' }
+
+    sleep(1)
+    first('a[editable-number="employee.absence"]').click
+    sleep(1)
+    find(:css, "input").set(5000)
+    sleep(1)
+    find('button[type="submit"]').click
+    sleep(1)
+
+    payroll = Payroll.find(payrolls[0].id)
+
+    eventually { expect(payroll.absence).to eq 5000.00 }
+    eventually { expect(page).to have_content 'สมศรี เป็นชื่อแอพ 5-234-34532-2342 1,000,000.00 0.00 0.00 0.00 0.00 0.00 0.00  100.00 0.00 0.00 5,000.00 0.00 0.00 0.00 994,900.00' }
+    eventually { expect(page).to have_content 'รวมทั้งหมด 2,000,000.00 0.00 0.00 0.00 0.00 0.00 0.00 200.00 0.00 0.00 5,000.00 0.00 0.00 0.00 1,994,800.00' }
+  end
+
+  it 'should edit late' do
+    visit "/#/payroll"
+
+    payroll = Payroll.find(payrolls[0].id)
+
+    eventually { expect(payroll.late).to eq 0.00 }
+    eventually { expect(page).to have_content 'สมศรี เป็นชื่อแอพ 5-234-34532-2342 1,000,000.00 0.00 0.00 0.00 0.00 0.00 0.00 100.00 0.00 0.00 0.00 0.00 0.00 0.00 999,900.00' }
+    eventually { expect(page).to have_content 'รวมทั้งหมด 2,000,000.00 0.00 0.00 0.00 0.00 0.00 0.00 200.00 0.00 0.00 0.00 0.00 0.00 0.00 1,999,800.00' }
+
+
+    sleep(1)
+    first('a[editable-number="employee.late"]').click
+    sleep(1)
+    find(:css, "input").set(5000)
+    sleep(1)
+    find('button[type="submit"]').click
+    sleep(1)
+
+    payroll = Payroll.find(payrolls[0].id)
+
+    eventually { expect(payroll.late).to eq 5000.00 }
+    eventually { expect(page).to have_content 'สมศรี เป็นชื่อแอพ 5-234-34532-2342 1,000,000.00 0.00 0.00 0.00 0.00 0.00 0.00  100.00 0.00 0.00 0.00 5,000.00 0.00 0.00 994,900.00' }
+    eventually { expect(page).to have_content 'รวมทั้งหมด 2,000,000.00 0.00 0.00 0.00 0.00 0.00 0.00 200.00 0.00 0.00 0.00 5,000.00 0.00 0.00 1,994,800.00' }
+  end
+
+  it 'should edit tax' do
+    visit "/#/payroll"
+
+    payroll = Payroll.find(payrolls[0].id)
+
+    eventually { expect(payroll.tax).to eq 100.00 }
+    eventually { expect(page).to have_content 'สมศรี เป็นชื่อแอพ 5-234-34532-2342 1,000,000.00 0.00 0.00 0.00 0.00 0.00 0.00 100.00 0.00 0.00 0.00 0.00 0.00 0.00 999,900.00' }
+    eventually { expect(page).to have_content 'รวมทั้งหมด 2,000,000.00 0.00 0.00 0.00 0.00 0.00 0.00 200.00 0.00 0.00 0.00 0.00 0.00 0.00 1,999,800.00' }
+
+    sleep(1)
+    first('a[editable-number="employee.tax"]').click
+    sleep(1)
+    find(:css, "input").set(5000)
+    sleep(1)
+    find('button[type="submit"]').click
+    sleep(1)
+
+    payroll = Payroll.find(payrolls[0].id)
+
+    eventually { expect(payroll.tax).to eq 5000.00 }
+    eventually { expect(page).to have_content 'สมศรี เป็นชื่อแอพ 5-234-34532-2342 1,000,000.00 0.00 0.00 0.00 0.00 0.00 0.00 5,000.00 0.00 0.00 0.00 0.00 0.00 0.00 995,000.00' }
+    eventually { expect(page).to have_content 'รวมทั้งหมด 2,000,000.00 0.00 0.00 0.00 0.00 0.00 0.00 5,100.00 0.00 0.00 0.00 0.00 0.00 0.00 1,994,900.00' }
+  end
+
+  it 'should edit social_insurance' do
+    visit "/#/payroll"
+
+    payroll = Payroll.find(payrolls[0].id)
+
+    eventually { expect(payroll.social_insurance).to eq 0.00 }
+    eventually { expect(page).to have_content 'สมศรี เป็นชื่อแอพ 5-234-34532-2342 1,000,000.00 0.00 0.00 0.00 0.00 0.00 0.00 100.00 0.00 0.00 0.00 0.00 0.00 0.00 999,900.00' }
+    eventually { expect(page).to have_content 'รวมทั้งหมด 2,000,000.00 0.00 0.00 0.00 0.00 0.00 0.00 200.00 0.00 0.00 0.00 0.00 0.00 0.00 1,999,800.00' }
+
+    sleep(1)
+    first('a[editable-number="employee.social_insurance"]').click
+    sleep(1)
+    find(:css, "input").set(5000)
+    sleep(1)
+    find('button[type="submit"]').click
+    sleep(1)
+
+    payroll = Payroll.find(payrolls[0].id)
+
+    eventually { expect(payroll.social_insurance).to eq 5000.00 }
+    eventually { expect(page).to have_content 'สมศรี เป็นชื่อแอพ 5-234-34532-2342 1,000,000.00 0.00 0.00 0.00 0.00 0.00 0.00  100.00 5,000.00 0.00 0.00 0.00 0.00 0.00 994,900.00' }
+    eventually { expect(page).to have_content 'รวมทั้งหมด 2,000,000.00 0.00 0.00 0.00 0.00 0.00 0.00 200.00 5,000.00 0.00 0.00 0.00 0.00 0.00 1,994,800.00' }
+  end
+
+  it 'should edit fee_etc' do
+    visit "/#/payroll"
+
+    payroll = Payroll.find(payrolls[0].id)
+
+    eventually { expect(payroll.social_insurance).to eq 0.00 }
+    eventually { expect(page).to have_content 'สมศรี เป็นชื่อแอพ 5-234-34532-2342 1,000,000.00 0.00 0.00 0.00 0.00 0.00 0.00 100.00 0.00 0.00 0.00 0.00 0.00 0.00 999,900.00' }
+    eventually { expect(page).to have_content 'รวมทั้งหมด 2,000,000.00 0.00 0.00 0.00 0.00 0.00 0.00 200.00 0.00 0.00 0.00 0.00 0.00 0.00 1,999,800.00' }
+
+    sleep(1)
+    first('a[editable-number="employee.fee_etc"]').click
+    sleep(1)
+    find(:css, "input").set(5000)
+    sleep(1)
+    find('button[type="submit"]').click
+    sleep(1)
+
+    payroll = Payroll.find(payrolls[0].id)
+
+    eventually { expect(payroll.fee_etc).to eq 5000.00 }
+    eventually { expect(page).to have_content 'สมศรี เป็นชื่อแอพ 5-234-34532-2342 1,000,000.00 0.00 0.00 0.00 0.00 0.00 0.00  100.00 0.00 0.00 0.00 0.00 0.00 5,000.00 994,900.00' }
+    eventually { expect(page).to have_content 'รวมทั้งหมด 2,000,000.00 0.00 0.00 0.00 0.00 0.00 0.00 200.00 0.00 0.00 0.00 0.00 0.00 5,000.00 1,994,800.00' }
+  end
+
+  it 'should edit pvf' do
+    visit "/#/payroll"
+
+    payroll = Payroll.find(payrolls[0].id)
+
+    eventually { expect(payroll.pvf).to eq 0.00 }
+    eventually { expect(page).to have_content 'สมศรี เป็นชื่อแอพ 5-234-34532-2342 1,000,000.00 0.00 0.00 0.00 0.00 0.00 0.00 100.00 0.00 0.00 0.00 0.00 0.00 0.00 999,900.00' }
+    eventually { expect(page).to have_content 'รวมทั้งหมด 2,000,000.00 0.00 0.00 0.00 0.00 0.00 0.00 200.00 0.00 0.00 0.00 0.00 0.00 0.00 1,999,800.00' }
+
+    sleep(1)
+    first('a[editable-number="employee.pvf"]').click
+    sleep(1)
+    find(:css, "input").set(5000)
+    sleep(1)
+    find('button[type="submit"]').click
+    sleep(1)
+
+    payroll = Payroll.find(payrolls[0].id)
+
+    eventually { expect(payroll.pvf).to eq 5000.00 }
+    eventually { expect(page).to have_content 'สมศรี เป็นชื่อแอพ 5-234-34532-2342 1,000,000.00 0.00 0.00 0.00 0.00 0.00 0.00  100.00 0.00 5,000.00 0.00 0.00 0.00 0.00 994,900.00' }
+    eventually { expect(page).to have_content 'รวมทั้งหมด 2,000,000.00 0.00 0.00 0.00 0.00 0.00 0.00 200.00 0.00 5,000.00 0.00 0.00 0.00 0.00 1,994,800.00' }
+  end
+
+  it 'should edit advance_payment' do
+    visit "/#/payroll"
+
+    payroll = Payroll.find(payrolls[0].id)
+
+    eventually { expect(payroll.advance_payment).to eq 0.00 }
+    eventually { expect(page).to have_content 'สมศรี เป็นชื่อแอพ 5-234-34532-2342 1,000,000.00 0.00 0.00 0.00 0.00 0.00 0.00 100.00 0.00 0.00 0.00 0.00 0.00 0.00 999,900.00' }
+    eventually { expect(page).to have_content 'รวมทั้งหมด 2,000,000.00 0.00 0.00 0.00 0.00 0.00 0.00 200.00 0.00 0.00 0.00 0.00 0.00 0.00 1,999,800.00' }
+
+    sleep(1)
+    first('a[editable-number="employee.advance_payment"]').click
+    sleep(1)
+    find(:css, "input").set(5000)
+    sleep(1)
+    find('button[type="submit"]').click
+    sleep(1)
+
+    payroll = Payroll.find(payrolls[0].id)
+
+    eventually { expect(payroll.advance_payment).to eq 5000.00 }
+    eventually { expect(page).to have_content 'สมศรี เป็นชื่อแอพ 5-234-34532-2342 1,000,000.00 0.00 0.00 0.00 0.00 0.00 0.00  100.00 0.00 0.00 0.00 0.00 5,000.00 0.00 994,900.00' }
+    eventually { expect(page).to have_content 'รวมทั้งหมด 2,000,000.00 0.00 0.00 0.00 0.00 0.00 0.00 200.00 0.00 0.00 0.00 0.00 5,000.00 0.00 1,994,800.00' }
+  end
+
+  it 'should default 0.00 when empty' do
+    visit "/#/payroll"
+
+    sleep(1)
+    first('a[editable-number="employee.salary"]').click
+    sleep(1)
+    find(:css, "input").set("")
+    sleep(1)
+    find('button[type="submit"]').click
+    sleep(1)
+
+    payroll = Payroll.find(payrolls[0].id)
+
+    eventually { expect(payroll.salary).to eq 0.00 }
+    eventually { expect(page).to have_content 'สมศรี เป็นชื่อแอพ 5-234-34532-2342 0.00 0.00 0.00 0.00 0.00 0.00 0.00 100.00 0.00 0.00 0.00 0.00 0.00 0.00 -100.00' }
+    eventually { expect(page).to have_content 'รวมทั้งหมด 1,000,000.00 0.00 0.00 0.00 0.00 0.00 0.00 200.00 0.00 0.00 0.00 0.00 0.00 0.00 999,800.00' }
+  end
 end
