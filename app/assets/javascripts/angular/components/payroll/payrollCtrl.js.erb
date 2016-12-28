@@ -84,11 +84,12 @@
       
       var payroll = {}
       payroll[field] = value
-      var data = {payroll}
+      var data = { data: payroll }
 
-      reportService.updatePayroll(id, data).then(function(resp) {
+      reportService.updatePayroll(id, data.data).then(function(resp) {
         // Calculate Net Salary
         var field_selector = $("a#" + index + "-" + field)
+
         if (field_selector.attr("class").indexOf("text-green") == 0) {
           ctrl.employees[index]["net_salary"] -= (old_value - value)
         } else if (field_selector.attr("class").indexOf("text-red") == 0) {
@@ -97,8 +98,7 @@
 
         getTotalSalary(ctrl.employees)
       })
-    };
-
+    }
 
     function getAll() {
       reportService.getMonths().then(function(resp) {
@@ -117,6 +117,5 @@
     }
 
     getAll()
-
   }]);
 })();
