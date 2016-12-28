@@ -49,6 +49,8 @@ class ReportsController < ApplicationController
     end
 
     def params_payroll
-      params.require(:payroll).permit(:salary)
+      params.require(:payroll).permit(:salary, :allowance, :attendance_bonus, :ot, :bonus, :position_allowance,
+                                      :extra_etc, :absence, :late, :tax, :social_insurance, :fee_etc, :pvf, 
+                                      :advance_payment)
     end
 end

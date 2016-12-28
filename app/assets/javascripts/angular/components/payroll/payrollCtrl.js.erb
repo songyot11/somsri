@@ -2,7 +2,7 @@
   'use strict';
   angular.module('somsri.payroll.payroll', [
   ])
-  .controller('payrollCtrl', ['$log', '$filter', 'reportService', '$rootScope', function($log, $filter, reportService, $rootScope) {
+  .controller('payrollCtrl', ['$filter', 'reportService', '$rootScope', function($filter, reportService, $rootScope) {
     $rootScope.menu = "Payroll"
     
      var ctrl = this
@@ -12,14 +12,9 @@
     ctrl.currentMonth = ""
     ctrl.total = {}
 
-    ctrl.getNetSalary = function(employee) {
-      return employee.salary - employee.extra_fee + employee.extra_pay;
-    }
-
     function getTotalSalary(employees)  {
       var totalSalary = 0
-      var totalExtraFee = 0
-      var totalExtraPay = 0
+      var totalNetSalary = 0
       var totalOt = 0
       var totalPositionAllowance = 0
       var totalAllowance = 0
@@ -36,8 +31,7 @@
 
       employees.forEach(function(employee) {
         totalSalary += employee.salary
-        totalExtraFee += employee.extra_fee
-        totalExtraPay += employee.extra_pay
+        totalNetSalary += employee.net_salary
         totalOt += employee.ot
         totalPositionAllowance += employee.position_allowance
         totalAllowance += employee.allowance
@@ -55,7 +49,7 @@
 
       ctrl.total =  {
         salary: totalSalary,
-        netSalary: totalSalary - totalExtraFee + totalExtraPay,
+        net_salary: totalNetSalary,
         ot: totalOt,
         position_allowance: totalPositionAllowance,
         allowance: totalAllowance,
@@ -75,35 +69,54 @@
     ctrl.switchMonth = function(month) {
       reportService.getPayroll(month.year, month.month).then(function(resp) {
         ctrl.employees = resp.data
-        ctrl.total = getTotalSalary(ctrl.employees);
         getTotalSalary(ctrl.employees)
         ctrl.currentMonth = $filter('get_month_name')(month)
       });
     }
 
-    ctrl.updatePaytoll = function(code, value, field) {
+    ctrl.updatePayroll = function(index, id, value, field) {
+      // Selected Current field
+      var old_value = ctrl.employees[index][field]
+
+      if (value == null) {
+        value = 0.00
+      }
+      
       var payroll = {}
       payroll[field] = value
       var data = {payroll}
 
-      reportService.updatePayroll(code, data).then(function(resp) {
-        $log.info("UPDATED!!");
+      reportService.updatePayroll(id, data).then(function(resp) {
+        // Calculate Net Salary
+        var field_selector = $("a#" + index + "-" + field)
+        if (field_selector.attr("class").indexOf("text-green") == 0) {
+          ctrl.employees[index]["net_salary"] -= (old_value - value)
+        } else if (field_selector.attr("class").indexOf("text-red") == 0) {
+          ctrl.employees[index]["net_salary"] += (old_value - value)
+        }
+
+        getTotalSalary(ctrl.employees)
       })
     };
 
-    reportService.getMonths().then(function(resp) {
-      if (resp.data.length > 0) {
-        ctrl.months = resp.data
-        var current = ctrl.months[0]
 
-        reportService.getPayroll(current.year, current.month).then(function(resp) {
-          ctrl.employees = resp.data
+    function getAll() {
+      reportService.getMonths().then(function(resp) {
+        if (resp.data.length > 0) {
+          ctrl.months = resp.data
+          var current = ctrl.months[0]
 
-          ctrl.total = getTotalSalary(ctrl.employees);
-          getTotalSalary(ctrl.employees)
-          ctrl.currentMonth = $filter('get_month_name')(ctrl.months[0])
-        });
-      }
-    });
+          reportService.getPayroll(current.year, current.month).then(function(resp) {
+            ctrl.employees = resp.data
+
+            getTotalSalary(ctrl.employees)
+            ctrl.currentMonth = $filter('get_month_name')(ctrl.months[0])
+          });
+        }
+      });  
+    }
+
+    getAll()
+
   }]);
 })();
