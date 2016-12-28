@@ -12,6 +12,7 @@
 
 
       employeeService.getAllEmployee().then(function(resp) {
+        console.log('Employee List');
         ctrl.datas = resp.data;
         ctrl.display_datas = [];
         for(var i = 0; i < ctrl.datas.length; i++) {
