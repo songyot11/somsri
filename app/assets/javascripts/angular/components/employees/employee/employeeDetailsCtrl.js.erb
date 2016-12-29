@@ -2,15 +2,17 @@
   'use strict';
   angular.module('somsri.payroll.employee_details', [
   ])
-  .controller('employeeDetailsCtrl', ['employeesService','$log', '$state', '$rootScope','$scope', '$uibModal', function(service, $log, $state, $rootScope, $scope, $uibModal) {
+  .controller('employeeDetailsCtrl', ['employeesService','$log', '$state', '$rootScope','$scope', '$uibModal', 'reportService', function(service, $log, $state, $rootScope, $scope, $uibModal, reportService) {
     $rootScope.menu = "Employees"
     var ctrl = this
     var dateNow = new Date();
     var employeeId = $state.params.id;
+    var lastestMonth = "";
     ctrl.empId = employeeId
     ctrl.isEdit = employeeId > 0 ? true : false
     ctrl.data = { employee: {}}
-    ctrl.isSubmit = false
+    ctrl.isSubmit = false;
+    ctrl.isLastestPayroll = true;
 
     function openConfirmationModal(message, success, dismiss) {
       $scope.message = message;
@@ -38,33 +40,64 @@
       });
     }
 
-    function isDataChange(){
+    function isPayrollChange(){
+      if(ctrl.isLastestPayroll){
+        var keys = Object.keys(ctrl.datas_original.payroll)
+        for(var i = 1; i < keys.length; i++){
+          if(ctrl.datas.payroll[keys[i]] != ctrl.datas_original.payroll[keys[i]]){ return true }
+        }
+      }
+      return false;
+    }
+
+    function isEmployeeChange(){
       var keys = Object.keys(ctrl.datas_original.employee)
       for(var i = 1; i < keys.length; i++){
         if(ctrl.datas.employee[keys[i]] != ctrl.datas_original.employee[keys[i]]){ return true }
       }
-
-      keys = Object.keys(ctrl.datas_original.payroll)
-      for(var i = 1; i < keys.length; i++){
-        if(ctrl.datas.payroll[keys[i]] != ctrl.datas_original.payroll[keys[i]]){ return true }
-      }
-
       return false;
     }
 
+    function isDataChange(){
+      return isPayrollChange() || isEmployeeChange();
+    }
+
+    // convert string to float
+    function payrollToFloat(){
+      var keys = Object.keys(ctrl.datas.payroll)
+      for(var i = 1; i < keys.length; i++){
+        if(keys[i] != "id"){
+          ctrl.datas.payroll[keys[i]] = parseFloat(ctrl.datas.payroll[keys[i]]);
+        }
+      }
+    }
+
+    function displayMonth(monthInfo){
+      ctrl.currentMonth = "ประจำเดือน " + monthInfo["name"] + " " + monthInfo["year"];
+      ctrl.monthsDisplay = JSON.parse(JSON.stringify(ctrl.months));
+      for(var i = 0; i < ctrl.monthsDisplay.length; i++){
+        if(ctrl.monthsDisplay[i]["month"] == monthInfo["month"] && ctrl.monthsDisplay[i]["year"] == monthInfo["year"]){
+          ctrl.monthsDisplay.splice(i, 1);
+        }
+      }
+    }
+
     function getEmployee(id){
-      service.getEmployee(id).then(function(resp) {
+      reportService.getMonths(id).then(function(resp) {
+        if (resp.data.length > 0) {
+          ctrl.months = resp.data;
+          lastestMonth = ctrl.months[0];
+          displayMonth(lastestMonth);
+        }
+      });
+
+      service.getEmployee(id, null, null).then(function(resp) {
         ctrl.datas = resp.data;
 
-        // convert string to float
-        var keys = Object.keys(ctrl.datas.payroll)
-        for(var i = 1; i < keys.length; i++){
-          if(keys[i] != "id"){
-            ctrl.datas.payroll[keys[i]] = parseFloat(ctrl.datas.payroll[keys[i]]);
-          }
-        }
-        var e = resp.data.employee
-        ctrl.datas.employee.salary = parseFloat(ctrl.datas.employee.salary);
+        payrollToFloat();
+
+        var e = resp.data.employee;
+        ctrl.datas.salary = parseFloat(ctrl.datas.employee.salary);
         if(e.start_date){
           ctrl.datas.employee.start_date = new Date(ctrl.datas.employee.start_date);
         }else{
@@ -73,6 +106,7 @@
 
         ctrl.datas_original = $.extend(true, {}, ctrl.datas);
         ctrl.calTotal();
+        ctrl.isLastestPayroll = true;
 
         // set display name
         var hasPrefixThai = e.prefix_thai && e.prefix_thai.length > 0
@@ -96,8 +130,34 @@
               }
             }
           }
-        })
+        });
+
       });
+    }
+
+    function switchMonth(monthInfo) {
+      var month = monthInfo.month;
+      var year = monthInfo.year;
+      service.getEmployee(employeeId, month, year).then(function(resp) {
+        //reset salary
+        ctrl.datas.employee.salary = ctrl.datas_original.employee.salary;
+        ctrl.datas.payroll.salary = ctrl.datas_original.payroll.salary;
+
+        //dispay payroll
+        ctrl.datas.payroll = resp.data.payroll
+        payrollToFloat();
+        ctrl.calTotal();
+        if(lastestMonth["month"].toString() == month.toString() && lastestMonth["year"].toString() == year.toString()){
+          ctrl.isLastestPayroll = true;
+        }else{
+          ctrl.isLastestPayroll = false;
+        }
+        displayMonth(monthInfo);
+      });
+    }
+
+    ctrl.changeSalary = function(){
+      ctrl.datas.employee.salary = ctrl.datas.payroll.salary;
     }
 
     ctrl.openEmployeeDetails = function(id){
@@ -112,7 +172,7 @@
       }
     }
 
-    ctrl.cancle = function(){
+    ctrl.cancel = function(){
       if (ctrl.isEdit) {
         if(isDataChange()){
           openConfirmationModal("คุณต้องการออกจากหน้านี้โดยไม่บันทึกค่าหรือไม่?", function(){
@@ -133,7 +193,13 @@
       if (ctrl.isEdit) {
         if(isDataChange()){
           openConfirmationModal("คุณต้องการบันทึกการเปลี่ยนแปลงครั้งนี้หรือไม่?", function(){
-            service.saveEmployee(ctrl.datas.employee.id, ctrl.datas).then(function(resp) {
+
+            var datas_result = $.extend(true, {}, ctrl.datas);
+            if(!ctrl.isLastestPayroll){
+              delete datas_result['payroll']
+            }
+
+            service.saveEmployee(ctrl.datas.employee.id, datas_result).then(function(resp) {
               $log.info("SAVE!!!");
               $rootScope.openEmployees();
             });
@@ -159,7 +225,7 @@
         var p = ctrl.datas.payroll;
         var e = ctrl.datas.employee;
         ctrl.total = 0;
-        if(e.salary){ ctrl.total += e.salary }
+        if(p.salary){ ctrl.total += p.salary }
         if(p.ot){ ctrl.total += p.ot }
         if(p.position_allowance){ ctrl.total += p.position_allowance }
         if(p.allowance ){ ctrl.total += p.allowance }
@@ -184,6 +250,18 @@
       }, function(){
         $log.info("DISMISS!!");
       })
+    }
+
+    ctrl.switchMonth = function(monthInfo) {
+      if(isPayrollChange()){
+        openConfirmationModal("คุณต้องการออกจากหน้านี้โดยไม่บันทึกค่าหรือไม่?", function(){
+          switchMonth(monthInfo);
+        }, function(){
+          $log.info("DISMISS!!");
+        })
+      }else{
+        switchMonth(monthInfo);
+      }
     }
 
     if (ctrl.isEdit) {
