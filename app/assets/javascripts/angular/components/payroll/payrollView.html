@@ -74,49 +74,49 @@
             <!-- Income -->
             <td class="bordered">
               <div class="popover-wrapper">
-                <a id="{{index}}-salary" href="#" editable-number="employee.salary" class="text-green" onbeforesave="payroll.updatePayroll(index, employee.payroll_id, $data, 'salary')">
+                <a id="{{index}}-salary" href="#" editable-number="employee.salary" e-step="0.01" class="text-green" onbeforesave="payroll.updatePayroll(index, employee.payroll_id, $data, 'salary')">
                   {{employee.salary || 0 | currency: ""}}
                 </a>
               </div>
             </td>
             <td class="bordered">
               <div class="popover-wrapper">
-                <a id="{{index}}-ot" href="#" editable-number="employee.ot" class="text-green" onbeforesave="payroll.updatePayroll(index, employee.payroll_id, $data, 'ot')">
+                <a id="{{index}}-ot" href="#" editable-number="employee.ot" e-step="0.01" class="text-green" onbeforesave="payroll.updatePayroll(index, employee.payroll_id, $data, 'ot')">
                   {{employee.ot || 0 | currency: ""}}
                 </a>
               </div>
             </td>
             <td class="bordered">
               <div class="popover-wrapper">
-                <a id="{{index}}-position_allowance" href="#" editable-number="employee.position_allowance" class="text-green" onbeforesave="payroll.updatePayroll(index, employee.payroll_id, $data, 'position_allowance')">
+                <a id="{{index}}-position_allowance" href="#" editable-number="employee.position_allowance" e-step="0.01" class="text-green" onbeforesave="payroll.updatePayroll(index, employee.payroll_id, $data, 'position_allowance')">
                   {{employee.position_allowance || 0 | currency: ""}}
                 </a>
               </div>
             </td>
             <td class="bordered">
               <div class="popover-wrapper">
-                <a id="{{index}}-allowance" href="#" editable-number="employee.allowance" class="text-green" onbeforesave="payroll.updatePayroll(index, employee.payroll_id, $data, 'allowance')">
+                <a id="{{index}}-allowance" href="#" editable-number="employee.allowance" e-step="0.01" class="text-green" onbeforesave="payroll.updatePayroll(index, employee.payroll_id, $data, 'allowance')">
                   {{employee.allowance || 0 | currency: ""}}
                 </a>
               </div>
             </td>
             <td class="bordered">
               <div class="popover-wrapper">
-                <a id="{{index}}-attendance_bonus" href="#" editable-number="employee.attendance_bonus" class="text-green" onbeforesave="payroll.updatePayroll(index, employee.payroll_id, $data, 'attendance_bonus')">
+                <a id="{{index}}-attendance_bonus" href="#" editable-number="employee.attendance_bonus" e-step="0.01" class="text-green" onbeforesave="payroll.updatePayroll(index, employee.payroll_id, $data, 'attendance_bonus')">
                   {{employee.attendance_bonus || 0 | currency: ""}}
                 </a>
               </div>
             </td>
             <td class="bordered">
               <div class="popover-wrapper">
-                <a id="{{index}}-bonus" href="#" editable-number="employee.bonus" class="text-green" onbeforesave="payroll.updatePayroll(index, employee.payroll_id, $data, 'bonus')">
+                <a id="{{index}}-bonus" href="#" editable-number="employee.bonus" e-step="0.01" class="text-green" onbeforesave="payroll.updatePayroll(index, employee.payroll_id, $data, 'bonus')">
                   {{employee.bonus || 0 | currency: ""}}
                 </a>
               </div>
             </td>
             <td class="bordered">
               <div class="popover-wrapper">
-                <a id="{{index}}-extra_etc" href="#" editable-number="employee.extra_etc" class="text-green" onbeforesave="payroll.updatePayroll(index, employee.payroll_id, $data, 'extra_etc')">
+                <a id="{{index}}-extra_etc" href="#" editable-number="employee.extra_etc" e-step="0.01" class="text-green" onbeforesave="payroll.updatePayroll(index, employee.payroll_id, $data, 'extra_etc')">
                   {{employee.extra_etc || 0 | currency: ""}}
                 </a>
               </div>
@@ -124,49 +124,49 @@
             <!-- Outcome -->
             <td class="bordered">
               <div class="popover-wrapper">
-                <a id="{{index}}-tax" href="#" editable-number="employee.tax" class="text-red" onbeforesave="payroll.updatePayroll(index, employee.payroll_id, $data, 'tax')">
+                <a id="{{index}}-tax" href="#" editable-number="employee.tax" e-step="0.01" class="text-red" onbeforesave="payroll.updatePayroll(index, employee.payroll_id, $data, 'tax')">
                   {{employee.tax || 0 | currency: ""}}
                 </a>
               </div>
             </td>
             <td class="bordered">
               <div class="popover-wrapper">
-                <a id="{{index}}-social_insurance" href="#" editable-number="employee.social_insurance" class="text-red" onbeforesave="payroll.updatePayroll(index, employee.payroll_id, $data, 'social_insurance')">
+                <a id="{{index}}-social_insurance" href="#" editable-number="employee.social_insurance" e-step="0.01" class="text-red" onbeforesave="payroll.updatePayroll(index, employee.payroll_id, $data, 'social_insurance')">
                   {{employee.social_insurance || 0 | currency: ""}}
                 </a>
               </div>
             </td>
             <td class="bordered">
               <div class="popover-wrapper">
-                <a id="{{index}}-pvf" href="#" editable-number="employee.pvf" class="text-red" onbeforesave="payroll.updatePayroll(index, employee.payroll_id, $data, 'pvf')">
+                <a id="{{index}}-pvf" href="#" editable-number="employee.pvf" e-step="0.01" class="text-red" onbeforesave="payroll.updatePayroll(index, employee.payroll_id, $data, 'pvf')">
                   {{employee.pvf || 0 | currency: ""}}
                 </a>
               </div>
             </td>
             <td class="bordered">
               <div class="popover-wrapper">
-                <a id="{{index}}-absence" href="#" editable-number="employee.absence" class="text-red" onbeforesave="payroll.updatePayroll(index, employee.payroll_id, $data, 'absence')">
+                <a id="{{index}}-absence" href="#" editable-number="employee.absence" e-step="0.01" class="text-red" onbeforesave="payroll.updatePayroll(index, employee.payroll_id, $data, 'absence')">
                   {{employee.absence || 0 | currency: ""}}
                 </a>
               </div>
             </td>
             <td class="bordered">
               <div class="popover-wrapper">
-                <a id="{{index}}-late" href="#" editable-number="employee.late" class="text-red" onbeforesave="payroll.updatePayroll(index, employee.payroll_id, $data, 'late')">
+                <a id="{{index}}-late" href="#" editable-number="employee.late" e-step="0.01" class="text-red" onbeforesave="payroll.updatePayroll(index, employee.payroll_id, $data, 'late')">
                   {{employee.late || 0 | currency: ""}}
                 </a>
               </div>
             </td>
             <td class="bordered">
               <div class="popover-wrapper">
-                <a id="{{index}}-advance_payment" href="#" editable-number="employee.advance_payment" class="text-red" onbeforesave="payroll.updatePayroll(index, employee.payroll_id, $data, 'advance_payment')">
+                <a id="{{index}}-advance_payment" href="#" editable-number="employee.advance_payment" e-step="0.01" class="text-red" onbeforesave="payroll.updatePayroll(index, employee.payroll_id, $data, 'advance_payment')">
                   {{employee.advance_payment || 0 | currency: ""}}
                 </a>
               </div>
             </td>
             <td class="bordered">
               <div class="popover-wrapper">
-                <a id="{{index}}-fee_etc" href="#" editable-number="employee.fee_etc" class="text-red" onbeforesave="payroll.updatePayroll(index, employee.payroll_id, $data, 'fee_etc')">
+                <a id="{{index}}-fee_etc" href="#" editable-number="employee.fee_etc" e-step="0.01" class="text-red" onbeforesave="payroll.updatePayroll(index, employee.payroll_id, $data, 'fee_etc')">
                   {{employee.fee_etc || 0 | currency: ""}}
                 </a>
               </div>
