@@ -182,17 +182,12 @@
           $rootScope.openEmployees();
         })
       }, function(){
-        $log.info("DISMISS!!"); 
+        $log.info("DISMISS!!");
       })
     }
 
     if (ctrl.isEdit) {
       getEmployee(employeeId);
     }
-
-  }]).config(function($mdDateLocaleProvider) {
-    $mdDateLocaleProvider.formatDate = function(date) {
-      return moment(date).format('DD/MM/YYYY');
-    };
-  });
+  }])
 })();
