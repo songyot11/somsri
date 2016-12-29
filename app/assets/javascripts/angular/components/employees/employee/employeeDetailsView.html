@@ -220,7 +220,13 @@
           </div>
         </div>
         <div class="col-md-4">
-          <!-- <button>ประวัติเงินเดือน</button> -->
+          <div class="row">
+            <div class="col-md-8">
+              <button type="button" class="btn bg-gray btn-block" data-toggle="modal" data-target="#bird-eye" ng-click="employee.getAllPayroll(employee.empId)"> 
+                ประวัติเงินเดือน
+              </button>
+            </div>
+          </div>
         </div>
       </div>
       <div class="row">
@@ -313,4 +319,40 @@
       </div>
     </div>
   </form>
+</div>
+
+<div class="modal fade " id="bird-eye" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content cyan">
+      <div class="modal-header">
+        <i class="fa fa-close fa-2x pull-right" data-dismiss="modal"></i>
+        <h3 class="modal-title" id="myModalLabel">ประวัติเงินเดือน</h3>
+      </div>
+      <div class="modal-body">
+        <table id="payroll-history-table" class="table text-right">
+          <thead>
+            <th width="40%">เดือน</th>
+            <th class="text-center" width="20%">เงินเดือน</th>
+            <th class="text-center" width="20%">รายการได้</th>
+            <th class="text-center" width="20%">รายการหัก</th>
+          </thead>
+          <tbody>
+            <tr ng-repeat="payroll in employee.employeePayrolls">
+              <td width="40%" class="text-left">{{payroll.date}}</td>
+              <td width="20%">{{payroll.salary | currency: ""}}</td>
+              <td width="20%" class="text-green">{{payroll.extra_pay | currency: ""}}</td>
+              <td width="20%" class="text-red">{{payroll.extra_fee | currency: ""}}</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+      <div class="modal-footer">
+        <div class="row">
+          <div class="col-md-4 col-md-offset-4">
+            <button type="button" class="btn btn-lg btn-block btn-cancel" data-dismiss="modal">ปิด</button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
 </div>
