@@ -220,7 +220,7 @@
           </div>
         </div>
         <div class="col-md-4">
-          <button type="button" class="btn bg-gray" data-toggle="modal" data-target="#bird-eye"> 
+          <button type="button" class="btn bg-gray" data-toggle="modal" data-target="#bird-eye" ng-click="employee.getAllPayroll(employee.empId)"> 
             ประวัติเงินเดือน
           </button>
         </div>
@@ -318,20 +318,28 @@
 </div>
 
 <div class="modal fade " id="bird-eye" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
-  <div class="modal-dialog modal-lg" role="document">
+  <div class="modal-dialog" role="document">
     <div class="modal-content cyan">
       <div class="modal-header">
         <i class="fa fa-close fa-2x pull-right" data-dismiss="modal"></i>
         <h3 class="modal-title" id="myModalLabel">ประวัติเงินเดือน</h3>
       </div>
       <div class="modal-body">
-        <table class="table">
+        <table id="payroll-history-table" class="table text-right">
           <thead>
-            <th>เดือน</th>
-            <th>เงินเดือน</th>
-            <th>รายการได้</th>
-            <th>รายการหัก</th>
+            <th width="40%">เดือน</th>
+            <th class="text-center" width="20%">เงินเดือน</th>
+            <th class="text-center" width="20%">รายการได้</th>
+            <th class="text-center" width="20%">รายการหัก</th>
           </thead>
+          <tbody>
+            <tr ng-repeat="payroll in employee.employeePayrolls">
+              <td class="text-left">{{payroll.date}}</td>
+              <td>{{payroll.salary | currency: ""}}</td>
+              <td class="text-green">{{payroll.extra_pay | currency: ""}}</td>
+              <td class="text-red">{{payroll.extra_fee | currency: ""}}</td>
+            </tr>
+          </tbody>
         </table>
       </div>
       <div class="modal-footer">

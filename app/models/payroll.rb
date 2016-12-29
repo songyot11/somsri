@@ -54,6 +54,13 @@ class Payroll < ApplicationRecord
         #Result
         net_salary: (self.salary + extra_pay - extra_fee).to_f
       }
+    elsif options["history"]
+      {
+        date: I18n.l(self.created_at, format: "%B %Y"),
+        salary: self.salary.to_f,
+        extra_pay: extra_pay.to_f,
+        extra_fee: extra_fee.to_f,
+      }
     elsif options["slip"]
       {
         date: self.created_at.strftime("#{created_at.end_of_month.day}/%m/#{(created_at.year + 543) % 100}"),

@@ -492,3 +492,8 @@ body {
   color: #E50000 !important;
 }
 
+
+scrollable-table {
+  height: 200px;
+}
+

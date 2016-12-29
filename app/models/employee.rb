@@ -54,7 +54,7 @@ class Employee < ApplicationRecord
         extra_pay: self.payrolls.latest.extra_pay.to_f,
         img: self.img_url
       }
-  else
+    else
       super()
     end
   end

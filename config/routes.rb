@@ -17,6 +17,7 @@ Rails.application.routes.draw do
   resources :employees, only: [:index, :create, :show, :update, :destroy]  do
     member do
       get 'slip'
+      get 'payrolls'
     end
   end
 end

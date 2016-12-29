@@ -16,6 +16,10 @@
       }
     };
 
+    this.getEmployeePayrolls = function(id) {
+      return $http.get('employees/' + id +'/payrolls');
+    };
+
     this.saveEmployee = function(id, data) {
       return $http.patch('/employees/' + id, data);
     };

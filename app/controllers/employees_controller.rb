@@ -21,6 +21,14 @@ class EmployeesController < ApplicationController
     render json: employee, status: :ok
   end
 
+  # GET /employees/:id/payrolls
+  def payrolls
+    payrolls = Employee.active.find(params[:id]).payrolls
+                       .order("created_at desc")
+                       .as_json("history")
+    render json: payrolls, status: :ok
+  end
+
   # GET /employees/:id
   def show
     @employee = Employee.active.find(params[:id])

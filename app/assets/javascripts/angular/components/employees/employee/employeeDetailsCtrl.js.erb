@@ -253,15 +253,21 @@
     }
 
     ctrl.switchMonth = function(monthInfo) {
-      if(isPayrollChange()){
-        openConfirmationModal("คุณต้องการออกจากหน้านี้โดยไม่บันทึกค่าหรือไม่?", function(){
+      if (isPayrollChange()) {
+        openConfirmationModal("คุณต้องการออกจากหน้านี้โดยไม่บันทึกค่าหรือไม่?", function() {
           switchMonth(monthInfo);
-        }, function(){
+        }, function() {
           $log.info("DISMISS!!");
         })
-      }else{
+      } else {
         switchMonth(monthInfo);
       }
+    }
+
+    ctrl.getAllPayroll = function(id) {
+      service.getEmployeePayrolls(id).then(function(resp) {
+        ctrl.employeePayrolls = resp.data
+      })
     }
 
     if (ctrl.isEdit) {
