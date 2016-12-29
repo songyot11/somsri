@@ -2,7 +2,7 @@
   'use strict';
   angular.module('somsri.payroll.employee_details', [
   ])
-  .controller('employeeDetailsCtrl', ['employeesService','$log', '$state', '$rootScope','$scope', '$uibModal', 'reportService', function(service, $log, $state, $rootScope, $scope, $uibModal, reportService) {
+  .controller('employeeDetailsCtrl', ['employeesService','$log', '$state', '$rootScope','$scope', '$uibModal', 'reportService', '$filter', function(service, $log, $state, $rootScope, $scope, $uibModal, reportService, $filter) {
     $rootScope.menu = "Employees"
     var ctrl = this
     var dateNow = new Date();
@@ -73,7 +73,7 @@
     }
 
     function displayMonth(monthInfo){
-      ctrl.currentMonth = "ประจำเดือน " + monthInfo["name"] + " " + monthInfo["year"];
+      ctrl.currentMonth = "ประจำเดือน " + $filter('get_month_name')(monthInfo);
       ctrl.monthsDisplay = JSON.parse(JSON.stringify(ctrl.months));
       for(var i = 0; i < ctrl.monthsDisplay.length; i++){
         if(ctrl.monthsDisplay[i]["month"] == monthInfo["month"] && ctrl.monthsDisplay[i]["year"] == monthInfo["year"]){
