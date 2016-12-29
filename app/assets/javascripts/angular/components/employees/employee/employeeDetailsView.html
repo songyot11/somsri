@@ -162,7 +162,7 @@
         <div ng-switch-when="true">
           <div class="dropdown">
             <h3 id="month-list" data-toggle="dropdown">
-              <span ng-bind="employee.currentMonth" ></span>
+              <span ng-bind="employee.currentMonthDisplay" ></span>
               <span class="caret"></span>
             </h3>
             <ul class="dropdown-menu" aria-labelledby="month-list">
@@ -176,7 +176,7 @@
         </div>
         <div ng-switch-default>
           <h3 data-toggle="dropdown">
-            <span ng-bind="employee.currentMonth" ></span>
+            <span ng-bind="employee.currentMonthDisplay" ></span>
           </h3>
         </div>
       </div>
@@ -302,7 +302,7 @@
     </div>
     <div class="footer-menu row">
       <div class="col-md-4">
-        <button ng-show="employee.isEdit" type="button" class="btn btn-lg btn-block btn-print" ng-click="openSlip(employee.datas.employee.id)">พิมพ์ใบจ่ายเงินเดือน</button>
+        <button ng-show="employee.isEdit" type="button" class="btn btn-lg btn-block btn-print" ng-click="openSlip(employee.datas.employee.id, employee.currentMonth['month'], employee.currentMonth['year'])">พิมพ์ใบจ่ายเงินเดือน</button>
       </div>
 
       <div class="col-md-2 {{employee.isEdit ? '': 'col-md-offset-2'}}">

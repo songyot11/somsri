@@ -71,7 +71,7 @@
         }
       }).
       state({
-        url: '/employees/:id/slip',
+        url: '/employees/:id/slip?month&year',
         name: 'slip',
         templateUrl: "<%= asset_path('angular/components/slip/slipView.html') %>",
         controller: 'slipCtrl as slip',
@@ -99,7 +99,7 @@
 
     $urlRouterProvider.when("", "/");
   }]);
-  
+
   app.run(['editableOptions', function(editableOptions) {
     editableOptions.theme = 'bs3';
     editableOptions.icon_set = "font-awesome"

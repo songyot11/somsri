@@ -19,8 +19,13 @@
       $state.go('employee_details',{ id: id });
     };
 
-    $rootScope.openSlip = function (id) {
-      $state.go('slip',{ id: id });
+    $rootScope.openSlip = function (id, month, year) {
+      if(month && year){
+        $state.go('slip',{ id: id, month: month, year: year });
+      }else{
+        $state.go('slip',{ id: id });
+      }
+
     };
 
   }]);

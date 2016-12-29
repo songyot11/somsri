@@ -6,18 +6,24 @@ class EmployeesController < ApplicationController
   def index
     school = current_user.school
     employee = school.employees.active.order('employees.start_date ASC, employees.created_at ASC')
-                              .as_json("employee_list")
+                              .as_json(employee_list: true)
     render json: employee, status: :ok
   end
 
   # GET /employees/:id/slip
   def slip
-    employee = Employee.active.find(params[:id]).as_json("slip")
+    month = params[:month].to_i
+    year = params[:year].to_i
+    payroll = nil
+    if month.to_s != params[:month] || year.to_s != params[:year]
+      month = nil
+      year = nil
+    end
+    employee = Employee.active.find(params[:id]).as_json({ slip: true, month: month, year: year })
     employee[:payroll][:fee_orders] = employee[:payroll][:fee_orders]
                                                       .select { |key, value| value[:value] > 0}
     employee[:payroll][:pay_orders] = employee[:payroll][:pay_orders]
                                                       .select { |key, value| value[:value] > 0}
-
     render json: employee, status: :ok
   end
 

@@ -227,4 +227,17 @@ describe 'Employee Details', js: true do
     expect(find_field('ค่าแรง / เงินเดือนปัจจุบัน').value).to eq '50000'
   end
 
+  it 'should go to 2016-8 slip' do
+    visit "/#/employees/#{employees[0].id}"
+    sleep(1)
+    find('#month-list').click
+    sleep(1)
+    find('ul.dropdown-menu li a', text: "สิงหาคม 2016").click
+    sleep(1)
+    click_button('พิมพ์ใบจ่ายเงินเดือน')
+    sleep(1)
+    expect(page).to have_css("#payroll-slip")
+    expect(page).to have_content("ส.ค. 59")
+  end
+
 end
