@@ -24,9 +24,17 @@ class EmployeesController < ApplicationController
   # GET /employees/:id
   def show
     @employee = Employee.active.find(params[:id])
+    payroll = @employee.lastest_payroll
+
+    month = params[:month].to_i
+    year = params[:year].to_i
+    if month.to_s == params[:month] && year.to_s == params[:year]
+      payroll = @employee.payroll(params[:month].to_i, params[:year].to_i)
+    end
+
     render json: {
       employee: @employee,
-      payroll: @employee.lastest_payroll
+      payroll: payroll
     }
   end
 
@@ -54,13 +62,15 @@ class EmployeesController < ApplicationController
   def update
     employee_datas = employee_params
     employee_datas.delete(:id)
-    payroll_datas = payroll_params
-    payroll_id = payroll_datas[:id]
-    payroll_datas[:salary] = employee_datas[:salary]
-    payroll_datas.delete(:id)
-
     employee = Employee.update(params[:id] , employee_datas)
-    payroll = Payroll.update(payroll_id, payroll_datas)
+
+    if params[:payroll]
+      payroll_datas = payroll_params
+      payroll_id = payroll_datas[:id]
+      payroll_datas[:salary] = employee_datas[:salary]
+      payroll_datas.delete(:id)
+      payroll = Payroll.update(payroll_id, payroll_datas)
+    end
 
     render json: {
       employee: employee,

@@ -4,7 +4,7 @@ class ReportsController < ApplicationController
 
   # GET /reports
   def index
-    getMonths()
+    render json: getMonths(params[:employee_id]), status: :ok
   end
 
   # GET /reports/:year/:month
@@ -33,8 +33,8 @@ class ReportsController < ApplicationController
   end
 
   private
-    def getMonths
-      employee_ids = Employee.active.where(school_id: current_user.school.id)
+    def getMonths(employee_ids)
+      employee_ids = Employee.active.where(school_id: current_user.school.id) if !employee_ids
       months = Payroll.where(employee_id: employee_ids).order("created_at DESC").map { |d| I18n.l(d.created_at, format: "%m %B %Y").split(" ") }.uniq
 
       months = months.collect { |x|
@@ -44,8 +44,6 @@ class ReportsController < ApplicationController
           year: x[2],
         }
       }
-
-      render json: months, status: :ok
     end
 
     def params_payroll

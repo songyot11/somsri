@@ -8,8 +8,12 @@
       return $http.get('/reports/' + year + "/" + month);
     }
 
-    this.getMonths = function() {
-      return $http.get('/reports/');
+    this.getMonths = function(employeeId) {
+      if(employeeId){
+        return $http.get('/reports/', { params: { employee_id: employeeId } });
+      }else{
+        return $http.get('/reports/');
+      }
     }
 
     this.updatePayroll = function(id, data) {

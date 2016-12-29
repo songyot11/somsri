@@ -158,6 +158,28 @@
       </div>
     </div>
     <div class="paragraph orange payroll" ng-show="employee.isEdit">
+      <div ng-switch="employee.monthsDisplay.length > 0">
+        <div ng-switch-when="true">
+          <div class="dropdown">
+            <h3 id="month-list" data-toggle="dropdown">
+              <span ng-bind="employee.currentMonth" ></span>
+              <span class="caret"></span>
+            </h3>
+            <ul class="dropdown-menu" aria-labelledby="month-list">
+              <li ng-repeat="month in employee.monthsDisplay">
+                <a ng-click="employee.switchMonth(month)">
+                  {{ month | get_month_name }}
+                </a>
+              </li>
+            </ul>
+          </div>
+        </div>
+        <div ng-switch-default>
+          <h3 data-toggle="dropdown">
+            <span ng-bind="employee.currentMonth" ></span>
+          </h3>
+        </div>
+      </div>
       <div class="row">
         <div class="col-md-4"><h3>รายการเงินได้</h3></div>
         <div class="col-md-4"><h3>รายการเงินหัก</h3></div>
@@ -168,13 +190,13 @@
         <div class="col-md-4">
           <div class="form-group">
             <label for="salary">ค่าแรง / เงินเดือนปัจจุบัน</label>
-            <input type="number" class="form-control text-green" id="salary" ng-model="employee.datas.employee.salary"  ng-change="employee.calTotal()">
+            <input type="number" class="form-control text-green" id="salary" ng-model="employee.datas.payroll.salary"  ng-change="employee.calTotal(); employee.changeSalary()" ng-disabled="!employee.isLastestPayroll">
           </div>
         </div>
         <div class="col-md-4">
           <div class="form-group">
             <label for="tax">ภาษี</label>
-            <input type="number" class="form-control text-red" id="tax" ng-model="employee.datas.payroll.tax"  ng-change="employee.calTotal()">
+            <input type="number" class="form-control text-red" id="tax" ng-model="employee.datas.payroll.tax"  ng-change="employee.calTotal()" ng-disabled="!employee.isLastestPayroll">
           </div>
         </div>
         <div class="col-md-4">
@@ -188,13 +210,13 @@
         <div class="col-md-4">
           <div class="form-group">
             <label for="ot">เงินสอนพิเศษ</label>
-            <input type="number" class="form-control text-green" id="ot" ng-model="employee.datas.payroll.ot"  ng-change="employee.calTotal()">
+            <input type="number" class="form-control text-green" id="ot" ng-model="employee.datas.payroll.ot"  ng-change="employee.calTotal()" ng-disabled="!employee.isLastestPayroll">
           </div>
         </div>
         <div class="col-md-4">
           <div class="form-group">
             <label for="social_insurance">ประกันสังคม</label>
-            <input type="number" class="form-control text-red" id="social_insurance" ng-model="employee.datas.payroll.social_insurance"  ng-change="employee.calTotal()">
+            <input type="number" class="form-control text-red" id="social_insurance" ng-model="employee.datas.payroll.social_insurance"  ng-change="employee.calTotal()" ng-disabled="!employee.isLastestPayroll">
           </div>
         </div>
         <div class="col-md-4">
@@ -205,13 +227,13 @@
         <div class="col-md-4">
           <div class="form-group">
             <label for="position_allowance">ค่าตำแหน่ง</label>
-            <input type="number" class="form-control text-green" id="position_allowance" ng-model="employee.datas.payroll.position_allowance"  ng-change="employee.calTotal()">
+            <input type="number" class="form-control text-green" id="position_allowance" ng-model="employee.datas.payroll.position_allowance"  ng-change="employee.calTotal()" ng-disabled="!employee.isLastestPayroll">
           </div>
         </div>
         <div class="col-md-4">
           <div class="form-group">
             <label for="pvf">เงินสะสมเข้ากองทุนสงเคราะห์</label>
-            <input type="number" class="form-control text-red" id="pvf" ng-model="employee.datas.payroll.pvf"  ng-change="employee.calTotal()">
+            <input type="number" class="form-control text-red" id="pvf" ng-model="employee.datas.payroll.pvf"  ng-change="employee.calTotal()" ng-disabled="!employee.isLastestPayroll">
           </div>
         </div>
       </div>
@@ -219,13 +241,13 @@
         <div class="col-md-4">
           <div class="form-group">
             <label for="allowance">ค่ากะ / ค่าเบี้ยเลี้ยง</label>
-            <input type="number" class="form-control text-green" id="allowance" ng-model="employee.datas.payroll.allowance"  ng-change="employee.calTotal()">
+            <input type="number" class="form-control text-green" id="allowance" ng-model="employee.datas.payroll.allowance"  ng-change="employee.calTotal()" ng-disabled="!employee.isLastestPayroll">
           </div>
         </div>
         <div class="col-md-4">
           <div class="form-group">
             <label for="absence">ขาดงาน</label>
-            <input type="number" class="form-control text-red" id="absence" ng-model="employee.datas.payroll.absence"  ng-change="employee.calTotal()">
+            <input type="number" class="form-control text-red" id="absence" ng-model="employee.datas.payroll.absence"  ng-change="employee.calTotal()" ng-disabled="!employee.isLastestPayroll">
           </div>
         </div>
       </div>
@@ -233,13 +255,13 @@
         <div class="col-md-4">
           <div class="form-group">
             <label for="attendace_bonus">เบี้ยขยัน</label>
-            <input type="number" class="form-control text-green" id="attendace_bonus" ng-model="employee.datas.payroll.attendance_bonus" ng-change="employee.calTotal()">
+            <input type="number" class="form-control text-green" id="attendace_bonus" ng-model="employee.datas.payroll.attendance_bonus" ng-change="employee.calTotal()" ng-disabled="!employee.isLastestPayroll">
           </div>
         </div>
         <div class="col-md-4">
           <div class="form-group">
             <label for="late">สาย</label>
-            <input type="number" class="form-control text-red" id="late" ng-model="employee.datas.payroll.late" ng-change="employee.calTotal()">
+            <input type="number" class="form-control text-red" id="late" ng-model="employee.datas.payroll.late" ng-change="employee.calTotal()" ng-disabled="!employee.isLastestPayroll">
           </div>
         </div>
       </div>
@@ -247,13 +269,13 @@
         <div class="col-md-4">
           <div class="form-group">
             <label for="bonus">โบนัส</label>
-            <input type="number" class="form-control text-green" id="bonus" ng-model="employee.datas.payroll.bonus" ng-change="employee.calTotal()">
+            <input type="number" class="form-control text-green" id="bonus" ng-model="employee.datas.payroll.bonus" ng-change="employee.calTotal()" ng-disabled="!employee.isLastestPayroll">
           </div>
         </div>
         <div class="col-md-4">
           <div class="form-group">
             <label for="advance_payment">เบิกล่วงหน้า</label>
-            <input type="number" class="form-control text-red" id="advance_payment" ng-model="employee.datas.payroll.advance_payment" ng-change="employee.calTotal()">
+            <input type="number" class="form-control text-red" id="advance_payment" ng-model="employee.datas.payroll.advance_payment" ng-change="employee.calTotal()" ng-disabled="!employee.isLastestPayroll">
           </div>
         </div>
       </div>
@@ -261,13 +283,13 @@
         <div class="col-md-4">
           <div class="form-group">
             <label for="extra_etc">รายได้อื่นๆ</label>
-            <input type="number" class="form-control text-green" id="extra_etc" ng-model="employee.datas.payroll.extra_etc" ng-change="employee.calTotal()">
+            <input type="number" class="form-control text-green" id="extra_etc" ng-model="employee.datas.payroll.extra_etc" ng-change="employee.calTotal()" ng-disabled="!employee.isLastestPayroll">
           </div>
         </div>
         <div class="col-md-4">
           <div class="form-group">
             <label for="fee_etc">หักอื่นๆ</label>
-            <input type="number" class="form-control text-red" id="fee_etc" ng-model="employee.datas.payroll.fee_etc" ng-change="employee.calTotal()">
+            <input type="number" class="form-control text-red" id="fee_etc" ng-model="employee.datas.payroll.fee_etc" ng-change="employee.calTotal()" ng-disabled="!employee.isLastestPayroll">
           </div>
         </div>
       </div>
@@ -284,7 +306,7 @@
         <button type="submit" class="btn btn-lg btn-block btn-submit" ng-disabled="employee.isSubmit">บันทึก</button>
       </div>
       <div class="col-md-2 text-right">
-        <button type="button" class="btn btn-lg btn-block btn-cancel" ng-click="employee.cancle()">ยกเลิก</button>
+        <button type="button" class="btn btn-lg btn-block btn-cancel" ng-click="employee.cancel()">ยกเลิก</button>
       </div>
       <div ng-show="employee.isEdit" class="col-md-2 text-right">
         <button type="button" class="btn btn-lg btn-block btn-danger" ng-click="employee.deleteEmployee(employee.empId)">ลบ</button>
