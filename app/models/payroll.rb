@@ -56,7 +56,7 @@ class Payroll < ApplicationRecord
       }
     elsif options["history"]
       {
-        date: I18n.l(self.created_at, format: "%B %Y"),
+        date: I18n.l(self.created_at, format: "%B #{created_at.year + 543}"),
         salary: self.salary.to_f,
         extra_pay: extra_pay.to_f,
         extra_fee: extra_fee.to_f,
