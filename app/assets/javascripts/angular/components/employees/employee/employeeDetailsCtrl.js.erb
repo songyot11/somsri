@@ -8,6 +8,7 @@
     var dateNow = new Date();
     var employeeId = $state.params.id;
     var lastestMonth = "";
+    ctrl.currentMonth = "";
     ctrl.empId = employeeId
     ctrl.isEdit = employeeId > 0 ? true : false
     ctrl.data = { employee: {}}
@@ -73,7 +74,7 @@
     }
 
     function displayMonth(monthInfo){
-      ctrl.currentMonth = "ประจำเดือน " + $filter('get_month_name')(monthInfo);
+      ctrl.currentMonthDisplay = "ประจำเดือน " + $filter('get_month_name')(monthInfo);
       ctrl.monthsDisplay = JSON.parse(JSON.stringify(ctrl.months));
       for(var i = 0; i < ctrl.monthsDisplay.length; i++){
         if(ctrl.monthsDisplay[i]["month"] == monthInfo["month"] && ctrl.monthsDisplay[i]["year"] == monthInfo["year"]){
@@ -87,6 +88,7 @@
         if (resp.data.length > 0) {
           ctrl.months = resp.data;
           lastestMonth = ctrl.months[0];
+          ctrl.currentMonth = ctrl.months[0];
           displayMonth(lastestMonth);
         }
       });
@@ -139,6 +141,7 @@
       var month = monthInfo.month;
       var year = monthInfo.year;
       service.getEmployee(employeeId, month, year).then(function(resp) {
+        ctrl.currentMonth = monthInfo;
         //reset salary
         ctrl.datas.employee.salary = ctrl.datas_original.employee.salary;
         ctrl.datas.payroll.salary = ctrl.datas_original.payroll.salary;
@@ -273,5 +276,6 @@
     if (ctrl.isEdit) {
       getEmployee(employeeId);
     }
+
   }])
 })();

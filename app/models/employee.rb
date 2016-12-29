@@ -32,20 +32,28 @@ class Employee < ApplicationRecord
   end
 
   def as_json(options={})
-    if options["slip"]
-      {
+    if options[:slip]
+      result = {
         code: format("%05d", self.id),
         prefix: self.prefix,
         name: self.full_name,
         position: self.position,
         account_number: self.account_number,
-        extra_fee: self.payrolls.latest.extra_fee.to_f,
-        extra_pay: self.payrolls.latest.extra_pay.to_f +
-                   self.payrolls.latest.salary.to_f,
-        annual_income_outcome: self.annual_income_outcome(self.id),
-        payroll: self.payrolls.latest.as_json("slip")
+        annual_income_outcome: self.annual_income_outcome(self.id)
       }
-    elsif options["employee_list"]
+
+      if options[:month] && options[:year]
+        payroll = self.payroll(options[:month].to_i, options[:year].to_i)
+        result[:payroll] = payroll.as_json("slip")
+        result[:extra_fee] = payroll.extra_fee.to_f
+        result[:extra_pay] = payroll.extra_pay.to_f + payroll.salary.to_f
+      else
+        result[:payroll] = self.payrolls.latest.as_json("slip")
+        result[:extra_fee] = self.payrolls.latest.extra_fee.to_f
+        result[:extra_pay] = self.payrolls.latest.extra_pay.to_f + self.payrolls.latest.salary.to_f
+      end
+      return result
+    elsif options[:employee_list]
        {
         id: self.id,
         name: self.full_name,
