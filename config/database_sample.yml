@@ -1,15 +1,20 @@
-development:
+default: &default
   adapter: postgresql
   encoding: utf8
-  database: somsri_payroll_dev
   pool: 5
-  username: bom
-  password:
+  host: <%= ENV['DB_HOST'] %>
+  port: <%= ENV['DB_PORT'] %>
+  username: <%= ENV['DB_USER'] %>
+  password: <%= ENV['DB_PASS'] %>
+
+development:
+  <<: *default
+  database: somsri_payroll_dev
 
 test:
-  adapter: postgresql
-  encoding: utf8
+  <<: *default
   database: somsri_payroll_test
-  pool: 5
-  username: bom
-  password:
+
+production:
+  <<: *default
+  database: somsri_payroll
