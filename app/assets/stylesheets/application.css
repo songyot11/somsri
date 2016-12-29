@@ -302,7 +302,7 @@ body {
   margin-bottom: 163px;
 }
 
-#payroll-slip #signature {
+#payroll-slip .signature {
   margin-top: 100px;
   border-top: 1px solid;
   text-align: center;
@@ -338,6 +338,12 @@ body {
     margin-bottom: 100px;
   }
 
+  #payroll-slip td,
+  #payroll-slip th {
+    vertical-align: middle;
+    border-color: #000;
+  }
+
   #payroll-slip #order thead th {
     padding: 5px 10px;
   }
@@ -351,12 +357,6 @@ body {
 
   #payroll-slip .slip-content {
     padding: 0px;
-  }
-
-  #payroll-slip th.bg-gray,
-  #payroll-slip thead th {
-    background-color: #4A4A4A !important;
-    color: #fff !important;
   }
 
   #payroll-slip .for_print {
@@ -375,17 +375,44 @@ body {
     width: 200px;
   }
 
-  #payroll-slip td.big {
-    height: 40px
-  }
-
-  #payroll-slip #signature {
+  #payroll-slip .signature {
     margin-top: 85px;
   }
 
   #payroll-slip p {
     margin: 0px 0 6px;
   }
+
+  /* For Safari */
+  #payroll-slip .safari td.big {
+    height: auto
+  }
+
+  #payroll-slip .safari p,
+  #payroll-slip .safari th,
+  #payroll-slip .safari td {
+    font-size: 9px;
+  }
+
+  #payroll-slip .safari #date_table {
+    margin-bottom: 100px;
+  }
+
+  #payroll-slip .safari #order tbody td {
+    border-bottom: 0px;
+    border-top: 0px;
+    height: 170px;
+    vertical-align: top !important;
+  }
+
+  #payroll-slip .safari .signature {
+    margin-top: 75px;
+  }
+
+  #payroll-slip .safari #order thead th {
+    padding: 5px 10px;
+  }
+  .pagebreak { page-break-before: always; } 
 }
 
 .employee-details .form-group input, .employee-details .form-group div{
