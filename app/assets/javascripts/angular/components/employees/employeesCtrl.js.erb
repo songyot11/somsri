@@ -9,7 +9,7 @@
     getPayroll(dateNow.getMonth() + 1, dateNow.getFullYear());
     function getPayroll(month, year){
       // Get last month on database
-      
+
 
       employeeService.getAllEmployee().then(function(resp) {
         ctrl.datas = resp.data;
@@ -22,7 +22,7 @@
             salary: data['salary'],
             fee: data['extra_fee'],
             extra: data['extra_pay'],
-            imgUrl: data['img_url']
+            imgUrl: data['img']
           });
         }
       });
