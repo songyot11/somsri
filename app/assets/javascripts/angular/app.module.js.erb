@@ -8,7 +8,8 @@
     'somsri.payroll.main',
     'ngMaterial',
     'angularMoment',
-    'somsri.payroll.filters'
+    'somsri.payroll.filters',
+    'xeditable'
   ]);
 
   app.config(['stateHelperProvider', 'ASSETS', '$urlRouterProvider', '$mdDateLocaleProvider', function(stateHelperProvider, ASSETS, $urlRouterProvider, $mdDateLocaleProvider) {
@@ -97,5 +98,10 @@
       })
 
     $urlRouterProvider.when("", "/");
+  }]);
+  
+  app.run(['editableOptions', function(editableOptions) {
+    editableOptions.theme = 'bs3';
+    editableOptions.icon_set = "font-awesome"
   }]);
 })();

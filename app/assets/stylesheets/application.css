@@ -11,6 +11,7 @@
  * It is generally better to create a new file per style scope.
  *
  *= require bootstrap/dist/css/bootstrap.min.css
+ *= require angular-xeditable/dist/css/xeditable
  *= require font-awesome
  *= require angular-material
  *= require_tree .
@@ -59,11 +60,11 @@ body {
 }
 
 .text-green {
-  color: #66E341;
+  color: #66E341 !important;
 }
 
 .text-red {
-  color: #E70A0E;
+  color: #E70A0E !important;
 }
 
 .text-yellow {
@@ -478,3 +479,15 @@ body {
 #payroll td.bordered {
   border: 1px solid #C8C8C8;
 }
+
+.popover-wrapper .editable-buttons .btn-primary {
+  background-color: #A3F185 !important;
+  border-color: #A3F185 !important;
+}
+
+.popover-wrapper .editable-buttons .btn-default {
+  background-color: #fff !important;
+  border-color: #E50000 !important;
+  color: #E50000 !important;
+}
+

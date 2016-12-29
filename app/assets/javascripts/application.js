@@ -27,3 +27,4 @@
 //= require angular/app.module
 //= require angular/app.assets
 //= require angular/shared/filters
+//= require angular-xeditable/dist/js/xeditable

@@ -11,5 +11,9 @@
     this.getMonths = function() {
       return $http.get('/reports/');
     }
+
+    this.updatePayroll = function(id, data) {
+      return $http.patch('/reports/' + id, data);
+    }
   }]);
 })();

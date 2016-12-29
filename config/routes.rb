@@ -8,7 +8,7 @@ Rails.application.routes.draw do
   # end
 
   get "/" => "home#index"
-  resources :reports, only: :index do
+  resources :reports, only: [:index, :update] do
     collection do
       get 'payroll', path: "/:year/:month"
     end
