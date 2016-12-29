@@ -493,7 +493,18 @@ body {
 }
 
 
-scrollable-table {
-  height: 200px;
+/* Fixed TAble Header */
+table#payroll-history-table { 
+  display: flex; 
+  flex-direction: column; 
+}
+#payroll-history-table tr { 
+  display: flex; 
+}
+#payroll-history-table thead, tbody { 
+  overflow-y: scroll; 
+}
+#payroll-history-table tbody { 
+  height: 445px; 
 }
 

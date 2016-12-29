@@ -334,10 +334,10 @@
           </thead>
           <tbody>
             <tr ng-repeat="payroll in employee.employeePayrolls">
-              <td class="text-left">{{payroll.date}}</td>
-              <td>{{payroll.salary | currency: ""}}</td>
-              <td class="text-green">{{payroll.extra_pay | currency: ""}}</td>
-              <td class="text-red">{{payroll.extra_fee | currency: ""}}</td>
+              <td width="40%" class="text-left">{{payroll.date}}</td>
+              <td width="20%">{{payroll.salary | currency: ""}}</td>
+              <td width="20%" class="text-green">{{payroll.extra_pay | currency: ""}}</td>
+              <td width="20%" class="text-red">{{payroll.extra_fee | currency: ""}}</td>
             </tr>
           </tbody>
         </table>

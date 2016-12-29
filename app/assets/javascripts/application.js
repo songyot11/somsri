@@ -29,4 +29,3 @@
 //= require angular/shared/filters
 //= require angular-xeditable/dist/js/xeditable
 //= require angular-xeditable/dist/js/xeditable
-//= require angular-scrollable-table/angular-scrollable-table
