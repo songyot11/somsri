@@ -11,7 +11,11 @@
     'somsri.payroll.filters'
   ]);
 
-  app.config(['stateHelperProvider', 'ASSETS', '$urlRouterProvider', function(stateHelperProvider, ASSETS, $urlRouterProvider) {
+  app.config(['stateHelperProvider', 'ASSETS', '$urlRouterProvider', '$mdDateLocaleProvider', function(stateHelperProvider, ASSETS, $urlRouterProvider, $mdDateLocaleProvider) {
+    $mdDateLocaleProvider.formatDate = function(date) {
+      return moment(date).format('DD/MM/YYYY');
+    };
+
     stateHelperProvider.
       state({
         url: '/',
