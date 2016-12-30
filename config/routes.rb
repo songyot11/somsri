@@ -1,5 +1,5 @@
 Rails.application.routes.draw do
-  devise_for :users, :skip => [:passwords, :registrations]
+  devise_for :users, :skip => [:registrations]
 
   # unauthenticated :user do
   #   devise_scope :user do
@@ -11,6 +11,13 @@ Rails.application.routes.draw do
   resources :reports, only: [:index, :update] do
     collection do
       get 'payroll', path: "/:year/:month"
+    end
+  end
+
+  resources :settings, only: [:index] do
+    collection do
+      patch 'update_current_user', path: "/"
+      patch 'update_password'
     end
   end
 

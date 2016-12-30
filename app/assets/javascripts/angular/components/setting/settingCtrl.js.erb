@@ -1,0 +1,49 @@
+(function() {
+  'use strict';
+  angular.module('somsri.payroll.setting', [
+  ])
+  .controller('settingCtrl', ['$rootScope','settingService','$scope', '$uibModal', function($rootScope, service, $scope, $uibModal) {
+    $rootScope.menu = "Setting"
+    var ctrl = this
+    service.getSetting().then(function(resp) {
+      ctrl.datas = resp.data;
+      ctrl.datas.password = "password";
+    });
+
+    ctrl.submit = function(parm){
+      var params = {
+        user: {
+          name: parm.name,
+          email: parm.email
+        }
+      };
+      service.saveSetting(params).then(function(resp) {
+        $rootScope.openEmployees();
+      });
+    }
+
+    ctrl.changePassword = function(){
+      $uibModal.open({
+        animation: true,
+        backdrop: 'static',
+        keyboard: false,
+        scope: $scope,
+        templateUrl: "<%= asset_path('angular/components/modal/password/passwordModalView.html') %>",
+        controller: 'passwordModalCtrl as password',
+        size: 'md',
+        resolve: {
+          resources: ['$ocLazyLoad', 'ASSETS', function($ocLazyLoad, ASSETS) {
+            return $ocLazyLoad.load([
+              ASSETS.somsri.payroll.password_modal
+            ]);
+          }]
+        }
+      }).result.then(function (isSuccess) {
+        if (isSuccess) {
+          $rootScope.openEmployees();
+        }
+      });
+    }
+
+  }]);
+})();
