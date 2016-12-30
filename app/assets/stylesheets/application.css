@@ -302,16 +302,19 @@ body {
   margin-bottom: 163px;
 }
 
+#payroll-report .signature,
 #payroll-slip .signature {
   margin-top: 100px;
   border-top: 1px solid;
   text-align: center;
 }
 
+#payroll-report .for_print,
 #payroll-slip .for_print {
   display: none;
 }
 
+#payroll-report .separate,
 #payroll-slip .separate {
   margin-top: 5px;
   margin-bottom: 5px;
