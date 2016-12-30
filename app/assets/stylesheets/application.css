@@ -324,61 +324,82 @@ body {
 }
 
 @media print {
+  #payroll-report.row {
+    margin-right: 0px !important;
+    margin-left: 0px !important;
+  }
+
+  #payroll-report tfoot {
+   border-bottom: unset
+  }
+
+
+  #payroll-report .unused_for_print,
   #payroll-slip .unused_for_print {
     display: none;
   }
 
   #payroll-slip p,
   #payroll-slip th,
-  #payroll-slip td {
+  #payroll-slip td,
+  #payroll-report p,
+  #payroll-report th,
+  #payroll-report td {
     font-size: 10px;
   }
-
+  
+  #payroll-report #date_table,
   #payroll-slip #date_table {
     margin-bottom: 100px;
   }
-
+  
+  #payroll-report td,
+  #payroll-report th,
   #payroll-slip td,
   #payroll-slip th {
     vertical-align: middle;
     border-color: #000;
   }
-
+  
+  #payroll-report #order thead th,
   #payroll-slip #order thead th {
     padding: 5px 10px;
   }
 
+  #payroll-report #order tbody td,
   #payroll-slip #order tbody td {
     border-bottom: 0px;
     border-top: 0px;
     height: 200px;
     vertical-align: top !important;
   }
-
+  
+  #payroll-report .slip-content,
   #payroll-slip .slip-content {
     padding: 0px;
   }
 
+  #payroll-report .for_print,
   #payroll-slip .for_print {
     display: block !important;
   }
 
+  #payroll-report #slipLogo,
   #payroll-slip #slipLogo {
     width: 200px;
   }
-
+  
+  #payroll-report td.big,
   #payroll-slip td.big {
     height: 45px
   }
 
-  #payroll-slip #slipLogo {
-    width: 200px;
-  }
-
+  #payroll-report .signature,
   #payroll-slip .signature {
     margin-top: 85px;
   }
 
+  #payroll-report p, 
   #payroll-slip p {
     margin: 0px 0 6px;
   }
