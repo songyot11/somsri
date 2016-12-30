@@ -20,10 +20,10 @@ class EmployeesController < ApplicationController
       year = nil
     end
     employee = Employee.active.find(params[:id]).as_json({ slip: true, month: month, year: year })
-    employee[:payroll][:fee_orders] = employee[:payroll][:fee_orders]
-                                                      .select { |key, value| value[:value] > 0}
-    employee[:payroll][:pay_orders] = employee[:payroll][:pay_orders]
-                                                      .select { |key, value| value[:value] > 0}
+    # employee[:payroll][:fee_orders] = employee[:payroll][:fee_orders]
+    #                                                   .select { |key, value| value[:value] > 0}
+    # employee[:payroll][:pay_orders] = employee[:payroll][:pay_orders]
+    #                                                   .select { |key, value| value[:value] > 0}
     render json: employee, status: :ok
   end
 

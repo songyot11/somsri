@@ -27,4 +27,5 @@
 //= require angular/app.module
 //= require angular/app.assets
 //= require angular/shared/filters
+//= require angular/components/shared/slip/slipDirective
 //= require angular-xeditable/dist/js/xeditable

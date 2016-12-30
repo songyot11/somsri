@@ -1,6 +1,6 @@
 (function() {
   'use strict';
-  angular.module('somsri.payroll.slip')
+  angular.module('somsri.payroll.slip.directive', [])
   .directive('slipContent', slipContent);
 
   function slipContent() {
@@ -10,7 +10,7 @@
         slipInfo: '=info',
         slipTitle: '@title'
       },
-      templateUrl: "<%= asset_path('angular/components/slip/slip-content.html') %>",
+      templateUrl: "<%= asset_path('angular/components/shared/slip/slipView.html') %>",
     };
   }
     
