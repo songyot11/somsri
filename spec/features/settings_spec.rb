@@ -9,15 +9,16 @@ describe 'Employee Details', js: true do
   it 'should update edit user detail' do
     visit "/#/setting"
     sleep(1)
-    page.fill_in 'ชื่อ', :with => 'Akiyama Eve'
-    page.fill_in 'อีเมล', :with => 'akiyama@eve.com'
+    save_screenshot('/Users/bom/Desktop/bt1.jpg')
+    page.fill_in 'username', :with => 'Akiyama Eve'
+    page.fill_in 'useremail', :with => 'akiyama@eve.com'
     click_button('บันทึก')
     sleep(1)
 
     visit "/#/setting"
     sleep(1)
-    expect(find_field('ชื่อ').value).to eq 'Akiyama Eve'
-    expect(find_field('อีเมล').value).to eq 'akiyama@eve.com'
+    expect(find_field('username').value).to eq 'Akiyama Eve'
+    expect(find_field('useremail').value).to eq 'akiyama@eve.com'
   end
 
   it 'should update password' do
