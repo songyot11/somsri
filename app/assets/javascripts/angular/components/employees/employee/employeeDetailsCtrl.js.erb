@@ -193,7 +193,7 @@
 
     ctrl.submit = function(parm){
       var isValid = false
-      
+
       if (parm == undefined || parm["employee"]["bank_name"] == undefined) {
         $('input#bank_name').focus()
       } else if (parm["employee"]["bank_branch"]  == undefined) {
@@ -216,15 +216,15 @@
               }
 
               service.saveEmployee(ctrl.datas.employee.id, datas_result).then(function(resp) {
-                $log.info("SAVE!!!");
+                // $log.info("SAVE!!!");
                 $rootScope.openEmployees();
               });
             }, function(){
               ctrl.isSubmit = false
-              $log.info("DISMISS!!");
+              // $log.info("DISMISS!!");
             });
           }else{
-            $log.info("NOTHING CHANGE!!!");
+            // $log.info("NOTHING CHANGE!!!");
             ctrl.isSubmit = false
             $rootScope.openEmployees();
           }
@@ -265,7 +265,7 @@
           $rootScope.openEmployees();
         })
       }, function(){
-        $log.info("DISMISS!!");
+        // $log.info("DISMISS!!");
       })
     }
 
@@ -274,7 +274,7 @@
         openConfirmationModal("คุณต้องการออกจากหน้านี้โดยไม่บันทึกค่าหรือไม่?", function() {
           switchMonth(monthInfo);
         }, function() {
-          $log.info("DISMISS!!");
+          // $log.info("DISMISS!!");
         })
       } else {
         switchMonth(monthInfo);

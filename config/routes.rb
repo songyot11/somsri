@@ -10,13 +10,13 @@ Rails.application.routes.draw do
   get "/" => "home#index"
   resources :reports, only: [:index, :update] do
     collection do
-      get 'payroll', path: "/:year/:month"
+      get "/:year/:month", action: 'payroll'
     end
   end
 
   resources :settings, only: [:index] do
     collection do
-      patch 'update_current_user', path: "/"
+      patch "/", action: 'update_current_user'
       patch 'update_password'
     end
   end
