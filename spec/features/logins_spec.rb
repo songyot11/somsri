@@ -70,13 +70,16 @@ describe 'Login', js: true do
 
   it 'should not go anywhere if user not authentication' do
     visit "/#/employees"
-    expect(page).to have_current_path new_user_session_path
+    expect(page).to have_current_path '/'
+    expect(page).to have_button 'Log in'
 
     visit "/#/reports"
-    expect(page).to have_current_path new_user_session_path
+    expect(page).to have_current_path '/'
+    expect(page).to have_button 'Log in'
 
     visit "/#/employees/1"
-    expect(page).to have_current_path new_user_session_path
+    expect(page).to have_current_path '/'
+    expect(page).to have_button 'Log in'
   end
 
   it 'should able to authentication' do
@@ -85,6 +88,7 @@ describe 'Login', js: true do
     page.fill_in 'Password', :with => users[0].password
     click_button('Log in')
     expect(page).to have_current_path "/"
+    expect(page).to have_content "Welcome #{users[0].name}"
   end
 
 end

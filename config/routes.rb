@@ -1,16 +1,23 @@
 Rails.application.routes.draw do
-  devise_for :users, :skip => [:passwords, :registrations]
+  devise_for :users, :skip => [:registrations]
 
-  # unauthenticated :user do
-  #   devise_scope :user do
-  #     get "/" => "devise/sessions#new"
-  #   end
-  # end
+  unauthenticated :user do
+    devise_scope :user do
+      get "/" => "devise/sessions#new"
+    end
+  end
 
   get "/" => "home#index"
   resources :reports, only: [:index, :update] do
     collection do
-      get 'payroll', path: "/:year/:month"
+      get "/:year/:month", action: 'payroll'
+    end
+  end
+
+  resources :settings, only: [:index] do
+    collection do
+      patch "/", action: 'update_current_user'
+      patch 'update_password'
     end
   end
 

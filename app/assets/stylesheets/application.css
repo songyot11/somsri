@@ -159,19 +159,19 @@ body {
 .btn-print {
   background-color: #FFAA00;
   color: #ffffff;
-  border-radius: 0px  
+  border-radius: 0px
 }
 
 
 .btn-danger {
-  border-radius: 0px  
+  border-radius: 0px
 }
 
 .btn-memo {
   background-color: #fff;
   border: 2px solid #4893DC;
   color: #4893DC;
-  border-radius: 0px  
+  border-radius: 0px
 }
 
 .btn-print {
@@ -253,7 +253,7 @@ body {
   background-color: #FFAA00;
   color: #ffffff;
   margin-top: 20px;
-  border-radius: 0px  
+  border-radius: 0px
 }
 
 #payroll-slip .btn-print:hover,
@@ -350,12 +350,12 @@ body {
   #payroll-report td {
     font-size: 10px;
   }
-  
+
   #payroll-report #date_table,
   #payroll-slip #date_table {
     margin-bottom: 100px;
   }
-  
+
   #payroll-report td,
   #payroll-report th,
   #payroll-slip td,
@@ -363,7 +363,7 @@ body {
     vertical-align: middle;
     border-color: #000;
   }
-  
+
   #payroll-report #order thead th,
   #payroll-slip #order thead th {
     padding: 5px 10px;
@@ -376,7 +376,7 @@ body {
     height: 200px;
     vertical-align: top !important;
   }
-  
+
   #payroll-report .slip-content,
   #payroll-slip .slip-content {
     padding: 0px;
@@ -391,7 +391,7 @@ body {
   #payroll-slip #slipLogo {
     width: 200px;
   }
-  
+
   #payroll-report td.big,
   #payroll-slip td.big {
     height: 45px
@@ -402,7 +402,7 @@ body {
     margin-top: 85px;
   }
 
-  #payroll-report p, 
+  #payroll-report p,
   #payroll-slip p {
     margin: 0px 0 6px;
   }
@@ -436,30 +436,30 @@ body {
   #payroll-slip .safari #order thead th {
     padding: 5px 10px;
   }
-  .pagebreak { page-break-before: always; } 
+  .pagebreak { page-break-before: always; }
 }
 
-.employee-details .form-group input, .employee-details .form-group div{
+.form-group input, .form-group div{
   border-left: 0 !important;
   border-right: 0 !important;
   border-top: 0 !important;
   box-shadow: none !important;
 }
 
-.employee-details .paragraph {
+.paragraph {
   background-color: white;
   padding: 60px;
   margin-top: 30px;
   margin-bottom: 30px;
 }
 
-.employee-details .paragraph.cyan,
+.paragraph.cyan,
 #bird-eye .modal-content.cyan {
   border-left: 5px solid;
   border-left-color: #42e2f4;
 }
 
-.employee-details .paragraph.orange{
+.paragraph.orange{
   border-left: 5px solid;
   border-left-color: #F59C0B;
 }
@@ -545,17 +545,31 @@ body {
 
 
 /* Fixed TAble Header */
-table#payroll-history-table { 
-  display: flex; 
-  flex-direction: column; 
+table#payroll-history-table {
+  display: flex;
+  flex-direction: column;
 }
-#payroll-history-table tr { 
-  display: flex; 
+#payroll-history-table tr {
+  display: flex;
 }
-#payroll-history-table thead, tbody { 
-  overflow-y: scroll; 
+#payroll-history-table thead, tbody {
+  overflow-y: scroll;
 }
-#payroll-history-table tbody { 
-  height: 445px; 
+#payroll-history-table tbody {
+  height: 445px;
 }
 
+.white-bg {
+  background-color: white !important;
+}
+
+.modal-content {
+  background-color: white;
+  padding: 60px;
+  margin-top: 30px;
+  margin-bottom: 30px;
+  border: 0px solid;
+  border-left: 5px solid;
+  border-left-color: #F59C0B;
+  border-radius: 0px;
+}
