@@ -9,7 +9,6 @@ describe 'Employee Details', js: true do
   it 'should update edit user detail' do
     visit "/#/setting"
     sleep(1)
-    save_screenshot('/Users/bom/Desktop/bt1.jpg')
     page.fill_in 'username', :with => 'Akiyama Eve'
     page.fill_in 'useremail', :with => 'akiyama@eve.com'
     click_button('บันทึก')
