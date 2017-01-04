@@ -1,5 +1,4 @@
 class ReportsController < ApplicationController
-  authorize_resource :class => :report
   skip_before_action :verify_authenticity_token, :only => [:update]
 
   # GET /reports
@@ -48,7 +47,7 @@ class ReportsController < ApplicationController
 
     def params_payroll
       params.require(:payroll).permit(:salary, :allowance, :attendance_bonus, :ot, :bonus, :position_allowance,
-                                      :extra_etc, :absence, :late, :tax, :social_insurance, :fee_etc, :pvf, 
+                                      :extra_etc, :absence, :late, :tax, :social_insurance, :fee_etc, :pvf,
                                       :advance_payment)
     end
 end
