@@ -15,6 +15,7 @@ describe 'Employee Details', js: true do
     sleep(1)
 
     visit "/#/setting"
+    sleep(1)
     expect(find_field('ชื่อ').value).to eq 'Akiyama Eve'
     expect(find_field('อีเมล').value).to eq 'akiyama@eve.com'
   end
