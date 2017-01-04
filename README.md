@@ -39,7 +39,8 @@ docker-compose up
 ##### heroku
   since we are using bower and rails, we have to setup Heroku multiple build packs by using this command
 ```
-heroku config:add BUILDPACK_URL=https://github.com/ddollar/heroku-buildpack-multi.git
+heroku buildpacks:set heroku/ruby
+heroku buildpacks:add --index 1 heroku/nodejs
 ```
   and another command for auto migrate
 ```
