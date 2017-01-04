@@ -16,7 +16,7 @@
           </ul>
         </div>
       </div>
-      <div class="col-lg-2">
+      <div class="col-lg-2" ng-hide="true">
         <button type="button" class="btn btn-lg bg-yellow btn-block">
           <i class="fa fa-upload" aria-hidden="true"></i>
           Export for bank</button>
@@ -60,9 +60,9 @@
             <!-- Result -->
             <th class="text-center">เงินเดือนสุทธิ</th>
          </tr>
-        </thead>  
+        </thead>
         <tbody>
-          <tr ng-repeat="(index, employee) in payroll.employees"> 
+          <tr ng-repeat="(index, employee) in payroll.employees">
             <!-- Employee Data -->
             <td class="text-left">{{employee.code}}</td>
             <td class="text-left">
