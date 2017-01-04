@@ -89,6 +89,10 @@ body {
   margin: auto;
 }
 
+.main-menu-item:focus {
+  outline: none;
+}
+
 .main-menu-item .main-menu-title {
   font-size: 18px;
   margin-top: 15px;
