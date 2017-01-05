@@ -26,12 +26,12 @@
             <th class="text-center">เงินเดือนสุทธิ</th>
             <th class="text-center"></th>
          </tr>
-        </thead>  
+        </thead>
         <tbody>
-          <tr ng-repeat="employee in report.employees"> 
+          <tr ng-repeat="employee in report.employees">
             <td class="text-left">{{employee.code}}</td>
             <td class="text-left">
-              <a href="/#/employees/{{employee.code}}">
+              <a href="/#/employees/{{employee.code}}?month={{report.currentMonthData.month}}&year={{report.currentMonthData.year}}">
                 <strong>{{employee.name}}</strong>
               </a>
             </td>
