@@ -227,6 +227,33 @@ describe 'Employee Details', js: true do
     expect(find_field('ค่าแรง / เงินเดือนปัจจุบัน').value).to eq '50000'
   end
 
+  it 'can edit history data' do
+    visit "/#/employees/#{employees[0].id}"
+    sleep(1)
+    find('#month-list').click
+    sleep(1)
+    find('ul.dropdown-menu li a', text: "สิงหาคม 2016").click
+    sleep(1)
+    page.fill_in 'ค่าแรง / เงินเดือนปัจจุบัน', :with => '1'
+    sleep(1)
+    click_button('บันทึก')
+    sleep(1)
+    click_button('ตกลง')
+    sleep(1)
+
+    # revisit and check the value
+    visit "/#/employees/#{employees[0].id}"
+    sleep(1)
+    # check data in current month
+    expect(find_field('ค่าแรง / เงินเดือนปัจจุบัน').value).to eq '50000'
+    find('#month-list').click
+    sleep(1)
+    find('ul.dropdown-menu li a', text: "สิงหาคม 2016").click
+    sleep(1)
+    # check edited data on previous month
+    expect(find_field('ค่าแรง / เงินเดือนปัจจุบัน').value).to eq '1'
+  end
+
   it 'should go to 2016-8 slip' do
     visit "/#/employees/#{employees[0].id}"
     sleep(1)
