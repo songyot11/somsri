@@ -16,14 +16,16 @@
         ctrl.display_datas = [];
         for(var i = 0; i < ctrl.datas.length; i++) {
           var data = ctrl.datas[i];
-          ctrl.display_datas.push({
-            full_name: data['name'],
-            id: data['id'],
-            salary: data['salary'],
-            fee: data['extra_fee'],
-            extra: data['extra_pay'],
-            imgUrl: data['img']
-          });
+          if (data['id']) {
+            ctrl.display_datas.push({
+              full_name: data['name'],
+              id: data['id'],
+              salary: data['salary'],
+              fee: data['extra_fee'],
+              extra: data['extra_pay'],
+              imgUrl: data['img']
+            });
+          }
         }
       });
     }
