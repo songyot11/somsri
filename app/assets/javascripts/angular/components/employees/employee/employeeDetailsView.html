@@ -158,6 +158,28 @@
       </div>
     </div>
     <div class="paragraph orange payroll" ng-show="employee.isEdit">
+      <div ng-switch="employee.monthsDisplay.length > 0">
+        <div ng-switch-when="true">
+          <div class="dropdown">
+            <h3 id="month-list" data-toggle="dropdown">
+              <span ng-bind="employee.currentMonthDisplay" ></span>
+              <span class="caret"></span>
+            </h3>
+            <ul class="dropdown-menu" aria-labelledby="month-list">
+              <li ng-repeat="month in employee.monthsDisplay">
+                <a ng-click="employee.switchMonth(month)">
+                  {{ month | get_month_name }}
+                </a>
+              </li>
+            </ul>
+          </div>
+        </div>
+        <div ng-switch-default>
+          <h3 data-toggle="dropdown">
+            <span ng-bind="employee.currentMonthDisplay" ></span>
+          </h3>
+        </div>
+      </div>
       <div class="row">
         <div class="col-md-4"><h3>รายการเงินได้</h3></div>
         <div class="col-md-4"><h3>รายการเงินหัก</h3></div>
@@ -168,7 +190,7 @@
         <div class="col-md-4">
           <div class="form-group">
             <label for="salary">ค่าแรง / เงินเดือนปัจจุบัน</label>
-            <input type="number" class="form-control text-green" id="salary" ng-model="employee.datas.employee.salary"  ng-change="employee.calTotal()">
+            <input type="number" class="form-control text-green" id="salary" ng-model="employee.datas.payroll.salary"  ng-change="employee.calTotal(); employee.changeSalary()">
           </div>
         </div>
         <div class="col-md-4">
@@ -198,7 +220,13 @@
           </div>
         </div>
         <div class="col-md-4">
-          <!-- <button>ประวัติเงินเดือน</button> -->
+          <div class="row">
+            <div class="col-md-8">
+              <button type="button" class="btn bg-gray btn-block" data-toggle="modal" data-target="#bird-eye" ng-click="employee.getAllPayroll(employee.empId)">
+                ประวัติเงินเดือน
+              </button>
+            </div>
+          </div>
         </div>
       </div>
       <div class="row">
@@ -274,7 +302,7 @@
     </div>
     <div class="footer-menu row">
       <div class="col-md-4">
-        <button ng-show="employee.isEdit" type="button" class="btn btn-lg btn-block btn-print" ng-click="openSlip(employee.datas.employee.id)">พิมพ์ใบจ่ายเงินเดือน</button>
+        <button ng-show="employee.isEdit" type="button" class="btn btn-lg btn-block btn-print" ng-click="openSlip(employee.datas.employee.id, employee.currentMonth['month'], employee.currentMonth['year'])">พิมพ์ใบจ่ายเงินเดือน</button>
       </div>
 
       <div class="col-md-2 {{employee.isEdit ? '': 'col-md-offset-2'}}">
@@ -284,11 +312,47 @@
         <button type="submit" class="btn btn-lg btn-block btn-submit" ng-disabled="employee.isSubmit">บันทึก</button>
       </div>
       <div class="col-md-2 text-right">
-        <button type="button" class="btn btn-lg btn-block btn-cancel" ng-click="employee.cancle()">ยกเลิก</button>
+        <button type="button" class="btn btn-lg btn-block btn-cancel" ng-click="employee.cancel()">ยกเลิก</button>
       </div>
       <div ng-show="employee.isEdit" class="col-md-2 text-right">
         <button type="button" class="btn btn-lg btn-block btn-danger" ng-click="employee.deleteEmployee(employee.empId)">ลบ</button>
       </div>
     </div>
   </form>
+</div>
+
+<div class="modal fade " id="bird-eye" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content cyan">
+      <div class="modal-header">
+        <i class="fa fa-close fa-2x pull-right" data-dismiss="modal"></i>
+        <h3 class="modal-title" id="myModalLabel">ประวัติเงินเดือน</h3>
+      </div>
+      <div class="modal-body">
+        <table id="payroll-history-table" class="table text-right">
+          <thead>
+            <th width="40%">เดือน</th>
+            <th class="text-center" width="20%">เงินเดือน</th>
+            <th class="text-center" width="20%">รายการได้</th>
+            <th class="text-center" width="20%">รายการหัก</th>
+          </thead>
+          <tbody>
+            <tr ng-repeat="payroll in employee.employeePayrolls">
+              <td width="40%" class="text-left">{{payroll.date}}</td>
+              <td width="20%">{{payroll.salary | currency: ""}}</td>
+              <td width="20%" class="text-green">{{payroll.extra_pay | currency: ""}}</td>
+              <td width="20%" class="text-red">{{payroll.extra_fee | currency: ""}}</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+      <div class="modal-footer">
+        <div class="row">
+          <div class="col-md-4 col-md-offset-4">
+            <button type="button" class="btn btn-lg btn-block btn-cancel" data-dismiss="modal">ปิด</button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
 </div>

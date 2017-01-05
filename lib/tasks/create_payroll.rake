@@ -16,7 +16,7 @@ def create_payroll(month=DateTime.now.month, year=DateTime.now.year)
 
   employees = Employee.all
   employees.each do |employee|
-    Payroll.transaction do 
+    Payroll.transaction do
       employee_previous = employee.payrolls.order("created_at ASC").last || employee.payrolls.new()
 
       payroll = employee.payrolls.new(
@@ -45,6 +45,6 @@ def create_payroll(month=DateTime.now.month, year=DateTime.now.year)
       end
     end
   end
-  
+
   puts "Created payrolls successfully"
 end

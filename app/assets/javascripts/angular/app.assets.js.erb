@@ -14,7 +14,9 @@
           name: 'somsri.payroll.report',
           files: [
             "<%= asset_path('angular/components/report/reportCtrl.js') %>",
-            "<%= asset_path('angular/components/report/reportService.js') %>"
+            "<%= asset_path('angular/components/report/reportService.js') %>",
+            "<%= asset_path('angular/components/slip/slipService.js') %>",
+            "<%= asset_path('angular/components/shared/slip/slipDirective.js') %>"
           ]
         },
         'employees': {
@@ -29,14 +31,15 @@
           files: [
             "<%= asset_path('angular/components/slip/slipCtrl.js') %>",
             "<%= asset_path('angular/components/slip/slipService.js') %>",
-            "<%= asset_path('angular/components/slip/slipDirective.js') %>"
+            "<%= asset_path('angular/components/shared/slip/slipDirective.js') %>"
           ]
         },
         'employee_details': {
           name: 'somsri.payroll.employee_details',
           files: [
             "<%= asset_path('angular/components/employees/employee/employeeDetailsCtrl.js') %>",
-            "<%= asset_path('angular/components/employees/employeesService.js') %>"
+            "<%= asset_path('angular/components/employees/employeesService.js') %>",
+            "<%= asset_path('angular/components/report/reportService.js') %>"
           ]
         },
         'confirm_modal': {
@@ -50,6 +53,20 @@
           files: [
             "<%= asset_path('angular/components/payroll/payrollCtrl.js') %>",
             "<%= asset_path('angular/components/report/reportService.js') %>"
+          ]
+        },
+        'setting': {
+          name: 'somsri.payroll.setting',
+          files: [
+            "<%= asset_path('angular/components/setting/settingCtrl.js') %>",
+            "<%= asset_path('angular/components/setting/settingService.js') %>"
+          ]
+        },
+        'password_modal': {
+          name: 'somsri.payroll.password_modal',
+          files: [
+            "<%= asset_path('angular/components/modal/password/passwordModalCtrl.js') %>",
+            "<%= asset_path('angular/components/modal/password/passwordModalService.js') %>"
           ]
         },
       }

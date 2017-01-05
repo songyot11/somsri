@@ -6,27 +6,49 @@ class EmployeesController < ApplicationController
   def index
     school = current_user.school
     employee = school.employees.active.order('employees.start_date ASC, employees.created_at ASC')
-                              .as_json("employee_list")
+                              .as_json(employee_list: true)
     render json: employee, status: :ok
   end
 
   # GET /employees/:id/slip
   def slip
-    employee = Employee.active.find(params[:id]).as_json("slip")
+    month = params[:month].to_i
+    year = params[:year].to_i
+    payroll = nil
+    if month.to_s != params[:month] || year.to_s != params[:year]
+      month = nil
+      year = nil
+    end
+    employee = Employee.active.find(params[:id]).as_json({ slip: true, month: month, year: year })
     employee[:payroll][:fee_orders] = employee[:payroll][:fee_orders]
                                                       .select { |key, value| value[:value] > 0}
     employee[:payroll][:pay_orders] = employee[:payroll][:pay_orders]
                                                       .select { |key, value| value[:value] > 0}
-
     render json: employee, status: :ok
+  end
+
+  # GET /employees/:id/payrolls
+  def payrolls
+    payrolls = Employee.active.find(params[:id]).payrolls
+                       .order("created_at desc")
+                       .as_json("history")
+    render json: payrolls, status: :ok
   end
 
   # GET /employees/:id
   def show
     @employee = Employee.active.find(params[:id])
+    payroll = @employee.lastest_payroll
+
+    month = params[:month].to_i
+    year = params[:year].to_i
+    if month.to_s == params[:month] && year.to_s == params[:year]
+      payroll = @employee.payroll(params[:month].to_i, params[:year].to_i)
+    end
+
     render json: {
       employee: @employee,
-      payroll: @employee.lastest_payroll
+      payroll: payroll
     }
   end
 
@@ -54,13 +76,15 @@ class EmployeesController < ApplicationController
   def update
     employee_datas = employee_params
     employee_datas.delete(:id)
-    payroll_datas = payroll_params
-    payroll_id = payroll_datas[:id]
-    payroll_datas[:salary] = employee_datas[:salary]
-    payroll_datas.delete(:id)
-
     employee = Employee.update(params[:id] , employee_datas)
-    payroll = Payroll.update(payroll_id, payroll_datas)
+
+    if params[:payroll]
+      payroll_datas = payroll_params
+      payroll_id = payroll_datas[:id]
+      payroll_datas[:salary] = employee_datas[:salary]
+      payroll_datas.delete(:id)
+      payroll = Payroll.update(payroll_id, payroll_datas)
+    end
 
     render json: {
       employee: employee,

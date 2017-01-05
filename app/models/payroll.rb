@@ -27,6 +27,7 @@ class Payroll < ApplicationRecord
   def as_json(options={})
     if options["report"]
       {
+        payroll_id: self.id,
         code: self.employee.id,
         prefix: self.employee.prefix,
         name: self.employee.full_name,
@@ -50,7 +51,15 @@ class Payroll < ApplicationRecord
         advance_payment: self.advance_payment.to_f,
         fee_etc: self.fee_etc.to_f,
         pvf: self.pvf.to_f,
-
+        #Result
+        net_salary: (self.salary + extra_pay - extra_fee).to_f
+      }
+    elsif options["history"]
+      {
+        date: I18n.l(self.created_at, format: "%B #{created_at.year + 543}"),
+        salary: self.salary.to_f,
+        extra_pay: extra_pay.to_f,
+        extra_fee: extra_fee.to_f,
       }
     elsif options["slip"]
       {

@@ -8,7 +8,9 @@
     'somsri.payroll.main',
     'ngMaterial',
     'angularMoment',
-    'somsri.payroll.filters'
+    'somsri.payroll.filters',
+    'xeditable',
+    'somsri.payroll.slip.directive',
   ]);
 
   app.config(['stateHelperProvider', 'ASSETS', '$urlRouterProvider', '$mdDateLocaleProvider', function(stateHelperProvider, ASSETS, $urlRouterProvider, $mdDateLocaleProvider) {
@@ -70,7 +72,7 @@
         }
       }).
       state({
-        url: '/employees/:id/slip',
+        url: '/employees/:id/slip?month&year',
         name: 'slip',
         templateUrl: "<%= asset_path('angular/components/slip/slipView.html') %>",
         controller: 'slipCtrl as slip',
@@ -94,8 +96,26 @@
             ]);
           }]
         }
+      }).
+      state({
+        url: '/setting',
+        name: 'setting',
+        templateUrl: "<%= asset_path('angular/components/setting/settingView.html') %>",
+        controller: 'settingCtrl as setting',
+        resolve: {
+          resources: ['$ocLazyLoad', function($ocLazyLoad) {
+            return $ocLazyLoad.load([
+              ASSETS.somsri.payroll.setting
+            ]);
+          }]
+        }
       })
 
     $urlRouterProvider.when("", "/");
+  }]);
+
+  app.run(['editableOptions', function(editableOptions) {
+    editableOptions.theme = 'bs3';
+    editableOptions.icon_set = "font-awesome"
   }]);
 })();

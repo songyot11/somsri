@@ -11,6 +11,7 @@
  * It is generally better to create a new file per style scope.
  *
  *= require bootstrap/dist/css/bootstrap.min.css
+ *= require angular-xeditable/dist/css/xeditable
  *= require font-awesome
  *= require angular-material
  *= require_tree .
@@ -59,11 +60,11 @@ body {
 }
 
 .text-green {
-  color: #66E341;
+  color: #66E341 !important;
 }
 
 .text-red {
-  color: #E70A0E;
+  color: #E70A0E !important;
 }
 
 .text-yellow {
@@ -86,6 +87,10 @@ body {
   text-align: center;
   display: table;
   margin: auto;
+}
+
+.main-menu-item:focus {
+  outline: none;
 }
 
 .main-menu-item .main-menu-title {
@@ -158,19 +163,19 @@ body {
 .btn-print {
   background-color: #FFAA00;
   color: #ffffff;
-  border-radius: 0px  
+  border-radius: 0px
 }
 
 
 .btn-danger {
-  border-radius: 0px  
+  border-radius: 0px
 }
 
 .btn-memo {
   background-color: #fff;
   border: 2px solid #4893DC;
   color: #4893DC;
-  border-radius: 0px  
+  border-radius: 0px
 }
 
 .btn-print {
@@ -252,7 +257,7 @@ body {
   background-color: #FFAA00;
   color: #ffffff;
   margin-top: 20px;
-  border-radius: 0px  
+  border-radius: 0px
 }
 
 #payroll-slip .btn-print:hover,
@@ -301,16 +306,19 @@ body {
   margin-bottom: 163px;
 }
 
-#payroll-slip #signature {
+#payroll-report .signature,
+#payroll-slip .signature {
   margin-top: 100px;
   border-top: 1px solid;
   text-align: center;
 }
 
+#payroll-report .for_print,
 #payroll-slip .for_print {
   display: none;
 }
 
+#payroll-report .separate,
 #payroll-slip .separate {
   margin-top: 5px;
   margin-bottom: 5px;
@@ -323,24 +331,49 @@ body {
 }
 
 @media print {
+  #payroll-report.row {
+    margin-right: 0px !important;
+    margin-left: 0px !important;
+  }
+
+  #payroll-report tfoot {
+   border-bottom: unset
+  }
+
+
+  #payroll-report .unused_for_print,
   #payroll-slip .unused_for_print {
     display: none;
   }
 
   #payroll-slip p,
   #payroll-slip th,
-  #payroll-slip td {
+  #payroll-slip td,
+  #payroll-report p,
+  #payroll-report th,
+  #payroll-report td {
     font-size: 10px;
   }
 
+  #payroll-report #date_table,
   #payroll-slip #date_table {
     margin-bottom: 100px;
   }
 
+  #payroll-report td,
+  #payroll-report th,
+  #payroll-slip td,
+  #payroll-slip th {
+    vertical-align: middle;
+    border-color: #000;
+  }
+
+  #payroll-report #order thead th,
   #payroll-slip #order thead th {
     padding: 5px 10px;
   }
 
+  #payroll-report #order tbody td,
   #payroll-slip #order tbody td {
     border-bottom: 0px;
     border-top: 0px;
@@ -348,65 +381,89 @@ body {
     vertical-align: top !important;
   }
 
+  #payroll-report .slip-content,
   #payroll-slip .slip-content {
     padding: 0px;
   }
 
-  #payroll-slip th.bg-gray,
-  #payroll-slip thead th {
-    background-color: #4A4A4A !important;
-    color: #fff !important;
-  }
-
+  #payroll-report .for_print,
   #payroll-slip .for_print {
     display: block !important;
   }
 
+  #payroll-report #slipLogo,
   #payroll-slip #slipLogo {
     width: 200px;
   }
 
+  #payroll-report td.big,
   #payroll-slip td.big {
     height: 45px
   }
 
-  #payroll-slip #slipLogo {
-    width: 200px;
-  }
-
-  #payroll-slip td.big {
-    height: 40px
-  }
-
-  #payroll-slip #signature {
+  #payroll-report .signature,
+  #payroll-slip .signature {
     margin-top: 85px;
   }
 
+  #payroll-report p,
   #payroll-slip p {
     margin: 0px 0 6px;
   }
+
+  /* For Safari */
+  #payroll-slip .safari td.big {
+    height: auto
+  }
+
+  #payroll-slip .safari p,
+  #payroll-slip .safari th,
+  #payroll-slip .safari td {
+    font-size: 9px;
+  }
+
+  #payroll-slip .safari #date_table {
+    margin-bottom: 100px;
+  }
+
+  #payroll-slip .safari #order tbody td {
+    border-bottom: 0px;
+    border-top: 0px;
+    height: 170px;
+    vertical-align: top !important;
+  }
+
+  #payroll-slip .safari .signature {
+    margin-top: 75px;
+  }
+
+  #payroll-slip .safari #order thead th {
+    padding: 5px 10px;
+  }
+  .pagebreak { page-break-before: always; }
 }
 
-.employee-details .form-group input, .employee-details .form-group div{
+.form-group input, .form-group div{
   border-left: 0 !important;
   border-right: 0 !important;
   border-top: 0 !important;
   box-shadow: none !important;
 }
 
-.employee-details .paragraph {
+.paragraph {
   background-color: white;
   padding: 60px;
   margin-top: 30px;
   margin-bottom: 30px;
 }
 
-.employee-details .paragraph.cyan{
+.paragraph.cyan,
+#bird-eye .modal-content.cyan {
   border-left: 5px solid;
   border-left-color: #42e2f4;
 }
 
-.employee-details .paragraph.orange{
+.paragraph.orange{
   border-left: 5px solid;
   border-left-color: #F59C0B;
 }
@@ -477,4 +534,46 @@ body {
 #payroll th.bordered,
 #payroll td.bordered {
   border: 1px solid #C8C8C8;
+}
+
+.popover-wrapper .editable-buttons .btn-primary {
+  background-color: #A3F185 !important;
+  border-color: #A3F185 !important;
+}
+
+.popover-wrapper .editable-buttons .btn-default {
+  background-color: #fff !important;
+  border-color: #E50000 !important;
+  color: #E50000 !important;
+}
+
+
+/* Fixed TAble Header */
+table#payroll-history-table {
+  display: flex;
+  flex-direction: column;
+}
+#payroll-history-table tr {
+  display: flex;
+}
+#payroll-history-table thead, tbody {
+  overflow-y: scroll;
+}
+#payroll-history-table tbody {
+  height: 445px;
+}
+
+.white-bg {
+  background-color: white !important;
+}
+
+.modal-content {
+  background-color: white;
+  padding: 60px;
+  margin-top: 30px;
+  margin-bottom: 30px;
+  border: 0px solid;
+  border-left: 5px solid;
+  border-left-color: #F59C0B;
+  border-radius: 0px;
 }

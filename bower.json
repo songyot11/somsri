@@ -14,7 +14,9 @@
     "angular-aria": "1.5.9",
     "angular-animate": "1.5.9",
     "angular-material": "1.1.1",
-    "angular-moment": ""
+    "angular-moment": "",
+    "angular-xeditable": "",
+    "angular-scrollable-table": ""
   },
   "resolutions": {
     "angular": "1.5.9"

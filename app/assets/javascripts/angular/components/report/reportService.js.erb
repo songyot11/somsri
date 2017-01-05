@@ -1,15 +1,23 @@
 (function() {
   'use strict';
 
-  angular.module('somsri.payroll.service', [
+  angular.module('somsri.payroll.report.service', [
   ])
   .service('reportService', ['$http', function($http) {
     this.getPayroll = function(year, month) {
       return $http.get('/reports/' + year + "/" + month);
     }
 
-    this.getMonths = function() {
-      return $http.get('/reports/');
+    this.getMonths = function(employeeId) {
+      if(employeeId){
+        return $http.get('/reports/', { params: { employee_id: employeeId } });
+      }else{
+        return $http.get('/reports/');
+      }
+    }
+
+    this.updatePayroll = function(id, data) {
+      return $http.patch('/reports/' + id, data);
     }
   }]);
 })();

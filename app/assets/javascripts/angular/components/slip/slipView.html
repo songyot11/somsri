@@ -1,3 +1,4 @@
+
 <div id="payroll-slip">
   <div class="row">
     <div class="col-lg-10 col-lg-offset-1">
@@ -5,7 +6,7 @@
         <div class="col-sm-6">
           <h2>
             <a href="/#/employees">
-              <i class="glyphicon glyphicon-arrow-left"></i>
+              <i class="fa fa-arrow-left" aria-hidden="true"></i>
               {{slip.employee.name}}
             </a>
           </h2>
@@ -13,7 +14,7 @@
         <div class="col col-sm-6 text-right">
           <a class="text-white" ng-click="slip.repeat()">
             <button class="btn btn-print">
-              <i class="glyphicon glyphicon-print"></i>
+              <i class="fa fa-print" aria-hidden="true"></i>
               พิมใบจ่ายเงินเดือน
             </button>
           </a>
@@ -21,7 +22,7 @@
       </div>
 
       <slip-content info=slip title="สำหรับโรงเรียน" />
-      <div class="separate for_print"></div>
+      <br>
     </div>
   </div>
 </div>

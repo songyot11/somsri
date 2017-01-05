@@ -117,4 +117,15 @@ describe 'Payroll Slip', js: true do
     eventually { expect(page).to have_content 'รายได้สะสมต่อปี Acc. Income ภาษีสะสมต่อปี Acc. Tax เงินประกันสังคมสะสมต่อปี Acc. Social fund เงินสะสมกองทุนสงเคราะห์ Private Teacher Aid fund' }
     eventually { expect(page).to have_content '74,082.00 1,068.00 750.00 1,100.00' }
   end
+
+  it 'should display 2015-2 slip order and value' do
+    visit "/#/employees/#{employee.id}/slip?month=2&year=2015"
+    eventually { expect(page).to have_content 'เงินเดือน / Salary ก.พ. 58 เบี้ยเลี้ยง / Shift' }
+    eventually { expect(page).to have_content '25,000.00 2,500.00'}
+    eventually { expect(page).to have_content 'ภาษี / Tax ประกันสังคม / Social Sec. สาย / Late เงินสะสมกองทุนสงเคราะห์ / Private Teacher Aid fund'}
+    eventually { expect(page).to have_content '968.00 750.00 500.00 100.00'}
+    eventually { expect(page).to have_content 'รวมรายได้ Total Income 27,500.00' }
+    eventually { expect(page).to have_content 'รวมรายการหัก Total Deduction 2,318.00'}
+    eventually { expect(page).to have_content 'เงินรับสุทธิ Net Income 25,182.00' }
+  end
 end

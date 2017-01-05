@@ -2,7 +2,7 @@
   'use strict';
   angular.module('somsri.payroll.report', [
   ])
-  .controller('reportCtrl', ['$filter', '$rootScope', 'reportService', function($filter, $rootScope, reportService) {
+  .controller('reportCtrl', ['$compile', '$scope', '$window', '$filter', '$rootScope', 'reportService', 'slipService', function($compile, $scope, $window, $filter, $rootScope, reportService, slipService) {
     $rootScope.menu = "Report"
     
     var ctrl = this
@@ -38,22 +38,58 @@
       reportService.getPayroll(month.year, month.month).then(function(resp) {
         ctrl.employees = resp.data
         ctrl.total = getTotalSalary(ctrl.employees);
-        ctrl.currentMonth = month
+        ctrl.currentMonth = $filter('get_month_name')(month)
+        ctrl.currentMonthData = month
       });
     }
 
-    reportService.getMonths().then(function(resp) {
-      if (resp.data.length > 0) {
-        ctrl.months = resp.data
-        var current = ctrl.months[0]
+    ctrl.printSlip = function(id, currentMonth) {
+      var containerDiv = $('#payroll-report')
+      ctrl.employee = []
 
-        reportService.getPayroll(current.year, current.month).then(function(resp) {
-          ctrl.employees = resp.data
-          ctrl.total = getTotalSalary(ctrl.employees);
-          getTotalSalary(ctrl.employees)
-          ctrl.currentMonth = $filter('get_month_name')(ctrl.months[0])
-        });
-      }
-    });
+      slipService.employeeSlip(id, currentMonth.month, currentMonth.year).then(function(resp) {
+        ctrl.employee = resp.data
+
+        if($window.navigator.userAgent.indexOf('Chrome') == -1) {
+          var slipForSchool = $compile('<slip-content info=report title="สำหรับโรงเรียน" class="for_print safari"/>');
+          var slipForEmployee = $compile('<slip-content info=report title="สำหรับพนักงาน" class="for_print safari"/>');
+        } else {
+          var slipForSchool = $compile('<slip-content info=report title="สำหรับโรงเรียน" class="for_print"/>');
+          var slipForEmployee = $compile('<slip-content info=report title="สำหรับพนักงาน" class="for_print"/>');
+        }
+
+        var slipSchoolDiv = slipForSchool($scope);
+        var slipEmployeeDiv = slipForEmployee($scope);
+
+        angular.element(containerDiv).append(slipSchoolDiv);
+        angular.element(containerDiv).append('<div class="separate for_print"></div>');
+        angular.element(containerDiv).append(slipEmployeeDiv);
+      
+        setTimeout(function() {
+          window.print();
+          $("slip-content").remove()
+          $(".separate").remove()
+        }, 500);
+      })
+    }
+    
+    function getPayrolls() {
+      reportService.getMonths().then(function(resp) {
+        if (resp.data.length > 0) {
+          ctrl.months = resp.data
+          var current = ctrl.months[0]
+
+          reportService.getPayroll(current.year, current.month).then(function(resp) {
+            ctrl.employees = resp.data
+            ctrl.total = getTotalSalary(ctrl.employees);
+            getTotalSalary(ctrl.employees)
+            ctrl.currentMonth = $filter('get_month_name')(current)
+            ctrl.currentMonthData = current
+          });
+        }
+      });
+    }
+
+    getPayrolls()
   }]);
 })();

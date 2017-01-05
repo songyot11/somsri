@@ -8,8 +8,16 @@
       return $http.get('/employees');
     };
 
-    this.getEmployee = function(id) {
-      return $http.get('/employees/' + id);
+    this.getEmployee = function(id, month, year) {
+      if(month && year){
+        return $http.get('/employees/' + id, { params: { month: month, year: year } });
+      } else {
+        return $http.get('/employees/' + id);
+      }
+    };
+
+    this.getEmployeePayrolls = function(id) {
+      return $http.get('employees/' + id +'/payrolls');
     };
 
     this.saveEmployee = function(id, data) {

@@ -1,7 +1,7 @@
 describe 'create payroll rake task' do
   let(:school) {school = School.make!({ name: "โรงเรียนแห่งหนึ่ง" })}
   let(:employee1) {employee1 = Employee.make!(
-    {     
+    {
       school_id: school.id,
       first_name: "สมศรี",
       last_name: "เป็นชื่อแอพ",
@@ -12,7 +12,7 @@ describe 'create payroll rake task' do
     }
   )}
   let(:employee2) {employee2 = Employee.make!(
-    {     
+    {
       school_id: school.id,
       first_name: "สมจิตร",
       last_name: "เป็นนักมวย",
@@ -27,9 +27,9 @@ describe 'create payroll rake task' do
       pr1 = Payroll.make!({
         employee_id: employee1.id,
         salary: 25_000,
-        allowance: 2_500, 
+        allowance: 2_500,
         tax: 968,
-        social_insurance: 750, 
+        social_insurance: 750,
         late: 500,
         pvf: 100,
         created_at: DateTime.now()
@@ -37,9 +37,9 @@ describe 'create payroll rake task' do
       pr2 = Payroll.make!({
         employee_id: employee2.id,
         salary: 25_000,
-        allowance: 2_500, 
+        allowance: 2_500,
         tax: 968,
-        social_insurance: 750, 
+        social_insurance: 750,
         late: 500,
         pvf: 1000,
         created_at: DateTime.now()
@@ -57,7 +57,7 @@ describe 'create payroll rake task' do
     employee2
 
     task = Rake::Task["payroll:generate:now"]
-    
+
     expect{ task.invoke }.to change{ Payroll.count }.by(2)
   end
 
@@ -66,7 +66,8 @@ describe 'create payroll rake task' do
 
     task = Rake::Task["payroll:generate:on"]
 
-    expect{ task.invoke(month=1, year=2017) }.to change{ Payroll.count }.by(2)
+    date = Date.today + 1.months
+    expect{ task.invoke(month=date.month, year=date.year) }.to change{ Payroll.count }.by(2)
   end
 
   it "should not create payroll by payroll:generate:now" do

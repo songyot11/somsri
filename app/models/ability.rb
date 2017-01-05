@@ -9,6 +9,7 @@ class Ability
       can :manage, Payroll, employee_id: employees
       can :manage, :home
       can :manage, :report
+      can :manage, :setting
     else
       cannot :manage, :all
     end

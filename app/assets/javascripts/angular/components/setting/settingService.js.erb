@@ -1,0 +1,16 @@
+(function() {
+  'use strict';
+
+  angular.module('somsri.payroll.setting.service', [
+  ])
+  .service('settingService', ['$http', function($http) {
+    this.getSetting = function() {
+      return $http.get('/settings');
+    };
+
+    this.saveSetting = function(params) {
+      return $http.patch('/settings/', params);
+    };
+
+  }]);
+})();
