@@ -170,10 +170,10 @@ describe 'Employee Details', js: true do
     sleep(1)
     find('ul.dropdown-menu li a', text: "สิงหาคม 2016").click
     sleep(1)
-    expect(find_field('ค่าแรง / เงินเดือนปัจจุบัน', disabled: true).value).to eq '500'
-    expect(find_field('ภาษี', disabled: true).value).to eq '1'
-    expect(find_field('เบิกล่วงหน้า', disabled: true).value).to eq '20'
-    expect(find_field('ค่ากะ / ค่าเบี้ยเลี้ยง', disabled: true).value).to eq '30'
+    expect(find_field('ค่าแรง / เงินเดือนปัจจุบัน', disabled: false).value).to eq '500'
+    expect(find_field('ภาษี', disabled: false).value).to eq '1'
+    expect(find_field('เบิกล่วงหน้า', disabled: false).value).to eq '20'
+    expect(find_field('ค่ากะ / ค่าเบี้ยเลี้ยง', disabled: false).value).to eq '30'
     expect(page).to have_content('เงินเดือนสุทธิ 509')
   end
 
@@ -187,10 +187,10 @@ describe 'Employee Details', js: true do
     find('ul.dropdown-menu li a', text: "สิงหาคม 2016").click
     sleep(1)
     expect(find_field('นามสกุล').value).to eq 'โอชา'
-    expect(find_field('ค่าแรง / เงินเดือนปัจจุบัน', disabled: true).value).to eq '500'
-    expect(find_field('ภาษี', disabled: true).value).to eq '1'
-    expect(find_field('เบิกล่วงหน้า', disabled: true).value).to eq '20'
-    expect(find_field('ค่ากะ / ค่าเบี้ยเลี้ยง', disabled: true).value).to eq '30'
+    expect(find_field('ค่าแรง / เงินเดือนปัจจุบัน', disabled: false).value).to eq '500'
+    expect(find_field('ภาษี', disabled: false).value).to eq '1'
+    expect(find_field('เบิกล่วงหน้า', disabled: false).value).to eq '20'
+    expect(find_field('ค่ากะ / ค่าเบี้ยเลี้ยง', disabled: false).value).to eq '30'
     expect(page).to have_content('เงินเดือนสุทธิ 509')
   end
 
