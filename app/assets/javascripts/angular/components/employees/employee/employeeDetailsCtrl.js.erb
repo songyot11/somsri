@@ -13,7 +13,6 @@
     ctrl.isEdit = employeeId > 0 ? true : false
     ctrl.data = { employee: {}}
     ctrl.isSubmit = false;
-    ctrl.isLastestPayroll = true;
 
     function openConfirmationModal(message, success, dismiss) {
       $scope.message = message;
@@ -42,11 +41,9 @@
     }
 
     function isPayrollChange(){
-      if(ctrl.isLastestPayroll){
-        var keys = Object.keys(ctrl.datas_original.payroll)
-        for(var i = 1; i < keys.length; i++){
-          if(ctrl.datas.payroll[keys[i]] != ctrl.datas_original.payroll[keys[i]]){ return true }
-        }
+      var keys = Object.keys(ctrl.datas_original.payroll)
+      for(var i = 1; i < keys.length; i++){
+        if(ctrl.datas.payroll[keys[i]] != ctrl.datas_original.payroll[keys[i]]){ return true }
       }
       return false;
     }
@@ -108,7 +105,6 @@
 
         ctrl.datas_original = $.extend(true, {}, ctrl.datas);
         ctrl.calTotal();
-        ctrl.isLastestPayroll = true;
 
         // set display name
         var hasPrefixThai = e.prefix_thai && e.prefix_thai.length > 0
@@ -150,11 +146,6 @@
         ctrl.datas.payroll = resp.data.payroll
         payrollToFloat();
         ctrl.calTotal();
-        if(lastestMonth["month"].toString() == month.toString() && lastestMonth["year"].toString() == year.toString()){
-          ctrl.isLastestPayroll = true;
-        }else{
-          ctrl.isLastestPayroll = false;
-        }
         displayMonth(monthInfo);
       });
     }
@@ -211,9 +202,6 @@
             openConfirmationModal("คุณต้องการบันทึกการเปลี่ยนแปลงครั้งนี้หรือไม่?", function(){
 
               var datas_result = $.extend(true, {}, ctrl.datas);
-              if(!ctrl.isLastestPayroll){
-                delete datas_result['payroll']
-              }
 
               service.saveEmployee(ctrl.datas.employee.id, datas_result).then(function(resp) {
                 // $log.info("SAVE!!!");
