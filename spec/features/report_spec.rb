@@ -103,4 +103,19 @@ describe 'Payroll Report', js: true do
     eventually { expect(page).not_to have_content 'Harabas' }
     eventually { expect(page).to have_content 'รวมทั้งหมด 100,000.00 0.00 200.00 99,800.00' }
   end
+
+  describe 'employee link' do
+    it 'go to employee detail and display payroll of the same month as report screen' do
+      visit "/#/report"
+      find('#month-list').click
+      sleep(1)
+      click_on("พฤศจิกายน 2016")
+      sleep(1)
+
+      click_link "สมศรี เป็นชื่อแอพ"
+      sleep(1)
+      eventually { expect(page).to have_content 'พฤศจิกายน 2016' }
+      expect(find_field('ค่าแรง / เงินเดือนปัจจุบัน').value).to eq '50000'
+    end
+  end
 end

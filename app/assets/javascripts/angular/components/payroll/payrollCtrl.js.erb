@@ -4,7 +4,7 @@
   ])
   .controller('payrollCtrl', ['$filter', 'reportService', '$rootScope', function($filter, reportService, $rootScope) {
     $rootScope.menu = "Payroll"
-    
+
      var ctrl = this
     ctrl.total = 0
     ctrl.employees = []
@@ -71,6 +71,7 @@
         ctrl.employees = resp.data
         getTotalSalary(ctrl.employees)
         ctrl.currentMonth = $filter('get_month_name')(month)
+        ctrl.currentMonthData = month
       });
     }
 
@@ -81,7 +82,7 @@
       if (value == null) {
         value = 0.00
       }
-      
+
       var payroll = {}
       payroll[field] = value
       var data = { payroll: payroll }
@@ -113,7 +114,7 @@
             ctrl.currentMonth = $filter('get_month_name')(ctrl.months[0])
           });
         }
-      });  
+      });
     }
 
     getAll()

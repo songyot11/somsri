@@ -2,12 +2,11 @@
   'use strict';
   angular.module('somsri.payroll.employee_details', [
   ])
-  .controller('employeeDetailsCtrl', ['employeesService','$log', '$state', '$rootScope','$scope', '$uibModal', 'reportService', '$filter', function(service, $log, $state, $rootScope, $scope, $uibModal, reportService, $filter) {
+  .controller('employeeDetailsCtrl', ['employeesService','$log', '$state', '$rootScope','$scope', '$uibModal', 'reportService', '$filter', '$location', function(service, $log, $state, $rootScope, $scope, $uibModal, reportService, $filter, $location) {
     $rootScope.menu = "Employees"
     var ctrl = this
     var dateNow = new Date();
     var employeeId = $state.params.id;
-    var lastestMonth = "";
     ctrl.currentMonth = "";
     ctrl.empId = employeeId
     ctrl.isEdit = employeeId > 0 ? true : false
@@ -82,16 +81,30 @@
     }
 
     function getEmployee(id){
+      var displayingMonth = null
+      var displayingYear = null
+      if($location.search().month && $location.search().year) {
+        displayingMonth = parseInt($location.search().month)
+        displayingYear = parseInt($location.search().year)
+      }
       reportService.getMonths(id).then(function(resp) {
         if (resp.data.length > 0) {
           ctrl.months = resp.data;
-          lastestMonth = ctrl.months[0];
           ctrl.currentMonth = ctrl.months[0];
-          displayMonth(lastestMonth);
+          if (displayingMonth && displayingYear) {
+            for (var i = 0; i < ctrl.months.length; i++) {
+              var month = ctrl.months[i];
+              if (parseInt(month.year) === displayingYear && parseInt(month.month) === displayingMonth) {
+                ctrl.currentMonth = month;
+                break;
+              }
+            }
+          }
+          displayMonth(ctrl.currentMonth);
         }
       });
 
-      service.getEmployee(id, null, null).then(function(resp) {
+      service.getEmployee(id, displayingMonth, displayingYear).then(function(resp) {
         ctrl.datas = resp.data;
 
         payrollToFloat();
