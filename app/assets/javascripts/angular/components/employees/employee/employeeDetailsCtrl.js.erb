@@ -13,6 +13,7 @@
     ctrl.isEdit = employeeId > 0 ? true : false
     ctrl.data = { employee: {}}
     ctrl.isSubmit = false;
+    console.log('employeeDetailsCtrl created');
 
     function openConfirmationModal(message, success, dismiss) {
       $scope.message = message;
@@ -155,6 +156,7 @@
     }
 
     ctrl.openEmployeeDetails = function(id){
+      console.log('openEmployeeDetails');
       if(isDataChange()){
         openConfirmationModal("คุณต้องการออกจากหน้านี้โดยไม่บันทึกค่าหรือไม่?", function(){
           $rootScope.openEmployeeDetails(id);
