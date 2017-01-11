@@ -5,12 +5,20 @@
   .controller('payrollCtrl', ['$filter', 'reportService', '$rootScope', function($filter, reportService, $rootScope) {
     $rootScope.menu = "Payroll"
 
-     var ctrl = this
+    var ctrl = this
     ctrl.total = 0
     ctrl.employees = []
     ctrl.months = []
     ctrl.currentMonth = ""
     ctrl.total = {}
+
+    ctrl.selectValue = function($event){
+      if($event && !$event.target){
+        return;
+      }
+      $($event.target).select();
+      console.log("cshdjckmlsd;,c");
+    }
 
     function getTotalSalary(employees)  {
       var totalSalary = 0
