@@ -160,7 +160,7 @@ describe 'Employee Details', js: true do
     expect(employee.last_name_thai).to eq 'โอชา'
     expect(employee.salary).to eq 200
     expect(payroll.salary).to eq 200
-    expect(page).to have_css('div.employees-list')
+    expect(page).to have_css('div.employee-details')
   end
 
   it 'should diplay histories when select histories dropdown' do
