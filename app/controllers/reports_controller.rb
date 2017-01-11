@@ -33,12 +33,8 @@ class ReportsController < ApplicationController
 
   # GET /reports/social_insurance_pdf
   def social_insurance_pdf
-
     year = params[:year].to_i
     month = params[:month].to_i
-
-    # year = 2017
-    # month = 1
 
     start_month = Date.new(year, month, 1)
     end_month = start_month.end_of_month
