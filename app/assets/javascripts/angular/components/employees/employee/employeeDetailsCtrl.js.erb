@@ -12,7 +12,6 @@
     ctrl.isEdit = employeeId > 0 ? true : false
     ctrl.data = { employee: {}}
     ctrl.isSubmit = false;
-    console.log('employeeDetailsCtrl created');
 
     function openConfirmationModal(message, success, dismiss) {
       $scope.message = message;
@@ -117,6 +116,12 @@
           ctrl.datas.employee.start_date = new Date(ctrl.datas.employee.created_at);
         }
 
+        if(ctrl.datas.employee.birthdate){
+          ctrl.datas.employee.birthdate = new Date(ctrl.datas.employee.birthdate);
+        }else{
+          ctrl.datas.employee.birthdate = new Date();
+        }
+
         ctrl.datas_original = $.extend(true, {}, ctrl.datas);
         ctrl.calTotal();
 
@@ -217,13 +222,13 @@
             openConfirmationModal("คุณต้องการบันทึกการเปลี่ยนแปลงครั้งนี้หรือไม่?", function(){
               var datas_result = $.extend(true, {}, ctrl.datas);
               service.saveEmployee(ctrl.datas.employee.id, datas_result).then(function(resp) {
+                ctrl.isSubmit = false
               });
             }, function(){
               ctrl.isSubmit = false
             });
           }else{
             ctrl.isSubmit = false
-            $rootScope.openEmployees();
           }
         } else {
           service.createEmployee(parm).then(function(resp) {
