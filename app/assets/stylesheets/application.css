@@ -13,7 +13,6 @@
  *= require bootstrap/dist/css/bootstrap.min.css
  *= require angular-xeditable/dist/css/xeditable
  *= require font-awesome
- *= require angular-material
  *= require_tree .
  *= require_self
  */

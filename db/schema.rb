@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20170111103003) do
+ActiveRecord::Schema.define(version: 20170112071939) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -46,22 +46,23 @@ ActiveRecord::Schema.define(version: 20170111103003) do
 
   create_table "payrolls", force: :cascade do |t|
     t.integer  "employee_id"
-    t.decimal  "salary",             default: "0.0", null: false
-    t.decimal  "allowance",          default: "0.0", null: false
-    t.decimal  "attendance_bonus",   default: "0.0", null: false
-    t.decimal  "ot",                 default: "0.0", null: false
-    t.decimal  "bonus",              default: "0.0", null: false
-    t.decimal  "position_allowance", default: "0.0", null: false
-    t.decimal  "extra_etc",          default: "0.0", null: false
-    t.decimal  "absence",            default: "0.0", null: false
-    t.decimal  "late",               default: "0.0", null: false
-    t.decimal  "tax",                default: "0.0", null: false
-    t.decimal  "social_insurance",   default: "0.0", null: false
-    t.decimal  "fee_etc",            default: "0.0", null: false
-    t.decimal  "pvf",                default: "0.0", null: false
-    t.decimal  "advance_payment",    default: "0.0", null: false
-    t.datetime "created_at",                         null: false
-    t.datetime "updated_at",                         null: false
+    t.decimal  "salary",             default: "0.0",                 null: false
+    t.decimal  "allowance",          default: "0.0",                 null: false
+    t.decimal  "attendance_bonus",   default: "0.0",                 null: false
+    t.decimal  "ot",                 default: "0.0",                 null: false
+    t.decimal  "bonus",              default: "0.0",                 null: false
+    t.decimal  "position_allowance", default: "0.0",                 null: false
+    t.decimal  "extra_etc",          default: "0.0",                 null: false
+    t.decimal  "absence",            default: "0.0",                 null: false
+    t.decimal  "late",               default: "0.0",                 null: false
+    t.decimal  "tax",                default: "0.0",                 null: false
+    t.decimal  "social_insurance",   default: "0.0",                 null: false
+    t.decimal  "fee_etc",            default: "0.0",                 null: false
+    t.decimal  "pvf",                default: "0.0",                 null: false
+    t.decimal  "advance_payment",    default: "0.0",                 null: false
+    t.datetime "created_at",                                         null: false
+    t.datetime "updated_at",                                         null: false
+    t.datetime "effective_date",     default: '2017-01-12 07:29:09', null: false
     t.index ["employee_id"], name: "index_payrolls_on_employee_id", using: :btree
   end
 

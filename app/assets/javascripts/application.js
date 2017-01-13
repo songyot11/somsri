@@ -13,9 +13,6 @@
 //= require jquery
 //= require jquery_ujs
 //= require angular
-//= require angular-aria
-//= require angular-animate
-//= require angular-material
 //= require bootstrap
 //= require angular-bootstrap
 //= require angular-ui-router

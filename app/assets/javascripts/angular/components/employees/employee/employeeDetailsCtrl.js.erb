@@ -113,13 +113,13 @@
         if(e.start_date){
           ctrl.datas.employee.start_date = new Date(ctrl.datas.employee.start_date);
         }else{
-          ctrl.datas.employee.start_date = new Date(ctrl.datas.employee.created_at);
+          ctrl.datas.employee.start_date = null;
         }
 
         if(ctrl.datas.employee.birthdate){
           ctrl.datas.employee.birthdate = new Date(ctrl.datas.employee.birthdate);
         }else{
-          ctrl.datas.employee.birthdate = new Date();
+          ctrl.datas.employee.birthdate = null;
         }
 
         ctrl.datas_original = $.extend(true, {}, ctrl.datas);
@@ -292,6 +292,22 @@
     if (ctrl.isEdit) {
       getEmployee(employeeId);
     }
+
+    ctrl.openStartDatePopup = function() {
+      ctrl.startDatePopup.opened = true;
+    };
+
+    ctrl.startDatePopup = {
+      opened: false
+    };
+
+    ctrl.openBirthdatePopup = function() {
+      ctrl.birthdatePopup.opened = true;
+    };
+
+    ctrl.birthdatePopup = {
+      opened: false
+    };
 
   }])
 })();
