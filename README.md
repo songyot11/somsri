@@ -41,12 +41,14 @@ docker-compose up
 ```
 heroku buildpacks:set heroku/ruby
 heroku buildpacks:add --index 1 heroku/nodejs
+heroku buildpacks:add --index 1 https://github.com/heroku/heroku-buildpack-apt
 ```
   and another command for auto migrate
 ```
 heroku config:set DEPLOY_TASKS='db:migrate'
 ```
-
+  to adding new build pack we have to add library name to Aptfile
+  
 ##### environment variables (ENV)
   We're using Figaro, so please create your own 'config/application.yml' by running
 ```
