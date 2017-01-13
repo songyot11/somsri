@@ -81,7 +81,7 @@ class ReportsController < ApplicationController
 
     pdf_path = 'public/sps1.pdf'
     pdf_out_path = 'public/sps1_out.pdf'
-    pdftk = PdfForms.new('/usr/local/bin/pdftk', data_format: 'XFdf', utf8_fields: true)
+    pdftk = PdfForms.new(Figaro.env.PDFTK_PATH, data_format: 'XFdf', utf8_fields: true)
     name = pdftk.get_field_names pdf_path
     pdftk.fill_form pdf_path, pdf_out_path, fill_form_data
     send_file(pdf_out_path, :filename => 'social_insurance_pdf.pdf', :disposition => 'inline', :type => 'application/pdf')
