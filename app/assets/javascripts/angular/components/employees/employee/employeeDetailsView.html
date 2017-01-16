@@ -87,20 +87,6 @@
               </div>
             </div>
           </div>
-          <div class="row">
-            <div class="col-md-6">
-              <div class="form-group">
-                <label for="nickname">ชื่อเล่น</label>
-                <input type="text" class="form-control" id="nickname" ng-model="employee.datas.employee.nickname">
-              </div>
-            </div>
-            <div class="col-md-6">
-              <div class="form-group">
-                <label for="start_date">วันที่เริ่มทำงาน</label>
-                <div><md-datepicker ng-model="employee.datas.employee.start_date"></md-datepicker></div>
-              </div>
-            </div>
-          </div>
         </div>
         <div class="col-md-4">
           <div class="img-profile">
@@ -113,6 +99,36 @@
                 <div class="img-bg bg-light-gray"></div>
               </div>
             </div>
+          </div>
+        </div>
+      </div>
+      <div class="row">
+        <div class="col-md-4">
+          <div class="form-group">
+            <label for="nickname">ชื่อเล่น</label>
+            <input type="text" class="form-control" id="nickname" ng-model="employee.datas.employee.nickname">
+          </div>
+        </div>
+        <div class="col-md-4">
+          <div class="form-group">
+            <label for="start_date">วันที่เริ่มทำงาน</label>
+            <p class="input-group">
+              <input id="start_date" type="text" class="form-control" uib-datepicker-popup="dd/MM/yyyy" ng-model="employee.datas.employee.start_date" is-open="employee.startDatePopup.opened" close-text="Close"/>
+              <span class="input-group-btn">
+                <button type="button" class="btn btn-default" ng-click="employee.openStartDatePopup()"><i class="glyphicon glyphicon-calendar"></i></button>
+              </span>
+            </p>
+          </div>
+        </div>
+        <div class="col-md-4">
+          <div class="form-group">
+            <label for="birthdate">วันเกิด</label>
+            <p class="input-group">
+              <input id="birthdate" type="text" class="form-control" uib-datepicker-popup="dd/MM/yyyy" ng-model="employee.datas.employee.birthdate" is-open="employee.birthdatePopup.opened" close-text="Close"/>
+              <span class="input-group-btn">
+                <button type="button" class="btn btn-default" ng-click="employee.openBirthdatePopup()"><i class="glyphicon glyphicon-calendar"></i></button>
+              </span>
+            </p>
           </div>
         </div>
       </div>

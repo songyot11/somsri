@@ -267,4 +267,30 @@ describe 'Employee Details', js: true do
     expect(page).to have_content("ส.ค. 59")
   end
 
+  it 'should edit birthdate' do
+    visit "/#/employees/#{employees[0].id}"
+    sleep(1)
+    find('#birthdate').set('03/12/1990')
+    sleep(1)
+    click_button('บันทึก')
+    sleep(1)
+    click_button('ตกลง')
+    sleep(1)
+    employee = Employee.find(employees[0].id)
+    expect(employee.birthdate.strftime("%Y-%m-%d")).to have_content '1990-12-03'
+  end
+
+  it 'should edit start_date' do
+    visit "/#/employees/#{employees[0].id}"
+    sleep(1)
+    find('#start_date').set('03/12/1990')
+    sleep(1)
+    click_button('บันทึก')
+    sleep(1)
+    click_button('ตกลง')
+    sleep(1)
+    employee = Employee.find(employees[0].id)
+    expect(employee.start_date.strftime("%Y-%m-%d")).to have_content '1990-12-03'
+  end
+
 end
