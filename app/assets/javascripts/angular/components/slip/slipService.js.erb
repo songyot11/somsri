@@ -5,7 +5,12 @@
   ])
   .service('slipService', ['$http', function($http) {
     this.employeeSlip = function(id, payroll_id) {
-      return $http.get('/employees/' + id + "/slip", { params: { payroll_id: payroll_id } });
+      if(payroll_id){
+        return $http.get('/employees/' + id + "/slip", { params: { payroll_id: payroll_id } });
+      }else{
+        return $http.get('/employees/' + id + "/slip");
+      }
+
     }
   }]);
 })();

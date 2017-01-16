@@ -61,7 +61,7 @@ describe 'Employee Lists', js: true do
         tax: 100,
         advance_payment: 2000,
         allowance: 3000,
-        created_at: DateTime.now
+        effective_date: DateTime.now
       }),
 
       Payroll.make!({
@@ -70,7 +70,7 @@ describe 'Employee Lists', js: true do
         tax: 1000,
         position_allowance: 10000,
         fee_etc: 200,
-        created_at: DateTime.now
+        effective_date: DateTime.now
       }),
 
       Payroll.make!({
@@ -79,14 +79,14 @@ describe 'Employee Lists', js: true do
         tax: 100,
         position_allowance: 1000,
         fee_etc: 20,
-        created_at: DateTime.now
+        effective_date: DateTime.now
       }),
-      
+
       Payroll.make!({
         employee_id: employees[3].id,
         salary: 0,
         tax: 0,
-        created_at: DateTime.now.next_month(1)
+        effective_date: DateTime.now.next_month(1)
       })
     ]
   end

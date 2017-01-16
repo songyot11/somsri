@@ -12,16 +12,12 @@ class EmployeesController < ApplicationController
 
   # GET /employees/:id/slip
   def slip
-    if params[:payroll_id]
-      employee = Employee.active.find(params[:id]).as_json({ slip: true, payroll_id: params[:payroll_id] })
-      employee[:payroll][:fee_orders] = employee[:payroll][:fee_orders]
-                                                        .select { |key, value| value[:value] > 0}
-      employee[:payroll][:pay_orders] = employee[:payroll][:pay_orders]
-                                                        .select { |key, value| value[:value] > 0}
-      render json: employee, status: :ok
-    else
-      render json: "payroll_id is required", status: 500
-    end
+    employee = Employee.active.find(params[:id]).as_json({ slip: true, payroll_id: params[:payroll_id] })
+    employee[:payroll][:fee_orders] = employee[:payroll][:fee_orders]
+                                                      .select { |key, value| value[:value] > 0}
+    employee[:payroll][:pay_orders] = employee[:payroll][:pay_orders]
+                                                      .select { |key, value| value[:value] > 0}
+    render json: employee, status: :ok
   end
 
   # GET /employees/:id/payrolls

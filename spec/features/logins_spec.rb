@@ -49,7 +49,7 @@ describe 'Login', js: true do
         tax: 100,
         advance_payment: 2000,
         allowance: 3000,
-        created_at: DateTime.now
+        effective_date: DateTime.now
       }),
 
       Payroll.make!({
@@ -58,7 +58,7 @@ describe 'Login', js: true do
         tax: 1000,
         position_allowance: 10000,
         fee_etc: 200,
-        created_at: DateTime.now
+        effective_date: DateTime.now
       })
     ]
   end

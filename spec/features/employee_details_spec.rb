@@ -38,7 +38,7 @@ describe 'Employee Details', js: true do
         tax: 100,
         advance_payment: 2000,
         allowance: 3000,
-        created_at: DateTime.now.next_month(1)
+        effective_date: DateTime.now.next_month(1)
       }),
 
       Payroll.make!({
@@ -47,7 +47,7 @@ describe 'Employee Details', js: true do
         tax: 1000,
         position_allowance: 10000,
         fee_etc: 200,
-        created_at: DateTime.now.next_month(1)
+        effective_date: DateTime.now.next_month(1)
       }),
 
       Payroll.make!({
@@ -56,7 +56,7 @@ describe 'Employee Details', js: true do
         tax: 10,
         advance_payment: 200,
         allowance: 300,
-        created_at: DateTime.now
+        effective_date: DateTime.now
       }),
 
       Payroll.make!({
@@ -65,7 +65,7 @@ describe 'Employee Details', js: true do
         tax: 100,
         position_allowance: 1000,
         fee_etc: 20,
-        created_at: DateTime.now
+        effective_date: DateTime.now
       }),
 
       Payroll.make!({
@@ -74,7 +74,7 @@ describe 'Employee Details', js: true do
         tax: 1,
         advance_payment: 20,
         allowance: 30,
-        created_at: DateTime.new(2016, 8, 1)
+        effective_date: DateTime.new(2016, 8, 1)
       }),
 
       Payroll.make!({
@@ -83,7 +83,7 @@ describe 'Employee Details', js: true do
         tax: 10,
         position_allowance: 100,
         fee_etc: 2,
-        created_at: DateTime.new(2016, 8, 1)
+        effective_date: DateTime.new(2016, 8, 1)
       })
     ]
   end

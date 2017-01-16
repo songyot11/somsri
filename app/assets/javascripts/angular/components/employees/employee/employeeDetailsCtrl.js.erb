@@ -64,7 +64,7 @@
       var skips = ["id", "created_at", "updated_at", "effective_date"];
       var keys = Object.keys(ctrl.datas.payroll);
       for(var i = 1; i < keys.length; i++){
-        if(!skips.includes(keys[i])){
+        if(!skips.indexOf(keys[i]) > -1){
           ctrl.datas.payroll[keys[i]] = parseFloat(ctrl.datas.payroll[keys[i]]);
         }
       }
@@ -104,7 +104,6 @@
 
       service.getEmployee(id, payroll_id).then(function(resp) {
         ctrl.datas = resp.data;
-
         payrollToFloat();
 
         var e = resp.data.employee;

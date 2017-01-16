@@ -23,35 +23,35 @@ describe 'Employee Details History Modal', js: true do
         salary: 50_000,
         bonus: 15_000,
         tax: 750,
-        created_at: DateTime.new(2017, 1, 1)
+        effective_date: DateTime.new(2017, 1, 1)
       }),
       Payroll.make!({
         employee_id: employee.id,
         salary: 50_000,
         bonus: 15_000,
         tax: 750,
-        created_at: DateTime.new(2017, 2, 1)
+        effective_date: DateTime.new(2017, 2, 1)
       }),
       Payroll.make!({
         employee_id: employee.id,
         salary: 50_000,
         bonus: 15_000,
         tax: 750,
-        created_at: DateTime.new(2017, 3, 1)
+        effective_date: DateTime.new(2017, 3, 1)
       }),
       Payroll.make!({
         employee_id: employee.id,
         salary: 50_000,
         bonus: 15_000,
         tax: 750,
-        created_at: DateTime.new(2017, 4, 1)
+        effective_date: DateTime.new(2017, 4, 1)
       }),
       Payroll.make!({
         employee_id: employee.id,
         salary: 50_000,
         bonus: 15_000,
         tax: 750,
-        created_at: DateTime.new(2017, 5, 1)
+        effective_date: DateTime.new(2017, 5, 1)
       }),
     ]
   end
@@ -63,7 +63,7 @@ describe 'Employee Details History Modal', js: true do
 
   it 'should see view history button' do
     visit "/#/employees/#{employee.id}"
-    
+
     expect(page).to have_content('ประวัติเงินเดือน')
   end
 

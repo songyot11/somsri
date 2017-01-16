@@ -43,22 +43,17 @@ class Employee < ApplicationRecord
       }
 
       # select payroll by payroll_id
-      if options[:payroll_id]
-        payroll = self.payroll(options[:payroll_id])
-        if payroll
-          result[:payroll] = payroll.as_json("slip")
-          result[:extra_fee] = payroll.extra_fee.to_f
-          result[:extra_pay] = payroll.extra_pay.to_f + payroll.salary.to_f
-        end
-      end
-
-      # default payroll
-      if !result[:payroll]
+      payroll = self.payroll(options[:payroll_id])
+      if payroll
+        result[:payroll] = payroll.as_json("slip")
+        result[:extra_fee] = payroll.extra_fee.to_f
+        result[:extra_pay] = payroll.extra_pay.to_f + payroll.salary.to_f
+      else
+        # default payroll
         result[:payroll] = self.payrolls.latest.as_json("slip")
         result[:extra_fee] = self.payrolls.latest.extra_fee.to_f
         result[:extra_pay] = self.payrolls.latest.extra_pay.to_f + self.payrolls.latest.salary.to_f
       end
-
       return result
     elsif options[:employee_list]
        {

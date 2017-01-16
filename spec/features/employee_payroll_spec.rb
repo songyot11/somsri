@@ -51,15 +51,15 @@ describe 'Payroll', js: true do
   let(:payrolls) do
     [
       pr1 = Payroll.make!({employee_id: employee1.id, salary: 1_000_000, tax: 100,
-                            created_at: DateTime.new(2016, 12, 1)}),
+                            effective_date: DateTime.new(2016, 12, 1)}),
       pr3 = Payroll.make!({employee_id: employee2.id, salary: 1_000_000, tax: 100,
-                            created_at: DateTime.new(2016, 12, 1)}),
+                            effective_date: DateTime.new(2016, 12, 1)}),
       pr2 = Payroll.make!({employee_id: employee1.id, salary: 50_000, tax: 100,
-                            created_at: DateTime.new(2016, 11, 1)}),
+                            effective_date: DateTime.new(2016, 11, 1)}),
       pr4 = Payroll.make!({employee_id: employee2.id, salary: 50_000, tax: 100,
-                            created_at: DateTime.new(2016, 11, 1)}),
+                            effective_date: DateTime.new(2016, 11, 1)}),
       pr5 = Payroll.make!({employee_id: employee3.id, salary: 20, tax: 10,
-                            created_at: DateTime.new(2016, 11, 1)}),
+                            effective_date: DateTime.new(2016, 11, 1)}),
     ]
   end
 
@@ -89,7 +89,7 @@ describe 'Payroll', js: true do
 
     find('#month-list').click
     sleep(1)
-    eventually { expect(page).to have_content 'ธันวาคม 2016 พฤศจิกายน 2016' }
+    eventually { expect(page).to have_content '1 ธันวาคม 2016 1 พฤศจิกายน 2016' }
   end
 
   it 'should switch month' do
@@ -115,12 +115,12 @@ describe 'Payroll', js: true do
       visit "/#/payroll"
       find('#month-list').click
       sleep(1)
-      click_on("พฤศจิกายน 2016")
+      click_on("1 พฤศจิกายน 2016")
       sleep(1)
 
       click_link "สมศรี เป็นชื่อแอพ"
       sleep(1)
-      eventually { expect(page).to have_content 'พฤศจิกายน 2016' }
+      eventually { expect(page).to have_content '1 พฤศจิกายน 2016' }
       expect(find_field('ค่าแรง / เงินเดือนปัจจุบัน').value).to eq '50000'
     end
   end
