@@ -23,9 +23,9 @@
       $state.go('employee_details',{ id: id });
     };
 
-    $rootScope.openSlip = function (id, month, year) {
-      if(month && year){
-        $state.go('slip',{ id: id, month: month, year: year });
+    $rootScope.openSlip = function (id, payroll_id) {
+      if(payroll_id){
+        $state.go('slip',{ id: id, payroll_id: payroll_id });
       }else{
         $state.go('slip',{ id: id });
       }

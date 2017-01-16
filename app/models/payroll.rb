@@ -3,12 +3,12 @@ class Payroll < ApplicationRecord
   validate :already_payroll_on_month, on: :create
   before_validation :set_created_at
 
-  scope :latest, -> { order("created_at ASC").last }
+  scope :latest, -> { order("effective_date ASC").last }
 
   def already_payroll_on_month
-    payrolls = Payroll.where(employee_id: self.employee_id).collect{ |x| [x.created_at.month, x.created_at.year]}
-    if payrolls.include?([self.created_at.month, self.created_at.year])
-      errors.add(:created_at, "This month and this year have a payroll already.")
+    payrolls = Payroll.where(employee_id: self.employee_id).collect{ |x| [x.effective_date.month, x.effective_date.year]}
+    if payrolls.include?([self.effective_date.month, self.effective_date.year])
+      errors.add(:effective_date, "This month and this year have a payroll already.")
     end
   end
 
@@ -56,20 +56,20 @@ class Payroll < ApplicationRecord
       }
     elsif options["history"]
       {
-        date: I18n.l(self.created_at, format: "%B #{created_at.year + 543}"),
+        date: I18n.l(self.effective_date, format: "%B #{effective_date.year + 543}"),
         salary: self.salary.to_f,
         extra_pay: extra_pay.to_f,
         extra_fee: extra_fee.to_f,
       }
     elsif options["slip"]
       {
-        date: self.created_at.strftime("#{created_at.end_of_month.day}/%m/#{(created_at.year + 543) % 100}"),
+        date: self.effective_date.strftime("#{effective_date.day}/%m/#{(effective_date.year + 543) % 100}"),
         pay_orders: {
           salary: {
             name: """
             #{I18n.t('activerecord.attributes.payroll.salary') }
-            #{I18n.l(self.created_at, format: "%b")}
-            #{(self.created_at.year + 543) % 100}
+            #{I18n.l(self.effective_date, format: "%b")}
+            #{(self.effective_date.year + 543) % 100}
             """,
             value: self.salary.to_f,
           },

@@ -15,11 +15,11 @@ class Employee < ApplicationRecord
   def annual_income_outcome(id)
     employee = Employee.active.find(id)
 
-    year = employee.payrolls.latest.created_at.year
+    year = employee.payrolls.latest.effective_date.year
     start_year = Date.new(year, 1, 1)
     end_year = Date.new(year, 12, 31)
 
-    payrolls = employee.payrolls.where(created_at: start_year.beginning_of_day..end_year.end_of_day)
+    payrolls = employee.payrolls.where(effective_date: start_year.beginning_of_day..end_year.end_of_day)
 
     return {
       total_salary: payrolls.as_json("report").inject(0) {
@@ -42,16 +42,23 @@ class Employee < ApplicationRecord
         annual_income_outcome: self.annual_income_outcome(self.id)
       }
 
-      if options[:month] && options[:year]
-        payroll = self.payroll(options[:month].to_i, options[:year].to_i)
-        result[:payroll] = payroll.as_json("slip")
-        result[:extra_fee] = payroll.extra_fee.to_f
-        result[:extra_pay] = payroll.extra_pay.to_f + payroll.salary.to_f
-      else
+      # select payroll by payroll_id
+      if options[:payroll_id]
+        payroll = self.payroll(options[:payroll_id])
+        if payroll
+          result[:payroll] = payroll.as_json("slip")
+          result[:extra_fee] = payroll.extra_fee.to_f
+          result[:extra_pay] = payroll.extra_pay.to_f + payroll.salary.to_f
+        end
+      end
+
+      # default payroll
+      if !result[:payroll]
         result[:payroll] = self.payrolls.latest.as_json("slip")
         result[:extra_fee] = self.payrolls.latest.extra_fee.to_f
         result[:extra_pay] = self.payrolls.latest.extra_pay.to_f + self.payrolls.latest.salary.to_f
       end
+
       return result
     elsif options[:employee_list]
        {
@@ -68,15 +75,11 @@ class Employee < ApplicationRecord
   end
 
   def lastest_payroll
-     Payroll.where({ employee_id: self.id }).order(created_at: :desc).first
+     Payroll.where({ employee_id: self.id }).order(effective_date: :desc).first
   end
 
-  def payroll(month, year)
-    start_month = Date.new(year, month, 1)
-    end_month = start_month.end_of_month
-    Payroll.where(employee_id: self.id, created_at: start_month.beginning_of_day..end_month.end_of_day)
-                      .order(created_at: :desc)
-                      .first
+  def payroll(payroll_id)
+    Payroll.where(employee_id: self.id, id: payroll_id).first
   end
 
 end

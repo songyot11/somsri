@@ -12,19 +12,16 @@ class EmployeesController < ApplicationController
 
   # GET /employees/:id/slip
   def slip
-    month = params[:month].to_i
-    year = params[:year].to_i
-    payroll = nil
-    if month.to_s != params[:month] || year.to_s != params[:year]
-      month = nil
-      year = nil
+    if params[:payroll_id]
+      employee = Employee.active.find(params[:id]).as_json({ slip: true, payroll_id: params[:payroll_id] })
+      employee[:payroll][:fee_orders] = employee[:payroll][:fee_orders]
+                                                        .select { |key, value| value[:value] > 0}
+      employee[:payroll][:pay_orders] = employee[:payroll][:pay_orders]
+                                                        .select { |key, value| value[:value] > 0}
+      render json: employee, status: :ok
+    else
+      render json: "payroll_id is required", status: 500
     end
-    employee = Employee.active.find(params[:id]).as_json({ slip: true, month: month, year: year })
-    employee[:payroll][:fee_orders] = employee[:payroll][:fee_orders]
-                                                      .select { |key, value| value[:value] > 0}
-    employee[:payroll][:pay_orders] = employee[:payroll][:pay_orders]
-                                                      .select { |key, value| value[:value] > 0}
-    render json: employee, status: :ok
   end
 
   # GET /employees/:id/payrolls
@@ -39,13 +36,9 @@ class EmployeesController < ApplicationController
   def show
     @employee = Employee.active.find(params[:id])
     payroll = @employee.lastest_payroll
-
-    month = params[:month].to_i
-    year = params[:year].to_i
-    if month.to_s == params[:month] && year.to_s == params[:year]
-      payroll = @employee.payroll(params[:month].to_i, params[:year].to_i)
+    if params[:payroll_id]
+      payroll = @employee.payroll(params[:payroll_id])
     end
-
     render json: {
       employee: @employee,
       payroll: payroll

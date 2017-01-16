@@ -68,7 +68,7 @@
         }
       }).
       state({
-        url: '/employees/:id/slip?month&year',
+        url: '/employees/:id/slip?payroll_id',
         name: 'slip',
         templateUrl: "<%= asset_path('angular/components/slip/slipView.html') %>",
         controller: 'slipCtrl as slip',

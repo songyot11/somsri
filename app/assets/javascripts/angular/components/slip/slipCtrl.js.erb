@@ -5,12 +5,11 @@
   .controller('slipCtrl', ['$window', 'slipService', '$state', '$compile', '$scope', function($window, slipService, $state, $compile, $scope) {
     var ctrl = this
     var employeeId = $state.params.id
-    var month = $state.params.month;
-    var year = $state.params.year;
+    var payroll_id = $state.params.payroll_id;
     ctrl.isDuplicate = false
     ctrl.employee = []
 
-    slipService.employeeSlip(employeeId, month, year).then(function(resp) {
+    slipService.employeeSlip(employeeId, payroll_id).then(function(resp) {
       ctrl.employee = resp.data;
     });
 

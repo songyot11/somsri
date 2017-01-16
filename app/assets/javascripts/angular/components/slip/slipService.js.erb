@@ -4,8 +4,8 @@
   angular.module('somsri.payroll.service', [
   ])
   .service('slipService', ['$http', function($http) {
-    this.employeeSlip = function(id, month, year) {
-      return $http.get('/employees/' + id + "/slip", { params: { month: month, year: year } });
+    this.employeeSlip = function(id, payroll_id) {
+      return $http.get('/employees/' + id + "/slip", { params: { payroll_id: payroll_id } });
     }
   }]);
 })();
