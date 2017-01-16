@@ -1,0 +1,4 @@
+PDFTK_PATH: /usr/local/bin/pdftk
+
+production:
+ PDFTK_PATH: /usr/local/bin/pdftk
