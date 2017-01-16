@@ -270,6 +270,8 @@ describe 'Employee Details', js: true do
   it 'should edit birthdate' do
     visit "/#/employees/#{employees[0].id}"
     sleep(1)
+    expect(find('#birthdate').value).to_not have_content '03/12/1990'
+
     find('#birthdate').set('03/12/1990')
     sleep(1)
     click_button('บันทึก')
@@ -277,12 +279,16 @@ describe 'Employee Details', js: true do
     click_button('ตกลง')
     sleep(1)
     employee = Employee.find(employees[0].id)
-    expect(employee.birthdate.strftime("%Y-%m-%d")).to have_content '1990-12-03'
+
+    visit "/#/employees/#{employees[0].id}"
+    expect(find('#birthdate').value).to have_content '03/12/1990'
   end
 
   it 'should edit start_date' do
     visit "/#/employees/#{employees[0].id}"
     sleep(1)
+    expect(find('#start_date').value).to_not have_content '03/12/1990'
+
     find('#start_date').set('03/12/1990')
     sleep(1)
     click_button('บันทึก')
@@ -290,7 +296,8 @@ describe 'Employee Details', js: true do
     click_button('ตกลง')
     sleep(1)
     employee = Employee.find(employees[0].id)
-    expect(employee.start_date.strftime("%Y-%m-%d")).to have_content '1990-12-03'
+    visit "/#/employees/#{employees[0].id}"
+    expect(find('#start_date').value).to have_content '03/12/1990'
   end
 
 end
