@@ -1,7 +1,7 @@
-class ReportsController < ApplicationController
+class PayrollsController < ApplicationController
   skip_before_action :verify_authenticity_token, :only => [:update]
 
-  # GET /reports
+  # GET /payrolls
   def index
     if params[:employee_id]
       render json: get_months_by_employee_ids(params[:employee_id]), status: :ok
@@ -10,7 +10,7 @@ class ReportsController < ApplicationController
     end
   end
 
-  # GET /reports/:year/:month
+  # GET /payrolls/:year/:month
   def payroll
     year = params[:year].to_i
     month = params[:month].to_i
@@ -25,7 +25,7 @@ class ReportsController < ApplicationController
     render json: payrolls, status: :ok
   end
 
-  # PATCH /reports/:id
+  # PATCH /payrolls/:id
   def update
     payroll = Payroll.find(params[:id])
     if payroll.update(params_payroll)
@@ -35,7 +35,7 @@ class ReportsController < ApplicationController
     end
   end
 
-  # GET /reports/social_insurance_pdf
+  # GET /payrolls/social_insurance_pdf
   def social_insurance_pdf
     year = params[:year].to_i
     month = params[:month].to_i

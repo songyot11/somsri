@@ -5,19 +5,19 @@
   ])
   .service('reportService', ['$http', function($http) {
     this.getPayroll = function(year, month) {
-      return $http.get('/reports/' + year + "/" + month);
+      return $http.get('/payrolls/' + year + "/" + month);
     }
 
     this.getMonths = function(employeeId) {
       if(employeeId){
-        return $http.get('/reports/', { params: { employee_id: employeeId } });
+        return $http.get('/payrolls/', { params: { employee_id: employeeId } });
       }else{
-        return $http.get('/reports/');
+        return $http.get('/payrolls/');
       }
     }
 
     this.updatePayroll = function(id, data) {
-      return $http.patch('/reports/' + id, data);
+      return $http.patch('/payrolls/' + id, data);
     }
   }]);
 })();

@@ -8,7 +8,7 @@ class Ability
       employees = Employee.where(school_id: user.school.id)
       can :manage, Payroll, employee_id: employees
       can :manage, :home
-      can :manage, :report
+      can :manage, :payrolls
       can :manage, :setting
     else
       cannot :manage, :all
