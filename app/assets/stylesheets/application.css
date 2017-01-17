@@ -35,7 +35,7 @@ body {
 }
 
 .navbar .dropdown-toggle {
-  height: 80px;
+  height: 60px;
   line-height: 50px;
 }
 
@@ -485,7 +485,6 @@ body {
   color: #A6A6A7;
 }
 
-
 .space20{
   height: 20px;
 }
@@ -493,7 +492,6 @@ body {
 .cursor-pointer {
   cursor: pointer;
 }
-
 
 #payroll {
   margin: 0px 10px;
@@ -575,4 +573,31 @@ table#payroll-history-table {
   border-left: 5px solid;
   border-left-color: #F59C0B;
   border-radius: 0px;
+}
+
+.employee-details.employee-menu {
+  padding-top: 100px;
+  background-color: #F3F9FC;
+}
+
+.employee-details.employee-menu-space {
+  padding-top: 80px;
+}
+
+.z-index-lv-1{
+  z-index: 999;
+}
+
+.z-index-lv-2{
+  z-index: 998;
+}
+
+.scrollable-menu {
+  height: auto;
+  max-height: 400px;
+  overflow-x: hidden;
+}
+
+.top-bar-space{
+  height: 94px;
 }
