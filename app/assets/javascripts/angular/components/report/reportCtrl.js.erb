@@ -4,7 +4,7 @@
   ])
   .controller('reportCtrl', ['$compile', '$scope', '$window', '$filter', '$rootScope', 'reportService', 'slipService', function($compile, $scope, $window, $filter, $rootScope, reportService, slipService) {
     $rootScope.menu = "Report"
-    
+
     var ctrl = this
     ctrl.total = 0
     ctrl.employees = []
@@ -47,7 +47,7 @@
       var containerDiv = $('#payroll-report')
       ctrl.employee = []
 
-      slipService.employeeSlip(id, currentMonth.month, currentMonth.year).then(function(resp) {
+      slipService.employeeSlip(id, currentMonth.payroll_id).then(function(resp) {
         ctrl.employee = resp.data
 
         if($window.navigator.userAgent.indexOf('Chrome') == -1) {
@@ -64,7 +64,7 @@
         angular.element(containerDiv).append(slipSchoolDiv);
         angular.element(containerDiv).append('<div class="separate for_print"></div>');
         angular.element(containerDiv).append(slipEmployeeDiv);
-      
+
         setTimeout(function() {
           window.print();
           $("slip-content").remove()
@@ -72,7 +72,7 @@
         }, 500);
       })
     }
-    
+
     function getPayrolls() {
       reportService.getMonths().then(function(resp) {
         if (resp.data.length > 0) {

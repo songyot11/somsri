@@ -8,11 +8,7 @@
     var dateNow = new Date();
     getPayroll(dateNow.getMonth() + 1, dateNow.getFullYear());
     function getPayroll(month, year){
-      // Get last month on database
-
-
       employeeService.getAllEmployee().then(function(resp) {
-        console.log('Employee List');
         ctrl.datas = resp.data;
         ctrl.display_datas = [];
         for(var i = 0; i < ctrl.datas.length; i++) {

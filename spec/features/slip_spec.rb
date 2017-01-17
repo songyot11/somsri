@@ -27,7 +27,7 @@ describe 'Payroll Slip', js: true do
         social_insurance: 750,
         late: 500,
         pvf: 100,
-        created_at: DateTime.new(2015, 2, 11)
+        effective_date: DateTime.new(2015, 2, 11)
       }),
       pr2 = Payroll.make!({
         employee_id: employee.id,
@@ -37,14 +37,14 @@ describe 'Payroll Slip', js: true do
         social_insurance: 750,
         late: 500,
         pvf: 1000,
-        created_at: DateTime.new(2016, 2, 16)
+        effective_date: DateTime.new(2016, 2, 16)
       }),
       pr3 = Payroll.make!({
         employee_id: employee.id,
         salary: 50_000,
         tax: 100,
         pvf: 100,
-        created_at: DateTime.new(2016, 1, 1)
+        effective_date: DateTime.new(2016, 1, 1)
       }),
     ]
   end
@@ -61,7 +61,7 @@ describe 'Payroll Slip', js: true do
     eventually { expect(page).to have_content 'ตำแหน่ง/Title ครูน้อย' }
     eventually { expect(page).to have_content 'รหัส/Code 00001 ชื่อ/Name นาง สมศรี เป็นชื่อแอพ เลขที่บัญชี/Bank acct. 5-234-34532-2342'}
     eventually { expect(page).to have_content 'รายการได้ / Income จำนวนเงิน / Amount รายการเงินหัก / Deduction จำนวนเงิน / Amount'}
-    eventually { expect(page).to have_content 'วัน / เดือน / ปี Day / Month / Year 29/02/59'}
+    eventually { expect(page).to have_content 'วัน / เดือน / ปี Day / Month / Year 16/02/59'}
     eventually { expect(page).to have_content 'รายได้สะสมต่อปี Acc. Income ภาษีสะสมต่อปี Acc. Tax เงินประกันสังคมสะสมต่อปี Acc. Social fund เงินสะสมกองทุนสงเคราะห์ Private Teacher Aid fund'}
   end
 
@@ -119,7 +119,7 @@ describe 'Payroll Slip', js: true do
   end
 
   it 'should display 2015-2 slip order and value' do
-    visit "/#/employees/#{employee.id}/slip?month=2&year=2015"
+    visit "/#/employees/#{employee.id}/slip?payroll_id=#{payrolls[0].id}"
     eventually { expect(page).to have_content 'เงินเดือน / Salary ก.พ. 58 เบี้ยเลี้ยง / Shift' }
     eventually { expect(page).to have_content '25,000.00 2,500.00'}
     eventually { expect(page).to have_content 'ภาษี / Tax ประกันสังคม / Social Sec. สาย / Late เงินสะสมกองทุนสงเคราะห์ / Private Teacher Aid fund'}

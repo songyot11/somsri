@@ -8,9 +8,9 @@
       return $http.get('/employees');
     };
 
-    this.getEmployee = function(id, month, year) {
-      if(month && year){
-        return $http.get('/employees/' + id, { params: { month: month, year: year } });
+    this.getEmployee = function(id, payroll_id) {
+      if(payroll_id){
+        return $http.get('/employees/' + id, { params: { payroll_id: payroll_id } });
       } else {
         return $http.get('/employees/' + id);
       }

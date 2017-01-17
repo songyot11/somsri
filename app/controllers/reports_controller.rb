@@ -3,7 +3,11 @@ class ReportsController < ApplicationController
 
   # GET /reports
   def index
-    render json: getMonths(params[:employee_id]), status: :ok
+    if params[:employee_id]
+      render json: get_months_by_employee_ids(params[:employee_id]), status: :ok
+    else
+      render json: get_months(params[:employee_id]), status: :ok
+    end
   end
 
   # GET /reports/:year/:month
@@ -14,7 +18,7 @@ class ReportsController < ApplicationController
     end_month = start_month.end_of_month
     employees = Employee.active.where(school_id: current_user.school.id)
     payrolls = Payroll.joins(:employee)
-                      .where(employee_id: employees, created_at: start_month.beginning_of_day..end_month.end_of_day)
+                      .where(employee_id: employees, effective_date: start_month.beginning_of_day..end_month.end_of_day)
                       .order('employees.start_date ASC, employees.created_at ASC')
                       .as_json("report")
 
@@ -40,7 +44,7 @@ class ReportsController < ApplicationController
     end_month = start_month.end_of_month
     employees = Employee.where(school_id: current_user.school.id).order(:id).limit(35).to_a
     payrolls = Payroll.joins(:employee)
-                      .where(employee_id: employees, created_at: start_month.beginning_of_day..end_month.end_of_day)
+                      .where(employee_id: employees, effective_date: start_month.beginning_of_day..end_month.end_of_day)
                       .order('employee_id').to_a
     employee_count = employees.size
     sum_salary = 0
@@ -88,17 +92,39 @@ class ReportsController < ApplicationController
   end
 
   private
-    def getMonths(employee_ids)
-      employee_ids = Employee.active.where(school_id: current_user.school.id) if !employee_ids
-      months = Payroll.where(employee_id: employee_ids).order("created_at DESC").map { |d| I18n.l(d.created_at, format: "%m %B %Y").split(" ") }.uniq
+    def get_months(employee_ids)
+      employee_ids = Employee.active.where(school_id: current_user.school.id)
+      payroll_dates = Payroll.where(employee_id: employee_ids)
+                             .order("effective_date DESC")
+                             .distinct.pluck(:effective_date).uniq
+      months = []
+      payroll_dates.to_a.each do |payroll_date|
+        d = I18n.l(payroll_date, format: "%dd %m %B %Y").split(" ")
+        months.push({
+          date: d[0].to_i,
+          month: d[1].to_i,
+          name: d[2],
+          year: d[3]
+        })
+      end
+      return months
+    end
 
-      months = months.collect { |x|
-        {
-          month: x[0].to_i,
-          name: x[1],
-          year: x[2],
-        }
-      }
+    def get_months_by_employee_ids(employee_ids)
+      payrolls = Payroll.where(employee_id: employee_ids)
+                             .order("effective_date DESC")
+      months = []
+      payrolls.to_a.each do |payroll|
+        d = I18n.l(payroll.effective_date, format: "%dd %m %B %Y").split(" ")
+        months.push({
+          date: d[0].to_i,
+          month: d[1].to_i,
+          name: d[2],
+          year: d[3],
+          payroll_id: payroll.id
+        })
+      end
+      return months
     end
 
     def params_payroll

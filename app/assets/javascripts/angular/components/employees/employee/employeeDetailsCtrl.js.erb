@@ -61,16 +61,17 @@
 
     // convert string to float
     function payrollToFloat(){
-      var keys = Object.keys(ctrl.datas.payroll)
+      var skips = ["id", "created_at", "updated_at", "effective_date"];
+      var keys = Object.keys(ctrl.datas.payroll);
       for(var i = 1; i < keys.length; i++){
-        if(keys[i] != "id"){
+        if(!skips.indexOf(keys[i]) > -1){
           ctrl.datas.payroll[keys[i]] = parseFloat(ctrl.datas.payroll[keys[i]]);
         }
       }
     }
 
     function displayMonth(monthInfo){
-      ctrl.currentMonthDisplay = "ประจำเดือน " + $filter('get_month_name')(monthInfo);
+      ctrl.currentMonthDisplay = $filter('get_month_name')(monthInfo);
       ctrl.monthsDisplay = JSON.parse(JSON.stringify(ctrl.months));
       for(var i = 0; i < ctrl.monthsDisplay.length; i++){
         if(ctrl.monthsDisplay[i]["month"] == monthInfo["month"] && ctrl.monthsDisplay[i]["year"] == monthInfo["year"]){
@@ -80,20 +81,18 @@
     }
 
     function getEmployee(id){
-      var displayingMonth = null
-      var displayingYear = null
-      if($location.search().month && $location.search().year) {
-        displayingMonth = parseInt($location.search().month)
-        displayingYear = parseInt($location.search().year)
+      var payroll_id = null
+      if($location.search().payroll_id) {
+        payroll_id = $location.search().payroll_id
       }
       reportService.getMonths(id).then(function(resp) {
         if (resp.data.length > 0) {
           ctrl.months = resp.data;
           ctrl.currentMonth = ctrl.months[0];
-          if (displayingMonth && displayingYear) {
+          if (payroll_id) {
             for (var i = 0; i < ctrl.months.length; i++) {
               var month = ctrl.months[i];
-              if (parseInt(month.year) === displayingYear && parseInt(month.month) === displayingMonth) {
+              if (month.payroll_id == payroll_id) {
                 ctrl.currentMonth = month;
                 break;
               }
@@ -103,9 +102,8 @@
         }
       });
 
-      service.getEmployee(id, displayingMonth, displayingYear).then(function(resp) {
+      service.getEmployee(id, payroll_id).then(function(resp) {
         ctrl.datas = resp.data;
-
         payrollToFloat();
 
         var e = resp.data.employee;
@@ -153,16 +151,17 @@
     }
 
     function switchMonth(monthInfo) {
-      var month = monthInfo.month;
-      var year = monthInfo.year;
-      service.getEmployee(employeeId, month, year).then(function(resp) {
+      var payroll_id = monthInfo.payroll_id;
+      service.getEmployee(employeeId, payroll_id).then(function(resp) {
         ctrl.currentMonth = monthInfo;
         //reset salary
         ctrl.datas.employee.salary = ctrl.datas_original.employee.salary;
-        ctrl.datas.payroll.salary = ctrl.datas_original.payroll.salary;
+
+        ctrl.datas_original.payroll = $.extend(true, {}, resp.data.payroll);
 
         //dispay payroll
-        ctrl.datas.payroll = resp.data.payroll
+        ctrl.datas.payroll = $.extend(true, {}, resp.data.payroll);
+
         payrollToFloat();
         ctrl.calTotal();
         displayMonth(monthInfo);
