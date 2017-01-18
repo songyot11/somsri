@@ -1,28 +1,36 @@
-<div class="container employee-details">
-  <div class="row">
-    <div class="col-md-9">
-      <div class="dropdown" ng-show="employee.isEdit">
-        <small>Select employee</small>
-        <h1 id="employeeName" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="true">
-          <span ng-bind="employee.displayName"></span>
-          <span class="caret"></span>
-        </h1>
-        <ul class="dropdown-menu">
-          <li ng-repeat="data in employee.employee_lists">
-            <a ng-click="employee.openEmployeeDetails(data.id)" href="javascript:void(0)">
-              {{data.name}}
+<nav class="navbar navbar-fixed-top employee-menu employee-details z-index-lv-2">
+  <div class="container">
+    <div class="row">
+      <div class="col-md-12">
+        <div class="row">
+          <div class="col-md-9">
+            <div class="dropdown" ng-show="employee.isEdit">
+              <small>Select employee</small>
+              <h1 id="employeeName" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="true">
+                <span ng-bind="employee.displayName"></span>
+                <span class="caret"></span>
+              </h1>
+              <ul class="dropdown-menu ">
+                <li ng-repeat="data in employee.employee_lists">
+                  <a ng-click="employee.openEmployeeDetails(data.id)" href="javascript:void(0)">
+                    {{data.name}}
+                  </a>
+                </li>
+              </ul>
+            </div>
+          </div>
+          <div class="col-md-3" style="line-height: 69px;" ng-show="employee.isEdit">
+            <a ng-click="employee.openEmployeeDetails(0)" href="javascript:void(0)" class="btn btn-lg btn-block bg-yellow">
+              + เพิ่มพนักงานใหม่
             </a>
-          </li>
-        </ul>
+          </div>
+        </div>
       </div>
     </div>
-    <div class="col-md-3" style="line-height: 69px;" ng-show="employee.isEdit">
-      <a ng-click="employee.openEmployeeDetails(0)" href="javascript:void(0)" class="btn btn-lg btn-block bg-yellow">
-        + เพิ่มพนักงานใหม่
-      </a>
-    </div>
   </div>
+</nav>
 
+<div class="container employee-details employee-menu-space">
   <form name="createProjectForm" ng-submit="employee.submit(employee.datas)">
     <div class="paragraph cyan employee">
       <div class="row">
