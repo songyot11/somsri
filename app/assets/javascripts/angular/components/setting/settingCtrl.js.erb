@@ -11,13 +11,7 @@
     });
 
     ctrl.submit = function(parm){
-      var params = {
-        user: {
-          name: parm.name,
-          email: parm.email
-        }
-      };
-      service.saveSetting(params).then(function(resp) {
+      service.saveSetting(parm).then(function(resp) {
         $rootScope.openEmployees();
       });
     }

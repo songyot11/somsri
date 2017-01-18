@@ -6,13 +6,13 @@
           <div class="col-md-4">
             <div class="form-group">
               <label for="name">ชื่อ</label>
-              <input type="text" class="form-control" id="username" ng-model="setting.datas.name">
+              <input type="text" class="form-control" id="username" ng-model="setting.datas.user.name">
             </div>
           </div>
           <div class="col-md-4">
             <div class="form-group">
               <label for="email">อีเมล</label>
-              <input type="text" class="form-control" id="useremail" ng-model="setting.datas.email">
+              <input type="text" class="form-control" id="useremail" ng-model="setting.datas.user.email">
             </div>
           </div>
         </div>
@@ -32,6 +32,29 @@
             </div>
           </div>
         </div>
+
+        <div class="space20"></div>
+        <div class="row">
+          <div class="col-md-4">
+            <div class="form-group">
+              <label for="name">ชื่อโรงเรียน</label>
+              <input type="text" class="form-control white-bg" id="name" ng-model="setting.datas.school.name">
+            </div>
+          </div>
+          <div class="col-md-4">
+            <div class="form-group">
+              <label for="schoolTaxId">เลขประจำตัวผู้เสียภาษี</label>
+              <input type="text" class="form-control white-bg" id="schoolTaxId" ng-model="setting.datas.school.tax_id">
+            </div>
+          </div>
+          <div class="col-md-4">
+            <div class="form-group">
+              <label for="address">ที่อยู่</label>
+              <input type="text" class="form-control white-bg" id="address" ng-model="setting.datas.school.address">
+            </div>
+          </div>
+        </div>
+
       </div>
     </div>
     <div class="footer-menu row">
