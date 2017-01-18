@@ -223,6 +223,7 @@ describe 'Employee Details', js: true do
     click_button('ตกลง')
     sleep(1)
     visit "/#/employees/#{employees[0].id}"
+    sleep(1)
     expect(find_field('นามสกุล').value).to eq 'โอชา'
     expect(find_field('ค่าแรง / เงินเดือนปัจจุบัน').value).to eq '50000'
   end
