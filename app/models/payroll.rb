@@ -31,7 +31,7 @@ class Payroll < ApplicationRecord
   def generate_social_insurance
     income = salary + position_allowance
     income = 15000 if income > 15000
-    income >= 1650 ? income * 0.05 : 0
+    income >= 1650 ? (income * 0.05).round : 0
   end
   
   def as_json(options={})
