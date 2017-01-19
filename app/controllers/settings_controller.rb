@@ -4,15 +4,17 @@ class SettingsController < ApplicationController
 
   # GET /settings
   def index
-    render json: current_user, status: :ok
+    render json: getSetting(), status: :ok
   end
 
   # PATCH /settings
   def update_current_user
-    if current_user.update(params_user)
-      render json: current_user, status: :ok
-    else
-      render json: {error: current_user.errors.full_message}, status: :bad_request
+    User.transaction do
+      if current_user.update(params_user) && current_user.school.update(params_school)
+        render json: getSetting(), status: :ok
+      else
+        render json: {error: "Cannot update settings."}, status: :bad_request
+      end
     end
   end
 
@@ -28,8 +30,19 @@ class SettingsController < ApplicationController
   end
 
   private
+    def getSetting
+      {
+        user: current_user,
+        school: current_user.school
+      }
+    end
+
     def params_password
       params.require(:user).permit(:password, :password_confirmation, :current_password)
+    end
+
+    def params_school
+      params.require(:school).permit(:name, :tax_id, :address)
     end
 
     def params_user

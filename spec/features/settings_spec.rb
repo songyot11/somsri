@@ -11,6 +11,9 @@ describe 'Employee Details', js: true do
     sleep(1)
     page.fill_in 'username', :with => 'Akiyama Eve'
     page.fill_in 'useremail', :with => 'akiyama@eve.com'
+    page.fill_in 'name', :with => 'โรงเรียนแห่งหนึ่ง'
+    page.fill_in 'schoolTaxId', :with => '1234567890123'
+    page.fill_in 'address', :with => 'สถานที่แห่งหนึ่ง มียุงชุกชุม'
     click_button('บันทึก')
     sleep(1)
 
@@ -18,6 +21,10 @@ describe 'Employee Details', js: true do
     sleep(1)
     expect(find_field('username').value).to eq 'Akiyama Eve'
     expect(find_field('useremail').value).to eq 'akiyama@eve.com'
+    expect(find_field('name').value).to eq 'โรงเรียนแห่งหนึ่ง'
+    expect(find_field('schoolTaxId').value).to eq '1234567890123'
+    expect(find_field('address').value).to eq 'สถานที่แห่งหนึ่ง มียุงชุกชุม'
+
   end
 
   it 'should update password' do
