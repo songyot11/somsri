@@ -2,7 +2,7 @@
   'use strict';
   angular.module('somsri.payroll.payroll', [
   ])
-  .controller('payrollCtrl', ['$filter', 'reportService', '$rootScope', '$timeout', function($filter, reportService, $rootScope, $timeout) {
+  .controller('payrollCtrl', ['$filter', 'reportService', '$rootScope', function($filter, reportService, $rootScope) {
     $rootScope.menu = "Payroll"
 
     var ctrl = this
