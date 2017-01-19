@@ -24,6 +24,10 @@ class Payroll < ApplicationRecord
     allowance + attendance_bonus + ot + bonus + position_allowance + extra_etc
   end
 
+  def generate_pvf
+    salary * 0.03
+  end
+
   def as_json(options={})
     if options["report"]
       {
