@@ -601,3 +601,13 @@ table#payroll-history-table {
 .top-bar-space{
   height: 94px;
 }
+
+table.scrollable-header {
+  /*table-layout:fixed;*/
+  margin-bottom: -1px !important;
+}
+
+.scrollable-content {
+  overflow-y:auto;
+  overflow-x:hidden;
+}

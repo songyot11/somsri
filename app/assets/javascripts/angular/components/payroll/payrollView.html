@@ -31,7 +31,7 @@
       <p class="text-right" ng-show="false">
         แก้ไขล่าสุด 25 ธ.ค. 59 10:50 โดย Somkid
       </p>
-      <table class="table text-right">
+      <table id="tableHeader" class="table text-right scrollable-header" style="table-layout:fixed">
         <thead>
           <tr>
             <th></th>
@@ -66,146 +66,150 @@
             <th class="text-center">เงินเดือนสุทธิ</th>
          </tr>
         </thead>
-        <tbody>
-          <tr ng-repeat="(index, employee) in payroll.employees">
-            <!-- Employee Data -->
-            <td class="text-left">{{employee.code}}</td>
-            <td class="text-left">
-              <a href="/#/employees/{{employee.code}}?payroll_id={{employee.payroll_id}}">
-                <strong>{{employee.name}}</strong>
-              </a>
-            </td>
-            <td class="text-center">{{employee.account_number}}</td>
-            <!-- Income -->
-            <td class="bordered">
-              <div class="popover-wrapper">
-                <a id="{{index}}-salary" href="#" e-ng-focus="payroll.selectValue($event)" editable-number="employee.salary" e-step="0.01" class="text-green" onbeforesave="payroll.updatePayroll(index, employee.payroll_id, $data, 'salary')">
-                  {{employee.salary || 0 | currency: ""}}
-                </a>
-              </div>
-            </td>
-            <td class="bordered">
-              <div class="popover-wrapper">
-                <a id="{{index}}-ot" href="#" e-ng-focus="payroll.selectValue($event)" editable-number="employee.ot" e-step="0.01" class="text-green" onbeforesave="payroll.updatePayroll(index, employee.payroll_id, $data, 'ot')">
-                  {{employee.ot || 0 | currency: ""}}
-                </a>
-              </div>
-            </td>
-            <td class="bordered">
-              <div class="popover-wrapper">
-                <a id="{{index}}-position_allowance" href="#" e-ng-focus="payroll.selectValue($event)" editable-number="employee.position_allowance" e-step="0.01" class="text-green" onbeforesave="payroll.updatePayroll(index, employee.payroll_id, $data, 'position_allowance')">
-                  {{employee.position_allowance || 0 | currency: ""}}
-                </a>
-              </div>
-            </td>
-            <td class="bordered">
-              <div class="popover-wrapper">
-                <a id="{{index}}-allowance" href="#" e-ng-focus="payroll.selectValue($event)" editable-number="employee.allowance" e-step="0.01" class="text-green" onbeforesave="payroll.updatePayroll(index, employee.payroll_id, $data, 'allowance')">
-                  {{employee.allowance || 0 | currency: ""}}
-                </a>
-              </div>
-            </td>
-            <td class="bordered">
-              <div class="popover-wrapper">
-                <a id="{{index}}-attendance_bonus" href="#" e-ng-focus="payroll.selectValue($event)" editable-number="employee.attendance_bonus" e-step="0.01" class="text-green" onbeforesave="payroll.updatePayroll(index, employee.payroll_id, $data, 'attendance_bonus')">
-                  {{employee.attendance_bonus || 0 | currency: ""}}
-                </a>
-              </div>
-            </td>
-            <td class="bordered">
-              <div class="popover-wrapper">
-                <a id="{{index}}-bonus" href="#" e-ng-focus="payroll.selectValue($event)" editable-number="employee.bonus" e-step="0.01" class="text-green" onbeforesave="payroll.updatePayroll(index, employee.payroll_id, $data, 'bonus')">
-                  {{employee.bonus || 0 | currency: ""}}
-                </a>
-              </div>
-            </td>
-            <td class="bordered">
-              <div class="popover-wrapper">
-                <a id="{{index}}-extra_etc" href="#" e-ng-focus="payroll.selectValue($event)" editable-number="employee.extra_etc" e-step="0.01" class="text-green" onbeforesave="payroll.updatePayroll(index, employee.payroll_id, $data, 'extra_etc')">
-                  {{employee.extra_etc || 0 | currency: ""}}
-                </a>
-              </div>
-            </td>
-            <!-- Outcome -->
-            <td class="bordered">
-              <div class="popover-wrapper">
-                <a id="{{index}}-tax" href="#" e-ng-focus="payroll.selectValue($event)" editable-number="employee.tax" e-step="0.01" class="text-red" onbeforesave="payroll.updatePayroll(index, employee.payroll_id, $data, 'tax')">
-                  {{employee.tax || 0 | currency: ""}}
-                </a>
-              </div>
-            </td>
-            <td class="bordered">
-              <div class="popover-wrapper">
-                <a id="{{index}}-social_insurance" e-ng-focus="payroll.selectValue($event)" href="#" editable-number="employee.social_insurance" e-step="0.01" class="text-red" onbeforesave="payroll.updatePayroll(index, employee.payroll_id, $data, 'social_insurance')">
-                  {{employee.social_insurance || 0 | currency: ""}}
-                </a>
-              </div>
-            </td>
-            <td class="bordered">
-              <div class="popover-wrapper">
-                <a id="{{index}}-pvf" href="#" e-ng-focus="payroll.selectValue($event)" editable-number="employee.pvf" e-step="0.01" class="text-red" onbeforesave="payroll.updatePayroll(index, employee.payroll_id, $data, 'pvf')">
-                  {{employee.pvf || 0 | currency: ""}}
-                </a>
-              </div>
-            </td>
-            <td class="bordered">
-              <div class="popover-wrapper">
-                <a id="{{index}}-absence" href="#" e-ng-focus="payroll.selectValue($event)" editable-number="employee.absence" e-step="0.01" class="text-red" onbeforesave="payroll.updatePayroll(index, employee.payroll_id, $data, 'absence')">
-                  {{employee.absence || 0 | currency: ""}}
-                </a>
-              </div>
-            </td>
-            <td class="bordered">
-              <div class="popover-wrapper">
-                <a id="{{index}}-late" href="#" e-ng-focus="payroll.selectValue($event)" editable-number="employee.late" e-step="0.01" class="text-red" onbeforesave="payroll.updatePayroll(index, employee.payroll_id, $data, 'late')">
-                  {{employee.late || 0 | currency: ""}}
-                </a>
-              </div>
-            </td>
-            <td class="bordered">
-              <div class="popover-wrapper">
-                <a id="{{index}}-advance_payment" e-ng-focus="payroll.selectValue($event)" href="#" editable-number="employee.advance_payment" e-step="0.01" class="text-red" onbeforesave="payroll.updatePayroll(index, employee.payroll_id, $data, 'advance_payment')">
-                  {{employee.advance_payment || 0 | currency: ""}}
-                </a>
-              </div>
-            </td>
-            <td class="bordered">
-              <div class="popover-wrapper">
-                <a id="{{index}}-fee_etc" href="#" e-ng-focus="payroll.selectValue($event)" editable-number="employee.fee_etc" e-step="0.01" class="text-red" onbeforesave="payroll.updatePayroll(index, employee.payroll_id, $data, 'fee_etc')">
-                  {{employee.fee_etc || 0 | currency: ""}}
-                </a>
-              </div>
-            </td>
-            <!-- Result -->
-            <td id="{{index}}-net_salary" class="text-green">{{employee.net_salary || 0 | currency: ""}}</td>
-          </tr>
-        </tbody>
-        <tfoot>
-          <tr>
-            <td></td>
-            <td></td>
-            <td class="text-center"><strong>รวมทั้งหมด</strong></td>
-            <!-- Income -->
-            <td class="text-green bordered"><strong>{{payroll.total.salary | currency: "" }}</strong></td>
-            <td class="text-green bordered"><strong>{{payroll.total.ot | currency: "" }}</strong></td>
-            <td class="text-green bordered"><strong>{{payroll.total.position_allowance | currency: "" }}</strong></td>
-            <td class="text-green bordered"><strong>{{payroll.total.allowance | currency: "" }}</strong></td>
-            <td class="text-green bordered"><strong>{{payroll.total.attendance_bonus | currency: "" }}</strong></td>
-            <td class="text-green bordered"><strong>{{payroll.total.bonus | currency: "" }}</strong></td>
-            <td class="text-green bordered"><strong>{{payroll.total.extra_etc | currency: "" }}</strong></td>
-            <!-- Outcome -->
-            <td class="text-red bordered"><strong>{{payroll.total.tax | currency: "" }}</strong></td>
-            <td class="text-red bordered"><strong>{{payroll.total.social_insurance | currency: "" }}</strong></td>
-            <td class="text-red bordered"><strong>{{payroll.total.pvf | currency: "" }}</strong></td>
-            <td class="text-red bordered"><strong>{{payroll.total.absence | currency: "" }}</strong></td>
-            <td class="text-red bordered"><strong>{{payroll.total.late | currency: "" }}</strong></td>
-            <td class="text-red bordered"><strong>{{payroll.total.advance_payment | currency: "" }}</strong></td>
-            <td class="text-red bordered"><strong>{{payroll.total.fee_etc | currency: "" }}</strong></td>
-            <!-- Result -->
-            <td class="text-green"><strong>{{payroll.total.net_salary | currency: "" }}</strong></td>
-          </tr>
-        </tfoot>
       </table>
+      <div class="scrollable-content" style="max-height: calc(100vh - 305px);">
+        <table id="tableData" class="table text-right" style="table-layout:fixed">
+          <tbody>
+            <tr ng-repeat="(index, employee) in payroll.employees">
+              <!-- Employee Data -->
+              <td class="text-left">{{employee.code}}</td>
+              <td class="text-left">
+                <a href="/#/employees/{{employee.code}}?payroll_id={{employee.payroll_id}}">
+                  <strong>{{employee.name}}</strong>
+                </a>
+              </td>
+              <td class="text-center">{{employee.account_number}}</td>
+              <!-- Income -->
+              <td class="bordered">
+                <div class="popover-wrapper">
+                  <a id="{{index}}-salary" href="#" e-ng-focus="payroll.selectValue($event)" editable-number="employee.salary" e-step="0.01" class="text-green" onbeforesave="payroll.updatePayroll(index, employee.payroll_id, $data, 'salary')">
+                    {{employee.salary || 0 | currency: ""}}
+                  </a>
+                </div>
+              </td>
+              <td class="bordered">
+                <div class="popover-wrapper">
+                  <a id="{{index}}-ot" href="#" e-ng-focus="payroll.selectValue($event)" editable-number="employee.ot" e-step="0.01" class="text-green" onbeforesave="payroll.updatePayroll(index, employee.payroll_id, $data, 'ot')">
+                    {{employee.ot || 0 | currency: ""}}
+                  </a>
+                </div>
+              </td>
+              <td class="bordered">
+                <div class="popover-wrapper">
+                  <a id="{{index}}-position_allowance" href="#" e-ng-focus="payroll.selectValue($event)" editable-number="employee.position_allowance" e-step="0.01" class="text-green" onbeforesave="payroll.updatePayroll(index, employee.payroll_id, $data, 'position_allowance')">
+                    {{employee.position_allowance || 0 | currency: ""}}
+                  </a>
+                </div>
+              </td>
+              <td class="bordered">
+                <div class="popover-wrapper">
+                  <a id="{{index}}-allowance" href="#" e-ng-focus="payroll.selectValue($event)" editable-number="employee.allowance" e-step="0.01" class="text-green" onbeforesave="payroll.updatePayroll(index, employee.payroll_id, $data, 'allowance')">
+                    {{employee.allowance || 0 | currency: ""}}
+                  </a>
+                </div>
+              </td>
+              <td class="bordered">
+                <div class="popover-wrapper">
+                  <a id="{{index}}-attendance_bonus" href="#" e-ng-focus="payroll.selectValue($event)" editable-number="employee.attendance_bonus" e-step="0.01" class="text-green" onbeforesave="payroll.updatePayroll(index, employee.payroll_id, $data, 'attendance_bonus')">
+                    {{employee.attendance_bonus || 0 | currency: ""}}
+                  </a>
+                </div>
+              </td>
+              <td class="bordered">
+                <div class="popover-wrapper">
+                  <a id="{{index}}-bonus" href="#" e-ng-focus="payroll.selectValue($event)" editable-number="employee.bonus" e-step="0.01" class="text-green" onbeforesave="payroll.updatePayroll(index, employee.payroll_id, $data, 'bonus')">
+                    {{employee.bonus || 0 | currency: ""}}
+                  </a>
+                </div>
+              </td>
+              <td class="bordered">
+                <div class="popover-wrapper">
+                  <a id="{{index}}-extra_etc" href="#" e-ng-focus="payroll.selectValue($event)" editable-number="employee.extra_etc" e-step="0.01" class="text-green" onbeforesave="payroll.updatePayroll(index, employee.payroll_id, $data, 'extra_etc')">
+                    {{employee.extra_etc || 0 | currency: ""}}
+                  </a>
+                </div>
+              </td>
+              <!-- Outcome -->
+              <td class="bordered">
+                <div class="popover-wrapper">
+                  <a id="{{index}}-tax" href="#" e-ng-focus="payroll.selectValue($event)" editable-number="employee.tax" e-step="0.01" class="text-red" onbeforesave="payroll.updatePayroll(index, employee.payroll_id, $data, 'tax')">
+                    {{employee.tax || 0 | currency: ""}}
+                  </a>
+                </div>
+              </td>
+              <td class="bordered">
+                <div class="popover-wrapper">
+                  <a id="{{index}}-social_insurance" e-ng-focus="payroll.selectValue($event)" href="#" editable-number="employee.social_insurance" e-step="0.01" class="text-red" onbeforesave="payroll.updatePayroll(index, employee.payroll_id, $data, 'social_insurance')">
+                    {{employee.social_insurance || 0 | currency: ""}}
+                  </a>
+                </div>
+              </td>
+              <td class="bordered">
+                <div class="popover-wrapper">
+                  <a id="{{index}}-pvf" href="#" e-ng-focus="payroll.selectValue($event)" editable-number="employee.pvf" e-step="0.01" class="text-red" onbeforesave="payroll.updatePayroll(index, employee.payroll_id, $data, 'pvf')">
+                    {{employee.pvf || 0 | currency: ""}}
+                  </a>
+                </div>
+              </td>
+              <td class="bordered">
+                <div class="popover-wrapper">
+                  <a id="{{index}}-absence" href="#" e-ng-focus="payroll.selectValue($event)" editable-number="employee.absence" e-step="0.01" class="text-red" onbeforesave="payroll.updatePayroll(index, employee.payroll_id, $data, 'absence')">
+                    {{employee.absence || 0 | currency: ""}}
+                  </a>
+                </div>
+              </td>
+              <td class="bordered">
+                <div class="popover-wrapper">
+                  <a id="{{index}}-late" href="#" e-ng-focus="payroll.selectValue($event)" editable-number="employee.late" e-step="0.01" class="text-red" onbeforesave="payroll.updatePayroll(index, employee.payroll_id, $data, 'late')">
+                    {{employee.late || 0 | currency: ""}}
+                  </a>
+                </div>
+              </td>
+              <td class="bordered">
+                <div class="popover-wrapper">
+                  <a id="{{index}}-advance_payment" e-ng-focus="payroll.selectValue($event)" href="#" editable-number="employee.advance_payment" e-step="0.01" class="text-red" onbeforesave="payroll.updatePayroll(index, employee.payroll_id, $data, 'advance_payment')">
+                    {{employee.advance_payment || 0 | currency: ""}}
+                  </a>
+                </div>
+              </td>
+              <td class="bordered">
+                <div class="popover-wrapper">
+                  <a id="{{index}}-fee_etc" href="#" e-ng-focus="payroll.selectValue($event)" editable-number="employee.fee_etc" e-step="0.01" class="text-red" onbeforesave="payroll.updatePayroll(index, employee.payroll_id, $data, 'fee_etc')">
+                    {{employee.fee_etc || 0 | currency: ""}}
+                  </a>
+                </div>
+              </td>
+              <!-- Result -->
+              <td id="{{index}}-net_salary" class="text-green">{{employee.net_salary || 0 | currency: ""}}</td>
+            </tr>
+          </tbody>
+          <tfoot>
+            <tr>
+              <td></td>
+              <td></td>
+              <td class="text-center"><strong>รวมทั้งหมด</strong></td>
+              <!-- Income -->
+              <td class="text-green bordered"><strong>{{payroll.total.salary | currency: "" }}</strong></td>
+              <td class="text-green bordered"><strong>{{payroll.total.ot | currency: "" }}</strong></td>
+              <td class="text-green bordered"><strong>{{payroll.total.position_allowance | currency: "" }}</strong></td>
+              <td class="text-green bordered"><strong>{{payroll.total.allowance | currency: "" }}</strong></td>
+              <td class="text-green bordered"><strong>{{payroll.total.attendance_bonus | currency: "" }}</strong></td>
+              <td class="text-green bordered"><strong>{{payroll.total.bonus | currency: "" }}</strong></td>
+              <td class="text-green bordered"><strong>{{payroll.total.extra_etc | currency: "" }}</strong></td>
+              <!-- Outcome -->
+              <td class="text-red bordered"><strong>{{payroll.total.tax | currency: "" }}</strong></td>
+              <td class="text-red bordered"><strong>{{payroll.total.social_insurance | currency: "" }}</strong></td>
+              <td class="text-red bordered"><strong>{{payroll.total.pvf | currency: "" }}</strong></td>
+              <td class="text-red bordered"><strong>{{payroll.total.absence | currency: "" }}</strong></td>
+              <td class="text-red bordered"><strong>{{payroll.total.late | currency: "" }}</strong></td>
+              <td class="text-red bordered"><strong>{{payroll.total.advance_payment | currency: "" }}</strong></td>
+              <td class="text-red bordered"><strong>{{payroll.total.fee_etc | currency: "" }}</strong></td>
+              <!-- Result -->
+              <td class="text-green"><strong>{{payroll.total.net_salary | currency: "" }}</strong></td>
+            </tr>
+          </tfoot>
+        </table>
+      </div>
     </div>
   </div>
 </div>

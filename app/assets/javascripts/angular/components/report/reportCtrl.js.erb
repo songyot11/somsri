@@ -2,7 +2,7 @@
   'use strict';
   angular.module('somsri.payroll.report', [
   ])
-  .controller('reportCtrl', ['$compile', '$scope', '$window', '$filter', '$rootScope', 'reportService', 'slipService', function($compile, $scope, $window, $filter, $rootScope, reportService, slipService) {
+  .controller('reportCtrl', ['$compile', '$scope', '$window', '$filter', '$rootScope', 'reportService', 'slipService', '$timeout', function($compile, $scope, $window, $filter, $rootScope, reportService, slipService, $timeout) {
     $rootScope.menu = "Report"
 
     var ctrl = this
@@ -40,6 +40,7 @@
         ctrl.total = getTotalSalary(ctrl.employees);
         ctrl.currentMonth = $filter('get_month_name')(month)
         ctrl.currentMonthData = month
+        setTableHeader();
       });
     }
 
@@ -85,11 +86,22 @@
             getTotalSalary(ctrl.employees)
             ctrl.currentMonth = $filter('get_month_name')(current)
             ctrl.currentMonthData = current
+            setTableHeader();
           });
         }
       });
     }
 
+    function setTableHeader(){
+      $timeout(function () {
+        var tdHeader = document.getElementById("tableHeader").rows[0].cells;
+        var tdData = document.getElementById("tableData").rows[0].cells;
+
+        for (var i = 0; i < tdData.length; i++)
+            tdHeader[i].style.width = tdData[i].offsetWidth + 'px';
+      });
+    }
     getPayrolls()
+
   }]);
 })();

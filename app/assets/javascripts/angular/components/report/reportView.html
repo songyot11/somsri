@@ -14,7 +14,7 @@
       </ul>
     </div>
     <div class="row report-content container-fluid">
-      <table class="table text-right">
+      <table id="tableHeader" class="table text-right scrollable-header">
         <thead>
          <tr>
             <th>รหัส</th>
@@ -27,39 +27,43 @@
             <th class="text-center"></th>
          </tr>
         </thead>
-        <tbody>
-          <tr ng-repeat="employee in report.employees">
-            <td class="text-left">{{employee.code}}</td>
-            <td class="text-left">
-              <a href="/#/employees/{{employee.code}}?payroll_id={{employee.payroll_id}}">
-                <strong>{{employee.name}}</strong>
-              </a>
-            </td>
-            <td class="text-center">{{employee.account_number}}</td>
-            <td>{{employee.salary | currency: ""}}</td>
-            <td class="text-green">{{employee.extra_pay | currency: ""}}</td>
-            <td class="text-red">{{employee.extra_fee | currency: ""}}</td>
-            <td class="text-green">{{report.getNetSalary(employee) | currency: ""}}</td>
-            <td>
-              <a ng-click="report.printSlip(employee.code, report.currentMonthData)" href="javascript:void(0)">
-                <i class="fa fa-print"></i>
-              </a>
-            </td>
-          </tr>
-        </tbody>
-        <tfoot>
-          <tr>
-            <td></td>
-            <td></td>
-            <td class="text-center">รวมทั้งหมด</td>
-            <td>{{report.total.salary | currency: ""}}</td>
-            <td class="text-green">{{report.total.extraPay | currency: ""}}</td>
-            <td class="text-red">{{report.total.extraFee | currency: ""}}</td>
-            <td class="text-green">{{report.total.netSalary | currency: ""}}</td>
-            <td></td>
-          </tr>
-        </tfoot>
       </table>
+      <div class="scrollable-content" style="max-height: calc(100vh - 270px);">
+        <table id="tableData" class="table text-right">
+          <tbody>
+            <tr ng-repeat="employee in report.employees">
+              <td class="text-left">{{employee.code}}</td>
+              <td class="text-left">
+                <a href="/#/employees/{{employee.code}}?payroll_id={{employee.payroll_id}}">
+                  <strong>{{employee.name}}</strong>
+                </a>
+              </td>
+              <td class="text-center">{{employee.account_number}}</td>
+              <td>{{employee.salary | currency: ""}}</td>
+              <td class="text-green">{{employee.extra_pay | currency: ""}}</td>
+              <td class="text-red">{{employee.extra_fee | currency: ""}}</td>
+              <td class="text-green">{{report.getNetSalary(employee) | currency: ""}}</td>
+              <td>
+                <a ng-click="report.printSlip(employee.code, report.currentMonthData)" href="javascript:void(0)">
+                  <i class="fa fa-print"></i>
+                </a>
+              </td>
+            </tr>
+          </tbody>
+          <tfoot>
+            <tr>
+              <td></td>
+              <td></td>
+              <td class="text-center">รวมทั้งหมด</td>
+              <td>{{report.total.salary | currency: ""}}</td>
+              <td class="text-green">{{report.total.extraPay | currency: ""}}</td>
+              <td class="text-red">{{report.total.extraFee | currency: ""}}</td>
+              <td class="text-green">{{report.total.netSalary | currency: ""}}</td>
+              <td></td>
+            </tr>
+          </tfoot>
+        </table>
+      </div>
     </div>
   </div>
 </div>

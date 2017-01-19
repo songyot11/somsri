@@ -2,7 +2,7 @@
   'use strict';
   angular.module('somsri.payroll.payroll', [
   ])
-  .controller('payrollCtrl', ['$filter', 'reportService', '$rootScope', function($filter, reportService, $rootScope) {
+  .controller('payrollCtrl', ['$filter', 'reportService', '$rootScope', '$timeout', function($filter, reportService, $rootScope, $timeout) {
     $rootScope.menu = "Payroll"
 
     var ctrl = this
@@ -79,6 +79,7 @@
         getTotalSalary(ctrl.employees)
         ctrl.currentMonth = $filter('get_month_name')(month)
         ctrl.currentMonthData = month
+        setTableHeader();
       });
     }
 
