@@ -1,4 +1,6 @@
 PDFTK_PATH: /usr/local/bin/pdftk
+SENDGRID_USERNAME: somsri_dev
+SENDGRID_PASSWORD: somsri_test
 
 production:
  PDFTK_PATH: /usr/local/bin/pdftk
