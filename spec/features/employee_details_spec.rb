@@ -271,6 +271,7 @@ describe 'Employee Details', js: true do
   it 'should edit birthdate' do
     visit "/#/employees/#{employees[0].id}"
     sleep(1)
+    click_link('ข้อมูลส่วนตัว')
     expect(find('#birthdate').value).to_not have_content '03/12/1990'
 
     find('#birthdate').set('03/12/1990')
@@ -282,6 +283,8 @@ describe 'Employee Details', js: true do
     employee = Employee.find(employees[0].id)
 
     visit "/#/employees/#{employees[0].id}"
+    sleep(1)
+    click_link('ข้อมูลส่วนตัว')
     expect(find('#birthdate').value).to have_content '03/12/1990'
   end
 

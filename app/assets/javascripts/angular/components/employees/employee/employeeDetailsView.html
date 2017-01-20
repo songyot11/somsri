@@ -32,7 +32,7 @@
 
 <div class="container employee-details employee-menu-space">
   <form name="createProjectForm" ng-submit="employee.submit(employee.datas)">
-    <ul class="nav nav-tabs">
+    <ul class="nav nav-tabs main">
       <li class="cyan" ng-class="{ 'active' : employee.activeTab === 'general' }">
         <a data-toggle="tab" ng-click="employee.activeTab = 'general'" href="javascript:void(0)">ข้อมูลทั่วไป</a>
       </li>
@@ -138,17 +138,6 @@
                 </p>
               </div>
             </div>
-            <div class="col-md-4">
-              <div class="form-group">
-                <label for="birthdate">วันเกิด</label>
-                <p class="input-group">
-                  <input id="birthdate" type="text" class="form-control" uib-datepicker-popup="dd/MM/yyyy" ng-model="employee.datas.employee.birthdate" is-open="employee.birthdatePopup.opened" close-text="Close"/>
-                  <span class="input-group-btn">
-                    <button type="button" class="btn btn-default" ng-click="employee.openBirthdatePopup()"><i class="glyphicon glyphicon-calendar"></i></button>
-                  </span>
-                </p>
-              </div>
-            </div>
           </div>
           <div class="row">
             <div class="col-md-4">
@@ -196,14 +185,81 @@
         <div class="paragraph tab-content grey employee private">
           <div class="row">
             <div class="col-md-3 sub-menu">
-              <ul>
-                <li>ภาพรวม</li>
-                <li>ข้อมูลติดต่อและข้อมูลพื้นฐาน</li>
-                <li>ครอบครัว</li>
-                <li>การทำงานและการศึกษา</li>
+              <ul class="nav nav-tabs tabs-left">
+                <li ng-class="{ 'active' : employee.activeTabPrivate === 'overview' }">
+                  <a data-toggle="tab" ng-click="employee.activeTabPrivate = 'overview'" href="javascript:void(0)">
+                    ภาพรวม
+                  </a>
+                </li>
+                <li ng-class="{ 'active' : employee.activeTabPrivate === 'basic' }">
+                  <a data-toggle="tab" ng-click="employee.activeTabPrivate = 'basic'" href="javascript:void(0)">
+                    ข้อมูลติดต่อและข้อมูลพื้นฐาน
+                  </a>
+                </li>
+                <li ng-class="{ 'active' : employee.activeTabPrivate === 'family' }">
+                  <a data-toggle="tab" ng-click="employee.activeTabPrivate = 'family'" href="javascript:void(0)">
+                    ครอบครัว
+                  </a>
+                </li>
+                <li ng-class="{ 'active' : employee.activeTabPrivate === 'education' }">
+                  <a data-toggle="tab" ng-click="employee.activeTabPrivate = 'education'" href="javascript:void(0)">
+                    การทำงานและการศึกษา
+                  </a>
+                </li>
               </ul>
             </div>
-            <div class="col-md-9">
+            <div class="col-md-9 tab-content">
+              <div ng-class="{ 'in active' : employee.activeTabPrivate === 'overview' }" class="tab-pane fade">
+                <div class="row">
+                  <div class="col-md-12">
+                    <div class="form-group">
+                      <label for="address">ที่อยู่ปัจจุบัน</label>
+                      <input type="text" class="form-control" id="address" ng-model="employee.datas.employee.address">
+                    </div>
+                  </div>
+                </div>
+                <div class="row">
+                  <div class="col-md-5">
+                    <div class="form-group">
+                      <label for="tel">โทรศัพท์</label>
+                      <input type="text" class="form-control" id="tel" ng-model="employee.datas.employee.tel">
+                    </div>
+                  </div>
+                  <div class="col-md-5">
+                    <div class="form-group">
+                      <label for="birthdate">วันเกิด</label>
+                      <p class="input-group">
+                        <input id="birthdate" type="text" class="form-control" uib-datepicker-popup="dd/MM/yyyy" ng-model="employee.datas.employee.birthdate" is-open="employee.birthdatePopup.opened" close-text="Close"/>
+                        <span class="input-group-btn">
+                          <button type="button" class="btn btn-default" ng-click="employee.openBirthdatePopup()"><i class="glyphicon glyphicon-calendar"></i></button>
+                        </span>
+                      </p>
+                    </div>
+                  </div>
+                </div>
+                <div class="row">
+                  <div class="col-md-5">
+                    <div class="form-group">
+                      <label for="status">สถานะ</label>
+                      <input type="text" class="form-control" id="status" ng-model="employee.datas.employee.status">
+                    </div>
+                  </div>
+                </div>
+                <div class="row">
+                  <div class="col-md-5">
+                    <div class="form-group">
+                      <label for="email">อีเมล</label>
+                      <input type="text" class="form-control" id="email" ng-model="employee.datas.employee.email">
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <div ng-class="{ 'in active' : employee.activeTabPrivate === 'basic' }" class="tab-pane fade">
+              </div>
+              <div ng-class="{ 'in active' : employee.activeTabPrivate === 'family' }" class="tab-pane fade">
+              </div>
+              <div ng-class="{ 'in active' : employee.activeTabPrivate === 'education' }" class="tab-pane fade">
+              </div>
             </div>
           </div>
         </div>
