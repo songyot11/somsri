@@ -456,6 +456,10 @@ body {
   margin-bottom: 30px;
 }
 
+.paragraph.tab-content {
+  margin-top: 0px;
+}
+
 .paragraph.cyan,
 #bird-eye .modal-content.cyan {
   border-left: 5px solid;
@@ -465,6 +469,11 @@ body {
 .paragraph.orange{
   border-left: 5px solid;
   border-left-color: #F59C0B;
+}
+
+.paragraph.grey{
+  border-left: 5px solid;
+  border-left-color: #EDF3F7;
 }
 
 .employee-details .img-profile{
@@ -581,7 +590,7 @@ table#payroll-history-table {
 }
 
 .employee-details.employee-menu-space {
-  padding-top: 80px;
+  padding-top: 100px;
 }
 
 .z-index-lv-1{
@@ -610,4 +619,60 @@ table.scrollable-header {
 .scrollable-content {
   overflow-y:auto;
   overflow-x:hidden;
+}
+
+.nav-tabs > li > a {
+  padding: 20px 40px 20px 40px;
+}
+
+.nav-tabs > li > a {
+  font-size: 22px;
+}
+
+.nav-tabs {
+  border-bottom: 1px solid white;
+}
+
+.nav-tabs > li.cyan > a {
+  color: #62C4CC;
+}
+
+.nav-tabs > li.orange > a {
+  color: #F59C0B;
+}
+
+.nav-tabs > li.active.cyan > a,
+.nav-tabs > li.active.orange > a {
+  color: #333;
+}
+
+.nav-tabs > li.active > a,
+.nav-tabs > li.active > a:hover,
+.nav-tabs > li.active > a:focus {
+  border: none;
+  border-bottom: 1px solid white;
+}
+
+.nav-tabs > li > a,
+.nav-tabs > li > a:hover {
+  background-color: transparent;
+  border: none;
+}
+
+.employee-details .paragraph.private {
+  padding-left: 45px;
+}
+
+.employee-details .paragraph ul {
+  list-style-type: none;
+  padding-left: 0px;
+}
+
+.employee-details .paragraph ul li {
+  padding-top: 15px;
+  font-size: 16px;
+}
+
+.employee-details .paragraph .sub-menu {
+  border-right: 1px solid #F59C0B;
 }

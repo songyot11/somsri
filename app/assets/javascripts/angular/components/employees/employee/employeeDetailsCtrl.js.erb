@@ -12,6 +12,7 @@
     ctrl.isEdit = employeeId > 0 ? true : false
     ctrl.data = { employee: {}}
     ctrl.isSubmit = false;
+    ctrl.activeTab = 'general'
 
     function openConfirmationModal(message, success, dismiss) {
       $scope.message = message;
