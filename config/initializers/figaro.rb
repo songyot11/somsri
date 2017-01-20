@@ -1,0 +1,1 @@
+Figaro.require_keys("PDFTK_PATH", "SENDGRID_USERNAME", "SENDGRID_PASSWORD")
