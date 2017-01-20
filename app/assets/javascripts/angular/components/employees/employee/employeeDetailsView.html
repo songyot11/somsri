@@ -32,151 +32,179 @@
 
 <div class="container employee-details employee-menu-space">
   <form name="createProjectForm" ng-submit="employee.submit(employee.datas)">
-    <div class="paragraph cyan employee">
-      <div class="row">
-        <div class="col-md-8">
+    <ul class="nav nav-tabs">
+      <li class="cyan" ng-class="{ 'active' : employee.activeTab === 'general' }">
+        <a data-toggle="tab" ng-click="employee.activeTab = 'general'" href="javascript:void(0)">ข้อมูลทั่วไป</a>
+      </li>
+      <li class="orange" ng-class="{ 'active' : employee.activeTab === 'private' }">
+        <a data-toggle="tab" ng-click="employee.activeTab = 'private'" href="javascript:void(0)">ข้อมูลส่วนตัว</a>
+      </li>
+    </ul>
+    <div class="tab-content">
+      <div ng-class="{ 'in active' : employee.activeTab === 'general' }" id="generalInfo" class="tab-pane fade">
+        <div class="paragraph cyan tab-content employee">
           <div class="row">
-            <div class="col-md-2">
-              <div class="form-group">
-                <label for="prefix_thai">คำนำหน้า</label>
-                <input type="text" class="form-control" id="prefix_thai" ng-model="employee.datas.employee.prefix_thai" ng-change="employee.calTotal()">
+            <div class="col-md-8">
+              <div class="row">
+                <div class="col-md-2">
+                  <div class="form-group">
+                    <label for="prefix_thai">คำนำหน้า</label>
+                    <input type="text" class="form-control" id="prefix_thai" ng-model="employee.datas.employee.prefix_thai" ng-change="employee.calTotal()">
+                  </div>
+                </div>
+                <div class="col-md-5">
+                  <div class="form-group">
+                    <label for="first_name_thai">ชื่อ</label>
+                    <input type="text" class="form-control" id="first_name_thai" ng-model="employee.datas.employee.first_name_thai">
+                  </div>
+                </div>
+                <div class="col-md-5">
+                  <div class="form-group">
+                    <label for="last_name_thai">นามสกุล</label>
+                    <input type="text" class="form-control" id="last_name_thai" ng-model="employee.datas.employee.last_name_thai">
+                  </div>
+                </div>
+              </div>
+              <div class="row">
+                <div class="col-md-2">
+                  <div class="form-group">
+                    <label for="prefix">Prefix</label>
+                    <input type="text" class="form-control" id="prefix" ng-model="employee.datas.employee.prefix">
+                  </div>
+                </div>
+                <div class="col-md-3">
+                  <div class="form-group">
+                    <label for="first_name">First Name</label>
+                    <input type="text" class="form-control" id="first_name" ng-model="employee.datas.employee.first_name">
+                  </div>
+                </div>
+                <div class="col-md-3">
+                  <div class="form-group">
+                    <label for="middle_name">Middle Name</label>
+                    <input type="text" class="form-control" id="middle_name" ng-model="employee.datas.employee.middle_name">
+                  </div>
+                </div>
+                <div class="col-md-4">
+                  <div class="form-group">
+                    <label for="last_name">Surname</label>
+                    <input type="text" class="form-control" id="last_name" ng-model="employee.datas.employee.last_name">
+                  </div>
+                </div>
+              </div>
+              <div class="row">
+                <div class="col-md-6">
+                  <div class="form-group">
+                    <label for="personal_id">เลขประจำตัวประชาชน</label>
+                    <input type="text" class="form-control" id="personal_id" ng-model="employee.datas.employee.personal_id">
+                  </div>
+                </div>
+                <div class="col-md-6">
+                  <div class="form-group">
+                    <label for="passport_number">Passport No.</label>
+                    <input type="text" class="form-control" id="passport_number" ng-model="employee.datas.employee.passport_number">
+                  </div>
+                </div>
               </div>
             </div>
-            <div class="col-md-5">
-              <div class="form-group">
-                <label for="first_name_thai">ชื่อ</label>
-                <input type="text" class="form-control" id="first_name_thai" ng-model="employee.datas.employee.first_name_thai">
-              </div>
-            </div>
-            <div class="col-md-5">
-              <div class="form-group">
-                <label for="last_name_thai">นามสกุล</label>
-                <input type="text" class="form-control" id="last_name_thai" ng-model="employee.datas.employee.last_name_thai">
+            <div class="col-md-4">
+              <div class="img-profile">
+                <div ng-switch on="employee.datas.employee.img_url.length > 0">
+                  <div ng-switch-when="true">
+                    <div class="img-bg" style="background: url('{{ employee.datas.employee.img_url }}')"></div>
+                  </div>
+                  <div ng-switch-default>
+                    <i class="fa fa-camera center font-size-40 font-white" aria-hidden="true"></i>
+                    <div class="img-bg bg-light-gray"></div>
+                  </div>
+                </div>
               </div>
             </div>
           </div>
           <div class="row">
-            <div class="col-md-2">
+            <div class="col-md-4">
               <div class="form-group">
-                <label for="prefix">Prefix</label>
-                <input type="text" class="form-control" id="prefix" ng-model="employee.datas.employee.prefix">
-              </div>
-            </div>
-            <div class="col-md-3">
-              <div class="form-group">
-                <label for="first_name">First Name</label>
-                <input type="text" class="form-control" id="first_name" ng-model="employee.datas.employee.first_name">
-              </div>
-            </div>
-            <div class="col-md-3">
-              <div class="form-group">
-                <label for="middle_name">Middle Name</label>
-                <input type="text" class="form-control" id="middle_name" ng-model="employee.datas.employee.middle_name">
+                <label for="nickname">ชื่อเล่น</label>
+                <input type="text" class="form-control" id="nickname" ng-model="employee.datas.employee.nickname">
               </div>
             </div>
             <div class="col-md-4">
               <div class="form-group">
-                <label for="last_name">Surname</label>
-                <input type="text" class="form-control" id="last_name" ng-model="employee.datas.employee.last_name">
+                <label for="start_date">วันที่เริ่มทำงาน</label>
+                <p class="input-group">
+                  <input id="start_date" type="text" class="form-control" uib-datepicker-popup="dd/MM/yyyy" ng-model="employee.datas.employee.start_date" is-open="employee.startDatePopup.opened" close-text="Close"/>
+                  <span class="input-group-btn">
+                    <button type="button" class="btn btn-default" ng-click="employee.openStartDatePopup()"><i class="glyphicon glyphicon-calendar"></i></button>
+                  </span>
+                </p>
+              </div>
+            </div>
+            <div class="col-md-4">
+              <div class="form-group">
+                <label for="birthdate">วันเกิด</label>
+                <p class="input-group">
+                  <input id="birthdate" type="text" class="form-control" uib-datepicker-popup="dd/MM/yyyy" ng-model="employee.datas.employee.birthdate" is-open="employee.birthdatePopup.opened" close-text="Close"/>
+                  <span class="input-group-btn">
+                    <button type="button" class="btn btn-default" ng-click="employee.openBirthdatePopup()"><i class="glyphicon glyphicon-calendar"></i></button>
+                  </span>
+                </p>
               </div>
             </div>
           </div>
           <div class="row">
-            <div class="col-md-6">
+            <div class="col-md-4">
               <div class="form-group">
-                <label for="personal_id">เลขประจำตัวประชาชน</label>
-                <input type="text" class="form-control" id="personal_id" ng-model="employee.datas.employee.personal_id">
+                <label for="race">เชื้อชาติ</label>
+                <input type="text" class="form-control" id="race" ng-model="employee.datas.employee.race">
               </div>
             </div>
-            <div class="col-md-6">
+            <div class="col-md-4">
               <div class="form-group">
-                <label for="passport_number">Passport No.</label>
-                <input type="text" class="form-control" id="passport_number" ng-model="employee.datas.employee.passport_number">
+                <label for="nationality">สัญชาติ</label>
+                <input type="text" class="form-control" id="nationality" ng-model="employee.datas.employee.nationality">
+              </div>
+            </div>
+            <div class="col-md-4">
+              <div class="form-group">
+                <label for="position">ตำแหน่ง</label>
+                <input type="text" class="form-control" id="position" ng-model="employee.datas.employee.position">
+              </div>
+            </div>
+          </div>
+          <div class="row">
+            <div class="col-md-4">
+              <div class="form-group">
+                <label for="bank_name">ธนาคาร</label>
+                <input type="text" class="form-control" id="bank_name" ng-model="employee.datas.employee.bank_name" required>
+              </div>
+            </div>
+            <div class="col-md-4">
+              <div class="form-group">
+                <label for="bank_branch">สาขา</label>
+                <input type="text" class="form-control" id="bank_branch" ng-model="employee.datas.employee.bank_branch" required>
+              </div>
+            </div>
+            <div class="col-md-4">
+              <div class="form-group">
+                <label for="account_number">เลขบัญชีธนาคาร</label>
+                <input type="text" class="form-control" id="account_number" ng-model="employee.datas.employee.account_number" required>
               </div>
             </div>
           </div>
         </div>
-        <div class="col-md-4">
-          <div class="img-profile">
-            <div ng-switch on="employee.datas.employee.img_url.length > 0">
-              <div ng-switch-when="true">
-                <div class="img-bg" style="background: url('{{ employee.datas.employee.img_url }}')"></div>
-              </div>
-              <div ng-switch-default>
-                <i class="fa fa-camera center font-size-40 font-white" aria-hidden="true"></i>
-                <div class="img-bg bg-light-gray"></div>
-              </div>
+      </div>
+      <div ng-class="{ 'in active' : employee.activeTab === 'private' }" id="privateInfo" class="tab-pane fade">
+        <div class="paragraph tab-content grey employee private">
+          <div class="row">
+            <div class="col-md-3 sub-menu">
+              <ul>
+                <li>ภาพรวม</li>
+                <li>ข้อมูลติดต่อและข้อมูลพื้นฐาน</li>
+                <li>ครอบครัว</li>
+                <li>การทำงานและการศึกษา</li>
+              </ul>
             </div>
-          </div>
-        </div>
-      </div>
-      <div class="row">
-        <div class="col-md-4">
-          <div class="form-group">
-            <label for="nickname">ชื่อเล่น</label>
-            <input type="text" class="form-control" id="nickname" ng-model="employee.datas.employee.nickname">
-          </div>
-        </div>
-        <div class="col-md-4">
-          <div class="form-group">
-            <label for="start_date">วันที่เริ่มทำงาน</label>
-            <p class="input-group">
-              <input id="start_date" type="text" class="form-control" uib-datepicker-popup="dd/MM/yyyy" ng-model="employee.datas.employee.start_date" is-open="employee.startDatePopup.opened" close-text="Close"/>
-              <span class="input-group-btn">
-                <button type="button" class="btn btn-default" ng-click="employee.openStartDatePopup()"><i class="glyphicon glyphicon-calendar"></i></button>
-              </span>
-            </p>
-          </div>
-        </div>
-        <div class="col-md-4">
-          <div class="form-group">
-            <label for="birthdate">วันเกิด</label>
-            <p class="input-group">
-              <input id="birthdate" type="text" class="form-control" uib-datepicker-popup="dd/MM/yyyy" ng-model="employee.datas.employee.birthdate" is-open="employee.birthdatePopup.opened" close-text="Close"/>
-              <span class="input-group-btn">
-                <button type="button" class="btn btn-default" ng-click="employee.openBirthdatePopup()"><i class="glyphicon glyphicon-calendar"></i></button>
-              </span>
-            </p>
-          </div>
-        </div>
-      </div>
-      <div class="row">
-        <div class="col-md-4">
-          <div class="form-group">
-            <label for="race">เชื้อชาติ</label>
-            <input type="text" class="form-control" id="race" ng-model="employee.datas.employee.race">
-          </div>
-        </div>
-        <div class="col-md-4">
-          <div class="form-group">
-            <label for="nationality">สัญชาติ</label>
-            <input type="text" class="form-control" id="nationality" ng-model="employee.datas.employee.nationality">
-          </div>
-        </div>
-        <div class="col-md-4">
-          <div class="form-group">
-            <label for="position">ตำแหน่ง</label>
-            <input type="text" class="form-control" id="position" ng-model="employee.datas.employee.position">
-          </div>
-        </div>
-      </div>
-      <div class="row">
-        <div class="col-md-4">
-          <div class="form-group">
-            <label for="bank_name">ธนาคาร</label>
-            <input type="text" class="form-control" id="bank_name" ng-model="employee.datas.employee.bank_name" required>
-          </div>
-        </div>
-        <div class="col-md-4">
-          <div class="form-group">
-            <label for="bank_branch">สาขา</label>
-            <input type="text" class="form-control" id="bank_branch" ng-model="employee.datas.employee.bank_branch" required>
-          </div>
-        </div>
-        <div class="col-md-4">
-          <div class="form-group">
-            <label for="account_number">เลขบัญชีธนาคาร</label>
-            <input type="text" class="form-control" id="account_number" ng-model="employee.datas.employee.account_number" required>
+            <div class="col-md-9">
+            </div>
           </div>
         </div>
       </div>
