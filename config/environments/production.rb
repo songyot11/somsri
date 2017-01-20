@@ -83,4 +83,34 @@ Rails.application.configure do
 
   # Do not dump schema after migrations.
   config.active_record.dump_schema_after_migration = false
+
+  # mail config
+  config.action_mailer.perform_deliveries = true
+  config.action_mailer.default_url_options = { host: 'www.somsri.io' }
+  config.action_mailer.delivery_method = :smtp
+  config.action_mailer.smtp_settings = {
+    address:                'smtp.sendgrid.net',
+    port:                   '587',
+    authentication:         :plain,
+    user_name:              ENV['SENDGRID_USERNAME'],
+    password:               ENV['SENDGRID_PASSWORD'],
+    domain:                 'heroku.com',
+    enable_starttls_auto:   true
+  }
+  config.action_mailer.asset_host = 'https://www.somsri.io'
+
+  Rails.application.config.middleware.use ExceptionNotification::Rack,
+    :email => {
+      :email_prefix => "[Exception] ",
+      :sender_address => %{"notifier" <notifier@somsri.io>},
+      :exception_recipients => %w{exceptions@somsri.io}
+    },
+    :slack => {
+        :webhook_url => "https://hooks.slack.com/services/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",
+        :channel => "#exceptions"
+        :additional_parameters => {
+          :mrkdwn => true
+        }
+    }
+
 end
