@@ -39,6 +39,10 @@ gem 'pdf-forms'
 gem 'exception_notification'
 gem 'slack-notifier'
 
+gem 'prawn'
+gem 'pdf-toolkit'
+gem 'fileutils'
+
 group :development, :test do
   # Call 'byebug' anywhere in the code to stop execution and get a debugger console
   gem 'byebug', platform: :mri
@@ -56,6 +60,7 @@ group :test do
   gem 'poltergeist'
 
   gem 'database_cleaner'
+  gem 'pdf-reader'
 end
 
 group :development do

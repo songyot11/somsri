@@ -15,3 +15,5 @@ module SomsriPayroll
     config.i18n.available_locales = [:th, :en]
   end
 end
+
+Dir["#{Rails.root}/lib/modules/*.rb"].each {|file| require file }
