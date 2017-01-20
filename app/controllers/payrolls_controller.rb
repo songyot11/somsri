@@ -1,4 +1,5 @@
 class PayrollsController < ApplicationController
+  include PdfUtils
   skip_before_action :verify_authenticity_token, :only => [:update]
 
   # GET /payrolls
