@@ -48,8 +48,21 @@ describe Payroll do
     ]
   end
 
+  let(:taxrates) do
+    [
+     Taxrate.make!({order_id: 1, income: 5_000_000, tax: 0.35}),
+     Taxrate.make!({order_id: 2, income: 2_000_000, tax: 0.30}),
+     Taxrate.make!({order_id: 3, income: 1_000_000, tax: 0.25}),
+     Taxrate.make!({order_id: 4, income: 750_000, tax: 0.20}),
+     Taxrate.make!({order_id: 5, income: 500_000, tax: 0.15}),
+     Taxrate.make!({order_id: 6, income: 300_000, tax: 0.10}),
+     Taxrate.make!({order_id: 7, income: 150_000, tax: 0.05})
+    ]
+  end
+
   before do
     payrolls
+    taxrates
   end
 
   it "should return salary" do
@@ -64,11 +77,15 @@ describe Payroll do
     expect(payrolls[0].generate_social_insurance).to eq(15000*0.05)
   end
 
-  it "should return tax" do
-    expect(payrolls[0].generate_tax).to eq(309583)
+  it "should return income tax" do
+    expect(payrolls[0].generate_income_tax).to eq(309583)
   end
 
-  it "should return tax2" do
-    expect(payrolls[2].generate_tax).to eq(280416)
+  it "should return income tax2" do
+    expect(payrolls[2].generate_income_tax).to eq(280416)
+  end
+
+  it "should return withholding tax" do
+    expect(payrolls[0].generate_withholding_tax).to eq(payrolls[0].salary*0.03)
   end
 end
