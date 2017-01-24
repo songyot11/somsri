@@ -138,6 +138,12 @@
                 </p>
               </div>
             </div>
+            <div class="col-md-4">
+              <div class="form-group">
+                <label for="position">ตำแหน่ง</label>
+                <input type="text" class="form-control" id="position" ng-model="employee.datas.employee.position">
+              </div>
+            </div>
           </div>
           <div class="row">
             <div class="col-md-4">
@@ -154,8 +160,13 @@
             </div>
             <div class="col-md-4">
               <div class="form-group">
-                <label for="position">ตำแหน่ง</label>
-                <input type="text" class="form-control" id="position" ng-model="employee.datas.employee.position">
+                <label for="employeetype">ประเภทการจ้างงาน</label>
+                <select class="form-control somsri-select" id="employeetype" ng-model="employee.datas.employee.employee_type">
+                  <option value="option-1">ลูกจ้างประจำ</option>
+                  <option value="option-2">ลูกจ้างชั่วคราว</option>
+                  <option value="option-3">ลูกจ้างทดลองงาน</option>
+                  <option value="option-4">ลูกจ้างรายวัน</option>
+                </select><br>
               </div>
             </div>
           </div>

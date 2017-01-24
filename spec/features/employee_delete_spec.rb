@@ -53,6 +53,7 @@ describe 'Employee delete', js: true do
 
   it 'should diplay confirmation modal when click delete button ' do
     visit "/#/employees/#{employee1.id}"
+    sleep(1)
     click_button("ลบ")
     sleep(1)
     eventually { expect(page).to have_content("คุณต้องการลบพนักงานหรือไม่?") }

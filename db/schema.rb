@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20170124044907) do
+ActiveRecord::Schema.define(version: 20170124085310) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -42,6 +42,11 @@ ActiveRecord::Schema.define(version: 20170124044907) do
     t.boolean  "deleted",         default: false
     t.datetime "birthdate"
     t.decimal  "tax_break",       default: "0.0"
+    t.text     "address"
+    t.string   "tel"
+    t.string   "status"
+    t.string   "email"
+    t.string   "employee_type"
     t.index ["school_id"], name: "index_employees_on_school_id", using: :btree
   end
 

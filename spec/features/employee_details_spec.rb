@@ -304,4 +304,21 @@ describe 'Employee Details', js: true do
     expect(find('#start_date').value).to have_content '03/12/1990'
   end
 
+  describe 'employee_type' do
+    it 'can edit' do
+      visit "/#/employees/#{employees[0].id}"
+      sleep(1)
+
+      expect(page).to have_select('ประเภทการจ้างงาน', selected: '')
+      select 'ลูกจ้างชั่วคราว', from: 'ประเภทการจ้างงาน'
+      click_button('บันทึก')
+      sleep(1)
+      click_button('ตกลง')
+      sleep(1)
+
+      visit "/#/employees/#{employees[0].id}"
+      sleep(1)
+      expect(page).to have_select('ประเภทการจ้างงาน', selected: 'ลูกจ้างชั่วคราว')
+    end
+  end
 end

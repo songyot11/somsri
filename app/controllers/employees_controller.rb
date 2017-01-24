@@ -112,7 +112,8 @@ class EmployeesController < ApplicationController
       :nickname,
       :start_date,
       :birthdate,
-      :img_url
+      :img_url,
+      :employee_type
     ]).to_h
     result[:salary] = 0 if result[:salary].blank?
     return result
