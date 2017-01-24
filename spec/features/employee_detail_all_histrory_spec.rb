@@ -56,7 +56,7 @@ describe 'Employee Details History Modal', js: true do
     ]
   end
 
-  before do
+  before :each do
     payrolls
     login_as(user, scope: :user)
   end

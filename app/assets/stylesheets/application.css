@@ -704,3 +704,10 @@ table.scrollable-header {
   height: 100%;
   border-left: 1px solid #F59C0B;
 }
+
+.somsri-select {
+  border-top: none;
+  border-left: none;
+  border-right: none;
+  box-shadow: none;
+}
