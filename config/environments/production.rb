@@ -107,7 +107,7 @@ Rails.application.configure do
     },
     :slack => {
         :webhook_url => "https://hooks.slack.com/services/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",
-        :channel => "#exceptions"
+        :channel => "#exceptions",
         :additional_parameters => {
           :mrkdwn => true
         }
