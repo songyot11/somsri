@@ -34,10 +34,10 @@ class Payroll < ApplicationRecord
     income >= 1650 ? (income * 0.05).round : 0
   end
   
-  def generate_tax
+  def generate_income_tax
     income = (salary + allowance + attendance_bonus + ot + bonus + position_allowance)*12
     income -= self.employee.tax_break
-    taxrates = [[5000000,0.35],[2000000,0.30],[1000000,0.25],[750000,0.20],[500000,0.15],[300000,0.10],[150000,0.05]]
+    taxrates = Taxrate.order(:order_id).map {|t| [t.income, t.tax] }
     yearTax = 0
     taxrates.each do |taxrate|
       if income>taxrate[0]
@@ -47,6 +47,10 @@ class Payroll < ApplicationRecord
     end
     (yearTax/12).floor # month 1-11
   end
+
+  def generate_withholding_tax
+    (salary + allowance + attendance_bonus + ot + bonus + position_allowance) * 0.03
+  end 
   
   def as_json(options={})
     if options["report"]

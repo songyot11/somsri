@@ -1,12 +1,11 @@
-User.delete_all
-School.delete_all
-Employee.delete_all
-Payroll.delete_all
-
+if School.count == 0
 School.create!([
   {id: 1, name: "Sunshine Kindergarten"},
   {id: 2, name: "Testing School"},
 ])
+end
+
+if User.count == 0
 User.create!([
   {email: "test@test.com", password: "password", password_confirmation: "password", reset_password_token: nil, reset_password_sent_at: nil, remember_created_at: nil, sign_in_count: 0, current_sign_in_at: nil, last_sign_in_at: nil, current_sign_in_ip: nil, last_sign_in_ip: nil, school_id: 1, name: nil},
   {email: "admin@bananacoding.com", password: "password", password_confirmation: "password", reset_password_token: nil, reset_password_sent_at: nil, remember_created_at: nil, sign_in_count: 2, current_sign_in_at: "2016-12-26 07:33:11", last_sign_in_at: "2016-12-26 07:28:33", current_sign_in_ip: "180.183.204.78", last_sign_in_ip: "180.183.204.78", school_id: 1, name: nil},
@@ -15,6 +14,9 @@ User.create!([
   {email: "admin@sunshinekindergarten.com", password: "password", password_confirmation: "password", reset_password_token: nil, reset_password_sent_at: nil, remember_created_at: nil, sign_in_count: 0, current_sign_in_at: nil, last_sign_in_at: nil, current_sign_in_ip: nil, last_sign_in_ip: nil, school_id: 1, name: nil},
   {email: "testing.school@test.com", password: "password", password_confirmation: "password", reset_password_token: nil, reset_password_sent_at: nil, remember_created_at: nil, sign_in_count: 0, current_sign_in_at: nil, last_sign_in_at: nil, current_sign_in_ip: nil, last_sign_in_ip: nil, school_id: 2, name: nil}
 ])
+end
+
+if Employee.count == 0
 Employee.create!([
   {id: 1, school_id: 1, first_name: "Christine", last_name: "Pronske", middle_name: "Michelle", prefix: "Ms", sex: 0, position: "ครูผู้สอน", personal_id: "", passport_number: "0-9910-08688-37-3", race: "", nationality: "", bank_name: "", bank_branch: "", account_number: "000-0-00000-0", salary: "0.0", img_url: "", first_name_thai: nil, last_name_thai: nil, prefix_thai: nil, nickname: "Christine", start_date: "2016-10-31 08:48:03"},
   {id: 2, school_id: 1, first_name: "", last_name: "", middle_name: "", prefix: "", sex: 0, position: "ครูผู้สอน", personal_id: "1-9098-00264-76-1", passport_number: "", race: "", nationality: "", bank_name: "", bank_branch: "", account_number: "000-0-00000-0", salary: "0.0", img_url: "", first_name_thai: "ปรารถนา", last_name_thai: "วารีดำ", prefix_thai: "นางสาว", nickname: "Shaylene", start_date: "2014-05-25 17:00:00"},
@@ -53,6 +55,9 @@ Employee.create!([
   {id: 35, school_id: 1, first_name: "Samantha", last_name: "Loyd", middle_name: "Natasha", prefix: "Ms", sex: 0, position: "ครูผู้สอน", personal_id: "", passport_number: "0-9910-09778-98-8", race: "", nationality: "", bank_name: "", bank_branch: "", account_number: "000-0-00000-0", salary: "0.0", img_url: "", first_name_thai: nil, last_name_thai: nil, prefix_thai: nil, nickname: "Sammy", start_date: nil},
   {id: 36, school_id: 2, first_name: "Another", last_name: "School", middle_name: "", prefix: "This is", sex: 0, position: "ครูผู้2", personal_id: "", passport_number: "0-9910-09778-98-8", race: "", nationality: "", bank_name: "", bank_branch: "", account_number: "000-0-00000-0", salary: "30000.0", img_url: "", first_name_thai: nil, last_name_thai: nil, prefix_thai: nil, nickname: "Sammy", start_date: nil}
 ])
+end
+
+if Payroll.count == 0
 Payroll.create!([
   {employee_id: 1, salary: "34000.0", allowance: "0.0", attendance_bonus: "0.0", ot: "0.0", bonus: "0.0", position_allowance: "0.0", extra_etc: "0.0", absence: "0.0", late: "0.0", tax: "2000.0", social_insurance: "750.0", fee_etc: "0.0", pvf: "0.0", advance_payment: "0.0", effective_date: DateTime.now},
   {employee_id: 2, salary: "25500.0", allowance: "0.0", attendance_bonus: "0.0", ot: "2000.0", bonus: "0.0", position_allowance: "1000.0", extra_etc: "10000.0", absence: "0.0", late: "0.0", tax: "1300.0", social_insurance: "750.0", fee_etc: "20.0", pvf: "0.0", advance_payment: "0.0", effective_date: DateTime.now},
@@ -93,3 +98,16 @@ Payroll.create!([
   {employee_id: 1, salary: "30000.0", allowance: "0.0", attendance_bonus: "0.0", ot: "0.0", bonus: "0.0", position_allowance: "0.0", extra_etc: "0.0", absence: "0.0", late: "0.0", tax: "0.0", social_insurance: "0.0", fee_etc: "1000.0", pvf: "0.0", advance_payment: "0.0", effective_date: (DateTime.now - 1.month).to_datetime},
   {employee_id: 1, salary: "2000.0", allowance: "0.0", attendance_bonus: "0.0", ot: "0.0", bonus: "0.0", position_allowance: "0.0", extra_etc: "0.0", absence: "0.0", late: "0.0", tax: "0.0", social_insurance: "0.0", fee_etc: "0.0", pvf: "0.0", advance_payment: "0.0", effective_date: (DateTime.now - 2.month).to_datetime}
 ])
+end
+
+if Taxrate.count == 0
+  Taxrate.create!([
+   {order_id: "1", income: "5000000", tax: "0.35"},
+   {order_id: "2", income: "2000000", tax: "0.30"},
+   {order_id: "3", income: "1000000", tax: "0.25"},
+   {order_id: "4", income: "750000", tax: "0.20"},
+   {order_id: "5", income: "500000", tax: "0.15"},
+   {order_id: "6", income: "300000", tax: "0.10"},
+   {order_id: "7", income: "150000", tax: "0.05"}
+  ])
+end
