@@ -14,6 +14,9 @@ describe 'Employee Details', js: true do
     page.fill_in 'name', :with => 'โรงเรียนแห่งหนึ่ง'
     page.fill_in 'schoolTaxId', :with => '1234567890123'
     page.fill_in 'address', :with => 'สถานที่แห่งหนึ่ง มียุงชุกชุม'
+    page.fill_in 'zipcode', :with => '50000'
+    page.fill_in 'phone', :with => '050999999'
+    page.fill_in 'fax', :with => '050999999(2)'
     click_button('บันทึก')
     sleep(1)
 
@@ -24,6 +27,9 @@ describe 'Employee Details', js: true do
     expect(find_field('name').value).to eq 'โรงเรียนแห่งหนึ่ง'
     expect(find_field('schoolTaxId').value).to eq '1234567890123'
     expect(find_field('address').value).to eq 'สถานที่แห่งหนึ่ง มียุงชุกชุม'
+    expect(find_field('zipcode').value).to eq '50000'
+    expect(find_field('phone').value).to eq '050999999'
+    expect(find_field('fax').value).to eq '050999999(2)'
 
   end
 

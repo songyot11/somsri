@@ -42,7 +42,7 @@ class SettingsController < ApplicationController
     end
 
     def params_school
-      params.require(:school).permit(:name, :tax_id, :address)
+      params.require(:school).permit(:name, :tax_id, :address, :zip_code, :phone, :fax)
     end
 
     def params_user
