@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20170124102123) do
+ActiveRecord::Schema.define(version: 20170125034811) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -42,11 +42,11 @@ ActiveRecord::Schema.define(version: 20170124102123) do
     t.boolean  "deleted",              default: false
     t.datetime "birthdate"
     t.decimal  "tax_break",            default: "0.0"
+    t.string   "employee_type"
     t.text     "address"
     t.string   "tel"
     t.string   "status"
     t.string   "email"
-    t.string   "employee_type"
     t.boolean  "pay_social_insurance"
     t.boolean  "pay_pvf"
     t.index ["school_id"], name: "index_employees_on_school_id", using: :btree
@@ -54,23 +54,23 @@ ActiveRecord::Schema.define(version: 20170124102123) do
 
   create_table "payrolls", force: :cascade do |t|
     t.integer  "employee_id"
-    t.decimal  "salary",             default: "0.0",                 null: false
-    t.decimal  "allowance",          default: "0.0",                 null: false
-    t.decimal  "attendance_bonus",   default: "0.0",                 null: false
-    t.decimal  "ot",                 default: "0.0",                 null: false
-    t.decimal  "bonus",              default: "0.0",                 null: false
-    t.decimal  "position_allowance", default: "0.0",                 null: false
-    t.decimal  "extra_etc",          default: "0.0",                 null: false
-    t.decimal  "absence",            default: "0.0",                 null: false
-    t.decimal  "late",               default: "0.0",                 null: false
-    t.decimal  "tax",                default: "0.0",                 null: false
-    t.decimal  "social_insurance",   default: "0.0",                 null: false
-    t.decimal  "fee_etc",            default: "0.0",                 null: false
-    t.decimal  "pvf",                default: "0.0",                 null: false
-    t.decimal  "advance_payment",    default: "0.0",                 null: false
-    t.datetime "created_at",                                         null: false
-    t.datetime "updated_at",                                         null: false
-    t.datetime "effective_date",     default: '2017-01-17 02:55:02', null: false
+    t.decimal  "salary",             default: "0.0", null: false
+    t.decimal  "allowance",          default: "0.0", null: false
+    t.decimal  "attendance_bonus",   default: "0.0", null: false
+    t.decimal  "ot",                 default: "0.0", null: false
+    t.decimal  "bonus",              default: "0.0", null: false
+    t.decimal  "position_allowance", default: "0.0", null: false
+    t.decimal  "extra_etc",          default: "0.0", null: false
+    t.decimal  "absence",            default: "0.0", null: false
+    t.decimal  "late",               default: "0.0", null: false
+    t.decimal  "tax",                default: "0.0", null: false
+    t.decimal  "social_insurance",   default: "0.0", null: false
+    t.decimal  "fee_etc",            default: "0.0", null: false
+    t.decimal  "pvf",                default: "0.0", null: false
+    t.decimal  "advance_payment",    default: "0.0", null: false
+    t.datetime "created_at",                         null: false
+    t.datetime "updated_at",                         null: false
+    t.datetime "effective_date",                     null: false
     t.index ["employee_id"], name: "index_payrolls_on_employee_id", using: :btree
   end
 
@@ -80,6 +80,9 @@ ActiveRecord::Schema.define(version: 20170124102123) do
     t.datetime "updated_at",              null: false
     t.string   "tax_id"
     t.string   "address"
+    t.string   "zip_code"
+    t.string   "phone"
+    t.string   "fax"
   end
 
   create_table "taxrates", force: :cascade do |t|

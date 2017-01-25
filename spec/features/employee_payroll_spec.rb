@@ -51,9 +51,9 @@ describe 'Payroll', js: true do
   let(:payrolls) do
     [
       pr1 = Payroll.make!({employee_id: employee1.id, salary: 1_000_000, tax: 100,
-                            effective_date: DateTime.new(2016, 12, 1)}),
+                            effective_date: DateTime.new(2016, 12, 1), social_insurance: 750}),
       pr3 = Payroll.make!({employee_id: employee2.id, salary: 1_000_000, tax: 100,
-                            effective_date: DateTime.new(2016, 12, 1)}),
+                            effective_date: DateTime.new(2016, 12, 1), social_insurance: 1000}),
       pr2 = Payroll.make!({employee_id: employee1.id, salary: 50_000, tax: 100,
                             effective_date: DateTime.new(2016, 11, 1)}),
       pr4 = Payroll.make!({employee_id: employee2.id, salary: 50_000, tax: 100,
@@ -79,9 +79,9 @@ describe 'Payroll', js: true do
   it 'should see month latest' do
     visit "/#/payroll"
 
-    eventually { expect(page).to have_content 'สมศรี เป็นชื่อแอพ 5-234-34532-2342 1,000,000.00 0.00 0.00 0.00 0.00 0.00 0.00 100.00 0.00 0.00 0.00 0.00 0.00 0.00 999,900.00' }
-    eventually { expect(page).to have_content 'สมจิตร เป็นนักมวย 5-234-34532-2341 1,000,000.00 0.00 0.00 0.00 0.00 0.00 0.00 100.00 0.00 0.00 0.00 0.00 0.00 0.00 999,900.00' }
-    eventually { expect(page).to have_content 'รวมทั้งหมด 2,000,000.00 0.00 0.00 0.00 0.00 0.00 0.00 200.00 0.00 0.00 0.00 0.00 0.00 0.00 1,999,800.00' }
+    eventually { expect(page).to have_content 'สมศรี เป็นชื่อแอพ 5-234-34532-2342 1,000,000.00 0.00 0.00 0.00 0.00 0.00 0.00 100.00 750.00 0.00 0.00 0.00 0.00 0.00 999,150.00' }
+    eventually { expect(page).to have_content 'สมจิตร เป็นนักมวย 5-234-34532-2341 1,000,000.00 0.00 0.00 0.00 0.00 0.00 0.00 100.00 1,000.00 0.00 0.00 0.00 0.00 0.00 998,900.00' }
+    eventually { expect(page).to have_content 'รวมทั้งหมด 2,000,000.00 0.00 0.00 0.00 0.00 0.00 0.00 200.00 1,750.00 0.00 0.00 0.00 0.00 0.00 1,998,050.00' }
   end
 
   it 'should see month list' do

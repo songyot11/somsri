@@ -38,58 +38,152 @@ class PayrollsController < ApplicationController
 
   # GET /payrolls/social_insurance_pdf
   def social_insurance_pdf
-    # year = params[:year].to_i
-    # month = params[:month].to_i
-    #
-    # start_month = Date.new(year, month, 1)
-    # end_month = start_month.end_of_month
-    # employees = Employee.where(school_id: current_user.school.id).order(:id).limit(35).to_a
-    # payrolls = Payroll.joins(:employee)
-    #                   .where(employee_id: employees, effective_date: start_month.beginning_of_day..end_month.end_of_day)
-    #                   .order('employee_id').to_a
-    # employee_count = employees.size
-    # sum_salary = 0
-    # sum_insurance = 0
-    # fill_form_data = {}
-    # i = 1
-    # payrolls.each do |payroll|
-    #   salary = payroll.salary < 15000 ? 15000 : payroll.salary
-    #   sum_salary += salary
-    #   sum_insurance += payroll.social_insurance
-    #
-    #   fill_form_data["Pay_R#{i}".to_sym] = salary.to_i
-    #   fill_form_data["Pay_L#{i}".to_sym] = satang(salary)
-    #   fill_form_data["Among#{i}".to_sym] = payroll.social_insurance ? payroll.social_insurance.to_i : 0
-    #   i += 1
-    # end
-    #
-    # # เงินเดือนทั้งสิ้น
-    # fill_form_data[:Pay_Date01] = sum_salary.to_i
-    # fill_form_data[:Payment2] = satang(sum_salary)
-    # # เงินสมทบผู้ประกันตน
-    # fill_form_data[:Pay_Date1] = sum_insurance.to_i
-    # fill_form_data[:SSO_Fund1] = "00"
-    # # เงินสมทบนายจ้าง
-    # fill_form_data[:SSO_Fund3] = sum_insurance.to_i
-    # fill_form_data[:SSO_Fund4] = "00"
-    # # เงินสมบทนำส่งทั้งสิ้น
-    # fill_form_data[:SSO_Fund5] = (sum_insurance * 2).to_i
-    # fill_form_data[:SSO_Fund6] = "00"
-    #
-    # # จำนวนผู้ประกันตน
-    # fill_form_data[:SSO_Fund8] = employee_count
-    #
-    # # เงินรวมของตาราง
-    # fill_form_data[:Among_All] = sum_insurance.to_i
-    # fill_form_data[:Pay_R_All] = sum_salary.to_i
-    # fill_form_data[:Pay_L_All] = satang(sum_salary)
-    #
-    # pdf_path = 'public/sps1.pdf'
-    # pdf_out_path = 'public/sps1_out.pdf'
-    # pdftk = PdfForms.new(Figaro.env.PDFTK_PATH, data_format: 'XFdf', utf8_fields: true)
-    # name = pdftk.get_field_names pdf_path
-    # pdftk.fill_form pdf_path, pdf_out_path, fill_form_data
-    # send_file(pdf_out_path, :filename => 'social_insurance_pdf.pdf', :disposition => 'inline', :type => 'application/pdf')
+    year = params[:year].to_i
+    month = params[:month].to_i
+    start_month = Date.new(year, month, 1)
+    end_month = start_month.end_of_month
+    employees = Employee.where(school_id: current_user.school.id).order(:id).to_a
+    payrolls = Payroll.joins(:employee)
+                      .where(employee_id: employees, effective_date: start_month.beginning_of_day..end_month.end_of_day)
+                      .where("social_insurance > ?", 0)
+                      .order('employee_id').to_a
+    render text: "ไม่มีพนักงานที่ต้องเสียค่าประกันสังคม", status: :ok and return if payrolls.size == 0 || payrolls.blank?
+    employee_count = employees.size
+    sum_salary = 0
+    sum_insurance = 0
+    fill_form_data = {}
+    i = 1
+    payrolls.each do |payroll|
+      salary = salary_by_law(payroll.salary)
+      sum_salary += salary
+      sum_insurance += payroll.social_insurance
+      i += 1
+    end
+
+    template_header = 'public/sps1-1.pdf'
+    template_detail = 'public/sps1-2.pdf'
+    tmp_dir = "tmp/#{random_string}"
+    output_file = generate_pdf_file_name('tmp/sps1')
+    FileUtils.mkdir_p "tmp/sps1" unless File.directory?("tmp/sps1")
+
+    page_amount = (payrolls.count / 10.0).ceil.to_i
+    school = current_user.school
+    thai_date = to_thai_date(payrolls[0].effective_date)
+
+    # generate header page pdf
+    header_data = [
+      [
+        { text: school.name, location: [100, 480] },
+        # { text: "ชื่อสาขา", location: [70, 458] },
+        { text: school.address, location: [10, 413] },
+        { text: school.zip_code, location: [68, 390] },
+        { text: school.phone, location: [150, 390] },
+        { text: school.fax, location: [270, 390] },
+        { text: thai_date[1], location: [150, 368] },
+        { text: thai_date[2], location: [265, 368] },
+        { text: sum_salary.to_i, location: [207, 305] },
+        { text: satang(sum_salary), location: [297, 305] },
+        { text: sum_insurance.to_i, location: [207, 284] },
+        { text: "00", location: [297, 284] },
+        { text: sum_insurance.to_i, location: [207, 265] },
+        { text: "00", location: [297, 265] },
+        { text: (sum_insurance * 2).to_i, location: [207, 245] },
+        { text: "00", location: [297, 245] },
+        # { text: "เงินบาทในภาษาไทย", location: [20, 226] },
+        { text: employee_count, location: [207, 206] },
+        { text: "/", location: [3, 138] },
+        { text: page_amount, location: [180, 138] }
+      ]
+    ]
+    header_pdfs = generate_pdf(template_header, header_data, tmp_dir) do |file, data|
+      Prawn::Document.generate(file, :page_layout => :landscape) do
+        data.each do |d|
+          font("public/fonts/THSarabunNew.ttf") do
+            text_box d[:text].to_s, at: d[:location], size: 16
+          end
+        end
+      end
+    end
+
+    # generate detail page pdf
+    detail_datas = []
+    page_number = 1
+    order = 1
+    payrolls.each_slice(10) do |p10|
+      data = [
+        { text: thai_date[1], location: [90, 540] },
+        { text: thai_date[2], location: [215, 540] },
+        { text: page_number, location: [565, 540] },
+        { text: page_amount, location: [655, 540] },
+        { text: school.name, location: [165, 495] }
+      ]
+
+      if page_amount == page_number
+        data.push([
+          { text: sum_salary.to_i, location: [520, 150] },
+          { text: satang(sum_salary), location: [603, 150] },
+          { text: sum_insurance.to_i, location: [625, 150] }
+        ]).flatten!
+      end
+
+      order_per_page = 0
+      new_line_margin = 30
+      p10.each do |p|
+        e = p.employee
+        personal_digits = e.personal_id.gsub('-', '').split('')
+        new_line_margin = 22 * order_per_page
+        employee_data = [
+          { text: order, location: [15, (380 - new_line_margin)] },
+          { text: personal_digits[0], location: [55, (383 - new_line_margin)], rect: [[50, (380 - new_line_margin)], 15, 15] },
+          { text: "-", location: [68, (383 - new_line_margin)]},
+          { text: personal_digits[1], location: [77, (383 - new_line_margin)], rect: [[72, (380 - new_line_margin)], 15, 15] },
+          { text: personal_digits[2], location: [92, (383 - new_line_margin)], rect: [[87, (380 - new_line_margin)], 15, 15] },
+          { text: personal_digits[3], location: [107, (383 - new_line_margin)], rect: [[102, (380 - new_line_margin)], 15, 15] },
+          { text: personal_digits[4], location: [122, (383 - new_line_margin)], rect: [[117, (380 - new_line_margin)], 15, 15] },
+          { text: "-", location: [133, (383 - new_line_margin)]},
+          { text: personal_digits[5], location: [144, (383 - new_line_margin)], rect: [[139, (380 - new_line_margin)], 15, 15] },
+          { text: personal_digits[6], location: [159, (383 - new_line_margin)], rect: [[154, (380 - new_line_margin)], 15, 15] },
+          { text: personal_digits[7], location: [174, (383 - new_line_margin)], rect: [[169, (380 - new_line_margin)], 15, 15] },
+          { text: personal_digits[8], location: [189, (383 - new_line_margin)], rect: [[184, (380 - new_line_margin)], 15, 15] },
+          { text: personal_digits[9], location: [204, (383 - new_line_margin)], rect: [[199, (380 - new_line_margin)], 15, 15] },
+          { text: "-", location: [215, (383 - new_line_margin)]},
+          { text: personal_digits[10], location: [226, (383 - new_line_margin)], rect: [[221, (380 - new_line_margin)], 15, 15] },
+          { text: personal_digits[11], location: [241, (383 - new_line_margin)], rect: [[236, (380 - new_line_margin)], 15, 15] },
+          { text: "-", location: [252, (383 - new_line_margin)]},
+          { text: personal_digits[12], location: [263, (383 - new_line_margin)], rect: [[258, (380 - new_line_margin)], 15, 15] },
+          { text: p.employee.full_name, location: [290, (380 - new_line_margin)] },
+          { text: salary_by_law(p.salary).to_i, location: [520, (380 - new_line_margin)] },
+          { text: satang(salary_by_law(p.salary)), location: [603, (380 - new_line_margin)] },
+          { text: p.social_insurance.to_i, location: [625, (380 - new_line_margin)] }
+        ]
+
+        data.push(employee_data).flatten!
+        order_per_page += 1
+        order += 1
+      end
+
+      detail_datas.push(data)
+      page_number += 1
+    end
+
+    data_pdfs = generate_pdf(template_detail, detail_datas, tmp_dir) do |file, data|
+      Prawn::Document.generate(file, :page_layout => :landscape) do
+        data.each do |d|
+          font("public/fonts/THSarabunNew.ttf") do
+            text_box d[:text].to_s, at: d[:location], size: 16
+          end
+          stroke do
+            rectangle d[:rect][0], d[:rect][1], d[:rect][2] if d[:rect]
+          end
+        end
+      end
+    end
+
+    # merge haeder and data
+    PDF::Toolkit.pdftk(header_pdfs, data_pdfs, "cat", "output", output_file)
+
+    FileUtils.rm_rf tmp_dir # remove all tmp
+    send_file(output_file, :filename => 'social_insurance_pdf.pdf', :disposition => 'inline', :type => 'application/pdf')
   end
 
   private
@@ -109,6 +203,15 @@ class PayrollsController < ApplicationController
         })
       end
       return months
+    end
+
+    def to_thai_date(date_time)
+      d = I18n.l(date_time, format: "%d %B %Y").split(" ")
+      return [ d[0].to_i, d[1], d[2].to_i + 543 ]
+    end
+
+    def salary_by_law(salary)
+      salary < 15000 ? 15000 : salary
     end
 
     def get_months_by_employee_ids(employee_ids)

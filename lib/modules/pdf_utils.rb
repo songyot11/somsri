@@ -13,11 +13,9 @@ module PdfUtils
 
       # merge
       if !result_file.blank?
-        puts "merge"
         PDF::Toolkit.pdftk(result_file, result_file_tmp, "cat", "output", merged_file_tmp)
         result_file = merged_file_tmp
       else
-        puts "fisrt"
         result_file = result_file_tmp
       end
     end
