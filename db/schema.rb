@@ -10,43 +10,45 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20170124085310) do
+ActiveRecord::Schema.define(version: 20170124102123) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
 
   create_table "employees", force: :cascade do |t|
     t.integer  "school_id"
-    t.string   "first_name",      default: "",    null: false
-    t.string   "last_name",       default: "",    null: false
-    t.string   "middle_name",     default: "",    null: false
-    t.string   "prefix",          default: "",    null: false
-    t.integer  "sex",             default: 0,     null: false
-    t.string   "position",        default: ""
-    t.string   "personal_id",     default: ""
-    t.string   "passport_number", default: ""
-    t.string   "race",            default: ""
-    t.string   "nationality",     default: ""
-    t.string   "bank_name",       default: ""
-    t.string   "bank_branch",     default: ""
-    t.string   "account_number",  default: ""
-    t.decimal  "salary",          default: "0.0", null: false
-    t.string   "img_url",         default: ""
-    t.datetime "created_at",                      null: false
-    t.datetime "updated_at",                      null: false
+    t.string   "first_name",           default: "",    null: false
+    t.string   "last_name",            default: "",    null: false
+    t.string   "middle_name",          default: "",    null: false
+    t.string   "prefix",               default: "",    null: false
+    t.integer  "sex",                  default: 0,     null: false
+    t.string   "position",             default: ""
+    t.string   "personal_id",          default: ""
+    t.string   "passport_number",      default: ""
+    t.string   "race",                 default: ""
+    t.string   "nationality",          default: ""
+    t.string   "bank_name",            default: ""
+    t.string   "bank_branch",          default: ""
+    t.string   "account_number",       default: ""
+    t.decimal  "salary",               default: "0.0", null: false
+    t.string   "img_url",              default: ""
+    t.datetime "created_at",                           null: false
+    t.datetime "updated_at",                           null: false
     t.string   "first_name_thai"
     t.string   "last_name_thai"
     t.string   "prefix_thai"
     t.string   "nickname"
     t.datetime "start_date"
-    t.boolean  "deleted",         default: false
+    t.boolean  "deleted",              default: false
     t.datetime "birthdate"
-    t.decimal  "tax_break",       default: "0.0"
+    t.decimal  "tax_break",            default: "0.0"
     t.text     "address"
     t.string   "tel"
     t.string   "status"
     t.string   "email"
     t.string   "employee_type"
+    t.boolean  "pay_social_insurance"
+    t.boolean  "pay_pvf"
     t.index ["school_id"], name: "index_employees_on_school_id", using: :btree
   end
 

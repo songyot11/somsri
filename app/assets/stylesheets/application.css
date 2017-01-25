@@ -711,3 +711,11 @@ table.scrollable-header {
   border-right: none;
   box-shadow: none;
 }
+
+.checkbox-group td:nth-child(1) {
+  width: 30px;
+}
+
+.checkbox-group label {
+  padding-top: 9px;
+}

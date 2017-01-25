@@ -190,6 +190,38 @@
               </div>
             </div>
           </div>
+          <div class="row">
+            <div class="col-md-4">
+              <div class="form-group">
+                <table class="checkbox-group">
+                  <tr>
+                    <td>
+                      <input type="checkbox" class="form-control cbox" id="pay_social_insurance" ng-model="employee.datas.employee.pay_social_insurance" />
+                    </td>
+                    <td>
+                      <label for="pay_social_insurance">จ่ายประกันสังคม</label>
+                    </td>
+                  </tr>
+                </table>
+              </div>
+            </div>
+            <div class="col-md-4">
+              <div class="form-group">
+                <table class="checkbox-group">
+                  <tr>
+                    <td>
+                      <input type="checkbox" class="form-control cbox" id="pay_pvf" ng-model="employee.datas.employee.pay_pvf" />
+                    </td>
+                    <td>
+                      <label for="pay_pvf">จ่ายกองทุนสงเคราะห์ครูเอกชน</label>
+                    </td>
+                  </tr>
+                </table>
+              </div>
+            </div>
+            <div class="col-md-4">
+            </div>
+          </div>
         </div>
       </div>
       <div ng-class="{ 'in active' : employee.activeTab === 'private' }" id="privateInfo" class="tab-pane fade">

@@ -117,7 +117,9 @@ class EmployeesController < ApplicationController
       :address,
       :tel,
       :email,
-      :status
+      :status,
+      :pay_pvf,
+      :pay_social_insurance
     ]).to_h
     result[:salary] = 0 if result[:salary].blank?
     return result
