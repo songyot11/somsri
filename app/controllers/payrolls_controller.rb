@@ -48,7 +48,7 @@ class PayrollsController < ApplicationController
                       .where("social_insurance > ?", 0)
                       .order('employee_id').to_a
     render text: "ไม่มีพนักงานที่ต้องเสียค่าประกันสังคม", status: :ok and return if payrolls.size == 0 || payrolls.blank?
-    employee_count = employees.size
+    employee_count = payrolls.size
     sum_salary = 0
     sum_insurance = 0
     fill_form_data = {}
