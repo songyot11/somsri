@@ -1,3 +1,4 @@
+
 describe Payroll do
 
   let(:school) {school = School.make!({ name: "โรงเรียนแห่งหนึ่ง" })}
@@ -30,8 +31,22 @@ describe Payroll do
       prefix_thai: "นาย",
       sex: 1,
       account_number: "5-234-34532-2342",
-      salary: 20000,
-      tax_break: 1000000
+      salary: 20000
+    }
+  )}
+  let(:employee3) {employee2 = Employee.make!(
+    {
+      school_id: school.id,
+      first_name: "Somchit",
+      middle_name: "Is",
+      last_name: "Boxing",
+      prefix: "Mr",
+      first_name_thai: "สมจิตร",
+      last_name_thai: "เป็นนักมวย",
+      prefix_thai: "นาย",
+      sex: 1,
+      account_number: "5-234-34532-2342",
+      salary: 20000
     }
   )}
 
@@ -43,7 +58,9 @@ describe Payroll do
                             effective_date: DateTime.new(2016, 11, 1)}),
       pr3 = Payroll.make!({employee_id: employee2.id, salary: 1_000_000, tax: 100,
                             effective_date: DateTime.new(2016, 11, 1)}),
-      pr3 = Payroll.make!({employee_id: employee2.id, salary: 50_000, tax: 100,
+      pr4 = Payroll.make!({employee_id: employee2.id, salary: 50_000, tax: 100,
+                            effective_date: DateTime.new(2016, 12, 1)}),
+      pr5 = Payroll.make!({employee_id: employee3.id, salary: 50_000,
                             effective_date: DateTime.new(2016, 12, 1)})
     ]
   end
@@ -60,9 +77,21 @@ describe Payroll do
     ]
   end
 
+  let(:taxs) do
+    [
+      taxR1 = TaxReduction.make!({ employee_id: employee1.id}),
+      taxR2 = TaxReduction.make!({ employee_id: employee2.id}),
+      taxR3 = TaxReduction.make!({ employee_id: employee3.id, pension_insurance: 300000, 
+        pension_fund: 0, expenses: 60000, no_income_spouse: 60000, child: 0, parent_alimony: 0, 
+        spouse_parent_alimony: 0, cripple_alimony: 0, parent_insurance: 0, insurance: 0, spouse_insurance: 0,
+        long_term_equity_fund: 100000, social_insurance: 0, education_donation: 0, general_donation: 0, other: 0})
+    ]
+  end
+
   before do
     payrolls
     taxrates
+    taxs
   end
 
   it "should return salary" do
@@ -78,11 +107,15 @@ describe Payroll do
   end
 
   it "should return income tax" do
-    expect(payrolls[0].generate_income_tax).to eq(309583)
+    expect(payrolls[0].generate_income_tax).to be > 0
   end
 
   it "should return income tax2" do
-    expect(payrolls[2].generate_income_tax).to eq(280416)
+    expect(payrolls[2].generate_income_tax).to be > 0
+  end
+
+  it "should return income tax3" do
+    expect(payrolls[4].generate_income_tax).to eq(1487)
   end
 
   it "should return withholding tax" do

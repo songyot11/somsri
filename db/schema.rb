@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20170125034811) do
+ActiveRecord::Schema.define(version: 20170127083923) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -41,7 +41,6 @@ ActiveRecord::Schema.define(version: 20170125034811) do
     t.datetime "start_date"
     t.boolean  "deleted",              default: false
     t.datetime "birthdate"
-    t.decimal  "tax_break",            default: "0.0"
     t.string   "employee_type"
     t.text     "address"
     t.string   "tel"
@@ -83,6 +82,31 @@ ActiveRecord::Schema.define(version: 20170125034811) do
     t.string   "zip_code"
     t.string   "phone"
     t.string   "fax"
+  end
+
+  create_table "tax_reductions", force: :cascade do |t|
+    t.integer "employee_id"
+    t.decimal "pension_insurance",        default: "0.0", null: false
+    t.decimal "pension_fund",             default: "0.0", null: false
+    t.decimal "government_pension_fund",  default: "0.0", null: false
+    t.decimal "private_teacher_aid_fund", default: "0.0", null: false
+    t.decimal "retirement_mutual_fund",   default: "0.0", null: false
+    t.decimal "national_savings_fund",    default: "0.0", null: false
+    t.decimal "expenses",                 default: "0.0", null: false
+    t.decimal "no_income_spouse",         default: "0.0", null: false
+    t.decimal "child",                    default: "0.0", null: false
+    t.decimal "parent_alimony",           default: "0.0", null: false
+    t.decimal "spouse_parent_alimony",    default: "0.0", null: false
+    t.decimal "cripple_alimony",          default: "0.0", null: false
+    t.decimal "parent_insurance",         default: "0.0", null: false
+    t.decimal "insurance",                default: "0.0", null: false
+    t.decimal "spouse_insurance",         default: "0.0", null: false
+    t.decimal "long_term_equity_fund",    default: "0.0", null: false
+    t.decimal "social_insurance",         default: "0.0", null: false
+    t.decimal "education_donation",       default: "0.0", null: false
+    t.decimal "general_donation",         default: "0.0", null: false
+    t.decimal "other",                    default: "0.0", null: false
+    t.index ["employee_id"], name: "index_tax_reductions_on_employee_id", using: :btree
   end
 
   create_table "taxrates", force: :cascade do |t|

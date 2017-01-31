@@ -37,3 +37,5 @@ end
 
 Taxrate.blueprint do
 end
+TaxReduction.blueprint do
+end

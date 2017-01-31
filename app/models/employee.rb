@@ -77,4 +77,13 @@ class Employee < ApplicationRecord
     Payroll.where(employee_id: self.id, id: payroll_id).first
   end
 
+  def year_income
+    payroll = self.lastest_payroll
+    income = (payroll.salary + payroll.allowance + payroll.attendance_bonus + payroll.ot + payroll.bonus + payroll.position_allowance)*12
+  end
+
+  def tax_break
+    TaxReduction.find(self.id).revenue_reduction
+  end
+
 end
