@@ -2,7 +2,7 @@
   'use strict';
   angular.module('somsri.payroll.main', [
   ])
-  .controller('mainCtrl', ['$rootScope', '$state', function($rootScope, $state) {
+  .controller('mainCtrl', ['$rootScope', '$state', '$scope', '$uibModal', function($rootScope, $state, $scope, $uibModal) {
     $rootScope.openReport = function() {
       $state.go('report')
     };
@@ -31,6 +31,32 @@
       }
 
     };
+
+    $rootScope.openConfirmationModal = function (message, success, dismiss) {
+      $scope.message = message;
+      $uibModal.open({
+        animation: true,
+        backdrop: 'static',
+        keyboard: false,
+        scope: $scope,
+        templateUrl: "<%= asset_path('angular/components/modal/confirm/confirmModalView.html') %>",
+        controller: 'confirmModalCtrl as confirm',
+        size: 'md',
+        resolve: {
+          resources: ['$ocLazyLoad', 'ASSETS', function($ocLazyLoad, ASSETS) {
+            return $ocLazyLoad.load([
+              ASSETS.somsri.payroll.confirm_modal
+            ]);
+          }]
+        }
+      }).result.then(function (isConfirm) {
+        if (isConfirm) {
+          if(success){ success() }
+        }else{
+          if(dismiss){ dismiss() }
+        }
+      });
+    }
 
   }]);
 })();

@@ -2,7 +2,7 @@
   'use strict';
   angular.module('somsri.payroll.employees', [
   ])
-  .controller('employeesCtrl', ['employeesService','$log', '$rootScope', function(employeeService, $log, $rootScope) {
+  .controller('employeesCtrl', ['employeesService','$log', '$rootScope', '$uibModal', '$scope', function(employeeService, $log, $rootScope, $uibModal, $scope) {
     $rootScope.menu = "Employees"
     var ctrl = this
     var dateNow = new Date();
@@ -27,9 +27,31 @@
       });
     }
 
-
     ctrl.openEmployeeDetails = function(id){
       $rootScope.openEmployeeDetails(id);
+    }
+
+    ctrl.createPayrolls = function(){
+      $uibModal.open({
+        animation: true,
+        backdrop: 'static',
+        keyboard: false,
+        scope: $scope,
+        templateUrl: "<%= asset_path('angular/components/modal/createPayrolls/createPayrollsModalView.html') %>",
+        controller: 'createPayrollsModalCtrl as createPayrolls',
+        size: 'md',
+        resolve: {
+          resources: ['$ocLazyLoad', 'ASSETS', function($ocLazyLoad, ASSETS) {
+            return $ocLazyLoad.load([
+              ASSETS.somsri.payroll.create_payrolls_modal
+            ]);
+          }]
+        }
+      }).result.then(function (isSuccess) {
+        if (isSuccess) {
+          $rootScope.openEmployees();
+        }
+      });
     }
 
   }]);

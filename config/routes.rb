@@ -9,7 +9,7 @@ Rails.application.routes.draw do
 
   get "/" => "home#index"
 
-  resources :payrolls, only: [:index, :update] do
+  resources :payrolls, only: [:index, :update, :create] do
     collection do
       get "/:year/:month", action: 'payroll'
       get 'social_insurance_pdf'

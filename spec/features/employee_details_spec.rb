@@ -1,4 +1,16 @@
 describe 'Employee Details', js: true do
+  let(:taxrates) do
+    [
+      Taxrate.make!({order_id: "1", income: "5000000", tax: "0.35"}),
+      Taxrate.make!({order_id: "2", income: "2000000", tax: "0.30"}),
+      Taxrate.make!({order_id: "3", income: "1000000", tax: "0.25"}),
+      Taxrate.make!({order_id: "4", income: "750000", tax: "0.20"}),
+      Taxrate.make!({order_id: "5", income: "500000", tax: "0.15"}),
+      Taxrate.make!({order_id: "6", income: "300000", tax: "0.10"}),
+      Taxrate.make!({order_id: "7", income: "150000", tax: "0.05"})
+    ]
+  end
+
   let(:school) { school = School.make!({ name: "โรงเรียนแห่งหนึ่ง" }) }
 
   let(:user) { User.make!({ school_id: school.id }) }
@@ -38,7 +50,7 @@ describe 'Employee Details', js: true do
         tax: 100,
         advance_payment: 2000,
         allowance: 3000,
-        effective_date: DateTime.now.next_month(1)
+        effective_date: DateTime.now.next_month(1).utc
       }),
 
       Payroll.make!({
@@ -47,7 +59,7 @@ describe 'Employee Details', js: true do
         tax: 1000,
         position_allowance: 10000,
         fee_etc: 200,
-        effective_date: DateTime.now.next_month(1)
+        effective_date: DateTime.now.next_month(1).utc
       }),
 
       Payroll.make!({
@@ -56,7 +68,7 @@ describe 'Employee Details', js: true do
         tax: 10,
         advance_payment: 200,
         allowance: 300,
-        effective_date: DateTime.now
+        effective_date: DateTime.now.utc
       }),
 
       Payroll.make!({
@@ -65,7 +77,7 @@ describe 'Employee Details', js: true do
         tax: 100,
         position_allowance: 1000,
         fee_etc: 20,
-        effective_date: DateTime.now
+        effective_date: DateTime.now.utc
       }),
 
       Payroll.make!({
@@ -74,7 +86,7 @@ describe 'Employee Details', js: true do
         tax: 1,
         advance_payment: 20,
         allowance: 30,
-        effective_date: DateTime.new(2016, 8, 1)
+        effective_date: DateTime.new(2016, 8, 1).utc
       }),
 
       Payroll.make!({
@@ -83,12 +95,13 @@ describe 'Employee Details', js: true do
         tax: 10,
         position_allowance: 100,
         fee_etc: 2,
-        effective_date: DateTime.new(2016, 8, 1)
+        effective_date: DateTime.new(2016, 8, 1).utc
       })
     ]
   end
 
   before do
+    taxrates
     payrolls
     login_as(user, scope: :user)
   end
@@ -101,6 +114,57 @@ describe 'Employee Details', js: true do
       sleep(1)
       expect(page).to have_css('div.employee-details')
     end
+
+    it 'should create new payrolls' do
+      visit "/#/employees"
+      sleep(1)
+      click_link('เริ่มออกเงินเดือน')
+      sleep(1)
+      find('#effective_date').set('03/12/2000')
+      click_button('บันทึก')
+      sleep(1)
+      first('.card').click
+      sleep(1)
+      find('#month-list').click
+      sleep(1)
+      find('ul.dropdown-menu li a', text: "3 ธันวาคม 2000").click
+      sleep(1)
+
+      expect(find_field('ค่าแรง / เงินเดือนปัจจุบัน').value).to eq '50000'
+      expect(find_field('ภาษี').value).to eq '3541'
+      expect(page).to have_content('เงินเดือนสุทธิ 46459')
+    end
+
+    it 'should warning before create new payrolls with same date' do
+      visit "/#/employees"
+      sleep(1)
+      # craete payroll
+      click_link('เริ่มออกเงินเดือน')
+      sleep(1)
+      find('#effective_date').set('13/12/2010')
+      click_button('บันทึก')
+      sleep(1)
+
+      # craete same payroll
+      click_link('เริ่มออกเงินเดือน')
+      sleep(1)
+      find('#effective_date').set('13/12/2010')
+      click_button('บันทึก')
+      sleep(1)
+      click_button('ตกลง')
+      sleep(1)
+      first('.card').click
+      sleep(1)
+      find('#month-list').click
+      sleep(1)
+      find('ul.dropdown-menu li a', text: "13 ธันวาคม 2010").click
+      sleep(1)
+
+      expect(find_field('ค่าแรง / เงินเดือนปัจจุบัน').value).to eq '50000'
+      expect(find_field('ภาษี').value).to eq '3541'
+      expect(page).to have_content('เงินเดือนสุทธิ 46459')
+    end
+
   end
 
   describe 'employee detail screen' do

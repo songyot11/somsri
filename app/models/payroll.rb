@@ -6,8 +6,7 @@ class Payroll < ApplicationRecord
   scope :latest, -> { order("effective_date ASC").last }
 
   def already_payroll_on_month
-    payrolls = Payroll.where(employee_id: self.employee_id).collect{ |x| [x.effective_date.month, x.effective_date.year]}
-    if payrolls.include?([self.effective_date.month, self.effective_date.year])
+    if Payroll.where(employee_id: self.employee_id, effective_date: self.effective_date).count > 0
       errors.add(:effective_date, "This month and this year have a payroll already.")
     end
   end
@@ -33,7 +32,7 @@ class Payroll < ApplicationRecord
     income = 15000 if income > 15000
     income >= 1650 ? (income * 0.05).round : 0
   end
-  
+
   def generate_income_tax
     income = (salary + allowance + attendance_bonus + ot + bonus + position_allowance)*12
     income -= self.employee.tax_break
@@ -50,8 +49,8 @@ class Payroll < ApplicationRecord
 
   def generate_withholding_tax
     (salary + allowance + attendance_bonus + ot + bonus + position_allowance) * 0.03
-  end 
-  
+  end
+
   def as_json(options={})
     if options["report"]
       {

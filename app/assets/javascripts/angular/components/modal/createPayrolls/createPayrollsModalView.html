@@ -1,0 +1,32 @@
+<div class="modal-body" id="modal-body">
+  <form name="createPayrollsForm" ng-submit="createPayrolls.submit()" autocomplete="off">
+    <div class="row">
+      <div class="col-md-12 text-center">
+        <h2 class="modal-title" id="modal-title"><b>เริ่มออกเงินเดือน</b></h2>
+      </div>
+    </div>
+    <div class="space20"></div>
+    <div class="row">
+      <div class="col-md-12">
+        <div class="form-group">
+          <label for="effective_date">วันที่ออกเงินเดือน</label>
+          <p class="input-group">
+            <input id="effective_date" type="text" class="form-control" uib-datepicker-popup="dd/MM/yyyy" ng-model="createPayrolls.effective_date" is-open="createPayrolls.effectiveDatePopup.opened" close-text="Close" required />
+            <span class="input-group-btn">
+              <button type="button" class="btn btn-default" ng-click="createPayrolls.openEffectiveDatePopup()"><i class="glyphicon glyphicon-calendar"></i></button>
+            </span>
+          </p>
+        </div>
+      </div>
+    </div>
+    <div class="space20"></div>
+    <div class="row">
+      <div class="col-md-6 text-center">
+        <button type="submit" class="btn btn-lg btn-block btn-submit">บันทึก</button>
+      </div>
+      <div class="col-md-6 text-center">
+        <button type="button" class="btn btn-lg btn-block btn-cancel" ng-click="createPayrolls.cancel()">ยกเลิก</button>
+      </div>
+    </div>
+  </form>
+</div>

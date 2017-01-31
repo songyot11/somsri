@@ -1,0 +1,13 @@
+(function() {
+  'use strict';
+
+  angular.module('somsri.payroll.create_payrolls_modal.service', [
+  ])
+  .service('createPayrollsModalService', ['$http', '$log', function($http, $log) {
+    return {
+      createPayrolls: function(data) {
+        return $http.post('/payrolls', data);
+      }
+    };
+  }]);
+})();

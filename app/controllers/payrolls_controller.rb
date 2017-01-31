@@ -1,6 +1,6 @@
 class PayrollsController < ApplicationController
   include PdfUtils
-  skip_before_action :verify_authenticity_token, :only => [:update]
+  skip_before_action :verify_authenticity_token, :only => [:update, :create]
 
   # GET /payrolls
   def index
@@ -186,6 +186,33 @@ class PayrollsController < ApplicationController
     send_file(output_file, :filename => 'social_insurance_pdf.pdf', :disposition => 'inline', :type => 'application/pdf')
   end
 
+  # POST /payrolls/
+  def create
+    employees = Employee.active.where(school_id: current_user.school.id).to_a
+    payrolls = Payroll.joins(:employee)
+                      .where(employee_id: employees, effective_date: params[:effective_date])
+    render json: {error: "PAYROLLS_EXIST"}, status: :ok and return if payrolls.count > 0 && !params[:force_create]
+    payrolls.destroy_all if payrolls.count > 0
+    employees.each do |employee|
+      payroll = Payroll.new({
+        employee_id: employee.id,
+        salary: employee.salary,
+        effective_date: params[:effective_date]
+      })
+      if employee.employee_type == "ลูกจ้างประจำ" || employee.employee_type.blank?
+        payroll.tax = payroll.generate_income_tax
+      else
+        payroll.tax = payroll.generate_withholding_tax
+      end
+      payroll.social_insurance = payroll.generate_social_insurance if employee.pay_social_insurance
+      payroll.pvf = payroll.generate_pvf if employee.pay_pvf
+      payroll.save
+    end
+
+    render json: ["PAYROLLS_CREATED"], status: :ok
+
+  end
+
   private
     def get_months(employee_ids)
       employee_ids = Employee.active.where(school_id: current_user.school.id)
@@ -194,7 +221,7 @@ class PayrollsController < ApplicationController
                              .distinct.pluck(:effective_date).uniq
       months = []
       payroll_dates.to_a.each do |payroll_date|
-        d = I18n.l(payroll_date, format: "%dd %m %B %Y").split(" ")
+        d = I18n.l(payroll_date.localtime, format: "%dd %m %B %Y").split(" ")
         months.push({
           date: d[0].to_i,
           month: d[1].to_i,
@@ -219,7 +246,7 @@ class PayrollsController < ApplicationController
                              .order("effective_date DESC")
       months = []
       payrolls.to_a.each do |payroll|
-        d = I18n.l(payroll.effective_date, format: "%dd %m %B %Y").split(" ")
+        d = I18n.l(payroll.effective_date.localtime, format: "%dd %m %B %Y").split(" ")
         months.push({
           date: d[0].to_i,
           month: d[1].to_i,

@@ -156,15 +156,12 @@
       var payroll_id = monthInfo.payroll_id;
       service.getEmployee(employeeId, payroll_id).then(function(resp) {
         ctrl.currentMonth = monthInfo;
-        //reset salary
         ctrl.datas.employee.salary = ctrl.datas_original.employee.salary;
 
-        ctrl.datas_original.payroll = $.extend(true, {}, resp.data.payroll);
-
-        //dispay payroll
         ctrl.datas.payroll = $.extend(true, {}, resp.data.payroll);
-
         payrollToFloat();
+        ctrl.datas_original.payroll = $.extend(true, {}, ctrl.datas.payroll);
+
         ctrl.calTotal();
         displayMonth(monthInfo);
       });

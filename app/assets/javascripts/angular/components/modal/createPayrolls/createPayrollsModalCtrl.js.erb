@@ -1,0 +1,45 @@
+(function() {
+  'use strict';
+  angular.module('somsri.payroll.create_payrolls_modal', [
+  ])
+  .controller('createPayrollsModalCtrl', ['$uibModalInstance', '$state', '$log', 'createPayrollsModalService', '$rootScope', function($uibModalInstance, $state, $log, service, $rootScope) {
+    var ctrl = this;
+
+    ctrl.submit = function(){
+      var params = { effective_date: ctrl.effective_date };
+      service.createPayrolls(params).then(function(res) {
+        if(res.data["error"] == "PAYROLLS_EXIST"){
+          var message = "มีรายการ payroll ในวันนี้อยู่แล้ว ท่านต้องการจะสร้างรายการใหม่และลบรายการเดิมหรือไม่"
+          $rootScope.openConfirmationModal(message, function(res) {
+            params["force_create"] = true;
+            service.createPayrolls(params).then(function(res) {
+              console.log("SUCCESS");
+              $uibModalInstance.close();
+            }, function(res) {
+              console.log("ERROR");
+            })
+            $uibModalInstance.close();
+          }, function(res) {
+            console.log("DISMISS CONFIRM");
+          })
+        }
+        $uibModalInstance.close();
+      },function(res) {
+        console.log("ERROR");
+      });
+    }
+
+    ctrl.cancel = function () {
+      $uibModalInstance.close();
+    };
+
+    ctrl.openEffectiveDatePopup = function() {
+      ctrl.effectiveDatePopup.opened = true;
+    };
+
+    ctrl.effectiveDatePopup = {
+      opened: false
+    };
+
+  }]);
+})();
