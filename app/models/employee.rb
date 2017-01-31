@@ -1,6 +1,7 @@
 class Employee < ApplicationRecord
   belongs_to :school
   has_many :payrolls, dependent: :destroy
+  after_create :create_tax_reduction
 
   scope :active, -> { where(deleted: false ) }
 
@@ -83,7 +84,12 @@ class Employee < ApplicationRecord
   end
 
   def tax_break
-    TaxReduction.find(self.id).revenue_reduction
+    TaxReduction.where(employee_id: self.id).first().revenue_reduction
   end
+
+  private
+    def create_tax_reduction
+      TaxReduction.create(employee_id: self.id)
+    end
 
 end

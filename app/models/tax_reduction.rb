@@ -1,5 +1,4 @@
 class TaxReduction < ApplicationRecord
-
   belongs_to :employee
 
   def income_exemption # รายได้ที่ได้รับการยกเว้น
@@ -30,5 +29,4 @@ class TaxReduction < ApplicationRecord
 
     reduction = p_fund + expenses + no_income_spouse + child + parent_alimony + spouse_parent_alimony + cripple_alimony + parent_insurance + insurance + spouse_insurance + ltf + social_insurance + e_donation + g_donation + other
   end
-
 end

@@ -1,3 +1,9 @@
+User.delete_all
+School.delete_all
+Employee.delete_all
+Payroll.delete_all
+TaxReduction.delete_all
+
 if School.count == 0
 School.create!([
   {id: 1, name: "Sunshine Kindergarten"},
