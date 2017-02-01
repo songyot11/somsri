@@ -123,11 +123,13 @@ describe 'Employee Details', js: true do
       find('#effective_date').set('03/12/2000')
       click_button('บันทึก')
       sleep(1)
+      visit "/#/employees"
+      sleep(1)
       first('.card').click
       sleep(1)
       find('#month-list').click
       sleep(1)
-      find('ul.dropdown-menu li a', text: "3 ธันวาคม 2000").click
+      find('ul.dropdown-menu li a', text: "3 ธันวาคม 2543").click
       sleep(1)
 
       expect(find_field('ค่าแรง / เงินเดือนปัจจุบัน').value).to eq '50000'
@@ -146,6 +148,8 @@ describe 'Employee Details', js: true do
       sleep(1)
 
       # craete same payroll
+      visit "/#/employees"
+      sleep(1)
       click_link('เริ่มออกเงินเดือน')
       sleep(1)
       find('#effective_date').set('13/12/2010')
@@ -153,11 +157,13 @@ describe 'Employee Details', js: true do
       sleep(1)
       click_button('ตกลง')
       sleep(1)
+      visit "/#/employees"
+      sleep(1)
       first('.card').click
       sleep(1)
       find('#month-list').click
       sleep(1)
-      find('ul.dropdown-menu li a', text: "13 ธันวาคม 2010").click
+      find('ul.dropdown-menu li a', text: "13 ธันวาคม 2553").click
       sleep(1)
 
       expect(find_field('ค่าแรง / เงินเดือนปัจจุบัน').value).to eq '50000'
@@ -229,7 +235,7 @@ describe 'Employee Details', js: true do
     it 'should diplay histories when select histories dropdown' do
       find('#month-list').click
       sleep(1)
-      find('ul.dropdown-menu li a', text: "สิงหาคม 2016").click
+      find('ul.dropdown-menu li a', text: "สิงหาคม 2559").click
       sleep(1)
       expect(find_field('ค่าแรง / เงินเดือนปัจจุบัน', disabled: false).value).to eq '500'
       expect(find_field('ภาษี', disabled: false).value).to eq '1'
@@ -243,7 +249,7 @@ describe 'Employee Details', js: true do
       sleep(1)
       find('#month-list').click
       sleep(1)
-      find('ul.dropdown-menu li a', text: "สิงหาคม 2016").click
+      find('ul.dropdown-menu li a', text: "สิงหาคม 2559").click
       sleep(1)
       expect(find_field('นามสกุล').value).to eq 'โอชา'
       expect(find_field('ค่าแรง / เงินเดือนปัจจุบัน', disabled: false).value).to eq '500'
@@ -258,7 +264,7 @@ describe 'Employee Details', js: true do
       sleep(1)
       find('#month-list').click
       sleep(1)
-      find('ul.dropdown-menu li a', text: "สิงหาคม 2016").click
+      find('ul.dropdown-menu li a', text: "สิงหาคม 2559").click
       sleep(1)
       expect(page).to have_content("คุณต้องการออกจากหน้านี้โดยไม่บันทึกค่าหรือไม่?")
     end
@@ -269,7 +275,7 @@ describe 'Employee Details', js: true do
       sleep(1)
       find('#month-list').click
       sleep(1)
-      find('ul.dropdown-menu li a', text: "สิงหาคม 2016").click
+      find('ul.dropdown-menu li a', text: "สิงหาคม 2559").click
       sleep(1)
       click_button('ตกลง')
       sleep(1)
@@ -286,7 +292,7 @@ describe 'Employee Details', js: true do
     it 'can edit history data' do
       find('#month-list').click
       sleep(1)
-      find('ul.dropdown-menu li a', text: "สิงหาคม 2016").click
+      find('ul.dropdown-menu li a', text: "สิงหาคม 2559").click
       sleep(1)
       page.fill_in 'ค่าแรง / เงินเดือนปัจจุบัน', :with => '1'
       sleep(1)
@@ -302,7 +308,7 @@ describe 'Employee Details', js: true do
       expect(find_field('ค่าแรง / เงินเดือนปัจจุบัน').value).to eq '50000'
       find('#month-list').click
       sleep(1)
-      find('ul.dropdown-menu li a', text: "สิงหาคม 2016").click
+      find('ul.dropdown-menu li a', text: "สิงหาคม 2559").click
       sleep(1)
       # check edited data on previous month
       expect(find_field('ค่าแรง / เงินเดือนปัจจุบัน').value).to eq '1'
@@ -311,7 +317,7 @@ describe 'Employee Details', js: true do
     it 'should go to 2016-8 slip' do
       find('#month-list').click
       sleep(1)
-      find('ul.dropdown-menu li a', text: "สิงหาคม 2016").click
+      find('ul.dropdown-menu li a', text: "สิงหาคม 2559").click
       sleep(1)
       click_button('พิมพ์ใบจ่ายเงินเดือน')
       sleep(1)

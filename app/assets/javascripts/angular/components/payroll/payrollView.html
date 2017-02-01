@@ -4,13 +4,13 @@
       <div class="col-lg-10">
         <div class="dropdown">
           <h2 id="month-list" data-toggle="dropdown">
-            <span ng-bind="payroll.currentMonth" ></span>
+            <span ng-bind="payroll.currentDateString" ></span>
             <span class="caret"></span>
           </h2>
           <ul class="dropdown-menu" aria-labelledby="month-list">
-            <li ng-repeat="month in payroll.months">
-              <a ng-click="payroll.switchMonth(month)">
-                <button>{{month | get_month_name}}</button>
+            <li ng-repeat="effectiveDate in payroll.effectiveDates">
+              <a ng-click="payroll.switchMonth(effectiveDate)">
+                <button>{{ effectiveDate["date_string"] }}</button>
               </a>
             </li>
           </ul>
@@ -18,7 +18,7 @@
       </div>
       <div class="col-lg-2">
         <a class="btn btn-lg bg-yellow btn-block"
-          href="/payrolls/social_insurance_pdf?month={{ payroll.currentMonthData.month }}&&year={{ payroll.currentMonthData.year }}"
+          href="/payrolls/social_insurance_pdf?effective_date={{payroll.currentEffectiveDate['date_time'] | encodeString }}"
           target="_blank">ประกันสังคม</a>
       </div>
       <div class="col-lg-2" ng-hide="true">

@@ -4,15 +4,15 @@
   angular.module('somsri.payroll.report.service', [
   ])
   .service('reportService', ['$http', function($http) {
-    this.getPayroll = function(year, month) {
-      return $http.get('/payrolls/' + year + "/" + month);
+    this.getPayroll = function(effectiveDate) {
+      return $http.get('/payrolls', { params: { effective_date: encodeURI(effectiveDate) } });
     }
 
     this.getMonths = function(employeeId) {
       if(employeeId){
-        return $http.get('/payrolls/', { params: { employee_id: employeeId } });
+        return $http.get('/payrolls/effective_dates/', { params: { employee_id: employeeId } });
       }else{
-        return $http.get('/payrolls/');
+        return $http.get('/payrolls/effective_dates/');
       }
     }
 

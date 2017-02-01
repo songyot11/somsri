@@ -2,15 +2,16 @@
   'use strict';
   angular.module('somsri.payroll.payroll', [
   ])
-  .controller('payrollCtrl', ['$filter', 'reportService', '$rootScope', function($filter, reportService, $rootScope) {
+  .controller('payrollCtrl', ['$filter', 'reportService', '$rootScope', '$state', function($filter, reportService, $rootScope, $state) {
     $rootScope.menu = "Payroll"
 
     var ctrl = this
     ctrl.total = 0
     ctrl.employees = []
-    ctrl.months = []
-    ctrl.currentMonth = ""
+    ctrl.effectiveDates = []
+    ctrl.currentDateString = ""
     ctrl.total = {}
+    var effectiveDateParm = $state.params.effective_date;
 
     ctrl.selectValue = function($event){
       if($event && !$event.target){
@@ -73,12 +74,12 @@
       }
     }
 
-    ctrl.switchMonth = function(month) {
-      reportService.getPayroll(month.year, month.month).then(function(resp) {
+    ctrl.switchMonth = function(effectiveDate) {
+      reportService.getPayroll(effectiveDate["date_time"]).then(function(resp) {
         ctrl.employees = resp.data
         getTotalSalary(ctrl.employees)
-        ctrl.currentMonth = $filter('get_month_name')(month)
-        ctrl.currentMonthData = month
+        ctrl.currentDateString = effectiveDate["date_string"];
+        ctrl.currentEffectiveDate = effectiveDate;
       });
     }
 
@@ -111,15 +112,21 @@
     function getAll() {
       reportService.getMonths().then(function(resp) {
         if (resp.data.length > 0) {
-          ctrl.months = resp.data
-          var current = ctrl.months[0]
-
-          reportService.getPayroll(current.year, current.month).then(function(resp) {
+          ctrl.effectiveDates = resp.data
+          var current = ctrl.effectiveDates[0]
+          if(effectiveDateParm){
+            for(var i = 0; i < ctrl.effectiveDates.length; i++){
+              if(new Date(ctrl.effectiveDates[i]['date_time']).getTime() == new Date(effectiveDateParm).getTime()){
+                current = ctrl.effectiveDates[i];
+              }
+            }
+          }
+          reportService.getPayroll(current['date_time']).then(function(resp) {
             ctrl.employees = resp.data
 
             getTotalSalary(ctrl.employees)
-            ctrl.currentMonth = $filter('get_month_name')(ctrl.months[0])
-            ctrl.currentMonthData = ctrl.months[0]
+            ctrl.currentDateString = current['date_string'];
+            ctrl.currentEffectiveDate = current;
           });
         }
       });

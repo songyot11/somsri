@@ -89,14 +89,14 @@ describe 'Payroll', js: true do
 
     find('#month-list').click
     sleep(1)
-    eventually { expect(page).to have_content '1 ธันวาคม 2016 1 พฤศจิกายน 2016' }
+    eventually { expect(page).to have_content '1 ธันวาคม 2559 1 พฤศจิกายน 2559' }
   end
 
   it 'should switch month' do
     visit "/#/payroll"
     find('#month-list').click
     sleep(1)
-    click_on("พฤศจิกายน 2016")
+    click_on("พฤศจิกายน 2559")
     sleep(1)
 
     eventually { expect(page).to have_content 'รายการได้ รายการหัก' }
@@ -115,12 +115,12 @@ describe 'Payroll', js: true do
       visit "/#/payroll"
       find('#month-list').click
       sleep(1)
-      click_on("1 พฤศจิกายน 2016")
+      click_on("1 พฤศจิกายน 2559")
       sleep(1)
 
       click_link "สมศรี เป็นชื่อแอพ"
       sleep(1)
-      eventually { expect(page).to have_content '1 พฤศจิกายน 2016' }
+      eventually { expect(page).to have_content '1 พฤศจิกายน 2559' }
       expect(find_field('ค่าแรง / เงินเดือนปัจจุบัน').value).to eq '50000'
     end
   end

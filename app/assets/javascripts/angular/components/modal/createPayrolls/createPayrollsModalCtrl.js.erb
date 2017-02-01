@@ -13,8 +13,8 @@
           $rootScope.openConfirmationModal(message, function(res) {
             params["force_create"] = true;
             service.createPayrolls(params).then(function(res) {
-              console.log("SUCCESS");
               $uibModalInstance.close();
+              $rootScope.openPayroll(params["effective_date"]);
             }, function(res) {
               console.log("ERROR");
             })
@@ -23,7 +23,7 @@
             console.log("DISMISS CONFIRM");
           })
         }
-        $uibModalInstance.close();
+        $rootScope.openPayroll(params["effective_date"]);
       },function(res) {
         console.log("ERROR");
       });

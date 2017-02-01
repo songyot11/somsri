@@ -11,7 +11,7 @@ Rails.application.routes.draw do
 
   resources :payrolls, only: [:index, :update, :create] do
     collection do
-      get "/:year/:month", action: 'payroll'
+      get "effective_dates"
       get 'social_insurance_pdf'
     end
   end

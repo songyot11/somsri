@@ -2,7 +2,7 @@
   'use strict';
   angular.module('somsri.payroll.main', [
   ])
-  .controller('mainCtrl', ['$rootScope', '$state', '$scope', '$uibModal', function($rootScope, $state, $scope, $uibModal) {
+  .controller('mainCtrl', ['$rootScope', '$state', '$scope', '$uibModal', '$filter', function($rootScope, $state, $scope, $uibModal, $filter) {
     $rootScope.openReport = function() {
       $state.go('report')
     };
@@ -11,8 +11,12 @@
       $state.go('employees')
     };
 
-    $rootScope.openPayroll = function () {
-      $state.go('payroll')
+    $rootScope.openPayroll = function (effectiveDate) {
+      if(effectiveDate){
+        $state.go('payroll',{ effective_date: effectiveDate });
+      }else{
+        $state.go('payroll');
+      }
     };
 
     $rootScope.openSetting = function () {

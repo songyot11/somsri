@@ -4,26 +4,22 @@ class PayrollsController < ApplicationController
 
   # GET /payrolls
   def index
+    effective_date = DateTime.parse(params[:effective_date])
+    employees = Employee.active.where(school_id: current_user.school.id)
+    payrolls = Payroll.joins(:employee)
+                      .where(employee_id: employees, effective_date: effective_date.beginning_of_day..effective_date.end_of_day)
+                      .order('employees.start_date ASC, employees.created_at ASC')
+                      .as_json("report")
+    render json: payrolls, status: :ok
+  end
+
+  # GET /payrolls/effective_dates
+  def effective_dates
     if params[:employee_id]
       render json: get_months_by_employee_ids(params[:employee_id]), status: :ok
     else
-      render json: get_months(params[:employee_id]), status: :ok
+      render json: get_months(), status: :ok
     end
-  end
-
-  # GET /payrolls/:year/:month
-  def payroll
-    year = params[:year].to_i
-    month = params[:month].to_i
-    start_month = Date.new(year, month, 1)
-    end_month = start_month.end_of_month
-    employees = Employee.active.where(school_id: current_user.school.id)
-    payrolls = Payroll.joins(:employee)
-                      .where(employee_id: employees, effective_date: start_month.beginning_of_day..end_month.end_of_day)
-                      .order('employees.start_date ASC, employees.created_at ASC')
-                      .as_json("report")
-
-    render json: payrolls, status: :ok
   end
 
   # PATCH /payrolls/:id
@@ -38,13 +34,10 @@ class PayrollsController < ApplicationController
 
   # GET /payrolls/social_insurance_pdf
   def social_insurance_pdf
-    year = params[:year].to_i
-    month = params[:month].to_i
-    start_month = Date.new(year, month, 1)
-    end_month = start_month.end_of_month
+    effective_date = DateTime.parse(params[:effective_date])
     employees = Employee.where(school_id: current_user.school.id).order(:id).to_a
     payrolls = Payroll.joins(:employee)
-                      .where(employee_id: employees, effective_date: start_month.beginning_of_day..end_month.end_of_day)
+                      .where(employee_id: employees, effective_date: effective_date.beginning_of_day..effective_date.end_of_day)
                       .where("social_insurance > ?", 0)
                       .order('employee_id').to_a
     render text: "ไม่มีพนักงานที่ต้องเสียค่าประกันสังคม", status: :ok and return if payrolls.size == 0 || payrolls.blank?
@@ -214,22 +207,19 @@ class PayrollsController < ApplicationController
   end
 
   private
-    def get_months(employee_ids)
+    def get_months()
       employee_ids = Employee.active.where(school_id: current_user.school.id)
       payroll_dates = Payroll.where(employee_id: employee_ids)
                              .order("effective_date DESC")
                              .distinct.pluck(:effective_date).uniq
-      months = []
+      effective_dates = []
       payroll_dates.to_a.each do |payroll_date|
-        d = I18n.l(payroll_date.localtime, format: "%dd %m %B %Y").split(" ")
-        months.push({
-          date: d[0].to_i,
-          month: d[1].to_i,
-          name: d[2],
-          year: d[3]
+        effective_dates.push({
+          date_time: payroll_date.localtime,
+          date_string: to_thai_date(payroll_date.localtime).join(" ")
         })
       end
-      return months
+      return effective_dates
     end
 
     def to_thai_date(date_time)
@@ -244,18 +234,15 @@ class PayrollsController < ApplicationController
     def get_months_by_employee_ids(employee_ids)
       payrolls = Payroll.where(employee_id: employee_ids)
                              .order("effective_date DESC")
-      months = []
+      effective_dates = []
       payrolls.to_a.each do |payroll|
-        d = I18n.l(payroll.effective_date.localtime, format: "%dd %m %B %Y").split(" ")
-        months.push({
-          date: d[0].to_i,
-          month: d[1].to_i,
-          name: d[2],
-          year: d[3],
+        effective_dates.push({
+          date_time: payroll.effective_date.localtime,
+          date_string: to_thai_date(payroll.effective_date.localtime).join(" "),
           payroll_id: payroll.id
         })
       end
-      return months
+      return effective_dates
     end
 
     def params_payroll

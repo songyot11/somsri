@@ -135,7 +135,7 @@ describe PayrollsController do
 
   it "should generate social insurance in pdf format" do
     date_time = payrolls[0].effective_date
-    get :social_insurance_pdf, month: date_time.month, year: date_time.year
+    get :social_insurance_pdf, effective_date: date_time
 
     temp_pdf = Tempfile.new('pdf')
     temp_pdf << response.body.force_encoding('UTF-8')
@@ -152,7 +152,7 @@ describe PayrollsController do
   end
 
   it "should display error text when generate social insurance pdf with no social_insurance in every payroll" do
-    get :social_insurance_pdf, month: 8, year: 2016
+    get :social_insurance_pdf, effective_date: payrolls[4].effective_date
     expect(response.body).to have_content "ไม่มีพนักงานที่ต้องเสียค่าประกันสังคม"
   end
 end

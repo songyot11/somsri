@@ -2,13 +2,13 @@
   <div class="unused_for_print col-lg-10 col-lg-offset-1">
     <div class="dropdown">
       <h2 id="month-list" data-toggle="dropdown">
-        <span ng-bind="report.currentMonth" ></span>
+        <span ng-bind="report.currentDateString" ></span>
         <span class="caret"></span>
       </h2>
       <ul class="dropdown-menu" aria-labelledby="month-list">
-        <li ng-repeat="month in report.months">
-          <a ng-click="report.switchMonth(month)">
-            <button>{{month | get_month_name}}</button>
+        <li ng-repeat="effectiveDate in report.effectiveDates">
+          <a ng-click="report.switchMonth(effectiveDate)">
+            <button>{{ effectiveDate["date_string"] }}</button>
           </a>
         </li>
       </ul>
@@ -44,7 +44,7 @@
               <td class="text-red">{{employee.extra_fee | currency: ""}}</td>
               <td class="text-green">{{report.getNetSalary(employee) | currency: ""}}</td>
               <td>
-                <a ng-click="report.printSlip(employee.code, report.currentMonthData)" href="javascript:void(0)">
+                <a ng-click="report.printSlip(employee.code, report.currentEffectiveDate)" href="javascript:void(0)">
                   <i class="fa fa-print"></i>
                 </a>
               </td>

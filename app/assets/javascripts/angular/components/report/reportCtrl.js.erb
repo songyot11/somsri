@@ -8,8 +8,8 @@
     var ctrl = this
     ctrl.total = 0
     ctrl.employees = []
-    ctrl.months = []
-    ctrl.currentMonth = ""
+    ctrl.effectiveDates = []
+    ctrl.currentDateString = ""
 
     ctrl.getNetSalary = function(employee) {
       return employee.salary - employee.extra_fee + employee.extra_pay;
@@ -34,21 +34,21 @@
       }
     }
 
-    ctrl.switchMonth = function(month) {
-      reportService.getPayroll(month.year, month.month).then(function(resp) {
+    ctrl.switchMonth = function(effectiveDate) {
+      reportService.getPayroll(effectiveDate['date_time']).then(function(resp) {
         ctrl.employees = resp.data
         ctrl.total = getTotalSalary(ctrl.employees);
-        ctrl.currentMonth = $filter('get_month_name')(month)
-        ctrl.currentMonthData = month
+        ctrl.currentDateString = effectiveDate["date_string"];
+        ctrl.currentEffectiveDate = effectiveDate
         setTableHeader();
       });
     }
 
-    ctrl.printSlip = function(id, currentMonth) {
+    ctrl.printSlip = function(id, currentEffectiveDate) {
       var containerDiv = $('#payroll-report')
       ctrl.employee = []
 
-      slipService.employeeSlip(id, currentMonth.payroll_id).then(function(resp) {
+      slipService.employeeSlip(id, currentEffectiveDate.payroll_id).then(function(resp) {
         ctrl.employee = resp.data
 
         if($window.navigator.userAgent.indexOf('Chrome') == -1) {
@@ -77,15 +77,14 @@
     function getPayrolls() {
       reportService.getMonths().then(function(resp) {
         if (resp.data.length > 0) {
-          ctrl.months = resp.data
-          var current = ctrl.months[0]
-
-          reportService.getPayroll(current.year, current.month).then(function(resp) {
+          ctrl.effectiveDates = resp.data
+          var current = ctrl.effectiveDates[0]
+          reportService.getPayroll(current['date_time']).then(function(resp) {
             ctrl.employees = resp.data
             ctrl.total = getTotalSalary(ctrl.employees);
             getTotalSalary(ctrl.employees)
-            ctrl.currentMonth = $filter('get_month_name')(current)
-            ctrl.currentMonthData = current
+            ctrl.currentDateString = current['date_string']
+            ctrl.currentEffectiveDates = current
             setTableHeader();
           });
         }

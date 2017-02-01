@@ -314,17 +314,17 @@
       </div>
     </div>
     <div class="paragraph orange payroll" ng-show="employee.isEdit">
-      <div ng-switch="employee.monthsDisplay.length > 0">
+      <div ng-switch="employee.effectiveDates.length > 0">
         <div ng-switch-when="true">
           <div class="dropdown">
             <h3 id="month-list" data-toggle="dropdown">
-              <span ng-bind="employee.currentMonthDisplay" ></span>
+              <span ng-bind="employee.currentDateString" ></span>
               <span class="caret"></span>
             </h3>
             <ul class="dropdown-menu" aria-labelledby="month-list">
-              <li ng-repeat="month in employee.monthsDisplay">
-                <a ng-click="employee.switchMonth(month)">
-                  {{ month | get_month_name }}
+              <li ng-repeat="effectiveDate in employee.effectiveDatesDisplay">
+                <a ng-click="employee.switchMonth(effectiveDate)">
+                  {{ effectiveDate["date_string"] }}
                 </a>
               </li>
             </ul>
@@ -332,7 +332,7 @@
         </div>
         <div ng-switch-default>
           <h3 data-toggle="dropdown">
-            <span ng-bind="employee.currentMonthDisplay" ></span>
+            <span ng-bind="employee.currentDateString" ></span>
           </h3>
         </div>
       </div>
@@ -458,7 +458,7 @@
     </div>
     <div class="footer-menu row">
       <div class="col-md-4">
-        <button ng-show="employee.isEdit" type="button" class="btn btn-lg btn-block btn-print" ng-click="openSlip(employee.datas.employee.id, employee.currentMonth['payroll_id'])">พิมพ์ใบจ่ายเงินเดือน</button>
+        <button ng-show="employee.isEdit" type="button" class="btn btn-lg btn-block btn-print" ng-click="openSlip(employee.datas.employee.id, employee.currentEffectiveDate['payroll_id'])">พิมพ์ใบจ่ายเงินเดือน</button>
       </div>
 
       <div class="col-md-2 {{employee.isEdit ? '': 'col-md-offset-2'}}">
