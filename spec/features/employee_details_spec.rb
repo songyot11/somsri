@@ -359,7 +359,7 @@ describe 'Employee Details', js: true do
 
     describe 'employee_type' do
       it 'can edit' do
-        expect(page).to have_select('ประเภทการจ้างงาน', selected: '')
+        expect(page).to have_select('ประเภทการจ้างงาน', selected: 'ลูกจ้างประจำ')
         select 'ลูกจ้างชั่วคราว', from: 'ประเภทการจ้างงาน'
         click_button('บันทึก')
         sleep(1)

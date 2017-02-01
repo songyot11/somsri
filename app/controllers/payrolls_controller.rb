@@ -183,7 +183,7 @@ class PayrollsController < ApplicationController
   def create
     employees = Employee.active.where(school_id: current_user.school.id).to_a
     payrolls = Payroll.joins(:employee)
-                      .where(employee_id: employees, effective_date: params[:effective_date])
+                      .where(employee_id: employees, effective_date: DateTime.parse(params[:effective_date]))
     render json: {error: "PAYROLLS_EXIST"}, status: :ok and return if payrolls.count > 0 && !params[:force_create]
     payrolls.destroy_all if payrolls.count > 0
     employees.each do |employee|
