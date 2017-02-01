@@ -82,9 +82,10 @@ describe Payroll do
       taxR1 = TaxReduction.make!({ employee_id: employee1.id}),
       taxR2 = TaxReduction.make!({ employee_id: employee2.id}),
       taxR3 = TaxReduction.make!({ employee_id: employee3.id, pension_insurance: 300000, 
-        pension_fund: 0, expenses: 60000, no_income_spouse: 60000, child: 0, parent_alimony: 0, 
-        spouse_parent_alimony: 0, cripple_alimony: 0, parent_insurance: 0, insurance: 0, spouse_insurance: 0,
-        long_term_equity_fund: 100000, social_insurance: 0, education_donation: 0, general_donation: 0, other: 0})
+        pension_fund: 0, expenses: 60000, no_income_spouse: 60000, child: 0, father_alimony: 0, mother_alimony: 0,
+        spouse_father_alimony: 0, spouse_mother_alimony: 0, cripple_alimony: 0, insurance: 0,
+        father_insurance: 0, mother_insurance: 0, spouse_father_insurance: 0, spouse_mother_insurance: 0,
+        long_term_equity_fund: 100000, social_insurance: 0, double_donation: 0, donation: 0, other: 0})
     ]
   end
 

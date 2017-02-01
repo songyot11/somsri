@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20170127083923) do
+ActiveRecord::Schema.define(version: 20170201042856) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -95,17 +95,23 @@ ActiveRecord::Schema.define(version: 20170127083923) do
     t.decimal "expenses",                 default: "0.0", null: false
     t.decimal "no_income_spouse",         default: "0.0", null: false
     t.decimal "child",                    default: "0.0", null: false
-    t.decimal "parent_alimony",           default: "0.0", null: false
-    t.decimal "spouse_parent_alimony",    default: "0.0", null: false
+    t.decimal "father_alimony",           default: "0.0", null: false
+    t.decimal "spouse_father_alimony",    default: "0.0", null: false
     t.decimal "cripple_alimony",          default: "0.0", null: false
-    t.decimal "parent_insurance",         default: "0.0", null: false
+    t.decimal "father_insurance",         default: "0.0", null: false
     t.decimal "insurance",                default: "0.0", null: false
     t.decimal "spouse_insurance",         default: "0.0", null: false
     t.decimal "long_term_equity_fund",    default: "0.0", null: false
     t.decimal "social_insurance",         default: "0.0", null: false
-    t.decimal "education_donation",       default: "0.0", null: false
-    t.decimal "general_donation",         default: "0.0", null: false
+    t.decimal "double_donation",          default: "0.0", null: false
+    t.decimal "donation",                 default: "0.0", null: false
     t.decimal "other",                    default: "0.0", null: false
+    t.decimal "house_loan_interest",      default: "0.0", null: false
+    t.decimal "mother_alimony",           default: "0.0", null: false
+    t.decimal "spouse_mother_alimony",    default: "0.0", null: false
+    t.decimal "mother_insurance",         default: "0.0", null: false
+    t.decimal "spouse_father_insurance",  default: "0.0", null: false
+    t.decimal "spouse_mother_insurance",  default: "0.0", null: false
     t.index ["employee_id"], name: "index_tax_reductions_on_employee_id", using: :btree
   end
 

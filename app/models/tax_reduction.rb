@@ -24,9 +24,10 @@ class TaxReduction < ApplicationRecord
     income = self.employee.year_income - self.income_exemption
     p_fund = pension_fund >= 10000 ? 10000 : pension_fund
     ltf = long_term_equity_fund > income * 0.15 ? income * 0.15 : long_term_equity_fund
-    e_donation = education_donation * 2 > income * 0.1 ? income * 0.1 : education_donation * 2
-    g_donation = general_donation > income * 0.1 ? income * 0.1 : general_donation
+    house_loan = house_loan_interest >= 100000 ? 100000 : house_loan_interest
+    d_donation = double_donation * 2 > income * 0.1 ? income * 0.1 : double_donation * 2
+    s_donation = donation > income * 0.1 ? income * 0.1 : donation
 
-    reduction = p_fund + expenses + no_income_spouse + child + parent_alimony + spouse_parent_alimony + cripple_alimony + parent_insurance + insurance + spouse_insurance + ltf + social_insurance + e_donation + g_donation + other
+    reduction = p_fund + expenses + no_income_spouse + child + father_alimony + mother_alimony + spouse_father_alimony + spouse_mother_alimony + cripple_alimony + father_insurance + mother_insurance + spouse_father_insurance + spouse_mother_insurance + insurance + spouse_insurance + ltf + house_loan + social_insurance + d_donation + s_donation + other
   end
 end
