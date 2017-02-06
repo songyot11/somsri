@@ -1,9 +1,3 @@
-User.delete_all
-School.delete_all
-Employee.delete_all
-Payroll.delete_all
-TaxReduction.delete_all
-
 if School.count == 0
 School.create!([
   {id: 1, name: "Sunshine Kindergarten"},
@@ -117,4 +111,10 @@ if Taxrate.count == 0
    {order_id: "6", income: "300000", tax: "0.10"},
    {order_id: "7", income: "150000", tax: "0.05"}
   ])
+end
+
+Employee.all.each do |employee|
+  if TaxReduction.find_by(employee_id: employee.id)==nil
+    TaxReduction.create!(employee_id: employee.id);
+  end
 end
