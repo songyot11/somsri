@@ -62,6 +62,7 @@ class Payroll < ApplicationRecord
         extra_pay: extra_pay.to_f,
         extra_fee: extra_fee.to_f,
         start_date: self.employee.start_date,
+        employee_type: self.employee.employee_type,
         # Income
         salary: self.salary.to_f,
         ot: self.ot.to_f,

@@ -748,3 +748,11 @@ table.scrollable-header {
   top: -9px !important;
   border-top: 0px !important;
 }
+.btn.employee-type {
+  background-color: #AAAAAA;
+  border-color: white;
+  box-shadow: none;
+}
+.btn.employee-type.active {
+  background-color: #FFAA00;
+}

@@ -1,18 +1,32 @@
 <div id="payroll-report" class="row">
   <div class="unused_for_print col-lg-10 col-lg-offset-1">
-    <div class="dropdown">
-      <h2 id="month-list" data-toggle="dropdown">
-        <span ng-bind="report.currentDateString" ></span>
-        <span class="caret"></span>
-      </h2>
-      <ul class="dropdown-menu" aria-labelledby="month-list">
-        <li ng-repeat="effectiveDate in report.effectiveDates">
-          <a ng-click="report.switchMonth(effectiveDate)">
-            <button>{{ effectiveDate["date_string"] }}</button>
-          </a>
-        </li>
-      </ul>
+
+    <div class="row">
+      <div class="col-lg-6">
+        <div class="dropdown">
+          <h2 id="month-list" data-toggle="dropdown">
+            <span ng-bind="report.currentDateString" ></span>
+            <span class="caret"></span>
+          </h2>
+          <ul class="dropdown-menu" aria-labelledby="month-list">
+            <li ng-repeat="effectiveDate in report.effectiveDates">
+              <a ng-click="report.switchMonth(effectiveDate)">
+                <button>{{ effectiveDate["date_string"] }}</button>
+              </a>
+            </li>
+          </ul>
+        </div>
+      </div>
+      <div class="col-lg-6" style="padding-right: 0px;">
+        <div class="btn-group pull-right">
+            <label class="btn btn-info btn-lg employee-type" ng-click="report.employeeTypeFilter()" ng-model="report.employeeTypeMode.normal" style="border-radius: 0px;" uib-btn-checkbox>ลูกจ้างประจำ</label>
+            <label class="btn btn-info btn-lg employee-type" ng-click="report.employeeTypeFilter()" ng-model="report.employeeTypeMode.temporary" uib-btn-checkbox>ลูกจ้างชั่วคราว</label>
+            <label class="btn btn-info btn-lg employee-type" ng-click="report.employeeTypeFilter()" ng-model="report.employeeTypeMode.probationary" uib-btn-checkbox>ลูกจ้างทดลองงาน</label>
+            <label class="btn btn-info btn-lg employee-type" ng-click="report.employeeTypeFilter()" ng-model="report.employeeTypeMode.daily" style="border-radius: 0px;" uib-btn-checkbox>ลูกจ้างรายวัน</label>
+        </div>
+      </div>
     </div>
+
     <div class="row report-content container-fluid">
       <table id="tableHeader" class="table text-right scrollable-header">
         <thead>
@@ -44,7 +58,7 @@
               <td class="text-red">{{employee.extra_fee | currency: ""}}</td>
               <td class="text-green">{{report.getNetSalary(employee) | currency: ""}}</td>
               <td>
-                <a ng-click="report.printSlip(employee.code, report.currentEffectiveDate)" href="javascript:void(0)">
+                <a ng-click="report.printSlip(employee.code, report.payroll_id)" href="javascript:void(0)">
                   <i class="fa fa-print"></i>
                 </a>
               </td>
