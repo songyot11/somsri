@@ -26,6 +26,7 @@ Employee.blueprint do
   birthdate { Faker::Date }
   status { 'โสด' }
   email { Faker::Internet.email }
+  employee_type { 'ลูกจ้างประจำ' }
 end
 
 Payroll.blueprint do
