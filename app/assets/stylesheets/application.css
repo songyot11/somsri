@@ -367,9 +367,10 @@ body {
     border-color: #000;
   }
 
-  #payroll-report #order thead th,
-  #payroll-slip #order thead th {
+  #payroll-report thead th,
+  #payroll-slip thead th {
     padding: 5px 10px;
+    background-color: #dadada !important;
   }
 
   #payroll-report #order tbody td,
