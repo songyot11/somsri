@@ -17,7 +17,7 @@
 ##### prerequisite
 - rbenv and ruby
 - bower
-- [pdftk](https://www.pdflabs.com/tools/pdftk-the-pdf-toolkit/) or [pdftk for OSX](https://www.pdflabs.com/tools/pdftk-the-pdf-toolkit/pdftk_server-2.02-mac_osx-10.11-setup.pkg)
+- [pdftk](https://www.pdflabs.com/tools/pdftk-the-pdf-toolkit/) or [pdftk for OSX](https://www.pdflabs.com/tools/pdftk-the-pdf-toolkit/pdftk_server-2.02-mac_osx-10.11-setup.pkg) or [pdftk for CentOS 7](https://www.linuxglobal.com/pdftk-works-on-centos-7/)
 
 ##### setup project
 - go to root directory
