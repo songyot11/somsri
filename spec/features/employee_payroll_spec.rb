@@ -13,6 +13,7 @@ describe 'Payroll', js: true do
       last_name_thai: "เป็นชื่อแอพ",
       prefix_thai: "นาง",
       sex: 1,
+      employee_type: "ลูกจ้างประจำ",
       account_number: "5-234-34532-2342",
       salary: 50000
     }
@@ -27,6 +28,7 @@ describe 'Payroll', js: true do
       first_name_thai: "สมจิตร",
       last_name_thai: "เป็นนักมวย",
       prefix_thai: "นาย",
+      employee_type: "ลูกจ้างชั่วคราว",
       sex: 1,
       account_number: "5-234-34532-2341",
       salary: 20000
@@ -43,7 +45,21 @@ describe 'Payroll', js: true do
       last_name_thai: "ฮาราบาส",
       prefix_thai: "นาย",
       sex: 1,
+      employee_type: "ลูกจ้างรายวัน",
       account_number: "5-234-34532-0000",
+      salary: 20
+    }
+  )}
+
+  let(:employee4) {Employee.make!(
+    {
+      school_id: school.id,
+      first_name_thai: "ดี",
+      last_name_thai: "เอ็ม",
+      prefix_thai: "พี",
+      sex: 1,
+      account_number: "5-234-34532-xxxx",
+      employee_type: "ลูกจ้างรายวัน",
       salary: 20
     }
   )}
@@ -60,6 +76,8 @@ describe 'Payroll', js: true do
                             effective_date: DateTime.new(2016, 11, 1)}),
       pr5 = Payroll.make!({employee_id: employee3.id, salary: 20, tax: 10,
                             effective_date: DateTime.new(2016, 11, 1)}),
+      pr6 = Payroll.make!({employee_id: employee4.id, salary: 1_000_000, tax: 0,
+                            effective_date: DateTime.new(2016, 12, 1)}),
     ]
   end
 
@@ -81,7 +99,7 @@ describe 'Payroll', js: true do
 
     eventually { expect(page).to have_content 'สมศรี เป็นชื่อแอพ 5-234-34532-2342 1,000,000.00 0.00 0.00 0.00 0.00 0.00 0.00 100.00 750.00 0.00 0.00 0.00 0.00 0.00 999,150.00' }
     eventually { expect(page).to have_content 'สมจิตร เป็นนักมวย 5-234-34532-2341 1,000,000.00 0.00 0.00 0.00 0.00 0.00 0.00 100.00 1,000.00 0.00 0.00 0.00 0.00 0.00 998,900.00' }
-    eventually { expect(page).to have_content 'รวมทั้งหมด 2,000,000.00 0.00 0.00 0.00 0.00 0.00 0.00 200.00 1,750.00 0.00 0.00 0.00 0.00 0.00 1,998,050.00' }
+    eventually { expect(page).to have_content 'รวมทั้งหมด 3,000,000.00 0.00 0.00 0.00 0.00 0.00 0.00 200.00 1,750.00 0.00 0.00 0.00 0.00 0.00 2,998,050.00' }
   end
 
   it 'should see month list' do
@@ -123,5 +141,54 @@ describe 'Payroll', js: true do
       eventually { expect(page).to have_content '1 พฤศจิกายน 2559' }
       expect(find_field('ค่าแรง / เงินเดือนปัจจุบัน').value).to eq '50000'
     end
+  end
+
+  it 'should see fliter button with actived status' do
+    visit "/#/report"
+    sleep(1)
+    expect(page).to have_selector('.active.employee-type[ng-model="report.employeeTypeMode.normal"]')
+    expect(page).to have_selector('.active.employee-type[ng-model="report.employeeTypeMode.temporary"]')
+    expect(page).to have_selector('.active.employee-type[ng-model="report.employeeTypeMode.probationary"]')
+    expect(page).to have_selector('.active.employee-type[ng-model="report.employeeTypeMode.daily"]')
+
+    expect(page).to have_content 'พี ดี เอ็ม'
+    expect(page).to have_content 'นาย สมจิตร เป็นนักมวย'
+    expect(page).to have_content 'นาง สมศรี เป็นชื่อแอพ'
+  end
+
+  it 'can fliter button data' do
+    visit "/#/report"
+    sleep(1)
+    find('.active.employee-type[ng-model="report.employeeTypeMode.normal"]').click
+    find('.active.employee-type[ng-model="report.employeeTypeMode.probationary"]').click
+    sleep(1)
+
+    expect(page).to_not have_selector('.active.employee-type[ng-model="report.employeeTypeMode.normal"]')
+    expect(page).to have_selector('.active.employee-type[ng-model="report.employeeTypeMode.temporary"]')
+    expect(page).to_not have_selector('.active.employee-type[ng-model="report.employeeTypeMode.probationary"]')
+    expect(page).to have_selector('.active.employee-type[ng-model="report.employeeTypeMode.daily"]')
+
+    expect(page).to have_content 'พี ดี เอ็ม'
+    expect(page).to have_content 'นาย สมจิตร เป็นนักมวย'
+    expect(page).to_not have_content 'นาง สมศรี เป็นชื่อแอพ'
+  end
+
+  it 'should not see datas when disable all button' do
+    visit "/#/report"
+    sleep(1)
+    find('.active.employee-type[ng-model="report.employeeTypeMode.normal"]').click
+    find('.active.employee-type[ng-model="report.employeeTypeMode.probationary"]').click
+    find('.active.employee-type[ng-model="report.employeeTypeMode.daily"]').click
+    find('.active.employee-type[ng-model="report.employeeTypeMode.temporary"]').click
+    sleep(1)
+
+    expect(page).to_not have_selector('.active.employee-type[ng-model="report.employeeTypeMode.normal"]')
+    expect(page).to_not have_selector('.active.employee-type[ng-model="report.employeeTypeMode.temporary"]')
+    expect(page).to_not have_selector('.active.employee-type[ng-model="report.employeeTypeMode.probationary"]')
+    expect(page).to_not have_selector('.active.employee-type[ng-model="report.employeeTypeMode.daily"]')
+
+    expect(page).to_not have_content 'พี ดี เอ็ม'
+    expect(page).to_not have_content 'นาย สมจิตร เป็นนักมวย'
+    expect(page).to_not have_content 'นาง สมศรี เป็นชื่อแอพ'
   end
 end
