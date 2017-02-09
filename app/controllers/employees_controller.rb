@@ -47,15 +47,9 @@ class EmployeesController < ApplicationController
 
     employee = school.employees.new(employee_params)
     if employee.save
-      payroll = employee.payrolls.new()
-      if payroll.save
         render json: {
-          employee: employee,
-          payroll: employee.lastest_payroll
+          employee: employee
         }, status: :ok
-      else
-        render json: employee.errors, status: 500
-      end
     else
       render json: employee.errors, status: 500
     end

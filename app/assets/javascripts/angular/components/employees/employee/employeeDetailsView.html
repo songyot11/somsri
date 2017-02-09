@@ -334,7 +334,7 @@
         </div>
       </div>
     </div>
-    <div class="paragraph orange payroll" ng-show="employee.isEdit">
+    <div class="paragraph orange payroll" ng-show="employee.isEdit && employee.hasPayroll">
       <div ng-switch="employee.effectiveDates.length > 0">
         <div ng-switch-when="true">
           <div class="dropdown">

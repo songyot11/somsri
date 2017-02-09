@@ -66,9 +66,9 @@ class Employee < ApplicationRecord
        {
         id: self.id,
         name: self.full_name,
-        salary: self.payrolls.latest.salary.to_f,
-        extra_fee: self.payrolls.latest.extra_fee.to_f,
-        extra_pay: self.payrolls.latest.extra_pay.to_f,
+        salary: self.payrolls.size > 0 ? self.payrolls.latest.salary.to_f : 0,
+        extra_fee: self.payrolls.size > 0 ? self.payrolls.latest.extra_fee.to_f : 0,
+        extra_pay: self.payrolls.size > 0 ? self.payrolls.latest.extra_pay.to_f : 0,
         img: self.img_url
       }
     else
@@ -86,7 +86,11 @@ class Employee < ApplicationRecord
 
   def year_income
     payroll = self.lastest_payroll
-    income = (payroll.salary + payroll.allowance + payroll.attendance_bonus + payroll.ot + payroll.bonus + payroll.position_allowance)*12
+    if payroll
+      income = (payroll.salary + payroll.allowance + payroll.attendance_bonus + payroll.ot + payroll.bonus + payroll.position_allowance)*12
+    else
+      income = 0
+    end
   end
 
   def tax_break

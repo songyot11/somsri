@@ -14,6 +14,7 @@
     ctrl.isSubmit = false;
     ctrl.activeTab = 'general';
     ctrl.activeTabPrivate = 'basic';
+    ctrl.hasPayroll =  true;
 
     function openConfirmationModal(message, success, dismiss) {
       $scope.message = message;
@@ -42,9 +43,11 @@
     }
 
     function isPayrollChange(){
-      var keys = Object.keys(ctrl.datas_original.payroll)
-      for(var i = 1; i < keys.length; i++){
-        if(ctrl.datas.payroll[keys[i]] != ctrl.datas_original.payroll[keys[i]]){ return true }
+      if(ctrl.hasPayroll){
+        var keys = Object.keys(ctrl.datas_original.payroll)
+        for(var i = 1; i < keys.length; i++){
+          if(ctrl.datas.payroll[keys[i]] != ctrl.datas_original.payroll[keys[i]]){ return true }
+        }
       }
       return false;
     }
@@ -106,7 +109,12 @@
 
       service.getEmployee(id, payroll_id).then(function(resp) {
         ctrl.datas = resp.data;
-        payrollToFloat();
+        if(ctrl.datas.payroll){
+          ctrl.hasPayroll = true;
+          payrollToFloat();
+        }else{
+          ctrl.hasPayroll = false;
+        }
 
         var e = resp.data.employee;
         ctrl.datas.salary = parseFloat(ctrl.datas.employee.salary);
@@ -123,7 +131,9 @@
         }
 
         ctrl.datas_original = $.extend(true, {}, ctrl.datas);
-        ctrl.calTotal();
+        if(ctrl.hasPayroll){
+          ctrl.calTotal();
+        }
 
         // set display name
         var hasPrefixThai = e.prefix_thai && e.prefix_thai.length > 0
@@ -279,6 +289,12 @@
 
     if (ctrl.isEdit) {
       getEmployee(employeeId);
+    }else{
+      // set defualt value for create employee page
+      ctrl.datas = {};
+      ctrl.datas.employee = {};
+      ctrl.datas.employee.employee_type = "ลูกจ้างประจำ";
+      ctrl.datas.employee.start_date = new Date();
     }
 
     ctrl.openStartDatePopup = function() {
