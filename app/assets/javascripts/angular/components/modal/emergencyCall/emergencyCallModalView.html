@@ -1,0 +1,97 @@
+<div class="modal-body" id="modal-body">
+  <form name="emergencyCallForm" ng-submit="emergencyCall.submit()" autocomplete="off">
+    <div class="row">
+      <div class="col-md-12">
+        <h2 class="modal-title" id="modal-title">บุคคลติดต่อฉุกเฉิน</h2>
+      </div>
+    </div>
+    <div class="space20"></div>
+    <div class="row">
+      <div class="col-md-12">
+        <div class="btn-group">
+          <label class="btn btn-prefix" ng-model="emergencyCall.datas.prefix" uib-btn-radio="'Mr.'" ng-click="emergencyCall.requireOtherPrefix(false)">นาย / Mr.</label>
+          <label class="btn btn-prefix" ng-model="emergencyCall.datas.prefix" uib-btn-radio="'Ms.'" ng-click="emergencyCall.requireOtherPrefix(false)">นาง / Ms.</label>
+          <label class="btn btn-prefix" ng-model="emergencyCall.datas.prefix" uib-btn-radio="'Miss.'" ng-click="emergencyCall.requireOtherPrefix(false)">นางสาว / Miss.</label>
+          <div style="display: inline-block !important;">
+            <input
+              id="otherPrefix"
+              value="{{emergencyCall.otherPrefix}}"
+              ng-model="emergencyCall.datas.prefix"
+              type="text"
+              uib-btn-radio="emergencyCall.otherPrefix"
+              class="form-control btn btn-prefix"
+              placeholder="อื่น / Other."
+              ng-click="emergencyCall.requireOtherPrefix(true)">
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="space20"></div>
+    <div class="row">
+      <div class="col-md-4">
+        <div class="form-group">
+          <label for="first_name_thai">ชื่อจริง</label>
+          <input type="text" class="form-control" id="first_name_thai" ng-model="emergencyCall.datas.first_name_thai">
+        </div>
+      </div>
+      <div class="col-md-4">
+        <div class="form-group">
+          <label for="last_name_thai">นามสกุล</label>
+          <input type="text" class="form-control" id="last_name_thai" ng-model="emergencyCall.datas.last_name_thai">
+        </div>
+      </div>
+      <div class="col-md-4">
+        <div class="form-group">
+          <label for="relationship">ความสัมพันธ์</label>
+          <input type="text" class="form-control" id="relationship" ng-model="emergencyCall.datas.relationship">
+        </div>
+      </div>
+    </div>
+    <div class="space20"></div>
+    <div class="row">
+      <div class="col-md-3">
+        <div class="form-group">
+          <label for="first_name">Name</label>
+          <input type="text" class="form-control" id="first_name" ng-model="emergencyCall.datas.first_name">
+        </div>
+      </div>
+      <div class="col-md-2">
+        <div class="form-group">
+          <label for="middle_name">Middle Name</label>
+          <input type="text" class="form-control" id="middle_name" ng-model="emergencyCall.datas.middle_name">
+        </div>
+      </div>
+      <div class="col-md-3">
+        <div class="form-group">
+          <label for="last_name">Surname</label>
+          <input type="text" class="form-control" id="last_name" ng-model="emergencyCall.datas.last_name">
+        </div>
+      </div>
+    </div>
+    <div class="space20"></div>
+    <div class="row">
+      <div class="col-md-4">
+        <div class="form-group">
+          <label for="phone">หมายเลขโทรศัพท์</label>
+          <input type="text" class="form-control" id="phone" ng-model="emergencyCall.datas.phone">
+        </div>
+      </div>
+      <div class="col-md-4">
+        <div class="form-group">
+          <label for="email">อีเมล</label>
+          <input type="text" class="form-control" id="email" ng-model="emergencyCall.datas.email">
+        </div>
+      </div>
+    </div>
+
+    <div class="space20"></div>
+    <div class="row">
+      <div class="col-md-6 text-center">
+        <button type="submit" class="btn btn-lg btn-block btn-submit">บันทึก</button>
+      </div>
+      <div class="col-md-6 text-center">
+        <button id="submit" type="button" class="btn btn-lg btn-block btn-cancel" ng-click="emergencyCall.cancel()">ยกเลิก</button>
+      </div>
+    </div>
+  </form>
+</div>

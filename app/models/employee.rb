@@ -1,5 +1,11 @@
 class Employee < ApplicationRecord
   belongs_to :school
+  has_many :emergency_calls, class_name: "Individual", foreign_key: 'emergency_call_id'
+  has_many :spouses, class_name: "Individual", foreign_key: 'spouse_id'
+  has_many :childs, class_name: "Individual", foreign_key: 'child_id'
+  has_many :parents, class_name: "Individual", foreign_key: 'parent_id'
+  has_many :friends, class_name: "Individual", foreign_key: 'friend_id'
+
   has_many :payrolls, dependent: :destroy
   after_create :create_tax_reduction
 

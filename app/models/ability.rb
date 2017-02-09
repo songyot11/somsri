@@ -10,6 +10,7 @@ class Ability
       can :manage, :home
       can :manage, :payrolls
       can :manage, :setting
+      can :manage, Individual
     else
       cannot :manage, :all
     end

@@ -2,18 +2,18 @@
   'use strict';
   angular.module('somsri.payroll.employee_details', [
   ])
-  .controller('employeeDetailsCtrl', ['employeesService','$log', '$state', '$rootScope','$scope', '$uibModal', 'reportService', '$filter', '$location', function(service, $log, $state, $rootScope, $scope, $uibModal, reportService, $filter, $location) {
-    $rootScope.menu = "Employees"
-    var ctrl = this
+  .controller('employeeDetailsCtrl', ['employeesService','$log', '$state', '$rootScope','$scope', '$uibModal', 'reportService', '$filter', '$location', 'individualsService', function(service, $log, $state, $rootScope, $scope, $uibModal, reportService, $filter, $location, individualsService) {
+    $rootScope.menu = "Employees";
+    var ctrl = this;
     var dateNow = new Date();
     var employeeId = $state.params.id;
     ctrl.currentEffectiveDate = "";
-    ctrl.empId = employeeId
+    ctrl.empId = employeeId;
     ctrl.isEdit = employeeId > 0 ? true : false
-    ctrl.data = { employee: {}}
+    ctrl.data = { employee: {}};
     ctrl.isSubmit = false;
-    ctrl.activeTab = 'general'
-    ctrl.activeTabPrivate = 'overview'
+    ctrl.activeTab = 'general';
+    ctrl.activeTabPrivate = 'basic';
 
     function openConfirmationModal(message, success, dismiss) {
       $scope.message = message;
@@ -296,6 +296,73 @@
     ctrl.birthdatePopup = {
       opened: false
     };
+
+    ctrl.addEmergencyCall = function(){
+      $scope.addEmergencyCallModalParams = {
+        employeeId: employeeId
+      };
+      openEmergencyCallModal();
+    }
+
+    ctrl.editEmergencyCall = function(individual){
+      $scope.addEmergencyCallModalParams = {
+        employeeId: employeeId,
+        individual: individual
+      };
+      openEmergencyCallModal();
+    }
+
+    ctrl.deleteEmergencyCall = function(id){
+      openConfirmationModal("คุณต้องการลบราการนี้หรือไม่?", function(){
+        individualsService.deleteIndividuals(id).then(function(resp) {
+          for(var i = 0; i < ctrl.individuals.emergency_calls.length; i++){
+            if(ctrl.individuals.emergency_calls[i].id == id){
+              ctrl.individuals.emergency_calls.splice(i, 1);
+            }
+          }
+        });
+      }, function(){
+        $log.info("DISMISS!!");
+      })
+    }
+
+    function openEmergencyCallModal(){
+      $uibModal.open({
+        animation: true,
+        backdrop: 'static',
+        keyboard: false,
+        scope: $scope,
+        templateUrl: "<%= asset_path('angular/components/modal/emergencyCall/emergencyCallModalView.html') %>",
+        controller: 'emergencyCallModalCtrl as emergencyCall',
+        size: 'lg',
+        resolve: {
+          resources: ['$ocLazyLoad', 'ASSETS', function($ocLazyLoad, ASSETS) {
+            return $ocLazyLoad.load([
+              ASSETS.somsri.payroll.emergency_call_modal
+            ]);
+          }]
+        }
+      }).result.then(function (data) {
+        if(data){
+          if($scope.addEmergencyCallModalParams.individual){
+            // update
+            for(var i = 0; i < ctrl.individuals.emergency_calls.length; i++){
+              if(ctrl.individuals.emergency_calls[i].id == data.id){
+                ctrl.individuals.emergency_calls[i] = data;
+              }
+            }
+          }else{
+            // create
+            ctrl.individuals.emergency_calls.push(data);
+          }
+        }
+      });
+    }
+
+    individualsService.getIndividuals(employeeId).then(function(resp) {
+      ctrl.individuals = resp.data;
+      ctrl.individuals.emergency_calls.reverse();
+    });
 
   }])
 })();

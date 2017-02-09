@@ -39,7 +39,8 @@
           files: [
             "<%= asset_path('angular/components/employees/employee/employeeDetailsCtrl.js') %>",
             "<%= asset_path('angular/components/employees/employeesService.js') %>",
-            "<%= asset_path('angular/components/report/reportService.js') %>"
+            "<%= asset_path('angular/components/report/reportService.js') %>",
+            "<%= asset_path('angular/components/individuals/individualsService.js') %>"
           ]
         },
         'confirm_modal': {
@@ -74,6 +75,13 @@
           files: [
             "<%= asset_path('angular/components/modal/createPayrolls/createPayrollsModalCtrl.js') %>",
             "<%= asset_path('angular/components/modal/createPayrolls/createPayrollsModalService.js') %>"
+          ]
+        },
+        'emergency_call_modal': {
+          name: 'somsri.payroll.emergency_call_modal',
+          files: [
+            "<%= asset_path('angular/components/modal/emergencyCall/emergencyCallModalCtrl.js') %>",
+            "<%= asset_path('angular/components/individuals/individualsService.js') %>"
           ]
         },
       }

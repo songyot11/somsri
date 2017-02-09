@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20170201111649) do
+ActiveRecord::Schema.define(version: 20170202065920) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -49,6 +49,36 @@ ActiveRecord::Schema.define(version: 20170201111649) do
     t.boolean  "pay_social_insurance"
     t.boolean  "pay_pvf"
     t.index ["school_id"], name: "index_employees_on_school_id", using: :btree
+  end
+
+  create_table "individuals", force: :cascade do |t|
+    t.string   "prefix"
+    t.string   "first_name"
+    t.string   "last_name"
+    t.string   "middle_name"
+    t.string   "first_name_thai"
+    t.string   "last_name_thai"
+    t.string   "prefix_thai"
+    t.string   "personal_id"
+    t.string   "passport_number"
+    t.string   "race"
+    t.string   "nationality"
+    t.string   "phone"
+    t.string   "email"
+    t.string   "relationship"
+    t.datetime "birthdate"
+    t.datetime "created_at",        null: false
+    t.datetime "updated_at",        null: false
+    t.integer  "emergency_call_id"
+    t.integer  "spouse_id"
+    t.integer  "child_id"
+    t.integer  "parent_id"
+    t.integer  "friend_id"
+    t.index ["child_id"], name: "index_individuals_on_child_id", using: :btree
+    t.index ["emergency_call_id"], name: "index_individuals_on_emergency_call_id", using: :btree
+    t.index ["friend_id"], name: "index_individuals_on_friend_id", using: :btree
+    t.index ["parent_id"], name: "index_individuals_on_parent_id", using: :btree
+    t.index ["spouse_id"], name: "index_individuals_on_spouse_id", using: :btree
   end
 
   create_table "payrolls", force: :cascade do |t|
@@ -141,5 +171,10 @@ ActiveRecord::Schema.define(version: 20170201111649) do
     t.index ["school_id"], name: "index_users_on_school_id", using: :btree
   end
 
+  add_foreign_key "individuals", "employees", column: "child_id"
+  add_foreign_key "individuals", "employees", column: "emergency_call_id"
+  add_foreign_key "individuals", "employees", column: "friend_id"
+  add_foreign_key "individuals", "employees", column: "parent_id"
+  add_foreign_key "individuals", "employees", column: "spouse_id"
   add_foreign_key "users", "schools"
 end

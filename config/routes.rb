@@ -29,4 +29,6 @@ Rails.application.routes.draw do
       get 'payrolls'
     end
   end
+
+  resources :individuals, only: [:create, :update, :destroy, :index]
 end
