@@ -13,6 +13,12 @@ describe 'Private Details', js: true do
     })
   }
 
+  let(:individuals) do
+    [
+      Individual.make!(emergency_call_id: employee.id)
+    ]
+  end
+
   let(:payrolls) do
     [
       Payroll.make!({
@@ -28,6 +34,7 @@ describe 'Private Details', js: true do
   before :each do
     expect { payrolls }.to change{ Employee.count }.by 1
     login_as(user, scope: :user)
+    individuals
     open_testing_screen employee.id
   end
 
@@ -111,5 +118,54 @@ describe 'Private Details', js: true do
       expect(find_field('อีเมล').value).to eq 'newemail@email.com'
       expect(page).to have_select('สถานะ', selected: 'สมรส')
     end
+
+    it 'can create new emergency call individual' do
+      click_link('+ เพิ่มข้อมูล')
+      sleep(1)
+      find("label", text: 'นางสาว / Miss.').click()
+      fill_in 'ชื่อจริง', with: 'กาไก่'
+      fill_in 'นามสกุล', with: 'ขาไข่'
+      fill_in 'ความสัมพันธ์', with: 'โศก'
+      fill_in 'Name', with: 'gargai'
+      fill_in 'Middle Name', with: 'ooo'
+      fill_in 'Surname', with: 'karkai'
+      fill_in 'หมายเลขโทรศัพท์', with: '1111-41-0--000'
+      find(:css, ".modal-body input[id$='email']").set('test@test.com')
+      find(:css, ".modal-body button[type='submit']").click()
+
+      sleep(1)
+      expect(page).to have_content('นางสาว กาไก่ ขาไข่')
+    end
+
+    it 'can edit emergency call individual' do
+      individual_name = "#{individuals[0].prefix_thai} #{individuals[0].first_name_thai} #{individuals[0].last_name_thai}"
+      expect(page).to have_content(individual_name)
+      click_link(individual_name)
+      sleep(1)
+      find("label", text: 'นางสาว / Miss.').click()
+      fill_in 'ชื่อจริง', with: 'กาไก่'
+      fill_in 'นามสกุล', with: 'ขาไข่'
+      fill_in 'ความสัมพันธ์', with: 'โศก'
+      fill_in 'Name', with: 'gargai'
+      fill_in 'Middle Name', with: 'ooo'
+      fill_in 'Surname', with: 'karkai'
+      fill_in 'หมายเลขโทรศัพท์', with: '1111-41-0--000'
+      find(:css, ".modal-body input[id$='email']").set('test@test.com')
+      find(:css, ".modal-body button[type='submit']").click()
+      sleep(1)
+      expect(page).to have_content('นางสาว กาไก่ ขาไข่')
+      expect(page).to_not have_content(individual_name)
+    end
+
+    it 'can delete emergency call individual' do
+      individual_name = "#{individuals[0].prefix_thai} #{individuals[0].first_name_thai} #{individuals[0].last_name_thai}"
+      expect(page).to have_content(individual_name)
+      find(:css, ".fa.fa-times").click()
+      sleep(1)
+      find(:css, ".modal-body .btn.btn-lg.btn-block.btn-submit").click()
+      sleep(1)
+      expect(page).to_not have_content(individual_name)
+    end
+
   end
 end

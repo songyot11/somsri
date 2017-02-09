@@ -11,6 +11,14 @@
     ctrl.effectiveDates = []
     ctrl.currentDateString = ""
     ctrl.total = {}
+
+    ctrl.employeeTypeMode = {
+      normal: true,
+      temporary: true,
+      probationary: true,
+      daily: true
+    }
+
     var effectiveDateParm = $state.params.effective_date;
 
     ctrl.selectValue = function($event){
@@ -77,6 +85,7 @@
     ctrl.switchMonth = function(effectiveDate) {
       reportService.getPayroll(effectiveDate["date_time"]).then(function(resp) {
         ctrl.employees = resp.data
+        ctrl.employees_origin = JSON.parse(JSON.stringify(ctrl.employees));
         getTotalSalary(ctrl.employees)
         ctrl.currentDateString = effectiveDate["date_string"];
         ctrl.currentEffectiveDate = effectiveDate;
@@ -123,6 +132,7 @@
           }
           reportService.getPayroll(current['date_time']).then(function(resp) {
             ctrl.employees = resp.data
+            ctrl.employees_origin = JSON.parse(JSON.stringify(ctrl.employees));
 
             getTotalSalary(ctrl.employees)
             ctrl.currentDateString = current['date_string'];
@@ -130,6 +140,38 @@
           });
         }
       });
+    }
+
+    ctrl.employeeTypeFilter = function (){
+      var mode = [];
+      if(ctrl.employeeTypeMode.normal){
+        mode.push("ลูกจ้างประจำ");
+      }
+      if(ctrl.employeeTypeMode.temporary){
+        mode.push("ลูกจ้างชั่วคราว");
+      }
+      if(ctrl.employeeTypeMode.probationary){
+        mode.push("ลูกจ้างทดลองงาน");
+      }
+      if(ctrl.employeeTypeMode.daily){
+        mode.push("ลูกจ้างรายวัน");
+      }
+      var employees = JSON.parse(JSON.stringify(ctrl.employees_origin));
+      for(var i = 0; i < employees.length; i++){
+        if(mode.indexOf(employees[i].employee_type) < 0){
+          employees[i] = null;
+        }
+      }
+      var newArray = new Array();
+      for (var i = 0; i < employees.length; i++) {
+        if (employees[i]) {
+          newArray.push(employees[i]);
+        }
+      }
+      ctrl.employees = newArray;
+
+      ctrl.total = getTotalSalary(ctrl.employees);
+      getTotalSalary(ctrl.employees);
     }
 
     getAll()

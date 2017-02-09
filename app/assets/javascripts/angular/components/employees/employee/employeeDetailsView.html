@@ -229,11 +229,6 @@
           <div class="row">
             <div class="col-md-3 sub-menu">
               <ul class="nav nav-tabs tabs-left">
-                <li ng-class="{ 'active' : employee.activeTabPrivate === 'overview' }">
-                  <a data-toggle="tab" ng-click="employee.activeTabPrivate = 'overview'" href="javascript:void(0)">
-                    ภาพรวม
-                  </a>
-                </li>
                 <li ng-class="{ 'active' : employee.activeTabPrivate === 'basic' }">
                   <a data-toggle="tab" ng-click="employee.activeTabPrivate = 'basic'" href="javascript:void(0)">
                     ข้อมูลติดต่อและข้อมูลพื้นฐาน
@@ -252,7 +247,7 @@
               </ul>
             </div>
             <div class="col-md-9 tab-content">
-              <div ng-class="{ 'in active' : employee.activeTabPrivate === 'overview' }" class="tab-pane fade">
+              <div ng-class="{ 'in active' : employee.activeTabPrivate === 'basic' }" class="tab-pane fade">
                 <div class="row">
                   <div class="col-md-12">
                     <div class="form-group">
@@ -301,8 +296,34 @@
                     </div>
                   </div>
                 </div>
-              </div>
-              <div ng-class="{ 'in active' : employee.activeTabPrivate === 'basic' }" class="tab-pane fade">
+
+                <div class="row">
+                  <div class="col-md-10">
+                    <div class="form-group">
+
+                      <label for="emergency_call">บุคคลติดต่อฉุกเฉิน</label>
+                      <div class="row" ng-repeat="emergency_call in employee.individuals.emergency_calls">
+                        <div id="emergency_call" class="col-md-12">
+                          <a ng-click="employee.deleteEmergencyCall(emergency_call.id)" href="javascript:void(0)" class="text-red">
+                            <span class="fa fa-times"></span>
+                          </a>
+                          <a ng-click="employee.editEmergencyCall(emergency_call)" href="javascript:void(0)" class="text-cyan">
+                            {{ emergency_call.full_name }}
+                          </a>
+                        </div>
+                      </div>
+                      <div class="row">
+                        <div class="col-md-12">
+                          <a ng-click="employee.addEmergencyCall()" href="javascript:void(0)" class="text-cyan">
+                            + เพิ่มข้อมูล
+                          </a>
+                        </div>
+                      </div>
+
+                    </div>
+                  </div>
+                </div>
+
               </div>
               <div ng-class="{ 'in active' : employee.activeTabPrivate === 'family' }" class="tab-pane fade">
               </div>
