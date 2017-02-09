@@ -41,12 +41,11 @@ ActiveRecord::Schema.define(version: 20170201111649) do
     t.datetime "start_date"
     t.boolean  "deleted",              default: false
     t.datetime "birthdate"
-    t.string   "employee_type",        default: "ลูกจ้างประจำ", null: false
     t.text     "address"
     t.string   "tel"
     t.string   "status"
     t.string   "email"
-    t.string   "employee_type"
+    t.string   "employee_type",        default: "ลูกจ้างประจำ", null: false
     t.boolean  "pay_social_insurance"
     t.boolean  "pay_pvf"
     t.index ["school_id"], name: "index_employees_on_school_id", using: :btree
