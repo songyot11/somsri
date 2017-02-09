@@ -201,17 +201,7 @@
     }
 
     ctrl.submit = function(parm){
-      var isValid = false
-
-      if (parm == undefined || parm["employee"]["bank_name"] == undefined) {
-        $('input#bank_name').focus()
-      } else if (parm["employee"]["bank_branch"]  == undefined) {
-        $('input#bank_branch').focus()
-      } else if (parm["employee"]["account_number"] == undefined) {
-        $('input#account_number').focus()
-      } else {
-        isValid = true
-      }
+      var isValid = true
 
       if (isValid) {
         ctrl.isSubmit = true
