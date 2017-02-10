@@ -809,3 +809,13 @@ table.scrollable-header {
 .btn.employee-type.active {
   background-color: #FFAA00;
 }
+
+#payroll .dropdown-menu, #payroll-report .dropdown-menu {
+  max-height: calc(100vh - 170px);
+  overflow-y: scroll;
+}
+
+.employee-details .dropdown-menu {
+  max-height: calc(100vh - 200px);
+  overflow-y: scroll;
+}
