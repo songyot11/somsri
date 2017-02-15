@@ -28,7 +28,7 @@ class Payroll < ApplicationRecord
   end
 
   def generate_social_insurance
-    income = salary + position_allowance
+    income = salary + position_allowance - late - absence
     income = 15000 if income > 15000
     income >= 1650 ? (income * 0.05).round : 0
   end
@@ -44,7 +44,7 @@ class Payroll < ApplicationRecord
         income = taxrate[0]
       end
     end
-    (yearTax/12).floor # month 1-11
+    (yearTax/12).round(2) # month 1-11
   end
 
   def generate_withholding_tax

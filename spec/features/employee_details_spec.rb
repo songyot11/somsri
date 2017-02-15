@@ -133,8 +133,8 @@ describe 'Employee Details', js: true do
       sleep(1)
 
       expect(find_field('ค่าแรง / เงินเดือนปัจจุบัน').value).to eq '50000'
-      expect(find_field('ภาษี').value).to eq '3541'
-      expect(page).to have_content('เงินเดือนสุทธิ 46459')
+      expect(find_field('ภาษี').value).to eq '3541.67'
+      expect(page).to have_content('เงินเดือนสุทธิ 46458.33')
     end
 
     it 'should warning before create new payrolls with same date' do
@@ -167,8 +167,8 @@ describe 'Employee Details', js: true do
       sleep(1)
 
       expect(find_field('ค่าแรง / เงินเดือนปัจจุบัน').value).to eq '50000'
-      expect(find_field('ภาษี').value).to eq '3541'
-      expect(page).to have_content('เงินเดือนสุทธิ 46459')
+      expect(find_field('ภาษี').value).to eq '3541.67'
+      expect(page).to have_content('เงินเดือนสุทธิ 46458.33')
     end
 
   end
