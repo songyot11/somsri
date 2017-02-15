@@ -62,17 +62,17 @@
 
         if($window.navigator.userAgent.indexOf('Chrome') == -1) {
           var slipForSchool = $compile('<slip-content info=report title="สำหรับโรงเรียน" class="for_print safari"/>');
-          var slipForEmployee = $compile('<slip-content info=report title="สำหรับพนักงาน" class="for_print safari"/>');
+          var slipForEmployee = $compile('<slip-content info=report title="" class="for_print safari"/>');
         } else {
           var slipForSchool = $compile('<slip-content info=report title="สำหรับโรงเรียน" class="for_print"/>');
-          var slipForEmployee = $compile('<slip-content info=report title="สำหรับพนักงาน" class="for_print"/>');
+          var slipForEmployee = $compile('<slip-content info=report title="" class="for_print"/>');
         }
 
-        var slipSchoolDiv = slipForSchool($scope);
+        // var slipSchoolDiv = slipForSchool($scope);
         var slipEmployeeDiv = slipForEmployee($scope);
 
-        angular.element(containerDiv).append(slipSchoolDiv);
-        angular.element(containerDiv).append('<div class="separate for_print"></div>');
+        // angular.element(containerDiv).append(slipSchoolDiv);
+        // angular.element(containerDiv).append('<div class="separate for_print"></div>');
         angular.element(containerDiv).append(slipEmployeeDiv);
 
         setTimeout(function() {

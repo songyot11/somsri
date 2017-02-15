@@ -383,6 +383,9 @@ input.btn-prefix.active:-moz-placeholder { /* Firefox 18- */
 }
 
 @media print {
+  .top-bar-space{
+    height: 0px !important;
+  }
   #payroll-report.row {
     margin-right: 0px !important;
     margin-left: 0px !important;
