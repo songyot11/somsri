@@ -254,9 +254,7 @@
 
     ctrl.calTotal = function(){
       if (ctrl.isEdit) {
-        calculateTax();
         var p = ctrl.datas.payroll;
-        var e = ctrl.datas.employee;
         ctrl.total = 0;
         if(p.salary){ ctrl.total += p.salary }
         if(p.ot){ ctrl.total += p.ot }
@@ -271,33 +269,32 @@
         if(p.late){ ctrl.total -= p.late}
         if(p.advance_payment){ ctrl.total -= p.advance_payment}
         if(p.fee_etc){ ctrl.total -= p.fee_etc}
-        var income = p.salary + p.position_allowance - p.late - p.absence;
-        if(income > 15000)
-          income = 15000;
-        p.social_insurance = income >= 1650 ? Math.round(income * 0.05) : 0;
         if(p.social_insurance){ ctrl.total -= p.social_insurance}
       }
     }
 
-    ctrl.calTotalDinamic = function(){
-      if (ctrl.isEdit) {
-        var p = ctrl.datas.payroll;
-        ctrl.total = 0;
-        if(p.salary){ ctrl.total += p.salary }
-        if(p.ot){ ctrl.total += p.ot }
-        if(p.position_allowance){ ctrl.total += p.position_allowance }
-        if(p.allowance ){ ctrl.total += p.allowance }
-        if(p.attendance_bonus){ ctrl.total += p.attendance_bonus}
-        if(p.bonus){ ctrl.total += p.bonus}
-        if(p.extra_etc){ ctrl.total += p.extra_etc}
-        if(p.tax){ ctrl.total -= p.tax}
-        if(p.pvf){ ctrl.total -= p.pvf}
-        if(p.absence){ ctrl.total -= p.absence}
-        if(p.late){ ctrl.total -= p.late}
-        if(p.advance_payment){ ctrl.total -= p.advance_payment}
-        if(p.fee_etc){ ctrl.total -= p.fee_etc}
-        if(p.social_insurance){ ctrl.total -= p.social_insurance}
-      }
+    ctrl.calTax = function(){
+      var p = ctrl.datas.payroll;
+      var t = p.tax;
+      calculateTax();
+      ctrl.total -= p.tax - t;
+    }
+
+    ctrl.calPvf = function(){
+      var p = ctrl.datas.payroll;
+      var t = p.pvf;
+      p.pvf = p.salary * 0.03;
+      ctrl.total -= p.pvf - t;
+    }
+
+    ctrl.calSocialInsurance = function(){
+      var p = ctrl.datas.payroll;
+      var t = p.social_insurance;
+      var income = p.salary + p.position_allowance - p.late - p.absence;
+      if(income > 15000)
+        income = 15000;
+      p.social_insurance = income >= 1650 ? Math.round(income * 0.05) : 0;
+      ctrl.total -= p.social_insurance - t;
     }
 
     ctrl.deleteEmployee = function(id) {
@@ -473,16 +470,11 @@
       ctrl.datas.payroll.tax = Number((yearTax/12).toFixed(2)); // month 1-11
     }
 
-    $scope.calTax = function() {
-      calculateTax();
-    }
-
     $scope.set_no_income_spouse = function(value) {
       if(value)
         ctrl.datas.tax_reduction.no_income_spouse = 60000;
       else
         ctrl.datas.tax_reduction.no_income_spouse = 0;
-      calculateTax();
     };
 
     $scope.set_father_alimony = function(value) {
@@ -490,36 +482,30 @@
         ctrl.datas.tax_reduction.father_alimony = 30000;
       else
         ctrl.datas.tax_reduction.father_alimony = 0;
-      calculateTax();
     };
     $scope.set_mother_alimony = function(value) {
       if(value)
         ctrl.datas.tax_reduction.mother_alimony = 30000;
       else
         ctrl.datas.tax_reduction.mother_alimony = 0;
-      calculateTax();
     };
     $scope.set_spouse_father_alimony = function(value) {
       if(value)
         ctrl.datas.tax_reduction.spouse_father_alimony = 30000;
       else
         ctrl.datas.tax_reduction.spouse_father_alimony = 0;
-      calculateTax();
     };
     $scope.set_spouse_mother_alimony = function(value) {
       if(value)
         ctrl.datas.tax_reduction.spouse_mother_alimony = 30000;
       else
         ctrl.datas.tax_reduction.spouse_mother_alimony = 0;
-      calculateTax();
     };
     $scope.set_child = function(value) {
       ctrl.datas.tax_reduction.child = 30000*value;
-      calculateTax();
     };
     $scope.set_cripple_alimony = function(value) {
       ctrl.datas.tax_reduction.cripple_alimony = 60000*value;
-      calculateTax();
     };
 
   }])
