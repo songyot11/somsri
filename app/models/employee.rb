@@ -6,6 +6,8 @@ class Employee < ApplicationRecord
   has_many :parents, class_name: "Individual", foreign_key: 'parent_id'
   has_many :friends, class_name: "Individual", foreign_key: 'friend_id'
 
+  has_one :taxReduction
+
   has_many :payrolls, dependent: :destroy
   after_create :create_tax_reduction
 
@@ -82,6 +84,10 @@ class Employee < ApplicationRecord
 
   def payroll(payroll_id)
     Payroll.where(employee_id: self.id, id: payroll_id).first
+  end
+
+  def tax_reduction
+    TaxReduction.where(employee_id: self.id).first
   end
 
   def year_income

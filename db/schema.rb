@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20170202065920) do
+ActiveRecord::Schema.define(version: 20170215123034) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -41,13 +41,17 @@ ActiveRecord::Schema.define(version: 20170202065920) do
     t.datetime "start_date"
     t.boolean  "deleted",              default: false
     t.datetime "birthdate"
+    t.string   "employee_type",        default: "ลูกจ้างประจำ", null: false
     t.text     "address"
     t.string   "tel"
     t.string   "status"
     t.string   "email"
-    t.string   "employee_type",        default: "ลูกจ้างประจำ", null: false
     t.boolean  "pay_social_insurance"
     t.boolean  "pay_pvf"
+    t.string   "avatar_file_name"
+    t.string   "avatar_content_type"
+    t.integer  "avatar_file_size"
+    t.datetime "avatar_updated_at"
     t.index ["school_id"], name: "index_employees_on_school_id", using: :btree
   end
 
@@ -116,32 +120,32 @@ ActiveRecord::Schema.define(version: 20170202065920) do
 
   create_table "tax_reductions", force: :cascade do |t|
     t.integer "employee_id"
-    t.decimal "pension_insurance",        default: "0.0", null: false
-    t.decimal "pension_fund",             default: "0.0", null: false
-    t.decimal "government_pension_fund",  default: "0.0", null: false
-    t.decimal "private_teacher_aid_fund", default: "0.0", null: false
-    t.decimal "retirement_mutual_fund",   default: "0.0", null: false
-    t.decimal "national_savings_fund",    default: "0.0", null: false
-    t.decimal "expenses",                 default: "0.0", null: false
-    t.decimal "no_income_spouse",         default: "0.0", null: false
-    t.decimal "child",                    default: "0.0", null: false
-    t.decimal "father_alimony",           default: "0.0", null: false
-    t.decimal "spouse_father_alimony",    default: "0.0", null: false
-    t.decimal "cripple_alimony",          default: "0.0", null: false
-    t.decimal "father_insurance",         default: "0.0", null: false
-    t.decimal "insurance",                default: "0.0", null: false
-    t.decimal "spouse_insurance",         default: "0.0", null: false
-    t.decimal "long_term_equity_fund",    default: "0.0", null: false
-    t.decimal "social_insurance",         default: "0.0", null: false
-    t.decimal "double_donation",          default: "0.0", null: false
-    t.decimal "donation",                 default: "0.0", null: false
-    t.decimal "other",                    default: "0.0", null: false
-    t.decimal "mother_alimony",           default: "0.0", null: false
-    t.decimal "spouse_mother_alimony",    default: "0.0", null: false
-    t.decimal "mother_insurance",         default: "0.0", null: false
-    t.decimal "spouse_father_insurance",  default: "0.0", null: false
-    t.decimal "spouse_mother_insurance",  default: "0.0", null: false
-    t.decimal "house_loan_interest",      default: "0.0", null: false
+    t.decimal "pension_insurance",        default: "0.0",     null: false
+    t.decimal "pension_fund",             default: "0.0",     null: false
+    t.decimal "government_pension_fund",  default: "0.0",     null: false
+    t.decimal "private_teacher_aid_fund", default: "0.0",     null: false
+    t.decimal "retirement_mutual_fund",   default: "0.0",     null: false
+    t.decimal "national_savings_fund",    default: "0.0",     null: false
+    t.decimal "expenses",                 default: "60000.0", null: false
+    t.decimal "no_income_spouse",         default: "0.0",     null: false
+    t.decimal "child",                    default: "0.0",     null: false
+    t.decimal "father_alimony",           default: "0.0",     null: false
+    t.decimal "spouse_father_alimony",    default: "0.0",     null: false
+    t.decimal "cripple_alimony",          default: "0.0",     null: false
+    t.decimal "father_insurance",         default: "0.0",     null: false
+    t.decimal "insurance",                default: "0.0",     null: false
+    t.decimal "spouse_insurance",         default: "0.0",     null: false
+    t.decimal "long_term_equity_fund",    default: "0.0",     null: false
+    t.decimal "social_insurance",         default: "0.0",     null: false
+    t.decimal "double_donation",          default: "0.0",     null: false
+    t.decimal "donation",                 default: "0.0",     null: false
+    t.decimal "other",                    default: "0.0",     null: false
+    t.decimal "mother_alimony",           default: "0.0",     null: false
+    t.decimal "spouse_mother_alimony",    default: "0.0",     null: false
+    t.decimal "mother_insurance",         default: "0.0",     null: false
+    t.decimal "spouse_father_insurance",  default: "0.0",     null: false
+    t.decimal "spouse_mother_insurance",  default: "0.0",     null: false
+    t.decimal "house_loan_interest",      default: "0.0",     null: false
     t.index ["employee_id"], name: "index_tax_reductions_on_employee_id", using: :btree
   end
 

@@ -793,6 +793,10 @@ table.scrollable-header {
   top: -10px !important;
 }
 
+.popover {
+  background: AntiqueWhite;
+}
+
 .popover-wrapper.bottom-popup form:after {
   content: "";
   width: 0;

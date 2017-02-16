@@ -118,3 +118,10 @@ Employee.all.each do |employee|
     TaxReduction.create!(employee_id: employee.id);
   end
 end
+
+TaxReduction.all.each do |tax|
+    if tax.expenses == 0
+        tax.expenses = 60000.0 
+        tax.save
+    end
+end
