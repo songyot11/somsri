@@ -22,12 +22,14 @@ class TaxReduction < ApplicationRecord
 
   def revenue_reduction # ค่าลดหย่อนภาษีเงินได้
     income = self.employee.year_income - self.income_exemption
+    exp40 = income*0.4 > 60000 ? 60000 : income*0.4
+
     p_fund = pension_fund >= 10000 ? 10000 : pension_fund
     ltf = long_term_equity_fund > income * 0.15 ? income * 0.15 : long_term_equity_fund
     house_loan = house_loan_interest >= 100000 ? 100000 : house_loan_interest
     d_donation = double_donation * 2 > income * 0.1 ? income * 0.1 : double_donation * 2
     s_donation = donation > income * 0.1 ? income * 0.1 : donation
 
-    reduction = p_fund + expenses + no_income_spouse + child + father_alimony + mother_alimony + spouse_father_alimony + spouse_mother_alimony + cripple_alimony + father_insurance + mother_insurance + spouse_father_insurance + spouse_mother_insurance + insurance + spouse_insurance + ltf + house_loan + social_insurance + d_donation + s_donation + other
+    reduction = exp40 + p_fund + expenses + no_income_spouse + child + father_alimony + mother_alimony + spouse_father_alimony + spouse_mother_alimony + cripple_alimony + father_insurance + mother_insurance + spouse_father_insurance + spouse_mother_insurance + insurance + spouse_insurance + ltf + house_loan + social_insurance + d_donation + s_donation + other
   end
 end

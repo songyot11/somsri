@@ -392,7 +392,7 @@
                                 <label for="child">บุตร</label> <i class="glyphicon glyphicon-info-sign" popover-trigger="'mouseenter'" uib-popover-html="child"></i>
                                 <table>
                                   <tr>
-                                    <td class="child"><input step="1" type="number" class="form-control cbox" id="numchild" ng-model="numchild" ng-change="set_child(this.numchild)" /></td>
+                                    <td class="child"><input step="1" type="number" class="form-control cbox" id="numchild" ng-model="numchild" ng-change="set_child(this.numchild)" min="0" /></td>
                                     <td><label for="child">คน</label></td>
                                     <td><input step="any" type="number" string-to-number 
                           class="form-control" id="child" ng-model="employee.datas.tax_reduction.child" disabled /></td>
@@ -433,7 +433,7 @@
                                 <label for="cripple_alimony">คนพิการ และหรือคนทุพพลภาพ</label> <i class="glyphicon glyphicon-info-sign" popover-trigger="'mouseenter'" uib-popover-html="cripple_alimony"></i>
                                 <table>
                                   <tr>
-                                    <td class="child"><input step="1" type="number" class="form-control cbox" id="numcripple_alimony" ng-model="numcripple_alimony" ng-change="set_cripple_alimony(this.numcripple_alimony)" /></td>
+                                    <td class="child"><input step="1" type="number" class="form-control cbox" id="numcripple_alimony" ng-model="numcripple_alimony" ng-change="set_cripple_alimony(this.numcripple_alimony)" min="0" /></td>
                                     <td><label for="cripple_alimony">คน</label></td>
                                     <td><input step="any" type="number" string-to-number 
                           class="form-control" id="cripple_alimony" ng-model="employee.datas.tax_reduction.cripple_alimony" disabled /></td>
@@ -454,20 +454,20 @@
                         <div class="form-group">
                           <label for="insurance">เบี้ยประกันชีวิต</label> <i class="glyphicon glyphicon-info-sign" popover-trigger="'mouseenter'" uib-popover-html="insurance"></i>
                           <input step="any" type="number" string-to-number 
-                          class="form-control" id="insurance" ng-model="employee.datas.tax_reduction.insurance" ng-change="calTax()" />
+                          class="form-control" id="insurance" ng-model="employee.datas.tax_reduction.insurance" ng-change="calTax()" min="0" />
                           <label for="retirement_mutual_fund">ค่าซื้อหน่วยลงทุนในกองทุนรวมเพื่อการเลี้ยงชีพ (RMF)</label> <i class="glyphicon glyphicon-info-sign" popover-trigger="'mouseenter'" uib-popover-html="retirement_mutual_fund"></i>
                           <input step="any" type="number" string-to-number 
-                          class="form-control" id="retirement_mutual_fund" ng-model="employee.datas.tax_reduction.retirement_mutual_fund" ng-change="calTax()" />
+                          class="form-control" id="retirement_mutual_fund" ng-model="employee.datas.tax_reduction.retirement_mutual_fund" ng-change="calTax()" min="0" />
                         </div>
                       </div>
                       <div class="col-md-6">
                         <div class="form-group">
                           <label for="pension_insurance">เบี้ยประกันชีวิตแบบบำนาญ</label> <i class="glyphicon glyphicon-info-sign" popover-trigger="'mouseenter'" uib-popover-html="pension_insurance"></i>
                           <input step="any" type="number" string-to-number 
-                          class="form-control" id="pension_insurance" ng-model="employee.datas.tax_reduction.pension_insurance" ng-change="calTax()" />
+                          class="form-control" id="pension_insurance" ng-model="employee.datas.tax_reduction.pension_insurance" ng-change="calTax()" min="0" />
                           <label for="long_term_equity_fund">ค่าซื้อหน่วยลงทุนในกองทุนรวมหุ้นระยะยาว (LTF)</label> <i class="glyphicon glyphicon-info-sign" popover-trigger="'mouseenter'" uib-popover-html="long_term_equity_fund"></i>
                           <input step="any" type="number" string-to-number 
-                          class="form-control" id="long_term_equity_fund" ng-model="employee.datas.tax_reduction.long_term_equity_fund" ng-change="calTax()" />
+                          class="form-control" id="long_term_equity_fund" ng-model="employee.datas.tax_reduction.long_term_equity_fund" ng-change="calTax()" min="0" />
                         </div>
                       </div>
                     </div>
@@ -480,7 +480,7 @@
                         <div class="form-group">
                           <label for="social_insurance">เงินสมทบกองทุนประกันสังคมทั้งปี</label> <i class="glyphicon glyphicon-info-sign" popover-trigger="'mouseenter'" uib-popover-html="social_insurance"></i>
                           <input step="any" type="number" string-to-number 
-                          class="form-control" id="social_insurance" ng-model="employee.datas.tax_reduction.social_insurance" ng-change="calTax()" />
+                          class="form-control" id="social_insurance" ng-model="employee.datas.tax_reduction.social_insurance" ng-change="calTax()" min="0" max="9000"/>
                         </div>
                       </div>
                     </div>
@@ -493,13 +493,13 @@
                         <div class="form-group">
                           <label for="pension_fund">กองทุนสำรองเลี้ยงชีพ</label> <i class="glyphicon glyphicon-info-sign" popover-trigger="'mouseenter'" uib-popover-html="pension_fund"></i>
                           <input step="any" type="number" string-to-number 
-                          class="form-control" id="pension_fund" ng-model="employee.datas.tax_reduction.pension_fund" ng-change="calTax()" />
+                          class="form-control" id="pension_fund" ng-model="employee.datas.tax_reduction.pension_fund" ng-change="calTax()" min="0"/>
                           <label for="government_pension_fund">เงินสะสม กบข</label> <i class="glyphicon glyphicon-info-sign" popover-trigger="'mouseenter'" uib-popover-html="government_pension_fund"></i>
                           <input step="any" type="number" string-to-number 
-                          class="form-control" id="government_pension_fund" ng-model="employee.datas.tax_reduction.government_pension_fund" ng-change="calTax()" />
+                          class="form-control" id="government_pension_fund" ng-model="employee.datas.tax_reduction.government_pension_fund" ng-change="calTax()" min="0"/>
                           <label for="private_teacher_aid_fund">เงินสะสมกองทุนสงเคราะห์ครูโรงเรียนเอกชน</label> <i class="glyphicon glyphicon-info-sign" popover-trigger="'mouseenter'" uib-popover-html="private_teacher_aid_fund"></i>
                           <input step="any" type="number" string-to-number 
-                          class="form-control" id="private_teacher_aid_fund" ng-model="employee.datas.tax_reduction.private_teacher_aid_fund" ng-change="calTax()" />
+                          class="form-control" id="private_teacher_aid_fund" ng-model="employee.datas.tax_reduction.private_teacher_aid_fund" ng-change="calTax()"  min="0"/>
                         </div>
                       </div>
                     </div>
@@ -512,7 +512,7 @@
                         <div class="form-group">
                           <label for="house_loan_interest">ค่าดอกเบี้ยเงินกู้ยืมเพื่อที่อยู่อาศัย</label> <i class="glyphicon glyphicon-info-sign" popover-trigger="'mouseenter'" uib-popover-html="house_loan_interest"></i>
                           <input step="any" type="number" string-to-number 
-                          class="form-control" id="house_loan_interest" ng-model="employee.datas.tax_reduction.house_loan_interest" ng-change="calTax()" />
+                          class="form-control" id="house_loan_interest" ng-model="employee.datas.tax_reduction.house_loan_interest" ng-change="calTax()"  min="0" max="100000"/>
                         </div>
                       </div>
                     </div>
@@ -525,25 +525,25 @@
                         <div class="form-group">
                           <label for="father_insurance">เบี้ยประกันสุขภาพบิดา</label> <i class="glyphicon glyphicon-info-sign" popover-trigger="'mouseenter'" uib-popover-html="parent_insurance"></i>
                           <input step="any" type="number" string-to-number 
-                          class="form-control" id="father_insurance" ng-model="employee.datas.tax_reduction.father_insurance" ng-change="calTax()" />
+                          class="form-control" id="father_insurance" ng-model="employee.datas.tax_reduction.father_insurance" ng-change="calTax()" min="0"/>
                           <label for="mother_insurance">เบี้ยประกันสุขภาพมารดา</label> <i class="glyphicon glyphicon-info-sign" popover-trigger="'mouseenter'" uib-popover-html="parent_insurance"></i>
                           <input step="any" type="number" string-to-number 
-                          class="form-control" id="mother_insurance" ng-model="employee.datas.tax_reduction.mother_insurance" ng-change="calTax()" />
+                          class="form-control" id="mother_insurance" ng-model="employee.datas.tax_reduction.mother_insurance" ng-change="calTax()" min="0"/>
                           <label for="spouse_father_insurance">เบี้ยประกันสุขภาพบิดาของคู่สมรส</label> <i class="glyphicon glyphicon-info-sign" popover-trigger="'mouseenter'" uib-popover-html="parent_insurance"></i>
                           <input step="any" type="number" string-to-number 
                           class="form-control" id="spouse_father_insurance" ng-model="employee.datas.tax_reduction.spouse_father_insurance" ng-change="calTax()" />
                           <label for="spouse_mother_insurance">เบี้ยประกันสุขภาพมารดาของคู่สมรส</label> <i class="glyphicon glyphicon-info-sign" popover-trigger="'mouseenter'" uib-popover-html="parent_insurance"></i>
                           <input step="any" type="number" string-to-number 
-                          class="form-control" id="spouse_mother_insurance" ng-model="employee.datas.tax_reduction.spouse_mother_insurance" ng-change="calTax()" />
+                          class="form-control" id="spouse_mother_insurance" ng-model="employee.datas.tax_reduction.spouse_mother_insurance" ng-change="calTax()" min="0"/>
                           <label for="double_donation">เงินบริจาคที่ได้รับสิทธิลดหย่อน 2 เท่า</label> <i class="glyphicon glyphicon-info-sign" popover-trigger="'mouseenter'" uib-popover-html="double_donation"></i>
                           <input step="any" type="number" string-to-number 
-                          class="form-control" id="double_donation" ng-model="employee.datas.tax_reduction.double_donation" ng-change="calTax()" />
+                          class="form-control" id="double_donation" ng-model="employee.datas.tax_reduction.double_donation" ng-change="calTax()" min="0"/>
                           <label for="donation">เงินบริจาคทั่วไป</label> <i class="glyphicon glyphicon-info-sign" popover-trigger="'mouseenter'" uib-popover-html="donation"></i>
                           <input step="any" type="number" string-to-number 
-                          class="form-control" id="donation" ng-model="employee.datas.tax_reduction.donation" ng-change="calTax()" />
+                          class="form-control" id="donation" ng-model="employee.datas.tax_reduction.donation" ng-change="calTax()" min="0"/>
                           <label for="other">ค่าลดหย่อนอื่นๆ</label> <i class="glyphicon glyphicon-info-sign" popover-trigger="'mouseenter'" uib-popover-html="other"></i>
                           <input step="any" type="number" string-to-number 
-                          class="form-control" id="other" ng-model="employee.datas.tax_reduction.other" ng-change="calTax()" />
+                          class="form-control" id="other" ng-model="employee.datas.tax_reduction.other" ng-change="calTax()" min="0"/>
                         </div>
                       </div>
                     </div>

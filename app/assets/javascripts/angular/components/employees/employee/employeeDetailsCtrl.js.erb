@@ -449,13 +449,14 @@
 
     function revenue_reduction() {// ค่าลดหย่อนภาษีเงินได้
       var income = calculate_year_income() - income_exemption();
+      var exp40 = income*0.4 > 60000 ? 60000 : income*0.4;
       var p_fund = Number(ctrl.datas.tax_reduction.pension_fund) >= 10000 ? 10000 : Number(ctrl.datas.tax_reduction.pension_fund);
       var ltf = Number(ctrl.datas.tax_reduction.long_term_equity_fund) > income * 0.15 ? income * 0.15 : Number(ctrl.datas.tax_reduction.long_term_equity_fund);
       var house_loan = Number(ctrl.datas.tax_reduction.house_loan_interest) >= 100000 ? 100000 : Number(ctrl.datas.tax_reduction.house_loan_interest);
       var d_donation = Number(ctrl.datas.tax_reduction.double_donation) * 2 > income * 0.1 ? income * 0.1 : Number(ctrl.datas.tax_reduction.double_donation) * 2;
       var s_donation = Number(ctrl.datas.tax_reduction.donation) > income * 0.1 ? income * 0.1 : Number(ctrl.datas.tax_reduction.donation);
 
-      return p_fund + Number(ctrl.datas.tax_reduction.expenses) + Number(ctrl.datas.tax_reduction.no_income_spouse) + Number(ctrl.datas.tax_reduction.child) + Number(ctrl.datas.tax_reduction.father_alimony) + Number(ctrl.datas.tax_reduction.mother_alimony) + Number(ctrl.datas.tax_reduction.spouse_father_alimony) + Number(ctrl.datas.tax_reduction.spouse_mother_alimony) + Number(ctrl.datas.tax_reduction.cripple_alimony) + Number(ctrl.datas.tax_reduction.father_insurance) + Number(ctrl.datas.tax_reduction.mother_insurance) + Number(ctrl.datas.tax_reduction.spouse_father_insurance) + Number(ctrl.datas.tax_reduction.spouse_mother_insurance) + Number(ctrl.datas.tax_reduction.insurance) + Number(ctrl.datas.tax_reduction.spouse_insurance) + ltf + house_loan + Number(ctrl.datas.tax_reduction.social_insurance) + d_donation + s_donation + Number(ctrl.datas.tax_reduction.other);
+      return exp40 + p_fund + Number(ctrl.datas.tax_reduction.expenses) + Number(ctrl.datas.tax_reduction.no_income_spouse) + Number(ctrl.datas.tax_reduction.child) + Number(ctrl.datas.tax_reduction.father_alimony) + Number(ctrl.datas.tax_reduction.mother_alimony) + Number(ctrl.datas.tax_reduction.spouse_father_alimony) + Number(ctrl.datas.tax_reduction.spouse_mother_alimony) + Number(ctrl.datas.tax_reduction.cripple_alimony) + Number(ctrl.datas.tax_reduction.father_insurance) + Number(ctrl.datas.tax_reduction.mother_insurance) + Number(ctrl.datas.tax_reduction.spouse_father_insurance) + Number(ctrl.datas.tax_reduction.spouse_mother_insurance) + Number(ctrl.datas.tax_reduction.insurance) + Number(ctrl.datas.tax_reduction.spouse_insurance) + ltf + house_loan + Number(ctrl.datas.tax_reduction.social_insurance) + d_donation + s_donation + Number(ctrl.datas.tax_reduction.other);
     }
 
     function calculateTax() {

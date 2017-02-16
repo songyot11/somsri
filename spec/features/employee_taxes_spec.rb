@@ -72,7 +72,7 @@ describe 'Taxes', js: true do
   end
 
   it "should return revenue reduction" do
-    expect(taxs[0].revenue_reduction).to eq(196500)
+    expect(taxs[0].revenue_reduction).to eq(256500.0)
   end
 
   it "should return year income" do
