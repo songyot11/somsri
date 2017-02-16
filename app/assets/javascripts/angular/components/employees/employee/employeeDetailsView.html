@@ -392,7 +392,7 @@
                                 <label for="child">บุตร</label> <i class="glyphicon glyphicon-info-sign" popover-trigger="'mouseenter'" uib-popover-html="child"></i>
                                 <table>
                                   <tr>
-                                    <td><input step="1" type="number" class="form-control cbox" id="numchild" ng-model="numchild" ng-change="set_child(this.numchild)" /></td>
+                                    <td class="child"><input step="1" type="number" class="form-control cbox" id="numchild" ng-model="numchild" ng-change="set_child(this.numchild)" /></td>
                                     <td><label for="child">คน</label></td>
                                     <td><input step="any" type="number" string-to-number 
                           class="form-control" id="child" ng-model="employee.datas.tax_reduction.child" disabled /></td>
@@ -433,7 +433,7 @@
                                 <label for="cripple_alimony">คนพิการ และหรือคนทุพพลภาพ</label> <i class="glyphicon glyphicon-info-sign" popover-trigger="'mouseenter'" uib-popover-html="cripple_alimony"></i>
                                 <table>
                                   <tr>
-                                    <td><input step="1" type="number" class="form-control cbox" id="numcripple_alimony" ng-model="numcripple_alimony" ng-change="set_cripple_alimony(this.numcripple_alimony)" /></td>
+                                    <td class="child"><input step="1" type="number" class="form-control cbox" id="numcripple_alimony" ng-model="numcripple_alimony" ng-change="set_cripple_alimony(this.numcripple_alimony)" /></td>
                                     <td><label for="cripple_alimony">คน</label></td>
                                     <td><input step="any" type="number" string-to-number 
                           class="form-control" id="cripple_alimony" ng-model="employee.datas.tax_reduction.cripple_alimony" disabled /></td>
@@ -598,8 +598,8 @@
         </div>
         <div class="col-md-4">
           <div class="form-group">
-            <label for="tax">ภาษี</label>
-            <input step="0.01" type="number" class="form-control text-red" id="tax" ng-model="employee.datas.payroll.tax"  ng-change="employee.calTotal()">
+            <label for="absence">ขาดงาน</label>
+            <input step="0.01" type="number" class="form-control text-red" id="absence" ng-model="employee.datas.payroll.absence"  ng-change="employee.calTotal()">
           </div>
         </div>
         <div class="col-md-4">
@@ -618,8 +618,8 @@
         </div>
         <div class="col-md-4">
           <div class="form-group">
-            <label for="social_insurance">ประกันสังคม</label>
-            <input step="0.01" type="number" class="form-control text-red" id="social_insurance" ng-model="employee.datas.payroll.social_insurance"  ng-change="employee.calTotal()">
+            <label for="late">สาย</label>
+            <input step="0.01" type="number" class="form-control text-red" id="late" ng-model="employee.datas.payroll.late" ng-change="employee.calTotal()">
           </div>
         </div>
         <div class="col-md-4">
@@ -655,8 +655,8 @@
         </div>
         <div class="col-md-4">
           <div class="form-group">
-            <label for="absence">ขาดงาน</label>
-            <input step="0.01" type="number" class="form-control text-red" id="absence" ng-model="employee.datas.payroll.absence"  ng-change="employee.calTotal()">
+            <label for="tax">ภาษี</label>
+            <input step="0.01" type="number" class="form-control text-red" id="tax" ng-model="employee.datas.payroll.tax"  ng-change="employee.calTotalDinamic()">
           </div>
         </div>
       </div>
@@ -669,8 +669,8 @@
         </div>
         <div class="col-md-4">
           <div class="form-group">
-            <label for="late">สาย</label>
-            <input step="0.01" type="number" class="form-control text-red" id="late" ng-model="employee.datas.payroll.late" ng-change="employee.calTotal()">
+            <label for="social_insurance">ประกันสังคม</label>
+            <input step="0.01" type="number" class="form-control text-red" id="social_insurance" ng-model="employee.datas.payroll.social_insurance" ng-change="employee.calTotalDinamic()">
           </div>
         </div>
       </div>

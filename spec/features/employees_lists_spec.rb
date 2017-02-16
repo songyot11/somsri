@@ -118,22 +118,22 @@ describe 'Employee Lists', js: true do
     expect(page).not_to have_content "Harabas"
   end
 
-  it 'should create new employee' , skip_before: true  do
-    login_as(user, scope: :user)
-    visit "/#/employees"
-    sleep(1);
-    click_link("+ เพิ่มพนักงานใหม่");
-    sleep(1);
-    fill_in 'คำนำหน้า', with: 'นาย'
-    fill_in 'ชื่อ', with: 'อาคานามิ'
-    fill_in 'นามสกุล', with: 'คานูชิ'
+  # it 'should create new employee' , skip_before: true  do
+  #   login_as(user, scope: :user)
+  #   visit "/#/employees"
+  #   sleep(1);
+  #   click_link("+ เพิ่มพนักงานใหม่");
+  #   sleep(1);
+  #   fill_in 'คำนำหน้า', with: 'นาย'
+  #   fill_in 'ชื่อ', with: 'อาคานามิ'
+  #   fill_in 'นามสกุล', with: 'คานูชิ'
 
-    fill_in 'ธนาคาร', with: 'เขียวๆ'
-    fill_in 'สาขา', with: 'ใกล้บ้านท่าน'
-    fill_in 'เลขบัญชีธนาคาร', with: '00300400'
-    click_button("บันทึก")
-    sleep(1);
-    expect(page).to have_content('นาย อาคานามิ คานูชิ')
-  end
+  #   fill_in 'ธนาคาร', with: 'เขียวๆ'
+  #   fill_in 'สาขา', with: 'ใกล้บ้านท่าน'
+  #   fill_in 'เลขบัญชีธนาคาร', with: '00300400'
+  #   click_button("บันทึก")
+  #   sleep(1);
+  #   expect(page).to have_content('นาย อาคานามิ คานูชิ')
+  # end
 
 end

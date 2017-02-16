@@ -254,6 +254,7 @@
 
     ctrl.calTotal = function(){
       if (ctrl.isEdit) {
+        calculateTax();
         var p = ctrl.datas.payroll;
         var e = ctrl.datas.employee;
         ctrl.total = 0;
@@ -265,12 +266,37 @@
         if(p.bonus){ ctrl.total += p.bonus}
         if(p.extra_etc){ ctrl.total += p.extra_etc}
         if(p.tax){ ctrl.total -= p.tax}
-        if(p.social_insurance){ ctrl.total -= p.social_insurance}
         if(p.pvf){ ctrl.total -= p.pvf}
         if(p.absence){ ctrl.total -= p.absence}
         if(p.late){ ctrl.total -= p.late}
         if(p.advance_payment){ ctrl.total -= p.advance_payment}
         if(p.fee_etc){ ctrl.total -= p.fee_etc}
+        var income = p.salary + p.position_allowance - p.late - p.absence;
+        if(income > 15000)
+          income = 15000;
+        p.social_insurance = income >= 1650 ? Math.round(income * 0.05) : 0;
+        if(p.social_insurance){ ctrl.total -= p.social_insurance}
+      }
+    }
+
+    ctrl.calTotalDinamic = function(){
+      if (ctrl.isEdit) {
+        var p = ctrl.datas.payroll;
+        ctrl.total = 0;
+        if(p.salary){ ctrl.total += p.salary }
+        if(p.ot){ ctrl.total += p.ot }
+        if(p.position_allowance){ ctrl.total += p.position_allowance }
+        if(p.allowance ){ ctrl.total += p.allowance }
+        if(p.attendance_bonus){ ctrl.total += p.attendance_bonus}
+        if(p.bonus){ ctrl.total += p.bonus}
+        if(p.extra_etc){ ctrl.total += p.extra_etc}
+        if(p.tax){ ctrl.total -= p.tax}
+        if(p.pvf){ ctrl.total -= p.pvf}
+        if(p.absence){ ctrl.total -= p.absence}
+        if(p.late){ ctrl.total -= p.late}
+        if(p.advance_payment){ ctrl.total -= p.advance_payment}
+        if(p.fee_etc){ ctrl.total -= p.fee_etc}
+        if(p.social_insurance){ ctrl.total -= p.social_insurance}
       }
     }
 
@@ -397,7 +423,7 @@
     
     // tax reduction
     function calculate_year_income() {
-      return (Number(ctrl.datas.payroll.salary) + Number(ctrl.datas.payroll.allowance) + Number(ctrl.datas.payroll.attendance_bonus) + Number(ctrl.datas.payroll.ot) + Number(ctrl.datas.payroll.bonus) + Number(ctrl.datas.payroll.position_allowance))*12;
+      return (Number(ctrl.datas.payroll.salary) + Number(ctrl.datas.payroll.allowance) + Number(ctrl.datas.payroll.attendance_bonus) + Number(ctrl.datas.payroll.ot) + Number(ctrl.datas.payroll.bonus) + Number(ctrl.datas.payroll.position_allowance) - Number(ctrl.datas.payroll.absence) - Number(ctrl.datas.payroll.late))*12;
     }
 
     function income_exemption() { // รายได้ที่ได้รับการยกเว้น
