@@ -446,7 +446,7 @@
                       </div>
                     </div>
 
-                    <div uib-accordion-group class="panel-default">
+                    <div uib-accordion-group class="panel-default" ng-show="false">
                       <uib-accordion-heading>
                         กองทุนรวมและประกันชีวิต<i class="pull-right glyphicon" ng-class="{'glyphicon-chevron-down': status.open, 'glyphicon-chevron-right': !status.open}"></i>
                       </uib-accordion-heading>
@@ -454,7 +454,7 @@
                         <div class="form-group">
                           <label for="insurance">เบี้ยประกันชีวิต</label> <i class="glyphicon glyphicon-info-sign" popover-trigger="'mouseenter'" uib-popover-html="insurance"></i>
                           <input step="any" type="number" string-to-number 
-                          class="form-control" id="insurance" ng-model="employee.datas.tax_reduction.insurance" min="0" />
+                          class="form-control" id="insurance" ng-model="employee.datas.tax_reduction.insurance" min="0" max="100000"/>
                           <label for="retirement_mutual_fund">ค่าซื้อหน่วยลงทุนในกองทุนรวมเพื่อการเลี้ยงชีพ (RMF)</label> <i class="glyphicon glyphicon-info-sign" popover-trigger="'mouseenter'" uib-popover-html="retirement_mutual_fund"></i>
                           <input step="any" type="number" string-to-number 
                           class="form-control" id="retirement_mutual_fund" ng-model="employee.datas.tax_reduction.retirement_mutual_fund" min="0" />
@@ -485,7 +485,7 @@
                       </div>
                     </div>
 
-                    <div uib-accordion-group class="panel-default">
+                    <div uib-accordion-group class="panel-default" ng-show="false">
                       <uib-accordion-heading>
                         กองทุนสำรองเลี้ยงชีพ/กบข./กองทุนสงเคราะห์ครูโรงเรียนเอกชน<i class="pull-right glyphicon" ng-class="{'glyphicon-chevron-down': status.open, 'glyphicon-chevron-right': !status.open}"></i>
                       </uib-accordion-heading>
@@ -525,16 +525,16 @@
                         <div class="form-group">
                           <label for="father_insurance">เบี้ยประกันสุขภาพบิดา</label> <i class="glyphicon glyphicon-info-sign" popover-trigger="'mouseenter'" uib-popover-html="parent_insurance"></i>
                           <input step="any" type="number" string-to-number 
-                          class="form-control" id="father_insurance" ng-model="employee.datas.tax_reduction.father_insurance" min="0"/>
+                          class="form-control" id="father_insurance" ng-model="employee.datas.tax_reduction.father_insurance" min="0" max="15000"/>
                           <label for="mother_insurance">เบี้ยประกันสุขภาพมารดา</label> <i class="glyphicon glyphicon-info-sign" popover-trigger="'mouseenter'" uib-popover-html="parent_insurance"></i>
                           <input step="any" type="number" string-to-number 
-                          class="form-control" id="mother_insurance" ng-model="employee.datas.tax_reduction.mother_insurance" min="0"/>
+                          class="form-control" id="mother_insurance" ng-model="employee.datas.tax_reduction.mother_insurance" min="0" max="15000"/>
                           <label for="spouse_father_insurance">เบี้ยประกันสุขภาพบิดาของคู่สมรส</label> <i class="glyphicon glyphicon-info-sign" popover-trigger="'mouseenter'" uib-popover-html="parent_insurance"></i>
                           <input step="any" type="number" string-to-number 
-                          class="form-control" id="spouse_father_insurance" ng-model="employee.datas.tax_reduction.spouse_father_insurance" />
+                          class="form-control" id="spouse_father_insurance" ng-model="employee.datas.tax_reduction.spouse_father_insurance" min="0" max="15000"/>
                           <label for="spouse_mother_insurance">เบี้ยประกันสุขภาพมารดาของคู่สมรส</label> <i class="glyphicon glyphicon-info-sign" popover-trigger="'mouseenter'" uib-popover-html="parent_insurance"></i>
                           <input step="any" type="number" string-to-number 
-                          class="form-control" id="spouse_mother_insurance" ng-model="employee.datas.tax_reduction.spouse_mother_insurance" min="0"/>
+                          class="form-control" id="spouse_mother_insurance" ng-model="employee.datas.tax_reduction.spouse_mother_insurance" min="0" max="15000"/>
                           <label for="double_donation">เงินบริจาคที่ได้รับสิทธิลดหย่อน 2 เท่า</label> <i class="glyphicon glyphicon-info-sign" popover-trigger="'mouseenter'" uib-popover-html="double_donation"></i>
                           <input step="any" type="number" string-to-number 
                           class="form-control" id="double_donation" ng-model="employee.datas.tax_reduction.double_donation" min="0"/>

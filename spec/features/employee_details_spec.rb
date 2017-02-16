@@ -237,10 +237,10 @@ describe 'Employee Details', js: true do
       sleep(1)
       find('ul.dropdown-menu li a', text: "สิงหาคม 2559").click
       sleep(1)
-      expect(find_field('ค่าแรง / เงินเดือนปัจจุบัน', disabled: false).value).to eq '50000'
+      expect(find_field('ค่าแรง / เงินเดือนปัจจุบัน', disabled: false).value.to_i).to be > 0
       expect(find_field('ภาษี', disabled: false).value.to_i).to be > 0
-      expect(find_field('เบิกล่วงหน้า', disabled: false).value).to eq '2000'
-      expect(find_field('ค่ากะ / ค่าเบี้ยเลี้ยง', disabled: false).value).to eq '3000'
+      expect(find_field('เบิกล่วงหน้า', disabled: false).value.to_i).to be > 0
+      expect(find_field('ค่ากะ / ค่าเบี้ยเลี้ยง', disabled: false).value.to_i).to be > 0
       expect(page).to have_content('เงินเดือนสุทธิ ')
     end
 
@@ -252,10 +252,10 @@ describe 'Employee Details', js: true do
       find('ul.dropdown-menu li a', text: "สิงหาคม 2559").click
       sleep(1)
       expect(find_field('นามสกุล').value).to eq 'โอชา'
-      expect(find_field('ค่าแรง / เงินเดือนปัจจุบัน', disabled: false).value).to eq '50000'
+      expect(find_field('ค่าแรง / เงินเดือนปัจจุบัน', disabled: false).value.to_i).to be > 0
       expect(find_field('ภาษี', disabled: false).value.to_i).to be > 0
-      expect(find_field('เบิกล่วงหน้า', disabled: false).value).to eq '2000'
-      expect(find_field('ค่ากะ / ค่าเบี้ยเลี้ยง', disabled: false).value).to eq '3000'
+      expect(find_field('เบิกล่วงหน้า', disabled: false).value.to_i).to be > 0
+      expect(find_field('ค่ากะ / ค่าเบี้ยเลี้ยง', disabled: false).value.to_i).to be > 0
       expect(page).to have_content('เงินเดือนสุทธิ ')
     end
 
