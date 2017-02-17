@@ -773,6 +773,10 @@ table.scrollable-header {
   width: 30px;
 }
 
+.child {
+  width: 50px !important;
+}
+
 .checkbox-group label {
   padding-top: 9px;
 }
@@ -791,6 +795,10 @@ table.scrollable-header {
   border-top: 0px !important;
   position: absolute;
   top: -10px !important;
+}
+
+.popover {
+  background: AntiqueWhite;
 }
 
 .popover-wrapper.bottom-popup form:after {

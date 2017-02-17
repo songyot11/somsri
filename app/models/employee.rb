@@ -6,6 +6,8 @@ class Employee < ApplicationRecord
   has_many :parents, class_name: "Individual", foreign_key: 'parent_id'
   has_many :friends, class_name: "Individual", foreign_key: 'friend_id'
 
+  has_one :taxReduction
+
   has_many :payrolls, dependent: :destroy
   after_create :create_tax_reduction
 
@@ -84,17 +86,25 @@ class Employee < ApplicationRecord
     Payroll.where(employee_id: self.id, id: payroll_id).first
   end
 
+  def tax_reduction
+    TaxReduction.where(employee_id: self.id).first
+  end
+
   def year_income
     payroll = self.lastest_payroll
     if payroll
-      income = (payroll.salary + payroll.allowance + payroll.attendance_bonus + payroll.ot + payroll.bonus + payroll.position_allowance)*12
+      income = (payroll.salary + payroll.allowance + payroll.attendance_bonus + payroll.position_allowance)*12
     else
       income = 0
     end
   end
 
   def tax_break
-    TaxReduction.where(employee_id: self.id).first().revenue_reduction
+    t = TaxReduction.where(employee_id: self.id).first()
+    income = self.year_income
+    income -= t.income_exemption(income) if income > 0
+    income -= t.revenue_reduction(income) if income > 0
+    self.year_income - income
   end
 
   private

@@ -32,12 +32,14 @@ class EmployeesController < ApplicationController
   def show
     @employee = Employee.active.find(params[:id])
     payroll = @employee.lastest_payroll
+    tax_reduction = @employee.tax_reduction
     if params[:payroll_id]
       payroll = @employee.payroll(params[:payroll_id])
     end
     render json: {
       employee: @employee,
-      payroll: payroll
+      payroll: payroll,
+      tax_reduction: tax_reduction
     }
   end
 
@@ -69,9 +71,16 @@ class EmployeesController < ApplicationController
       payroll = Payroll.update(payroll_id, payroll_datas)
     end
 
+    if params[:tax_reduction]
+      tax_reduction_datas = tax_reduction_params
+      tax_reduction_id = tax_reduction_datas[:id]
+      tax_reduction = TaxReduction.update(tax_reduction_id, tax_reduction_datas)
+    end
+
     render json: {
       employee: employee,
-      payroll: employee.lastest_payroll
+      payroll: employee.lastest_payroll,
+      tax_reduction: employee.tax_reduction
     }
   end
 
@@ -142,4 +151,38 @@ class EmployeesController < ApplicationController
     return result
   end
 
+  def tax_reduction_params
+    result = params.require(:tax_reduction).permit([
+      :id,
+      :employee_id,
+      :pension_insurance,
+      :pension_fund,
+      :government_pension_fund,
+      :private_teacher_aid_fund,
+      :retirement_mutual_fund,
+      :national_savings_fund,
+      :expenses,
+      :no_income_spouse,
+      :child,
+      :father_alimony,
+      :spouse_father_alimony,
+      :cripple_alimony,
+      :father_insurance,
+      :insurance,
+      :spouse_insurance,
+      :long_term_equity_fund,
+      :social_insurance,
+      :double_donation,
+      :donation,
+      :other,
+      :mother_alimony,
+      :spouse_mother_alimony,
+      :mother_insurance,
+      :spouse_father_insurance,
+      :spouse_mother_insurance,
+      :house_loan_interest
+    ])
+    result.to_h.each { |k,v| result[k] = 0 if k != "id" && v.blank? }
+    return result
+  end
 end
