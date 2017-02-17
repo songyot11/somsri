@@ -27,8 +27,9 @@ class TaxReduction < ApplicationRecord
     s_donation = donation > income * 0.1 ? income * 0.1 : donation
     ins = insurance > 10000 ? 10000 : insurance
     p_ins = father_insurance + mother_insurance + spouse_father_insurance + spouse_mother_insurance
-    p_ins = p_ins > 15000 ? 15000 : p_ins;
+    p_ins = p_ins > 15000 ? 15000 : p_ins
+    s_ins = spouse_insurance > 100000 ? 100000 : spouse_insurance
 
-    exp40 + expenses + no_income_spouse + child + father_alimony + mother_alimony + spouse_father_alimony + spouse_mother_alimony + cripple_alimony + p_ins + ins + ltf + house_loan + spouse_insurance + social_insurance + d_donation + s_donation + other
+    exp40 + expenses + no_income_spouse + child + father_alimony + mother_alimony + spouse_father_alimony + spouse_mother_alimony + cripple_alimony + p_ins + ins + ltf + house_loan + s_ins + social_insurance + d_donation + s_donation + other
   end
 end

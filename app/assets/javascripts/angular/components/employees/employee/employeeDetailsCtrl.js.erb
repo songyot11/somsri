@@ -461,12 +461,13 @@
       var ins = Number(t.insurance) > 10000 ? 10000 : Number(t.insurance);
       var p_ins = Number(t.father_insurance) + Number(t.mother_insurance) + Number(t.spouse_father_insurance) + Number(t.spouse_mother_insurance);
       p_ins = p_ins > 15000 ? 15000 : p_ins;
-
+      var s_ins = Number(t.spouse_insurance) > 100000 ? 100000 : Number(t.spouse_insurance);
+      
       return exp40 + Number(t.expenses) + Number(t.no_income_spouse) + Number(t.child) 
               + Number(t.father_alimony) + Number(t.mother_alimony) 
               + Number(t.spouse_father_alimony) + Number(t.spouse_mother_alimony) 
               + Number(t.cripple_alimony) + p_ins + ins + ltf + house_loan
-              + Number(t.spouse_insurance) + Number(t.social_insurance) 
+              + s_ins + Number(t.social_insurance) 
               + d_donation + s_donation + Number(t.other);
     }
 
