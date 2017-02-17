@@ -41,17 +41,13 @@ ActiveRecord::Schema.define(version: 20170215123034) do
     t.datetime "start_date"
     t.boolean  "deleted",              default: false
     t.datetime "birthdate"
-    t.string   "employee_type",        default: "ลูกจ้างประจำ", null: false
     t.text     "address"
     t.string   "tel"
     t.string   "status"
     t.string   "email"
+    t.string   "employee_type",        default: "ลูกจ้างประจำ", null: false
     t.boolean  "pay_social_insurance"
     t.boolean  "pay_pvf"
-    t.string   "avatar_file_name"
-    t.string   "avatar_content_type"
-    t.integer  "avatar_file_size"
-    t.datetime "avatar_updated_at"
     t.index ["school_id"], name: "index_employees_on_school_id", using: :btree
   end
 
