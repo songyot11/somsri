@@ -41,7 +41,7 @@ set :branch, ENV['BRANCH'] || 'develop'
 set :keep_releases, 5
 
 set :rvm_type, :system              # Defaults to: :auto
-set :rvm_ruby_version, '2.3.0'      # Defaults to: 'default'
+set :rvm_ruby_version, '2.3.3'      # Defaults to: 'default'
 
 set :rails_env, 'production'
 
@@ -55,7 +55,7 @@ namespace :deploy do
  desc 'Restart application'
   task :restart do
     on roles(:app), in: :sequence, wait: 5 do
-      invoke 'unicorn:duplicate'
+      invoke 'unicorn:restart'
     end
   end
 
