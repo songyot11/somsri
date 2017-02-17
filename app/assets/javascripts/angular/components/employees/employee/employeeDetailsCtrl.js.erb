@@ -472,11 +472,8 @@
 
     function calculateTax() {
       var income = calculate_year_income();
-      console.log(income);
       income -= income_exemption(income);
-      console.log(income);
       income -= revenue_reduction(income);
-      console.log(income);
       var yearTax = 0;
       var taxrates = [[5000000,0.35],[2000000,0.30],[1000000,0.25],[750000,0.20],[500000,0.15],[300000,0.10],[150000,0.05]];
       taxrates.forEach(function(taxrate) {
