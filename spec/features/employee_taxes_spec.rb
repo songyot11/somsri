@@ -64,15 +64,16 @@ describe 'Taxes', js: true do
   end
 
   it "should return exempt income 1" do
-    expect(taxs[0].income_exemption).to eq(90000)
+    expect(taxs[0].income_exemption(employee1.year_income)).to eq(90000)
   end
 
   it "should return exempt income 2" do
-    expect(taxs[1].income_exemption).to be <= 500000
+    expect(taxs[1].income_exemption(employee2.year_income)).to be <= 500000
   end
 
   it "should return revenue reduction" do
-    expect(taxs[0].revenue_reduction).to eq(256500.0)
+    income = taxs[0].income_exemption(employee1.year_income)
+    expect(taxs[0].revenue_reduction(income)).to eq(169500.0)
   end
 
   it "should return year income" do

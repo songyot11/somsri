@@ -446,7 +446,7 @@
                       </div>
                     </div>
 
-                    <div uib-accordion-group class="panel-default" ng-show="false">
+                    <div uib-accordion-group class="panel-default">
                       <uib-accordion-heading>
                         กองทุนรวมและประกันชีวิต<i class="pull-right glyphicon" ng-class="{'glyphicon-chevron-down': status.open, 'glyphicon-chevron-right': !status.open}"></i>
                       </uib-accordion-heading>
@@ -464,10 +464,17 @@
                         <div class="form-group">
                           <label for="pension_insurance">เบี้ยประกันชีวิตแบบบำนาญ</label> <i class="glyphicon glyphicon-info-sign" popover-trigger="'mouseenter'" uib-popover-html="pension_insurance"></i>
                           <input step="any" type="number" string-to-number 
-                          class="form-control" id="pension_insurance" ng-model="employee.datas.tax_reduction.pension_insurance" min="0" />
+                          class="form-control" id="pension_insurance" ng-model="employee.datas.tax_reduction.pension_insurance" min="0" ng-change="employee.checkInsurance()"/>
                           <label for="long_term_equity_fund">ค่าซื้อหน่วยลงทุนในกองทุนรวมหุ้นระยะยาว (LTF)</label> <i class="glyphicon glyphicon-info-sign" popover-trigger="'mouseenter'" uib-popover-html="long_term_equity_fund"></i>
                           <input step="any" type="number" string-to-number 
                           class="form-control" id="long_term_equity_fund" ng-model="employee.datas.tax_reduction.long_term_equity_fund" min="0" />
+                        </div>
+                      </div>
+                      <div class="col-md-6">
+                        <div class="form-group">
+                          <label for="national_savings_fund">กองทุนการออมแห่งชาติ</label> <i class="glyphicon glyphicon-info-sign" popover-trigger="'mouseenter'" uib-popover-html="national_savings_fund"></i>
+                          <input step="any" type="number" string-to-number 
+                          class="form-control" id="national_savings_fund" ng-model="employee.datas.tax_reduction.national_savings_fund" min="0" />
                         </div>
                       </div>
                     </div>
@@ -485,7 +492,7 @@
                       </div>
                     </div>
 
-                    <div uib-accordion-group class="panel-default" ng-show="false">
+                    <div uib-accordion-group class="panel-default">
                       <uib-accordion-heading>
                         กองทุนสำรองเลี้ยงชีพ/กบข./กองทุนสงเคราะห์ครูโรงเรียนเอกชน<i class="pull-right glyphicon" ng-class="{'glyphicon-chevron-down': status.open, 'glyphicon-chevron-right': !status.open}"></i>
                       </uib-accordion-heading>
@@ -669,7 +676,7 @@
               <tr>
                 <td><input step="0.01" type="number" class="form-control text-red" id="tax" ng-model="employee.datas.payroll.tax" ng-change="employee.calTotal()"></td>
                 <td>
-                  <a ng-click="employee.calTax()" href="javascript:void(0)" ng-show="employee.datas.employee.employee_type==='ลูกจ้างประจำ'" title="คำนวณ">
+                  <a ng-click="employee.calTax()" href="javascript:void(0)" title="คำนวณ">
                     <i class="glyphicon glyphicon-refresh"></i>
                   </a>
                 </td>

@@ -133,7 +133,7 @@ describe 'Employee Details', js: true do
       sleep(1)
 
       expect(find_field('ค่าแรง / เงินเดือนปัจจุบัน').value).to eq '50000'
-      expect(find_field('ภาษี').value.to_i).to be > 0
+      expect(find_field('ภาษี').value.to_i).to be >= 0
       expect(page).to have_content('เงินเดือนสุทธิ')
     end
 
@@ -167,7 +167,7 @@ describe 'Employee Details', js: true do
       sleep(1)
 
       expect(find_field('ค่าแรง / เงินเดือนปัจจุบัน').value).to eq '50000'
-      expect(find_field('ภาษี').value.to_i).to be > 0
+      expect(find_field('ภาษี').value.to_i).to be >= 0
       expect(page).to have_content('เงินเดือนสุทธิ')
     end
 

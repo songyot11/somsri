@@ -2,7 +2,7 @@
   'use strict';
   angular.module('somsri.payroll.employee_details', [
   ])
-  .controller('employeeDetailsCtrl', ['employeesService','$log', '$state', '$rootScope','$scope', '$uibModal', 'reportService', '$filter', '$location', 'individualsService', function(service, $log, $state, $rootScope, $scope, $uibModal, reportService, $filter, $location, individualsService) {
+  .controller('employeeDetailsCtrl', ['employeesService', '$log', '$state', '$rootScope','$scope', '$uibModal', 'reportService', '$filter', '$location', 'individualsService', function(service, $log, $state, $rootScope, $scope, $uibModal, reportService, $filter, $location, individualsService) {
     $rootScope.menu = "Employees";
     var ctrl = this;
     var dateNow = new Date();
@@ -273,10 +273,18 @@
       }
     }
 
+    ctrl.checkInsurance = function() {
+      if(Number(ctrl.datas.tax_reduction.insurance)<100000) {
+        ctrl.datas.tax_reduction.pension_insurance = 0;
+        alert("ท่านไม่สามารถบันทึกเบี้ยประกันชีวิตของผู้มีเงินได้แบบบำนาญได้ เนื่องจากเบี้ยประกันชีวิตมีค่าไม่ถึง 100,000 บาท หากไม่มีเบี้ยประกันชีวิต ให้นำเบี้ยประกันแบบบำนาญบันทึก ที่ช่องเบี้ยประกันชีวิตแทนจนครบ 100,000 บาท จึงจะสามารถนำส่วนที่เหลือมาบันทึกที่ช่องเบี้ยประกันแบบบำนาญ")
+      }
+    }
+
     ctrl.calTax = function(){
       var p = ctrl.datas.payroll;
       var t = p.tax;
-      calculateTax();
+      if(ctrl.datas.employee.employee_type=='ลูกจ้างประจำ') calculateTax();
+      else ctrl.datas.payroll.tax = calculate_year_income()/12 * 0.03;
       ctrl.total -= p.tax - t;
     }
 
@@ -423,46 +431,52 @@
       return (Number(ctrl.datas.payroll.salary) + Number(ctrl.datas.payroll.allowance) + Number(ctrl.datas.payroll.attendance_bonus) + Number(ctrl.datas.payroll.ot) + Number(ctrl.datas.payroll.bonus) + Number(ctrl.datas.payroll.position_allowance) - Number(ctrl.datas.payroll.absence) - Number(ctrl.datas.payroll.late))*12;
     }
 
-    function income_exemption() { // รายได้ที่ได้รับการยกเว้น
+    function income_exemption(year_income) { // รายได้ที่ได้รับการยกเว้น
       var t = ctrl.datas.tax_reduction;
-      var year_income = calculate_year_income();
       var p_insurance = Number(t.pension_insurance) > year_income * 0.15 ? year_income * 0.15 : Number(t.pension_insurance);
       p_insurance = p_insurance > 200000 ? 200000 : p_insurance;
-      var p_fund = Number(t.pension_fund) > year_income * 0.15 ? year_income * 0.15 : Number(t.pension_fund);
-      p_fund = p_fund > 200000 ? 200000 : p_fund;
-      // if(p_fund > 10000)
-      //   p_fund -= 10000 
       var g_fund = Number(t.government_pension_fund) > 500000 ? 500000 : Number(t.government_pension_fund);
       var t_fund = Number(t.private_teacher_aid_fund) > 500000 ? 500000 : Number(t.private_teacher_aid_fund);
       var r_fund = Number(t.retirement_mutual_fund) > year_income * 0.15 ? year_income * 0.15 : Number(t.retirement_mutual_fund);
       if(r_fund > 500000) 
         r_fund = 500000;
-      var n_fund = Number(t.national_savings_fund) > year_income * 0.15 ? year_income * 0.15 : Number(t.national_savings_fund);
-      n_fund = n_fund > 500000 ? 500000 : n_fund;
-      var exempt = p_insurance + p_fund + g_fund + t_fund + r_fund + n_fund;
+      var n_fund = Number(t.national_savings_fund) > 13200 ? 13200 : Number(t.national_savings_fund);
+      var ins = Number(t.insurance) > 10000 ? Number(t.insurance) : 0;
+      ins = ins > 90000 ? 90000 : ins;
+      var p_fund = Number(t.pension_fund) > year_income * 0.15 ? year_income * 0.15 : Number(t.pension_fund);
+      p_fund = p_fund > 200000 ? 200000 : p_fund;
+      var exempt = p_insurance + p_fund + g_fund + t_fund + r_fund + n_fund + ins;
       var max_exempt_income = 500000;
-
- // console.log(p_insurance +"+"+ p_fund +"+"+ g_fund +"+"+ t_fund +"+"+ r_fund +"+"+ n_fund +"="+ exempt);
 
       return exempt > max_exempt_income ? max_exempt_income : exempt;
     }
 
-    function revenue_reduction() {// ค่าลดหย่อนภาษีเงินได้
+    function revenue_reduction(income) {// ค่าลดหย่อนภาษีเงินได้
       var t = ctrl.datas.tax_reduction;
-      var income = calculate_year_income() - income_exemption();
       var exp40 = income*0.4 > 60000 ? 60000 : income*0.4;
       var ltf = Number(t.long_term_equity_fund) > income * 0.15 ? income * 0.15 : Number(t.long_term_equity_fund);
-      var house_loan = Number(t.house_loan_interest) >= 100000 ? 100000 : Number(t.house_loan_interest);
+      var house_loan = Number(t.house_loan_interest) > 100000 ? 100000 : Number(t.house_loan_interest);
       var d_donation = Number(t.double_donation) * 2 > income * 0.1 ? income * 0.1 : Number(t.double_donation) * 2;
       var s_donation = Number(t.donation) > income * 0.1 ? income * 0.1 : Number(t.donation);
-      var ins = Number(t.insurance) >= 100000 ? 100000 : Number(t.insurance);
+      var ins = Number(t.insurance) > 10000 ? 10000 : Number(t.insurance);
+      var p_ins = Number(t.father_insurance) + Number(t.mother_insurance) + Number(t.spouse_father_insurance) + Number(t.spouse_mother_insurance);
+      p_ins = p_ins > 15000 ? 15000 : p_ins;
 
-      return exp40 + Number(t.expenses) + Number(t.no_income_spouse) + Number(t.child) + Number(t.father_alimony) + Number(t.mother_alimony) + Number(t.spouse_father_alimony) + Number(t.spouse_mother_alimony) + Number(t.cripple_alimony) + Number(t.father_insurance) + Number(t.mother_insurance) + Number(t.spouse_father_insurance) + Number(t.spouse_mother_insurance) + ins + Number(t.spouse_insurance) + ltf + house_loan + Number(t.social_insurance) + d_donation + s_donation + Number(t.other);
+      return exp40 + Number(t.expenses) + Number(t.no_income_spouse) + Number(t.child) 
+              + Number(t.father_alimony) + Number(t.mother_alimony) 
+              + Number(t.spouse_father_alimony) + Number(t.spouse_mother_alimony) 
+              + Number(t.cripple_alimony) + p_ins + ins + ltf + house_loan
+              + Number(t.spouse_insurance) + Number(t.social_insurance) 
+              + d_donation + s_donation + Number(t.other);
     }
 
     function calculateTax() {
       var income = calculate_year_income();
-      income -= revenue_reduction();
+      console.log(income);
+      income -= income_exemption(income);
+      console.log(income);
+      income -= revenue_reduction(income);
+      console.log(income);
       var yearTax = 0;
       var taxrates = [[5000000,0.35],[2000000,0.30],[1000000,0.25],[750000,0.20],[500000,0.15],[300000,0.10],[150000,0.05]];
       taxrates.forEach(function(taxrate) {
@@ -472,6 +486,7 @@
         }
       });
       ctrl.datas.payroll.tax = Number((yearTax/12).toFixed(2)); // month 1-11
+      console.log(ctrl.datas.payroll.tax);
     }
 
     $scope.set_no_income_spouse = function(value) {
@@ -539,7 +554,7 @@
     $scope.retirement_mutual_fund = $sce.trustAsHtml('ให้หักเป็นรายการยกเว้นในอัตราไม่เกินร้อยละ 15 ของเงินได้ แต่ไม่เกิน 500,000 บาท');
     $scope.pension_insurance = $sce.trustAsHtml('- ให้ใช้สิทธิลดหย่อนเบี้ยประกันชีวิตก่อน หากเบี้ยประกันชีวิต ยังไม่เกิน 100,000 บาท ให้นำเบี้ยประกันแบบบำนาญไปหัก ให้เต็มจำนวน 100,000 บาท<br> - เฉพาะเบี้ยประกันแบบบำนาญหักเป็นรายการยกเว้นได้ไม่เกิน ร้อยละ 15 ของเงินได้ แต่ไม่เกิน 200,000 บาท<br>');
     $scope.long_term_equity_fund = $sce.trustAsHtml('- ให้หักเป็นรายการยกเว้นไม่เกินร้อยละ 15 ของเงินได้ แต่ไม่เกิน 500,000 บาท<br> - ผู้ได้รับสิทธิยกเว้นเงินได้คือบุคคลธรรมดา ไม่รวมถึงห้างหุ้นส่วนสามัญ หรือคณะบุคคลที่มิใช่นิติบุคคล และกองมรดกที่ยังไม่ได้แบ่ง<br> - ต้องถือต่อเนื่องกันเป็นเวลาไม่น้อยกว่า 7 ปีปฏิทิน สำหรับเงินได้พึงประเมินที่ได้รับตั้งแต่วันที่ 1 มกราคม 2559 ถึง 31 ธันวาคม 2562 หากขายหน่วยลงทุน ก่อนกำหนด ต้องยื่นแบบเพิ่มเติมพร้อมรับผิดเงินเพิ่ม<br>');
-
+    $scope.national_savings_fund = $sce.trustAsHtml('หักได้ตามที่จ่ายจริง แต่ไม่เกิน 13,200 บาท โดยหักเป็นรายการยกเว้นเงินได้<br>');
     $scope.social_insurance = $sce.trustAsHtml('หักลดหย่อนได้ตามที่จ่ายจริง ตามกฎหมายว่าด้วยการประกันสังคม');
 
     $scope.pension_fund = $sce.trustAsHtml('หักได้ตามที่จ่ายจริงแต่ไม่เกิน 15% ของค่าจ้าง โดย 10,000 บาทแรก หักเป็นรายการลดหย่อน ส่วนที่เกิน 10,000 บาท แต่ไม่เกิน 490,000 บาท หักเป็นรายการยกเว้นเงินได้');

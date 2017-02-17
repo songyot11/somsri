@@ -34,8 +34,7 @@ class Payroll < ApplicationRecord
   end
 
   def generate_income_tax
-    income = (salary + allowance + attendance_bonus + ot + bonus + position_allowance)*12
-    income -= self.employee.tax_break
+    income = self.employee.year_income - self.employee.tax_break
     taxrates = Taxrate.order(:order_id).map {|t| [t.income, t.tax] }
     yearTax = 0
     taxrates.each do |taxrate|
