@@ -8,6 +8,7 @@ Rails.application.routes.draw do
   end
 
   get "/" => "home#index"
+  get 'changelog', to: 'home#changelog'
 
   resources :payrolls, only: [:index, :update, :create] do
     collection do
