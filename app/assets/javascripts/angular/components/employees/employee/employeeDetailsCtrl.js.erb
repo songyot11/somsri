@@ -159,9 +159,9 @@
         if(ctrl.datas.tax_reduction.spouse_mother_alimony > 0)
           $scope.cbox_spouse_mother_alimony = true;
         if(ctrl.datas.tax_reduction.child > 0)
-          $scope.numchild = (ctrl.datas.tax_reduction.child/30000); 
+          $scope.numchild = (ctrl.datas.tax_reduction.child/30000);
         if(ctrl.datas.tax_reduction.cripple_alimony > 0)
-          $scope.numcripple_alimony = (ctrl.datas.tax_reduction.cripple_alimony/60000); 
+          $scope.numcripple_alimony = (ctrl.datas.tax_reduction.cripple_alimony/60000);
 
         // get others employee
         service.getAllEmployee().then(function(resp) {
@@ -425,7 +425,7 @@
       ctrl.individuals = resp.data;
       ctrl.individuals.emergency_calls.reverse();
     });
-    
+
     // tax reduction
     function calculate_year_income() {
       return (Number(ctrl.datas.payroll.salary) + Number(ctrl.datas.payroll.allowance) + Number(ctrl.datas.payroll.attendance_bonus) + Number(ctrl.datas.payroll.ot) + Number(ctrl.datas.payroll.bonus) + Number(ctrl.datas.payroll.position_allowance) - Number(ctrl.datas.payroll.absence) - Number(ctrl.datas.payroll.late))*12;
@@ -438,7 +438,7 @@
       var g_fund = Number(t.government_pension_fund) > 500000 ? 500000 : Number(t.government_pension_fund);
       var t_fund = Number(t.private_teacher_aid_fund) > 500000 ? 500000 : Number(t.private_teacher_aid_fund);
       var r_fund = Number(t.retirement_mutual_fund) > year_income * 0.15 ? year_income * 0.15 : Number(t.retirement_mutual_fund);
-      if(r_fund > 500000) 
+      if(r_fund > 500000)
         r_fund = 500000;
       var n_fund = Number(t.national_savings_fund) > 13200 ? 13200 : Number(t.national_savings_fund);
       var ins = Number(t.insurance) > 10000 ? Number(t.insurance) : 0;
@@ -463,11 +463,11 @@
       p_ins = p_ins > 15000 ? 15000 : p_ins;
       var s_ins = Number(t.spouse_insurance) > 100000 ? 100000 : Number(t.spouse_insurance);
 
-      return exp40 + Number(t.expenses) + Number(t.no_income_spouse) + Number(t.child) 
-              + Number(t.father_alimony) + Number(t.mother_alimony) 
-              + Number(t.spouse_father_alimony) + Number(t.spouse_mother_alimony) 
+      return exp40 + Number(t.expenses) + Number(t.no_income_spouse) + Number(t.child)
+              + Number(t.father_alimony) + Number(t.mother_alimony)
+              + Number(t.spouse_father_alimony) + Number(t.spouse_mother_alimony)
               + Number(t.cripple_alimony) + p_ins + ins + ltf + house_loan
-              + s_ins + Number(t.social_insurance) 
+              + s_ins + Number(t.social_insurance)
               + d_donation + s_donation + Number(t.other);
     }
 
@@ -539,14 +539,14 @@
     };
   });
 
-  angular.module('somsri.payroll.employee_details').controller('TaxReductionCtrl', function ($scope, $sce) {
+  angular.module('somsri.payroll.employee_details').controller('TaxReductionCtrl', ['$scope', '$sce', function ($scope, $sce) {
     $scope.expenses = $sce.trustAsHtml('หักลดหย่อนได้ 60,000 บาท (ไม่ว่าจะอยู่ในประเทศไทยถึง 180 วัน หรือไม่ก็ตาม)');
     $scope.no_income_spouse = $sce.trustAsHtml('หักลดหย่อนได้ 60,000 บาท<br>(1) สามีหรือภริยาของผู้มีเงินได้ที่มีสิทธิหักลดหย่อน จะต้องเป็นสามีหรือภริยาชอบด้วยกฎหมาย การสมรสไม่ครบปีภาษีก็มีสิทธิหักลดหย่อนได้ เช่น จดทะเบียนสมรสระหว่างปีภาษี หรือตายในระหว่างปีภาษีก็มีสิทธิหักลดหย่อนได้ 60,000 บาท<br>(2) สามีหรือภริยาของผู้มีเงินได้ที่จะนำมาหักลดหย่อนจะต้องไม่มีเงินได้พึงประเมินหรือมีแต่ไม่ได้แยกคำนวณภาษี ตัวอย่าง สามีภริยาแต่งงานครบปีภาษีและต่างฝ่ายต่างมีเงินได้ประเภทที่ 1 กรณีดังกล่าว ภริยาสามารถแยกคำนวณภาษีต่างหากจากสามีได้โดยชอบ ทั้งสามีภริยาจึงไม่มีสิทธินำคู่สมรสมาหักลดหย่อนได้ แต่หากสามีหรือภริยาเลือกนำเงินได้ทั้งหมดของคู่สมรสอีกฝ่ายหนึ่ง มารวมคำนวณ สามีหรือภริยาย่อมมีสิทธินำคู่สมรสนั้นมาหักลดหย่อนได้');
 
     $scope.parent_alimony = $sce.trustAsHtml('- หักลดหย่อนได้คนละ 30,000 บาท<br>- บิดา/มารดาต้องมีอายุตั้งแต่ 60 ปีขึ้นไป (การคำนวณอายุ ให้นำปีภาษี หักด้วย พ.ศ. เกิดของบิดา/มารดา)<br> - บิดา/มารดา ต้องมีเลขประจำตัวประชาชนตามกฎหมายว่าด้วยการทะเบียนราษฎร<br> - อยู่ในความอุปการะเลี้ยงดูของผู้มีเงินได้<br> - หากภริยาแยกยื่นแบบเสียภาษี ให้ต่างฝ่ายต่างหักบิดา/มารดาของตน<br> - บิดา/มารดาต้องไม่มีเงินได้ในปีภาษีนั้นเกิน 30,000 บาท<br> - ผู้มีเงินได้หรือคู่สมรสต้องเป็นบุตรชอบด้วยกฎหมาย<br> - บุตรบุญธรรมไม่มีสิทธิหักลดหย่อน<br> - บุตรหลายคนอุปการะบิดา/มารดา ให้บุตรเพียงคนเดียวที่มีหลักฐาน (ล.ย.03) เป็นผู้มีสิทธิหักลดหย่อน<br>');
     $scope.child = $sce.trustAsHtml('- หักลดหย่อนได้คนละ 30,000 บาท โดยไม่จากัดจานวนบุตร<br> - บุตรชอบด้วยกฎหมายของผู้มีเงินได้ หรือของคู่สมรส<br> - บุตรบุญธรรมของผู้มีเงินได้<br> - บุตรต้องไม่มีเงินได้ในปีภาษีนั้น ตั้งแต่ 15,000 บาทขึ้นไป ยกเว้น เงินได้จากเงินปันผล<br> - บุตรต้องอยู่ในความอุปการะเลี้ยงดูของผู้มีเงินได้<br> - เป็นผู้เยาว์ (อายุไม่ถึง 20 ปี) หรือผู้มีอายุไม่เกิน 25 ปี และยังศึกษา อยู่ในมหาวิทยาลัย (ปริญญาตรี โท เอก ในประเทศ) หรือชั้นอุดมศึกษา (ปวส) หรือเป็นผู้ที่ศาลสั่งให้เป็นคนไร้ความสามารถหรือเสมือนไร้ความสามารถ<br>');
     $scope.cripple_alimony = $sce.trustAsHtml('- หักลดหย่อนได้คนละ 60,000 บาท<br> - คนพิการต้องมีบัตรประจำตัวตามกฎหมายว่าด้วยการส่งเสริมและ พัฒนาคุณภาพชีวิตคนพิการ<br> - ผู้ใช้สิทธิต้องมีชื่อเป็นผู้ดูแลในบัตรประจำตัวของคนพิการ<br> - คนทุพพลภาพต้องเป็นกรณีที่แพทย์ได้ตรวจและมีความเห็นว่า ทุพพลภาพมาแล้วไม่น้อยกว่า 180 วัน<br> - คนพิการ/ทุพพลภาพต้องมีเงินได้ไม่เกิน 30,000 บาท<br> - การหักลดหย่อนต้องมีหนังสือรับรอง (ล.ย.04-กรณีคนพิการ, ล.ย.04.1-กรณีคนทุพพลภาพ)<br>');
-    
+
     $scope.insurance = $sce.trustAsHtml('- หักเป็นค่าลดหย่อนตามจำนวนที่จ่ายจริงแต่ไม่เกิน 10,000 บาท สำหรับเบี้ยประกันส่วนที่เกิน 10,000 แต่ไม่เกิน 90,000 บาท หักเป็นรายการยกเว้น ซึ่งต้องไม่เกินจากจำนวนเงินได้เมื่อหัก ค่าใช้จ่ายแล้ว (มีผลเท่ากับว่าเบี้ยประกันชีวิตให้หักลดหย่อนได้ ตามจำนวนที่จ่ายจริงแต่ไม่เกิน 100,000 บาท)<br> - กรณีคู่สมรสไม่มีเงินได้ แต่มีการประกันชีวิตไว้ หากความเป็นสามี ภริยามีอยู่ตลอดปีภาษี ให้ผู้มีเงินได้หักลดหย่อนเบี้ยประกันชีวิต ของคู่สมรสได้ตามที่จ่ายจริงแต่ไม่เกิน 10,000 บาท<br> - เป็นการประกันชีวิต ที่กรมธรรม์มีกำหนดเวลา 10 ปีขึ้นไป<br> - หากมีผลประโยชน์ตอบแทนคืนทุกปี (ไม่รวมเงินปันผลตามกรมธรรม์) ต้องไม่เกินร้อยละ 20 ของเบี้ยประกันชีวิตรายปี<br>');
     $scope.retirement_mutual_fund = $sce.trustAsHtml('ให้หักเป็นรายการยกเว้นในอัตราไม่เกินร้อยละ 15 ของเงินได้ แต่ไม่เกิน 500,000 บาท');
     $scope.pension_insurance = $sce.trustAsHtml('- ให้ใช้สิทธิลดหย่อนเบี้ยประกันชีวิตก่อน หากเบี้ยประกันชีวิต ยังไม่เกิน 100,000 บาท ให้นำเบี้ยประกันแบบบำนาญไปหัก ให้เต็มจำนวน 100,000 บาท<br> - เฉพาะเบี้ยประกันแบบบำนาญหักเป็นรายการยกเว้นได้ไม่เกิน ร้อยละ 15 ของเงินได้ แต่ไม่เกิน 200,000 บาท<br>');
@@ -564,5 +564,5 @@
     $scope.double_donation = $sce.trustAsHtml('- หักได้ 2 เท่าของจำนวนเงินที่จ่ายไปจริง แต่ไม่เกินร้อยละ 10 ของ เงินได้หลังหักค่าใช้จ่ายและค่าลดหย่อน<br> - การบริจาคต้องเป็นการบริจาคเงินสดเท่านั้น<br> - เป็นค่าใช้จ่ายเพื่อการจัดหาหรือจัดสร้างอาคาร อาคารพร้อมที่ดิน ที่ดิน วัสดุอุปกรณ์เพื่อการศึกษา แบบเรียน หนังสือทางวิชาการ ตำรา ฯลฯ จัดหาครู อาจารย์ ฯลฯ หรือเป็นทุนการศึกษา การค้นคว้า การวิจัย ฯลฯ ทั้งนี้ตามหลักเกณฑ์วิธีการที่อธิบดีประกาศกำหนด<br> - ต้องเป็นสถานศึกษาที่กระทรวงศึกษาธิการประกาศกำหนด<br> - ต้องมีหลักฐานจากสถานศึกษา และเอกสารหลักฐานที่ได้รับต้อง ระบุว่าเป็นการสนับสนุนการศึกษาเพื่อ..............<br>');
     $scope.donation = $sce.trustAsHtml('- หักได้ร้อยละ 10 ของเงินได้หลังหักค่าใช้จ่าย ค่าลดหย่อน และเงิน บริจาคสนับสนุนการศึกษา<br> - บริจาคเงินให้แก่วัดวาอาราม สภากาชาดไทย ฯลฯ สำหรับ มูลนิธิ สถานสาธารณกุศลที่สามารถหักลดหย่อนเงินบริจาคได้ สามารถค้นหา รายชื่อสถานสาธารณกุศลจาก www.rd.go.th<br>');
     $scope.other = $sce.trustAsHtml('ค่าลดหย่อนอื่นๆ นอกเหนือจากรายการที่ระบุไว้');
-  });
+  }]);
 })();
