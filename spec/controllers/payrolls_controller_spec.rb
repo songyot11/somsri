@@ -115,7 +115,7 @@ describe PayrollsController do
 
     header_pdfs = ctrl.generate_pdf(template, ["HEADERRR", "กกกกกกกกกกกกก"], tmp_dir) do |file, data|
       Prawn::Document.generate(file, :page_layout => :landscape) do
-        font("#{Rails.root}/public/fonts/THSarabunNew.ttf") do
+        font(Rails.root.join('app', 'assets', 'fonts', 'THSarabunNew.ttf').to_s) do
           text_box data, :at => [20, 500], :size => 28
         end
       end

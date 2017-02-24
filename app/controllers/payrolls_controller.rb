@@ -91,7 +91,7 @@ class PayrollsController < ApplicationController
     header_pdfs = generate_pdf(template_header, header_data, tmp_dir) do |file, data|
       Prawn::Document.generate(file, :page_layout => :landscape) do
         data.each do |d|
-          font("public/fonts/THSarabunNew.ttf") do
+          font(Rails.root.join('app', 'assets', 'fonts', 'THSarabunNew.ttf').to_s) do
             text_box d[:text].to_s, at: d[:location], size: 16
           end
         end
@@ -162,7 +162,7 @@ class PayrollsController < ApplicationController
     data_pdfs = generate_pdf(template_detail, detail_datas, tmp_dir) do |file, data|
       Prawn::Document.generate(file, :page_layout => :landscape) do
         data.each do |d|
-          font("public/fonts/THSarabunNew.ttf") do
+          font(Rails.root.join('app', 'assets', 'fonts', 'THSarabunNew.ttf').to_s) do
             text_box d[:text].to_s, at: d[:location], size: 16
           end
           stroke do
