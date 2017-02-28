@@ -17,7 +17,7 @@
 
     stateHelperProvider.
       state({
-        url: '/',
+        url: '/somsri_payroll',
         name: 'home',
         templateUrl: "<%= asset_path('payroll/angular/components/home/homeView.html') %>",
         controller: 'homeCtrl as home',
@@ -30,7 +30,7 @@
         }
       }).
       state({
-        url: '/employees',
+        url: '/somsri_payroll/employees',
         name: 'employees',
         templateUrl: "<%= asset_path('payroll/angular/components/employees/employeesView.html') %>",
         controller: 'employeesCtrl as employees',
@@ -43,7 +43,7 @@
         }
       }).
       state({
-        url: '/employees/:id',
+        url: '/somsri_payroll/employees/:id',
         name: 'employee_details',
         templateUrl: "<%= asset_path('payroll/angular/components/employees/employee/employeeDetailsView.html') %>",
         controller: 'employeeDetailsCtrl as employee',
@@ -56,7 +56,7 @@
         }
       }).
       state({
-        url: '/report',
+        url: '/somsri_payroll/report',
         name: 'report',
         templateUrl: "<%= asset_path('payroll/angular/components/report/reportView.html') %>",
         controller: 'reportCtrl as report',
@@ -69,7 +69,7 @@
         }
       }).
       state({
-        url: '/employees/:id/slip?payroll_id',
+        url: '/somsri_payroll/employees/:id/slip?payroll_id',
         name: 'slip',
         templateUrl: "<%= asset_path('payroll/angular/components/slip/slipView.html') %>",
         controller: 'slipCtrl as slip',
@@ -82,7 +82,7 @@
         }
       }).
       state({
-        url: '/payroll?effective_date',
+        url: '/somsri_payroll/payroll?effective_date',
         name: 'payroll',
         templateUrl: "<%= asset_path('payroll/angular/components/payroll/payrollView.html') %>",
         controller: 'payrollCtrl as payroll',
@@ -95,7 +95,7 @@
         }
       }).
       state({
-        url: '/setting',
+        url: '/somsri_payroll/setting',
         name: 'setting',
         templateUrl: "<%= asset_path('payroll/angular/components/setting/settingView.html') %>",
         controller: 'settingCtrl as setting',

@@ -69,15 +69,15 @@ describe 'Login', js: true do
   end
 
   it 'should not go anywhere if user not authentication' do
-    visit "/#/employees"
+    visit "/#/somsri_payroll/employees"
     expect(page).to have_current_path '/'
     expect(page).to have_button 'Log in'
 
-    visit "/#/reports"
+    visit "/#/somsri_payroll/reports"
     expect(page).to have_current_path '/'
     expect(page).to have_button 'Log in'
 
-    visit "/#/employees/1"
+    visit "/#/somsri_payroll/employees/1"
     expect(page).to have_current_path '/'
     expect(page).to have_button 'Log in'
   end
