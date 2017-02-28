@@ -19,7 +19,7 @@
       state({
         url: '/',
         name: 'home',
-        templateUrl: "<%= asset_path('angular/components/home/homeView.html') %>",
+        templateUrl: "<%= asset_path('payroll/angular/components/home/homeView.html') %>",
         controller: 'homeCtrl as home',
         resolve: {
           resources: ['$ocLazyLoad', function($ocLazyLoad) {
@@ -32,7 +32,7 @@
       state({
         url: '/employees',
         name: 'employees',
-        templateUrl: "<%= asset_path('angular/components/employees/employeesView.html') %>",
+        templateUrl: "<%= asset_path('payroll/angular/components/employees/employeesView.html') %>",
         controller: 'employeesCtrl as employees',
         resolve: {
           resources: ['$ocLazyLoad', function($ocLazyLoad) {
@@ -45,7 +45,7 @@
       state({
         url: '/employees/:id',
         name: 'employee_details',
-        templateUrl: "<%= asset_path('angular/components/employees/employee/employeeDetailsView.html') %>",
+        templateUrl: "<%= asset_path('payroll/angular/components/employees/employee/employeeDetailsView.html') %>",
         controller: 'employeeDetailsCtrl as employee',
         resolve: {
           resources: ['$ocLazyLoad', function($ocLazyLoad) {
@@ -58,7 +58,7 @@
       state({
         url: '/report',
         name: 'report',
-        templateUrl: "<%= asset_path('angular/components/report/reportView.html') %>",
+        templateUrl: "<%= asset_path('payroll/angular/components/report/reportView.html') %>",
         controller: 'reportCtrl as report',
         resolve: {
           resources: ['$ocLazyLoad', function($ocLazyLoad) {
@@ -71,7 +71,7 @@
       state({
         url: '/employees/:id/slip?payroll_id',
         name: 'slip',
-        templateUrl: "<%= asset_path('angular/components/slip/slipView.html') %>",
+        templateUrl: "<%= asset_path('payroll/angular/components/slip/slipView.html') %>",
         controller: 'slipCtrl as slip',
         resolve: {
           resources: ['$ocLazyLoad', function($ocLazyLoad) {
@@ -84,7 +84,7 @@
       state({
         url: '/payroll?effective_date',
         name: 'payroll',
-        templateUrl: "<%= asset_path('angular/components/payroll/payrollView.html') %>",
+        templateUrl: "<%= asset_path('payroll/angular/components/payroll/payrollView.html') %>",
         controller: 'payrollCtrl as payroll',
         resolve: {
           resources: ['$ocLazyLoad', function($ocLazyLoad) {
@@ -97,7 +97,7 @@
       state({
         url: '/setting',
         name: 'setting',
-        templateUrl: "<%= asset_path('angular/components/setting/settingView.html') %>",
+        templateUrl: "<%= asset_path('payroll/angular/components/setting/settingView.html') %>",
         controller: 'settingCtrl as setting',
         resolve: {
           resources: ['$ocLazyLoad', function($ocLazyLoad) {
