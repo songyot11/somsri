@@ -2,7 +2,7 @@
   'use strict';
   angular.module('somsri.payroll.slip', [
   ])
-  .controller('slipCtrl', ['$window', 'slipService', '$state', '$compile', '$scope', function($window, slipService, $state, $compile, $scope) {
+  .controller('slipCtrl', ['$window', 'slipService', '$state', '$compile', '$scope', 'moment', function($window, slipService, $state, $compile, $scope, moment) {
     var ctrl = this
     var employeeId = $state.params.id
     var payroll_id = $state.params.payroll_id;
@@ -11,6 +11,7 @@
 
     slipService.employeeSlip(employeeId, payroll_id).then(function(resp) {
       ctrl.employee = resp.data;
+      ctrl.dateDisplay = moment(ctrl.employee.payroll.date).add(543, 'years').format('DD/MM/YYYY');
     });
 
     ctrl.repeat = function() {

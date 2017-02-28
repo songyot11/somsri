@@ -13,7 +13,8 @@
     "angular-bootstrap": "",
     "angular-moment": "",
     "angular-xeditable": "",
-    "angular-scrollable-table": ""
+    "angular-scrollable-table": "",
+    "moment": ""
   },
   "resolutions": {
     "angular": "1.5.9"

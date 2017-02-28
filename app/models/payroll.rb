@@ -90,7 +90,7 @@ class Payroll < ApplicationRecord
       }
     elsif options["slip"]
       {
-        date: self.effective_date.strftime("#{effective_date.day}/%m/#{(effective_date.year + 543) % 100}"),
+        date: self.effective_date,
         pay_orders: {
           salary: {
             name: """

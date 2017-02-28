@@ -61,7 +61,7 @@ describe 'Payroll Slip', js: true do
     eventually { expect(page).to have_content 'ตำแหน่ง/Title ครูน้อย' }
     eventually { expect(page).to have_content 'รหัส/Code 00001 ชื่อ/Name นาง สมศรี เป็นชื่อแอพ เลขที่บัญชี/Bank acct. 5-234-34532-2342'}
     eventually { expect(page).to have_content 'รายการได้ / Income จำนวนเงิน / Amount รายการเงินหัก / Deduction จำนวนเงิน / Amount'}
-    eventually { expect(page).to have_content 'วัน / เดือน / ปี Day / Month / Year 16/02/59'}
+    eventually { expect(page).to have_content 'วัน / เดือน / ปี Day / Month / Year 16/02/2559'}
     eventually { expect(page).to have_content 'รายได้สะสมต่อปี Acc. Income ภาษีสะสมต่อปี Acc. Tax เงินประกันสังคมสะสมต่อปี Acc. Social fund เงินสะสมกองทุนสงเคราะห์ Private Teacher Aid fund'}
   end
 
