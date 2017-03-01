@@ -34,6 +34,7 @@ gem 'rails-i18n', '~> 5.0.0'
 gem 'bower-rails'
 
 gem 'pdf-forms'
+gem 'rmagick'
 
 # Exception Notification
 gem 'exception_notification'

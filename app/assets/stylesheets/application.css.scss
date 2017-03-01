@@ -1,0 +1,2046 @@
+/*
+ * This is a manifest file that'll be compiled into application.css, which will include all the files
+ * listed below.
+ *
+ * Any CSS and SCSS file within this directory, lib/assets/stylesheets, vendor/assets/stylesheets,
+ * or any plugin's vendor/assets/stylesheets directory can be referenced here using a relative path.
+ *
+ * You're free to add application-wide styles to this file and they'll appear at the bottom of the
+ * compiled file so the styles you add here take precedence over styles defined in any other CSS/SCSS
+ * files in this directory. Styles in this file should be added after the last require_* statement.
+ * It is generally better to create a new file per style scope.
+ *
+ *= require bootstrap/dist/css/bootstrap.min.css
+ *= require angular-xeditable/dist/css/xeditable
+ *= require font-awesome
+ *= require_tree .
+ *= require_self
+ */
+
+body {
+  background-color: #F3F9FC;
+  font-family: 'Maitree', serif;
+  color: #595959;
+  -webkit-print-color-adjust: exact !important;
+}
+
+.navbar-default {
+  background-color: #ffffff;
+  border: 0px;
+}
+
+.navbar-brand {
+  height: 100%;
+  padding: 0px;
+}
+
+.navbar .dropdown-toggle {
+  height: 60px;
+  line-height: 50px;
+}
+
+#payroll-report .report-content {
+  padding-top: 30px;
+  background-color: #fff;
+  border-left: 4px solid #00D2D7;
+}
+
+#payroll-report tfoot {
+  border-bottom: 2px solid #FFAA00;
+}
+
+#payroll-report #month-list {
+  cursor: pointer;
+}
+
+#payroll-report .dropdown-menu button {
+  background-color: transparent;
+  border: 0px;
+}
+
+.text-green {
+  color: #66E341 !important;
+}
+
+.text-red {
+  color: #E70A0E !important;
+}
+
+.text-yellow {
+  color: #FFAA00;
+}
+
+.text-white {
+  color: #fff;
+}
+
+.text-cyan{
+  color: #62C4CC;
+}
+
+.main-menu {
+  margin-top: calc(50vh - 200px);
+}
+
+.main-menu .main-menu-box {
+  text-align: center;
+}
+
+.main-menu-item {
+  text-align: center;
+  display: table;
+  margin: auto;
+}
+
+.main-menu-item:focus {
+  outline: none;
+}
+
+.main-menu-item .main-menu-title {
+  font-size: 18px;
+  margin-top: 15px;
+  font-weight: bold;
+  cursor: pointer;
+}
+
+.main-menu-item .main-menu-button {
+  background-color: #F2F2F2;
+  width: 100px;
+  height: 100px;
+  border-radius: 5px;
+  box-shadow: 3px 3px 3px #E2E2E2;
+  text-align: center;
+  vertical-align: middle;
+  display: table-cell;
+  cursor: pointer;
+}
+
+.main-menu-item .main-menu-button .main-menu-image {
+}
+
+
+.main-menu-item .main-menu-button .main-menu-image.setting,
+.main-menu-item .main-menu-button .main-menu-image.employees {
+  width: 60px;
+  height: 60px;
+}
+
+.main-menu-item .main-menu-button .main-menu-image.payroll {
+  width: 50px;
+  height: 60px;
+}
+
+.main-menu-item .main-menu-button .main-menu-image.report {
+  width: 45px;
+  height: 45px;
+}
+
+.bg-light-gray {
+  background-color: #DDD;
+}
+
+.bg-gray {
+  background-color: #4A4A4A;
+  color: #fff;
+}
+
+.bg-yellow {
+  background-color: #FFAA00;
+  color: #fff;
+  border-radius: 0px
+}
+
+.btn-submit {
+  background-color: #69C406;
+  color: #FFFFFF;
+  border-radius: 0px
+}
+
+.btn-cancel {
+  background-color: transparent;
+  color: #D7283E;
+  border: 1px solid #D7283E;
+  border-radius: 0px
+}
+
+.btn-print {
+  background-color: #FFAA00;
+  color: #ffffff;
+  border-radius: 0px
+}
+
+
+.btn-danger {
+  border-radius: 0px
+}
+
+.btn-memo {
+  background-color: #fff;
+  border: 2px solid #4893DC;
+  color: #4893DC;
+  border-radius: 0px
+}
+
+.btn-print {
+  background-color: #FFAA00;
+  color: #ffffff;
+  border-radius: 0px;
+}
+
+.btn-prefix {
+  background-color: transparent;
+  color: #000;
+  border: 1px solid #000;
+  border-radius: 0px
+}
+input.btn-prefix {
+  border-top: 1px solid #000 !important;
+  border-right: 1px solid #000 !important;
+  border-bottom: 1px solid #000 !important;
+  border-left: 0px !important;
+  outline: none !important;
+}
+input.btn-prefix::-webkit-input-placeholder { /* Chrome/Opera/Safari */
+  color: #000;
+}
+input.btn-prefix::-moz-placeholder { /* Firefox 19+ */
+  color: #000;
+}
+input.btn-prefix:-ms-input-placeholder { /* IE 10+ */
+  color: #000;
+}
+input.btn-prefix:-moz-placeholder { /* Firefox 18- */
+  color: #000;
+}
+
+input.btn-prefix.active::-webkit-input-placeholder { /* Chrome/Opera/Safari */
+  color: #fff;
+}
+input.btn-prefix.active::-moz-placeholder { /* Firefox 19+ */
+  color: #fff;
+}
+input.btn-prefix.active:-ms-input-placeholder { /* IE 10+ */
+  color: #fff;
+}
+input.btn-prefix.active:-moz-placeholder { /* Firefox 18- */
+  color: #fff;
+}
+
+.btn-prefix.active, .btn-prefix:active{
+  background-color: #1cc5db;
+  color: #fff !important;
+  border: 1px solid #1cc5db !important;
+}
+
+.btn-prefix:hover {
+  color: #1cc5db;
+}
+
+.img-bg {
+  width: 100%;
+  padding-bottom: 100%;
+  background-size: 100% !important;
+  background-repeat: no-repeat !important;
+  background-position: center center !important;
+}
+
+.circle {
+  border-radius: 50%;
+}
+
+.line-space5{
+  padding-top: 5px;
+  padding-bottom: 5px;
+}
+
+.employees-list .card {
+  background-color: #FFF;
+  padding-left: 30px;
+  padding-right: 30px;
+  padding-top: 15px;
+  padding-bottom: 15px;
+  border-bottom: 5px solid;
+  border-bottom-color: #1cc5db;
+  margin-top: 15px;
+  margin-bottom: 15px;
+  height: 100%;
+}
+
+.center {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+}
+
+.employees-list .img-profile {
+  position: relative;
+}
+
+.font-size-40 {
+  font-size: 40px;
+}
+
+.font-white {
+  color: #FFF;
+}
+
+.font-light-gray {
+  color: #AAA;
+}
+
+.padding0{
+  padding: 0px !important;
+}
+
+.row.same-height {
+  display: -webkit-box;
+  display: -webkit-flex;
+  display: -ms-flexbox;
+  display:         flex;
+  flex-wrap: wrap;
+}
+.row.same-height > [class*='col-'] {
+  display: flex;
+  flex-direction: column;
+}
+
+#payroll-slip .btn-print {
+  background-color: #FFAA00;
+  color: #ffffff;
+  margin-top: 20px;
+  border-radius: 0px
+}
+
+#payroll-slip .btn-print:hover,
+#payroll-slip .btn-print:hover a {
+  color: #000;
+  text-decoration: none;
+}
+
+#payroll-slip .btn-print a {
+  color: #ffffff;
+}
+
+
+#payroll-slip .slip-content {
+  background-color: #fff;
+  padding: 60px 0px 20px 0px;
+}
+
+#payroll-slip thead {
+  background-color: #4A4A4A !important;
+  color: #fff;
+}
+
+#payroll-slip td,
+#payroll-slip th {
+  vertical-align: middle;
+  border-color: #4A4A4A;
+}
+
+#payroll-slip td.big {
+  height: 50px
+}
+
+#payroll-slip #order tbody td {
+  border-bottom: 0px;
+  border-top: 0px;
+  height: 250px;
+  vertical-align: top !important;
+}
+
+#payroll-slip #order thead th {
+  padding: 15px 20px;
+}
+
+#payroll-slip #date_table {
+  margin-bottom: 163px;
+}
+
+#payroll-report .signature,
+#payroll-slip .signature {
+  margin-top: 100px;
+  border-top: 1px solid;
+  text-align: center;
+}
+
+#payroll-report .for_print,
+#payroll-slip .for_print {
+  display: none;
+}
+
+#payroll-report .separate,
+#payroll-slip .separate {
+  margin-top: 5px;
+  margin-bottom: 5px;
+  border: 0;
+  border-top: 1px dashed #000 !important;
+}
+
+@print {
+  size: A4;
+}
+
+@media print {
+  .top-bar-space{
+    height: 0px !important;
+  }
+  #payroll-report.row {
+    margin-right: 0px !important;
+    margin-left: 0px !important;
+  }
+
+  #payroll-report tfoot {
+   border-bottom: unset
+  }
+
+
+  #payroll-report .unused_for_print,
+  #payroll-slip .unused_for_print {
+    display: none;
+  }
+
+  #payroll-slip p,
+  #payroll-slip th,
+  #payroll-slip td,
+  #payroll-report p,
+  #payroll-report th,
+  #payroll-report td {
+    font-size: 10px;
+  }
+
+  #payroll-report #date_table,
+  #payroll-slip #date_table {
+    margin-bottom: 100px;
+  }
+
+  #payroll-report td,
+  #payroll-report th,
+  #payroll-slip td,
+  #payroll-slip th {
+    vertical-align: middle;
+    border-color: #000;
+  }
+
+  #payroll-report thead th,
+  #payroll-slip thead th {
+    padding: 5px 10px;
+    background-color: #dadada !important;
+  }
+
+  #payroll-report #order tbody td,
+  #payroll-slip #order tbody td {
+    border-bottom: 0px;
+    border-top: 0px;
+    height: 200px;
+    vertical-align: top !important;
+  }
+
+  #payroll-report .slip-content,
+  #payroll-slip .slip-content {
+    padding: 0px;
+  }
+
+  #payroll-report .for_print,
+  #payroll-slip .for_print {
+    display: block !important;
+  }
+
+  #payroll-report #slipLogo,
+  #payroll-slip #slipLogo {
+    width: 200px;
+  }
+
+  #payroll-report td.big,
+  #payroll-slip td.big {
+    height: 45px
+  }
+
+  #payroll-report .signature,
+  #payroll-slip .signature {
+    margin-top: 85px;
+  }
+
+  #payroll-report p,
+  #payroll-slip p {
+    margin: 0px 0 6px;
+  }
+
+  /* For Safari */
+  #payroll-slip .safari td.big {
+    height: auto
+  }
+
+  #payroll-slip .safari p,
+  #payroll-slip .safari th,
+  #payroll-slip .safari td {
+    font-size: 9px;
+  }
+
+  #payroll-slip .safari #date_table {
+    margin-bottom: 100px;
+  }
+
+  #payroll-slip .safari #order tbody td {
+    border-bottom: 0px;
+    border-top: 0px;
+    height: 170px;
+    vertical-align: top !important;
+  }
+
+  #payroll-slip .safari .signature {
+    margin-top: 75px;
+  }
+
+  #payroll-slip .safari #order thead th {
+    padding: 5px 10px;
+  }
+  .pagebreak { page-break-before: always; }
+
+  // for invoice
+  .form-slip-forslip-copy{
+    display: block;;
+  }
+  .form-slip-forslip{
+      display: block;
+  }
+  .form-slip-forslip-copy{
+    margin-top: -130px !important;
+  }
+  .container.form-slip-forslip.ng-scope, main.form-slip-forslip.ng-scope{
+    margin-top: 150px !important;
+  }
+  .form-slip{
+    display: none;
+  }
+  .slip-copy-top{
+    margin-top: 150px;
+  }
+  .form-slip{
+      display: none;
+  }
+  .form-slip{
+    margin-top: -100px !important;
+  }
+  body > .container-fluid{
+      padding: 20px 15px 0;
+  }
+  .navbar-brand{
+      display: none;
+  }
+  nav.navbar.navbar-toggleable-md.fixed-top.navbar-light.bg-faded.navbar-custom{
+      display: none;
+  }
+  .top-bar-space{
+      height: 0px !important;
+  }
+  .container.form-slip.ng-scope{
+      padding: 0px;
+  }
+  .form-slip{
+      padding: 50px 100px;
+      background: #fff;
+      min-height: 1000px;
+      box-shadow: 2px 7px 20px #b7b7b7;
+  }
+  .title-refund{
+      font-size: 12px !important;
+  }
+  .slip-sec1{
+      margin-bottom: 5px !important;
+  }
+  .slip-sec2{
+      margin-bottom: 20px;
+  }
+  .large-receipt{
+      font-size: 24px;
+      margin-top: -10px;
+  }
+  .text-slip2-school{
+      margin-left: 0px !important;
+      margin-right: 0px !important;
+      font-size: 12px !important;
+  }
+  .text-slip3-payment{
+      font-size: 15px !important;
+      margin-left: 0px !important;
+  }
+  .text-slip4-refund1{
+      font-size: 8px !important;
+      line-height: 15px !important;
+  }
+  .text-slip4-refund2{
+      font-size: 8px !important;
+      line-height: 15px !important;
+  }
+  .table-payment-slip{
+      padding-bottom: 0px !important;
+      margin-right: -30px;
+  }
+  .sup-date{
+      margin-top: 15px;
+  }
+  .sec-payent{
+      padding-bottom: 5px !important;
+      padding-top: 5px !important;
+  }
+  .right-receiver-for-print{
+      margin-top: 30px !important;
+  }
+  .table-with1{
+  min-width: 80px;
+      text-align: center;
+  }
+  .table-with2{
+      width: 15%;
+      text-align: right;
+  }
+  th.table-center{
+      border-right: 1px solid !important;
+      border-left: 1px solid !important;
+  }
+  .table td{
+      border:inherit !important;
+  }
+  td.table-center.ng-binding,td.table-center{
+      border-right: 1px solid !important;
+      border-left: 1px solid !important;
+  }
+  td.total-pay{
+      border-right: 1px solid !important;
+  }
+  tr.text-total-display-print{
+      background-color: #f1f1f1 !important;
+      border-bottom: 1px solid !important;
+  }
+  b.total_text{
+      margin-left: 100px;
+      margin-right: 15px;
+      letter-spacing: 1px;
+  }
+  .text-title-table{
+      margin-top: 0px !important;
+  }
+  .table-bordered{
+      border-top: 1px solid;
+      border-bottom: 1px solid;
+      border-left: inherit;
+      border-right: inherit;
+  }
+  .price-pay{
+      text-align: right;
+  }
+  table.table.table-sm>tbody{
+      border-bottom: 1px solid !important;
+      font-size: 14px;
+  }
+  thead{
+    font-size: 15px !important;
+  }
+  tfoot{
+      text-align: right;
+  }
+  tfoot>tr>th{
+      text-align: right;
+  }
+  .slip-payment-right{
+      margin-left: 5%;
+  }
+  .container.form-slip-forslip.ng-scope{
+      margin-top: -130px;
+  }
+  .text-total {
+      background-color: #f1f1f1 !important;
+      border: 1px solid !important;
+  }
+  .table td, .table th{
+      background-color: inherit;
+  }
+  .table th{
+      border-top: 1px solid;
+  }
+  .sec-payment{
+    padding-top: 0px !important;
+    padding-bottom: 0px !important;
+  }
+  div#min-height-pay{
+    min-height: 259px !important;
+  }
+  // for daily-report
+  .text-report-school{
+    font-size: 13px;
+  }
+  div#dailyReportPreview {
+    margin-top: -80px !important;
+    padding: 0px !important;
+  }
+  .col-num{
+    width: 77px;
+    text-align: center;
+    border-top: 1px solid;
+  }
+  .col-report-table-right{
+    width: 145px;
+    text-align: right;
+  }
+  .for-print-report{
+    font-size: 16px;
+  }
+  .text-date-report{
+    font-size: 14px;
+    padding-left: 113px;
+    padding-top: 30px;
+  }
+  .text-date-report2{
+    font-size: 14px;
+  }
+  table.table.table-sm {
+      margin-left: -15px;
+      margin-right: -15px;
+  }
+  tfoot.dialyreport-view-tfoot{
+      font-size: 15px;
+  }
+  table.table.table-sm>tbody>tr>td{
+    font-size: 12px !important;
+  }
+  table.table.table-sm>thead>tr>th.table-center{
+  }
+  table.table.table-sm > tfoot > tr > td.table-foot-center{
+    border-right: 1px solid !important;
+  }
+  .report-receiver{
+    font-size: 14px;
+    text-align: center;
+  }
+  .row.justify-content-between{
+    border-top: 2px solid;
+    padding-top: 150px;
+  }
+  tfoot.dialyreport-view-tfoot>tr>td{
+    font-weight: bold;
+  }
+  td.table-foot-center,th.table-foot-center{
+    border-right: 1px solid;
+  }
+  th.table-foot-top,td.table-foot-top{
+    border-top: 1px solid;
+    border-bottom: 1px solid !important;
+  }
+  .text-head-report{
+    margin-top: 10px;
+  }
+  .large-receipt-report{
+    margin-top: -17px;
+    font-size: 30px;
+  }
+  .nav-for-print{
+    display: none !important;
+  }
+  .nav-for-print-report{
+    display: none !important;
+  }
+}
+
+.form-group input, .form-group div{
+  border-left: 0 !important;
+  border-right: 0 !important;
+  border-top: 0 !important;
+  box-shadow: none !important;
+}
+
+.paragraph {
+  background-color: white;
+  padding: 60px;
+  margin-top: 30px;
+  margin-bottom: 30px;
+}
+
+.paragraph.tab-content {
+  margin-top: 0px;
+}
+
+.paragraph.cyan,
+#bird-eye .modal-content.cyan {
+  border-left: 5px solid;
+  border-left-color: #1cc5db;
+}
+
+.paragraph.orange{
+  border-left: 5px solid;
+  border-left-color: #F59C0B;
+}
+
+.paragraph.grey{
+  border-left: 5px solid;
+  border-left-color: #EDF3F7;
+}
+
+.employee-details .img-profile{
+  position: relative;
+}
+
+.employee-details .img-bg {
+  width: 100% !important;
+  margin-top: -60px;
+  padding-bottom: -20px;
+}
+
+.employee-details h1#employeeName {
+  margin-top: 0px !important;
+}
+
+.employee-details .dropdown small {
+  color: #A6A6A7;
+}
+
+.space20{
+  height: 20px;
+}
+
+.cursor-pointer {
+  cursor: pointer;
+}
+
+#payroll {
+  margin: 0px 10px;
+}
+
+#payroll .payroll-content {
+  padding-top: 30px;
+  background-color: #fff;
+  border-left: 4px solid #00D2D7;
+}
+
+#payroll th,
+#payroll td {
+  vertical-align: middle;
+}
+
+#payroll tfoot td.text-green,
+#payroll tfoot td.text-center,
+#payroll tfoot td.bordered {
+  border-bottom: 2px solid #FFAA00;
+}
+
+#payroll .dropdown-menu button {
+  background-color: transparent;
+  border: 0px;
+}
+
+#payroll th.income {
+  border-top: 1px solid #C8C8C8;
+  border-right: 1px solid #C8C8C8;
+}
+#payroll th.outcome {
+  border-top: 1px solid #C8C8C8;
+  border-left: 1px solid #C8C8C8;
+}
+
+#payroll th.bordered,
+#payroll td.bordered {
+  border: 1px solid #C8C8C8;
+}
+
+.popover-wrapper .editable-buttons .btn-primary {
+  background-color: #A3F185 !important;
+  border-color: #A3F185 !important;
+}
+
+.popover-wrapper .editable-buttons .btn-default {
+  background-color: #fff !important;
+  border-color: #E50000 !important;
+  color: #E50000 !important;
+}
+
+
+/* Fixed TAble Header */
+table#payroll-history-table {
+  display: flex;
+  flex-direction: column;
+}
+#payroll-history-table tr {
+  display: flex;
+}
+#payroll-history-table thead, tbody {
+  overflow-y: scroll;
+}
+#payroll-history-table tbody {
+  height: 445px;
+}
+
+.white-bg {
+  background-color: white !important;
+}
+
+.modal-content {
+  background-color: white;
+  padding: 60px;
+  margin-top: 30px;
+  margin-bottom: 30px;
+  border: 0px solid;
+  border-left: 5px solid;
+  border-left-color: #F59C0B;
+  border-radius: 0px;
+}
+
+.employee-details.employee-menu {
+  padding-top: 100px;
+  background-color: #F3F9FC;
+}
+
+.employee-details.employee-menu-space {
+  padding-top: 100px;
+}
+
+.z-index-lv-1{
+  z-index: 999;
+}
+
+.z-index-lv-2{
+  z-index: 998;
+}
+
+.scrollable-menu {
+  height: auto;
+  max-height: 400px;
+  overflow-x: hidden;
+}
+
+.top-bar-space{
+  height: 94px;
+}
+
+table.scrollable-header {
+  /*table-layout:fixed;*/
+  margin-bottom: -1px !important;
+}
+
+.scrollable-content {
+  overflow-y:auto;
+  overflow-x:hidden;
+}
+
+.nav-tabs.main > li > a {
+  padding: 20px 40px 20px 40px;
+}
+
+.nav-tabs.main > li > a {
+  font-size: 22px;
+}
+
+.nav-tabs.main {
+  border-bottom: 1px solid white;
+}
+
+.nav-tabs.main > li.cyan > a {
+  color: #62C4CC;
+}
+
+.nav-tabs.main > li.orange > a {
+  color: #F59C0B;
+}
+
+.nav-tabs.main > li.active.cyan > a,
+.nav-tabs.main > li.active.orange > a {
+  color: #333;
+}
+
+.nav-tabs.main > li.active > a,
+.nav-tabs.main > li.active > a:hover,
+.nav-tabs.main > li.active > a:focus {
+  border: none;
+  background-color: white;
+  border-bottom: 1px solid white;
+}
+
+.nav-tabs.main > li > a,
+.nav-tabs.main > li > a:hover {
+  background-color: transparent;
+  border: none;
+}
+
+.employee-details .paragraph.private {
+  padding-left: 30px;
+  padding-top: 35px;
+}
+
+.employee-details .paragraph .sub-menu {
+  padding-right: 0px;
+}
+
+.employee-details .paragraph ul {
+  list-style-type: none;
+  padding-left: 0px;
+  border-bottom: none;
+}
+
+.employee-details .paragraph ul li {
+  padding-top: 2px;
+  font-size: 16px;
+  width: 100%;
+}
+
+.employee-details .paragraph ul li.active {
+  border-right: 3px solid #F59C0B;
+}
+
+.employee-details .paragraph ul li a {
+  color: #333;
+  border: none;
+}
+
+.employee-details .paragraph ul li.active a {
+  color: #F59C0B;
+  border: none;
+}
+
+.employee-details .paragraph ul li a:hover {
+  background-color: transparent;
+  border: none;
+}
+
+.employee-details .private .tab-content {
+  height: 100%;
+  border-left: 1px solid #F59C0B;
+}
+
+.somsri-select {
+  border-top: none;
+  border-left: none;
+  border-right: none;
+  box-shadow: none;
+}
+
+.checkbox-group td:nth-child(1) {
+  width: 30px;
+}
+
+.child {
+  width: 50px !important;
+}
+
+.checkbox-group label {
+  padding-top: 9px;
+}
+
+.popover-wrapper.bottom-popup form {
+  margin-top: 90px !important;
+}
+
+.popover-wrapper.bottom-popup form:before {
+  content: "";
+  width: 0;
+  height: 0;
+  border-left: 10px solid transparent;
+  border-right: 10px solid transparent;
+  border-bottom: 10px solid #AAA;
+  border-top: 0px !important;
+  position: absolute;
+  top: -10px !important;
+}
+
+.popover {
+  background: AntiqueWhite;
+}
+
+.popover-wrapper.bottom-popup form:after {
+  content: "";
+  width: 0;
+  height: 0;
+  border-left: 9px solid transparent;
+  border-right: 9px solid transparent;
+  border-bottom: 9px solid #FFF;
+  position: absolute;
+  top: -9px !important;
+  border-top: 0px !important;
+}
+.btn.employee-type {
+  background-color: #AAAAAA;
+  border-color: white;
+  box-shadow: none;
+}
+.btn.employee-type.active {
+  background-color: #FFAA00;
+}
+
+#payroll .dropdown-menu, #payroll-report .dropdown-menu {
+  max-height: calc(100vh - 170px);
+  overflow-y: scroll;
+}
+
+.employee-details .dropdown-menu {
+  max-height: calc(100vh - 200px);
+  overflow-y: scroll;
+}
+
+// Css of somsri invoice
+
+// img {
+//     @extend .img-fluid;
+//     margin: 0 auto;
+// }
+// THESE ARE EXAMPLES YOU CAN MODIFY
+// create your own classes
+// to make views framework-neutral
+
+// .column {
+//     @extend .col-md-6;
+// }
+//
+// .form {
+//     @extend .col-md-6;
+// }
+//
+// .form-centered {
+//     @extend .col-md-6;
+// }
+//
+// .submit {
+//     @extend .btn;
+//     @extend .btn-primary;
+//     @extend .btn-lg;
+// }
+// apply styles to HTML elements
+// to make views framework-neutral
+
+// main {
+//     @extend .container;
+//     margin-top: 30px; // accommodate the navbar
+// }
+//
+// section {
+//     @extend .row;
+//     margin-top: 20px;
+// }
+
+.slide-down-enter,
+.slide-down-leave {
+    -webkit-transition: 200ms cubic-bezier(0.250, 0.250, 0.750, 0.750) all;
+    -moz-transition: 200ms cubic-bezier(0.250, 0.250, 0.750, 0.750) all;
+    -ms-transition: 200ms cubic-bezier(0.250, 0.250, 0.750, 0.750) all;
+    -o-transition: 200ms cubic-bezier(0.250, 0.250, 0.750, 0.750) all;
+    transition: 200ms cubic-bezier(0.250, 0.250, 0.750, 0.750) all;
+    display: block;
+    overflow: hidden;
+    position: relative;
+}
+
+.items-table .row {
+    border-bottom: 1px solid #ddd;
+    line-height: 3em;
+}
+
+.items-table .row:last-child {
+    border-bottom: none;
+    line-height: 3em;
+}
+
+.slide-down-enter.slide-down-enter-active,
+.slide-down-leave {
+    opacity: 1;
+    height: 46px;
+}
+
+.slide-down-enter,
+.slide-down-leave.slide-down-leave-active {
+    opacity: 0;
+    height: 0;
+}
+
+.invoice-number-container * {
+    font-family: 'Maitree', serif;
+    float: right;
+}
+
+.items-table .row:nth-child(even) {
+    background: #f9f9f9;
+}
+
+.items-table input {
+    line-height: 1.5em;
+}
+
+.actions {
+    margin-top: 200px;
+}
+
+input:focus {
+    outline: 0;
+}
+
+.heading {
+    margin-bottom: 10px;
+    float: left;
+    font-size: 36px;
+    color: #5b5b5b;
+    line-height: 2.5em;
+}
+
+.branding {
+    line-height: 100px;
+    color: #8d8d8d;
+    font-size: 21px;
+}
+
+.form_1{
+    margin-top: -30px;
+    padding: 36px;
+    border: 1px solid #ddd;
+    box-shadow: 2px 7px 20px #b7b7b7;
+    background-color: #fff;
+}
+
+.form-1_2{
+    margin-top: 15px;
+}
+
+.form_2{
+    margin-top: 20px;
+    padding: 36px;
+    border: 1px solid #ddd;
+    box-shadow: 2px 7px 20px #b7b7b7;
+    background-color: #fff;
+}
+.form-control{
+    border-radius: inherit;
+    border: inherit;
+    border-bottom: 1px solid #ddd;
+}
+.container input:focus, main input:focus, .container input:hover, main input:hover,
+.container textarea:focus, main textarea:focus, .container textarea:hover, main textarea:hover,
+.table-striped > tbody > tr:nth-child(2n+1) > td input:focus,
+.table-striped > tbody > tr:nth-child(2n+1) > td input:hover{
+    border: inherit;
+}
+
+.semester-1{
+    display: -webkit-inline-box;
+}
+
+.btn-primary{
+    background-color: #5bab67;
+    border-color: inherit;
+    border-radius: inherit;
+    letter-spacing: 1px;
+    border: inherit;
+}
+.btn-primary:hover{
+    background-color: #6fc178;
+    border:inherit;
+    transition: 0.3s;
+}
+
+.col-payment{
+    margin-left: -65px;
+}
+
+.radio {
+    line-height: 30px;
+}
+
+.btn-grades{
+    font-family: 'Maitree', serif;
+    background-color: transparent;
+    margin-top: -3px;
+}
+#semester{
+    margin-top: -7px;
+}
+.fa-times-circle{
+    color: #d0021b;
+    font-size: 21px;
+    text-align: center;
+}
+
+.items-table .row:nth-child(even), .items-table section:nth-child(even){
+    background-color: transparent;
+}
+
+.grop-table{
+    border: inherit;
+    padding-left: 0px;
+}
+
+.table-price{
+    text-align: right;
+    padding-right: 0px;
+    border:inherit;
+    margin-top: 7px;
+    margin-bottom: -7px;
+}
+.title-htable{
+    font-size: 20px;
+}
+.form-price{
+    margin-right: -13px;
+}
+.add-item-container{
+    margin-bottom: 100px;
+}
+.text-center{
+    text-align: center;
+}
+
+.header.row{
+    padding-top: 20px;
+    border-bottom: 3px solid #ddd;
+}
+
+.text-note{
+    display: -webkit-box;
+}
+.text-right-1{
+    color: #dd5a2c;
+    font-size: 21px;
+    margin-top: 40px;
+    border-top: 1px solid #5d5d5d;
+    border-bottom: 4px double #5d5d5d;
+}
+.text-right-htable{
+    text-align: right !important;
+}
+.row.invoice-item.add-invoice-item {
+    border-bottom: inherit;
+}
+
+.form-control:disabled{
+    background: transparent;
+}
+
+.somsri-invoice.btn-submit{
+    font-family: 'Maitree', serif;
+    background-color: #3fa1e6;
+    color: #fff;
+    padding: 8px 46px;
+    box-shadow: 2px 7px 20px #b7b7b7;
+    margin-right: 20px;
+    letter-spacing: 1px;
+    border: inherit;
+}
+.somsri-invoice.btn-cancel{
+    font-family: 'Maitree', serif;
+    background-color: #fff;
+    color: #000;
+    padding: 8px 46px;
+    box-shadow: 2px 7px 20px #b7b7b7;
+    letter-spacing: 1px;
+    border: inherit;
+}
+.somsri-invoice.btn-cancel:hover{
+    background-color: #f2f2f2;
+    border:inherit;
+    transition: 0.3s;
+}
+.somsri-invoice.btn-submit:hover{
+    background-color: #85cdf9;
+    border:inherit;
+    transition: 0.3s;
+}
+.col-total-1{
+    margin-bottom: 5px;
+}
+
+.col-total-2{
+    padding-top: 10px;
+    border-top: 2px solid #ddd;
+}
+.text-hradio{
+    color: #5b5b5b;
+    font-size: 21px;
+}
+
+.textarea-note{
+    margin-top: 13px;
+    margin-left: -30px;
+    border: 1px solid #ddd;
+    min-width: 500px;
+}
+
+.col-md-1{
+    max-width: 5.3%;
+}
+
+.col-md-1.ng-binding{
+    text-align: center;
+    margin-top: 3px;
+}
+.form-list{
+    margin-top: 7px;
+    margin-bottom: -7px;
+}
+.logo-container {
+    text-align: right;
+}
+
+.infos .right {
+    text-align: right;
+}
+
+.infos .right input {
+    text-align: right;
+}
+
+.infos .input-container {
+    padding: 3px 0;
+}
+
+.header.row {
+    font-weight: bold;
+    border-bottom: 1px solid #ddd;
+    border-top: 1px solid #ddd;
+}
+
+input,
+textarea {
+    border: 1px solid #FFF;
+}
+
+.container input:focus,
+.container input:hover,
+.container textarea:focus,
+.container textarea:hover,
+.table-striped > tbody > tr:nth-child(2n+1) > td input:focus,
+.table-striped > tbody > tr:nth-child(2n+1) > td input:hover {
+    border-bottom: 1px solid #ddd;
+}
+
+.table-striped > tbody > tr:nth-child(2n+1) > td input {
+    background-color: #F9F9F9;
+    border: 1px solid #F9F9F9;
+}
+
+.form-slip-forslip{
+    display: none;
+}
+.form-slip-forslip-copy{
+  display: none;
+}
+
+/*slip*/
+.form-slip{
+    padding: 50px 100px;
+    background: #fff;
+    min-height: 1000px;
+    box-shadow: 2px 7px 20px #b7b7b7;
+    margin-top: 120px;
+}
+.text-slip1-school{
+    font-size: 12px;
+}
+.name-school{
+    font-size: 16px;
+    line-height: 24px;
+}
+.slip-sec1{
+    margin-bottom: 20px;
+}
+.slip-sec2{
+    margin-bottom: 20px;
+}
+.large-receipt{
+    font-size: 24px;
+    margin-top: -10px;
+}
+.text-slip2-school{
+    font-size: 14px;
+    margin-right: 0px;
+}
+.text-slip3-payment{
+    font-size: 18px;
+    margin-left: 0px !important;
+}
+.text-slip4-refund1{
+    font-size: 11px;
+    text-indent: 35px;
+    line-height: 24px;
+}
+.text-slip4-refund2{
+    font-size: 11px;
+    line-height: 24px;
+}
+.table-payment-slip{
+    margin-right: -30px;
+}
+.sup-date{
+    margin-top: 15px;
+}
+.sec-payment{
+    border-bottom: 1px solid;
+    padding-bottom: 20px;
+    padding-top: 20px;
+    margin-bottom: 10px;
+    margin-left: -15px;
+    margin-right: -15px;
+}
+.right-receiver{
+    font-size: 16px;
+    margin-top: 80px;
+    margin-left: 70%;
+}
+.table-with1{
+    width: 8%;
+    text-align: center;
+}
+.table-with2{
+    width: 15%;
+    text-align: right;
+}
+td.height-col-table{
+  height: 120px;
+  border-right: 1px solid !important;
+  border-left: 1px solid !important;
+}
+.table-bordered th, .table-bordered td{
+    border:inherit;
+}
+th.table-center {
+    border-right: 1px solid;
+    border-left: 1px solid;
+    text-align: center;
+}
+table.table.table-sm>thead>tr>th{
+  border: 1px solid !important;
+}
+td.table-center.ng-binding,td.table-center{
+    border-right: 1px solid;
+    border-left: 1px solid;
+}
+td.total-pay{
+    border-right: 1px solid;
+}
+b.total_text{
+    margin-left: 100px;
+    margin-right: 15px;
+    letter-spacing: 1px;
+}
+.text-title-table{
+    font-size: 14px;
+    margin-bottom: 10px;
+    margin-top: 10px;
+}
+.table-bordered{
+    border-top: 1px solid;
+    border-bottom: 1px solid;
+    border-left: inherit;
+    border-right: inherit;
+}
+.num-pay{
+    text-align: center;
+}
+.price-pay{
+    text-align: right;
+}
+table.table.table-sm>tbody{
+    border-bottom: 1px solid;
+}
+tfoot{
+    text-align: right;
+}
+tfoot>tr>th{
+    text-align: right;
+}
+
+.img-logo_school{
+    height: 130px;
+    width: 150px;
+}
+.text-total{
+    background-color: #f1f1f1;
+    border-top:1px solid;
+}
+.text-total>td {
+    padding-right: 0px;
+    background-color: #f1f1f1 !important;
+}
+.nav-for-print{
+  height: 80px;
+  margin-left: -15px;
+  margin-top: -130px;
+  width: 100%;
+  background-color: #3fa1e6;
+  position: fixed;
+  z-index: 100;
+}
+.row-print{
+  padding-top: 20px !important;
+}
+.btn-back_to_print{
+  font-family: 'Maitree', serif;
+  background: transparent;
+  color: #fff;
+  font-size: 20px;
+  letter-spacing: 2px;
+  font-weight: 100;
+}
+.btn-to-print{
+  font-family: 'Maitree', serif;
+  font-size: 20px;
+  color: #333;
+  letter-spacing: 2px;
+  background-color: #fff;
+  padding: 8px 36px;
+}
+/*end slip*/
+
+
+.infos input {
+    width: 300px;
+}
+
+.align-right input {
+    text-align: right;
+    width: 300px;
+}
+
+#imgInp {
+    display: none;
+}
+
+.copy {
+    font-family: "Lucida Grande", "Lucida Sans Unicode", "Lucida Sans", Geneva, Verdana, sans-serif;
+    width: 100%;
+    margin: 40px 0 20px;
+    font-size: 10px;
+    color: rgba(0, 0, 0, 0.5);
+    text-align: center;
+    color: #404040;
+    cursor: default;
+    line-height: 1.4em;
+}
+
+.copy .love {
+    display: inline-block;
+    position: relative;
+    color: #ce0c15;
+}
+
+.footer {
+    position: absolute;
+    bottom: 0;
+    width: 100%;
+    /* Set the fixed height of the footer here */
+    height: 65px;
+}
+/* Custom page CSS
+-------------------------------------------------- */
+/* Not required for template or sticky footer method. */
+body > .container-fluid {
+    padding: 100px 15px 0;
+}
+
+.container .text-muted {
+    margin: 20px 0;
+}
+
+.footer > .container {
+    padding-right: 15px;
+    padding-left: 15px;
+}
+
+.navbar-custom {
+    background-color: #ffffff;
+    box-shadow: 0 2px 4px 0 rgba(0, 0, 0, 0.3);
+    padding-top: 0;
+    padding-bottom: 0;
+
+    .logo {
+        width: 180px;
+        height: 91px;
+        margin-left: -15px;
+        background-color: #3fa1e6;
+
+        a {
+            margin-top: 15px;
+            margin-right: 0;
+        }
+    }
+}
+
+.main-menu {
+    margin-top: calc(50vh - 250px);
+
+    .menu-btn {
+        width: 119px;
+        height: 119px;
+        border-radius: 6px;
+        background-color: #f2f2f2;
+        box-shadow: 0 2px 4px 0 rgba(0, 0, 0, 0.3);
+        margin: 0 auto;
+        cursor: pointer;
+        transition: all 0.25s ease;
+
+        &:hover {
+            box-shadow: 0 2px 10px 0 rgba(0, 0, 0, 0.5);
+        }
+
+        .wraptocenter {
+            display: table-cell;
+            text-align: center;
+            vertical-align: middle;
+            width: 119px;
+            height: 119px;
+        }
+
+        .wraptocenter * {
+            vertical-align: middle;
+        }
+    }
+
+    p {
+        font-size: 18px;
+        font-weight: 500;
+        font-style: normal;
+        font-stretch: normal;
+        line-height: normal;
+        letter-spacing: normal;
+        text-align: center;
+        color: #5b5b5b;
+        margin-top: 10px;
+    }
+}
+.text-green {
+  color: #66E341 !important;
+}
+
+.text-red {
+  color: #E70A0E !important;
+}
+
+.text-yellow {
+  color: #FFAA00;
+}
+
+.text-white {
+  color: #fff;
+}
+
+.text-cyan{
+  color: #62C4CC;
+}
+
+.main-menu {
+  margin-top: calc(50vh - 200px);
+}
+
+.main-menu .main-menu-box {
+  text-align: center;
+}
+
+.main-menu-item {
+  text-align: center;
+  display: table;
+  margin: auto;
+}
+
+.main-menu-item:focus {
+  outline: none;
+}
+
+.bg-light-gray {
+  background-color: #DDD;
+}
+
+.bg-gray {
+  background-color: #4A4A4A;
+  color: #fff;
+}
+
+.bg-yellow {
+  background-color: #FFAA00;
+  color: #fff;
+  border-radius: 0px
+}
+
+.btn-print {
+  background-color: #FFAA00;
+  color: #ffffff;
+  border-radius: 0px
+}
+
+
+.btn-danger {
+  border-radius: 0px
+}
+
+.btn-memo {
+  background-color: #fff;
+  border: 2px solid #4893DC;
+  color: #4893DC;
+  border-radius: 0px
+}
+
+.btn-print {
+  background-color: #FFAA00;
+  color: #ffffff;
+  border-radius: 0px;
+}
+
+
+#student-report .report-content {
+  padding-top: 30px;
+  background-color: #fff;
+  border-left: 4px solid #00D2D7;
+}
+
+#student-report tfoot {
+  border-bottom: 2px solid #FFAA00;
+}
+
+#student-report #grade-list {
+  cursor: pointer;
+}
+
+#student-report .dropdown-menu button {
+  background-color: transparent;
+  border: 0px;
+}
+
+#student-report .text-currency {
+  text-align: right;
+}
+
+
+// css dailyReport
+.content-dailyReport{
+  padding: 50px 80px;
+  box-shadow: 2px 7px 20px #b7b7b7;
+  margin-top: -20px;
+  font-size: 18px;
+  color: #333333;
+}
+.topic-right-report{
+  text-align: right;
+  margin-top: 6px;
+}
+.number-report-right{
+  text-align: right;
+  margin-top: 6px;
+}
+.input-num-center{
+  border-right: 2px solid;
+}
+
+.button-reportdairy{
+  margin-top: 50px;
+}
+
+// for-report-view
+div#dailyReportPreview {
+    max-width: 960px;
+    box-shadow: 2px 7px 20px #b7b7b7;
+    padding: 70px 70px;
+    margin-top: 100px;
+}
+.col-num{
+  width: 77px;
+  text-align: center;
+  border-top: 1px solid !important;
+}
+.col-report-table-right{
+  width: 145px;
+  text-align: right;
+  border-top: 1px solid !important;
+}
+.for-print-report{
+  font-size: 16px;
+}
+.text-report-school{
+  font-size: 13px;
+}
+.text-date-report{
+  font-size: 14px;
+  padding-left: 113px;
+  padding-top: 30px;
+}
+.text-date-report2{
+  font-size: 14px;
+}
+table.table.table-sm {
+    margin-left: -15px;
+    margin-right: -15px;
+}
+tfoot.dialyreport-view-tfoot{
+    font-size: 15px;
+}
+table.table.table-sm>tbody>tr>td{
+  border-bottom: none !important;
+  border-top: none !important;
+  border-left: 1px solid !important;
+  border-right: 1px solid !important;
+  font-size: 15px;
+  text-indent: 30px;
+  line-height: 25px;
+}
+table.table.table-sm>thead>tr>th.table-center{
+  border-top: 1px solid !important;
+}
+table.table.table-sm > tfoot > tr > td{
+  border-bottom: none !important;
+  border-top: none !important;
+  border-left: 1px solid !important;
+  border-right: 1px solid !important;
+}
+table.table.table-sm > tfoot > tr > td.table-foot-top{
+  border-top: none !important;
+  border-left: none !important;
+  border-bottom: none !important;
+  border-right: 1px solid !important;
+}
+table.table.table-sm > tfoot > tr > th{
+  border: 1px solid !important;
+}
+.report-receiver{
+  font-size: 14px;
+  text-align: center;
+}
+.row.justify-content-between{
+  border-top: 2px solid;
+  padding-top: 150px;
+}
+tfoot.dialyreport-view-tfoot>tr>td{
+  font-weight: bold;
+}
+td.table-foot-center,th.table-foot-center{
+  border-right: 1px solid;
+}
+th.table-foot-top,td.table-foot-top{
+  border-top: 1px solid;
+  border-bottom: 1px solid !important;
+}
+.text-head-report{
+  margin-top: 10px;
+}
+.large-receipt-report{
+  margin-top: -17px;
+  font-size: 30px;
+}
+.nav-for-print-report{
+  height: 80px;
+  margin-left: -15px;
+  margin-top: -110px;
+  width: 100%;
+  background-color: #3fa1e6;
+  position: fixed;
+  z-index: 100;
+}
+.row-print{
+  padding-top: 20px !important;
+}
+.btn-back_to_print{
+  font-family: 'Maitree', serif;
+  background: transparent;
+  color: #fff;
+  font-size: 20px;
+  letter-spacing: 2px;
+  font-weight: 100;
+  cursor: pointer;
+}
+.btn-to-print,.btn-to-print:focus{
+  font-family: 'Maitree', serif;
+  font-size: 18px;
+  color: #333;
+  letter-spacing: 2px;
+  background-color: #fff;
+  padding: 8px 36px;
+  box-shadow: 0 5px 13px 0 rgba(0, 0, 0, 0.3);
+  cursor: pointer;
+}
+.btn-to-print:hover{
+  background-color: #f2f2f2;
+  transition: 0.3s;
+}
+
+
+.pagination {
+    margin-top: 10px;
+    align-items: center;
+    justify-content: center;
+}
+
+// Release Notes Invoices css
+.changelog-invoices{
+  font-family: 'Maitree', serif;
+  padding: 30px 80px;
+  background-color: #fff;
+  box-shadow: 0 5px 13px 0 rgba(0, 0, 0, 0.3);
+  margin-top: 30px;
+}
+.head-changelog{
+  border-bottom: 1px solid #eeeeee;
+}
+
+ .head-changelog-date{
+   margin-top: 30px;
+ }
+ // modal invoice
+.titel-modal-pay{
+  margin-top: 13px;
+}
+.price-pay{
+  border-bottom: 1px solid #ddd;
+  padding-right: 10px;
+}
+.content-no-amount{
+  margin-top: 30px;
+  height: 300px;
+  color: red;
+  padding-top: 15%;
+  text-align: center;
+  font-size: 17px;
+}
+.content-amount{
+  padding: 5px 20px;
+}
+ a.nav-user,a.nav-user:focus{
+     color: #7d7d7d;
+     padding-right: 10px;
+     border-right: 2px solid #3fa1e6;
+     letter-spacing: 2px;
+     text-decoration: none;
+ }
+a.nav-user:hover{
+    text-decoration: none;
+    color: #3e3e3e;
+  }
+
+.help-invoice,.help-invoice:focus{
+  color: #7d7d7d;
+  font-size: 21px;
+  font-weight: bold;
+  padding-top: 5px;
+  padding-left: 20px;
+  margin-right: 20px;
+}
+.help-invoice:hover{
+  color: #3e3e3e;
+}
+.avatar {
+   .img-avatar {
+     margin-top: -11px;
+     margin-bottom: -10px;
+     padding-left: 3px;
+   }
+
+   .img-avatar {
+     border: 1px solid #fff;
+     border-radius: 30px;
+     padding: 10px;
+   }
+}
+.text-table-invoicereport{
+  font-size: 14px;
+}
+a:not([href]):not([tabindex]){
+  cursor: pointer;
+  color: #d0021b;
+}
+.text-invoice-num,.text-invoice-num:focus{
+  color: #0275d8;
+  font-weight: bold;
+  cursor: pointer;
+}
+.text-invoice-num:hover{
+  text-decoration: underline;
+}
