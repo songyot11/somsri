@@ -10,10 +10,51 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20170215123034) do
+ActiveRecord::Schema.define(version: 20170222113015) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
+
+  create_table "account_types", force: :cascade do |t|
+    t.string   "name",       null: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+  end
+
+  create_table "accounts", force: :cascade do |t|
+    t.string   "name",            limit: 512,                null: false
+    t.datetime "date",                                       null: false
+    t.integer  "account_type_id",                            null: false
+    t.float    "amount",                       default: 0.0, null: false
+    t.string   "note",            limit: 1024
+    t.datetime "created_at",                                 null: false
+    t.datetime "updated_at",                                 null: false
+    t.index ["name"], name: "index_accounts_on_name", using: :btree
+  end
+
+  create_table "class_permisions", force: :cascade do |t|
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.integer  "list_id"
+    t.integer  "user_id"
+    t.index ["list_id"], name: "index_class_permisions_on_list_id", using: :btree
+    t.index ["user_id"], name: "index_class_permisions_on_user_id", using: :btree
+  end
+
+  create_table "daily_reports", force: :cascade do |t|
+    t.float    "real_start_cash",  default: 0.0
+    t.float    "real_cash",        default: 0.0
+    t.float    "real_credit_card", default: 0.0
+    t.float    "real_cheque",      default: 0.0
+    t.float    "real_tranfers",    default: 0.0
+    t.float    "cash",             default: 0.0
+    t.float    "credit_card",      default: 0.0
+    t.float    "cheque",           default: 0.0
+    t.float    "tranfers",         default: 0.0
+    t.integer  "user_id"
+    t.datetime "created_at",                     null: false
+    t.datetime "updated_at",                     null: false
+  end
 
   create_table "employees", force: :cascade do |t|
     t.integer  "school_id"
@@ -51,6 +92,18 @@ ActiveRecord::Schema.define(version: 20170215123034) do
     t.index ["school_id"], name: "index_employees_on_school_id", using: :btree
   end
 
+  create_table "genders", force: :cascade do |t|
+    t.string   "name"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+  end
+
+  create_table "grades", force: :cascade do |t|
+    t.string   "name"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+  end
+
   create_table "individuals", force: :cascade do |t|
     t.string   "prefix"
     t.string   "first_name"
@@ -81,6 +134,73 @@ ActiveRecord::Schema.define(version: 20170215123034) do
     t.index ["spouse_id"], name: "index_individuals_on_spouse_id", using: :btree
   end
 
+  create_table "invoice_statuses", force: :cascade do |t|
+    t.string   "name"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+  end
+
+  create_table "invoices", force: :cascade do |t|
+    t.integer  "student_id"
+    t.integer  "parent_id"
+    t.integer  "user_id"
+    t.text     "remark"
+    t.string   "payment_method_id"
+    t.string   "cheque_bank_name"
+    t.string   "cheque_number"
+    t.string   "cheque_date"
+    t.string   "transfer_bank_name"
+    t.string   "transfer_date"
+    t.integer  "invoice_status_id"
+    t.string   "school_year"
+    t.string   "semester"
+    t.datetime "created_at",         null: false
+    t.datetime "updated_at",         null: false
+    t.string   "grade_name"
+  end
+
+  create_table "line_items", force: :cascade do |t|
+    t.string   "detail"
+    t.float    "amount"
+    t.integer  "invoice_id"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+  end
+
+  create_table "lists", force: :cascade do |t|
+    t.integer  "user_id"
+    t.string   "name",       default: "", null: false
+    t.string   "category",   default: "", null: false
+    t.datetime "created_at",              null: false
+    t.datetime "updated_at",              null: false
+    t.index ["user_id", "name"], name: "index_lists_on_user_id_and_name", unique: true, using: :btree
+    t.index ["user_id"], name: "index_lists_on_user_id", using: :btree
+  end
+
+  create_table "parents", force: :cascade do |t|
+    t.string   "full_name"
+    t.string   "full_name_english"
+    t.string   "nickname"
+    t.string   "nickname_english"
+    t.string   "mobile"
+    t.string   "email"
+    t.string   "line_id"
+    t.datetime "created_at",        null: false
+    t.datetime "updated_at",        null: false
+    t.string   "id_card_no"
+  end
+
+  create_table "payment_methods", force: :cascade do |t|
+    t.string  "payment_method"
+    t.string  "cheque_bank_name"
+    t.string  "cheque_number"
+    t.string  "cheque_date"
+    t.string  "transfer_bank_name"
+    t.string  "transfer_date"
+    t.integer "invoice_id"
+    t.float   "amount",             default: 0.0, null: false
+  end
+
   create_table "payrolls", force: :cascade do |t|
     t.integer  "employee_id"
     t.decimal  "salary",             default: "0.0", null: false
@@ -103,6 +223,26 @@ ActiveRecord::Schema.define(version: 20170215123034) do
     t.index ["employee_id"], name: "index_payrolls_on_employee_id", using: :btree
   end
 
+  create_table "relationships", force: :cascade do |t|
+    t.string   "name"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+  end
+
+  create_table "roll_calls", force: :cascade do |t|
+    t.integer  "student_id"
+    t.string   "status",     default: "", null: false
+    t.string   "cause",      default: ""
+    t.datetime "created_at",              null: false
+    t.datetime "updated_at",              null: false
+    t.string   "round"
+    t.string   "check_date"
+    t.integer  "list_id"
+    t.index ["list_id"], name: "index_roll_calls_on_list_id", using: :btree
+    t.index ["student_id", "list_id", "check_date", "round"], name: "index_roll_calls_uniq_roll", unique: true, using: :btree
+    t.index ["student_id"], name: "index_roll_calls_on_student_id", using: :btree
+  end
+
   create_table "schools", force: :cascade do |t|
     t.string   "name",       default: "", null: false
     t.datetime "created_at",              null: false
@@ -112,6 +252,40 @@ ActiveRecord::Schema.define(version: 20170215123034) do
     t.string   "zip_code"
     t.string   "phone"
     t.string   "fax"
+  end
+
+  create_table "student_lists", force: :cascade do |t|
+    t.integer  "student_id"
+    t.integer  "list_id"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["list_id"], name: "index_student_lists_on_list_id", using: :btree
+    t.index ["student_id"], name: "index_student_lists_on_student_id", using: :btree
+  end
+
+  create_table "students", force: :cascade do |t|
+    t.string   "full_name"
+    t.string   "full_name_english"
+    t.string   "nickname"
+    t.string   "nickname_english"
+    t.integer  "gender_id"
+    t.datetime "birthdate"
+    t.integer  "grade_id"
+    t.string   "classroom"
+    t.integer  "classroom_number"
+    t.integer  "student_number"
+    t.string   "national_id"
+    t.text     "remark"
+    t.datetime "created_at",        null: false
+    t.datetime "updated_at",        null: false
+  end
+
+  create_table "students_parents", force: :cascade do |t|
+    t.integer  "student_id",      null: false
+    t.integer  "parent_id",       null: false
+    t.integer  "relationship_id"
+    t.datetime "created_at",      null: false
+    t.datetime "updated_at",      null: false
   end
 
   create_table "tax_reductions", force: :cascade do |t|
@@ -166,15 +340,20 @@ ActiveRecord::Schema.define(version: 20170215123034) do
     t.datetime "updated_at",                          null: false
     t.integer  "school_id"
     t.string   "name"
+    t.string   "full_name"
+    t.string   "classroom"
     t.index ["email"], name: "index_users_on_email", unique: true, using: :btree
     t.index ["reset_password_token"], name: "index_users_on_reset_password_token", unique: true, using: :btree
     t.index ["school_id"], name: "index_users_on_school_id", using: :btree
   end
 
+  add_foreign_key "class_permisions", "lists"
+  add_foreign_key "class_permisions", "users"
   add_foreign_key "individuals", "employees", column: "child_id"
   add_foreign_key "individuals", "employees", column: "emergency_call_id"
   add_foreign_key "individuals", "employees", column: "friend_id"
   add_foreign_key "individuals", "employees", column: "parent_id"
   add_foreign_key "individuals", "employees", column: "spouse_id"
+  add_foreign_key "roll_calls", "lists"
   add_foreign_key "users", "schools"
 end
