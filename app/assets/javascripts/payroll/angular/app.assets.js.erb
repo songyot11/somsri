@@ -1,0 +1,90 @@
+(function() {
+  'use strict';
+  angular.module('somsri.payroll.assets', []).
+  constant('ASSETS', {
+    'somsri': {
+      'payroll': {
+        'home': {
+          name: 'somsri.payroll.home',
+          files: [
+            "<%= asset_path('payroll/angular/components/home/homeCtrl.js') %>"
+          ]
+        },
+        'report': {
+          name: 'somsri.payroll.report',
+          files: [
+            "<%= asset_path('payroll/angular/components/report/reportCtrl.js') %>",
+            "<%= asset_path('payroll/angular/components/report/reportService.js') %>",
+            "<%= asset_path('payroll/angular/components/slip/slipService.js') %>",
+            "<%= asset_path('payroll/angular/components/shared/slip/slipDirective.js') %>"
+          ]
+        },
+        'employees': {
+          name: 'somsri.payroll.employees',
+          files: [
+            "<%= asset_path('payroll/angular/components/employees/employeesCtrl.js') %>",
+            "<%= asset_path('payroll/angular/components/employees/employeesService.js') %>"
+          ]
+        },
+        'slip': {
+          name: 'somsri.payroll.slip',
+          files: [
+            "<%= asset_path('payroll/angular/components/slip/slipCtrl.js') %>",
+            "<%= asset_path('payroll/angular/components/slip/slipService.js') %>",
+            "<%= asset_path('payroll/angular/components/shared/slip/slipDirective.js') %>"
+          ]
+        },
+        'employee_details': {
+          name: 'somsri.payroll.employee_details',
+          files: [
+            "<%= asset_path('payroll/angular/components/employees/employee/employeeDetailsCtrl.js') %>",
+            "<%= asset_path('payroll/angular/components/employees/employeesService.js') %>",
+            "<%= asset_path('payroll/angular/components/report/reportService.js') %>",
+            "<%= asset_path('payroll/angular/components/individuals/individualsService.js') %>"
+          ]
+        },
+        'confirm_modal': {
+          name: 'somsri.payroll.confirm_modal',
+          files: [
+            "<%= asset_path('payroll/angular/components/modal/confirm/confirmModalCtrl.js') %>"
+          ]
+        },
+        'payroll': {
+          name: 'somsri.payroll.payroll',
+          files: [
+            "<%= asset_path('payroll/angular/components/payroll/payrollCtrl.js') %>",
+            "<%= asset_path('payroll/angular/components/report/reportService.js') %>"
+          ]
+        },
+        'setting': {
+          name: 'somsri.payroll.setting',
+          files: [
+            "<%= asset_path('payroll/angular/components/setting/settingCtrl.js') %>",
+            "<%= asset_path('payroll/angular/components/setting/settingService.js') %>"
+          ]
+        },
+        'password_modal': {
+          name: 'somsri.payroll.password_modal',
+          files: [
+            "<%= asset_path('payroll/angular/components/modal/password/passwordModalCtrl.js') %>",
+            "<%= asset_path('payroll/angular/components/modal/password/passwordModalService.js') %>"
+          ]
+        },
+        'create_payrolls_modal': {
+          name: 'somsri.payroll.create_payrolls_modal',
+          files: [
+            "<%= asset_path('payroll/angular/components/modal/createPayrolls/createPayrollsModalCtrl.js') %>",
+            "<%= asset_path('payroll/angular/components/modal/createPayrolls/createPayrollsModalService.js') %>"
+          ]
+        },
+        'emergency_call_modal': {
+          name: 'somsri.payroll.emergency_call_modal',
+          files: [
+            "<%= asset_path('payroll/angular/components/modal/emergencyCall/emergencyCallModalCtrl.js') %>",
+            "<%= asset_path('payroll/angular/components/individuals/individualsService.js') %>"
+          ]
+        },
+      }
+    }
+  });
+})();

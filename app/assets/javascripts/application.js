@@ -20,9 +20,11 @@
 //= require moment
 //= require angular-moment
 //= require ocLazyLoad/dist/ocLazyLoad.min
-//= require angular/components/mainCtrl.js.erb
-//= require angular/app.module
-//= require angular/app.assets
-//= require angular/shared/filters
-//= require angular/components/shared/slip/slipDirective
+
+//= require payroll/angular/components/mainCtrl.js.erb
+//= require payroll/angular/app.module
+//= require payroll/angular/app.assets
+//= require payroll/angular/shared/filters
+//= require payroll/angular/components/shared/slip/slipDirective
+
 //= require angular-xeditable/dist/js/xeditable

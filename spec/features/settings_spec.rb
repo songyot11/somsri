@@ -7,7 +7,7 @@ describe 'Employee Details', js: true do
   end
 
   it 'should update edit user detail' do
-    visit "/#/setting"
+    visit "/#/somsri_payroll/setting"
     sleep(1)
     page.fill_in 'username', :with => 'Akiyama Eve'
     page.fill_in 'useremail', :with => 'akiyama@eve.com'
@@ -20,7 +20,7 @@ describe 'Employee Details', js: true do
     click_button('บันทึก')
     sleep(1)
 
-    visit "/#/setting"
+    visit "/#/somsri_payroll/setting"
     sleep(1)
     expect(find_field('username').value).to eq 'Akiyama Eve'
     expect(find_field('useremail').value).to eq 'akiyama@eve.com'
@@ -34,7 +34,7 @@ describe 'Employee Details', js: true do
   end
 
   it 'should update password' do
-    visit "/#/setting"
+    visit "/#/somsri_payroll/setting"
     sleep(1)
     click_button('เปลี่ยนรหัสผ่าน')
     sleep(1)
@@ -48,6 +48,7 @@ describe 'Employee Details', js: true do
     page.fill_in 'Email', :with => user.email
     page.fill_in 'Password', :with => 'valid_password'
     click_button('Log in')
+    visit "/#/somsri_payroll"
     expect(page).to have_css('.main-menu')
   end
 end

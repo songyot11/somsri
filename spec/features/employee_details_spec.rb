@@ -108,7 +108,7 @@ describe 'Employee Details', js: true do
 
   describe 'employees list screen' do
     it 'should goto employee details when click employee' do
-      visit "/#/employees"
+      visit "/#/somsri_payroll/employees"
       sleep(1)
       first('.card').click
       sleep(1)
@@ -116,14 +116,14 @@ describe 'Employee Details', js: true do
     end
 
     it 'should create new payrolls' do
-      visit "/#/employees"
+      visit "/#/somsri_payroll/employees"
       sleep(1)
       click_link('เริ่มออกเงินเดือน')
       sleep(1)
       find('#effective_date').set('03/12/2000')
       click_button('บันทึก')
       sleep(1)
-      visit "/#/employees"
+      visit "/#/somsri_payroll/employees"
       sleep(1)
       first('.card').click
       sleep(1)
@@ -138,7 +138,7 @@ describe 'Employee Details', js: true do
     end
 
     it 'should warning before create new payrolls with same date' do
-      visit "/#/employees"
+      visit "/#/somsri_payroll/employees"
       sleep(1)
       # craete payroll
       click_link('เริ่มออกเงินเดือน')
@@ -148,7 +148,7 @@ describe 'Employee Details', js: true do
       sleep(1)
 
       # craete same payroll
-      visit "/#/employees"
+      visit "/#/somsri_payroll/employees"
       sleep(1)
       click_link('เริ่มออกเงินเดือน')
       sleep(1)
@@ -157,7 +157,7 @@ describe 'Employee Details', js: true do
       sleep(1)
       click_button('ตกลง')
       sleep(1)
-      visit "/#/employees"
+      visit "/#/somsri_payroll/employees"
       sleep(1)
       first('.card').click
       sleep(1)
@@ -175,7 +175,7 @@ describe 'Employee Details', js: true do
 
   describe 'employee detail screen' do
     before :each do
-      visit "/#/employees/#{employees[0].id}"
+      visit "/#/somsri_payroll/employees/#{employees[0].id}"
       sleep(1)
     end
 
@@ -283,7 +283,7 @@ describe 'Employee Details', js: true do
       sleep(1)
       click_button('ตกลง')
       sleep(1)
-      visit "/#/employees/#{employees[0].id}"
+      visit "/#/somsri_payroll/employees/#{employees[0].id}"
       sleep(1)
       expect(find_field('นามสกุล').value).to eq 'โอชา'
       expect(find_field('ค่าแรง / เงินเดือนปัจจุบัน').value).to eq '50000'
@@ -337,7 +337,7 @@ describe 'Employee Details', js: true do
       sleep(1)
       employee = Employee.find(employees[0].id)
 
-      visit "/#/employees/#{employees[0].id}"
+      visit "/#/somsri_payroll/employees/#{employees[0].id}"
       sleep(1)
       click_link('ข้อมูลส่วนตัว')
       expect(find('#birthdate').value).to have_content '03/12/1990'
@@ -353,7 +353,7 @@ describe 'Employee Details', js: true do
       click_button('ตกลง')
       sleep(1)
       employee = Employee.find(employees[0].id)
-      visit "/#/employees/#{employees[0].id}"
+      visit "/#/somsri_payroll/employees/#{employees[0].id}"
       expect(find('#start_date').value).to have_content '03/12/1990'
     end
 
@@ -367,7 +367,7 @@ describe 'Employee Details', js: true do
         click_button('ตกลง')
         sleep(1)
 
-        visit "/#/employees/#{employees[0].id}"
+        visit "/#/somsri_payroll/employees/#{employees[0].id}"
         sleep(1)
         expect(page).to have_select('ประเภทการจ้างงาน', selected: 'ลูกจ้างชั่วคราว')
       end
@@ -389,7 +389,7 @@ describe 'Employee Details', js: true do
         click_button('ตกลง')
         sleep(1)
 
-        visit "/#/employees/#{employees[0].id}"
+        visit "/#/somsri_payroll/employees/#{employees[0].id}"
         sleep(1)
 
         expect(cbx_pvf).to be_checked
