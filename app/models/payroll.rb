@@ -24,7 +24,7 @@ class Payroll < ApplicationRecord
   end
 
   def generate_pvf
-    salary * 0.03
+    salary > 15000 ? salary * 0.03 : 15000 * 0.03
   end
 
   def generate_social_insurance

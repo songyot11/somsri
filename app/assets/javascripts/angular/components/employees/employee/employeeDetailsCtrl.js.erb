@@ -255,6 +255,9 @@
     ctrl.calTotal = function(){
       if (ctrl.isEdit) {
         var p = ctrl.datas.payroll;
+        calTax();
+        calSocialInsurance();
+        calPvf();
         ctrl.total = 0;
         if(p.salary){ ctrl.total += p.salary }
         if(p.ot){ ctrl.total += p.ot }
@@ -280,29 +283,31 @@
       }
     }
 
-    ctrl.calTax = function(){
+    function calTax() {
       var p = ctrl.datas.payroll;
       var t = p.tax;
       if(ctrl.datas.employee.employee_type=='ลูกจ้างประจำ') calculateTax();
       else ctrl.datas.payroll.tax = calculate_year_income()/12 * 0.03;
-      ctrl.total -= p.tax - t;
     }
 
-    ctrl.calPvf = function(){
+    function calPvf() {
       var p = ctrl.datas.payroll;
-      var t = p.pvf;
-      p.pvf = p.salary * 0.03;
-      ctrl.total -= p.pvf - t;
+      if(ctrl.datas.employee.pay_pvf) {
+        var income = p.salary > 15000 ? p.salary : 15000
+        p.pvf = income * 0.03;
+      }
+      else 
+        p.pvf = 0;
     }
 
-    ctrl.calSocialInsurance = function(){
+    function calSocialInsurance(){
       var p = ctrl.datas.payroll;
-      var t = p.social_insurance;
-      var income = p.salary + p.position_allowance - p.late - p.absence;
-      if(income > 15000)
-        income = 15000;
-      p.social_insurance = income >= 1650 ? Math.round(income * 0.05) : 0;
-      ctrl.total -= p.social_insurance - t;
+      if(ctrl.datas.employee.pay_social_insurance) {
+        var income = p.salary + p.position_allowance - p.late - p.absence;
+        if(income > 15000)
+          income = 15000;
+        p.social_insurance = income >= 1650 ? Math.round(income * 0.05) : 0;
+      } else p.social_insurance = 0;
     }
 
     ctrl.deleteEmployee = function(id) {

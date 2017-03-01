@@ -161,7 +161,7 @@
             <div class="col-md-4">
               <div class="form-group">
                 <label for="employeetype">ประเภทการจ้างงาน</label>
-                <select class="form-control somsri-select" id="employeetype" ng-model="employee.datas.employee.employee_type">
+                <select class="form-control somsri-select" id="employeetype" ng-model="employee.datas.employee.employee_type" ng-change="employee.calTotal()">
                   <option value="ลูกจ้างประจำ">ลูกจ้างประจำ</option>
                   <option value="ลูกจ้างชั่วคราว">ลูกจ้างชั่วคราว</option>
                   <option value="ลูกจ้างทดลองงาน">ลูกจ้างทดลองงาน</option>
@@ -196,7 +196,7 @@
                 <table class="checkbox-group">
                   <tr>
                     <td>
-                      <input type="checkbox" class="form-control cbox" id="pay_social_insurance" ng-model="employee.datas.employee.pay_social_insurance" />
+                      <input type="checkbox" class="form-control cbox" id="pay_social_insurance" ng-model="employee.datas.employee.pay_social_insurance" ng-change="employee.calTotal()"/>
                     </td>
                     <td>
                       <label for="pay_social_insurance">จ่ายประกันสังคม</label>
@@ -210,7 +210,7 @@
                 <table class="checkbox-group">
                   <tr>
                     <td>
-                      <input type="checkbox" class="form-control cbox" id="pay_pvf" ng-model="employee.datas.employee.pay_pvf" />
+                      <input type="checkbox" class="form-control cbox" id="pay_pvf" ng-model="employee.datas.employee.pay_pvf" ng-change="employee.calTotal()"/>
                     </td>
                     <td>
                       <label for="pay_pvf">จ่ายกองทุนสงเคราะห์ครูเอกชน</label>
@@ -649,16 +649,7 @@
         <div class="col-md-4">
           <div class="form-group">
             <label for="pvf">เงินสะสมเข้ากองทุนสงเคราะห์</label>
-            <table width="100%">
-              <tr>
-                <td><input step="0.01" type="number" class="form-control text-red" id="pvf" ng-model="employee.datas.payroll.pvf" ng-change="employee.calTotal()"></td>
-                <td>
-                  <a ng-click="employee.calPvf()" href="javascript:void(0)" ng-show="employee.datas.employee.pay_pvf" title="คำนวณ">
-                    <i class="glyphicon glyphicon-refresh"></i>
-                  </a>
-                </td>
-              </tr>
-            </table>
+            <input step="0.01" type="number" class="form-control text-red" id="pvf" ng-model="employee.datas.payroll.pvf" disabled>
           </div>
         </div>
       </div>
@@ -672,16 +663,7 @@
         <div class="col-md-4">
           <div class="form-group">
             <label for="tax">ภาษี</label>
-            <table width="100%">
-              <tr>
-                <td><input step="0.01" type="number" class="form-control text-red" id="tax" ng-model="employee.datas.payroll.tax" ng-change="employee.calTotal()"></td>
-                <td>
-                  <a ng-click="employee.calTax()" href="javascript:void(0)" title="คำนวณ">
-                    <i class="glyphicon glyphicon-refresh"></i>
-                  </a>
-                </td>
-              </tr>
-            </table>
+            <input step="0.01" type="number" class="form-control text-red" id="tax" ng-model="employee.datas.payroll.tax" disabled>
           </div>
         </div>
       </div>
@@ -695,16 +677,7 @@
         <div class="col-md-4">
           <div class="form-group">
             <label for="social_insurance">ประกันสังคม</label>
-            <table width="100%">
-              <tr>
-                <td><input step="0.01" type="number" class="form-control text-red" id="social_insurance" ng-model="employee.datas.payroll.social_insurance" ng-change="employee.calTotal()"></td>
-                <td>
-                  <a ng-click="employee.calSocialInsurance()" href="javascript:void(0)" ng-show="employee.datas.employee.pay_social_insurance" title="คำนวณ">
-                    <i class="glyphicon glyphicon-refresh"></i>
-                  </a>
-                </td>
-              </tr>
-            </table>
+            <input step="0.01" type="number" class="form-control text-red" id="social_insurance" ng-model="employee.datas.payroll.social_insurance" disabled>
           </div>
         </div>
       </div>

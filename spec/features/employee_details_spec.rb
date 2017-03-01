@@ -133,7 +133,7 @@ describe 'Employee Details', js: true do
       sleep(1)
 
       expect(find_field('ค่าแรง / เงินเดือนปัจจุบัน').value).to eq '50000'
-      expect(find_field('ภาษี').value.to_i).to be >= 0
+      # expect(find_field('ภาษี').value.to_i).to be >= 0
       expect(page).to have_content('เงินเดือนสุทธิ')
     end
 
@@ -167,7 +167,7 @@ describe 'Employee Details', js: true do
       sleep(1)
 
       expect(find_field('ค่าแรง / เงินเดือนปัจจุบัน').value).to eq '50000'
-      expect(find_field('ภาษี').value.to_i).to be >= 0
+      # expect(find_field('ภาษี').value.to_i).to be >= 0
       expect(page).to have_content('เงินเดือนสุทธิ')
     end
 
@@ -181,7 +181,7 @@ describe 'Employee Details', js: true do
 
     it 'should diplay lastest employee details' do
       expect(find_field('ค่าแรง / เงินเดือนปัจจุบัน').value).to eq '50000'
-      expect(find_field('ภาษี').value.to_i).to be > 0
+      # expect(find_field('ภาษี').value.to_i).to be > 0
       expect(find_field('เบิกล่วงหน้า').value).to eq '2000'
       expect(find_field('ค่ากะ / ค่าเบี้ยเลี้ยง').value).to eq '3000'
       # expect(page).to have_content('เงินเดือนสุทธิ 50900')
@@ -191,7 +191,7 @@ describe 'Employee Details', js: true do
       page.fill_in 'ค่าแรง / เงินเดือนปัจจุบัน', :with => '2000000'
       page.fill_in 'เงินสอนพิเศษ', :with => '500000'
       page.fill_in 'ค่าตำแหน่ง', :with => '70000'
-      page.fill_in 'เงินสะสมเข้ากองทุนสงเคราะห์', :with => '40000'
+      # page.fill_in 'เงินสะสมเข้ากองทุนสงเคราะห์', :with => '40000'
       page.fill_in 'ค่ากะ / ค่าเบี้ยเลี้ยง', :with => '5000'
       page.fill_in 'ขาดงาน', :with => '1000'
       page.fill_in 'เบี้ยขยัน', :with => '500'
@@ -199,8 +199,8 @@ describe 'Employee Details', js: true do
       page.fill_in 'เบิกล่วงหน้า', :with => '30'
       page.fill_in 'รายได้อื่นๆ', :with => '9'
       page.fill_in 'หักอื่นๆ', :with => '2'
-      page.fill_in 'ภาษี', :with => '1000000'
-      page.fill_in 'ประกันสังคม', :with => '300000'
+      # page.fill_in 'ภาษี', :with => '1000000'
+      # page.fill_in 'ประกันสังคม', :with => '300000'
       sleep(1)
       expect(page).to have_content('เงินเดือนสุทธิ ')
     end
@@ -238,7 +238,7 @@ describe 'Employee Details', js: true do
       find('ul.dropdown-menu li a', text: "สิงหาคม 2559").click
       sleep(1)
       expect(find_field('ค่าแรง / เงินเดือนปัจจุบัน', disabled: false).value.to_i).to be > 0
-      expect(find_field('ภาษี', disabled: false).value.to_i).to be > 0
+      # expect(find_field('ภาษี', disabled: false).value.to_i).to be > 0
       expect(find_field('เบิกล่วงหน้า', disabled: false).value.to_i).to be > 0
       expect(find_field('ค่ากะ / ค่าเบี้ยเลี้ยง', disabled: false).value.to_i).to be > 0
       expect(page).to have_content('เงินเดือนสุทธิ ')
@@ -253,7 +253,7 @@ describe 'Employee Details', js: true do
       sleep(1)
       expect(find_field('นามสกุล').value).to eq 'โอชา'
       expect(find_field('ค่าแรง / เงินเดือนปัจจุบัน', disabled: false).value.to_i).to be > 0
-      expect(find_field('ภาษี', disabled: false).value.to_i).to be > 0
+      # expect(find_field('ภาษี', disabled: false).value.to_i).to be > 0
       expect(find_field('เบิกล่วงหน้า', disabled: false).value.to_i).to be > 0
       expect(find_field('ค่ากะ / ค่าเบี้ยเลี้ยง', disabled: false).value.to_i).to be > 0
       expect(page).to have_content('เงินเดือนสุทธิ ')
