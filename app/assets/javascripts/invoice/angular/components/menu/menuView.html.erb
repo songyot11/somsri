@@ -1,0 +1,51 @@
+<div class="container main-menu">
+    <div class="row justify-content-center">
+        <div class="col-2">
+            <div class="menu-btn" ng-click="openPayment()">
+                <div class="wraptocenter">
+                    <%= image_tag 'payment.png', class: "" %>
+                </div>
+            </div>
+            <p>ชำระเงิน</p>
+        </div>
+        <div class="col-2">
+            <div class="menu-btn" ng-click="openReportMenu()">
+                <div class="wraptocenter">
+                    <%= image_tag 'report.png', class: "" %>
+                </div>
+            </div>
+            <p>รายงาน</p>
+        </div>
+        <div class="col-2">
+            <div class="menu-btn" ng-click="openInvoiceReport()">
+                <div class="wraptocenter">
+                    <%= image_tag 'report.png', class: "" %>
+                </div>
+            </div>
+            <p>ใบเสร็จ</p>
+        </div>
+    </div>
+
+    <div class="row justify-content-center">
+        <div class="col-2">
+            <div class="menu-btn">
+              <a href="/parents">
+                <div class="wraptocenter">
+                    <%= image_tag 'parent.png', class: "" %>
+                </div>
+              </a>
+            </div>
+            <p>ผู้ปกครอง</p>
+        </div>
+        <div class="col-2">
+            <div class="menu-btn">
+              <a href="/students">
+                <div class="wraptocenter">
+                    <%= image_tag 'child.png', class: "" %>
+                </div>
+              </a>
+            </div>
+            <p>นักเรียน</p>
+        </div>
+    </div>
+</div>

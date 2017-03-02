@@ -1,0 +1,23 @@
+    <div class="form-group" id="add-prn-<%= index %>">
+      <label for="parent" class="control-label col-lg-2">ผู้ปกครอง</label>
+      <div class="row">
+        <div class="col-6" style="margin-left:15px;">
+          <select id="parent<%= index %>" name="parent[]" placeholder="Select parent...">
+            <option value="" disabled selected></option>
+            <% @parents.each do |p| %>
+              <option value="<%= p.id %>" <%= set_option_selected(p, ps) %>><%= p.full_name %></option>
+            <% end %>
+          </select>
+        </div>
+        <div class="col-3">
+          <select id="relationship<%= index %>" name="relationship[]" class="form-control">
+            <% @relations.each do |r| %>
+              <option value="<%= r.id %>" <%= set_option_selected(r, @student.relationships[index]) %>><%= r.name %></option>
+            <% end %>
+          </select>
+        </div>
+        <div class="col-2">
+          <button type="button" class="btn btn-delete-sp" onclick="remove_parent(<%= index %>)"><i class="fa fa-times"></i></button>
+        </div>
+      </div>
+    </div>

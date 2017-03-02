@@ -1,4 +1,5 @@
 Rails.application.routes.draw do
+  mount RailsAdmin::Engine => '/admin', as: 'rails_admin'
   devise_for :users, :skip => [:registrations]
 
   unauthenticated :user do
@@ -8,7 +9,11 @@ Rails.application.routes.draw do
   end
 
   get "/" => "home#index"
+  root to: 'home#index'
   get 'changelog', to: 'home#changelog'
+  get "/menu" => "menu#index"
+  get "/somsri_invoice" => "menu#landing_invoice"
+  get "/somsri_payroll" => "menu#landing_payroll"
 
   resources :payrolls, only: [:index, :update, :create] do
     collection do
@@ -32,4 +37,18 @@ Rails.application.routes.draw do
   end
 
   resources :individuals, only: [:create, :update, :destroy, :index]
+
+
+  resources :invoices do
+    member do
+      get "slip"
+      patch "cancel"
+    end
+  end
+
+  resources :parents
+  resources :students
+  resources :grades
+  resources :daily_reports
+
 end

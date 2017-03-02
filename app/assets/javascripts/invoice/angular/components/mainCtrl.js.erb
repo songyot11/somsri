@@ -1,0 +1,42 @@
+(function() {
+  'use strict';
+  angular.module('somsri.invoice.main', [
+  ])
+  .controller('mainCtrl', ['$rootScope','$state', function($rootScope, $state) {
+    $rootScope.openPayment = function () {
+      $state.go('invoice')
+    };
+
+    $rootScope.openReportMenu = function () {
+      $state.go('report')
+    };
+
+    $rootScope.openStudentReport = function () {
+      $state.go('studentReport')
+    };
+
+    $rootScope.openDailyReport = function () {
+      $state.go('daily_report')
+    };
+
+    $rootScope.openSlip = function (id, page) {
+      if(page){
+        $state.go('invoice_slip',{ id: id, page: page });
+      }else{
+        $state.go('invoice_slip',{ id: id });
+      }
+    };
+
+    $rootScope.openDailyReportPreview = function (id) {
+      $state.go('daily_report_preview',{id: id})
+    };
+
+    $rootScope.openInvoiceReport = function () {
+      $state.go('invoice_report')
+    };
+
+    $rootScope.openPage = function (page) {
+      $state.go(page)
+    };
+  }]);
+})();

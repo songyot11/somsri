@@ -13,6 +13,7 @@
 //= require jquery
 //= require jquery_ujs
 //= require angular
+//= require tether
 //= require bootstrap
 //= require angular-bootstrap
 //= require angular-ui-router
@@ -20,11 +21,10 @@
 //= require moment
 //= require angular-moment
 //= require ocLazyLoad/dist/ocLazyLoad.min
+//= require angular-input-masks
 
-//= require payroll/angular/components/mainCtrl.js.erb
-//= require payroll/angular/app.module
-//= require payroll/angular/app.assets
-//= require payroll/angular/shared/filters
-//= require payroll/angular/components/shared/slip/slipDirective
+//= require invoice/angular/components/mainCtrl.js.erb
+//= require invoice/angular/app.module
+//= require invoice/angular/app.assets
 
 //= require angular-xeditable/dist/js/xeditable

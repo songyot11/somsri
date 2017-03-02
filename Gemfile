@@ -36,6 +36,10 @@ gem 'bower-rails'
 gem 'pdf-forms'
 gem 'rmagick'
 
+gem 'rails_admin'
+gem 'gravtastic'
+gem 'figaro'
+
 # Exception Notification
 gem 'exception_notification'
 gem 'slack-notifier'
@@ -43,6 +47,10 @@ gem 'slack-notifier'
 gem 'prawn'
 gem 'pdf-toolkit'
 gem 'fileutils'
+
+# Pagination
+gem 'will_paginate', '~> 3.1.0'
+gem 'will_paginate-bootstrap4'
 
 group :development, :test do
   # Call 'byebug' anywhere in the code to stop execution and get a debugger console
