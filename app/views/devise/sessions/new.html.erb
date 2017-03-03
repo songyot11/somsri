@@ -5,7 +5,7 @@
       <%= form_for(resource, as: resource_name, url: session_path(resource_name)) do |f| %>
         <div class="row">
           <div class="col-xs-6 col-xs-offset-3">
-            <img src="../logo_login.png" alt="logo-login" class="img-responsive logo-login">
+            <%= image_tag 'logo_login.png', class: "img-responsive logo-login" %>
           </div>
         </div>
         <div class="row">
@@ -27,7 +27,7 @@
           <% end -%>
         </div>
         <div class="row">
-          <div class="actions">
+          <div class="sign-in actions">
             <%= f.submit "Sign in", class: "btn btn-signin" %>
           </div>
         </div>
