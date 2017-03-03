@@ -13,7 +13,12 @@ class StudentsController < ApplicationController
         @students = Student.where(grade_id: grade.id).order("classroom ASC, classroom_number ASC").search(params[:search]).page(params[:page]).to_a
       end
     else
-      @students = Student.order("student_number ASC").all.to_a
+      if grade_select.downcase == 'all'
+        @students = Student.all.order("grade_id ASC , classroom_number ASC").to_a
+      else
+        grade = Grade.where(name: grade_select).first
+        @students = Student.where(grade_id: grade.id).order("classroom_number ASC").to_a
+      end
     end
 
 
