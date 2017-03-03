@@ -16,7 +16,10 @@ describe Payroll do
       prefix_thai: "นาง",
       sex: 1,
       account_number: "5-234-34532-2342",
-      salary: 50000
+      salary: 50000,
+      pay_pvf: true,
+      pay_social_insurance: true
+
     }
   )}
   let(:employee2) {employee2 = Employee.make!(
@@ -100,26 +103,15 @@ describe Payroll do
   end
 
   it "should return pvf" do
-    expect(payrolls[0].generate_pvf).to eq(payrolls[0].salary*0.03)
+    expect(Payroll.generate_pvf(payrolls[0],employee1)).to eq(payrolls[0].salary*0.03)
   end
 
   it "should return social_insurance" do
-    expect(payrolls[0].generate_social_insurance).to eq(15000*0.05)
+    expect(Payroll.generate_social_insurance(payrolls[0],employee1)).to eq(15000*0.05)
   end
 
-  it "should return income tax" do
-    expect(payrolls[0].generate_income_tax).to be > 0
+  it "should return  tax" do
+    expect(Payroll.generate_tax(payrolls[0],employee1,taxs[0])).to be > 0
   end
 
-  it "should return income tax2" do
-    expect(payrolls[2].generate_income_tax).to be > 0
-  end
-
-  it "should return income tax3" do
-    expect(payrolls[4].generate_income_tax).to be > 0
-  end
-
-  it "should return withholding tax" do
-    expect(payrolls[0].generate_withholding_tax).to eq(payrolls[0].salary*0.03)
-  end
 end
