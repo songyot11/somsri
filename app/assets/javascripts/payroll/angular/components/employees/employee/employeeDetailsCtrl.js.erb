@@ -255,6 +255,9 @@
     ctrl.calTotal = function(){
       if (ctrl.isEdit) {
         var p = ctrl.datas.payroll;
+
+        var datas_result = $.extend(true, {}, ctrl.datas);
+        service.getEmployee(ctrl.datas.employee.id, p.id , datas_result);
         calTax();
         calSocialInsurance();
         calPvf();

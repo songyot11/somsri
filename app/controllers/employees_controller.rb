@@ -57,6 +57,20 @@ class EmployeesController < ApplicationController
     end
   end
 
+  # GET /employees/calculate_outcome/:id
+  def calculate_outcome
+
+    # render json: params.require(:payroll)
+    # payroll_params
+    payroll_datas = eval(params.require(:payroll))
+    payroll_datas[:updated_at] = Date.new()
+    payroll_datas[:effective_date] = Date.new()
+    # puts(payroll_datas)
+    payroll = Payroll.find(payroll_datas[:id])
+    payroll.update_attributes(payroll_datas)
+    render json: {tax: payroll.generate_income_tax, salary: payroll_datas[:salary]}
+  end
+
   # PATCH /employees/:id
   def update
     employee_datas = employee_params
