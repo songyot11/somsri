@@ -92,8 +92,8 @@
               <div class="col-md-2"> หมายเหตุ</div>
               <div class="col-md-6"><textarea type="textarea" rows="3" class="form-control textarea-note" ng-model="invoice.datas.invoice.remark"></textarea></div>
             </div>
-            <div class="col-md-2 text-right">ยอดรวมสุทธิ: </div>
-            <div class="col-md-2 text-right">{{ invoice.total.toFixed(2) | number:2 }}</div>
+            <div class="col-md-2 text-right-total-invoice">ยอดรวมสุทธิ: </div>
+            <div class="col-md-2 text-right-total-invoice">{{ invoice.total.toFixed(2) | number:2 }}</div>
           </div>
         </div>
 
@@ -110,34 +110,39 @@
               <div class="col-md-2">
                 <label><input type="checkbox" ng-true-value="true" ng-false-value="false" ng-model="invoice.datas.payment_method.is_cheque">&nbsp;&nbsp;เช็คธนาคาร</label>
               </div>
-              <div class="col-md-3 col-payment">
-                <input type="text" placeholder="ชื่อธนาคาร" class="form-control" ng-model="invoice.datas.payment_method.cheque_bank_name">
-              </div>
-              <div class="col-md-3">
-                <input type="text" placeholder="เช็คเลขที่" class="form-control" ng-model="invoice.datas.payment_method.cheque_number">
-              </div>
-              <div class="col-md-3">
-                <input type="text" placeholder="ลงวันที่" class="form-control" ng-model="invoice.datas.payment_method.cheque_date">
+              <div class="input-bank">
+                <div class="col-md-3 col-payment">
+                  <input type="text" placeholder="ชื่อธนาคาร" class="form-control" ng-model="invoice.datas.payment_method.cheque_bank_name">
+                </div>
+                <div class="col-md-3">
+                  <input type="text" placeholder="เช็คเลขที่" class="form-control" ng-model="invoice.datas.payment_method.cheque_number">
+                </div>
+                <div class="col-md-3">
+                  <input type="text" placeholder="ลงวันที่" class="form-control" ng-model="invoice.datas.payment_method.cheque_date">
+                </div>
               </div>
             </div>
             <div class="checkbox row">
               <div class="col-md-2">
                 <label><input type="checkbox" ng-true-value="true" ng-false-value="false" ng-model="invoice.datas.payment_method.is_transfer">&nbsp;&nbsp;เงินโอน</label>
               </div>
-              <div class="col-md-3 col-payment">
-                <input type="text" placeholder="เลขบัญชีธนาคาร" class="form-control" ng-model="invoice.datas.payment_method.transfer_date">
-              </div>
-              <div class="col-md-3">
-                <input type="text" placeholder="ลงวันที่" class="form-control" ng-model="invoice.datas.payment_method.transfer_bank_name">
+              <div class="input-bank">
+                <div class="col-md-3 col-payment">
+                  <input type="text" placeholder="เลขบัญชีธนาคาร" class="form-control" ng-model="invoice.datas.payment_method.transfer_date">
+                </div>
+                <div class="col-md-3">
+                  <input type="text" placeholder="ลงวันที่" class="form-control" ng-model="invoice.datas.payment_method.transfer_bank_name">
+                </div>
               </div>
             </div>
           </div>
         </div>
 
         <div class="row noPrint actions">
-        <div class="col-md-8 col-md-offset-4"></div>
-          <button type="submit" class="btn btn-submit">ชำระเงิน</button>
-          <a href="#" class="btn btn-cancel" ng-click="invoice.cancel()">ยกเลิก</a>
+          <div class="col-md-4 col-md-offset-8">
+            <button type="submit" class="btn btn-submit">ชำระเงิน</button>
+            <a href="#" class="btn btn-cancel" ng-click="invoice.cancel()">ยกเลิก</a>
+          </div>
         </div>
       </div>
     </form>

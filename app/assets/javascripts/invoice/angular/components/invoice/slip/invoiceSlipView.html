@@ -1,9 +1,9 @@
 <div class="container-fluid nav-for-print">
-  <div class="row justify-content-between row-print">
-    <div class="col-3">
+  <div class="row row-print">
+    <div class="col-xs-3">
       <button type="button" class="btn btn-back_to_print" ng-click="slip.goBack()"><i class="fa fa-arrow-left"></i>&nbsp;&nbsp;ย้อนกลับ</button>
     </div>
-    <div class="col-3" style="text-align:right;">
+    <div class="col-xs-3 col-xs-offset-6" style="text-align:right;">
       <button type="button" class="btn btn-to-print" onclick="window.print()"><i class="fa fa-print"></i>&nbsp;&nbsp;พิมพ์ใบเสร็จ</button>
     </div>
   </div>
@@ -105,9 +105,9 @@
   <div class="sec-payment">
     <div class="row text-slip3-payment"><b>การชำระเงิน / Payment</b></div>
     <div class="row text-slip2-school">
-      <div class="col-12">
+      <div class="col-xs-12">
         <div class="row" ng-show="slip.datas.is_cash">
-          <div class="col-9">
+          <div class="col-xs-9">
             <div class="checkbox">
               <label>
                 <span>&nbsp;
@@ -116,14 +116,14 @@
               </label>
             </div>
           </div>
-          <div class="col-3">
+          <div class="col-xs-3">
             <span class="pull-right">
              {{ slip.datas.cash_amount.toFixed(2) | number:2 }} บาท / Baht
             </span>
           </div>
         </div>
         <div class="row" ng-show="slip.datas.is_credit_card">
-          <div class="col-9">
+          <div class="col-xs-9">
             <div class="checkbox">
               <label>
                 <span>&nbsp;
@@ -132,14 +132,14 @@
               </label>
             </div>
           </div>
-          <div class="col-3">
+          <div class="col-xs-3">
             <span class="pull-right">
              {{ slip.datas.credit_card_amount.toFixed(2) | number:2 }} บาท / Baht
             </span>
           </div>
         </div>
         <div class="row" ng-show="slip.datas.is_cheque">
-          <div class="col-9">
+          <div class="col-xs-9">
             <div class="checkbox">
               <label>
                 <span>&nbsp;
@@ -148,14 +148,14 @@
               </label>
             </div>
           </div>
-          <div class="col-3">
+          <div class="col-xs-3">
             <span class="pull-right">
              {{ slip.datas.cheque_amount.toFixed(2) | number:2 }} บาท / Baht
             </span>
           </div>
         </div>
         <div class="row" ng-show="slip.datas.is_transfer">
-          <div class="col-9">
+          <div class="col-xs-9">
             <div class="checkbox">
               <label>
                 <span>&nbsp;
@@ -164,7 +164,7 @@
               </label>
             </div>
           </div>
-          <div class="col-3">
+          <div class="col-xs-3">
             <span class="pull-right">
              {{ slip.datas.transfer_amount.toFixed(2) | number:2 }} บาท / Baht
             </span>
@@ -229,10 +229,10 @@
 <!-- for slip copy-->
 <div class="container form-slip-forslip-copy">
   <div class="row slip-sec1">
-    <div class="col-2 img-logo_school">
+    <div class="col-xs-2 img-logo_school">
       <img src="logo_school.png" class="img-responsive">
     </div>
-    <div class="col-7 text-slip1-school slip-name-school">
+    <div class="col-xs-7 text-slip1-school slip-name-school">
       <div class="row">
         <b class="name-school">โรงเรียนอนุบาลซันชายน์</b>
       </div>
@@ -252,7 +252,7 @@
         <b>เลขประจำตัวผู้เสียภาษี: </b>&nbsp; 0505551005106&nbsp;<b>สาขาที่: </b>&nbsp;000000
       </div>
     </div>
-    <div class="col-3 text-slip1-school slip-date-right">
+    <div class="col-xs-3 text-slip1-school slip-date-right">
       <div class="row">
         เลขที่ใบเสร็จ &nbsp;{{ slip.datas.slip_id }}<br>
         receipt No.
@@ -266,22 +266,22 @@
     </div>
   </div>
   <div class="row slip-sec2">
-    <div class="col-7 text-slip2-school">
+    <div class="col-xs-7 text-slip2-school">
       <div class="row"><span class="large-receipt">ใบเสร็จรับเงิน</span>&nbsp;&nbsp;/ Receipt</div>
       <div class="row">( ต้นฉบับ / Original )</div>
       <!-- <div class="row">( สำเนา / Copy )</div> -->
     </div>
-    <div class="col-4 text-slip2-school slip-school-year">
+    <div class="col-xs-4 text-slip2-school slip-school-year">
       <div class="row">ภาคเรียนที่ {{ slip.datas.semester }} ปีการศึกษา {{ slip.datas.school_year }}</div>
       <div class="row">Semester {{ slip.datas.semester }} year {{ slip.datas.school_year_thai }}</div>
     </div>
   </div>
   <div class="row">
-    <div class="col-7 text-slip2-school">
+    <div class="col-xs-7 text-slip2-school">
       <div class="row"><b>ผู้ปกครอง / Parents</b></div>
       <div class="row">{{ slip.datas.parent.display_name }}</div>
     </div>
-    <div class="col-4 text-slip2-school slip-student-name">
+    <div class="col-xs-4 text-slip2-school slip-student-name">
       <div class="row"><b>นักเรียน / Student</b></div>
       <div class="row">{{ slip.datas.student.display_name }}</div>
       <div class="row">เลขประจำตัว {{ slip.datas.student.student_number }}</div>
@@ -328,9 +328,9 @@
       <div class="row text-slip3-payment"><b>การชำระเงิน / Payment</b></div>
 
       <div class="row text-slip2-school">
-        <div class="col-12">
+        <div class="col-xs-12">
           <div class="row" ng-show="slip.datas.is_cash">
-            <div class="col-9">
+            <div class="col-xs-9">
               <div class="checkbox">
                 <label>
                   <span>&nbsp;
@@ -339,14 +339,14 @@
                 </label>
               </div>
             </div>
-            <div class="col-3">
+            <div class="col-xs-3">
               <span class="pull-right">
                {{ slip.datas.cash_amount.toFixed(2) | number:2 }} บาท / Baht
               </span>
             </div>
           </div>
           <div class="row" ng-show="slip.datas.is_credit_card">
-            <div class="col-9">
+            <div class="col-xs-9">
               <div class="checkbox">
                 <label>
                   <span>&nbsp;
@@ -355,14 +355,14 @@
                 </label>
               </div>
             </div>
-            <div class="col-3">
+            <div class="col-xs-3">
               <span class="pull-right">
                {{ slip.datas.credit_card_amount.toFixed(2) | number:2 }} บาท / Baht
               </span>
             </div>
           </div>
           <div class="row" ng-show="slip.datas.is_cheque">
-            <div class="col-9">
+            <div class="col-xs-9">
               <div class="checkbox">
                 <label>
                   <span>&nbsp;
@@ -371,14 +371,14 @@
                 </label>
               </div>
             </div>
-            <div class="col-3">
+            <div class="col-xs-3">
               <span class="pull-right">
                {{ slip.datas.cheque_amount.toFixed(2) | number:2 }} บาท / Baht
               </span>
             </div>
           </div>
           <div class="row" ng-show="slip.datas.is_transfer">
-            <div class="col-9">
+            <div class="col-xs-9">
               <div class="checkbox">
                 <label>
                   <span>&nbsp;
@@ -387,7 +387,7 @@
                 </label>
               </div>
             </div>
-            <div class="col-3">
+            <div class="col-xs-3">
               <span class="pull-right">
                {{ slip.datas.transfer_amount.toFixed(2) | number:2 }} บาท / Baht
               </span>
@@ -400,44 +400,44 @@
       <b>เงื่อนไขการคืนเงิน / Refund Condition</b>
     </div>
     <div class="row">
-      <div class="col-6 text-slip4-refund1">
+      <div class="col-xs-6 text-slip4-refund1">
         <div class="row">* โรงเรียนขอสงวนสิทธิ์ในการคืนเงินค่าแรกเข้าทุกกรณี</div>
         <div class="row">* ชุดฟอร์มซื้อแล้วไม่รับคืน</div>
         <div class="row">
-          <div class="col-7">ขอคืนเงินก่อนเปิดเทอม 2 สัปดาห์</div>
-          <div class="col-5 pull-right">คืนเงิน 70%</div>
+          <div class="col-xs-7">ขอคืนเงินก่อนเปิดเทอม 2 สัปดาห์</div>
+          <div class="col-xs-5 pull-right">คืนเงิน 70%</div>
         </div>
         <div class="row">
-          <div class="col-7">เรียน 2 สัปดาห์</div>
-          <div class="col-5 pull-right">คืนเงิน 60%</div>
+          <div class="col-xs-7">เรียน 2 สัปดาห์</div>
+          <div class="col-xs-5 pull-right">คืนเงิน 60%</div>
         </div>
         <div class="row">
-          <div class="col-7">เรียน 3 สัปดาห์</div>
-          <div class="col-5 pull-right">คืนเงิน 50%</div>
+          <div class="col-xs-7">เรียน 3 สัปดาห์</div>
+          <div class="col-xs-5 pull-right">คืนเงิน 50%</div>
         </div>
         <div class="row">
-          <div class="col-7">เรียน 4 สัปดาห์</div>
-          <div class="col-5 pull-right">คืนเงิน 40%</div>
+          <div class="col-xs-7">เรียน 4 สัปดาห์</div>
+          <div class="col-xs-5 pull-right">คืนเงิน 40%</div>
         </div>
       </div>
-      <div class="col-6 text-slip4-refund2 slip-refund-right">
+      <div class="col-xs-6 text-slip4-refund2 slip-refund-right">
         <div class="row">*&nbsp;<b>Entrance fee</b>&nbsp;once paid will not be refunded under any circumstances.</div>
         <div class="row">* After 4 weeks Non Refund</div>
         <div class="row">
-          <div class="col-7">Cancellation before school start 2 weeks</div>
-          <div class="col-5 pull-right">&nbsp;&nbsp;&nbsp;&nbsp;Refund 70%</div>
+          <div class="col-xs-7">Cancellation before school start 2 weeks</div>
+          <div class="col-xs-5 pull-right">&nbsp;&nbsp;&nbsp;&nbsp;Refund 70%</div>
         </div>
         <div class="row">
-          <div class="col-7">Study 2 weeks</div>
-          <div class="col-5 pull-right">&nbsp;&nbsp;&nbsp;&nbsp;Refund 60%</div>
+          <div class="col-xs-7">Study 2 weeks</div>
+          <div class="col-xs-5 pull-right">&nbsp;&nbsp;&nbsp;&nbsp;Refund 60%</div>
         </div>
         <div class="row">
-          <div class="col-7">Study 3 weeks</div>
-          <div class="col-5 pull-right">&nbsp;&nbsp;&nbsp;&nbsp;Refund 50%</div>
+          <div class="col-xs-7">Study 3 weeks</div>
+          <div class="col-xs-5 pull-right">&nbsp;&nbsp;&nbsp;&nbsp;Refund 50%</div>
         </div>
         <div class="row">
-          <div class="col-7">Study 4 weeks</div>
-          <div class="col-5 pull-right">&nbsp;&nbsp;&nbsp;&nbsp;Refund 40%</div>
+          <div class="col-xs-7">Study 4 weeks</div>
+          <div class="col-xs-5 pull-right">&nbsp;&nbsp;&nbsp;&nbsp;Refund 40%</div>
         </div>
       </div>
     </div>
@@ -452,10 +452,10 @@
 <!-- for slip -->
 <div class="container form-slip-forslip">
   <div class="row slip-sec1">
-    <div class="col-2 img-logo_school">
+    <div class="col-xs-2 img-logo_school">
       <img src="logo_school.png" class="img-responsive">
     </div>
-    <div class="col-7 text-slip1-school slip-name-school">
+    <div class="col-xs-7 text-slip1-school slip-name-school">
       <div class="row">
         <b class="name-school">โรงเรียนอนุบาลซันชายน์</b>
       </div>
@@ -475,7 +475,7 @@
         <b>เลขประจำตัวผู้เสียภาษี: </b>&nbsp; 0505551005106&nbsp;<b>สาขาที่: </b>&nbsp;000000
       </div>
     </div>
-    <div class="col-3 text-slip1-school slip-date-right">
+    <div class="col-xs-3 text-slip1-school slip-date-right">
       <div class="row">
         เลขที่ใบเสร็จ &nbsp;{{ slip.datas.slip_id }}<br>
         receipt No.
@@ -489,21 +489,21 @@
     </div>
   </div>
   <div class="row slip-sec2">
-    <div class="col-7 text-slip2-school">
+    <div class="col-xs-7 text-slip2-school">
       <div class="row"><span class="large-receipt">ใบเสร็จรับเงิน</span>&nbsp;&nbsp;/ Receipt</div>
       <div class="row">( สำเนา / Copy )</div>
     </div>
-    <div class="col-4 text-slip2-school slip-school-year">
+    <div class="col-xs-4 text-slip2-school slip-school-year">
       <div class="row">ภาคเรียนที่ {{ slip.datas.semester }} ปีการศึกษา {{ slip.datas.school_year }}</div>
       <div class="row">Semester {{ slip.datas.semester }} year {{ slip.datas.school_year_thai }}</div>
     </div>
   </div>
   <div class="row">
-    <div class="col-7 text-slip2-school">
+    <div class="col-xs-7 text-slip2-school">
       <div class="row"><b>ผู้ปกครอง / Parents</b></div>
       <div class="row">{{ slip.datas.parent.display_name }}</div>
     </div>
-    <div class="col-4 text-slip2-school slip-student-name">
+    <div class="col-xs-4 text-slip2-school slip-student-name">
       <div class="row"><b>นักเรียน / Student</b></div>
       <div class="row">{{ slip.datas.student.display_name }}</div>
       <div class="row">เลขประจำตัว {{ slip.datas.student.student_number }}</div>
@@ -550,9 +550,9 @@
       <div class="row text-slip3-payment"><b>การชำระเงิน / Payment</b></div>
 
       <div class="row text-slip2-school">
-        <div class="col-12">
+        <div class="col-xs-12">
           <div class="row" ng-show="slip.datas.is_cash">
-            <div class="col-9">
+            <div class="col-xs-9">
               <div class="checkbox">
                 <label>
                   <span>&nbsp;
@@ -561,14 +561,14 @@
                 </label>
               </div>
             </div>
-            <div class="col-3">
+            <div class="col-xs-3">
               <span class="pull-right">
                {{ slip.datas.cash_amount.toFixed(2) | number:2 }} บาท / Baht
               </span>
             </div>
           </div>
           <div class="row" ng-show="slip.datas.is_credit_card">
-            <div class="col-9">
+            <div class="col-xs-9">
               <div class="checkbox">
                 <label>
                   <span>&nbsp;
@@ -577,14 +577,14 @@
                 </label>
               </div>
             </div>
-            <div class="col-3">
+            <div class="col-xs-3">
               <span class="pull-right">
                {{ slip.datas.credit_card_amount.toFixed(2) | number:2 }} บาท / Baht
               </span>
             </div>
           </div>
           <div class="row" ng-show="slip.datas.is_cheque">
-            <div class="col-9">
+            <div class="col-xs-9">
               <div class="checkbox">
                 <label>
                   <span>&nbsp;
@@ -593,14 +593,14 @@
                 </label>
               </div>
             </div>
-            <div class="col-3">
+            <div class="col-xs-3">
               <span class="pull-right">
                {{ slip.datas.cheque_amount.toFixed(2) | number:2 }} บาท / Baht
               </span>
             </div>
           </div>
           <div class="row" ng-show="slip.datas.is_transfer">
-            <div class="col-9">
+            <div class="col-xs-9">
               <div class="checkbox">
                 <label>
                   <span>&nbsp;
@@ -609,7 +609,7 @@
                 </label>
               </div>
             </div>
-            <div class="col-3">
+            <div class="col-xs-3">
               <span class="pull-right">
                {{ slip.datas.transfer_amount.toFixed(2) | number:2 }} บาท / Baht
               </span>
@@ -622,44 +622,44 @@
       <b>เงื่อนไขการคืนเงิน / Refund Condition</b>
     </div>
     <div class="row">
-      <div class="col-6 text-slip4-refund1">
+      <div class="col-xs-6 text-slip4-refund1">
         <div class="row">* โรงเรียนขอสงวนสิทธิ์ในการคืนเงินค่าแรกเข้าทุกกรณี</div>
         <div class="row">* ชุดฟอร์มซื้อแล้วไม่รับคืน</div>
         <div class="row">
-          <div class="col-7">ขอคืนเงินก่อนเปิดเทอม 2 สัปดาห์</div>
-          <div class="col-5 pull-right">คืนเงิน 70%</div>
+          <div class="col-xs-7">ขอคืนเงินก่อนเปิดเทอม 2 สัปดาห์</div>
+          <div class="col-xs-5 pull-right">คืนเงิน 70%</div>
         </div>
         <div class="row">
-          <div class="col-7">เรียน 2 สัปดาห์</div>
-          <div class="col-5 pull-right">คืนเงิน 60%</div>
+          <div class="col-xs-7">เรียน 2 สัปดาห์</div>
+          <div class="col-xs-5 pull-right">คืนเงิน 60%</div>
         </div>
         <div class="row">
-          <div class="col-7">เรียน 3 สัปดาห์</div>
-          <div class="col-5 pull-right">คืนเงิน 50%</div>
+          <div class="col-xs-7">เรียน 3 สัปดาห์</div>
+          <div class="col-xs-5 pull-right">คืนเงิน 50%</div>
         </div>
         <div class="row">
-          <div class="col-7">เรียน 4 สัปดาห์</div>
-          <div class="col-5 pull-right">คืนเงิน 40%</div>
+          <div class="col-xs-7">เรียน 4 สัปดาห์</div>
+          <div class="col-xs-5 pull-right">คืนเงิน 40%</div>
         </div>
       </div>
-      <div class="col-6 text-slip4-refund2 slip-refund-right">
+      <div class="col-xs-6 text-slip4-refund2 slip-refund-right">
         <div class="row">*&nbsp;<b>Entrance fee</b>&nbsp;once paid will not be refunded under any circumstances.</div>
         <div class="row">* After 4 weeks Non Refund</div>
         <div class="row">
-          <div class="col-7">Cancellation before school start 2 weeks</div>
-          <div class="col-5 pull-right">&nbsp;&nbsp;&nbsp;&nbsp;Refund 70%</div>
+          <div class="col-xs-7">Cancellation before school start 2 weeks</div>
+          <div class="col-xs-5 pull-right">&nbsp;&nbsp;&nbsp;&nbsp;Refund 70%</div>
         </div>
         <div class="row">
-          <div class="col-7">Study 2 weeks</div>
-          <div class="col-5 pull-right">&nbsp;&nbsp;&nbsp;&nbsp;Refund 60%</div>
+          <div class="col-xs-7">Study 2 weeks</div>
+          <div class="col-xs-5 pull-right">&nbsp;&nbsp;&nbsp;&nbsp;Refund 60%</div>
         </div>
         <div class="row">
-          <div class="col-7">Study 3 weeks</div>
-          <div class="col-5 pull-right">&nbsp;&nbsp;&nbsp;&nbsp;Refund 50%</div>
+          <div class="col-xs-7">Study 3 weeks</div>
+          <div class="col-xs-5 pull-right">&nbsp;&nbsp;&nbsp;&nbsp;Refund 50%</div>
         </div>
         <div class="row">
-          <div class="col-7">Study 4 weeks</div>
-          <div class="col-5 pull-right">&nbsp;&nbsp;&nbsp;&nbsp;Refund 40%</div>
+          <div class="col-xs-7">Study 4 weeks</div>
+          <div class="col-xs-5 pull-right">&nbsp;&nbsp;&nbsp;&nbsp;Refund 40%</div>
         </div>
       </div>
     </div>

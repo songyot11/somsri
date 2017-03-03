@@ -121,7 +121,14 @@ end
 
 TaxReduction.all.each do |tax|
     if tax.expenses == 0
-        tax.expenses = 60000.0 
+        tax.expenses = 60000.0
         tax.save
     end
 end
+
+
+AccountType.create([{ name: 'Income' }, { name: 'Expenses' }]) if AccountType.count == 0
+Gender.create([{ name: 'Male'},{ name: 'Female'}]) if Gender.count == 0
+Grade.create([{ name: 'Preschool' },{ name: 'Kindergarten 1' },{ name: 'Kindergarten 2' },{ name: 'Kindergarten 3' }]) if Grade.count == 0
+Relationship.create([{ name: 'Father' }, { name: 'Mother' }, { name: 'Grandfather' }, { name: 'Grandmother' }, { name: 'Uncle' }, { name: 'Aunt' }, { name: 'Cousin' }]) if Relationship.count == 0
+InvoiceStatus.create([{ name: 'Active' }, { name: 'Canceled' }]) if InvoiceStatus.count == 0
