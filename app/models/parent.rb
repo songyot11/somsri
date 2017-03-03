@@ -5,6 +5,6 @@ class Parent < ApplicationRecord
   self.per_page = 10
 
   def self.search(search)
-    where("full_name LIKE ? OR full_name_english LIKE ? OR email LIKE ? OR mobile LIKE ?", "%#{search}%", "%#{search}%", "%#{search}%" , "%#{search}%")
+    where("parents.full_name LIKE ? OR parents.full_name_english LIKE ? OR parents.email LIKE ? OR parents.mobile LIKE ?", "%#{search}%", "%#{search}%", "%#{search}%" , "%#{search}%")
   end
 end

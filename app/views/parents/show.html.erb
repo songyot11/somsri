@@ -1,0 +1,85 @@
+<%- model_class = Parent -%>
+<div class="container" style="width: 960px;">
+  <div class="row head-sp justify-content-between">
+    <h1>รายละเอียดผู้ปกครอง</h1>
+  </div>
+  <div class="content-student-parent-show">
+    <div class="row add-st-pr">
+      <div class="col-3">
+        <b>ชื่อ - นามสกุล : </b>
+      </div>
+      <div class="col-8">
+        <%= @parent.full_name %>
+      </div>
+    </div>
+    <div class="row add-st-pr">
+      <div class="col-3">
+        <b>Full name english : </b>
+      </div>
+      <div class="col-8">
+        <%= @parent.full_name_english %>
+      </div>
+    </div>
+    <div class="row add-st-pr">
+      <div class="col-3">
+        <b>ชื่อเล่น : </b>
+      </div>
+      <div class="col-8">
+        <%= @parent.nickname %>
+      </div>
+    </div>
+    <div class="row add-st-pr">
+      <div class="col-3">
+        <b>Nickname english : </b>
+      </div>
+      <div class="col-8">
+        <%= @parent.nickname_english %>
+      </div>
+    </div>
+    <div class="row add-st-pr">
+      <div class="col-3">
+        <b>เบอร์โทร / tel : </b>
+      </div>
+      <div class="col-8">
+        <%= @parent.mobile %>
+      </div>
+    </div>
+    <div class="row add-st-pr">
+      <div class="col-3">
+        <b>E-mail : </b>
+      </div>
+      <div class="col-8">
+        <%= @parent.email %>
+      </div>
+    </div>
+    <div class="row add-st-pr">
+      <div class="col-3">
+        <b> Line id : </b>
+      </div>
+      <div class="col-8">
+        <%= @parent.line_id %>
+      </div>
+    </div>
+    <div class="row add-st-pr">
+      <div class="col-3">
+        <b> นักเรียน / Students : </b>
+      </div>
+      <div class="col-8">
+        <% @parent.students.each do |student| %>
+          <dd><%= link_to "#{student.full_name_with_title}", student_path(student) %></dd>
+        <% end %>
+      </div>
+    </div>
+    <div class="row justify-content-center save-sp">
+      <%= link_to t('.back', :default => t("helpers.links.back")),
+                    parents_path, :class => 'btn btn-default'  %>
+      <%= link_to t('.edit', :default => t("helpers.links.edit")),
+                    edit_parent_path(@parent), :class => 'btn btn-default' %>
+      <%= link_to t('.destroy', :default => t("helpers.links.destroy")),
+                    parent_path(@parent),
+                    :method => 'delete',
+                    :data => { :confirm => t('.confirm', :default => t("helpers.links.confirm", :default => 'Are you sure?')) },
+                    :class => 'btn btn-remove' %>
+    </div>
+  </div>
+</div>

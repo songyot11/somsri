@@ -1,0 +1,157 @@
+<%= form_for @parent, :html => { :class => "form-horizontal parent" } do |f| %>
+
+<% if @parent.errors.any? %>
+<div id="error_expl" class="panel panel-danger">
+  <div class="panel-heading">
+    <h3 class="panel-title"><%= pluralize(@parent.errors.count, "error") %> prohibited this parent from being saved:</h3>
+  </div>
+  <div class="panel-body">
+    <ul>
+      <% @parent.errors.full_messages.each do |msg| %>
+      <li><%= msg %></li>
+      <% end %>
+    </ul>
+  </div>
+</div>
+<% end %>
+
+<div class="content-student-parent">
+  <div class="card-block">
+    <div class="row">
+      <div class="col-6">
+        <div class="form-group">
+          <%= f.label :full_name, 'ชื่อ-นามสกุล', :class => 'control-label col-6' %>
+          <div class="col-12">
+            <%= f.text_field :full_name, :class => 'form-control', required: true %>
+          </div>
+          <%=f.error_span(:full_name) %>
+        </div>
+      </div>
+      <div class="col-6">
+        <div class="form-group">
+          <%= f.label :nickname, 'ชื่อเล่น', :class => 'control-label col-6' %>
+          <div class="col-12">
+            <%= f.text_field :nickname, :class => 'form-control' %>
+          </div>
+          <%=f.error_span(:nickname) %>
+        </div>
+      </div>
+    </div>
+    <div class="row">
+      <div class="col-6">
+        <div class="form-group">
+          <%= f.label :id_card_no, 'เลขบัตรประชาชนน', :class => 'control-label col-6' %>
+          <div class="col-12">
+            <%= f.text_field :id_card_no, :class => 'form-control' %>
+          </div>
+          <%=f.error_span(:id_card_no) %>
+        </div>
+      </div>
+      <div class="col-6">
+        <div class="form-group">
+          <%= f.label :mobile, 'โทรศัพท์', :class => 'control-label col-6' %>
+          <div class="col-12">
+            <%= f.text_field :mobile, :class => 'form-control' %>
+          </div>
+          <%=f.error_span(:mobile) %>
+        </div>
+      </div>
+    </div>
+    <div class="row">
+      <div class="col-6">
+        <div class="form-group">
+          <%= f.label :email, 'อีเมล์', :class => 'control-label col-6' %>
+          <div class="col-12">
+            <%= f.text_field :email, :class => 'form-control' %>
+          </div>
+          <%=f.error_span(:email) %>
+        </div>
+      </div>
+      <div class="col-6">
+        <div class="form-group">
+          <%= f.label :line_id, 'Line ID', :class => 'control-label col-6' %>
+          <div class="col-12">
+            <%= f.text_field :line_id, :class => 'form-control' %>
+          </div>
+          <%=f.error_span(:line_id) %>
+        </div>
+      </div>
+    </div>
+  
+  <% if @parent.new_record? || @parent.students.size == 0 %>
+    <% 1.times do |index| %>
+      <%= render :partial => 'add_student', :locals => {:index => index, :ps => nil} %>
+      <% @round = index %>
+    <% end %>
+  <% else %>
+    <% @parent.students.each_with_index do |ps, index| %>
+      <%= render :partial => 'add_student', :locals => {:index => index, :ps => ps} %>
+      <% @round = index %>
+    <% end %>
+  <% end %>
+
+  <div id="add-student"></div>
+  <a href="" id="student-link" class="btn-add-st">+ เพิ่มชื่อนักเรียน</a>
+
+  <div class="form-group" style="margin-top: 25px;">
+    <div class="row justify-content-center save-sp">
+      <%= f.submit 'บันทึก', :class => 'btn btn-submit' %>
+      <%= link_to t('.cancel', :default => t("helpers.links.cancel")),
+                parents_path, :class => 'btn btn-cancel' %>
+    </div>
+   </div>
+
+ </div>
+</div>
+
+<% end %>
+
+<script>
+function remove_student(i) {
+    $('#add-std-'+i+'').remove();
+}
+
+function gen_selectize(round) {
+  for (i = 0; i <= round; i++) {
+    $('#student'+i).selectize({
+      create: true,
+      sortField: 'text'
+    });
+  }
+}
+
+  $(function() {
+    var round = <%= @round %>;
+    gen_selectize(round);
+
+    $('#student-link').click( function() {
+      round = round + 1;
+      $('#add-student').append(
+        '<div class="form-group" id="add-std-'+round+'">\
+          <label for="student" class="control-label col-2">นักเรียน</label>\
+          <div class="row">\
+            <div class="col-6" style="margin-left:15px;">\
+              <select id="student'+round+'" name="student[]" placeholder="เลือกนักเรียน...">\
+                <option value="" disabled selected></option>\
+                <% @students.each do |s| %>\
+                  <option value="<%= s.id %>"><%= s.full_name %></option>\
+                <% end %>\
+              </select>\
+            </div>\
+            <div class="col-3">\
+              <select id="relationship'+round+'" name="relationship[]" class="form-control">\
+                <% @relations.each do |r| %>\
+                  <option value="<%= r.id %>"><%= r.name %></option>\
+                <% end %>\
+              </select>\
+            </div>\
+            <div class="col-2">\
+              <button type="button" class="btn btn-delete-sp" onclick="remove_student('+round+')"><i class="fa fa-times"></i></button>\
+            </div>\
+          </div>\
+        </div>'
+      );
+      gen_selectize(round);
+    });
+  });
+</script>

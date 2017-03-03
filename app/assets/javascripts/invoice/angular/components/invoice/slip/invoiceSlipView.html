@@ -1,0 +1,671 @@
+<div class="container-fluid nav-for-print">
+  <div class="row justify-content-between row-print">
+    <div class="col-3">
+      <button type="button" class="btn btn-back_to_print" ng-click="slip.goBack()"><i class="fa fa-arrow-left"></i>&nbsp;&nbsp;ย้อนกลับ</button>
+    </div>
+    <div class="col-3" style="text-align:right;">
+      <button type="button" class="btn btn-to-print" onclick="window.print()"><i class="fa fa-print"></i>&nbsp;&nbsp;พิมพ์ใบเสร็จ</button>
+    </div>
+  </div>
+</div>
+<div class="container form-slip">
+  <div class="row slip-sec1">
+    <div class="col-md-2 img-logo_school">
+      <img src="logo_school.png" class="img-responsive">
+    </div>
+    <div class="col-md-8 text-slip1-school">
+      <div class="row">
+        <b class="name-school">โรงเรียนอนุบาลซันชายน์</b>
+      </div>
+	  <div class="row">
+		  โดย บริษัท สามหน่อยพอเพียง จำกัด
+	  </div>
+      <div class="row">
+        305 หมู่ 7 ตำบลหนองควาย อำเภอหางดง จังหวัด เชียงใหม่ 50230
+      </div>
+      <div class="row">
+        <b>โทร/แฟซ์.</b> &nbsp;053 131 206-7, 090 606 6595
+      </div>
+      <div class="row">
+        <b>E-mail:</b> &nbsp;info@sunshinekindergarten.com
+      </div>
+      <div class="row">
+        <b>เลขประจำตัวผู้เสียภาษี: </b>&nbsp; 0505551005106 &nbsp;<b>สาขาที่: </b>&nbsp;000000
+      </div>
+    </div>
+    <div class="col-md-2 text-slip1-school">
+      <div class="row">
+        เลขที่ใบเสร็จ &nbsp;{{ slip.datas.slip_id }}<br>
+        receipt No.
+      </div>
+      <div class="row sup-date">
+        วันที่&nbsp;&nbsp;{{ slip.datas.thai_now_date }}
+      </div>
+      <div class="row">
+        {{ slip.datas.eng_now_date }}
+      </div>
+    </div>
+  </div>
+  <div class="row slip-sec2">
+    <div class="col-md-8 text-slip2-school">
+      <div class="row"><span class="large-receipt">ใบเสร็จรับเงิน </span>&nbsp;&nbsp;/ Receipt</div>
+      <div class="row">( ต้นฉบับ / Original )</div>
+    </div>
+    <div class="col-md-4 text-slip2-school slip-school-year">
+      <div class="row">ภาคเรียนที่ {{ slip.datas.semester }} ปีการศึกษา {{ slip.datas.school_year }}</div>
+      <div class="row">Semester {{ slip.datas.semester }} year {{ slip.datas.school_year_thai }}</div>
+    </div>
+  </div>
+  <div class="row">
+    <div class="col-md-8 text-slip2-school">
+      <div class="row"><b>ผู้ปกครอง / Parents</b></div>
+      <div class="row">{{ slip.datas.parent.display_name }}</div>
+    </div>
+    <div class="col-md-4 text-slip2-school">
+      <div class="row"><b>นักเรียน / Student</b></div>
+      <div class="row">{{ slip.datas.student.display_name }}</div>
+      <div class="row">เลขประจำตัว {{ slip.datas.student.student_number }}</div>
+      <div class="row"> <b>ชั้น / Grade</b> &nbsp;{{ slip.datas.grade_name }}</div>
+    </div>
+  </div>
+  <div class="row text-title-table">ตามรายละเอียดดังต่อไปนี้</div>
+  <div class="table-payment-slip">
+    <table class="table table-sm">
+      <thead>
+        <tr>
+          <th class="table-with1">ลำดับที่<br/> No.</th>
+          <th class="table-center">รายการ <br> Description</th>
+          <th class="table-with2">จำนวนเงิน<br/> Amount</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr ng-repeat="line_item in slip.datas.line_items">
+          <td class="num-pay">{{ $index + 1 }}</th>
+          <td class="table-center">{{ line_item.detail }}</td>
+          <td class="price-pay">{{ line_item.amount.toFixed(2) | number:2}}</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td ng-style="{height: slip.autoHeigth}"></td>
+          <td></td>
+        </tr>
+      </tbody>
+      <tfoot>
+        <tr>
+          <th></th>
+          <th class="total-pay">จำนวนเงินรวมทั้งสิ้น (บาท)/Total (Baht)</th>
+          <th>{{ slip.datas.total_amount.toFixed(2) | number:2}}</th>
+        </tr>
+        <tr class="text-total">
+          <th colspan="3">จำนวนเงินรวมทั้งสิ้น <b class="total_text">{{ slip.datas.total_amount.toString() | thaiBaht }}</b></th>
+        </tr>
+      </tfoot>
+    </table>
+  </div>
+  <div class="sec-payment">
+    <div class="row text-slip3-payment"><b>การชำระเงิน / Payment</b></div>
+    <div class="row text-slip2-school">
+      <div class="col-12">
+        <div class="row" ng-show="slip.datas.is_cash">
+          <div class="col-9">
+            <div class="checkbox">
+              <label>
+                <span>&nbsp;
+                  เงินสด / Cash
+                </span>
+              </label>
+            </div>
+          </div>
+          <div class="col-3">
+            <span class="pull-right">
+             {{ slip.datas.cash_amount.toFixed(2) | number:2 }} บาท / Baht
+            </span>
+          </div>
+        </div>
+        <div class="row" ng-show="slip.datas.is_credit_card">
+          <div class="col-9">
+            <div class="checkbox">
+              <label>
+                <span>&nbsp;
+                  บัตรเครดิต / Credit card
+                </span>
+              </label>
+            </div>
+          </div>
+          <div class="col-3">
+            <span class="pull-right">
+             {{ slip.datas.credit_card_amount.toFixed(2) | number:2 }} บาท / Baht
+            </span>
+          </div>
+        </div>
+        <div class="row" ng-show="slip.datas.is_cheque">
+          <div class="col-9">
+            <div class="checkbox">
+              <label>
+                <span>&nbsp;
+                  เช็คธนาคาร / Cheque {{ slip.datas.cheque_bank_name || '.................' }} เช็คเลขที่ / No. {{ slip.datas.cheque_number || '.......' }} ลงวันที่ / Date {{ slip.datas.cheque_date || '.......' }}
+                </span>
+              </label>
+            </div>
+          </div>
+          <div class="col-3">
+            <span class="pull-right">
+             {{ slip.datas.cheque_amount.toFixed(2) | number:2 }} บาท / Baht
+            </span>
+          </div>
+        </div>
+        <div class="row" ng-show="slip.datas.is_transfer">
+          <div class="col-9">
+            <div class="checkbox">
+              <label>
+                <span>&nbsp;
+                  เงินโอน เลขบัญชี / Transfer to {{ slip.datas.transfer_bank_name || '.................' }} ลงวันที่ / Date {{ slip.datas.transfer_date || '.......' }}
+                </span>
+              </label>
+            </div>
+          </div>
+          <div class="col-3">
+            <span class="pull-right">
+             {{ slip.datas.transfer_amount.toFixed(2) | number:2 }} บาท / Baht
+            </span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="row name-school">
+    <b>เงื่อนไขการคืนเงิน / Refund Condition</b>
+  </div>
+  <div class="row">
+    <div class="col-md-6 text-slip4-refund1">
+      <div class="row">* โรงเรียนขอสงวนสิทธิ์ในการคืนเงินค่าแรกเข้าทุกกรณี</div>
+      <div class="row">* ชุดฟอร์มซื้อแล้วไม่รับคืน</div>
+      <div class="row">
+        <div class="col-md-6">ขอคืนเงินก่อนเปิดเทอม 2 สัปดาห์</div>
+        <div class="col-md-6 pull-right">คืนเงิน 70%</div>
+      </div>
+      <div class="row">
+        <div class="col-md-6">เรียน 2 สัปดาห์</div>
+        <div class="col-md-6 pull-right">คืนเงิน 60%</div>
+      </div>
+      <div class="row">
+        <div class="col-md-6">เรียน 3 สัปดาห์</div>
+        <div class="col-md-6 pull-right">คืนเงิน 50%</div>
+      </div>
+      <div class="row">
+        <div class="col-md-6">เรียน 4 สัปดาห์</div>
+        <div class="col-md-6 pull-right">คืนเงิน 40%</div>
+      </div>
+    </div>
+    <div class="col-md-6 text-slip4-refund2">
+      <div class="row">*&nbsp;<b>Entrance fee</b>&nbsp;once paid will not be refunded under any circumstances.</div>
+      <div class="row">* After 4 weeks Non Refund</div>
+      <div class="row">
+        <div class="col-md-6">Cancellation before school start 2 weeks</div>
+        <div class="col-md-6 pull-right">Refund 70%</div>
+      </div>
+      <div class="row">
+        <div class="col-md-6">Study 2 weeks</div>
+        <div class="col-md-6 pull-right">Refund 60%</div>
+      </div>
+      <div class="row">
+        <div class="col-md-6">Study 3 weeks</div>
+        <div class="col-md-6 pull-right">Refund 50%</div>
+      </div>
+      <div class="row">
+        <div class="col-md-6">Study 4 weeks</div>
+        <div class="col-md-6 pull-right">Refund 40%</div>
+      </div>
+    </div>
+    <div class="col-md-4 right-receiver">
+      ลงชื่อ .................................... ​Receiver </br>
+      &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;(&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;)
+    </div>
+  </div>
+</div>
+</br>
+</br>
+
+<!-- for slip copy-->
+<div class="container form-slip-forslip-copy">
+  <div class="row slip-sec1">
+    <div class="col-2 img-logo_school">
+      <img src="logo_school.png" class="img-responsive">
+    </div>
+    <div class="col-7 text-slip1-school slip-name-school">
+      <div class="row">
+        <b class="name-school">โรงเรียนอนุบาลซันชายน์</b>
+      </div>
+	  <div class="row">
+		  โดย บริษัท สามหน่อยพอเพียง จำกัด
+	  </div>
+      <div class="row">
+        305 หมู่ 7 ตำบลหนองควาย อำเภอหางดง จังหวัด เชียงใหม่ 50230
+      </div>
+      <div class="row">
+        <b>โทร/แฟซ์.</b> &nbsp;053 131 206-7, 090 606 6595
+      </div>
+      <div class="row">
+        <b>E-mail:</b> &nbsp;info@sunshinekindergarten.com
+      </div>
+      <div class="row">
+        <b>เลขประจำตัวผู้เสียภาษี: </b>&nbsp; 0505551005106&nbsp;<b>สาขาที่: </b>&nbsp;000000
+      </div>
+    </div>
+    <div class="col-3 text-slip1-school slip-date-right">
+      <div class="row">
+        เลขที่ใบเสร็จ &nbsp;{{ slip.datas.slip_id }}<br>
+        receipt No.
+      </div>
+      <div class="row sup-date">
+        วันที่&nbsp;&nbsp;{{ slip.datas.thai_now_date }}
+      </div>
+      <div class="row">
+        {{ slip.datas.eng_now_date }}
+      </div>
+    </div>
+  </div>
+  <div class="row slip-sec2">
+    <div class="col-7 text-slip2-school">
+      <div class="row"><span class="large-receipt">ใบเสร็จรับเงิน</span>&nbsp;&nbsp;/ Receipt</div>
+      <div class="row">( ต้นฉบับ / Original )</div>
+      <!-- <div class="row">( สำเนา / Copy )</div> -->
+    </div>
+    <div class="col-4 text-slip2-school slip-school-year">
+      <div class="row">ภาคเรียนที่ {{ slip.datas.semester }} ปีการศึกษา {{ slip.datas.school_year }}</div>
+      <div class="row">Semester {{ slip.datas.semester }} year {{ slip.datas.school_year_thai }}</div>
+    </div>
+  </div>
+  <div class="row">
+    <div class="col-7 text-slip2-school">
+      <div class="row"><b>ผู้ปกครอง / Parents</b></div>
+      <div class="row">{{ slip.datas.parent.display_name }}</div>
+    </div>
+    <div class="col-4 text-slip2-school slip-student-name">
+      <div class="row"><b>นักเรียน / Student</b></div>
+      <div class="row">{{ slip.datas.student.display_name }}</div>
+      <div class="row">เลขประจำตัว {{ slip.datas.student.student_number }}</div>
+      <div class="row"><b>ชั้น&nbsp;/ Grade</b> &nbsp;{{ slip.datas.grade_name }}</div>
+    </div>
+  </div>
+  <div class="row text-title-table">ตามรายละเอียดดังต่อไปนี้/Details</div>
+  <div class="table-payment-slip">
+    <table class="table table-sm">
+      <thead>
+        <tr>
+          <th class="table-with1">ลำดับที่<br/> No.</th>
+          <th class="table-center">รายการ <br/> Description</th>
+          <th class="table-with2">จำนวนเงิน<br/> Amount</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr ng-repeat="line_item in slip.datas.line_items">
+          <td class="num-pay">{{ $index + 1 }}</th>
+          <td class="table-center">{{ line_item.detail }}</td>
+          <td class="price-pay">{{ line_item.amount.toFixed(2) | number:2}}</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td ng-style="{height: slip.autoHeigth}"></td>
+          <td></td>
+        </tr>
+      </tbody>
+      <tfoot>
+        <tr>
+          <th></th>
+          <td class="total-pay" style="font-size:14px;">จำนวนเงินรวมทั้งสิ้น (บาท)/Total (Baht)</td>
+          <th style="font-size:14px;">{{ slip.datas.total_amount.toFixed(2) | number:2}}</th>
+        </tr>
+         <tr class="text-total text-total-display-print">
+          <td></td>
+          <td colspan="3"><span>จำนวนเงินรวมทั้งสิ้น <b class="total_text">{{ slip.datas.total_amount.toString() | thaiBaht }}</b></span></td>
+        </tr>
+      </tfoot>
+    </table>
+  </div>
+  <div id="min-height-pay">
+    <div class="sec-payment">
+      <div class="row text-slip3-payment"><b>การชำระเงิน / Payment</b></div>
+
+      <div class="row text-slip2-school">
+        <div class="col-12">
+          <div class="row" ng-show="slip.datas.is_cash">
+            <div class="col-9">
+              <div class="checkbox">
+                <label>
+                  <span>&nbsp;
+                    เงินสด / Cash
+                  </span>
+                </label>
+              </div>
+            </div>
+            <div class="col-3">
+              <span class="pull-right">
+               {{ slip.datas.cash_amount.toFixed(2) | number:2 }} บาท / Baht
+              </span>
+            </div>
+          </div>
+          <div class="row" ng-show="slip.datas.is_credit_card">
+            <div class="col-9">
+              <div class="checkbox">
+                <label>
+                  <span>&nbsp;
+                    บัตรเครดิต / Credit card
+                  </span>
+                </label>
+              </div>
+            </div>
+            <div class="col-3">
+              <span class="pull-right">
+               {{ slip.datas.credit_card_amount.toFixed(2) | number:2 }} บาท / Baht
+              </span>
+            </div>
+          </div>
+          <div class="row" ng-show="slip.datas.is_cheque">
+            <div class="col-9">
+              <div class="checkbox">
+                <label>
+                  <span>&nbsp;
+                    เช็คธนาคาร / Cheque {{ slip.datas.cheque_bank_name || '.................' }} เช็คเลขที่ / No. {{ slip.datas.cheque_number || '.......' }} ลงวันที่ / Date {{ slip.datas.cheque_date || '.......' }}
+                  </span>
+                </label>
+              </div>
+            </div>
+            <div class="col-3">
+              <span class="pull-right">
+               {{ slip.datas.cheque_amount.toFixed(2) | number:2 }} บาท / Baht
+              </span>
+            </div>
+          </div>
+          <div class="row" ng-show="slip.datas.is_transfer">
+            <div class="col-9">
+              <div class="checkbox">
+                <label>
+                  <span>&nbsp;
+                    เงินโอน เลขบัญชี / Transfer to {{ slip.datas.transfer_bank_name || '.................' }} ลงวันที่ / Date {{ slip.datas.transfer_date || '.......' }}
+                  </span>
+                </label>
+              </div>
+            </div>
+            <div class="col-3">
+              <span class="pull-right">
+               {{ slip.datas.transfer_amount.toFixed(2) | number:2 }} บาท / Baht
+              </span>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="row title-refund">
+      <b>เงื่อนไขการคืนเงิน / Refund Condition</b>
+    </div>
+    <div class="row">
+      <div class="col-6 text-slip4-refund1">
+        <div class="row">* โรงเรียนขอสงวนสิทธิ์ในการคืนเงินค่าแรกเข้าทุกกรณี</div>
+        <div class="row">* ชุดฟอร์มซื้อแล้วไม่รับคืน</div>
+        <div class="row">
+          <div class="col-7">ขอคืนเงินก่อนเปิดเทอม 2 สัปดาห์</div>
+          <div class="col-5 pull-right">คืนเงิน 70%</div>
+        </div>
+        <div class="row">
+          <div class="col-7">เรียน 2 สัปดาห์</div>
+          <div class="col-5 pull-right">คืนเงิน 60%</div>
+        </div>
+        <div class="row">
+          <div class="col-7">เรียน 3 สัปดาห์</div>
+          <div class="col-5 pull-right">คืนเงิน 50%</div>
+        </div>
+        <div class="row">
+          <div class="col-7">เรียน 4 สัปดาห์</div>
+          <div class="col-5 pull-right">คืนเงิน 40%</div>
+        </div>
+      </div>
+      <div class="col-6 text-slip4-refund2 slip-refund-right">
+        <div class="row">*&nbsp;<b>Entrance fee</b>&nbsp;once paid will not be refunded under any circumstances.</div>
+        <div class="row">* After 4 weeks Non Refund</div>
+        <div class="row">
+          <div class="col-7">Cancellation before school start 2 weeks</div>
+          <div class="col-5 pull-right">&nbsp;&nbsp;&nbsp;&nbsp;Refund 70%</div>
+        </div>
+        <div class="row">
+          <div class="col-7">Study 2 weeks</div>
+          <div class="col-5 pull-right">&nbsp;&nbsp;&nbsp;&nbsp;Refund 60%</div>
+        </div>
+        <div class="row">
+          <div class="col-7">Study 3 weeks</div>
+          <div class="col-5 pull-right">&nbsp;&nbsp;&nbsp;&nbsp;Refund 50%</div>
+        </div>
+        <div class="row">
+          <div class="col-7">Study 4 weeks</div>
+          <div class="col-5 pull-right">&nbsp;&nbsp;&nbsp;&nbsp;Refund 40%</div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="row pull-right right-receiver-for-print">
+    ลงชื่อ .................................... ​Receiver </br>
+    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;(&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;)
+  </div>
+</div>
+
+<div class="slip-copy-top"></div>
+<!-- for slip -->
+<div class="container form-slip-forslip">
+  <div class="row slip-sec1">
+    <div class="col-2 img-logo_school">
+      <img src="logo_school.png" class="img-responsive">
+    </div>
+    <div class="col-7 text-slip1-school slip-name-school">
+      <div class="row">
+        <b class="name-school">โรงเรียนอนุบาลซันชายน์</b>
+      </div>
+	  <div class="row">
+		  โดย บริษัท สามหน่อยพอเพียง จำกัด
+	  </div>
+      <div class="row">
+        305 หมู่ 7 ตำบลหนองควาย อำเภอหางดง จังหวัด เชียงใหม่ 50230
+      </div>
+      <div class="row">
+        <b>โทร/แฟซ์.</b> &nbsp;053 131 206-7, 090 606 6595
+      </div>
+      <div class="row">
+        <b>E-mail:</b> &nbsp;info@sunshinekindergarten.com
+      </div>
+      <div class="row">
+        <b>เลขประจำตัวผู้เสียภาษี: </b>&nbsp; 0505551005106&nbsp;<b>สาขาที่: </b>&nbsp;000000
+      </div>
+    </div>
+    <div class="col-3 text-slip1-school slip-date-right">
+      <div class="row">
+        เลขที่ใบเสร็จ &nbsp;{{ slip.datas.slip_id }}<br>
+        receipt No.
+      </div>
+      <div class="row sup-date">
+        วันที่&nbsp;&nbsp;{{ slip.datas.thai_now_date }}
+      </div>
+      <div class="row">
+        {{ slip.datas.eng_now_date }}
+      </div>
+    </div>
+  </div>
+  <div class="row slip-sec2">
+    <div class="col-7 text-slip2-school">
+      <div class="row"><span class="large-receipt">ใบเสร็จรับเงิน</span>&nbsp;&nbsp;/ Receipt</div>
+      <div class="row">( สำเนา / Copy )</div>
+    </div>
+    <div class="col-4 text-slip2-school slip-school-year">
+      <div class="row">ภาคเรียนที่ {{ slip.datas.semester }} ปีการศึกษา {{ slip.datas.school_year }}</div>
+      <div class="row">Semester {{ slip.datas.semester }} year {{ slip.datas.school_year_thai }}</div>
+    </div>
+  </div>
+  <div class="row">
+    <div class="col-7 text-slip2-school">
+      <div class="row"><b>ผู้ปกครอง / Parents</b></div>
+      <div class="row">{{ slip.datas.parent.display_name }}</div>
+    </div>
+    <div class="col-4 text-slip2-school slip-student-name">
+      <div class="row"><b>นักเรียน / Student</b></div>
+      <div class="row">{{ slip.datas.student.display_name }}</div>
+      <div class="row">เลขประจำตัว {{ slip.datas.student.student_number }}</div>
+      <div class="row"><b>ชั้น&nbsp;/ Grade</b> &nbsp;{{ slip.datas.grade_name }}</div>
+    </div>
+  </div>
+  <div class="row text-title-table">ตามรายละเอียดดังต่อไปนี้/Details</div>
+  <div class="table-payment-slip">
+    <table class="table table-sm">
+      <thead>
+        <tr>
+          <th class="table-with1">ลำดับที่<br/> No.</th>
+          <th class="table-center">รายการ <br/> Description</th>
+          <th class="table-with2">จำนวนเงิน<br/> Amount</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr ng-repeat="line_item in slip.datas.line_items">
+          <td class="num-pay">{{ $index + 1 }}</th>
+          <td class="table-center">{{ line_item.detail }}</td>
+          <td class="price-pay">{{ line_item.amount.toFixed(2) | number:2}}</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td  ng-style="{height: slip.autoHeigth}"></td>
+          <td></td>
+        </tr>
+      </tbody>
+      <tfoot>
+        <tr>
+          <th></th>
+          <td class="total-pay" style="font-size:14px;">จำนวนเงินรวมทั้งสิ้น (บาท)/Total (Baht)</td>
+          <th style="font-size:14px;">{{ slip.datas.total_amount.toFixed(2) | number:2}}</th>
+        </tr>
+         <tr class="text-total text-total-display-print">
+          <td></td>
+          <td colspan="3"><span>จำนวนเงินรวมทั้งสิ้น <b class="total_text">{{ slip.datas.total_amount.toString() | thaiBaht }}</b></span></td>
+        </tr>
+      </tfoot>
+    </table>
+  </div>
+  <div id="min-height-pay">
+    <div class="sec-payment">
+      <div class="row text-slip3-payment"><b>การชำระเงิน / Payment</b></div>
+
+      <div class="row text-slip2-school">
+        <div class="col-12">
+          <div class="row" ng-show="slip.datas.is_cash">
+            <div class="col-9">
+              <div class="checkbox">
+                <label>
+                  <span>&nbsp;
+                    เงินสด / Cash
+                  </span>
+                </label>
+              </div>
+            </div>
+            <div class="col-3">
+              <span class="pull-right">
+               {{ slip.datas.cash_amount.toFixed(2) | number:2 }} บาท / Baht
+              </span>
+            </div>
+          </div>
+          <div class="row" ng-show="slip.datas.is_credit_card">
+            <div class="col-9">
+              <div class="checkbox">
+                <label>
+                  <span>&nbsp;
+                    บัตรเครดิต / Credit card
+                  </span>
+                </label>
+              </div>
+            </div>
+            <div class="col-3">
+              <span class="pull-right">
+               {{ slip.datas.credit_card_amount.toFixed(2) | number:2 }} บาท / Baht
+              </span>
+            </div>
+          </div>
+          <div class="row" ng-show="slip.datas.is_cheque">
+            <div class="col-9">
+              <div class="checkbox">
+                <label>
+                  <span>&nbsp;
+                    เช็คธนาคาร / Cheque {{ slip.datas.cheque_bank_name || '.................' }} เช็คเลขที่ / No. {{ slip.datas.cheque_number || '.......' }} ลงวันที่ / Date {{ slip.datas.cheque_date || '.......' }}
+                  </span>
+                </label>
+              </div>
+            </div>
+            <div class="col-3">
+              <span class="pull-right">
+               {{ slip.datas.cheque_amount.toFixed(2) | number:2 }} บาท / Baht
+              </span>
+            </div>
+          </div>
+          <div class="row" ng-show="slip.datas.is_transfer">
+            <div class="col-9">
+              <div class="checkbox">
+                <label>
+                  <span>&nbsp;
+                    เงินโอน เลขบัญชี / Transfer to {{ slip.datas.transfer_bank_name || '.................' }} ลงวันที่ / Date {{ slip.datas.transfer_date || '.......' }}
+                  </span>
+                </label>
+              </div>
+            </div>
+            <div class="col-3">
+              <span class="pull-right">
+               {{ slip.datas.transfer_amount.toFixed(2) | number:2 }} บาท / Baht
+              </span>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="row title-refund">
+      <b>เงื่อนไขการคืนเงิน / Refund Condition</b>
+    </div>
+    <div class="row">
+      <div class="col-6 text-slip4-refund1">
+        <div class="row">* โรงเรียนขอสงวนสิทธิ์ในการคืนเงินค่าแรกเข้าทุกกรณี</div>
+        <div class="row">* ชุดฟอร์มซื้อแล้วไม่รับคืน</div>
+        <div class="row">
+          <div class="col-7">ขอคืนเงินก่อนเปิดเทอม 2 สัปดาห์</div>
+          <div class="col-5 pull-right">คืนเงิน 70%</div>
+        </div>
+        <div class="row">
+          <div class="col-7">เรียน 2 สัปดาห์</div>
+          <div class="col-5 pull-right">คืนเงิน 60%</div>
+        </div>
+        <div class="row">
+          <div class="col-7">เรียน 3 สัปดาห์</div>
+          <div class="col-5 pull-right">คืนเงิน 50%</div>
+        </div>
+        <div class="row">
+          <div class="col-7">เรียน 4 สัปดาห์</div>
+          <div class="col-5 pull-right">คืนเงิน 40%</div>
+        </div>
+      </div>
+      <div class="col-6 text-slip4-refund2 slip-refund-right">
+        <div class="row">*&nbsp;<b>Entrance fee</b>&nbsp;once paid will not be refunded under any circumstances.</div>
+        <div class="row">* After 4 weeks Non Refund</div>
+        <div class="row">
+          <div class="col-7">Cancellation before school start 2 weeks</div>
+          <div class="col-5 pull-right">&nbsp;&nbsp;&nbsp;&nbsp;Refund 70%</div>
+        </div>
+        <div class="row">
+          <div class="col-7">Study 2 weeks</div>
+          <div class="col-5 pull-right">&nbsp;&nbsp;&nbsp;&nbsp;Refund 60%</div>
+        </div>
+        <div class="row">
+          <div class="col-7">Study 3 weeks</div>
+          <div class="col-5 pull-right">&nbsp;&nbsp;&nbsp;&nbsp;Refund 50%</div>
+        </div>
+        <div class="row">
+          <div class="col-7">Study 4 weeks</div>
+          <div class="col-5 pull-right">&nbsp;&nbsp;&nbsp;&nbsp;Refund 40%</div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="row pull-right right-receiver-for-print">
+    ลงชื่อ .................................... ​Receiver </br>
+    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;(&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;)
+  </div>
+</div>

@@ -1,0 +1,75 @@
+<div class="container-fluid">
+  <div id="student-report" class="row ng-scope">
+    <div class="unused_for_print col-lg-12">
+      <div class="row">
+        <div class="col-lg-6">
+          <div class="dropdown">
+            <h4 id="grade-list" data-toggle="dropdown">
+              <span ng-bind="invoiceReport.currentGradeString" ></span>
+              <i class="fa fa-caret-down" aria-hidden="true"></i>
+            </h4>
+            <ul class="dropdown-menu" aria-labelledby="grade-list">
+              <li ng-repeat="grade in invoiceReport.grades">
+                <a ng-click="invoiceReport.switchGrade(grade.name)">
+                  <button>{{ grade.name }}</button>
+                </a>
+              </li>
+            </ul>
+          </div>
+        </div>
+      </div>
+
+      <div class="row report-content container-fluid">
+        <table id="tableHeader" class="table scrollable-header text-table-invoicereport">
+          <thead>
+           <tr>
+              <th>Invoice #</th>
+              <th>ชื่อนักเรียน</th>
+              <th>ชั้น</th>
+              <th>ผู้ปกครอง</th>
+              <th>ผู้รับเงิน</th>
+              <th>วันที่ชำระ</th>
+              <th style="width: 150px;">ชำระโดย</th>
+              <th class='text-currency'>ยอดชำระ</th>
+              <th>สถานะ</th>
+              <th></th>
+           </tr>
+          </thead>
+            <tbody>
+              <tr ng-repeat="invoice in invoiceReport.datas ">
+                <td class="text-left text-invoice-num" ng-click="openSlip(invoice.id, 'invoice_report')">{{invoice.id}}</td>
+                <td class="text-left">
+                  {{invoice.student_full_name_with_nickname}}
+                </td>
+                <td>{{invoice.grade_name}}</td>
+                <td>{{invoice.parent_name}}</td>
+                <td>{{invoice.payee_name}}</td>
+                <td>{{invoice.created_at | date:'d/MM/yyyy hh:mm'}}</td>
+                <td>{{invoice.payment_method_names}}</td>
+                <td class="text-currency">{{invoice.total_amount.toFixed(2) | number:2}}</td>
+                <td>{{invoice.status_name}}</td>
+                <td><a herf="javascript:void(0)" ng-show="!invoice.is_cancel && invoiceReport.thisDay(invoice.created_at)" ng-click="invoiceReport.cancelInvoiceModal(invoice)"><i class="fa fa-times-circle"></i>&nbsp;ยกเลิกใบเสร็จ</a></td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+
+<!-- Modal -->
+<div class="modal" id="cancelInvoiceModal" tabindex="-1" role="dialog" aria-hidden="true">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-body">
+        คุณต้องการยกเลิกใบเสร็จนี้หรือไม่
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-submit" ng-click="invoiceReport.cancelInvoice()">ใช่</button>
+        <button type="button" class="btn btn-cancel" data-dismiss="modal">ไม่ใช่</button>
+      </div>
+    </div>
+  </div>
+</div>

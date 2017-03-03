@@ -1,0 +1,72 @@
+<div class="container-fluid">
+  <div id="student-report" class="row ng-scope">
+    <div class="unused_for_print col-lg-12">
+      <div class="row">
+        <div class="col-lg-6">
+          <div class="dropdown">
+            <h4 id="grade-list" data-toggle="dropdown">
+              <span ng-bind="studentReport.currentGradeString" ></span>
+              <i class="fa fa-caret-down" aria-hidden="true"></i>
+            </h4>
+            <ul class="dropdown-menu" aria-labelledby="grade-list">
+              <li ng-repeat="grade in studentReport.grades">
+                <a ng-click="studentReport.switchGrade(grade.name)">
+                  <button>{{ grade.name }}</button>
+                </a>
+              </li>
+            </ul>
+          </div>
+        </div>
+      </div>
+
+      <div class="row report-content container-fluid">
+        <table id="tableHeader" class="table scrollable-header">
+          <thead>
+           <tr>
+              <th>รหัส</th>
+              <th>ชื่อ</th>
+              <th>ชื่อเล่น</th>
+              <th>ชั้น</th>
+              <th>เลขที่</th>
+              <th>ผู้ปกครอง</th>
+              <th>สถานะ</th>
+              <th>ชำระโดย</th>
+              <th class='text-currency'>ค่าแรกเข้า</th>
+              <th class='text-currency'>ยอดชำระ</th>
+              <th>วันที่ชำระ</th>
+           </tr>
+          </thead>
+            <tbody>
+              <tr ng-repeat="student in studentReport.students ">
+                <td class="text-left">{{student.student_number}}</td>
+                <td class="text-left">
+                  <a href="/students/{{ student.id }}/edit">
+                    <strong>{{student.full_name_with_title}}</strong>
+                  </a>
+                </td>
+                <td>{{student.nickname_eng_thai}}</td>
+                <td>{{student.grade_name}}</td>
+                <td>{{student.classroom_number}}</td>
+                <td>{{student.parent_names}}</td>
+                <td>{{student.active_invoice_status}}</td>
+                <td>{{student.active_invoice_payment_method}}</td>
+                <td class="text-currency">{{student.active_invoice_entrance_fee.toFixed(2) | number:2}}</td>
+                <td class="text-currency">{{student.active_invoice_total_amount.toFixed(2) | number:2}}</td>
+                <td>{{student.active_invoice_updated_at | date:'d/MM/yyyy hh:mm'}}</td>
+              </tr>
+            </tbody>
+            <tfoot>
+              <tr>
+                <td colspan="7"></td>
+                <td class="text-green">รวมทั้งหมด</td>
+                <td class="text-green text-currency">{{studentReport.total.entrance_fee.toFixed(2) | number:2}}</td>
+                <td class="text-green text-currency">{{studentReport.total.amount.toFixed(2) | number:2}}</td>
+                <td class="text-green"></td>
+              </tr>
+            </tfoot>
+          </table>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

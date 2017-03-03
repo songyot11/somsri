@@ -5,4 +5,12 @@ class User < ApplicationRecord
          :recoverable, :rememberable, :trackable, :validatable
 
   belongs_to :school
+  has_many :invoices, dependent: :destroy
+
+  def admin?
+    true
+  end
+
+  include Gravtastic
+  gravtastic
 end

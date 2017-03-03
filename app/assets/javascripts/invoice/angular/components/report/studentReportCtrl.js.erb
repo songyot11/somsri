@@ -1,0 +1,35 @@
+(function() {
+  'use strict';
+  angular.module('somsri.invoice.studentReport', [
+  ])
+  .controller('studentReportCtrl', ['$compile', '$scope', '$window', '$filter', '$rootScope', 'studentReportService', '$timeout', function($compile, $scope, $window, $filter, $rootScope, studentReportService, $timeout) {
+    $rootScope.menu = "Report"
+
+    var ctrl = this
+
+    ctrl.switchGrade = function(grade_name) {
+      getStudents(grade_name);
+    }
+
+    function getStudents(grade_name) {
+      studentReportService.getGrades().then(function(grade_resp) {
+        ctrl.currentGradeString = grade_name
+        ctrl.grades = grade_resp.data
+        studentReportService.getStudents(grade_name).then(function(resp) {
+          ctrl.students = resp.data
+          ctrl.total = { entrance_fee: 0.0, amount: 0.0 }
+
+          angular.forEach(ctrl.students, function(value, key) {
+            if(value.active_invoice_status == "ชำระแล้ว"){
+              ctrl.total.entrance_fee += value.active_invoice_entrance_fee
+              ctrl.total.amount += value.active_invoice_total_amount
+            }
+          });
+        });
+      });
+    }
+
+    getStudents('All');
+
+  }]);
+})();

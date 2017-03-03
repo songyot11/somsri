@@ -1,0 +1,14 @@
+(function() {
+  'use strict';
+  angular.module('somsri.invoice.studentReport.service', [
+  ])
+  .service('studentReportService', ['$http', function($http) {
+    this.getStudents = function(grade_name) {
+      return $http.get('/students', { params: { grade_select: grade_name, student_report: true } })
+    }
+
+    this.getGrades = function() {
+      return $http.get('/grades')
+    }
+  }]);
+})();

@@ -1,0 +1,64 @@
+(function() {
+  'use strict';
+  angular.module('somsri.invoice.assets', []).
+  constant('ASSETS', {
+    'somsri': {
+      'invoice': {
+        'invoice': {
+          name: 'somsri.invoice.invoice',
+          files: [
+            "<%= asset_path('invoice/angular/components/invoice/invoiceCtrl.js') %>",
+            "<%= asset_path('invoice/angular/components/invoice/invoiceService.js') %>",
+          ]
+        },
+        'menu': {
+          name: 'somsri.invoice.menu',
+          files: [
+            "<%= asset_path('invoice/angular/components/menu/menuCtrl.js') %>"
+          ]
+        },
+        'report': {
+          name: 'somsri.invoice.report',
+          files: [
+            "<%= asset_path('invoice/angular/components/report/reportCtrl.js') %>"
+          ]
+        },
+        'studentReport': {
+          name: 'somsri.invoice.studentReport',
+          files: [
+            "<%= asset_path('invoice/angular/components/report/studentReportCtrl.js') %>",
+            "<%= asset_path('invoice/angular/components/report/studentReportService.js') %>"
+          ]
+        },
+        'invoice_slip': {
+          name: 'somsri.payroll.invoice_slip',
+          files: [
+            "<%= asset_path('invoice/angular/components/invoice/slip/invoiceSlipCtrl.js') %>",
+            "<%= asset_path('invoice/angular/components/invoice/slip/invoiceSlipService.js') %>"
+          ]
+        },
+        'daily_report': {
+          name: 'somsri.invoice.daily_report',
+          files: [
+            "<%= asset_path('invoice/angular/components/dailyReport/dailyReportCtrl.js') %>",
+            "<%= asset_path('invoice/angular/components/dailyReport/dailyReportService.js') %>"
+          ]
+        },
+        'daily_report_preview': {
+          name: 'somsri.invoice.daily_report_preview',
+          files: [
+            "<%= asset_path('invoice/angular/components/dailyReport/preview/previewCtrl.js') %>",
+            "<%= asset_path('invoice/angular/components/dailyReport/dailyReportService.js') %>"
+          ]
+        },
+        'invoice_report': {
+          name: 'somsri.invoice.invoice_report',
+          files: [
+            "<%= asset_path('invoice/angular/components/invoiceReport/invoiceReportCtrl.js') %>",
+            "<%= asset_path('invoice/angular/components/invoiceReport/invoiceReportService.js') %>"
+          ]
+        }
+      }
+    }
+  });
+})();

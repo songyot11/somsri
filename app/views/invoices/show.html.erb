@@ -1,0 +1,69 @@
+<p id="notice"><%= notice %></p>
+
+<p>
+  <strong>Student:</strong>
+  <%= @invoice.student_id %>
+</p>
+
+<p>
+  <strong>Parent:</strong>
+  <%= @invoice.parent_id %>
+</p>
+
+<p>
+  <strong>User:</strong>
+  <%= @invoice.user_id %>
+</p>
+
+<p>
+  <strong>Remark:</strong>
+  <%= @invoice.remark %>
+</p>
+
+<p>
+  <strong>Payment method:</strong>
+  <%= @invoice.payment_method_id %>
+</p>
+
+<p>
+  <strong>Cheque bank name:</strong>
+  <%= @invoice.cheque_bank_name %>
+</p>
+
+<p>
+  <strong>Cheque number:</strong>
+  <%= @invoice.cheque_number %>
+</p>
+
+<p>
+  <strong>Cheque date:</strong>
+  <%= @invoice.cheque_date %>
+</p>
+
+<p>
+  <strong>Transfer bank name:</strong>
+  <%= @invoice.transfer_bank_name %>
+</p>
+
+<p>
+  <strong>Transfer date:</strong>
+  <%= @invoice.transfer_date %>
+</p>
+
+<p>
+  <strong>Invoice status:</strong>
+  <%= @invoice.invoice_status_id %>
+</p>
+
+<p>
+  <strong>School year:</strong>
+  <%= @invoice.school_year %>
+</p>
+
+<p>
+  <strong>Semester:</strong>
+  <%= @invoice.semester %>
+</p>
+
+<%= link_to 'Edit', edit_invoice_path(@invoice) %> |
+<%= link_to 'Back', invoices_path %>
