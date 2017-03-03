@@ -60,8 +60,16 @@
       return false;
     }
 
+    function isTaxReductionChange(){
+      var keys = Object.keys(ctrl.datas_original.tax_reduction)
+      for(var i = 1; i < keys.length; i++){
+        if(ctrl.datas.tax_reduction[keys[i]] != ctrl.datas_original.tax_reduction[keys[i]]){ return true }
+      }
+      return false;
+    }
+
     function isDataChange(){
-      return isPayrollChange() || isEmployeeChange();
+      return isPayrollChange() || isEmployeeChange() || isTaxReductionChange();
     }
 
     // convert string to float

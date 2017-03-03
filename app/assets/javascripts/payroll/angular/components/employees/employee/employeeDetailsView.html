@@ -33,6 +33,9 @@
 <div class="container employee-details employee-menu-space">
   <form name="createProjectForm" ng-submit="employee.submit(employee.datas)">
     <ul class="nav nav-tabs main">
+      <li class="cyan" ng-class="{ 'active' : employee.activeTab === 'salary' }">
+        <a data-toggle="tab" ng-click="employee.activeTab = 'salary'" href="javascript:void(0)">เงินเดือน</a>
+      </li>
       <li class="cyan" ng-class="{ 'active' : employee.activeTab === 'general' }">
         <a data-toggle="tab" ng-click="employee.activeTab = 'general'" href="javascript:void(0)">ข้อมูลทั่วไป</a>
       </li>
@@ -566,146 +569,148 @@
           </div>
         </div>
       </div>
-    </div>
-    <div class="paragraph orange payroll" ng-show="employee.isEdit && employee.hasPayroll">
-      <div ng-switch="employee.effectiveDates.length > 0">
-        <div ng-switch-when="true">
-          <div class="dropdown">
-            <h3 id="month-list" data-toggle="dropdown">
-              <span ng-bind="employee.currentDateString" ></span>
-              <span class="caret"></span>
-            </h3>
-            <ul class="dropdown-menu" aria-labelledby="month-list">
-              <li ng-repeat="effectiveDate in employee.effectiveDatesDisplay">
-                <a ng-click="employee.switchMonth(effectiveDate)">
-                  {{ effectiveDate["date_string"] }}
-                </a>
-              </li>
-            </ul>
-          </div>
-        </div>
-        <div ng-switch-default>
-          <h3 data-toggle="dropdown">
-            <span ng-bind="employee.currentDateString" ></span>
-          </h3>
-        </div>
-      </div>
-      <div class="row">
-        <div class="col-md-4"><h3>รายการเงินได้</h3></div>
-        <div class="col-md-4"><h3>รายการเงินหัก</h3></div>
-        <div class="col-md-4"><h3>รวมทั้งสิ้น</h3></div>
-      </div>
-      <div class="space20"></div>
-      <div class="row">
-        <div class="col-md-4">
-          <div class="form-group">
-            <label for="salary">ค่าแรง / เงินเดือนปัจจุบัน</label>
-            <input step="0.01" type="number" class="form-control text-green" id="salary" ng-model="employee.datas.payroll.salary" ng-change="employee.calTotal(); employee.changeSalary()">
-          </div>
-        </div>
-        <div class="col-md-4">
-          <div class="form-group">
-            <label for="absence">ขาดงาน</label>
-            <input step="0.01" type="number" class="form-control text-red" id="absence" ng-model="employee.datas.payroll.absence" ng-change="employee.calTotal()">
-          </div>
-        </div>
-        <div class="col-md-4">
-          <div class="form-group">
-            <label for="total">เงินเดือนสุทธิ</label>
-            <div class="form-control text-green">{{ employee.total.toFixed(2) }}</div>
-          </div>
-        </div>
-      </div>
-      <div class="row">
-        <div class="col-md-4">
-          <div class="form-group">
-            <label for="ot">เงินสอนพิเศษ</label>
-            <input step="0.01" type="number" class="form-control text-green" id="ot" ng-model="employee.datas.payroll.ot" ng-change="employee.calTotal()">
-          </div>
-        </div>
-        <div class="col-md-4">
-          <div class="form-group">
-            <label for="late">สาย</label>
-            <input step="0.01" type="number" class="form-control text-red" id="late" ng-model="employee.datas.payroll.late" ng-change="employee.calTotal()">
-          </div>
-        </div>
-        <div class="col-md-4">
-          <div class="row">
-            <div class="col-md-8">
-              <button type="button" class="btn bg-gray btn-block" data-toggle="modal" data-target="#bird-eye" ng-click="employee.getAllPayroll(employee.empId)">
-                ประวัติเงินเดือน
-              </button>
+      <div ng-class="{ 'in active' : employee.activeTab === 'salary' }" id="salaryInfo" class="tab-pane fade">
+        <div class="paragraph cyan tab-content salary" ng-show="employee.isEdit && employee.hasPayroll">
+          <div ng-switch="employee.effectiveDates.length > 0">
+            <div ng-switch-when="true">
+              <div class="dropdown">
+                <h3 id="month-list" data-toggle="dropdown">
+                  <span ng-bind="employee.currentDateString" ></span>
+                  <span class="caret"></span>
+                </h3>
+                <ul class="dropdown-menu" aria-labelledby="month-list">
+                  <li ng-repeat="effectiveDate in employee.effectiveDatesDisplay">
+                    <a ng-click="employee.switchMonth(effectiveDate)">
+                      {{ effectiveDate["date_string"] }}
+                    </a>
+                  </li>
+                </ul>
+              </div>
+            </div>
+            <div ng-switch-default>
+              <h3 data-toggle="dropdown">
+                <span ng-bind="employee.currentDateString" ></span>
+              </h3>
             </div>
           </div>
-        </div>
-      </div>
-      <div class="row">
-        <div class="col-md-4">
-          <div class="form-group">
-            <label for="position_allowance">ค่าตำแหน่ง</label>
-            <input step="0.01" type="number" class="form-control text-green" id="position_allowance" ng-model="employee.datas.payroll.position_allowance" ng-change="employee.calTotal()">
+          <div class="row">
+            <div class="col-md-4"><h3>รายการเงินได้</h3></div>
+            <div class="col-md-4"><h3>รายการเงินหัก</h3></div>
+            <div class="col-md-4"><h3>รวมทั้งสิ้น</h3></div>
           </div>
-        </div>
-        <div class="col-md-4">
-          <div class="form-group">
-            <label for="pvf">เงินสะสมเข้ากองทุนสงเคราะห์</label>
-            <input step="0.01" type="number" class="form-control text-red" id="pvf" ng-model="employee.datas.payroll.pvf" disabled>
+          <div class="space20"></div>
+          <div class="row">
+            <div class="col-md-4">
+              <div class="form-group">
+                <label for="salary">ค่าแรง / เงินเดือนปัจจุบัน</label>
+                <input step="0.01" type="number" class="form-control text-green" id="salary" ng-model="employee.datas.payroll.salary" ng-change="employee.calTotal(); employee.changeSalary()">
+              </div>
+            </div>
+            <div class="col-md-4">
+              <div class="form-group">
+                <label for="absence">ขาดงาน</label>
+                <input step="0.01" type="number" class="form-control text-red" id="absence" ng-model="employee.datas.payroll.absence" ng-change="employee.calTotal()">
+              </div>
+            </div>
+            <div class="col-md-4">
+              <div class="form-group">
+                <label for="total">เงินเดือนสุทธิ</label>
+                <div class="form-control text-green">{{ employee.total.toFixed(2) }}</div>
+              </div>
+            </div>
           </div>
-        </div>
-      </div>
-      <div class="row">
-        <div class="col-md-4">
-          <div class="form-group">
-            <label for="allowance">ค่ากะ / ค่าเบี้ยเลี้ยง</label>
-            <input step="0.01" type="number" class="form-control text-green" id="allowance" ng-model="employee.datas.payroll.allowance" ng-change="employee.calTotal()">
+          <div class="row">
+            <div class="col-md-4">
+              <div class="form-group">
+                <label for="ot">เงินสอนพิเศษ</label>
+                <input step="0.01" type="number" class="form-control text-green" id="ot" ng-model="employee.datas.payroll.ot" ng-change="employee.calTotal()">
+              </div>
+            </div>
+            <div class="col-md-4">
+              <div class="form-group">
+                <label for="late">สาย</label>
+                <input step="0.01" type="number" class="form-control text-red" id="late" ng-model="employee.datas.payroll.late" ng-change="employee.calTotal()">
+              </div>
+            </div>
+            <div class="col-md-4">
+              <div class="row">
+                <div class="col-md-8">
+                  <button type="button" class="btn bg-gray btn-block" data-toggle="modal" data-target="#bird-eye" ng-click="employee.getAllPayroll(employee.empId)">
+                    ประวัติเงินเดือน
+                  </button>
+                </div>
+              </div>
+            </div>
           </div>
-        </div>
-        <div class="col-md-4">
-          <div class="form-group">
-            <label for="tax">ภาษี</label>
-            <input step="0.01" type="number" class="form-control text-red" id="tax" ng-model="employee.datas.payroll.tax" disabled>
+          <div class="row">
+            <div class="col-md-4">
+              <div class="form-group">
+                <label for="position_allowance">ค่าตำแหน่ง</label>
+                <input step="0.01" type="number" class="form-control text-green" id="position_allowance" ng-model="employee.datas.payroll.position_allowance" ng-change="employee.calTotal()">
+              </div>
+            </div>
+            <div class="col-md-4">
+              <div class="form-group">
+                <label for="pvf">เงินสะสมเข้ากองทุนสงเคราะห์</label>
+                <input step="0.01" type="number" class="form-control text-red" id="pvf" ng-model="employee.datas.payroll.pvf" disabled>
+              </div>
+            </div>
           </div>
-        </div>
-      </div>
-      <div class="row">
-        <div class="col-md-4">
-          <div class="form-group">
-            <label for="attendace_bonus">เบี้ยขยัน</label>
-            <input step="0.01" type="number" class="form-control text-green" id="attendace_bonus" ng-model="employee.datas.payroll.attendance_bonus" ng-change="employee.calTotal()">
+          <div class="row">
+            <div class="col-md-4">
+              <div class="form-group">
+                <label for="allowance">ค่ากะ / ค่าเบี้ยเลี้ยง</label>
+                <input step="0.01" type="number" class="form-control text-green" id="allowance" ng-model="employee.datas.payroll.allowance" ng-change="employee.calTotal()">
+              </div>
+            </div>
+            <div class="col-md-4">
+              <div class="form-group">
+                <label for="tax">ภาษี</label>
+                <input step="0.01" type="number" class="form-control text-red" id="tax" ng-model="employee.datas.payroll.tax" disabled>
+              </div>
+            </div>
           </div>
-        </div>
-        <div class="col-md-4">
-          <div class="form-group">
-            <label for="social_insurance">ประกันสังคม</label>
-            <input step="0.01" type="number" class="form-control text-red" id="social_insurance" ng-model="employee.datas.payroll.social_insurance" disabled>
+          <div class="row">
+            <div class="col-md-4">
+              <div class="form-group">
+                <label for="attendace_bonus">เบี้ยขยัน</label>
+                <input step="0.01" type="number" class="form-control text-green" id="attendace_bonus" ng-model="employee.datas.payroll.attendance_bonus" ng-change="employee.calTotal()">
+              </div>
+            </div>
+            <div class="col-md-4">
+              <div class="form-group">
+                <label for="social_insurance">ประกันสังคม</label>
+                <input step="0.01" type="number" class="form-control text-red" id="social_insurance" ng-model="employee.datas.payroll.social_insurance" disabled>
+              </div>
+            </div>
           </div>
-        </div>
-      </div>
-      <div class="row">
-        <div class="col-md-4">
-          <div class="form-group">
-            <label for="bonus">โบนัส</label>
-            <input step="0.01" type="number" class="form-control text-green" id="bonus" ng-model="employee.datas.payroll.bonus" ng-change="employee.calTotal()">
+          <div class="row">
+            <div class="col-md-4">
+              <div class="form-group">
+                <label for="bonus">โบนัส</label>
+                <input step="0.01" type="number" class="form-control text-green" id="bonus" ng-model="employee.datas.payroll.bonus" ng-change="employee.calTotal()">
+              </div>
+            </div>
+            <div class="col-md-4">
+              <div class="form-group">
+                <label for="advance_payment">เบิกล่วงหน้า</label>
+                <input step="0.01" type="number" class="form-control text-red" id="advance_payment" ng-model="employee.datas.payroll.advance_payment" ng-change="employee.calTotal()">
+              </div>
+            </div>
           </div>
-        </div>
-        <div class="col-md-4">
-          <div class="form-group">
-            <label for="advance_payment">เบิกล่วงหน้า</label>
-            <input step="0.01" type="number" class="form-control text-red" id="advance_payment" ng-model="employee.datas.payroll.advance_payment" ng-change="employee.calTotal()">
-          </div>
-        </div>
-      </div>
-      <div class="row">
-        <div class="col-md-4">
-          <div class="form-group">
-            <label for="extra_etc">รายได้อื่นๆ</label>
-            <input step="0.01" type="number" class="form-control text-green" id="extra_etc" ng-model="employee.datas.payroll.extra_etc" ng-change="employee.calTotal()">
-          </div>
-        </div>
-        <div class="col-md-4">
-          <div class="form-group">
-            <label for="fee_etc">หักอื่นๆ</label>
-            <input step="0.01" type="number" class="form-control text-red" id="fee_etc" ng-model="employee.datas.payroll.fee_etc" ng-change="employee.calTotal()">
+          <div class="row">
+            <div class="col-md-4">
+              <div class="form-group">
+                <label for="extra_etc">รายได้อื่นๆ</label>
+                <input step="0.01" type="number" class="form-control text-green" id="extra_etc" ng-model="employee.datas.payroll.extra_etc" ng-change="employee.calTotal()">
+              </div>
+            </div>
+            <div class="col-md-4">
+              <div class="form-group">
+                <label for="fee_etc">หักอื่นๆ</label>
+                <input step="0.01" type="number" class="form-control text-red" id="fee_etc" ng-model="employee.datas.payroll.fee_etc" ng-change="employee.calTotal()">
+              </div>
+            </div>
           </div>
         </div>
       </div>
@@ -728,6 +733,7 @@
         <button type="button" class="btn btn-lg btn-block btn-danger" ng-click="employee.deleteEmployee(employee.empId)">ลบ</button>
       </div>
     </div>
+
   </form>
 </div>
 
