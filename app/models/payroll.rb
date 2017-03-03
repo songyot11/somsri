@@ -23,31 +23,24 @@ class Payroll < ApplicationRecord
     allowance + attendance_bonus + ot + bonus + position_allowance + extra_etc
   end
 
-  def generate_pvf
-    salary > 15000 ? salary * 0.03 : 15000 * 0.03
+  def self.generate_pvf(p, e)
+    return 0 unless e[:pay_pvf]
+    p[:salary].to_i > 15000 ? p[:salary].to_i * 0.03 : 15000 * 0.03
   end
 
-  def generate_social_insurance
-    income = salary + position_allowance - late - absence
+  def self.generate_social_insurance(p, e)
+    return 0 unless e[:pay_social_insurance]
+    income = p[:salary].to_i + p[:position_allowance].to_i - p[:late].to_i - p[:absence].to_i
     income = 15000 if income > 15000
     income >= 1650 ? (income * 0.05).round : 0
   end
 
-  def generate_income_tax
-    income = self.employee.year_income - self.employee.tax_break
-    taxrates = Taxrate.order(:order_id).map {|t| [t.income, t.tax] }
-    yearTax = 0
-    taxrates.each do |taxrate|
-      if income>taxrate[0]
-        yearTax += (income-taxrate[0])*taxrate[1]
-        income = taxrate[0]
-      end
+  def self.generate_tax(p, e, t) # payroll, employee, tax_reduction
+    if e[:employee_type]=='ลูกจ้างประจำ'
+      tax = self.generate_income_tax(p, e, t)
+    else
+      tax = self.generate_withholding_tax(p)
     end
-    (yearTax/12).round(2) # month 1-11
-  end
-
-  def generate_withholding_tax
-    (salary + allowance + attendance_bonus + ot + bonus + position_allowance) * 0.03
   end
 
   def as_json(options={})
@@ -161,4 +154,34 @@ class Payroll < ApplicationRecord
       super()
     end
   end
+
+  private
+    def self.assume_year_income(p)
+      income = (p[:salary].to_i + p[:allowance].to_i + p[:attendance_bonus].to_i + p[:ot].to_i + p[:bonus].to_i + p[:position_allowance].to_i - p[:absence].to_i - p[:late].to_i)*12
+    end
+
+    def self.tax_break(p, t)
+      y_income = assume_year_income(p)
+      income = y_income
+      income -= TaxReduction.income_exemption(income, t) if income > 0
+      income -= TaxReduction.revenue_reduction(income, t) if income > 0
+      y_income - income
+    end
+
+    def self.generate_income_tax(p,e,t)
+      income = self.assume_year_income(p) - self.tax_break(p,t)
+      taxrates = Taxrate.order(:order_id).map {|tr| [tr.income, tr.tax] }
+      yearTax = 0
+      taxrates.each do |taxrate|
+        if income>taxrate[0]
+          yearTax += (income-taxrate[0])*taxrate[1]
+          income = taxrate[0]
+        end
+      end
+      (yearTax/12).round(2) # month 1-11
+    end
+
+    def self.generate_withholding_tax(p)
+      p[:salary].to_i * 0.03
+    end
 end

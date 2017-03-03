@@ -49,7 +49,7 @@
                 <div class="col-md-2">
                   <div class="form-group">
                     <label for="prefix_thai">คำนำหน้า</label>
-                    <input type="text" class="form-control" id="prefix_thai" ng-model="employee.datas.employee.prefix_thai" ng-change="employee.calTotal()">
+                    <input type="text" class="form-control" id="prefix_thai" ng-model="employee.datas.employee.prefix_thai" ng-blur="employee.calTotal()">
                   </div>
                 </div>
                 <div class="col-md-5">
@@ -161,7 +161,7 @@
             <div class="col-md-4">
               <div class="form-group">
                 <label for="employeetype">ประเภทการจ้างงาน</label>
-                <select class="form-control somsri-select" id="employeetype" ng-model="employee.datas.employee.employee_type" ng-change="employee.calTotal()">
+                <select class="form-control somsri-select" id="employeetype" ng-model="employee.datas.employee.employee_type" ng-blur="employee.calTotal()">
                   <option value="ลูกจ้างประจำ">ลูกจ้างประจำ</option>
                   <option value="ลูกจ้างชั่วคราว">ลูกจ้างชั่วคราว</option>
                   <option value="ลูกจ้างทดลองงาน">ลูกจ้างทดลองงาน</option>
@@ -196,7 +196,7 @@
                 <table class="checkbox-group">
                   <tr>
                     <td>
-                      <input type="checkbox" class="form-control cbox" id="pay_social_insurance" ng-model="employee.datas.employee.pay_social_insurance" ng-change="employee.calTotal()"/>
+                      <input type="checkbox" class="form-control cbox" id="pay_social_insurance" ng-model="employee.datas.employee.pay_social_insurance" ng-blur="employee.calTotal()"/>
                     </td>
                     <td>
                       <label for="pay_social_insurance">จ่ายประกันสังคม</label>
@@ -210,7 +210,7 @@
                 <table class="checkbox-group">
                   <tr>
                     <td>
-                      <input type="checkbox" class="form-control cbox" id="pay_pvf" ng-model="employee.datas.employee.pay_pvf" ng-change="employee.calTotal()"/>
+                      <input type="checkbox" class="form-control cbox" id="pay_pvf" ng-model="employee.datas.employee.pay_pvf" ng-blur="employee.calTotal()"/>
                     </td>
                     <td>
                       <label for="pay_pvf">จ่ายกองทุนสงเคราะห์ครูเอกชน</label>
@@ -600,13 +600,13 @@
         <div class="col-md-4">
           <div class="form-group">
             <label for="salary">ค่าแรง / เงินเดือนปัจจุบัน</label>
-            <input step="0.01" type="number" class="form-control text-green" id="salary" ng-model="employee.datas.payroll.salary" ng-change="employee.calTotal(); employee.changeSalary()">
+            <input step="0.01" type="number" class="form-control text-green" id="salary" ng-model="employee.datas.payroll.salary" ng-blur="employee.calTotal(); employee.changeSalary()">
           </div>
         </div>
         <div class="col-md-4">
           <div class="form-group">
             <label for="absence">ขาดงาน</label>
-            <input step="0.01" type="number" class="form-control text-red" id="absence" ng-model="employee.datas.payroll.absence" ng-change="employee.calTotal()">
+            <input step="0.01" type="number" class="form-control text-red" id="absence" ng-model="employee.datas.payroll.absence" ng-blur="employee.calTotal()">
           </div>
         </div>
         <div class="col-md-4">
@@ -620,13 +620,13 @@
         <div class="col-md-4">
           <div class="form-group">
             <label for="ot">เงินสอนพิเศษ</label>
-            <input step="0.01" type="number" class="form-control text-green" id="ot" ng-model="employee.datas.payroll.ot" ng-change="employee.calTotal()">
+            <input step="0.01" type="number" class="form-control text-green" id="ot" ng-model="employee.datas.payroll.ot" ng-blur="employee.calTotal()">
           </div>
         </div>
         <div class="col-md-4">
           <div class="form-group">
             <label for="late">สาย</label>
-            <input step="0.01" type="number" class="form-control text-red" id="late" ng-model="employee.datas.payroll.late" ng-change="employee.calTotal()">
+            <input step="0.01" type="number" class="form-control text-red" id="late" ng-model="employee.datas.payroll.late" ng-blur="employee.calTotal()">
           </div>
         </div>
         <div class="col-md-4">
@@ -643,7 +643,7 @@
         <div class="col-md-4">
           <div class="form-group">
             <label for="position_allowance">ค่าตำแหน่ง</label>
-            <input step="0.01" type="number" class="form-control text-green" id="position_allowance" ng-model="employee.datas.payroll.position_allowance" ng-change="employee.calTotal()">
+            <input step="0.01" type="number" class="form-control text-green" id="position_allowance" ng-model="employee.datas.payroll.position_allowance" ng-blur="employee.calTotal()">
           </div>
         </div>
         <div class="col-md-4">
@@ -657,7 +657,7 @@
         <div class="col-md-4">
           <div class="form-group">
             <label for="allowance">ค่ากะ / ค่าเบี้ยเลี้ยง</label>
-            <input step="0.01" type="number" class="form-control text-green" id="allowance" ng-model="employee.datas.payroll.allowance" ng-change="employee.calTotal()">
+            <input step="0.01" type="number" class="form-control text-green" id="allowance" ng-model="employee.datas.payroll.allowance" ng-blur="employee.calTotal()">
           </div>
         </div>
         <div class="col-md-4">
@@ -671,7 +671,7 @@
         <div class="col-md-4">
           <div class="form-group">
             <label for="attendace_bonus">เบี้ยขยัน</label>
-            <input step="0.01" type="number" class="form-control text-green" id="attendace_bonus" ng-model="employee.datas.payroll.attendance_bonus" ng-change="employee.calTotal()">
+            <input step="0.01" type="number" class="form-control text-green" id="attendace_bonus" ng-model="employee.datas.payroll.attendance_bonus" ng-blur="employee.calTotal()">
           </div>
         </div>
         <div class="col-md-4">
@@ -685,13 +685,13 @@
         <div class="col-md-4">
           <div class="form-group">
             <label for="bonus">โบนัส</label>
-            <input step="0.01" type="number" class="form-control text-green" id="bonus" ng-model="employee.datas.payroll.bonus" ng-change="employee.calTotal()">
+            <input step="0.01" type="number" class="form-control text-green" id="bonus" ng-model="employee.datas.payroll.bonus" ng-blur="employee.calTotal()">
           </div>
         </div>
         <div class="col-md-4">
           <div class="form-group">
             <label for="advance_payment">เบิกล่วงหน้า</label>
-            <input step="0.01" type="number" class="form-control text-red" id="advance_payment" ng-model="employee.datas.payroll.advance_payment" ng-change="employee.calTotal()">
+            <input step="0.01" type="number" class="form-control text-red" id="advance_payment" ng-model="employee.datas.payroll.advance_payment" ng-blur="employee.calTotal()">
           </div>
         </div>
       </div>
@@ -699,13 +699,13 @@
         <div class="col-md-4">
           <div class="form-group">
             <label for="extra_etc">รายได้อื่นๆ</label>
-            <input step="0.01" type="number" class="form-control text-green" id="extra_etc" ng-model="employee.datas.payroll.extra_etc" ng-change="employee.calTotal()">
+            <input step="0.01" type="number" class="form-control text-green" id="extra_etc" ng-model="employee.datas.payroll.extra_etc" ng-blur="employee.calTotal()">
           </div>
         </div>
         <div class="col-md-4">
           <div class="form-group">
             <label for="fee_etc">หักอื่นๆ</label>
-            <input step="0.01" type="number" class="form-control text-red" id="fee_etc" ng-model="employee.datas.payroll.fee_etc" ng-change="employee.calTotal()">
+            <input step="0.01" type="number" class="form-control text-red" id="fee_etc" ng-model="employee.datas.payroll.fee_etc" ng-blur="employee.calTotal()">
           </div>
         </div>
       </div>
