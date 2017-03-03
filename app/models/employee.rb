@@ -90,23 +90,6 @@ class Employee < ApplicationRecord
     TaxReduction.where(employee_id: self.id).first
   end
 
-  def year_income
-    payroll = self.lastest_payroll
-    if payroll
-      income = (payroll.salary + payroll.allowance + payroll.attendance_bonus + payroll.position_allowance)*12
-    else
-      income = 0
-    end
-  end
-
-  def tax_break
-    t = TaxReduction.where(employee_id: self.id).first()
-    income = self.year_income
-    income -= t.income_exemption(income) if income > 0
-    income -= t.revenue_reduction(income) if income > 0
-    self.year_income - income
-  end
-
   private
     def create_tax_reduction
       TaxReduction.create(employee_id: self.id)
