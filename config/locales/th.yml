@@ -28,7 +28,7 @@ th:
         allowance: "เบี้ยเลี้ยง / Shift"
         attendance_bonus: "เบี้ยขยัน / Attendance Bonus"
         ot: "เงินสอนพิเศษ / After School Class"
-        bonus: "โบนัส / Bonus" 
+        bonus: "โบนัส / Bonus"
         position_allowance: "ค่าตำแหน่ง / Posticion"
         extra_etc: "รายได้อื่นๆ / Etc."
         absence: "ขาดงาน / Absence"
@@ -42,3 +42,29 @@ th:
   date:
     month_names: [~, มกราคม, กุมภาพันธ์, มีนาคม, เมษายน, พฤษภาคม, มิถุนายน, กรกฎาคม, สิงหาคม, กันยายน, ตุลาคม, พฤศจิกายน, ธันวาคม]
     abbr_month_names: [~, ม.ค., ก.พ., มี.ค., เม.ย., พ.ค., มิ.ย., ก.ค., ส.ค., ก.ย., ต.ค., พ.ย., ธ.ค.]
+
+  #Grade
+  Preschool: "เตรียมอนุบาล"
+  Kindergarten1: "อ.1"
+  Kindergarten2: "อ.2"
+  Kindergarten3: "อ.3"
+  Kindergarten 1: "อ.1"
+  Kindergarten 2: "อ.2"
+  Kindergarten 3: "อ.3"
+
+  #Gender
+  Male: "ชาย"
+  Female: "หญิง"
+
+  #Paystatus
+  Unpaid: "ยังไม่ได้ชำระเงิน"
+  Active: "ชำระเงินแล้ว"
+  Canceled: "ยกเลิก"
+  #relationships
+  Father: "คุณพ่อ"
+  Mother: "คุณแม่"
+  Grandfather: "คุณปู่/คุณตา"
+  Grandmother: "คุณยาย/คุณย่า"
+  Uncle: "คุณลุง"
+  Aunt: "คุณป้า"
+  Cousin: "ลูกพี่ลูกน้อง"

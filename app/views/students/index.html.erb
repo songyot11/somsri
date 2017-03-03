@@ -23,7 +23,7 @@
               <select name="grade_select" id="grade_select" class="btn-grades" onchange="this.form.submit()">
                   <option value='all'>ทั้งหมด</option>
                   <% Grade.all.each do |grade| %>
-                    <option value="<%= grade.name %>"<%= @filter_grade.to_s == grade.name.to_s ? "selected" : "" %>> <%= grade.name %> </option>
+                    <option value="<%= grade.name %>"<%= @filter_grade.to_s == grade.name.to_s ? "selected" : "" %>> <%= t(grade.name) %> </option>
                   <% end %>
               </select>
             </td>
