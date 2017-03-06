@@ -23,23 +23,23 @@ class Payroll < ApplicationRecord
     allowance + attendance_bonus + ot + bonus + position_allowance + extra_etc
   end
 
-  def self.generate_pvf(p, e)
-    return 0 unless e[:pay_pvf]
-    p[:salary].to_i > 15000 ? p[:salary].to_i * 0.03 : 15000 * 0.03
+  def self.generate_pvf(payroll, employee)
+    return 0 unless employee["pay_pvf"]
+    payroll["salary"].to_i > 15000 ? payroll["salary"].to_i * 0.03 : 15000 * 0.03
   end
 
-  def self.generate_social_insurance(p, e)
-    return 0 unless e[:pay_social_insurance]
-    income = p[:salary].to_i + p[:position_allowance].to_i - p[:late].to_i - p[:absence].to_i
+  def self.generate_social_insurance(payroll, employee)
+    return 0 unless employee["pay_social_insurance"]
+    income = payroll["salary"].to_i + payroll["position_allowance"].to_i - payroll["late"].to_i - payroll["absence"].to_i
     income = 15000 if income > 15000
     income >= 1650 ? (income * 0.05).round : 0
   end
 
-  def self.generate_tax(p, e, t) # payroll, employee, tax_reduction
-    if e[:employee_type]=='ลูกจ้างประจำ'
-      tax = self.generate_income_tax(p, e, t)
+  def self.generate_tax(payroll, employee, tax_reduction)
+    if employee["employee_type"]=='ลูกจ้างประจำ'
+      tax = self.generate_income_tax(payroll, employee, tax_reduction)
     else
-      tax = self.generate_withholding_tax(p)
+      tax = self.generate_withholding_tax(payroll)
     end
   end
 
@@ -156,20 +156,20 @@ class Payroll < ApplicationRecord
   end
 
   private
-    def self.assume_year_income(p)
-      income = (p[:salary].to_i + p[:allowance].to_i + p[:attendance_bonus].to_i + p[:ot].to_i + p[:bonus].to_i + p[:position_allowance].to_i - p[:absence].to_i - p[:late].to_i)*12
+    def self.assume_year_income(payroll)
+      income = (payroll["salary"].to_i + payroll["allowance"].to_i + payroll["attendance_bonus"].to_i + payroll["ot"].to_i + payroll["bonus"].to_i + payroll["position_allowance"].to_i - payroll["absence"].to_i - payroll["late"].to_i)*12
     end
 
-    def self.tax_break(p, t)
-      y_income = assume_year_income(p)
+    def self.tax_break(payroll, tax_reduction)
+      y_income = assume_year_income(payroll)
       income = y_income
-      income -= TaxReduction.income_exemption(income, t) if income > 0
-      income -= TaxReduction.revenue_reduction(income, t) if income > 0
+      income -= TaxReduction.income_exemption(income, tax_reduction) if income > 0
+      income -= TaxReduction.revenue_reduction(income, tax_reduction) if income > 0
       y_income - income
     end
 
-    def self.generate_income_tax(p,e,t)
-      income = self.assume_year_income(p) - self.tax_break(p,t)
+    def self.generate_income_tax(payroll, employee, tax_reduction)
+      income = self.assume_year_income(payroll) - self.tax_break(payroll,tax_reduction)
       taxrates = Taxrate.order(:order_id).map {|tr| [tr.income, tr.tax] }
       yearTax = 0
       taxrates.each do |taxrate|
@@ -181,7 +181,7 @@ class Payroll < ApplicationRecord
       (yearTax/12).round(2) # month 1-11
     end
 
-    def self.generate_withholding_tax(p)
-      p[:salary].to_i * 0.03
+    def self.generate_withholding_tax(payroll)
+      payroll["salary"].to_i * 0.03
     end
 end
