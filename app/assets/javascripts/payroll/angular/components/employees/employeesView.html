@@ -1,4 +1,4 @@
-<div class="container employees-list">
+<div class="container-fluid employees-list">
   <div class="row same-height">
     <div class="col-md-3 col-md-offset-6">
       <a ng-click="employees.createPayrolls()" href="javascript:void(0)" class="btn btn-lg bg-yellow">
@@ -10,7 +10,8 @@
         + เพิ่มพนักงานใหม่
       </a>
     </div>
-    <div class="col-md-3" ng-repeat="data in employees.display_datas">
+
+    <div class="col-xs-2 card-employees" ng-repeat="data in employees.display_datas">
       <div class="card cursor-pointer" ng-click="employees.openEmployeeDetails(data.id)">
 
         <div class="row line-space5">
