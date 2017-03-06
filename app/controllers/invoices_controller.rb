@@ -154,45 +154,30 @@ class InvoicesController < ApplicationController
       invoice.user_id = current_user.id
       invoice.grade_name = grade.name
       invoice.invoice_status_id = InvoiceStatus.find_by_name("Active").id
-      invoice.save
 
       line_item_params.to_h[:items].each do |item|
-        line_item = LineItem.new(item);
-        line_item.invoice_id = invoice.id;
-        line_item.save
+        invoice.line_items << LineItem.new(item)
       end
 
       pm = payment_method_params
-      if pm[:is_cash]
-        PaymentMethod.create({ payment_method: "เงินสด", amount: pm[:cash_amount] || 0, invoice_id: invoice.id})
-      end
-
-      if pm[:is_credit_card]
-        PaymentMethod.create({ payment_method: "บัตรเครดิต", amount: pm[:credit_card_amount] || 0, invoice_id: invoice.id})
-      end
-
-      if pm[:is_transfer]
-        PaymentMethod.create({
+      invoice.payment_methods << PaymentMethod.new({ payment_method: "เงินสด", amount: pm[:cash_amount] || 0}) if pm[:is_cash]
+      invoice.payment_methods << PaymentMethod.new({ payment_method: "บัตรเครดิต", amount: pm[:credit_card_amount] || 0}) if pm[:is_credit_card]
+      invoice.payment_methods << PaymentMethod.new({
           payment_method: "เงินโอน",
           amount: pm[:transfer_amount] || 0,
-          invoice_id: invoice.id,
           transfer_bank_name: pm[:transfer_bank_name],
           transfer_date: pm[:transfer_date]
-        })
-      end
-
-      if pm[:is_cheque]
-        PaymentMethod.create({
+      }) if pm[:is_transfer]
+      invoice.payment_methods << PaymentMethod.new({
           payment_method: "เช็คธนาคาร",
           amount: pm[:cheque_amount] || 0,
           invoice_id: invoice.id,
           cheque_bank_name: pm[:cheque_bank_name],
           cheque_date: pm[:cheque_date],
           cheque_number: pm[:cheque_number]
-        })
-      end
+        }) if pm[:is_cheque]
 
-      invoice.reload();
+      invoice.save
       render json: { id: invoice.id }, status: :ok
     end
   end
