@@ -1,89 +1,34 @@
-<div class="container">
-  <div class="row main-menu">
-    <!-- Employee -->
-    <div class="col-md-2 col-md-offset-4 main-menu-box">
-      <div class="main-menu-item" ng-click="openEmployees()">
-        <table class="main-menu-grid">
-          <tr>
-            <td>
-              <div class="main-menu-button">
-                <%= image_tag 'employees.png', class: "main-menu-image employees" %>
-              </div>
-            </td>
-          </tr>
-          <tr>
-            <td>
-              <div class="main-menu-title">
-                <p>Employees</p>
-                <br>
-              </div>
-            </td>
-          </tr>
-        </table>
-      </div>
-    </div>
+<div class="container main-menu">
+  <div class="row">
 
     <!-- Payroll -->
-    <div class="col-md-2">
-      <div class="main-menu-item" ng-click="openPayroll()">
-        <table>
-          <tr>
-            <td>
-              <div class="main-menu-button">
-                <%= image_tag 'payroll.png', class: "main-menu-image payroll" %>
-              </div>
-            </td>
-          </tr>
-          <tr>
-            <td>
-              <div class="main-menu-title">
-                <p>Payroll</p>
-                <br>
-              </div>
-            </td>
-          </tr>
-        </table>
+    <div class="col-xs-2 col-xs-offset-2">
+      <div class="menu-btn" ng-click="openPayroll()">
+        <div class="wraptocenter">
+          <%= image_tag 'payroll-icon-2.png', class: "" %>
+        </div>
       </div>
+      <p>เงินเดือน</p>
     </div>
 
     <!-- Report -->
-    <div class="col-md-2 col-md-offset-4 main-menu-box">
-      <div class="main-menu-item" ng-click="openReport()">
-        <table>
-          <tr>
-            <td>
-              <div class="main-menu-button">
-                <%= image_tag 'report.png', class: "main-menu-image report" %>
-              </div>
-            </td>
-          </tr>
-          <tr>
-            <td>
-              <div class="main-menu-title">Report</div>
-            </td>
-          </tr>
-        </table>
+    <div class="col-xs-2 col-xs-offset-1">
+      <div class="menu-btn" ng-click="openReport()">
+        <div class="wraptocenter">
+          <%= image_tag 'report-payroll-icon.png', class: "" %>
+        </div>
       </div>
+      <p>รายงาน</p>
     </div>
 
     <!-- Setting -->
-    <div class="col-md-2 main-menu-box">
-      <div class="main-menu-item" ng-click="openSetting()">
-        <table>
-          <tr>
-            <td>
-              <div class="main-menu-button">
-                <%= image_tag 'setting.png', class: "main-menu-image setting" %>
-              </div>
-            </td>
-          </tr>
-          <tr>
-            <td>
-              <div class="main-menu-title">Setting</div>
-            </td>
-          </tr>
-        </table>
+    <div class="col-xs-2 col-xs-offset-1">
+      <div class="menu-btn" ng-click="openSetting()">
+        <div class="wraptocenter">
+          <%= image_tag 'setting-icon.png', class: "" %>
+        </div>
       </div>
+      <p>ตั้งค่า</p>
     </div>
   <div>
 <div>

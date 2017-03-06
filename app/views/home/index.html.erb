@@ -1,6 +1,6 @@
-<div class="container main-menu">
+<div class="container main-menu main">
     <div class="row">
-        <div class="col-xs-2 col-xs-offset-3">
+        <div class="col-xs-2 col-xs-offset-2">
             <div class="menu-btn">
                 <div class="wraptocenter">
                     <a href="/somsri_payroll"><%= image_tag 'payroll-icon.png', class: "" %></a>
@@ -8,7 +8,7 @@
             </div>
             <p>เงินเดือน</p>
         </div>
-        <div class="col-xs-2">
+        <div class="col-xs-2 col-xs-offset-1">
             <div class="menu-btn">
                 <div class="wraptocenter">
                   <a href="/somsri_invoice"><%= image_tag 'fee-icon.png', class: "" %></a>
@@ -16,7 +16,7 @@
             </div>
             <p>ค่าเทอม</p>
         </div>
-        <div class="col-xs-2">
+        <div class="col-xs-2 col-xs-offset-1">
             <div class="menu-btn" style="cursor: no-drop;">
                 <div class="wraptocenter">
                     <%= image_tag 'roll-icon.png', class: "" %>
@@ -26,32 +26,34 @@
         </div>
     </div>
 
-    <div class="row">
-        <div class="col-xs-2  col-xs-offset-3">
-            <div class="menu-btn" style="cursor: no-drop;">
+    <div class="row" style="margin-top:50px;">
+        <div class="col-xs-2  col-xs-offset-2">
+            <div class="menu-btn">
               <div class="wraptocenter">
+                <a href="/somsri_payroll#/employees">
                   <%= image_tag 'hr-icon.png', class: "" %>
+                </a>
               </div>
             </div>
             <p>บุคลากร</p>
         </div>
-        <div class="col-xs-2">
-            <div class="menu-btn">
-              <a href="/parents">
+        <div class="col-xs-2 col-xs-offset-1">
+            <div class="menu-btn" style="cursor: no-drop;">
+              <!-- <a href="/parents"> -->
                 <div class="wraptocenter">
                     <%= image_tag 'parent.png', class: "" %>
                 </div>
-              </a>
+              <!-- </a> -->
             </div>
             <p>ผู้ปกครอง</p>
         </div>
-        <div class="col-xs-2">
-            <div class="menu-btn">
-              <a href="/students">
+        <div class="col-xs-2 col-xs-offset-1">
+            <div class="menu-btn" style="cursor: no-drop;">
+              <!-- <a href="/students"> -->
                 <div class="wraptocenter">
                     <%= image_tag 'child.png', class: "" %>
                 </div>
-              </a>
+              <!-- </a> -->
             </div>
             <p>นักเรียน</p>
         </div>

@@ -11,4 +11,5 @@ class MenuController < ApplicationController
   def landing_invoice
     render "menu/angular_view", layout: "application_invoice"
   end
+
 end

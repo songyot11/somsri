@@ -168,7 +168,7 @@ input:focus {
     display: -webkit-inline-box;
 }
 
-.btn-primary{
+.btn-primary, .btn-primary:focus{
     background-color: #5bab67;
     border-color: inherit;
     border-radius: inherit;
@@ -564,14 +564,6 @@ tfoot>tr>th{
 .row-print{
   padding-top: 20px !important;
 }
-.btn-back_to_print{
-  font-family: 'Maitree', serif;
-  background: transparent;
-  color: #fff;
-  font-size: 20px;
-  letter-spacing: 2px;
-  font-weight: 100;
-}
 .btn-to-print{
   font-family: 'Maitree', serif;
   font-size: 20px;
@@ -667,7 +659,7 @@ body > .container-fluid {
 }
 
 .main-menu {
-    margin-top: calc(50vh - 250px);
+    margin-top: calc(50vh - 100px);
 
     .menu-btn {
         width: 119px;
@@ -729,61 +721,12 @@ body > .container-fluid {
   color: #62C4CC;
 }
 
-.main-menu {
-  margin-top: calc(50vh - 200px);
-}
-
 .main-menu .main-menu-box {
   text-align: center;
 }
 
-.main-menu-item {
-  text-align: center;
-  display: table;
-  margin: auto;
-}
-
 .main-menu-item:focus {
   outline: none;
-}
-
-.main-menu-item .main-menu-title {
-  font-size: 18px;
-  margin-top: 15px;
-  font-weight: bold;
-  cursor: pointer;
-}
-
-.main-menu-item .main-menu-button {
-  background-color: #F2F2F2;
-  width: 100px;
-  height: 100px;
-  border-radius: 5px;
-  box-shadow: 3px 3px 3px #E2E2E2;
-  text-align: center;
-  vertical-align: middle;
-  display: table-cell;
-  cursor: pointer;
-}
-
-.main-menu-item .main-menu-button .main-menu-image {
-}
-
-
-.main-menu-item .main-menu-button .main-menu-image.setting,
-.main-menu-item .main-menu-button .main-menu-image.employees {
-  width: 60px;
-  height: 60px;
-}
-
-.main-menu-item .main-menu-button .main-menu-image.payroll {
-  width: 50px;
-  height: 60px;
-}
-
-.main-menu-item .main-menu-button .main-menu-image.report {
-  width: 45px;
-  height: 45px;
 }
 
 .bg-light-gray {
@@ -975,7 +918,10 @@ th.table-foot-top,td.table-foot-top{
   position: fixed;
   z-index: 100;
 }
-.btn-back_to_print{
+.row-print{
+  padding-top: 20px !important;
+}
+.btn-back_to_print, .btn-back_to_print:focus{
   font-family: 'Maitree', serif;
   background: transparent;
   color: #fff;
@@ -984,6 +930,10 @@ th.table-foot-top,td.table-foot-top{
   font-weight: 100;
   cursor: pointer;
 }
+.btn-back_to_print:hover{
+  color: #cec9c9;
+}
+
 .btn-to-print,.btn-to-print:focus{
   font-family: 'Maitree', serif;
   font-size: 18px;
