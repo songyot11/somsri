@@ -2,6 +2,7 @@ class Parent < ApplicationRecord
   has_and_belongs_to_many :students, join_table: "students_parents"
   has_and_belongs_to_many :relationships, join_table: "students_parents"
   has_many :invoices
+  belongs_to :school
   self.per_page = 10
 
   def self.search(search)

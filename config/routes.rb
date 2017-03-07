@@ -48,8 +48,16 @@ Rails.application.routes.draw do
   end
 
   resources :parents
-  resources :students
   resources :grades
   resources :daily_reports
+  
+  get "/report" => "roll_calls#report"
+  get "/info" =>"students#info"
+  resources :roll_calls, only: [:create, :index]
+  resources :students, only: [:index, :show] do
+    collection do
+      get 'get_roll_calls'
+    end
+  end
 
 end

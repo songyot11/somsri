@@ -4,30 +4,43 @@ class StudentsController < ApplicationController
   # GET /students
   # GET /students.json
   def index
-    grade_select = (params[:grade_select] || 'All')
-    if !params[:student_report]
-      if grade_select.downcase == 'all'
-        @students = Student.order("student_number ASC").search(params[:search]).all.page(params[:page]).to_a
+    if params[:pin]
+      user = get_current_user(params[:pin])
+      if user
+        render json: Student.where({ school_id: user.school.id  })
       else
-        grade = Grade.where(name: grade_select).first
-        @students = Student.where(grade_id: grade.id).order("classroom ASC, classroom_number ASC").search(params[:search]).page(params[:page]).to_a
+        render json: { errors: "Invalid token or user not registered" }, status: 422 and return
       end
     else
-      if grade_select.downcase == 'all'
-        @students = Student.all.order("grade_id ASC , classroom_number ASC").to_a
+      grade_select = (params[:grade_select] || 'All')
+      if !params[:student_report]
+        if grade_select.downcase == 'all'
+          @students = Student.order("student_number ASC").search(params[:search]).all.page(params[:page]).to_a
+        else
+          grade = Grade.where(name: grade_select).first
+          @students = Student.where(grade_id: grade.id).order("classroom ASC, classroom_number ASC").search(params[:search]).page(params[:page]).to_a
+        end
       else
-        grade = Grade.where(name: grade_select).first
-        @students = Student.where(grade_id: grade.id).order("classroom_number ASC").to_a
+        if grade_select.downcase == 'all'
+          @students = Student.all.order("grade_id ASC , classroom_number ASC").to_a
+        else
+          grade = Grade.where(name: grade_select).first
+          @students = Student.where(grade_id: grade.id).order("classroom_number ASC").to_a
+        end
       end
+      @filter_grade = grade_select
     end
-
-
-    @filter_grade = grade_select
   end
 
   # GET /students/1
   # GET /students/1.json
   def show
+    user = get_current_user(params[:pin])
+    if user
+      render json: Student.where({ code: params[:id], school_id: user.school.id })
+    else
+      render json: { errors: "Invalid token or user not registered" }, status: 422 and return
+    end
   end
 
   # GET /students/new
@@ -83,6 +96,65 @@ class StudentsController < ApplicationController
     respond_to do |format|
       format.html { redirect_to students_url, notice: 'Student was successfully destroyed.' }
       format.json { head :no_content }
+    end
+  end
+
+  # GET /get_roll_calls
+  def get_roll_calls
+    user = get_current_user(params[:pin])
+    if user && user.lists && user.lists.size > 0
+      # select list
+      list = user.lists[0]
+      render json: list.get_students and return
+    else
+      render json: { errors: "Invalid token or user not registered" }, status: 422 and return
+    end
+  end
+
+  def info
+    user = get_current_user(params[:pin])
+    student = Student.find_by(code: params[:id])
+    d =  Date.strptime(params[:date], "%Y-%m-%d")
+    if student
+      s_rollcall = student.roll_call
+      if s_rollcall
+        date = d
+        @studet_r = []
+        @morning = []
+        @afternoon = []
+
+        roll_date_1 = s_rollcall.where(check_date:date.strftime("%Y-%m-%d"))
+        @studet_r << roll_date_1 if roll_date_1
+
+        morning  = s_rollcall.where(check_date:date.strftime("%Y-%m-%d"), round:"morning")
+        @morning  << morning if morning
+        afternoon = s_rollcall.where(check_date:date.strftime("%Y-%m-%d"), round:"afternoon")
+        @afternoon << afternoon if afternoon
+
+        (1..Time.days_in_month(d.month)).each do |i|
+            date = d + i.days
+            roll_date = s_rollcall.where(check_date:date.strftime("%Y-%m-%d"))
+            @studet_r << roll_date if roll_date
+            #do count rollcall status
+            morning  = s_rollcall.where(check_date:date.strftime("%Y-%m-%d"), round:"morning")
+            @morning  << morning if morning
+            afternoon = s_rollcall.where(check_date:date.strftime("%Y-%m-%d"), round:"afternoon")
+            @afternoon << afternoon if afternoon
+        end
+      end
+        result = []
+        result << {
+          date: d,
+          first_name: student.first_name,
+          last_name: student.last_name,
+          prefix: student.prefix,
+          morning: @morning.flatten,
+          afternoon: @afternoon.flatten
+        }
+
+      render json: result
+    else
+      render json: { errors: "Invalid token or user not registered" }, status: 422 and return
     end
   end
 

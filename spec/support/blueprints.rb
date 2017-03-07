@@ -4,10 +4,13 @@ User.blueprint do
   name { Faker::Name.first_name }
   email { Faker::Internet.email }
   password { 'password' }
+  pin { Faker::Lorem.characters }
 end
 
 School.blueprint do
   name { Faker::Lorem.word }
+  address { Faker::Address.street_address }
+  phone { Faker::PhoneNumber.cell_phone }
 end
 
 Employee.blueprint do
@@ -51,4 +54,24 @@ Individual.blueprint do
   phone { Faker::PhoneNumber.cell_phone }
   birthdate { Faker::Date }
   email { Faker::Internet.email }
+end
+
+Student.blueprint do
+  prefix { Faker::Name.prefix }
+  first_name { Faker::Name.first_name }
+  last_name { Faker::Name.last_name }
+  student_number { Faker::Lorem.characters }
+end
+
+List.blueprint do
+  name { Faker::Name.name }
+  category { "roll_call" }
+end
+
+StudentList.blueprint do
+end
+
+RollCall.blueprint do
+  status { "มา" }
+  round { "morning" }
 end

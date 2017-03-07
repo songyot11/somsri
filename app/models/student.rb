@@ -1,9 +1,16 @@
 class Student < ApplicationRecord
   belongs_to :grade
   belongs_to :gender
+  belongs_to :school
   has_and_belongs_to_many :parents, join_table: 'students_parents'
   has_and_belongs_to_many :relationships, join_table: "students_parents"
   has_many :invoices
+
+  has_many :student_lists, dependent: :destroy
+  alias_attribute :code, :student_number
+  alias_attribute :number, :classroom_number
+  attr_accessor :first_name, :last_name, :prefix
+
   self.per_page = 10
 
   validates :full_name , presence: true
@@ -83,4 +90,94 @@ class Student < ApplicationRecord
     where("full_name LIKE ? OR classroom LIKE ? OR nickname LIKE ? OR student_number::text LIKE ? OR classroom_number::text LIKE ? OR classroom LIKE ? ",
      "%#{search}%", "%#{search}%", "%#{search}%" , "%#{search}%" , "%#{search}%" , "%#{search}%" )
   end
+
+  def first_name
+    self.full_name.gsub(/\s+/m, ' ').strip.split(" ")[0]
+  end
+
+  def first_name=(value)
+    full_name = self.full_name
+    full_a = Array.new
+    if !full_name.nil?
+      full_a = full_name.gsub(/\s+/m, ' ').strip.split(" ")
+    end
+    full_a[0] = value
+    self.full_name = "#{full_a.join(' ')}"
+  end
+
+  def last_name
+    name_a = self.full_name.gsub(/\s+/m, ' ').strip.split(" ")
+    if name_a.size > 2
+      last_name_a = Array.new
+      name_a.each_with_index do |n, index|
+        if index > 0
+          last_name_a.push(n)
+        end
+      end
+      return "#{last_name_a.join(' ')}"
+    else
+      return "#{name_a[1]}"
+    end
+  end
+
+  def last_name=(value)
+    full_name = self.full_name
+    full_a = full_name.gsub(/\s+/m, ' ').strip.split(" ")
+    self.full_name = "#{full_a[0]} #{value}"
+  end
+
+  def prefix
+    if self.gender_id == 1
+      return "ด.ช."
+    elsif self.gender_id == 2
+      return "ด.ญ."
+    else
+      return ""
+    end
+  end
+
+  def prefix=(value)
+    if value == "ด.ช." || value.include?("ช")
+      self.gender_id = 1
+    elsif value == "ด.ญ." || value.include?("ญ")
+      self.gender_id = 2
+    else
+      self.gender_id = nil
+    end
+  end
+
+  def missing
+    missingCount = 0
+    dateStart = Time.now - Time.now.day.days + 1.days
+    (0..(Time.now.day-2)).each do |i|
+      date = dateStart + i.days
+      rollcall = RollCall.where(check_date:date.strftime("%Y-%m-%d"))
+      student_rollcall = rollcall.where(student_id:self.id, round:'morning').first
+
+      if !student_rollcall.nil?
+        missingCount += 1 if student_rollcall.status == "0"
+        missingCount += 1 if student_rollcall.status == "1"
+        missingCount += 1 if student_rollcall.status == "2"
+      end
+    end
+
+    return missingCount
+  end
+
+  def roll_call
+    RollCall.where(student_id:self.id)
+  end
+
+  def as_json(option={})
+    roll_call_json = {
+      id: self.id,
+      code: self.code,
+      first_name: self.first_name,
+      last_name: self.last_name,
+      prefix: self.prefix,
+      number: self.number
+    }
+    return roll_call_json.merge(super())
+  end
+
 end
