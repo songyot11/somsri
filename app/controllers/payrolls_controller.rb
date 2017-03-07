@@ -192,13 +192,10 @@ class PayrollsController < ApplicationController
         salary: employee.salary,
         effective_date: params[:effective_date]
       })
-      if employee.employee_type == "ลูกจ้างประจำ" || employee.employee_type.blank?
-        payroll.tax = payroll.generate_income_tax
-      else
-        payroll.tax = payroll.generate_withholding_tax
-      end
-      payroll.social_insurance = payroll.generate_social_insurance if employee.pay_social_insurance
-      payroll.pvf = payroll.generate_pvf if employee.pay_pvf
+      payroll.tax = Payroll.generate_tax(payroll, employee, employee.tax_reduction)
+
+      payroll.social_insurance = Payroll.generate_social_insurance(payroll, employee)
+      payroll.pvf = Payroll.generate_pvf(payroll, employee)
       payroll.save
     end
 

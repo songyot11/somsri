@@ -56,6 +56,14 @@ class EmployeesController < ApplicationController
     end
   end
 
+  # GET /employees/calculate_outcome/:id
+  def calculate_outcome
+    p = JSON.parse(params[:payroll])
+    e = JSON.parse(params[:employee])
+    t = JSON.parse(params[:tax_reduction])
+    render json: {tax: Payroll.generate_tax(p, e, t), social_insurance: Payroll.generate_social_insurance(p, e), pvf: Payroll.generate_pvf(p, e)}
+  end
+
   # PATCH /employees/:id
   def update
     employee_datas = employee_params

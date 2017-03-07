@@ -13,7 +13,7 @@ describe 'Taxes', js: true do
       prefix_thai: "นาง",
       sex: 1,
       account_number: "5-234-34532-2342",
-      salary: 50000
+      employee_type: "ลูกจ้างรายวัน"
     }
   )}
   let(:employee2) {employee2 = Employee.make!(
@@ -28,7 +28,9 @@ describe 'Taxes', js: true do
       prefix_thai: "นาย",
       sex: 1,
       account_number: "5-234-34532-2341",
-      salary: 20000
+      pay_pvf: true,
+      pay_social_insurance: true,
+      employee_type: "ลูกจ้างประจำ"
     }
   )}
 
@@ -49,9 +51,7 @@ describe 'Taxes', js: true do
         father_insurance: 0, mother_insurance: 0, spouse_father_insurance: 0, spouse_mother_insurance: 0,
         long_term_equity_fund: 100000, social_insurance: 0, double_donation: 0, donation: 0, other: 0}),
 
-      taxR2 = TaxReduction.make!({ employee_id: employee2.id, pension_insurance: 300000, 
-        pension_fund: 300000, government_pension_fund: 300000, private_teacher_aid_fund: 300000,
-        retirement_mutual_fund: 300000, national_savings_fund: 300000, expenses: 50000 })
+      taxR2 = TaxReduction.make!({ employee_id: employee2.id, expenses: 60000 })
     ]
   end
 
@@ -63,24 +63,43 @@ describe 'Taxes', js: true do
     login_as(user, scope: :user)
   end
 
-  it "should return exempt income 1" do
-    expect(taxs[0].income_exemption(employee1.year_income)).to eq(90000)
+  it "should return income_exemption 1" do
+    expect(TaxReduction.income_exemption(payrolls[0].salary*12, taxs[0])).to eq(90000.0)
   end
 
-  it "should return exempt income 2" do
-    expect(taxs[1].income_exemption(employee2.year_income)).to be <= 500000
+  it "should return revenue_reduction 1" do
+    expect(TaxReduction.revenue_reduction(payrolls[0].salary*12, taxs[0])).to eq(270000.0)
   end
 
-  it "should return revenue reduction" do
-    income = taxs[0].income_exemption(employee1.year_income)
-    expect(taxs[0].revenue_reduction(income)).to eq(169500.0)
+  it "should return tax 1" do
+    expect(Payroll.generate_tax(payrolls[0], employee1, taxs[0])).to eq(1500.0)
   end
 
-  it "should return year income" do
-    expect(employee1.year_income).to be >= 0
+  it "should return pvf 1" do
+    expect(Payroll.generate_pvf(payrolls[0], employee1)).to eq(0.0)
   end
 
-  it "should return monthly income" do
-    expect(employee1.year_income).to be >= 0
+  it "should return social_insurance 1" do
+    expect(Payroll.generate_social_insurance(payrolls[1], employee1)).to eq(0.0)
+  end
+
+  it "should return income_exemption 2" do
+    expect(TaxReduction.income_exemption(payrolls[1].salary*12, taxs[1])).to eq(0.0)
+  end
+
+  it "should return revenue_reduction 2" do
+    expect(TaxReduction.revenue_reduction(payrolls[1].salary*12, taxs[1])).to eq(120000.0)
+  end
+
+  it "should return tax 2" do
+    expect(Payroll.generate_tax(payrolls[1], employee2, taxs[1])).to eq(0.0)
+  end
+
+  it "should return pvf 2" do
+    expect(Payroll.generate_pvf(payrolls[1], employee2)).to eq(30000.0)
+  end
+
+  it "should return social_insurance 2" do
+    expect(Payroll.generate_social_insurance(payrolls[1], employee2)).to eq(750.0)
   end
 end
