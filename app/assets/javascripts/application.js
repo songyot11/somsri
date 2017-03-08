@@ -12,6 +12,7 @@
 //
 //= require jquery
 //= require jquery_ujs
+//= require selectize.min
 //= require angular
 //= require tether
 //= require bootstrap
