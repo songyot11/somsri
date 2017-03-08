@@ -24,7 +24,7 @@
               <div class="col-md-4 topic-right-report">เงินสด</div>
               <div class="col-md-4 input-num-center">
                 <div class="form-group">
-                  <input type="text" ng-model="dailyReport.datas.real_cash" value="0.00" ng-required min="-100000" step="1000" placeholder="ระบุจำนวน" placeholder="ราคา" class="form-control" ng-change="dailyReport.total()" ui-number-mask="2" ui-negative-number required>
+                  <input type="text" ng-model="dailyReport.datas.real_cash" value="0.00" ng-required min="-100000" step="1000" placeholder="ระบุจำนวน" placeholder="ราคา" class="form-control" ng-change="dailyReport.total()" ui-number-mask="2" ui-negative-number required id="เงินสด">
                 </div>
               </div>
               <div class="col-md-2 number-report-right">
@@ -35,7 +35,7 @@
               <div class="col-md-4 topic-right-report">บัตรเครดิต</div>
               <div class="col-md-4 input-num-center">
                 <div class="form-group">
-                  <input type="text" ng-model="dailyReport.datas.real_credit_card" value="0.00" ng-required min="-100000" step="1000" placeholder="ระบุจำนวน" placeholder="ราคา" class="form-control" ng-change="dailyReport.total()" ui-number-mask="2" ui-negative-number required>
+                  <input type="text" ng-model="dailyReport.datas.real_credit_card" value="0.00" ng-required min="-100000" step="1000" placeholder="ระบุจำนวน" placeholder="ราคา" class="form-control" ng-change="dailyReport.total()" ui-number-mask="2" ui-negative-number required id="บัตรเครดิต">
                 </div>
               </div>
               <div class="col-md-2 number-report-right">
@@ -46,7 +46,7 @@
               <div class="col-md-4 topic-right-report">เช็คธนาคาร</div>
               <div class="col-md-4 input-num-center">
                 <div class="form-group">
-                  <input type="text" ng-model="dailyReport.datas.real_cheque" value="0.00" ng-required min="-100000" step="1000" placeholder="ระบุจำนวน" placeholder="ราคา" class="form-control" ng-change="dailyReport.total()" ui-number-mask="2" ui-negative-number required>
+                  <input type="text" ng-model="dailyReport.datas.real_cheque" value="0.00" ng-required min="-100000" step="1000" placeholder="ระบุจำนวน" placeholder="ราคา" class="form-control" ng-change="dailyReport.total()" ui-number-mask="2" ui-negative-number required id="เช็คธนาคาร">
                 </div>
               </div>
               <div class="col-md-2 number-report-right">
@@ -57,7 +57,7 @@
               <div class="col-md-4 topic-right-report">เงินโอน</div>
               <div class="col-md-4 input-num-center">
                 <div class="form-group">
-                  <input type="text" ng-model="dailyReport.datas.real_tranfers" value="0.00" ng-required min="-100000" step="1000" placeholder="ระบุจำนวน" placeholder="ราคา" class="form-control" ng-change="dailyReport.total()" ui-number-mask="2" ui-negative-number required>
+                  <input type="text" ng-model="dailyReport.datas.real_tranfers" value="0.00" ng-required min="-100000" step="1000" placeholder="ระบุจำนวน" placeholder="ราคา" class="form-control" ng-change="dailyReport.total()" ui-number-mask="2" ui-negative-number required id="เงินโอน">
                 </div>
               </div>
               <div class="col-md-2 number-report-right" style="border-bottom:2px solid">
