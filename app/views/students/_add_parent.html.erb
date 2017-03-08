@@ -12,7 +12,7 @@
         <div class="col-3">
           <select id="relationship<%= index %>" name="relationship[]" class="form-control">
             <% @relations.each do |r| %>
-              <option value="<%= r.id %>" <%= set_option_selected(r, @student.relationships[index]) %>><%= r.name %></option>
+              <option value="<%= r.id %>" <%= set_option_selected(r, @student.relationships[index]) %>><%= t(r.name) %></option>
             <% end %>
           </select>
         </div>

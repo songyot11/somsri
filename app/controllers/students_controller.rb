@@ -40,11 +40,13 @@ class StudentsController < ApplicationController
   # GET /students/1
   # GET /students/1.json
   def show
-    user = get_current_user(params[:pin])
-    if user
-      render json: Student.where({ student_number: params[:id], school_id: user.school.id })
-    else
-      render json: { errors: "Invalid token or user not registered" }, status: 422 and return
+    if params[:pin]
+      user = get_current_user(params[:pin])
+      if user
+        render json: Student.where({ student_number: params[:id], school_id: user.school.id })
+      else
+        render json: { errors: "Invalid token or user not registered" }, status: 422 and return
+      end
     end
   end
 

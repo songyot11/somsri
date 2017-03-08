@@ -23,7 +23,6 @@
           <div class="col-12">
             <%= f.text_field :full_name, :class => 'form-control', required: true %>
           </div>
-          <%=f.error_span(:full_name) %>
         </div>
       </div>
       <div class="col-6">
@@ -32,7 +31,6 @@
           <div class="col-12">
             <%= f.text_field :nickname, :class => 'form-control' %>
           </div>
-          <%=f.error_span(:nickname) %>
         </div>
       </div>
     </div>
@@ -43,7 +41,6 @@
           <div class="col-12">
             <%= f.text_field :full_name_english, :class => 'form-control'%>
           </div>
-          <%=f.error_span(:full_name_english) %>
         </div>
       </div>
       <div class="col-6">
@@ -52,7 +49,6 @@
           <div class="col-12">
             <%= f.text_field :nickname_english, :class => 'form-control' %>
           </div>
-          <%=f.error_span(:nickname_english) %>
         </div>
       </div>
     </div>
@@ -64,7 +60,6 @@
           <div class="col-12">
             <%= f.collection_select :gender_id, Gender.all, :id, :name, {prompt: "โปรดเลือกเพศ"}, {class: "form-control"}%>
           </div>
-          <%=f.error_span(:gender_id) %>
         </div>
       </div>
       <div class="col-4">
@@ -73,7 +68,6 @@
           <div class="col-12">
             <%= f.date_field :birthdate, :class => 'form-control',:data => {:provide => :datepicker} %>
           </div>
-          <%=f.error_span(:birthdate) %>
         </div>
       </div>
     </div>
@@ -84,7 +78,6 @@
           <div class="col-12">
             <%= f.collection_select :grade_id, Grade.all, :id, :name, {prompt: "โปรดเลือกระดับชั้น"}, {class: "form-control"} %>
           </div>
-          <%=f.error_span(:grade_id) %>
         </div>
       </div>
       <div class="col-2">
@@ -93,7 +86,6 @@
           <div class="col-12">
             <%= f.text_field :classroom, :class => 'form-control'%>
           </div>
-          <%=f.error_span(:classroom) %>
         </div>
       </div>
       <div class="col-2">
@@ -102,7 +94,6 @@
           <div class="col-12">
             <%= f.text_field :classroom_number, :class => 'form-control'%>
           </div>
-          <%=f.error_span(:classroom_number) %>
         </div>
       </div>
       <div class="col-5">
@@ -111,7 +102,6 @@
           <div class="col-12">
             <%= f.text_field :student_number, :class => 'form-control'%>
           </div>
-          <%=f.error_span(:student_number) %>
         </div>
       </div>
     </div>
@@ -124,7 +114,6 @@
           <div class="col-12">
             <%= f.text_field :national_id, :class => 'form-control'%>
           </div>
-          <%=f.error_span(:national_id) %>
         </div>
       </div>
     </div>
