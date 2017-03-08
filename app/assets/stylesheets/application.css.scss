@@ -60,6 +60,11 @@ body{
   width: 100%;
   font-size: 16px;
   font-weight: lighter;
+
+  &:hover{
+    border: none !important;
+    background: #3f8ec5;
+  }
 }
 ul.nav.navbar-nav.navbar-right.dropdown{
   margin-top: 25px;

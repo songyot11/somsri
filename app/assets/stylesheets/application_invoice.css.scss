@@ -369,6 +369,9 @@ textarea {
 }
 
 @media print {
+    body{
+      margin-bottom: 0px !important;
+    }
     .form-slip-forslip-copy{
       display: block;
     }
@@ -792,7 +795,18 @@ body > .container-fluid {
   text-align: right;
 }
 
-
+.dropdown-menu.on-nav-bar {
+    padding: 10px 10px;
+    margin-right: 70px;
+    width: 62%;
+}
+a.dropdown-item{
+  color: #555;
+  &:hover {
+    text-decoration: none;
+    color: #000;
+  }
+}
 // css dailyReport
 .content-dailyReport{
   padding: 50px 80px;
@@ -955,7 +969,9 @@ th.table-foot-top,td.table-foot-top{
     align-items: center;
     justify-content: center;
 }
-
+.table-dailyReport{
+  border-bottom: 2px solid ;
+}
 // Release Notes Invoices css
 .changelog-invoices{
   font-family: 'Maitree', serif;
