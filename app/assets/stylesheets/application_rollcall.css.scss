@@ -1,0 +1,75 @@
+/*
+ * This is a manifest file that'll be compiled into application.css, which will include all the files
+ * listed below.
+ *
+ * Any CSS and SCSS file within this directory, lib/assets/stylesheets, vendor/assets/stylesheets,
+ * or any plugin's vendor/assets/stylesheets directory can be referenced here using a relative path.
+ *
+ * You're free to add application-wide styles to this file and they'll appear at the bottom of the
+ * compiled file so the styles you add here take precedence over styles defined in any other CSS/SCSS
+ * files in this directory. Styles in this file should be added after the last require_* statement.
+ * It is generally better to create a new file per style scope.
+ *
+ *= require bootstrap/dist/css/bootstrap.min.css
+ *= require angular-xeditable/dist/css/xeditable
+ *= require font-awesome
+ *= require_self
+ */
+
+@import "application_invoice";
+body{
+  margin-bottom: 50px;
+  margin-top: 100px;
+  background: linear-gradient(90deg, #72cef5, #55b4ed);
+}
+.form-sign-in{
+  background: #fff;
+  padding: 80px 100px;
+  box-shadow: 0 2px 4px 0 rgba(0, 0, 0, 0.3);
+  left: 25px;
+}
+.logo-login{
+  padding-bottom: 40px;
+}
+.input-login{
+  font-family: 'Maitree', serif;
+  border: inherit;
+  border-radius: inherit;
+  border-bottom: 1px solid #ddd;
+  background: none;
+  font-size: 18px;
+  box-shadow: none;
+}
+.form-control .input-login:focus{
+  background: none;
+}
+.text-remember{
+  font-weight: normal;
+  font-size: 16px;
+  color: #888;
+  margin-bottom: 50px;
+  letter-spacing: 1px;
+}
+.btn-signin{
+  background-color: #3fa1e6;
+  color: #fff !important;
+  padding: 8px 46px;
+  box-shadow: 2px 7px 20px #b7b7b7;
+  letter-spacing: 1px;
+  border: inherit;
+  width: 100%;
+  font-size: 16px;
+  font-weight: lighter;
+}
+ul.nav.navbar-nav.navbar-right.dropdown{
+  margin-top: 25px;
+}
+.sign-in.actions{
+  margin-top: 10px;
+}
+.main-menu .main{
+  margin-left: -15px;
+}
+.container.main-menu.main {
+    margin-top: calc(50vh - 250px);
+}

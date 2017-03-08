@@ -14,6 +14,7 @@ Rails.application.routes.draw do
   get "/menu" => "menu#index"
   get "/somsri_invoice" => "menu#landing_invoice"
   get "/somsri_payroll" => "menu#landing_payroll"
+  get "/somsri_rollcall" => "menu#landing_rollcall"
 
   resources :payrolls, only: [:index, :update, :create] do
     collection do
@@ -50,7 +51,6 @@ Rails.application.routes.draw do
   resources :parents
   resources :grades
   resources :daily_reports
-  resources :students
 
   get "/report" => "roll_calls#report"
   get "/info" =>"students#info"

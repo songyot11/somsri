@@ -11,6 +11,8 @@ Rails.application.config.assets.version = '1.0'
 # Rails.application.config.assets.precompile += %w( search.js )
 
 Rails.application.config.assets.precompile += %w( application_invoice.js )
-Rails.application.config.assets.precompile += %w( application_payroll.js )
 Rails.application.config.assets.precompile += %w( application_invoice.css )
+Rails.application.config.assets.precompile += %w( application_payroll.js )
 Rails.application.config.assets.precompile += %w( application_payroll.css )
+Rails.application.config.assets.precompile += %w( application_rollcall.js )
+Rails.application.config.assets.precompile += %w( application_rollcall.css )

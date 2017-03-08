@@ -1,0 +1,23 @@
+(function() {
+  'use strict';
+  angular.module('somsri.rollcall.assets', []).
+  constant('ASSETS', {
+    'somsri': {
+      'rollcall': {
+        'menu': {
+          name: 'somsri.rollcall.menu',
+          files: [
+            "<%= asset_path('rollcall/angular/components/menu/menuCtrl.js') %>"
+          ]
+        },
+        'report': {
+          name: 'somsri.rollcall.report',
+          files: [
+            "<%= asset_path('rollcall/angular/components/report/reportCtrl.js') %>",
+            "<%= asset_path('rollcall/angular/components/report/reportService.js') %>"
+          ]
+        }
+      }
+    }
+  });
+})();

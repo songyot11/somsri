@@ -12,4 +12,8 @@ class MenuController < ApplicationController
     render "menu/angular_view", layout: "application_invoice"
   end
 
+  def landing_rollcall
+    render "menu/angular_view", layout: "application_rollcall"
+  end
+
 end
