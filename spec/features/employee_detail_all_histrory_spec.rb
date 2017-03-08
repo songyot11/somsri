@@ -62,15 +62,17 @@ describe 'Employee Details History Modal', js: true do
   end
 
   it 'should see view history button' do
-    visit "/#/somsri_payroll/employees/#{employee.id}"
-
+    visit "/somsri_payroll#/employees/#{employee.id}"
+    click_link('เงินเดือน')
+    sleep(1)
     expect(page).to have_content('ประวัติเงินเดือน')
   end
 
   it 'should see payroll when click history button' do
-    visit "/#/somsri_payroll/employees/#{employee.id}"
-    click_button('ประวัติเงินเดือน')
+    visit "/somsri_payroll#/employees/#{employee.id}"
+    click_link('เงินเดือน')
     sleep(1)
+    click_button('ประวัติเงินเดือน')
     sleep(1)
     expect(page).to have_content('ประวัติเงินเดือน เดือน เงินเดือน รายการได้ รายการหัก')
     expect(page).to have_content('พฤษภาคม 2560 50,000.00 15,000.00 750.00')

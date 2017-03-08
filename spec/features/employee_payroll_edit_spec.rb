@@ -69,8 +69,7 @@ describe 'Payroll Edit', js: true do
   end
 
   it 'should edit salary' do
-    visit "/#/somsri_payroll/payroll"
-
+    visit "/somsri_payroll#/payroll"
     payroll = Payroll.find(payrolls[0].id)
 
     eventually { expect(payroll.salary).to eq 1_000_000.00 }
@@ -93,7 +92,7 @@ describe 'Payroll Edit', js: true do
   end
 
   it 'should edit allowance' do
-    visit "/#/somsri_payroll/payroll"
+    visit "/somsri_payroll#/payroll"
 
     payroll = Payroll.find(payrolls[0].id)
 
@@ -118,7 +117,7 @@ describe 'Payroll Edit', js: true do
   end
 
   it 'should edit attendance_bonus' do
-    visit "/#/somsri_payroll/payroll"
+    visit "/somsri_payroll#/payroll"
 
     payroll = Payroll.find(payrolls[0].id)
 
@@ -142,7 +141,7 @@ describe 'Payroll Edit', js: true do
   end
 
   it 'should edit ot' do
-    visit "/#/somsri_payroll/payroll"
+    visit "/somsri_payroll#/payroll"
 
     payroll = Payroll.find(payrolls[0].id)
 
@@ -166,7 +165,7 @@ describe 'Payroll Edit', js: true do
   end
 
   it 'should edit bonus' do
-    visit "/#/somsri_payroll/payroll"
+    visit "/somsri_payroll#/payroll"
 
     payroll = Payroll.find(payrolls[0].id)
 
@@ -190,7 +189,7 @@ describe 'Payroll Edit', js: true do
   end
 
   it 'should edit position_allowance' do
-    visit "/#/somsri_payroll/payroll"
+    visit "/somsri_payroll#/payroll"
 
     payroll = Payroll.find(payrolls[0].id)
 
@@ -214,7 +213,7 @@ describe 'Payroll Edit', js: true do
   end
 
   it 'should edit extra_etc' do
-    visit "/#/somsri_payroll/payroll"
+    visit "/somsri_payroll#/payroll"
 
     payroll = Payroll.find(payrolls[0].id)
 
@@ -238,7 +237,7 @@ describe 'Payroll Edit', js: true do
   end
 
   it 'should edit absence' do
-    visit "/#/somsri_payroll/payroll"
+    visit "/somsri_payroll#/payroll"
 
     payroll = Payroll.find(payrolls[0].id)
 
@@ -262,7 +261,7 @@ describe 'Payroll Edit', js: true do
   end
 
   it 'should edit late' do
-    visit "/#/somsri_payroll/payroll"
+    visit "/somsri_payroll#/payroll"
 
     payroll = Payroll.find(payrolls[0].id)
 
@@ -287,7 +286,7 @@ describe 'Payroll Edit', js: true do
   end
 
   it 'should edit tax' do
-    visit "/#/somsri_payroll/payroll"
+    visit "/somsri_payroll#/payroll"
 
     payroll = Payroll.find(payrolls[0].id)
 
@@ -311,7 +310,7 @@ describe 'Payroll Edit', js: true do
   end
 
   it 'should edit social_insurance' do
-    visit "/#/somsri_payroll/payroll"
+    visit "/somsri_payroll#/payroll"
 
     payroll = Payroll.find(payrolls[0].id)
 
@@ -335,7 +334,7 @@ describe 'Payroll Edit', js: true do
   end
 
   it 'should edit fee_etc' do
-    visit "/#/somsri_payroll/payroll"
+    visit "/somsri_payroll#/payroll"
 
     payroll = Payroll.find(payrolls[0].id)
 
@@ -359,7 +358,7 @@ describe 'Payroll Edit', js: true do
   end
 
   it 'should edit pvf' do
-    visit "/#/somsri_payroll/payroll"
+    visit "/somsri_payroll#/payroll"
 
     payroll = Payroll.find(payrolls[0].id)
 
@@ -383,7 +382,7 @@ describe 'Payroll Edit', js: true do
   end
 
   it 'should edit advance_payment' do
-    visit "/#/somsri_payroll/payroll"
+    visit "/somsri_payroll#/payroll"
 
     payroll = Payroll.find(payrolls[0].id)
 
@@ -407,7 +406,7 @@ describe 'Payroll Edit', js: true do
   end
 
   it 'should default 0.00 when empty' do
-    visit "/#/somsri_payroll/payroll"
+    visit "/somsri_payroll#/payroll"
 
     sleep(1)
     first('a[editable-number="employee.salary"]').click

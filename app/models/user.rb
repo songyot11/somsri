@@ -13,8 +13,6 @@ class User < ApplicationRecord
     true
   end
 
-
-
   include Gravtastic
   gravtastic
 end

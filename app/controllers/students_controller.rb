@@ -1,6 +1,11 @@
 class StudentsController < ApplicationController
-  before_action :set_student, only: [:show, :edit, :update, :destroy]
-  before_action :authenticate_user!
+  before_action :set_student, only: [:show, :edit, :update, :destroy], unless: :is_api?
+  before_action :authenticate_user!, unless: :is_api?
+
+  def is_api?
+    !params[:pin].blank?
+  end
+
   # GET /students
   # GET /students.json
   def index
@@ -37,7 +42,7 @@ class StudentsController < ApplicationController
   def show
     user = get_current_user(params[:pin])
     if user
-      render json: Student.where({ code: params[:id], school_id: user.school.id })
+      render json: Student.where({ student_number: params[:id], school_id: user.school.id })
     else
       render json: { errors: "Invalid token or user not registered" }, status: 422 and return
     end

@@ -52,7 +52,7 @@ describe 'Employee delete', js: true do
   end
 
   it 'should diplay confirmation modal when click delete button ' do
-    visit "/#/somsri_payroll/employees/#{employee1.id}"
+    visit "/somsri_payroll#/employees/#{employee1.id}"
     sleep(1)
     click_button("ลบ")
     sleep(1)
@@ -61,7 +61,7 @@ describe 'Employee delete', js: true do
 
   describe 'when confirmed modal' do
     before do
-      visit "/#/somsri_payroll/employees/#{employee1.id}"
+      visit "/somsri_payroll#/employees/#{employee1.id}"
       click_button("ลบ")
       sleep(1)
       click_button("ตกลง")
@@ -78,13 +78,13 @@ describe 'Employee delete', js: true do
     end
 
     it 'should not display on employee list' do
-      visit "/#/somsri_payroll/employees"
+      visit "/somsri_payroll#/employees"
 
       eventually { expect(page).to have_selector('.card', count: 1) }
     end
 
     it 'should not display on employee dropdown' do
-      visit "/#/somsri_payroll/employees/#{employee2.id}"
+      visit "/somsri_payroll#/employees/#{employee2.id}"
 
       find('#employeeName').click
       sleep(1)
@@ -93,7 +93,7 @@ describe 'Employee delete', js: true do
     end
 
     it 'should not display on report' do
-      visit "/#/somsri_payroll/report"
+      visit "/somsri_payroll#/report"
       sleep(1)
 
       eventually { expect(page).to have_selector('tbody tr', count: 1) }

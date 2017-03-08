@@ -69,26 +69,26 @@ describe 'Login', js: true do
   end
 
   it 'should not go anywhere if user not authentication' do
-    visit "/#/somsri_payroll/employees"
-    expect(page).to have_current_path '/'
-    expect(page).to have_button 'Log in'
+    visit "/somsri_payroll#/employees"
+    expect(page).to have_current_path '/users/sign_in'
+    expect(page).to have_button 'Sign in'
 
-    visit "/#/somsri_payroll/reports"
-    expect(page).to have_current_path '/'
-    expect(page).to have_button 'Log in'
+    visit "/somsri_payroll#/reports"
+    expect(page).to have_current_path '/users/sign_in'
+    expect(page).to have_button 'Sign in'
 
-    visit "/#/somsri_payroll/employees/1"
-    expect(page).to have_current_path '/'
-    expect(page).to have_button 'Log in'
+    visit "/somsri_payroll#/employees/1"
+    expect(page).to have_current_path '/users/sign_in'
+    expect(page).to have_button 'Sign in'
   end
 
   it 'should able to authentication' do
     visit new_user_session_path
-    page.fill_in 'Email', :with => users[0].email
-    page.fill_in 'Password', :with => users[0].password
-    click_button('Log in')
+    find('#user_email').set(users[0].email)
+    find('#user_password').set(users[0].password)
+    click_button('Sign in')
     expect(page).to have_current_path "/"
-    expect(page).to have_content "Welcome #{users[0].name}"
+    expect(page).to have_content "#{users[0].email}"
   end
 
 end

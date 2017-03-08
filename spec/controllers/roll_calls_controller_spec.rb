@@ -13,11 +13,11 @@ describe RollCallsController do
 
   let(:students) do
     [
-      Student.make!(school_id: school.id, number: 1),
-      Student.make!(school_id: school.id, number: 2),
-      Student.make!(school_id: school.id, number: 3),
-      Student.make!(school_id: school.id, number: 1),
-      Student.make!(school_id: school.id, number: 2)
+      Student.make!(school_id: school.id, student_number: 101, classroom_number: 1),
+      Student.make!(school_id: school.id, student_number: 102, classroom_number: 2),
+      Student.make!(school_id: school.id, student_number: 103, classroom_number: 3),
+      Student.make!(school_id: school.id, student_number: 104, classroom_number: 1),
+      Student.make!(school_id: school.id, student_number: 105, classroom_number: 2)
     ]
   end
 

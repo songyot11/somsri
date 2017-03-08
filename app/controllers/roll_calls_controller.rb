@@ -1,5 +1,11 @@
 class RollCallsController < ApplicationController
   skip_before_action :verify_authenticity_token, :only => [:create]
+  before_action :authenticate_user!, unless: :is_api?
+
+  def is_api?
+    !params[:pin].blank?
+  end
+
   # OUTPUT:
   # {
     # data:[
@@ -45,7 +51,6 @@ class RollCallsController < ApplicationController
       render json: { errors: "afternoon is required params" }, status: 422 and return if !params[:afternoon]
       render json: { errors: "afternoon isn't JSON" }, status: 422 and return if !is_json(params[:afternoon])
       afternoon = add_round_property(JSON.parse(params[:afternoon]), "afternoon")
-
       datas = (morning << afternoon).flatten
 
       # craete roll call
@@ -64,7 +69,7 @@ class RollCallsController < ApplicationController
         roll_call_datas = []
         students.each do |student|
           datas.each do |data|
-            if student.code == data['student_code']
+            if student.student_number.to_s == data['student_code'].to_s
               roll_call_datas << RollCall.new({
                 student_id: student.id,
                 status: data['status'],

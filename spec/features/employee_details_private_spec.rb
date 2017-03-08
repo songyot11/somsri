@@ -39,7 +39,7 @@ describe 'Private Details', js: true do
   end
 
   def open_testing_screen(employee_id)
-    visit "/#/somsri_payroll/employees/#{employee.id}"
+    visit "/somsri_payroll#/employees/#{employee.id}"
     sleep(1)
     find('.employee-details .nav-tabs .orange').click
     sleep(1)

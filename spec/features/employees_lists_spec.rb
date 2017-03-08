@@ -98,16 +98,8 @@ describe 'Employee Lists', js: true do
     end
   end
 
-  it 'should goto employees list when click employee button' do
-    visit "/#/somsri_payroll"
-    sleep(1)
-    find('.main-menu-image.employees').click
-    sleep(1)
-    expect(page).to have_css('div.employees-list')
-  end
-
   it 'should see employees list' do
-    visit "/#/somsri_payroll/employees"
+    visit "/somsri_payroll#/employees"
     sleep(1)
     expect(page).to have_content 'นาง สมศรี เป็นชื่อแอพ เงินเดือน : 50000 บาท เงินหัก : 2100 บาท เงินเพิ่ม : 3000 บาท'
     expect(page).to have_content 'นาย สมจิตร เป็นนักมวย เงินเดือน : 50000 บาท เงินหัก : 1200 บาท เงินเพิ่ม : 10000 บาท'
@@ -115,7 +107,7 @@ describe 'Employee Lists', js: true do
   end
 
   it 'should display only employee in user\'s school' do
-    visit "/#/somsri_payroll/employees"
+    visit "/somsri_payroll#/employees"
     expect(page).not_to have_content "Harabas"
   end
 

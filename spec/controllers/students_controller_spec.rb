@@ -16,11 +16,11 @@ describe StudentsController do
 
   let(:students) do
     [
-      Student.make!( school_id: schools[0].id),
-      Student.make!( school_id: schools[0].id),
-      Student.make!( school_id: schools[0].id),
-      Student.make!( school_id: schools[1].id),
-      Student.make!( school_id: schools[1].id)
+      Student.make!(school_id: schools[0].id, student_number: 101, classroom_number: 1),
+      Student.make!(school_id: schools[0].id, student_number: 102, classroom_number: 2),
+      Student.make!(school_id: schools[0].id, student_number: 103, classroom_number: 3),
+      Student.make!(school_id: schools[1].id, student_number: 104, classroom_number: 1),
+      Student.make!(school_id: schools[1].id, student_number: 105, classroom_number: 2)
     ]
   end
 
@@ -46,24 +46,7 @@ describe StudentsController do
   end
 
   describe "get: index /students" do
-    it "should return student in user's school" do
-      sign_in users[0]
-      get 'index'
-      data = JSON.parse(response.body)
-      expect(data.size).to eq(3)
-      found_data = 0
-      data.each do |d|
-        students.each do |s|
-          if d["code"] == s.code
-            found_data += 1
-          end
-        end
-      end
-      expect(found_data).to eq(3)
-    end
-
-
-    it "should return student in user's school using ID_TOKEN" do
+    it "should return student in user's school using PIN" do
       get 'index', params: { pin: users[0]['pin'] }
       data = JSON.parse(response.body)
       expect(data.size).to eq(3)
@@ -81,17 +64,8 @@ describe StudentsController do
 
 
   describe "get: show /students/:id" do
-    it "should return a student" do
-      sign_in users[0]
-      get 'show', params: { id: students[1].code }
-      data = JSON.parse(response.body)
-      expect(data.size).to eq(1)
-      expect(data[0]["code"]).to eq(students[1].code)
-    end
-
-
-    it "should return a student" do
-      get 'show', params: { id: students[1].code, pin: users[0]['pin'] }
+    it "should return a student using PIN" do
+      get 'show', params: { id: students[1].student_number, pin: users[0]['pin'] }
       data = JSON.parse(response.body)
       expect(data.size).to eq(1)
       expect(data[0]["code"]).to eq(students[1].code)
@@ -100,25 +74,7 @@ describe StudentsController do
 
 
   describe "get: get_roll_calls /get_roll_calls/" do
-    it "should return student in user's roll call" do
-      student_list
-      sign_in users[0]
-      get 'get_roll_calls'
-      data = JSON.parse(response.body)
-      expect(data.size).to eq(3)
-      found_data = 0
-      data.each do |d|
-        students.each do |s|
-          if d["code"] == s.code
-            found_data += 1
-          end
-        end
-      end
-      expect(found_data).to eq(3)
-    end
-
-
-    it "should return student in user's roll call using ID_TOKEN" do
+    it "should return student in user's roll call using PIN" do
       student_list
       get 'get_roll_calls', params: { pin: users[0]['pin'] }
       data = JSON.parse(response.body)

@@ -55,7 +55,7 @@ describe 'Payroll Slip', js: true do
   end
 
   it 'should see label and data in employee slip' do
-    visit "/#/somsri_payroll/employees/#{employee.id}/slip"
+    visit "/somsri_payroll#/employees/#{employee.id}/slip"
     sleep(1)
     sleep(1)
     eventually { expect(page).to have_content 'ตำแหน่ง/Title ครูน้อย' }
@@ -66,7 +66,7 @@ describe 'Payroll Slip', js: true do
   end
 
   it 'should see order is value greater than zero' do
-    visit "/#/somsri_payroll/employees/#{employee.id}/slip"
+    visit "/somsri_payroll#/employees/#{employee.id}/slip"
 
     eventually { expect(page).to have_content 'เงินเดือน / Salary ก.พ. 59' }
     eventually { expect(page).to have_content 'เบี้ยเลี้ยง / Shift'}
@@ -77,7 +77,7 @@ describe 'Payroll Slip', js: true do
   end
 
   it 'should not see order is value less than zero' do
-    visit "/#/somsri_payroll/employees/#{employee.id}/slip"
+    visit "/somsri_payroll#/employees/#{employee.id}/slip"
 
     eventually { expect(page).to have_no_content 'เบี้ยขยัน / Attendance Bonus' }
     eventually { expect(page).to have_no_content 'เงินสอนพิเศษ / After School Class' }
@@ -90,7 +90,7 @@ describe 'Payroll Slip', js: true do
   end
 
   it 'should see order and value' do
-    visit "/#/somsri_payroll/employees/#{employee.id}/slip"
+    visit "/somsri_payroll#/employees/#{employee.id}/slip"
 
     eventually { expect(page).to have_content 'เงินเดือน / Salary ก.พ. 59 เบี้ยเลี้ยง / Shift' }
     eventually { expect(page).to have_content '25,000.00 2,500.00'}
@@ -99,27 +99,27 @@ describe 'Payroll Slip', js: true do
   end
 
   it 'should see net salary' do
-    visit "/#/somsri_payroll/employees/#{employee.id}/slip"
+    visit "/somsri_payroll#/employees/#{employee.id}/slip"
 
     eventually { expect(page).to have_content 'เงินรับสุทธิ Net Income 24,282.00' }
   end
 
   it 'should see total value on month' do
-    visit "/#/somsri_payroll/employees/#{employee.id}/slip"
+    visit "/somsri_payroll#/employees/#{employee.id}/slip"
 
     eventually { expect(page).to have_content 'รวมรายได้ Total Income 27,500.00' }
     eventually { expect(page).to have_content 'รวมรายการหัก Total Deduction 3,218.00'}
   end
 
   it 'should see total value on year' do
-    visit "/#/somsri_payroll/employees/#{employee.id}/slip"
+    visit "/somsri_payroll#/employees/#{employee.id}/slip"
 
     eventually { expect(page).to have_content 'รายได้สะสมต่อปี Acc. Income ภาษีสะสมต่อปี Acc. Tax เงินประกันสังคมสะสมต่อปี Acc. Social fund เงินสะสมกองทุนสงเคราะห์ Private Teacher Aid fund' }
     eventually { expect(page).to have_content '74,082.00 1,068.00 750.00 1,100.00' }
   end
 
   it 'should display 2015-2 slip order and value' do
-    visit "/#/somsri_payroll/employees/#{employee.id}/slip?payroll_id=#{payrolls[0].id}"
+    visit "/somsri_payroll#/employees/#{employee.id}/slip?payroll_id=#{payrolls[0].id}"
     eventually { expect(page).to have_content 'เงินเดือน / Salary ก.พ. 58 เบี้ยเลี้ยง / Shift' }
     eventually { expect(page).to have_content '25,000.00 2,500.00'}
     eventually { expect(page).to have_content 'ภาษี / Tax ประกันสังคม / Social Sec. สาย / Late เงินสะสมกองทุนสงเคราะห์ / Private Teacher Aid fund'}

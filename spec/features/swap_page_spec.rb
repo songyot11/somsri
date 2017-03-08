@@ -8,13 +8,13 @@ describe 'Payroll Swap Page', js: true do
   end
 
   it 'should not see two menu on homepage' do
-    visit "/#/somsri_payroll/"
+    visit "/somsri_payroll#/"
 
     eventually { expect(page).to have_no_selector('#menu') }
   end
 
   it 'should see three menu and current page is Report' do
-    visit "/#/somsri_payroll/report"
+    visit "/somsri_payroll#/report"
     find('#menu').click
 
     eventually { expect(page).to have_content 'Report Employees Payroll Report' }
@@ -22,7 +22,7 @@ describe 'Payroll Swap Page', js: true do
   end
 
   it 'should see three menu and current page is Employee' do
-    visit "/#/somsri_payroll/employees"
+    visit "/somsri_payroll#/employees"
     find('#menu').click
 
     eventually { expect(page).to have_content 'Employees Employees Payroll Report' }
@@ -30,7 +30,7 @@ describe 'Payroll Swap Page', js: true do
   end
 
   it 'should see three menu and current page is Payroll' do
-    visit "/#/somsri_payroll/payroll"
+    visit "/somsri_payroll#/payroll"
     find('#menu').click
 
     eventually { expect(page).to have_content 'Payroll Employees Payroll Report' }
@@ -38,7 +38,7 @@ describe 'Payroll Swap Page', js: true do
   end
 
   it 'should swap report to employees page' do
-    visit "/#/somsri_payroll/report"
+    visit "/somsri_payroll#/report"
     find('#menu').click
     click_link("Employees")
     sleep(1)
@@ -49,7 +49,7 @@ describe 'Payroll Swap Page', js: true do
   end
 
   it 'should swap employees to report page' do
-    visit "/#/somsri_payroll/employees"
+    visit "/somsri_payroll#/employees"
     find('#menu').click
     click_link("Report")
     sleep(1)
@@ -60,7 +60,7 @@ describe 'Payroll Swap Page', js: true do
   end
 
   it 'should swap report to payroll page' do
-    visit "/#/somsri_payroll/report"
+    visit "/somsri_payroll#/report"
     find('#menu').click
     click_link("Payroll")
     sleep(1)
@@ -71,7 +71,7 @@ describe 'Payroll Swap Page', js: true do
   end
 
   it 'should swap employees to payrolll page' do
-    visit "/#/somsri_payroll/employees"
+    visit "/somsri_payroll#/employees"
     find('#menu').click
     click_link("Payroll")
     sleep(1)
@@ -82,7 +82,7 @@ describe 'Payroll Swap Page', js: true do
   end
 
   it 'should swap payroll to report page' do
-    visit "/#/somsri_payroll/payroll"
+    visit "/somsri_payroll#/payroll"
     find('#menu').click
     click_link("Report")
     sleep(1)
@@ -93,7 +93,7 @@ describe 'Payroll Swap Page', js: true do
   end
 
   it 'should swap payroll to employee page' do
-    visit "/#/somsri_payroll/payroll"
+    visit "/somsri_payroll#/payroll"
     find('#menu').click
     click_link("Employees")
     sleep(1)

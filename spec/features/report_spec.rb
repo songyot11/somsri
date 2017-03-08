@@ -86,13 +86,13 @@ describe 'Payroll Report', js: true do
     login_as(user, scope: :user)
   end
   it 'should see header table' do
-    visit "/#/somsri_payroll/report"
+    visit "/somsri_payroll#/report"
     eventually { expect(page).to have_content 'รหัส ชื่อ เลขบัญชี เงินเดือน เงินเพิ่ม เงินหัก เงินเดือนสุทธิ' }
     eventually { expect(page).to have_content 'รวมทั้งหมด' }
   end
 
   it 'should see month latest' do
-    visit "/#/somsri_payroll/report"
+    visit "/somsri_payroll#/report"
 
     eventually { expect(page).to have_content 'สมศรี เป็นชื่อแอพ 5-234-34532-2342 1,000,000.00 0.00 100.00 999,900.00' }
     eventually { expect(page).to have_content 'สมจิตร เป็นนักมวย 5-234-34532-2342 1,000,000.00 0.00 100.00 999,900.00' }
@@ -101,7 +101,7 @@ describe 'Payroll Report', js: true do
   end
 
   it 'should see month list' do
-    visit "/#/somsri_payroll/report"
+    visit "/somsri_payroll#/report"
 
     find('#month-list').click
     sleep(1)
@@ -109,7 +109,7 @@ describe 'Payroll Report', js: true do
   end
 
   it 'should switch month' do
-    visit "/#/somsri_payroll/report"
+    visit "/somsri_payroll#/report"
     find('#month-list').click
     sleep(1)
     click_on("พฤศจิกายน 2559")
@@ -125,7 +125,7 @@ describe 'Payroll Report', js: true do
 
   describe 'employee link' do
     it 'go to employee detail and display payroll of the same month as report screen' do
-      visit "/#/somsri_payroll/report"
+      visit "/somsri_payroll#/report"
       find('#month-list').click
       sleep(1)
       click_on("1 พฤศจิกายน 2559")
@@ -133,13 +133,15 @@ describe 'Payroll Report', js: true do
 
       click_link "สมศรี เป็นชื่อแอพ"
       sleep(1)
+      click_link "เงินเดือน"
+      sleep(1)
       eventually { expect(page).to have_content '1 พฤศจิกายน 2559' }
       expect(find_field('ค่าแรง / เงินเดือนปัจจุบัน').value).to eq '50000'
     end
   end
 
   it 'should switch month' do
-    visit "/#/somsri_payroll/report"
+    visit "/somsri_payroll#/report"
     find('#month-list').click
     sleep(1)
     click_on("พฤศจิกายน 2559")
@@ -154,7 +156,7 @@ describe 'Payroll Report', js: true do
   end
 
   it 'should see fliter button with actived status' do
-    visit "/#/somsri_payroll/report"
+    visit "/somsri_payroll#/report"
     sleep(1)
     expect(page).to have_selector('.active.employee-type[ng-model="report.employeeTypeMode.normal"]')
     expect(page).to have_selector('.active.employee-type[ng-model="report.employeeTypeMode.temporary"]')
@@ -167,7 +169,7 @@ describe 'Payroll Report', js: true do
   end
 
   it 'can fliter button data' do
-    visit "/#/somsri_payroll/report"
+    visit "/somsri_payroll#/report"
     sleep(1)
     find('.active.employee-type[ng-model="report.employeeTypeMode.normal"]').click
     find('.active.employee-type[ng-model="report.employeeTypeMode.probationary"]').click
@@ -184,7 +186,7 @@ describe 'Payroll Report', js: true do
   end
 
   it 'should not see datas when disable all button' do
-    visit "/#/somsri_payroll/report"
+    visit "/somsri_payroll#/report"
     sleep(1)
     find('.active.employee-type[ng-model="report.employeeTypeMode.normal"]').click
     find('.active.employee-type[ng-model="report.employeeTypeMode.probationary"]').click
