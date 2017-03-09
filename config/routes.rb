@@ -52,6 +52,7 @@ Rails.application.routes.draw do
   resources :grades
   resources :daily_reports
 
+  get "/auth_api" => "home#auth_api"
   get "/report" => "roll_calls#report"
   get "/info" =>"students#info"
   resources :roll_calls, only: [:create, :index]
