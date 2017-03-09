@@ -30,10 +30,9 @@
         <%= stylesheet_link_tag    'application_rollcall', media: 'all' %>
         <%= javascript_include_tag 'application_rollcall' %>
     </head>
-    <% if !user_signed_in? %><body ng-controller="mainCtrl as main"><% else %><body ng-controller="mainCtrl as main" style="background:#fff !important;"><%end%>
-    <body ng-controller="mainCtrl as main">
-      <% if !user_signed_in? %><header style="display:none;"><% else %><header><% end %>
-        <%= render 'layouts/navigation' %>
+    <body ng-controller="mainCtrl as main" class="somsri-rollcall">
+      <header>
+        <%= render 'layouts/navigation_rollcall/navigation_rollcall' %>
       </header>
       <div class="container">
 
