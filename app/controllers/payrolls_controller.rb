@@ -192,10 +192,6 @@ class PayrollsController < ApplicationController
         salary: employee.salary,
         effective_date: params[:effective_date]
       })
-      payroll.tax = Payroll.generate_tax(payroll, employee, employee.tax_reduction)
-
-      payroll.social_insurance = Payroll.generate_social_insurance(payroll, employee)
-      payroll.pvf = Payroll.generate_pvf(payroll, employee)
       payroll.save
     end
 

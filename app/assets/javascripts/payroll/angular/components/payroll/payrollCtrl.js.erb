@@ -2,7 +2,7 @@
   'use strict';
   angular.module('somsri.payroll.payroll', [
   ])
-  .controller('payrollCtrl', ['$filter', 'reportService', '$rootScope', '$state', function($filter, reportService, $rootScope, $state) {
+  .controller('payrollCtrl', ['$filter', 'reportService', 'payrollService', 'employeesService', '$rootScope', '$state', function($filter, reportService, payrollService, employeesService, $rootScope, $state) {
     $rootScope.menu = "Payroll"
 
     var ctrl = this
@@ -95,26 +95,41 @@
     ctrl.updatePayroll = function(index, id, value, field) {
       // Selected Current field
       var old_value = ctrl.employees[index][field]
-
+      var old_deduction = ctrl.employees[index]["tax"] + ctrl.employees[index]["pvf"] + ctrl.employees[index]["social_insurance"]
       if (value == null) {
         value = 0.00
       }
 
-      var payroll = {}
-      payroll[field] = value
-      var data = { payroll: payroll }
+      payrollService.showEmployee(ctrl.employees[index].code, ctrl.employees[index].payroll_id).then(function(resp) {
+        resp.data.payroll[field]=value;
+        employeesService.getEmployeeDeduction(resp.data.employee.id, resp.data.payroll.id , resp.data).then(function(resp2) {
+          ctrl.employees[index]["tax"] = resp2.data.tax;
+          ctrl.employees[index]["pvf"] = resp2.data.pvf;
+          ctrl.employees[index]["social_insurance"] = resp2.data.social_insurance;
 
-      reportService.updatePayroll(id, data).then(function(resp) {
-        // Calculate Net Salary
-        var field_selector = $("a#" + index + "-" + field)
+          resp.data.payroll.tax = resp2.data.tax;
+          resp.data.payroll.pvf = resp2.data.pvf;
+          resp.data.payroll.social_insurance = resp2.data.social_insurance;
 
-        if (field_selector.attr("class").indexOf("text-green") == 0) {
-          ctrl.employees[index]["net_salary"] -= (old_value - value)
-        } else if (field_selector.attr("class").indexOf("text-red") == 0) {
-          ctrl.employees[index]["net_salary"] += (old_value - value)
-        }
+          delete resp.data.payroll["id"];
+          delete resp.data.payroll["employee_id"];
+          delete resp.data.payroll["created_at"];
+          delete resp.data.payroll["effective_date"];
+          delete resp.data.payroll["updated_at"];
 
-        getTotalSalary(ctrl.employees)
+          reportService.updatePayroll(id, { payroll: resp.data.payroll }).then(function(resp3) {
+            // Calculate Net Salary
+            var field_selector = $("a#" + index + "-" + field)
+
+            if (field_selector.attr("class").indexOf("text-green") == 0) {
+              ctrl.employees[index]["net_salary"] -= (old_value - value)
+            } else if (field_selector.attr("class").indexOf("text-red") == 0) {
+              ctrl.employees[index]["net_salary"] += (old_value - value)
+            }
+            ctrl.employees[index]["net_salary"] += (old_deduction - (resp2.data.tax + resp2.data.pvf + resp2.data.social_insurance)) 
+            getTotalSalary(ctrl.employees);
+          })
+        }, function(resp) { console.log(JSON.stringify(resp)); })
       })
     }
 

@@ -30,10 +30,11 @@ class EmployeesController < ApplicationController
   # GET /employees/:id
   def show
     @employee = Employee.active.find(params[:id])
-    payroll = @employee.lastest_payroll
     tax_reduction = @employee.tax_reduction
     if params[:payroll_id]
       payroll = @employee.payroll(params[:payroll_id])
+    else
+      payroll = @employee.lastest_payroll
     end
     render json: {
       employee: @employee,
@@ -56,12 +57,19 @@ class EmployeesController < ApplicationController
     end
   end
 
-  # GET /employees/calculate_outcome/:id
-  def calculate_outcome
+  # POST /employees/:id/calculate_deduction
+  def calculate_deduction
     p = JSON.parse(params[:payroll])
-    e = JSON.parse(params[:employee])
+    e = Employee.active.find(params[:id])
+    e.employee_type = params[:employee_type]
+    e.pay_pvf = params[:employee_pay_pvf]
+    e.pay_social_insurance = params[:employee_pay_s_ins]
     t = JSON.parse(params[:tax_reduction])
-    render json: {tax: Payroll.generate_tax(p, e, t), social_insurance: Payroll.generate_social_insurance(p, e), pvf: Payroll.generate_pvf(p, e)}
+    render json: {
+      tax: Payroll.generate_tax(p, e, t), 
+      social_insurance: Payroll.generate_social_insurance(p, e), 
+      pvf: Payroll.generate_pvf(p, e)
+    }, status: :ok
   end
 
   # PATCH /employees/:id

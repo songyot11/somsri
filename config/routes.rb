@@ -34,7 +34,7 @@ Rails.application.routes.draw do
     member do
       get 'slip'
       get 'payrolls'
-      get 'calculate_outcome'
+      get 'calculate_deduction'
     end
   end
 

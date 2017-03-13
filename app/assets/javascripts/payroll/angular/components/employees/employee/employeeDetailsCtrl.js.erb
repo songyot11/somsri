@@ -264,7 +264,7 @@
       if (ctrl.isEdit) {
         var p = ctrl.datas.payroll;
         var datas_result = $.extend(true, {}, ctrl.datas);
-        service.getEmployee(ctrl.datas.employee.id, p.id , datas_result).then(function(resp) {
+        service.getEmployeeDeduction(ctrl.datas.employee.id, p.id , datas_result).then(function(resp) {
           p.tax = resp.data.tax;
           p.pvf = resp.data.pvf;
           p.social_insurance = resp.data.social_insurance;

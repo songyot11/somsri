@@ -66,17 +66,17 @@ describe 'Payroll', js: true do
 
   let(:payrolls) do
     [
-      pr1 = Payroll.make!({employee_id: employee1.id, salary: 1_000_000, tax: 100,
+      pr1 = Payroll.make!({employee_id: employee1.id, salary: 1_000_000,
                             effective_date: DateTime.new(2016, 12, 1), social_insurance: 750}),
-      pr3 = Payroll.make!({employee_id: employee2.id, salary: 1_000_000, tax: 100,
-                            effective_date: DateTime.new(2016, 12, 1), social_insurance: 1000}),
-      pr2 = Payroll.make!({employee_id: employee1.id, salary: 50_000, tax: 100,
+      pr3 = Payroll.make!({employee_id: employee2.id, salary: 1_000_000,
+                            effective_date: DateTime.new(2016, 12, 1), social_insurance: 750}),
+      pr2 = Payroll.make!({employee_id: employee1.id, salary: 50_000,
                             effective_date: DateTime.new(2016, 11, 1)}),
-      pr4 = Payroll.make!({employee_id: employee2.id, salary: 50_000, tax: 100,
+      pr4 = Payroll.make!({employee_id: employee2.id, salary: 50_000,
                             effective_date: DateTime.new(2016, 11, 1)}),
-      pr5 = Payroll.make!({employee_id: employee3.id, salary: 20, tax: 10,
+      pr5 = Payroll.make!({employee_id: employee3.id, salary: 20,
                             effective_date: DateTime.new(2016, 11, 1)}),
-      pr6 = Payroll.make!({employee_id: employee4.id, salary: 1_000_000, tax: 0,
+      pr6 = Payroll.make!({employee_id: employee4.id, salary: 1_000_000,
                             effective_date: DateTime.new(2016, 12, 1)}),
     ]
   end
@@ -90,16 +90,16 @@ describe 'Payroll', js: true do
     eventually { expect(page).to have_content 'รายการได้ รายการหัก' }
     eventually { expect(page).to have_content 'รหัส ชื่อ เลขบัญชีธนาคาร' }
     eventually { expect(page).to have_content 'เงินเดือน เงินสอนพิเศษ ค่าตำแหน่ง เบี้ยเลี้ยง เบี้ยขยัน โบนัส อื่นๆ' }
-    eventually { expect(page).to have_content 'ภาษี ประกันสังคม เงินสะสม ขาดงาน สาย เบิกล่วงหน้า อืนๆ เงินเดือนสุทธิ' }
     eventually { expect(page).to have_content 'รวมทั้งหมด' }
   end
 
   it 'should see month latest' do
     visit "/somsri_payroll#/payroll"
 
-    eventually { expect(page).to have_content 'สมศรี เป็นชื่อแอพ 5-234-34532-2342 1,000,000.00 0.00 0.00 0.00 0.00 0.00 0.00 100.00 750.00 0.00 0.00 0.00 0.00 0.00 999,150.00' }
-    eventually { expect(page).to have_content 'สมจิตร เป็นนักมวย 5-234-34532-2341 1,000,000.00 0.00 0.00 0.00 0.00 0.00 0.00 100.00 1,000.00 0.00 0.00 0.00 0.00 0.00 998,900.00' }
-    eventually { expect(page).to have_content 'รวมทั้งหมด 3,000,000.00 0.00 0.00 0.00 0.00 0.00 0.00 200.00 1,750.00 0.00 0.00 0.00 0.00 0.00 2,998,050.00' }
+    eventually { expect(page).to have_content 'นาง สมศรี เป็นชื่อแอพ 5-234-34532-2342 1,000,000.00 0.00 0.00 0.00 0.00 0.00 0.00' }
+    eventually { expect(page).to have_content 'นาย สมจิตร เป็นนักมวย 5-234-34532-2341 1,000,000.00 0.00 0.00 0.00 0.00 0.00 0.00' }
+    eventually { expect(page).to have_content 'พี ดี เอ็ม 5-234-34532-xxxx 1,000,000.00 0.00 0.00 0.00 0.00 0.00 0.00' }
+    eventually { expect(page).to have_content 'รวมทั้งหมด 3,000,000.00 0.00 0.00 0.00 0.00 0.00 0.00' }
   end
 
   it 'should see month list' do
@@ -120,12 +120,12 @@ describe 'Payroll', js: true do
     eventually { expect(page).to have_content 'รายการได้ รายการหัก' }
     eventually { expect(page).to have_content 'รหัส ชื่อ เลขบัญชีธนาคาร' }
     eventually { expect(page).to have_content 'เงินเดือน เงินสอนพิเศษ ค่าตำแหน่ง เบี้ยเลี้ยง เบี้ยขยัน โบนัส อื่นๆ' }
-    eventually { expect(page).to have_content 'ภาษี ประกันสังคม เงินสะสม ขาดงาน สาย เบิกล่วงหน้า อืนๆ เงินเดือนสุทธิ' }
-    eventually { expect(page).to have_content 'สมศรี เป็นชื่อแอพ 5-234-34532-2342 50,000.00 0.00 0.00 0.00 0.00 0.00 0.00 100.00 0.00 0.00 0.00 0.00 0.00 0.00 49,900.00' }
-    eventually { expect(page).to have_content 'สมจิตร เป็นนักมวย 5-234-34532-2341 50,000.00 0.00 0.00 0.00 0.00 0.00 0.00 100.00 0.00 0.00 0.00 0.00 0.00 0.00 49,900.00' }
+    eventually { expect(page).to have_content 'ขาดงาน สาย ภาษี ประกันสังคม เงินสะสม เบิกล่วงหน้า อืนๆ เงินเดือนสุทธิ' }
+    eventually { expect(page).to have_content 'นาง สมศรี เป็นชื่อแอพ 5-234-34532-2342 50,000.00 0.00 0.00 0.00 0.00 0.00 0.00' }
+    eventually { expect(page).to have_content 'นาย สมจิตร เป็นนักมวย 5-234-34532-2341 50,000.00 0.00 0.00 0.00 0.00 0.00 0.00' }
     eventually { expect(page).not_to have_content 'ฮาราบาส' }
     eventually { expect(page).not_to have_content 'Harabas' }
-    eventually { expect(page).to have_content 'รวมทั้งหมด 100,000.00 0.00 0.00 0.00 0.00 0.00 0.00 200.00 0.00 0.00 0.00 0.00 0.00 0.00 99,800.00' }
+    eventually { expect(page).to have_content 'รวมทั้งหมด 100,000.00 0.00 0.00 0.00 0.00 0.00 0.00' }
   end
 
   describe 'employee link' do

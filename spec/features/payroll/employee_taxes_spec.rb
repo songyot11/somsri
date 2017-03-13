@@ -55,12 +55,25 @@ describe 'Taxes', js: true do
     ]
   end
 
+  let(:taxrates) do
+    [
+      Taxrate.make!({order_id: "1", income: "5000000", tax: "0.35"}),
+      Taxrate.make!({order_id: "2", income: "2000000", tax: "0.30"}),
+      Taxrate.make!({order_id: "3", income: "1000000", tax: "0.25"}),
+      Taxrate.make!({order_id: "4", income: "750000", tax: "0.20"}),
+      Taxrate.make!({order_id: "5", income: "500000", tax: "0.15"}),
+      Taxrate.make!({order_id: "6", income: "300000", tax: "0.10"}),
+      Taxrate.make!({order_id: "7", income: "150000", tax: "0.05"})
+    ]
+  end
+
   before do
     employee1
     employee2
     payrolls
     taxs
     login_as(user, scope: :user)
+    taxrates
   end
 
   it "should return income_exemption 1" do
@@ -92,7 +105,7 @@ describe 'Taxes', js: true do
   end
 
   it "should return tax 2" do
-    expect(Payroll.generate_tax(payrolls[1], employee2, taxs[1])).to eq(0.0)
+    expect(Payroll.generate_tax(payrolls[1], employee2, taxs[1])).to eq(306083.33)
   end
 
   it "should return pvf 2" do

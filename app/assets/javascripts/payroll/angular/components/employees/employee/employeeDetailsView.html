@@ -199,7 +199,7 @@
                 <table class="checkbox-group">
                   <tr>
                     <td>
-                      <input type="checkbox" class="form-control cbox" id="pay_social_insurance" ng-model="employee.datas.employee.pay_social_insurance" ng-blur="employee.calTotal()"/>
+                      <input type="checkbox" class="form-control cbox" id="pay_social_insurance" ng-model="employee.datas.employee.pay_social_insurance" ng-change="employee.calTotal()"/>
                     </td>
                     <td>
                       <label for="pay_social_insurance">จ่ายประกันสังคม</label>
@@ -213,7 +213,7 @@
                 <table class="checkbox-group">
                   <tr>
                     <td>
-                      <input type="checkbox" class="form-control cbox" id="pay_pvf" ng-model="employee.datas.employee.pay_pvf" ng-blur="employee.calTotal()"/>
+                      <input type="checkbox" class="form-control cbox" id="pay_pvf" ng-model="employee.datas.employee.pay_pvf" ng-change="employee.calTotal()"/>
                     </td>
                     <td>
                       <label for="pay_pvf">จ่ายกองทุนสงเคราะห์ครูเอกชน</label>
@@ -652,8 +652,8 @@
             </div>
             <div class="col-md-4">
               <div class="form-group">
-                <label for="pvf">เงินสะสมเข้ากองทุนสงเคราะห์</label>
-                <input class="form-control text-red" id="pvf" ng-model="employee.datas.payroll.pvf" disabled>
+                <label for="tax">ภาษี</label>
+                <input class="form-control text-red" id="tax" ng-model="employee.datas.payroll.tax" disabled>
               </div>
             </div>
           </div>
@@ -666,8 +666,8 @@
             </div>
             <div class="col-md-4">
               <div class="form-group">
-                <label for="tax">ภาษี</label>
-                <input class="form-control text-red" id="tax" ng-model="employee.datas.payroll.tax" disabled>
+                <label for="social_insurance">ประกันสังคม</label>
+                <input class="form-control text-red" id="social_insurance" ng-model="employee.datas.payroll.social_insurance" disabled>
               </div>
             </div>
           </div>
@@ -680,8 +680,8 @@
             </div>
             <div class="col-md-4">
               <div class="form-group">
-                <label for="social_insurance">ประกันสังคม</label>
-                <input class="form-control text-red" id="social_insurance" ng-model="employee.datas.payroll.social_insurance" disabled>
+                <label for="pvf">เงินสะสมเข้ากองทุนสงเคราะห์</label>
+                <input class="form-control text-red" id="pvf" ng-model="employee.datas.payroll.pvf" disabled>
               </div>
             </div>
           </div>

@@ -2,6 +2,7 @@ class Payroll < ApplicationRecord
   belongs_to :employee
   validate :already_payroll_on_month, on: :create
   before_validation :set_created_at
+  after_create :set_default_val
 
   scope :latest, -> { order("effective_date ASC").last }
 
@@ -21,26 +22,6 @@ class Payroll < ApplicationRecord
 
   def extra_pay
     allowance + attendance_bonus + ot + bonus + position_allowance + extra_etc
-  end
-
-  def self.generate_pvf(payroll, employee)
-    return 0 unless employee["pay_pvf"]
-    payroll["salary"].to_i > 15000 ? payroll["salary"].to_i * 0.03 : 15000 * 0.03
-  end
-
-  def self.generate_social_insurance(payroll, employee)
-    return 0 unless employee["pay_social_insurance"]
-    income = payroll["salary"].to_i + payroll["position_allowance"].to_i - payroll["late"].to_i - payroll["absence"].to_i
-    income = 15000 if income > 15000
-    income >= 1650 ? (income * 0.05).round : 0
-  end
-
-  def self.generate_tax(payroll, employee, tax_reduction)
-    if employee["employee_type"]=='ลูกจ้างประจำ'
-      tax = self.generate_income_tax(payroll, employee, tax_reduction)
-    else
-      tax = self.generate_withholding_tax(payroll)
-    end
   end
 
   def as_json(options={})
@@ -156,6 +137,14 @@ class Payroll < ApplicationRecord
   end
 
   private
+    def set_default_val
+      e = Employee.find(self.employee_id)
+      self.tax = Payroll.generate_tax(self, e, e.tax_reduction)
+      self.social_insurance = Payroll.generate_social_insurance(self, e)
+      self.pvf = Payroll.generate_pvf(self, e)
+      self.save
+    end
+
     def self.assume_year_income(payroll)
       income = (payroll["salary"].to_i + payroll["allowance"].to_i + payroll["attendance_bonus"].to_i + payroll["ot"].to_i + payroll["bonus"].to_i + payroll["position_allowance"].to_i - payroll["absence"].to_i - payroll["late"].to_i)*12
     end
@@ -183,5 +172,25 @@ class Payroll < ApplicationRecord
 
     def self.generate_withholding_tax(payroll)
       payroll["salary"].to_i * 0.03
+    end
+
+    def self.generate_pvf(payroll, employee)
+      return 0 unless employee["pay_pvf"]
+      payroll["salary"].to_i > 15000 ? payroll["salary"].to_i * 0.03 : 15000 * 0.03
+    end
+
+    def self.generate_social_insurance(payroll, employee)
+      return 0 unless employee["pay_social_insurance"]
+      income = payroll["salary"].to_i + payroll["position_allowance"].to_i + payroll["allowance"].to_i - payroll["late"].to_i - payroll["absence"].to_i
+      income = 15000 if income > 15000
+      income >= 1650 ? (income * 0.05).round : 0
+    end
+
+    def self.generate_tax(payroll, employee, tax_reduction)
+      if employee["employee_type"]=='ลูกจ้างประจำ'
+        tax = self.generate_income_tax(payroll, employee, tax_reduction)
+      else
+        tax = self.generate_withholding_tax(payroll)
+      end
     end
 end

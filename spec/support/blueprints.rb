@@ -35,12 +35,12 @@ end
 Payroll.blueprint do
   employee_id { Faker::Number.positive }
   salary { Faker::Number.positive }
-  tax { Faker::Number.positive }
   created_at { Faker::Date }
 end
 
 Taxrate.blueprint do
 end
+
 TaxReduction.blueprint do
 end
 

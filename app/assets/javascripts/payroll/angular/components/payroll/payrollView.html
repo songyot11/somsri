@@ -63,11 +63,11 @@
             <th class="text-center bordered">โบนัส</th>
             <th class="text-center bordered">อื่นๆ</th>
             <!-- Outcome -->
+            <th class="text-center bordered">ขาดงาน</th>
+            <th class="text-center bordered">สาย</th>
             <th class="text-center bordered">ภาษี</th>
             <th class="text-center bordered">ประกันสังคม</th>
             <th class="text-center bordered">เงินสะสม</th>
-            <th class="text-center bordered">ขาดงาน</th>
-            <th class="text-center bordered">สาย</th>
             <th class="text-center bordered">เบิกล่วงหน้า</th>
             <th class="text-center bordered">อืนๆ</th>
             <!-- Result -->
@@ -140,27 +140,6 @@
               <!-- Outcome -->
               <td class="bordered">
                 <div class="popover-wrapper" ng-class="{'bottom-popup': index === 0}">
-                  <a id="{{index}}-tax" href="#" e-ng-focus="payroll.selectValue($event)" editable-number="employee.tax" e-step="0.01" class="text-red" onbeforesave="payroll.updatePayroll(index, employee.payroll_id, $data, 'tax')">
-                    {{employee.tax || 0 | currency: ""}}
-                  </a>
-                </div>
-              </td>
-              <td class="bordered">
-                <div class="popover-wrapper" ng-class="{'bottom-popup': index === 0}">
-                  <a id="{{index}}-social_insurance" e-ng-focus="payroll.selectValue($event)" href="#" editable-number="employee.social_insurance" e-step="0.01" class="text-red" onbeforesave="payroll.updatePayroll(index, employee.payroll_id, $data, 'social_insurance')">
-                    {{employee.social_insurance || 0 | currency: ""}}
-                  </a>
-                </div>
-              </td>
-              <td class="bordered">
-                <div class="popover-wrapper" ng-class="{'bottom-popup': index === 0}">
-                  <a id="{{index}}-pvf" href="#" e-ng-focus="payroll.selectValue($event)" editable-number="employee.pvf" e-step="0.01" class="text-red" onbeforesave="payroll.updatePayroll(index, employee.payroll_id, $data, 'pvf')">
-                    {{employee.pvf || 0 | currency: ""}}
-                  </a>
-                </div>
-              </td>
-              <td class="bordered">
-                <div class="popover-wrapper" ng-class="{'bottom-popup': index === 0}">
                   <a id="{{index}}-absence" href="#" e-ng-focus="payroll.selectValue($event)" editable-number="employee.absence" e-step="0.01" class="text-red" onbeforesave="payroll.updatePayroll(index, employee.payroll_id, $data, 'absence')">
                     {{employee.absence || 0 | currency: ""}}
                   </a>
@@ -171,6 +150,27 @@
                   <a id="{{index}}-late" href="#" e-ng-focus="payroll.selectValue($event)" editable-number="employee.late" e-step="0.01" class="text-red" onbeforesave="payroll.updatePayroll(index, employee.payroll_id, $data, 'late')">
                     {{employee.late || 0 | currency: ""}}
                   </a>
+                </div>
+              </td>
+              <td class="bordered">
+                <div class="popover-wrapper" ng-class="{'bottom-popup': index === 0}">
+                  <span id="{{index}}-tax" class="text-red">
+                    {{employee.tax || 0 | currency: ""}}
+                  </span>
+                </div>
+              </td>
+              <td class="bordered">
+                <div class="popover-wrapper" ng-class="{'bottom-popup': index === 0}">
+                  <span id="{{index}}-social_insurance" class="text-red">
+                    {{employee.social_insurance || 0 | currency: ""}}
+                  </span>
+                </div>
+              </td>
+              <td class="bordered">
+                <div class="popover-wrapper" ng-class="{'bottom-popup': index === 0}">
+                  <span id="{{index}}-pvf" class="text-red">
+                    {{employee.pvf || 0 | currency: ""}}
+                  </span>
                 </div>
               </td>
               <td class="bordered">
@@ -205,11 +205,11 @@
               <td class="text-green bordered"><strong>{{payroll.total.bonus | currency: "" }}</strong></td>
               <td class="text-green bordered"><strong>{{payroll.total.extra_etc | currency: "" }}</strong></td>
               <!-- Outcome -->
+              <td class="text-red bordered"><strong>{{payroll.total.absence | currency: "" }}</strong></td>
+              <td class="text-red bordered"><strong>{{payroll.total.late | currency: "" }}</strong></td>
               <td class="text-red bordered"><strong>{{payroll.total.tax | currency: "" }}</strong></td>
               <td class="text-red bordered"><strong>{{payroll.total.social_insurance | currency: "" }}</strong></td>
               <td class="text-red bordered"><strong>{{payroll.total.pvf | currency: "" }}</strong></td>
-              <td class="text-red bordered"><strong>{{payroll.total.absence | currency: "" }}</strong></td>
-              <td class="text-red bordered"><strong>{{payroll.total.late | currency: "" }}</strong></td>
               <td class="text-red bordered"><strong>{{payroll.total.advance_payment | currency: "" }}</strong></td>
               <td class="text-red bordered"><strong>{{payroll.total.fee_etc | currency: "" }}</strong></td>
               <!-- Result -->

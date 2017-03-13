@@ -66,22 +66,35 @@ describe 'Payroll Report', js: true do
 
   let(:payrolls) do
     [
-      pr1 = Payroll.make!({employee_id: employee1.id, salary: 1_000_000, tax: 100,
+      pr1 = Payroll.make!({employee_id: employee1.id, salary: 1_000_000,
                             effective_date: DateTime.new(2016, 12, 1)}),
-      pr3 = Payroll.make!({employee_id: employee2.id, salary: 1_000_000, tax: 100,
+      pr3 = Payroll.make!({employee_id: employee2.id, salary: 1_000_000,
                             effective_date: DateTime.new(2016, 12, 1)}),
-      pr2 = Payroll.make!({employee_id: employee1.id, salary: 50_000, tax: 100,
+      pr2 = Payroll.make!({employee_id: employee1.id, salary: 50_000,
                             effective_date: DateTime.new(2016, 11, 1)}),
-      pr4 = Payroll.make!({employee_id: employee2.id, salary: 50_000, tax: 100,
+      pr4 = Payroll.make!({employee_id: employee2.id, salary: 50_000,
                             effective_date: DateTime.new(2016, 11, 1)}),
-      pr5 = Payroll.make!({employee_id: employee3.id, salary: 20, tax: 10,
+      pr5 = Payroll.make!({employee_id: employee3.id, salary: 20,
                             effective_date: DateTime.new(2016, 11, 1)}),
-      pr6 = Payroll.make!({employee_id: employee4.id, salary: 1_000_000, tax: 0,
+      pr6 = Payroll.make!({employee_id: employee4.id, salary: 1_000_000,
                             effective_date: DateTime.new(2016, 12, 1)}),
     ]
   end
 
+  let(:taxrates) do
+    [
+      Taxrate.make!({order_id: "1", income: "5000000", tax: "0.35"}),
+      Taxrate.make!({order_id: "2", income: "2000000", tax: "0.30"}),
+      Taxrate.make!({order_id: "3", income: "1000000", tax: "0.25"}),
+      Taxrate.make!({order_id: "4", income: "750000", tax: "0.20"}),
+      Taxrate.make!({order_id: "5", income: "500000", tax: "0.15"}),
+      Taxrate.make!({order_id: "6", income: "300000", tax: "0.10"}),
+      Taxrate.make!({order_id: "7", income: "150000", tax: "0.05"})
+    ]
+  end
+
   before do
+    taxrates
     payrolls
     login_as(user, scope: :user)
   end
@@ -94,10 +107,10 @@ describe 'Payroll Report', js: true do
   it 'should see month latest' do
     visit "/somsri_payroll#/report"
 
-    eventually { expect(page).to have_content 'สมศรี เป็นชื่อแอพ 5-234-34532-2342 1,000,000.00 0.00 100.00 999,900.00' }
-    eventually { expect(page).to have_content 'สมจิตร เป็นนักมวย 5-234-34532-2342 1,000,000.00 0.00 100.00 999,900.00' }
-    eventually { expect(page).to have_content 'พี ดี เอ็ม 5-234-34532-xxxx 1,000,000.00 0.00 0.00 1,000,000.00' }
-    eventually { expect(page).to have_content 'รวมทั้งหมด 3,000,000.00 0.00 200.00 2,999,800.00' }
+    eventually { expect(page).to have_content 'มศรี เป็นชื่อแอพ 5-234-34532-2342 1,000,000.00 0.00 306,083.33 693,916.67' }
+    eventually { expect(page).to have_content 'สมจิตร เป็นนักมวย 5-234-34532-2342 1,000,000.00 0.00 30,000.00 970,000.00' }
+    eventually { expect(page).to have_content 'พี ดี เอ็ม 5-234-34532-xxxx 1,000,000.00 0.00 30,000.00 970,000.00' }
+    eventually { expect(page).to have_content 'รวมทั้งหมด 3,000,000.00 0.00 366,083.33 2,633,916.67' }
   end
 
   it 'should see month list' do
@@ -116,11 +129,11 @@ describe 'Payroll Report', js: true do
     sleep(1)
 
     eventually { expect(page).to have_content 'รหัส ชื่อ เลขบัญชี เงินเดือน เงินเพิ่ม เงินหัก เงินเดือนสุทธิ' }
-    eventually { expect(page).to have_content 'สมศรี เป็นชื่อแอพ 5-234-34532-2342 50,000.00 0.00 100.00 49,900.00' }
-    eventually { expect(page).to have_content 'สมจิตร เป็นนักมวย 5-234-34532-2342 50,000.00 0.00 100.00 49,900.00' }
+    eventually { expect(page).to have_content 'สมศรี เป็นชื่อแอพ 5-234-34532-2342 50,000.00 0.00 2,125.00 47,875.00' }
+    eventually { expect(page).to have_content 'สมจิตร เป็นนักมวย 5-234-34532-2342 50,000.00 0.00 1,500.00 48,500.00' }
     eventually { expect(page).not_to have_content 'ฮาราบาส' }
     eventually { expect(page).not_to have_content 'Harabas' }
-    eventually { expect(page).to have_content 'รวมทั้งหมด 100,000.00 0.00 200.00 99,800.00' }
+    eventually { expect(page).to have_content 'รวมทั้งหมด 100,000.00 0.00 3,625.00 96,375.00' }
   end
 
   describe 'employee link' do
@@ -148,11 +161,11 @@ describe 'Payroll Report', js: true do
     sleep(1)
 
     eventually { expect(page).to have_content 'รหัส ชื่อ เลขบัญชี เงินเดือน เงินเพิ่ม เงินหัก เงินเดือนสุทธิ' }
-    eventually { expect(page).to have_content 'สมศรี เป็นชื่อแอพ 5-234-34532-2342 50,000.00 0.00 100.00 49,900.00' }
-    eventually { expect(page).to have_content 'สมจิตร เป็นนักมวย 5-234-34532-2342 50,000.00 0.00 100.00 49,900.00' }
+    eventually { expect(page).to have_content 'สมศรี เป็นชื่อแอพ 5-234-34532-2342 50,000.00 0.00 2,125.00 47,875.00' }
+    eventually { expect(page).to have_content 'สมจิตร เป็นนักมวย 5-234-34532-2342 50,000.00 0.00 1,500.00 48,500.00' }
     eventually { expect(page).not_to have_content 'ฮาราบาส' }
     eventually { expect(page).not_to have_content 'Harabas' }
-    eventually { expect(page).to have_content 'รวมทั้งหมด 100,000.00 0.00 200.00 99,800.00' }
+    eventually { expect(page).to have_content 'รวมทั้งหมด 100,000.00 0.00 3,625.00 96,375.00' }
   end
 
   it 'should see fliter button with actived status' do
