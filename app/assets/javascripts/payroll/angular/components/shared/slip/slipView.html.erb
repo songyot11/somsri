@@ -157,8 +157,11 @@
     <div class="col-xs-3">
       <p class="signature">ผู้มีอำนาจลงนาม / Signature</p>
     </div>
-    <div ng-hide="$even || $last">
+    <div ng-hide="$odd">
       <div class="page-space for_print" ></div>
+    </div>
+    <div ng-hide="$even || $last">
+      <div class="new-page for_print" ></div>
     </div>
   </div>
 </div>
