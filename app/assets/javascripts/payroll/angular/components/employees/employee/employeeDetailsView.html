@@ -25,6 +25,19 @@
             </a>
           </div>
         </div>
+        <div class="row">
+          <ul class="nav nav-tabs main">
+            <li class="cyan" ng-class="{ 'active' : employee.activeTab === 'general' }">
+              <a data-toggle="tab" ng-click="employee.activeTab = 'general'" href="javascript:void(0)">ข้อมูลทั่วไป</a>
+            </li>
+            <li class="cyan" ng-class="{ 'active' : employee.activeTab === 'salary' }">
+              <a data-toggle="tab" ng-click="employee.activeTab = 'salary'; employee.calTotal();" href="javascript:void(0)">เงินเดือน</a>
+            </li>
+            <li class="orange" ng-class="{ 'active' : employee.activeTab === 'private' }">
+              <a data-toggle="tab" ng-click="employee.activeTab = 'private'" href="javascript:void(0)">ข้อมูลส่วนตัว</a>
+            </li>
+          </ul>
+        </div>
       </div>
     </div>
   </div>
@@ -32,22 +45,12 @@
 
 <div class="container employee-details employee-menu-space">
   <form name="createProjectForm" ng-submit="employee.submit(employee.datas)">
-    <ul class="nav nav-tabs main">
-      <li class="cyan" ng-class="{ 'active' : employee.activeTab === 'salary' }">
-        <a data-toggle="tab" ng-click="employee.activeTab = 'salary'; employee.calTotal();" href="javascript:void(0)">เงินเดือน</a>
-      </li>
-      <li class="cyan" ng-class="{ 'active' : employee.activeTab === 'general' }">
-        <a data-toggle="tab" ng-click="employee.activeTab = 'general'" href="javascript:void(0)">ข้อมูลทั่วไป</a>
-      </li>
-      <li class="orange" ng-class="{ 'active' : employee.activeTab === 'private' }">
-        <a data-toggle="tab" ng-click="employee.activeTab = 'private'" href="javascript:void(0)">ข้อมูลส่วนตัว</a>
-      </li>
-    </ul>
     <div class="tab-content">
       <div ng-class="{ 'in active' : employee.activeTab === 'general' }" id="generalInfo" class="tab-pane fade">
         <div class="paragraph cyan tab-content employee">
           <div class="row">
             <div class="col-md-8">
+              <br>
               <div class="row">
                 <div class="col-md-2">
                   <div class="form-group">
@@ -229,6 +232,7 @@
       </div>
       <div ng-class="{ 'in active' : employee.activeTab === 'private' }" id="privateInfo" class="tab-pane fade">
         <div class="paragraph tab-content grey employee private">
+          <br><br>
           <div class="row">
             <div class="col-md-3 sub-menu">
               <ul class="nav nav-tabs tabs-left">
