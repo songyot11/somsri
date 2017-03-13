@@ -51,8 +51,8 @@
       <tbody>
         <% @students.each do |student| %>
           <tr>
-            <td><%= student.full_name_with_title%></td>
-            <td><%= student.nickname %></td>
+            <td><%= student.full_name_eng_thai_with_title%></td>
+            <td><%= student.nickname_eng_thai %></td>
             <td><%= student.grade.nil? ? "" : t(student.grade.name) %></td>
             <td><%= student.classroom %></td>
             <td><%= student.classroom_number %></td>

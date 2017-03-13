@@ -87,8 +87,12 @@ class Student < ApplicationRecord
   end
 
   def self.search(search)
-    where("full_name LIKE ? OR classroom LIKE ? OR nickname LIKE ? OR student_number::text LIKE ? OR classroom_number::text LIKE ? OR classroom LIKE ? ",
-     "%#{search}%", "%#{search}%", "%#{search}%" , "%#{search}%" , "%#{search}%" , "%#{search}%" )
+    if search
+      where("full_name ILIKE ? OR classroom ILIKE ? OR nickname ILIKE ? OR student_number::text ILIKE ? OR classroom_number::text ILIKE ? OR classroom ILIKE ? OR full_name_english ILIKE ? OR nickname_english ILIKE ? ",
+       "%#{search}%", "%#{search}%", "%#{search}%" , "%#{search}%" , "%#{search}%" , "%#{search}%" , "%#{search}%" , "%#{search}%" )
+    else
+      all
+    end
   end
 
   def first_name
@@ -178,6 +182,18 @@ class Student < ApplicationRecord
       number: self.number
     }
     return roll_call_json.merge(super())
+  end
+
+  def full_name_eng_thai_with_title
+    title = self.gender_id == 1  ? 'ด.ช.' : 'ด.ญ.'
+    thaiName = self.full_name.nil? ? "" : self.full_name
+    engName = self.full_name_english.nil? ? "" : self.full_name_english
+
+    if gender_id != nil && (full_name_english != "" && full_name_english != nil)
+      return "#{title} #{thaiName} (#{engName})"
+    else
+      return "#{title} #{thaiName}"
+    end
   end
 
 end
