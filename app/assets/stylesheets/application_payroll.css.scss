@@ -59,7 +59,7 @@ body {
 a.nav-user,a.nav-user:focus{
     color: #7d7d7d;
     padding: 10px;
-    border-right: 2px solid #3fa1e6;
+    // border-right: 2px solid #3fa1e6;
     letter-spacing: 2px;
     text-decoration: none;
 }
@@ -1145,7 +1145,6 @@ table.scrollable-header {
 }
 .dropdown-menu.on-nav-bar {
     padding: 10px 10px;
-    margin-right: 70px;
     width: 62%;
 }
 a.dropdown-item{
