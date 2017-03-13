@@ -54,12 +54,11 @@
     }
 
     ctrl.printSlip = function(id, payroll_id) {
+      clearForPrint();
       var containerDiv = $('#payroll-report')
-      ctrl.employee = []
-
+      ctrl.employee_slips = []
       slipService.employeeSlip(id, payroll_id).then(function(resp) {
-        ctrl.employee = resp.data
-
+        ctrl.employee_slips = [resp.data]
         if($window.navigator.userAgent.indexOf('Chrome') == -1) {
           var slipForSchool = $compile('<slip-content info=report title="สำหรับโรงเรียน" class="for_print safari"/>');
           var slipForEmployee = $compile('<slip-content info=report title="" class="for_print safari"/>');
@@ -81,6 +80,39 @@
           $(".separate").remove()
         }, 500);
       })
+    }
+
+    ctrl.printSlips = function() {
+      clearForPrint();
+      var containerDiv = $('#payroll-report')
+      ctrl.employee_slips = []
+      var payroll_ids = []
+
+      for(var i = 0; i < ctrl.employees.length; i++ ){
+        payroll_ids.push(ctrl.employees[i].payroll_id);
+      }
+      slipService.employeeSlips(payroll_ids).then(function(resp) {
+        ctrl.employee_slips = resp.data
+        if($window.navigator.userAgent.indexOf('Chrome') == -1) {
+          var slipForSchool = $compile('<slip-content info=report title="สำหรับโรงเรียน" class="for_print safari"/>');
+          var slipForEmployee = $compile('<slip-content info=report title="" class="for_print safari"/>');
+        } else {
+          var slipForSchool = $compile('<slip-content info=report title="สำหรับโรงเรียน" class="for_print"/>');
+          var slipForEmployee = $compile('<slip-content info=report title="" class="for_print"/>');
+        }
+        var slipEmployeeDiv = slipForEmployee($scope);
+        angular.element(containerDiv).append(slipEmployeeDiv);
+        setTimeout(function() {
+          window.print();
+          $("slip-content").remove()
+          $(".separate").remove()
+        }, 500);
+      })
+    }
+
+    function clearForPrint(){
+      $('slip-all-content').remove();
+      $('slip-content').remove();
     }
 
     function getPayrolls() {

@@ -19,6 +19,20 @@ class EmployeesController < ApplicationController
     render json: employee, status: :ok
   end
 
+  # GET /employees/slips
+  def slips
+    employees = []
+    Payroll.where({ id: params[:payroll_ids] }).to_a.each do |payroll|
+      employee = payroll.employee.as_json({ slip: true, payroll_id: payroll.id })
+      employee[:payroll][:fee_orders] = employee[:payroll][:fee_orders]
+                                                        .select { |key, value| value[:value] > 0}
+      employee[:payroll][:pay_orders] = employee[:payroll][:pay_orders]
+                                                        .select { |key, value| value[:value] > 0}
+      employees << employee
+    end
+    render json: employees, status: :ok
+  end
+
   # GET /employees/:id/payrolls
   def payrolls
     payrolls = Employee.active.find(params[:id]).payrolls

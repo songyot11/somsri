@@ -31,6 +31,9 @@ Rails.application.routes.draw do
   end
 
   resources :employees, only: [:index, :create, :show, :update, :destroy]  do
+    collection do
+      get 'slips'
+    end
     member do
       get 'slip'
       get 'payrolls'

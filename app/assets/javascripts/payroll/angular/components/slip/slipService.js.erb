@@ -10,7 +10,10 @@
       }else{
         return $http.get('/employees/' + id + "/slip");
       }
+    }
 
+    this.employeeSlips = function(payroll_ids) {
+      return $http.get('/employees/slips', { params: { "payroll_ids[]": payroll_ids } });
     }
   }]);
 })();

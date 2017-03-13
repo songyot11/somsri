@@ -1,159 +1,164 @@
 <div class="row slip-content">
-  <!-- line logo -->
-  <div class="row">
-    <div class="col-xs-6">
-      <center><%= image_tag("slipLogo.png", id: "slipLogo") %></center>
+  <div ng-repeat="employee in slipInfo.employee_slips">
+    <!-- line logo -->
+    <div class="row">
+      <div class="col-xs-6">
+        <center><%= image_tag("slipLogo.png", id: "slipLogo") %></center>
+      </div>
+      <div class="col-xs-6 text-center">
+        <h4 class="for_print">{{slipTitle}}</h4>
+      </div>
     </div>
-    <div class="col-xs-6 text-center">
-      <h4 class="for_print">{{slipTitle}}</h4>
+
+
+    <!-- line 1 -->
+    <div class="col-xs-5 col-xs-offset-7">
+      <p>
+        <strong>ตำแหน่ง/Title</strong>
+        {{employee.position}}
+      </p>
     </div>
-  </div>
 
+    <!-- line 2 -->
+     <div class="col-xs-3">
+      <p>
+        <strong>รหัส/Code</strong>
+        {{employee.code}}
+      </p>
+    </div>
+    <div class="col-xs-4">
+      <p>
+        <strong>ชื่อ/Name</strong>
+        {{employee.name}}
+      </p>
+    </div>
+    <div class="col-xs-5 ">
+      <p>
+        <strong>เลขที่บัญชี/Bank acct.</strong>
+        {{employee.account_number}}
+      </p>
+    </div>
 
-  <!-- line 1 -->
-  <div class="col-xs-5 col-xs-offset-7">
-    <p>
-      <strong>ตำแหน่ง/Title</strong>
-      {{slipInfo.employee.position}}
-    </p>
-  </div>
-
-  <!-- line 2 -->
-   <div class="col-xs-3">
-    <p>
-      <strong>รหัส/Code</strong>
-      {{slipInfo.employee.code}}
-    </p>
-  </div>
-  <div class="col-xs-4">
-    <p>
-      <strong>ชื่อ/Name</strong>
-      {{slipInfo.employee.name}}
-    </p>
-  </div>
-  <div class="col-xs-5 ">
-    <p>
-      <strong>เลขที่บัญชี/Bank acct.</strong>
-      {{slipInfo.employee.account_number}}
-    </p>
-  </div>
-
-  <!-- Table -->
-  <div class="col-xs-9">
-    <!-- Left Table -->
-    <table id="order" class="table table-bordered">
-      <thead style="background-color: #EEEEEE;">
+    <!-- Table -->
+    <div class="col-xs-9">
+      <!-- Left Table -->
+      <table id="order" class="table table-bordered">
+        <thead style="background-color: #EEEEEE;">
+          <tr>
+            <th class="text-center" width="30%">รายการได้ / Income</th>
+            <th class="text-center" width="20%">จำนวนเงิน / Amount</th>
+            <th class="text-center" width="30%">รายการเงินหัก / Deduction</th>
+            <th class="text-center" width="20%">จำนวนเงิน / Amount</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td>
+              <p ng-repeat="pay in employee.payroll.pay_orders">
+                {{pay.name}}
+              </p>
+            </td>
+            <td class="text-right">
+              <p ng-repeat="pay in employee.payroll.pay_orders">
+                {{pay.value | currency: ""}}
+              </p>
+            </td>
+            <td>
+              <p ng-repeat="fee in employee.payroll.fee_orders">
+                {{fee.name}}
+              </p>
+            </td>
+            <td class="text-right">
+              <p ng-repeat="fee in employee.payroll.fee_orders">
+                {{fee.value | currency: ""}}
+              </p>
+            </td>
+          </tr>
+        </tbody>
+        <tfoot>
+          <th class="text-right bg-gray">
+            รวมรายได้<br>
+            Total Income
+          </th>
+          <td class="text-right">{{employee.extra_pay | currency: ""}}</td>
+          <th class="text-right bg-gray">
+            รวมรายการหัก<br>
+            Total Deduction
+          </th>
+          <td class="text-right">{{employee.extra_fee | currency: ""}}</td>
+        </tfoot>
+      </table>
+    </div>
+    <div class="col-xs-3">
+      <!-- Right Table -->
+      <table id="date_table" class="table table-bordered text-center">
+        <thead>
+          <tr>
+            <th class="text-center">
+              วัน / เดือน / ปี<br>
+              Day / Month / Year
+            </th>
+          </tr>
+        </thead>
         <tr>
-          <th class="text-center" width="30%">รายการได้ / Income</th>
-          <th class="text-center" width="20%">จำนวนเงิน / Amount</th>
-          <th class="text-center" width="30%">รายการเงินหัก / Deduction</th>
-          <th class="text-center" width="20%">จำนวนเงิน / Amount</th>
+          <td class="big">{{ employee.payroll.date | dateThai }}</td>
         </tr>
-      </thead>
-      <tbody>
+      </table>
+      <table class="table table-bordered text-center">
+        <thead>
+          <tr>
+            <th class="text-center">
+              เงินรับสุทธิ<br>
+              Net Income
+            </th>
+          </tr>
+        </thead>
         <tr>
-          <td>
-            <p ng-repeat="pay in slipInfo.employee.payroll.pay_orders">
-              {{pay.name}}
-            </p>
+          <td class="big">
+            {{employee.extra_pay - employee.extra_fee | currency: ""}}
           </td>
-          <td class="text-right">
-            <p ng-repeat="pay in slipInfo.employee.payroll.pay_orders">
-              {{pay.value | currency: ""}}
-            </p>
-          </td>
-          <td>
-            <p ng-repeat="fee in slipInfo.employee.payroll.fee_orders">
-              {{fee.name}}
-            </p>
-          </td>
-          <td class="text-right">
-            <p ng-repeat="fee in slipInfo.employee.payroll.fee_orders">
-              {{fee.value | currency: ""}}
-            </p>
-          </td>
         </tr>
-      </tbody>
-      <tfoot>
-        <th class="text-right bg-gray">
-          รวมรายได้<br>
-          Total Income
-        </th>
-        <td class="text-right">{{slipInfo.employee.extra_pay | currency: ""}}</td>
-        <th class="text-right bg-gray">
-          รวมรายการหัก<br>
-          Total Deduction
-        </th>
-        <td class="text-right">{{slipInfo.employee.extra_fee | currency: ""}}</td>
-      </tfoot>
-    </table>
-  </div>
-  <div class="col-xs-3">
-    <!-- Right Table -->
-    <table id="date_table" class="table table-bordered text-center">
-      <thead>
-        <tr>
-          <th class="text-center">
-            วัน / เดือน / ปี<br>
-            Day / Month / Year
-          </th>
-        </tr>
-      </thead>
-      <tr>
-        <td class="big">{{ slipInfo.dateDisplay }}</td>
-      </tr>
-    </table>
-    <table class="table table-bordered text-center">
-      <thead>
-        <tr>
-          <th class="text-center">
-            เงินรับสุทธิ<br>
-            Net Income
-          </th>
-        </tr>
-      </thead>
-      <tr>
-        <td class="big">
-          {{slipInfo.employee.extra_pay - slipInfo.employee.extra_fee | currency: ""}}
-        </td>
-      </tr>
-    </table>
-  </div>
+      </table>
+    </div>
 
-  <!-- Result Table -->
-  <div class="col-xs-9 ">
-    <table class="table table-bordered text-center">
-      <thead>
-        <tr>
-          <th class="text-center">
-            รายได้สะสมต่อปี<br>
-            Acc. Income
-          </th>
-          <th class="text-center">
-            ภาษีสะสมต่อปี<br>
-            Acc. Tax
-          </th>
-          <th class="text-center">
-            เงินประกันสังคมสะสมต่อปี<br>
-            Acc. Social fund
-          </th>
-          <th class="text-center">
-            เงินสะสมกองทุนสงเคราะห์<br>
-            Private Teacher Aid fund
-          </th>
-        </tr>
-      </thead>
-      <tbody>
-        <tr>
-          <td class="big" width="20%">{{slipInfo.employee.annual_income_outcome.total_salary | currency: ""}}</td>
-          <td class="big" width="20%">{{slipInfo.employee.annual_income_outcome.total_tax | currency: ""}}</td>
-          <td class="big" width="30%">{{slipInfo.employee.annual_income_outcome.total_social_insurance | currency: ""}}</td>
-          <td class="big" width="30%">{{slipInfo.employee.annual_income_outcome.total_aid_fund | currency: ""}}</td>
-        </tr>
-      </tbody>
-    </table>
-  </div>
-  <div class="col-xs-3">
-    <p class="signature">ผู้มีอำนาจลงนาม / Signature</p>
+    <!-- Result Table -->
+    <div class="col-xs-9 ">
+      <table class="table table-bordered text-center">
+        <thead>
+          <tr>
+            <th class="text-center">
+              รายได้สะสมต่อปี<br>
+              Acc. Income
+            </th>
+            <th class="text-center">
+              ภาษีสะสมต่อปี<br>
+              Acc. Tax
+            </th>
+            <th class="text-center">
+              เงินประกันสังคมสะสมต่อปี<br>
+              Acc. Social fund
+            </th>
+            <th class="text-center">
+              เงินสะสมกองทุนสงเคราะห์<br>
+              Private Teacher Aid fund
+            </th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td class="big" width="20%">{{employee.annual_income_outcome.total_salary | currency: ""}}</td>
+            <td class="big" width="20%">{{employee.annual_income_outcome.total_tax | currency: ""}}</td>
+            <td class="big" width="30%">{{employee.annual_income_outcome.total_social_insurance | currency: ""}}</td>
+            <td class="big" width="30%">{{employee.annual_income_outcome.total_aid_fund | currency: ""}}</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+    <div class="col-xs-3">
+      <p class="signature">ผู้มีอำนาจลงนาม / Signature</p>
+    </div>
+    <div ng-hide="$even || $last">
+      <div class="page-space for_print" ></div>
+    </div>
   </div>
 </div>

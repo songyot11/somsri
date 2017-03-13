@@ -12,6 +12,7 @@
 
     slipService.employeeSlip(employeeId, payroll_id).then(function(resp) {
       ctrl.employee = resp.data;
+      ctrl.employee_slips = [resp.data];
       ctrl.dateDisplay = moment(ctrl.employee.payroll.date).add(543, 'years').format('DD/MM/YYYY');
     });
 
