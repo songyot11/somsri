@@ -68,3 +68,15 @@ th:
   Uncle: "คุณลุง"
   Aunt: "คุณป้า"
   Cousin: "ลูกพี่ลูกน้อง"
+
+#helpers_links
+  helpers:
+    links:
+      addstudent: "เพิ่มนักเรียน"
+      addparent: "เพิ่มผู้ปกครอง"
+      show: "แสดง"
+      edit: "แก้ไข"
+      cancel: "ยกเลิก"
+      confirm:
+        student_confirm: "คุณแน่ใจหรือไม่ที่จะลบข้อมูลนักเรียน?"
+        parent_confirm: "คุณแน่ใจหรือไม่ที่จะลบข้อมูลผู้ปกครอง?"

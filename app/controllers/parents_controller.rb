@@ -19,6 +19,8 @@ class ParentsController < ApplicationController
       @parents = parent_joins.search(params[:search]).page(params[:page]).order("parents.full_name ASC").includes(:students, :relationships, :invoices)
     end
       @filter_grade = class_select
+
+      render "parents/index", layout: "application_invoice"
   end
 
   # GET /parents/1

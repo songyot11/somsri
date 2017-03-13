@@ -9,6 +9,7 @@ class StudentsController < ApplicationController
   # GET /students
   # GET /students.json
   def index
+
     if params[:pin]
       user = get_current_user(params[:pin])
       if user
@@ -35,6 +36,7 @@ class StudentsController < ApplicationController
       end
       @filter_grade = grade_select
     end
+
   end
 
   # GET /students/1
@@ -55,6 +57,7 @@ class StudentsController < ApplicationController
     @student = Student.new
     @parents = Parent.all
     @relations = Relationship.all
+    
   end
 
   # GET /students/1/edit

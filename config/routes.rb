@@ -51,6 +51,7 @@ Rails.application.routes.draw do
   resources :parents
   resources :grades
   resources :daily_reports
+  resources :students
 
   get "/auth_api" => "home#auth_api"
   get "/report" => "roll_calls#report"

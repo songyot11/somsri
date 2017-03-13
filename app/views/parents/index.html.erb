@@ -1,25 +1,27 @@
 <%- model_class = Parent -%>
 <div class="container-fluid">
-  <div class="row head-sp justify-content-between">
-    <div class="col-4">
+  <div class="row head-sp">
+    <div class="col-xs-2">
       <h1>ผู้ปกครอง</h1>
     </div>
-    <div class="col-4">
+    <div class="col-xs-2 col-xs-offset-8" style="text-align: right; margin-top: 10px;">
       <%= link_to t('.addparent', :default => t("helpers.links.addparent")),
                 new_parent_path,
                 :class => 'btn btn-add-ps float-right'%>
     </div>
   </div>
-  <div class="content-student-parent">
+  <div class="content-student-parent" style="
+    padding-left: 60px;
+    padding-right: 60px;">
     <%= form_tag(parents_path, method: :get, id: "search-form") do %>
-      <div class="form-group">
+      <div class="form-group col-xs-4">
         <%= text_field_tag :search, params[:search], placeholder: "ค้นหา..." ,class: 'search-sp'%>
         <%= button_tag(type: 'submit', class: "btn btn-search-sp") do %>
           <i class="fa fa-search"></i>
         <% end %>
       </div>
 
-      <div class="form-group">
+      <div class="col-xs-4 col-xs-offset-4 form-group float-right-search">
         <tr>
           <td><label for="class_select">เลือกตามห้อง</label></td>
           <td>
@@ -68,7 +70,7 @@
               <%= link_to "<i class='fa fa-times'></i>".html_safe ,
                           parent_path(parent),
                           :method => :delete,
-                          :data => { :confirm => t('.confirm', :default => t("helpers.links.confirm", :default => 'Are you sure?')) },
+                          :data => { :confirm => t('.confirm', :default => t("helpers.links.confirm.parent_confirm", :default => 'Are you sure?')) },
                           :class => 'btn btn-delete-sp' %>
             </td>
           </tr>

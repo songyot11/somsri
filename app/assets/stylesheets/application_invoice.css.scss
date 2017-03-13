@@ -628,7 +628,7 @@ tr.text-total-display-print{
 /* Custom page CSS
 -------------------------------------------------- */
 /* Not required for template or sticky footer method. */
-body > .container-fluid {
+body.somsri-invoice >.container-fluid {
     padding: 100px 15px 0;
 }
 
@@ -1151,7 +1151,7 @@ table.table.table-sp-report>tbody{
 .btn-add-st{
   padding: 5px 32px;
   background-color: #5bab67;
-  color: #fff;
+  color: #fff !important;
   margin-left: 15px;
 }
 .save-sp{
@@ -1174,7 +1174,9 @@ table.table.table-sp-report>tbody{
   line-height: 25px;
 }
 .btn-remove:hover{
-  background-color: #901524;
+  color: black ;
+  background-color: #fff;
+  border-color: #adadad;
 }
 .navbar-brand {
   height: 100%;
