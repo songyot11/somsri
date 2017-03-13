@@ -50,7 +50,17 @@
                 <!-- Collect the nav links, forms, and other content for toggling -->
                 <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
                     <% if current_user %>
-                        <ul class="nav navbar-nav">
+                      <ul class="nav navbar-nav">
+                        <li class="dropdown">
+                          <button id="menu" class="dropdown-toggle text-navbar-left" data-toggle="dropdown">เงินเดือน
+                            <span class="caret"></span>
+                          </button>
+                          <ul class="dropdown-menu nav-menu">
+                            <%= render 'layouts/navigation_left_menu' %>
+                          </ul>
+                        </li>
+                      </ul>
+                        <!-- <ul class="nav navbar-nav">
                             <li class="dropdown">
                                 <a id="menu" ng-show="menu" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">
                                     <span class="text-yellow">
@@ -73,7 +83,7 @@
                                     </li>
                                 </ul>
                             </li>
-                        </ul>
+                        </ul> -->
                         <ul class="nav navbar-nav navbar-right dropdown">
                           <% if user_signed_in? %>
                             <a class="nav-user avatar" href="javascript:void(0)" id="navbarDropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">

@@ -16,6 +16,7 @@
  */
 
 @import "selectize";
+@import "navigation_menu";
 /* Sticky footer styles
 -------------------------------------------------- */
 
@@ -154,7 +155,7 @@ input:focus {
     line-height: 27.5px;
     box-shadow: none !important;
 }
-.somsri-invoice ul.nav.navbar-nav.navbar-right.dropdown{
+ul.nav.navbar-nav.navbar-right.dropdown{
   margin-top: 25px;
 }
 .container input:focus, main input:focus, .container input:hover, main input:hover,

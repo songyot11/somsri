@@ -8,98 +8,45 @@ describe 'Payroll Swap Page', js: true do
   end
 
   it 'should not see two menu on homepage' do
-    visit "/somsri_payroll#/"
+    visit "/"
 
     eventually { expect(page).to have_no_selector('#menu') }
   end
 
-  it 'should see three menu and current page is Report' do
+  it 'should see six menu and current page is Report' do
     visit "/somsri_payroll#/report"
     find('#menu').click
 
-    eventually { expect(page).to have_content 'Report Employees Payroll Report' }
+    eventually { expect(page).to have_content 'เงินเดือน เงินเดือน ค่าเทอม นับแถว บุคลากร ผู้ปกครอง นักเรียน' }
     eventually { expect(URI.parse(current_url).to_s).to have_content 'report' }
   end
 
-  it 'should see three menu and current page is Employee' do
+  it 'should see six menu and current page is Employee' do
     visit "/somsri_payroll#/employees"
     find('#menu').click
 
-    eventually { expect(page).to have_content 'Employees Employees Payroll Report' }
+    eventually { expect(page).to have_content 'เงินเดือน เงินเดือน ค่าเทอม นับแถว บุคลากร ผู้ปกครอง นักเรียน' }
     eventually { expect(URI.parse(current_url).to_s).to have_content 'employees' }
   end
 
-  it 'should see three menu and current page is Payroll' do
+  it 'should see six menu and current page is Payroll' do
     visit "/somsri_payroll#/payroll"
     find('#menu').click
 
-    eventually { expect(page).to have_content 'Payroll Employees Payroll Report' }
+    eventually { expect(page).to have_content 'เงินเดือน เงินเดือน ค่าเทอม นับแถว บุคลากร ผู้ปกครอง นักเรียน' }
     eventually { expect(URI.parse(current_url).to_s).to have_content 'payroll' }
   end
 
   it 'should swap report to employees page' do
     visit "/somsri_payroll#/report"
     find('#menu').click
-    click_link("Employees")
+    # click_link("Employees")
+    find(:xpath, "//a[@href='/somsri_payroll#/employees']").click
     sleep(1)
     find('#menu').click
 
-    eventually { expect(page).to have_content 'Employees Employees Payroll Report' }
+    eventually { expect(page).to have_content 'เงินเดือน เงินเดือน ค่าเทอม นับแถว บุคลากร ผู้ปกครอง นักเรียน' }
     eventually { expect(URI.parse(current_url).to_s).to have_content 'employees' }
   end
 
-  it 'should swap employees to report page' do
-    visit "/somsri_payroll#/employees"
-    find('#menu').click
-    click_link("Report")
-    sleep(1)
-    find('#menu').click
-
-    eventually { expect(page).to have_content 'Report Employees Payroll Report' }
-    eventually { expect(URI.parse(current_url).to_s).to have_content 'report' }
-  end
-
-  it 'should swap report to payroll page' do
-    visit "/somsri_payroll#/report"
-    find('#menu').click
-    click_link("Payroll")
-    sleep(1)
-    find('#menu').click
-
-    eventually { expect(page).to have_content 'Payroll Employees Payroll Report' }
-    eventually { expect(URI.parse(current_url).to_s).to have_content 'payroll' }
-  end
-
-  it 'should swap employees to payrolll page' do
-    visit "/somsri_payroll#/employees"
-    find('#menu').click
-    click_link("Payroll")
-    sleep(1)
-    find('#menu').click
-
-    eventually { expect(page).to have_content 'Payroll Employees Payroll Report' }
-    eventually { expect(URI.parse(current_url).to_s).to have_content 'payroll' }
-  end
-
-  it 'should swap payroll to report page' do
-    visit "/somsri_payroll#/payroll"
-    find('#menu').click
-    click_link("Report")
-    sleep(1)
-    find('#menu').click
-
-    eventually { expect(page).to have_content 'Report Employees Payroll Report' }
-    eventually { expect(URI.parse(current_url).to_s).to have_content 'report' }
-  end
-
-  it 'should swap payroll to employee page' do
-    visit "/somsri_payroll#/payroll"
-    find('#menu').click
-    click_link("Employees")
-    sleep(1)
-    find('#menu').click
-
-    eventually { expect(page).to have_content 'Employees Employees Payroll Report' }
-    eventually { expect(URI.parse(current_url).to_s).to have_content 'employees' }
-  end
 end
