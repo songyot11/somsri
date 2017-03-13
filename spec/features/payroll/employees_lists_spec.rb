@@ -58,7 +58,6 @@ describe 'Employee Lists', js: true do
       Payroll.make!({
         employee_id: employees[0].id,
         salary: 50000,
-        tax: 100,
         advance_payment: 2000,
         allowance: 3000,
         effective_date: DateTime.now
@@ -67,7 +66,6 @@ describe 'Employee Lists', js: true do
       Payroll.make!({
         employee_id: employees[1].id,
         salary: 50000,
-        tax: 1000,
         position_allowance: 10000,
         fee_etc: 200,
         effective_date: DateTime.now
@@ -76,7 +74,6 @@ describe 'Employee Lists', js: true do
       Payroll.make!({
         employee_id: employees[2].id,
         salary: 2000,
-        tax: 100,
         position_allowance: 1000,
         fee_etc: 20,
         effective_date: DateTime.now
@@ -101,14 +98,30 @@ describe 'Employee Lists', js: true do
   it 'should see employees list' do
     visit "/somsri_payroll#/employees"
     sleep(1)
-    expect(page).to have_content 'นาง สมศรี เป็นชื่อแอพ เงินเดือน : 50000 บาท เงินหัก : 2100 บาท เงินเพิ่ม : 3000 บาท'
-    expect(page).to have_content 'นาย สมจิตร เป็นนักมวย เงินเดือน : 50000 บาท เงินหัก : 1200 บาท เงินเพิ่ม : 10000 บาท'
+    expect(page).to have_content 'นาง สมศรี เป็นชื่อแอพ เงินเดือน : 50000 บาท เงินหัก : 2000 บาท เงินเพิ่ม : 3000 บาท'
+    expect(page).to have_content 'นาย สมจิตร เป็นนักมวย เงินเดือน : 50000 บาท เงินหัก : 200 บาท เงินเพิ่ม : 10000 บาท'
     expect(page).to have_content 'นาย สมคิด จิตใจดี เงินเดือน : 0 บาท เงินหัก : 0 บาท เงินเพิ่ม : 0 บาท'
   end
 
   it 'should display only employee in user\'s school' do
     visit "/somsri_payroll#/employees"
     expect(page).not_to have_content "Harabas"
+  end
+
+  it 'should create new payroll' do
+    login_as(user, scope: :user)
+    visit "/somsri_payroll#/employees"
+
+    sleep(1)
+    first('a[ng-click="employees.createPayrolls()"]').trigger('click')
+    sleep(1)
+    find('input[type="text"]').set(DateTime.now.next_month(1).strftime("%d/%m/%Y"))
+    sleep(1)
+    find('button[type="submit"]').click
+    sleep(1)
+
+    expect(page).to have_content('นาง สมศรี เป็นชื่อแอพ '+employees[0].account_number+' 50,000.00 0.00 0.00 3,000.00')
+    expect(page).to have_content('นาย สมจิตร เป็นนักมวย '+employees[1].account_number+' 50,000.00 0.00 10,000.00')
   end
 
   # it 'should create new employee' , skip_before: true  do

@@ -187,11 +187,21 @@ class PayrollsController < ApplicationController
     render json: {error: "PAYROLLS_EXIST"}, status: :ok and return if payrolls.count > 0 && !params[:force_create]
     payrolls.destroy_all if payrolls.count > 0
     employees.each do |employee|
-      payroll = Payroll.new({
-        employee_id: employee.id,
-        salary: employee.salary,
-        effective_date: params[:effective_date]
-      })
+      if employee.lastest_payroll.nil?
+        payroll = Payroll.new({
+          employee_id: employee.id,
+          salary: employee.salary,
+          effective_date: params[:effective_date]
+        })
+      else
+        payroll = Payroll.new({
+          employee_id: employee.id,
+          salary: employee.lastest_payroll.salary,
+          position_allowance: employee.lastest_payroll.position_allowance,
+          allowance: employee.lastest_payroll.allowance,
+          effective_date: params[:effective_date]
+        })
+      end
       payroll.save
     end
 
