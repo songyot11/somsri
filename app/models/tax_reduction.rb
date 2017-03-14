@@ -1,5 +1,6 @@
 class TaxReduction < ApplicationRecord
   belongs_to :employee
+  before_save :before_save
 
   def self.income_exemption(year_income, t) # รายได้ที่ได้รับการยกเว้น
     t = JSON.parse(t)
@@ -33,5 +34,9 @@ class TaxReduction < ApplicationRecord
     s_ins = t["spouse_insurance"].to_i > 100000 ? 100000 : t["spouse_insurance"].to_i
 
     exp40 + t["expenses"].to_i + t["no_income_spouse"].to_i + t["child"].to_i + t["father_alimony"].to_i + t["mother_alimony"].to_i + t["spouse_father_alimony"].to_i + t["spouse_mother_alimony"].to_i + t["cripple_alimony"].to_i + p_ins + ins + ltf + house_loan + s_ins + t["social_insurance"].to_i + d_donation + s_donation + t["other"].to_i
+  end
+  
+  def before_save
+    self.attributes.each_pair { |name, value| self[name] = "0.0" if value.nil? }
   end
 end
