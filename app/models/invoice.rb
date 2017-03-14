@@ -18,9 +18,7 @@ class Invoice < ApplicationRecord
   end
 
   def student_full_name_with_nickname
-    name = self.student.full_name_with_title if self.student
-    name = "#{name} (#{self.student.get_nickname})" if self.student && self.student.get_nickname
-    return name
+    self.student.invoice_screen_full_name_display if self.student
   end
 
   def parent_name
@@ -42,10 +40,5 @@ class Invoice < ApplicationRecord
   def is_cancel
     self.invoice_status.name == 'Canceled'
   end
-
-  # def self.search(search)
-  #   where("full_name LIKE ? OR classroom LIKE ? OR nickname LIKE ? OR student_number::text LIKE ? OR classroom_number::text LIKE ? OR classroom LIKE ? ",
-  #    "%#{search}%", "%#{search}%", "%#{search}%" , "%#{search}%" , "%#{search}%" , "%#{search}%" )
-  # end
 
 end

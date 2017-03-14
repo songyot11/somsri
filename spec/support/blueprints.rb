@@ -68,10 +68,20 @@ List.blueprint do
   category { "roll_call" }
 end
 
+Parent.blueprint do
+  full_name { Faker::Name.full_name }
+  mobile { Faker::PhoneNumber.cell_phone }
+end
+
 StudentList.blueprint do
 end
 
 RollCall.blueprint do
   status { "มา" }
   round { "morning" }
+end
+
+LineItem.blueprint do
+  detail { Faker::Lorem.sentence }
+  amount { rand(10) + 1 }
 end

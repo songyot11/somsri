@@ -29,19 +29,9 @@ class InvoicesController < ApplicationController
     student_code = []
     students.each do |student|
 
-      student_number_display = ""
-      if(student.student_number)
-        student_number_display = "#{student.student_number} - #{student.full_name_with_title} (#{student.nickname})"
-      else
-        student_number_display = "#{student.full_name_with_title} (#{student.nickname})"
-      end
+      student_number_display = student.invoice_screen_student_number_display
 
-      full_name_display = ""
-      if(student.nickname)
-        full_name_display = student.full_name_with_title + ' (' + student.nickname + ')'
-      else
-        full_name_display = student.full_name_with_title
-      end
+      full_name_display = student.invoice_screen_full_name_display
 
       student_info << {
         id: student.id,
@@ -58,12 +48,7 @@ class InvoicesController < ApplicationController
     parents = Parent.all.to_a
     parent_info = []
     parents.each do |parent|
-      fullname_display = ""
-      if(parent.mobile)
-        fullname_display = parent.full_name + ' (' + parent.mobile.to_s + ')'
-      else
-        fullname_display = parent.full_name
-      end
+      fullname_display = parent.invoice_screen_full_name_display
       parent_info << {
         id: parent.id,
         student_id: parent.students[0] ? parent.students[0].id : '',
