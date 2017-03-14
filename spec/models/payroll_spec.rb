@@ -1,6 +1,4 @@
-
 describe Payroll do
-
   let(:school) {school = School.make!({ name: "โรงเรียนแห่งหนึ่ง" })}
   let(:school2) {School.make!({ name: "โรงเรียนแห่ง2" })}
   let(:user) { User.make!({ school_id: school.id }) }

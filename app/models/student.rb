@@ -196,4 +196,20 @@ class Student < ApplicationRecord
     end
   end
 
+  def invoice_screen_full_name_display
+    if(nickname.to_s.strip != '')
+      full_name_with_title + ' (' + nickname.to_s.strip + ')'
+    else
+      full_name_with_title
+    end
+  end
+
+  def invoice_screen_student_number_display
+    if(student_number)
+      "#{student_number} - #{invoice_screen_full_name_display}"
+    else
+      invoice_screen_full_name_display
+    end
+  end
+
 end
