@@ -17,11 +17,12 @@
         ctrl.grades = grade_resp.data
         studentReportService.getStudents(grade_name).then(function(resp) {
           ctrl.students = resp.data
-          ctrl.total = { entrance_fee: 0.0, amount: 0.0 }
+          ctrl.total = { other_fee: 0.0, amount: 0.0, tuition_fee: 0.0 }
 
           angular.forEach(ctrl.students, function(value, key) {
             if(value.active_invoice_status == "ชำระแล้ว"){
-              ctrl.total.entrance_fee += value.active_invoice_entrance_fee
+              ctrl.total.other_fee += value.active_invoice_other_fee
+              ctrl.total.tuition_fee += value.active_invoice_tuition_fee
               ctrl.total.amount += value.active_invoice_total_amount
             }
           });

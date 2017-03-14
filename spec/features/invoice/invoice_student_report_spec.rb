@@ -7,7 +7,7 @@ describe 'Invoice-Report', js: true do
   let(:grade){grade = Grade.create(
     name: "Kindergarten 1"
   )}
-  
+
   let(:invoiceStatus1){invoiceStatus1 = InvoiceStatus.create!(
     name: 'Active'
   )}
@@ -38,11 +38,48 @@ describe 'Invoice-Report', js: true do
     birthdate: Time.now
   )}
 
+  let(:student3){student3 = Student.create!(
+    full_name: 'สมพล ณ บานาน่าโค๊ดดิ้ง' ,
+    nickname: 'กั้ง' ,
+    gender_id: 2 ,
+    grade_id: 4 ,
+    classroom: '1A' ,
+    classroom_number: 14 ,
+    student_number: 2015 ,
+    birthdate: Time.now
+  )}
+
   let(:invoice) do
     [
-      invoice1 = Invoice.create!({student_id: student1.id, invoice_status_id:  invoiceStatus1.id}),
-      invoice2 = Invoice.create!({student_id: student2.id, invoice_status_id: invoiceStatus2.id}),
-      payment_method1 = PaymentMethod.create!({payment_method:'เงินสด' , invoice_id: invoice1.id })
+      invoice1 = Invoice.make!({
+        student_id: student1.id,
+        invoice_status_id:  invoiceStatus1.id,
+        line_items: [
+          LineItem.make!(:tuition, amount: 48000),
+          LineItem.make!(amount: 3000),
+          LineItem.make!(amount: 750)
+        ]
+      }),
+      invoice2 = Invoice.make!({
+        student_id: student2.id,
+        invoice_status_id: invoiceStatus2.id,
+        line_items: [
+          LineItem.make!(:tuition),
+          LineItem.make!(amount: 10000),
+        ]
+      }),
+      invoice3 = Invoice.make!({
+        student_id: student3.id,
+        invoice_status_id: invoiceStatus1.id,
+        line_items: [
+          LineItem.make!(:tuition),
+          LineItem.make!(amount: 10000),
+        ]
+      }),
+      payment_method1 = PaymentMethod.create!({
+        payment_method:'เงินสด',
+        invoice_id: invoice1.id
+      })
     ]
   end
 
@@ -89,5 +126,35 @@ describe 'Invoice-Report', js: true do
     sleep(1)
     click_on("Kindergarten 1")
     expect(page).to have_content("มั่งมี")
+  end
+
+  it 'display total fee' do
+    visit 'somsri_invoice#/student_report'
+    expect(page).to have_content("51,750.00")
+  end
+
+  it 'display other fee' do
+    visit 'somsri_invoice#/student_report'
+    expect(page).to have_content("3,750.00")
+  end
+
+  it 'display tuition fee' do
+    visit 'somsri_invoice#/student_report'
+    expect(page).to have_content("48,000.00")
+  end
+
+  it 'display total of total fee(of all student)' do
+    visit 'somsri_invoice#/student_report'
+    expect(page).to have_content("109,750.00")
+  end
+
+  it 'display total other fee' do
+    visit 'somsri_invoice#/student_report'
+    expect(page).to have_content("13,750.00")
+  end
+
+  it 'display total tuition fee' do
+    visit 'somsri_invoice#/student_report'
+    expect(page).to have_content("96,000.00")
   end
 end

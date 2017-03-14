@@ -74,8 +74,16 @@ class Student < ApplicationRecord
     self.active_invoice.nil? ? '' : self.active_invoice.payment_methods.collect(&:payment_method).join(', ')
   end
 
+  def active_invoice_tuition_fee
+    self.active_invoice.nil? ? '' : self.active_invoice.tuition_fee
+  end
+
   def active_invoice_entrance_fee
     self.active_invoice.nil? ? '' : self.active_invoice.entrance_fee
+  end
+
+  def active_invoice_other_fee
+    self.active_invoice.nil? ? '' : self.active_invoice.other_fee
   end
 
   def active_invoice_total_amount

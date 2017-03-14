@@ -4,7 +4,7 @@ class IndividualsController < ApplicationController
 
   # GET /individuals/
   def index
-    render text: "Employee not found", status: 404 and return if params[:employee_id].blank?
+    render plain: "Employee not found", status: 404 and return if params[:employee_id].blank?
     employee = Employee.where(id: params[:employee_id], school_id: current_user.school.id).first
     if employee
       render json: {
@@ -15,7 +15,7 @@ class IndividualsController < ApplicationController
         friends: employee.friends
       }.as_json({ full_name: true })
     else
-      render text: "Employee not found", status: 500
+      render plain: "Employee not found", status: 500
     end
   end
 
@@ -43,7 +43,7 @@ class IndividualsController < ApplicationController
   # DELETE /individuals/:id
   def destroy
     @individual.destroy
-    render text: "Deleted", status: :ok
+    render plain: "Deleted", status: :ok
   end
 
   private

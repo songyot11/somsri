@@ -17,6 +17,14 @@ class Invoice < ApplicationRecord
     entrance_fee.nil? ? 0 : entrance_fee.amount
   end
 
+  def other_fee
+    self.line_items.collect{|item| item.amount unless item.detail =~ /Tuition Fee/ }.compact.inject(:+)
+  end
+
+  def tuition_fee
+    self.line_items.collect{|item| item.amount if item.detail =~ /Tuition Fee/ }.compact.inject(:+)
+  end
+
   def student_full_name_with_nickname
     self.student.invoice_screen_full_name_display if self.student
   end

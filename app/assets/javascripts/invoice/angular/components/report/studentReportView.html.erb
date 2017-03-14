@@ -31,8 +31,9 @@
               <th>ผู้ปกครอง</th>
               <th>สถานะ</th>
               <th>ชำระโดย</th>
-              <th class='text-currency'>ค่าแรกเข้า</th>
-              <th class='text-currency'>ยอดชำระ</th>
+              <th class='text-currency'>ค่าธรรมเนียมการศึกษา</th>
+              <th class='text-currency'>ค่าใช้จ่ายอื่นๆ</th>
+              <th class='text-currency bold'>ยอดชำระ</th>
               <th>วันที่ชำระ</th>
            </tr>
           </thead>
@@ -50,8 +51,9 @@
                 <td>{{student.parent_names}}</td>
                 <td>{{student.active_invoice_status}}</td>
                 <td>{{student.active_invoice_payment_method}}</td>
-                <td class="text-currency">{{student.active_invoice_entrance_fee.toFixed(2) | number:2}}</td>
-                <td class="text-currency">{{student.active_invoice_total_amount.toFixed(2) | number:2}}</td>
+                <td class="text-currency">{{student.active_invoice_tuition_fee.toFixed(2) | number:2}}</td>
+                <td class="text-currency">{{student.active_invoice_other_fee.toFixed(2) | number:2}}</td>
+                <td class="text-currency bold">{{student.active_invoice_total_amount.toFixed(2) | number:2}}</td>
                 <td>{{student.active_invoice_updated_at | date:'d/MM/yyyy hh:mm'}}</td>
               </tr>
             </tbody>
@@ -59,7 +61,8 @@
               <tr>
                 <td colspan="7"></td>
                 <td class="text-green">รวมทั้งหมด</td>
-                <td class="text-green text-currency">{{studentReport.total.entrance_fee.toFixed(2) | number:2}}</td>
+                <td class="text-green text-currency">{{studentReport.total.tuition_fee.toFixed(2) | number:2}}</td>
+                <td class="text-green text-currency">{{studentReport.total.other_fee.toFixed(2) | number:2}}</td>
                 <td class="text-green text-currency">{{studentReport.total.amount.toFixed(2) | number:2}}</td>
                 <td class="text-green"></td>
               </tr>

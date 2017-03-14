@@ -81,7 +81,17 @@ RollCall.blueprint do
   round { "morning" }
 end
 
+Invoice.blueprint do
+  student_id { object.student ? object.student.id : Student.make!.id }
+  invoice_status_id { object.invoice_status ? object.invoice_status.id : InvoiceStats.make!.id }
+end
+
 LineItem.blueprint do
   detail { Faker::Lorem.sentence }
   amount { rand(10) + 1 }
+end
+
+LineItem.blueprint(:tuition) do
+  detail { "ค่าธรรมเนียมการศึกษา / Tuition Fee" }
+  amount { 48000 }
 end
