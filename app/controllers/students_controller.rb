@@ -2,6 +2,7 @@ class StudentsController < ApplicationController
   before_action :set_student, only: [:show, :edit, :update, :destroy], unless: :is_api?
   before_action :authenticate_user!, unless: :is_api?
 
+
   def is_api?
     !params[:pin].blank?
   end
@@ -35,8 +36,8 @@ class StudentsController < ApplicationController
         end
       end
       @filter_grade = grade_select
+      render "students/index", layout: "application_invoice"
     end
-
   end
 
   # GET /students/1
@@ -49,6 +50,8 @@ class StudentsController < ApplicationController
       else
         render json: { errors: "Invalid token or user not registered" }, status: 422 and return
       end
+    else
+      render "students/show", layout: "application_invoice"
     end
   end
 
@@ -57,13 +60,16 @@ class StudentsController < ApplicationController
     @student = Student.new
     @parents = Parent.all
     @relations = Relationship.all
-    
+
+    render "students/new", layout: "application_invoice"
   end
 
   # GET /students/1/edit
   def edit
     @parents = Parent.all
     @relations = Relationship.all
+
+    render "students/edit", layout: "application_invoice"
   end
 
   # POST /students

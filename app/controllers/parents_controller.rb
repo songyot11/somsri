@@ -26,6 +26,7 @@ class ParentsController < ApplicationController
   # GET /parents/1
   # GET /parents/1.json
   def show
+    render "parents/show", layout: "application_invoice"
   end
 
   # GET /parents/new
@@ -33,12 +34,16 @@ class ParentsController < ApplicationController
     @parent = Parent.new
     @students = Student.all
     @relations = Relationship.all
+
+    render "parents/new", layout: "application_invoice"
   end
 
   # GET /parents/1/edit
   def edit
     @students = Student.all
     @relations = Relationship.all
+
+    render "parents/edit", layout: "application_invoice"
   end
 
   # POST /parents

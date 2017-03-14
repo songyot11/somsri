@@ -22,6 +22,7 @@
 //= require angular-moment
 //= require ocLazyLoad/dist/ocLazyLoad.min
 //= require angular-input-masks
+//= require selectize.min
 
 //= require invoice/angular/components/mainCtrl.js.erb
 //= require invoice/angular/app.module
