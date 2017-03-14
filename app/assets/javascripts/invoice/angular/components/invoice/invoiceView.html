@@ -14,12 +14,12 @@
         <div class="row">
           <div class="col-md-2">
             <div class="form-group">
-              <input type="text" class="form-control" id="student_code" placeholder="รหัสนักเรียน" ng-model="invoice.datas.student.student_number" typeahead-on-select="invoice.onSelectStudentNumber($item)" uib-typeahead="student.student_number as student.student_number_display for student in invoice.student_info | filter:{student_number:$viewValue} | limitTo:8">
+              <input type="text" class="form-control" id="student_code" placeholder="รหัสนักเรียน" ng-model="invoice.datas.student.student_number" typeahead-on-select="invoice.onSelectStudentNumber($item)" uib-typeahead="student.student_number as student.student_number_display for student in invoice.student_info | filter:{student_number:$viewValue} | limitTo:8"  autocomplete="off">
             </div>
           </div>
           <div class="col-md-4">
             <div class="form-group">
-              <input type="text" class="form-control" id="student_name" placeholder="ชื่อนักเรียน" ng-model="invoice.datas.student.full_name" typeahead-on-select="invoice.onSelectStudentFullName($item)" uib-typeahead="student.full_name as student.full_name_display for student in invoice.student_info | filter:{full_name_display:$viewValue} | limitTo:8" required>
+              <input type="text" class="form-control" id="student_name" placeholder="ชื่อนักเรียน" ng-model="invoice.datas.student.full_name" typeahead-on-select="invoice.onSelectStudentFullName($item)" uib-typeahead="student.full_name as student.full_name_display for student in invoice.student_info | filter:{full_name_display:$viewValue} | limitTo:8" required , autocomplete="off">
             </div>
           </div>
           <div class="col-md-6">
