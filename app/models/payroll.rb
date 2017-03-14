@@ -139,7 +139,7 @@ class Payroll < ApplicationRecord
   private
     def set_default_val
       e = Employee.find(self.employee_id)
-      self.tax = Payroll.generate_tax(self, e, e.tax_reduction)
+      self.tax = Payroll.generate_tax(self, e, e.tax_reduction.to_json)
       self.social_insurance = Payroll.generate_social_insurance(self, e)
       self.pvf = Payroll.generate_pvf(self, e)
       self.save
