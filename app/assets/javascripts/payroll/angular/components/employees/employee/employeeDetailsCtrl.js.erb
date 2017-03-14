@@ -415,6 +415,10 @@
       ctrl.individuals.emergency_calls.reverse();
     });
 
+    $scope.check_not_null = function(e) {
+      if(ctrl.datas.tax_reduction[e]==null) ctrl.datas.tax_reduction[e] = 0
+    }
+
     $scope.set_no_income_spouse = function(value) {
       if(value)
         ctrl.datas.tax_reduction.no_income_spouse = 60000;
