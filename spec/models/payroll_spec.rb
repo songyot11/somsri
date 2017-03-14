@@ -82,13 +82,15 @@ describe Payroll do
 
   let(:taxs) do
     [
-      taxR1 = TaxReduction.make!({ employee_id: employee1.id}),
-      taxR2 = TaxReduction.make!({ employee_id: employee2.id}),
+      taxR1 = TaxReduction.make!({ employee_id: employee1.id}).to_json,
+      taxR2 = TaxReduction.make!({ employee_id: employee2.id}).to_json,
       taxR3 = TaxReduction.make!({ employee_id: employee3.id, pension_insurance: 300000, 
-        pension_fund: 0, expenses: 60000, no_income_spouse: 60000, child: 0, father_alimony: 0, mother_alimony: 0,
-        spouse_father_alimony: 0, spouse_mother_alimony: 0, cripple_alimony: 0, insurance: 0,
+        pension_fund: 0, government_pension_fund: 0, private_teacher_aid_fund: 0, retirement_mutual_fund: 0,
+        national_savings_fund: 0, expenses: 60000, no_income_spouse: 60000, father_alimony: 0, mother_alimony: 0,
+        spouse_father_alimony: 0, spouse_mother_alimony: 0, cripple_alimony: 0, insurance: 0, child: 0,
         father_insurance: 0, mother_insurance: 0, spouse_father_insurance: 0, spouse_mother_insurance: 0,
-        long_term_equity_fund: 100000, social_insurance: 0, double_donation: 0, donation: 0, other: 0})
+        long_term_equity_fund: 100000, social_insurance: 0, double_donation: 0, donation: 0, other: 0,
+        spouse_insurance: 0, house_loan_interest: 0}).to_json
     ]
   end
 

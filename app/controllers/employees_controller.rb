@@ -78,7 +78,7 @@ class EmployeesController < ApplicationController
     e.employee_type = params[:employee_type]
     e.pay_pvf = params[:employee_pay_pvf]
     e.pay_social_insurance = params[:employee_pay_s_ins]
-    t = JSON.parse(params[:tax_reduction])
+    t = params[:tax_reduction]
     render json: {
       tax: Payroll.generate_tax(p, e, t), 
       social_insurance: Payroll.generate_social_insurance(p, e), 
