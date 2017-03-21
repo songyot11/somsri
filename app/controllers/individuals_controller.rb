@@ -5,7 +5,11 @@ class IndividualsController < ApplicationController
   # GET /individuals/
   def index
     render plain: "Employee not found", status: 404 and return if params[:employee_id].blank?
-    employee = Employee.where(id: params[:employee_id], school_id: current_user.school.id).first
+    if params[:employee_id]=="0"
+      employee = Employee.new
+    else
+      employee = Employee.where(id: params[:employee_id], school_id: current_user.school.id).first
+    end
     if employee
       render json: {
         emergency_calls: employee.emergency_calls,
