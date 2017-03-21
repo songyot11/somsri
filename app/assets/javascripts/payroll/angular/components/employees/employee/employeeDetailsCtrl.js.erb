@@ -205,7 +205,6 @@
     }
 
     ctrl.openEmployeeDetails = function(id){
-      console.log('openEmployeeDetails');
       if(isDataChange()){
         openConfirmationModal("คุณต้องการออกจากหน้านี้โดยไม่บันทึกค่าหรือไม่?", function(){
           $rootScope.openEmployeeDetails(id);
