@@ -119,7 +119,7 @@ img {
 }
 
 .text-green {
-  color: #66E341 !important;
+  color: #66E341;
 }
 
 .text-red {
@@ -452,6 +452,47 @@ input.btn-prefix.active:-moz-placeholder { /* Firefox 18- */
 }
 
 @media print {
+  a[href]:after {
+    content: none !important;
+  }
+  .no_display_print{
+    display: none;
+  }
+  #payroll-report .report-content{
+    border: none;
+    padding-top: 0px;
+  }
+  .scrollable-content{
+    overflow-y: inherit !important;
+    overflow-x: inherit !important;
+  }
+  .report_for_print_hide{
+    display: none;
+  }
+  th.text-right{
+    display: none;
+  }
+  th.forprint-h_table{
+    background: none !important;
+  }
+  td.text-left.forprint_table.this_name{
+    min-width: 30px;
+  }
+  td.text-center.forprint_table.this_account{
+    min-width: 200px;
+  }
+  td.text-green.forprint_table.this_netsalary{
+    min-width: 200px;
+  }
+  td.text-center.forprint_table.this_account{
+    text-align: right;
+  }
+  td.text-center.forprint-h_table,th.text-center.forprint-h_table {
+    text-align: right;
+  }
+  th.forprint-h_table.print_name{
+    width: 100px !important;
+  }
   .top-bar-space{
     height: 0px !important;
   }
@@ -464,18 +505,19 @@ input.btn-prefix.active:-moz-placeholder { /* Firefox 18- */
    border-bottom: unset
   }
 
-
+  #payroll-report .for_print{
+    display: block;
+  }
   #payroll-report .unused_for_print,
   #payroll-slip .unused_for_print {
     display: none;
   }
-
   #payroll-slip p,
   #payroll-slip th,
   #payroll-slip td,
-  #payroll-report p,
   #payroll-report th,
-  #payroll-report td {
+  #payroll-report td,
+  #payroll-report p{
     font-size: 10px;
   }
 
@@ -1126,6 +1168,15 @@ table.scrollable-header {
   background-color: #AAAAAA;
   border-color: white;
   box-shadow: none;
+}
+.btn.employee-print,.btn.employee-print:focus {
+  background-color: #333;
+  border-color: white;
+  box-shadow: none;
+  transition: all 0.25s ease;
+}
+.btn.employee-print:hover{
+  background-color: #555;
 }
 .btn.employee-type.active {
   background-color: #FFAA00;
