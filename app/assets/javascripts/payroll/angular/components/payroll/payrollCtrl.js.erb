@@ -128,6 +128,7 @@
             }
             ctrl.employees[index]["net_salary"] += (old_deduction - (resp2.data.tax + resp2.data.pvf + resp2.data.social_insurance)) 
             getTotalSalary(ctrl.employees);
+            ctrl.employees_origin = JSON.parse(JSON.stringify(ctrl.employees));
           })
         }, function(resp) { console.log(JSON.stringify(resp)); })
       })
