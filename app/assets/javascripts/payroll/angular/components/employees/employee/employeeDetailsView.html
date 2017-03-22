@@ -30,10 +30,10 @@
             <li class="cyan" ng-class="{ 'active' : employee.activeTab === 'general' }">
               <a data-toggle="tab" ng-click="employee.activeTab = 'general'" href="javascript:void(0)">ข้อมูลทั่วไป</a>
             </li>
-            <li class="cyan" ng-class="{ 'active' : employee.activeTab === 'salary' }">
+            <li class="cyan" ng-class="{ 'active' : employee.activeTab === 'salary' }" ng-show="employee.hasPayroll && employee.isEdit">
               <a data-toggle="tab" ng-click="employee.activeTab = 'salary'; employee.calTotal();" href="javascript:void(0)">เงินเดือน</a>
             </li>
-            <li class="orange" ng-class="{ 'active' : employee.activeTab === 'private' }">
+            <li class="orange" ng-class="{ 'active' : employee.activeTab === 'private' }" ng-show="employee.isEdit">
               <a data-toggle="tab" ng-click="employee.activeTab = 'private'" href="javascript:void(0)">ข้อมูลส่วนตัว</a>
             </li>
           </ul>
