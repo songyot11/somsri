@@ -14,7 +14,9 @@
     <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
       <ul class="nav navbar-nav">
         <li class="dropdown">
-          <a class="dropdown-toggle text-navbar-left" data-toggle="dropdown" href="">ค่าเทอม
+          <a id="menu" class="dropdown-toggle text-navbar-left" data-toggle="dropdown" href="">
+            <span ng-show="menu" ng-bind="menu"></span>
+            <span ng-hide="menu"><%= @menu %></span>
             <span class="caret"></span>
           </a>
           <ul class="dropdown-menu nav-menu">

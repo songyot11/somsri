@@ -3,7 +3,7 @@
   angular.module('somsri.payroll.report', [
   ])
   .controller('reportCtrl', ['$compile', '$scope', '$window', '$filter', '$rootScope', 'reportService', 'slipService', '$timeout', function($compile, $scope, $window, $filter, $rootScope, reportService, slipService, $timeout) {
-    $rootScope.menu = "Report"
+    $rootScope.menu = "รายงาน"
     var ctrl = this
     $rootScope.loadAndAuthorizeResource("payroll", function(){
       ctrl.total = 0

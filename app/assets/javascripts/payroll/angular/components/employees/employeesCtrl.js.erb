@@ -3,7 +3,7 @@
   angular.module('somsri.payroll.employees', [
   ])
   .controller('employeesCtrl', ['employeesService','$log', '$rootScope', function(employeeService, $log, $rootScope) {
-    $rootScope.menu = "Employees"
+    $rootScope.menu = "บุคลากร"
     var ctrl = this
     var dateNow = new Date();
     getPayroll(dateNow.getMonth() + 1, dateNow.getFullYear());

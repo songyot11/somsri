@@ -3,7 +3,7 @@
   angular.module('somsri.payroll.employee_details', [
   ])
   .controller('employeeDetailsCtrl', ['employeesService', '$log', '$state', '$rootScope','$scope', '$uibModal', 'reportService', '$filter', '$location', 'individualsService', function(service, $log, $state, $rootScope, $scope, $uibModal, reportService, $filter, $location, individualsService) {
-    $rootScope.menu = "Employees";
+    $rootScope.menu = "บุคลากร";
     var ctrl = this;
     $rootScope.loadAndAuthorizeResource("employee", function(){
       var dateNow = new Date();

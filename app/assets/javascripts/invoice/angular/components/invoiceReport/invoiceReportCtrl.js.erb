@@ -3,7 +3,7 @@
   angular.module('somsri.invoice.invoice_report', [
   ])
   .controller('invoiceReportCtrl', ['$compile', '$scope', '$window', '$filter', '$rootScope', 'invoiceReportService', '$timeout', function($compile, $scope, $window, $filter, $rootScope, service, $timeout) {
-    $rootScope.menu = "Report"
+    $rootScope.menu = "ใบเสร็จ"
     var ctrl = this
     $rootScope.loadAndAuthorizeResource("invoice", function(){
       ctrl.switchGrade = function(grade_name) {

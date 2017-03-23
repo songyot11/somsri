@@ -11,7 +11,7 @@ class StudentsController < ApplicationController
   # GET /students
   # GET /students.json
   def index
-
+    @menu = "นักเรียน"
     if params[:pin]
       user = get_current_user(params[:pin])
       if user.cannot? :read, Student
@@ -48,6 +48,7 @@ class StudentsController < ApplicationController
   # GET /students/1
   # GET /students/1.json
   def show
+    @menu = "นักเรียน"
     if params[:pin]
       user = get_current_user(params[:pin])
       if user.ability.cannot? :read, Student
@@ -66,6 +67,7 @@ class StudentsController < ApplicationController
 
   # GET /students/new
   def new
+    @menu = "นักเรียน"
     @student = Student.new
     @parents = Parent.all
     @relations = Relationship.all
@@ -74,6 +76,7 @@ class StudentsController < ApplicationController
 
   # GET /students/1/edit
   def edit
+    @menu = "นักเรียน"
     @parents = Parent.all
     @relations = Relationship.all
 

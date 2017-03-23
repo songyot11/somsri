@@ -20,18 +20,20 @@ class ParentsController < ApplicationController
       @parents = parent_joins.search(params[:search]).page(params[:page]).order("parents.full_name ASC").includes(:students, :relationships, :invoices)
     end
       @filter_grade = class_select
-
+      @menu = "ผู้ปกครอง"
       render "parents/index", layout: "application_invoice"
   end
 
   # GET /parents/1
   # GET /parents/1.json
   def show
+    @menu = "ผู้ปกครอง"
     render "parents/show", layout: "application_invoice"
   end
 
   # GET /parents/new
   def new
+    @menu = "ผู้ปกครอง"
     @parent = Parent.new
     @students = Student.all
     @relations = Relationship.all
@@ -41,6 +43,7 @@ class ParentsController < ApplicationController
 
   # GET /parents/1/edit
   def edit
+    @menu = "ผู้ปกครอง"
     @students = Student.all
     @relations = Relationship.all
 

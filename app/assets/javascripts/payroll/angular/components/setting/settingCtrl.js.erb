@@ -3,7 +3,7 @@
   angular.module('somsri.payroll.setting', [
   ])
   .controller('settingCtrl', ['$rootScope','settingService','$scope', '$uibModal', function($rootScope, service, $scope, $uibModal) {
-    $rootScope.menu = "Setting"
+    $rootScope.menu = "ตั้งค่า"
     var ctrl = this
     $rootScope.loadAndAuthorizeResource("setting", function(){
       service.getSetting().then(function(resp) {

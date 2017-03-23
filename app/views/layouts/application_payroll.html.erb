@@ -52,7 +52,8 @@
                     <% if current_user %>
                       <ul class="nav navbar-nav">
                         <li class="dropdown">
-                          <button id="menu" class="dropdown-toggle text-navbar-left" data-toggle="dropdown">เงินเดือน
+                          <button id="menu" ng-show="menu" class="dropdown-toggle text-navbar-left" data-toggle="dropdown">
+                            <span ng-bind="menu">เงืนเดือน</span>
                             <span class="caret"></span>
                           </button>
                           <ul class="dropdown-menu nav-menu">
@@ -60,30 +61,6 @@
                           </ul>
                         </li>
                       </ul>
-                        <!-- <ul class="nav navbar-nav">
-                            <li class="dropdown">
-                                <a id="menu" ng-show="menu" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">
-                                    <span class="text-yellow">
-                                        <span ng-bind="menu"></span>
-                                        <span class="caret"></span>
-                                    </span>
-                                </a>
-                                <ul class="dropdown-menu">
-                                    <li>
-                                        <a href="/somsri_payroll#/employees">Employees</a>
-                                    </li>
-                                    <li>
-                                        <a href="/somsri_payroll#/payroll">Payroll</a>
-                                    </li>
-                                    <li>
-                                        <a href="/somsri_payroll#/report">Report</a>
-                                    </li>
-                                    <li>
-                                        <a href="/somsri_payroll#/setting">Setting</a>
-                                    </li>
-                                </ul>
-                            </li>
-                        </ul> -->
                         <ul class="nav navbar-nav navbar-right dropdown">
                           <% if user_signed_in? %>
                             <a class="nav-user avatar" href="javascript:void(0)" id="navbarDropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">

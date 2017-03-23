@@ -14,7 +14,8 @@
     <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
       <ul class="nav navbar-nav">
         <li class="dropdown">
-          <a class="dropdown-toggle text-navbar-left" data-toggle="dropdown" href="">นับแถว
+          <a id="menu" ng-show="menu" class="dropdown-toggle text-navbar-left" data-toggle="dropdown" href="">
+            <span ng-bind="menu"></span>
             <span class="caret"></span>
           </a>
           <ul class="dropdown-menu nav-menu">
