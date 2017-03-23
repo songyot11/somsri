@@ -126,7 +126,7 @@
             } else if (field_selector.attr("class").indexOf("text-red") == 0) {
               ctrl.employees[index]["net_salary"] += (old_value - value)
             }
-            ctrl.employees[index]["net_salary"] += (old_deduction - (resp2.data.tax + resp2.data.pvf + resp2.data.social_insurance)) 
+            ctrl.employees[index]["net_salary"] += (old_deduction - (resp2.data.tax + resp2.data.pvf + resp2.data.social_insurance))
             getTotalSalary(ctrl.employees);
             ctrl.employees_origin = JSON.parse(JSON.stringify(ctrl.employees));
           })

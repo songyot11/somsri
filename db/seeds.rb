@@ -307,3 +307,8 @@ if Student.where(student_number: 2001..2040).count == 0 && Student.where(student
   StudentList.create({ student_id: b49.id, list_id: l12.id })
   StudentList.create({ student_id: b50.id, list_id: l12.id })
 end
+
+if Role.count == 0
+  User.find(1).add_role "admin"
+  User.find(2).add_role "finance_officer"
+end

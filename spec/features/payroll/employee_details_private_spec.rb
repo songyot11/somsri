@@ -1,5 +1,6 @@
 describe 'Private Details', js: true do
   let(:school) { school = School.make!({ name: "โรงเรียนแห่งหนึ่ง" }) }
+
   let(:user) { User.make!({ school_id: school.id }) }
 
   let(:employee) {
@@ -32,6 +33,7 @@ describe 'Private Details', js: true do
   end
 
   before :each do
+    user.add_role :admin
     expect { payrolls }.to change{ Employee.count }.by 1
     login_as(user, scope: :user)
     individuals

@@ -3,6 +3,8 @@
   angular.module('somsri.invoice.reports', [
   ])
   .controller('reportCtrl', ['$rootScope', function($rootScope) {
-    $rootScope.menu = "Report"
+    $rootScope.loadAndAuthorizeResource("invoice", function(){
+      $rootScope.menu = "Report";
+    });
   }]);
 })();

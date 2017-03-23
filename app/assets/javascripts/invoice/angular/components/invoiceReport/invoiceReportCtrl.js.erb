@@ -4,44 +4,44 @@
   ])
   .controller('invoiceReportCtrl', ['$compile', '$scope', '$window', '$filter', '$rootScope', 'invoiceReportService', '$timeout', function($compile, $scope, $window, $filter, $rootScope, service, $timeout) {
     $rootScope.menu = "Report"
-
     var ctrl = this
+    $rootScope.loadAndAuthorizeResource("invoice", function(){
+      ctrl.switchGrade = function(grade_name) {
+        getStudents(grade_name);
+      }
 
-    ctrl.switchGrade = function(grade_name) {
-      getStudents(grade_name);
-    }
-
-    function getStudents(grade_name) {
-      service.getGrades().then(function(grade_resp) {
-        ctrl.currentGradeString = grade_name
-        ctrl.grades = grade_resp.data
-        service.getInvoices(grade_name).then(function(resp) {
-          ctrl.datas = resp.data
+      function getStudents(grade_name) {
+        service.getGrades().then(function(grade_resp) {
+          ctrl.currentGradeString = grade_name
+          ctrl.grades = grade_resp.data
+          service.getInvoices(grade_name).then(function(resp) {
+            ctrl.datas = resp.data
+          });
         });
-      });
-    }
+      }
 
-    ctrl.cancelInvoice = function() {
-      service.cancelInvoice(ctrl.selectedInvoice.id).then(function(resp) {
-        if(resp.data[0] == "SUCCESS"){
-          ctrl.selectedInvoice.is_cancel = true;
-          ctrl.selectedInvoice.status_name = "ยกเลิก";
-          $('#cancelInvoiceModal').modal('hide');
-        }
-      });
-    }
+      ctrl.cancelInvoice = function() {
+        service.cancelInvoice(ctrl.selectedInvoice.id).then(function(resp) {
+          if(resp.data[0] == "SUCCESS"){
+            ctrl.selectedInvoice.is_cancel = true;
+            ctrl.selectedInvoice.status_name = "ยกเลิก";
+            $('#cancelInvoiceModal').modal('hide');
+          }
+        });
+      }
 
-    ctrl.cancelInvoiceModal = function(invoice) {
-      ctrl.selectedInvoice = invoice;
-      $('#cancelInvoiceModal').modal('show');
-    }
+      ctrl.cancelInvoiceModal = function(invoice) {
+        ctrl.selectedInvoice = invoice;
+        $('#cancelInvoiceModal').modal('show');
+      }
 
-    ctrl.thisDay = function(date) {
-      var today = new Date();
-      var d = new Date(date);
-      return today.toDateString()===d.toDateString();
-    }
-    
-    getStudents('All');
+      ctrl.thisDay = function(date) {
+        var today = new Date();
+        var d = new Date(date);
+        return today.toDateString()===d.toDateString();
+      }
+
+      getStudents('All');
+    });
   }]);
 })();

@@ -4,18 +4,20 @@
   ])
   .controller('dailyReportPreviewCtrl', ['$scope', '$http', '$rootScope', 'dailyReportService', '$state', function($scope, $http, $rootScope, service, $state) {
     var ctrl = this;
-    ctrl.title = 'Daily Report Preview';
-    var id = $state.params.id;
+    $rootScope.loadAndAuthorizeResource("daily_report", function(){
+      ctrl.title = 'Daily Report Preview';
+      var id = $state.params.id;
 
-    ctrl.goBack = function(){
-      $rootScope.openDailyReport();
-    };
+      ctrl.goBack = function(){
+        $rootScope.openDailyReport();
+      };
 
-    service.getDailyReport(id).then(function(resp) {
-      ctrl.datas = resp.data;
-      ctrl.total = resp.data.real_total - resp.data.total
-    },function(resp) {
-      $rootScope.openDailyReport();
+      service.getDailyReport(id).then(function(resp) {
+        ctrl.datas = resp.data;
+        ctrl.total = resp.data.real_total - resp.data.total
+      },function(resp) {
+        $rootScope.openDailyReport();
+      });
     });
   }]);
 })();

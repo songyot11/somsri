@@ -1,5 +1,6 @@
 describe 'Invoice-Report', js: true do
-  let(:user) {user = User.create!({
+
+  let(:user) { user = User.create!({
     email: 'test@mail.com',
     password: '123456789'
   })}
@@ -84,6 +85,7 @@ describe 'Invoice-Report', js: true do
   end
 
   before do
+    user.add_role :admin
     login_as(user, scope: :user)
     grade
     invoice

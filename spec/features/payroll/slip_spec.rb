@@ -50,6 +50,7 @@ describe 'Payroll Slip', js: true do
   end
 
   before do
+    user.add_role :admin
     payrolls
     login_as(user, scope: :user)
   end

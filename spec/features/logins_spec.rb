@@ -64,7 +64,8 @@ describe 'Login', js: true do
   end
 
   before do
-    users
+    users[0].add_role :admin
+    users[1].add_role :admin
     payrolls
   end
 

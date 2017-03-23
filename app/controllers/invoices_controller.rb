@@ -1,6 +1,7 @@
 class InvoicesController < ApplicationController
   before_action :set_invoice, only: [:show, :edit, :update, :destroy, :slip, :cancel]
   skip_before_action :verify_authenticity_token, :only => [:update, :create, :destroy, :cancel]
+  load_and_authorize_resource
 
   # GET /invoices
   def index
@@ -280,7 +281,7 @@ class InvoicesController < ApplicationController
 
     # Never trust parameters from the scary internet, only allow the white list through.
     def invoice_params
-      params.require(:invoice).permit(:student_id, :parent_id, :user_id, :remark, :cheque_bank_name, :cheque_number, :cheque_date, :transfer_bank_name, :transfer_date, :invoice_status_id, :school_year, :semester, :grade, items: [[:detail, :amount]], grade_name: [:value, :text])
+      params.require(:invoice).permit(:student_id, :parent_id, :user_id, :remark, :cheque_bank_name, :cheque_number, :cheque_date, :transfer_bank_name, :transfer_date, :invoice_status_id, :school_year, :semester, grade_name: [:value, :text])
     end
 
     def parent_params

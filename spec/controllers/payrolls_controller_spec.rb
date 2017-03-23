@@ -96,6 +96,7 @@ describe PayrollsController do
   end
 
   before do
+    user.add_role :admin
     payrolls
     sign_in user
   end

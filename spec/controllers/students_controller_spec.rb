@@ -42,6 +42,7 @@ describe StudentsController do
   end
 
   before :each do
+    users[0].add_role :admin
     students
   end
 

@@ -45,7 +45,7 @@ describe 'Taxes', js: true do
 
   let(:taxs) do
     [
-      taxR1 = TaxReduction.make!({ employee_id: employee1.id, pension_insurance: 300000, 
+      taxR1 = TaxReduction.make!({ employee_id: employee1.id, pension_insurance: 300000,
         pension_fund: 0, government_pension_fund: 0, private_teacher_aid_fund: 0, retirement_mutual_fund: 0,
         national_savings_fund: 0, expenses: 60000, no_income_spouse: 60000, father_alimony: 0, mother_alimony: 0,
         spouse_father_alimony: 0, spouse_mother_alimony: 0, cripple_alimony: 0, insurance: 0, child: 0,
@@ -69,6 +69,7 @@ describe 'Taxes', js: true do
   end
 
   before do
+    user.add_role :admin
     employee1
     employee2
     payrolls

@@ -7,6 +7,11 @@ describe HomeController do
     ]
   end
 
+  before :each do
+    users[0].add_role :admin
+    users[0].add_role :admin
+  end
+
   it "should return user information" do
     get 'auth_api', params: { pin: users[1]['pin'] }
     data = JSON.parse(response.body)

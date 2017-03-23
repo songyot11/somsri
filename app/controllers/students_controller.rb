@@ -1,6 +1,7 @@
 class StudentsController < ApplicationController
   before_action :set_student, only: [:show, :edit, :update, :destroy], unless: :is_api?
   before_action :authenticate_user!, unless: :is_api?
+  load_and_authorize_resource except: [:index, :show, :get_roll_calls, :info]
 
 
   def is_api?
@@ -13,12 +14,16 @@ class StudentsController < ApplicationController
 
     if params[:pin]
       user = get_current_user(params[:pin])
+      if user.cannot? :read, Student
+        raise CanCan::AccessDenied.new("Not authorized!", :read, Student)
+      end
       if user
         render json: Student.where({ school_id: user.school.id  })
       else
         render json: { errors: "Invalid token or user not registered" }, status: 422 and return
       end
     else
+      authorize! :read, Student
       grade_select = (params[:grade_select] || 'All')
       if !params[:student_report]
         if grade_select.downcase == 'all'
@@ -45,12 +50,16 @@ class StudentsController < ApplicationController
   def show
     if params[:pin]
       user = get_current_user(params[:pin])
+      if user.ability.cannot? :read, Student
+        raise CanCan::AccessDenied.new("Not authorized!", :read, Student)
+      end
       if user
         render json: Student.where({ student_number: params[:id], school_id: user.school.id })
       else
         render json: { errors: "Invalid token or user not registered" }, status: 422 and return
       end
     else
+      authorize! :read, Student
       render "students/show", layout: "application_invoice"
     end
   end
@@ -60,7 +69,6 @@ class StudentsController < ApplicationController
     @student = Student.new
     @parents = Parent.all
     @relations = Relationship.all
-
     render "students/new", layout: "application_invoice"
   end
 

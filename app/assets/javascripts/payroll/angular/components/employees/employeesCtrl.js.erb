@@ -5,54 +5,55 @@
   .controller('employeesCtrl', ['employeesService','$log', '$rootScope', '$uibModal', '$scope', function(employeeService, $log, $rootScope, $uibModal, $scope) {
     $rootScope.menu = "Employees"
     var ctrl = this
-    var dateNow = new Date();
-    getPayroll(dateNow.getMonth() + 1, dateNow.getFullYear());
-    function getPayroll(month, year){
-      employeeService.getAllEmployee().then(function(resp) {
-        ctrl.datas = resp.data;
-        ctrl.display_datas = [];
-        for(var i = 0; i < ctrl.datas.length; i++) {
-          var data = ctrl.datas[i];
-          if (data['id']) {
-            ctrl.display_datas.push({
-              full_name: data['name'],
-              id: data['id'],
-              salary: data['salary'],
-              fee: data['extra_fee'],
-              extra: data['extra_pay'],
-              imgUrl: data['img']
-            });
+    $rootScope.loadAndAuthorizeResource("employee", function(){
+      var dateNow = new Date();
+      getPayroll(dateNow.getMonth() + 1, dateNow.getFullYear());
+      function getPayroll(month, year){
+        employeeService.getAllEmployee().then(function(resp) {
+          ctrl.datas = resp.data;
+          ctrl.display_datas = [];
+          for(var i = 0; i < ctrl.datas.length; i++) {
+            var data = ctrl.datas[i];
+            if (data['id']) {
+              ctrl.display_datas.push({
+                full_name: data['name'],
+                id: data['id'],
+                salary: data['salary'],
+                fee: data['extra_fee'],
+                extra: data['extra_pay'],
+                imgUrl: data['img']
+              });
+            }
           }
-        }
-      });
-    }
+        });
+      }
 
-    ctrl.openEmployeeDetails = function(id){
-      $rootScope.openEmployeeDetails(id);
-    }
+      ctrl.openEmployeeDetails = function(id){
+        $rootScope.openEmployeeDetails(id);
+      }
 
-    ctrl.createPayrolls = function(){
-      $uibModal.open({
-        animation: true,
-        backdrop: 'static',
-        keyboard: false,
-        scope: $scope,
-        templateUrl: "<%= asset_path('payroll/angular/components/modal/createPayrolls/createPayrollsModalView.html') %>",
-        controller: 'createPayrollsModalCtrl as createPayrolls',
-        size: 'md',
-        resolve: {
-          resources: ['$ocLazyLoad', 'ASSETS', function($ocLazyLoad, ASSETS) {
-            return $ocLazyLoad.load([
-              ASSETS.somsri.payroll.create_payrolls_modal
-            ]);
-          }]
-        }
-      }).result.then(function (isSuccess) {
-        if (isSuccess) {
-          $rootScope.openEmployees();
-        }
-      });
-    }
-
+      ctrl.createPayrolls = function(){
+        $uibModal.open({
+          animation: true,
+          backdrop: 'static',
+          keyboard: false,
+          scope: $scope,
+          templateUrl: "<%= asset_path('payroll/angular/components/modal/createPayrolls/createPayrollsModalView.html') %>",
+          controller: 'createPayrollsModalCtrl as createPayrolls',
+          size: 'md',
+          resolve: {
+            resources: ['$ocLazyLoad', 'ASSETS', function($ocLazyLoad, ASSETS) {
+              return $ocLazyLoad.load([
+                ASSETS.somsri.payroll.create_payrolls_modal
+              ]);
+            }]
+          }
+        }).result.then(function (isSuccess) {
+          if (isSuccess) {
+            $rootScope.openEmployees();
+          }
+        });
+      }
+    });
   }]);
 })();

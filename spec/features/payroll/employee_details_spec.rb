@@ -101,6 +101,7 @@ describe 'Employee Details', js: true do
   end
 
   before do
+    user.add_role :admin
     taxrates
     payrolls
     login_as(user, scope: :user)

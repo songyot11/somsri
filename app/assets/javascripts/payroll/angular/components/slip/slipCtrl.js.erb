@@ -2,45 +2,47 @@
   'use strict';
   angular.module('somsri.payroll.slip', [
   ])
-  .controller('slipCtrl', ['$window', 'slipService', '$state', '$compile', '$scope', 'moment', function($window, slipService, $state, $compile, $scope, moment) {
+  .controller('slipCtrl', ['$window', 'slipService', '$state', '$compile', '$scope', 'moment', '$rootScope', function($window, slipService, $state, $compile, $scope, moment, $rootScope) {
     var ctrl = this;
-    var employeeId = $state.params.id;
-    var payroll_id = $state.params.payroll_id;
-    ctrl.isDuplicate = false;
-    ctrl.employee = [];
-    ctrl.employeeId = employeeId;
+    $rootScope.loadAndAuthorizeResource("employee", function(){
+      var employeeId = $state.params.id;
+      var payroll_id = $state.params.payroll_id;
+      ctrl.isDuplicate = false;
+      ctrl.employee = [];
+      ctrl.employeeId = employeeId;
 
-    slipService.employeeSlip(employeeId, payroll_id).then(function(resp) {
-      ctrl.employee = resp.data;
-      ctrl.employee_slips = [resp.data];
-      ctrl.dateDisplay = moment(ctrl.employee.payroll.date).add(543, 'years').format('DD/MM/YYYY');
-    });
+      slipService.employeeSlip(employeeId, payroll_id).then(function(resp) {
+        ctrl.employee = resp.data;
+        ctrl.employee_slips = [resp.data];
+        ctrl.dateDisplay = moment(ctrl.employee.payroll.date).add(543, 'years').format('DD/MM/YYYY');
+      });
 
-    ctrl.repeat = function() {
-      if (!ctrl.isDuplicate) {
-        var containerDiv = $('#payroll-slip .col-lg-10')
+      ctrl.repeat = function() {
+        if (!ctrl.isDuplicate) {
+          var containerDiv = $('#payroll-slip .col-lg-10')
 
-        if($window.navigator.userAgent.indexOf('Chrome') == -1) {
-          var slipContent = $compile('<slip-content info=slip title="สำหรับพนักงาน" class="for_print safari"/>');
-        } else {
-          var slipContent = $compile('<slip-content info=slip title="สำหรับพนักงาน" class="for_print"/>');
+          if($window.navigator.userAgent.indexOf('Chrome') == -1) {
+            var slipContent = $compile('<slip-content info=slip title="สำหรับพนักงาน" class="for_print safari"/>');
+          } else {
+            var slipContent = $compile('<slip-content info=slip title="สำหรับพนักงาน" class="for_print"/>');
+          }
+
+          var slipContentDiv = slipContent($scope);
+
+          // angular.element(containerDiv).append('<div class="separate for_print"></div>');
+          // angular.element(containerDiv).append(slipContentDiv);
+
+          if($window.navigator.userAgent.indexOf('Chrome') == -1){
+            $("slip-content").addClass("safari")
+          }
+
+          ctrl.isDuplicate = true
         }
 
-        var slipContentDiv = slipContent($scope);
-
-        // angular.element(containerDiv).append('<div class="separate for_print"></div>');
-        // angular.element(containerDiv).append(slipContentDiv);
-
-        if($window.navigator.userAgent.indexOf('Chrome') == -1){
-          $("slip-content").addClass("safari")
-        }
-
-        ctrl.isDuplicate = true
+        setTimeout(function() {
+          window.print();
+        }, 500);
       }
-
-      setTimeout(function() {
-        window.print();
-      }, 500);
-    }
+    });
   }]);
 })();

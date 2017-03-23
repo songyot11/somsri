@@ -80,3 +80,8 @@ th:
       confirm:
         student_confirm: "คุณแน่ใจหรือไม่ที่จะลบข้อมูลนักเรียน?"
         parent_confirm: "คุณแน่ใจหรือไม่ที่จะลบข้อมูลผู้ปกครอง?"
+
+  #cancancan
+  unauthorized:
+    manage:
+      all: "บัญชีของคุณไม่สามารถใช้งานฟังก์ชันนี้ได้"

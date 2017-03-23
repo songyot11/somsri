@@ -1,6 +1,7 @@
 class DailyReportsController < ApplicationController
   before_action :set_daily_report, only: [:show]
   skip_before_action :verify_authenticity_token, :only => [:create]
+  load_and_authorize_resource
 
   # GET /daily_reports
   def show

@@ -70,6 +70,7 @@ describe RollCallsController do
   end
 
   before :each do
+    users[0].add_role :admin
     students
     student_list
     roll_calls

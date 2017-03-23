@@ -78,3 +78,7 @@ ul.nav.navbar-nav.navbar-right.dropdown{
 .container.main-menu.main {
     margin-top: calc(50vh - 250px);
 }
+
+.disabled {
+  cursor: not-allowed !important;
+}

@@ -2,13 +2,41 @@
   'use strict';
   angular.module('somsri.invoice.main', [
   ])
-  .controller('mainCtrl', ['$rootScope','$state', function($rootScope, $state) {
+  .controller('mainCtrl', ['$rootScope','$state', '$http', function($rootScope, $state, $http) {
+
+    function checkAbility(model, callback){
+      if($rootScope.abilities.manage && $rootScope.abilities.manage.all){
+        callback();
+      }else if($rootScope.abilities.manage && $rootScope.abilities.manage[model]){
+        callback();
+      }else{
+        $state.go('menu');
+      }
+    }
+
+    $rootScope.loadAndAuthorizeResource = function(model, callback) {
+      if($rootScope.abilities && $rootScope.abilities.length > 0){
+        checkAbility(model, callback);
+      }else{
+        // load ability
+        $http.get('/abilities').then(function(resp) {
+          $rootScope.abilities = [];
+          if (resp.data.length > 0) {
+            $rootScope.abilities = resp.data[0];
+            checkAbility(model, callback);
+          }else{
+            $state.go('menu');
+          }
+        });
+      }
+    };
+
     $rootScope.openPayment = function () {
       $state.go('invoice')
     };
 
     $('body').addClass('somsri-invoice');
-    
+
     $rootScope.openReportMenu = function () {
       $state.go('report')
     };

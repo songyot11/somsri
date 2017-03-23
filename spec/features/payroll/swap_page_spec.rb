@@ -4,6 +4,7 @@ describe 'Payroll Swap Page', js: true do
   let(:user) { User.make!({ school_id: school.id }) }
 
   before do
+    user.add_role :admin
     login_as(user, scope: :user)
   end
 

@@ -1,6 +1,7 @@
 describe 'Payroll Edit', js: true do
   let(:school) {school = School.make!({ name: "โรงเรียนแห่งหนึ่ง" })}
   let(:school2) {School.make!({ name: "โรงเรียนแห่ง2" })}
+
   let(:user) { User.make!({ school_id: school.id }) }
   let(:employee1) {employee1 = Employee.make!(
     {
@@ -47,15 +48,15 @@ describe 'Payroll Edit', js: true do
 
   let(:payrolls) do
     [
-      pr1 = Payroll.make!({employee_id: employee1.id, salary: 1_000,
+      Payroll.make!({employee_id: employee1.id, salary: 1_000,
                             effective_date: DateTime.new(2016, 12, 1)}),
-      pr3 = Payroll.make!({employee_id: employee2.id, salary: 1_000,
+      Payroll.make!({employee_id: employee2.id, salary: 1_000,
                             effective_date: DateTime.new(2016, 12, 1)}),
-      pr2 = Payroll.make!({employee_id: employee1.id, salary: 1_000,
+      Payroll.make!({employee_id: employee1.id, salary: 1_000,
                             effective_date: DateTime.new(2016, 11, 1)}),
-      pr4 = Payroll.make!({employee_id: employee2.id, salary: 1_000,
+      Payroll.make!({employee_id: employee2.id, salary: 1_000,
                             effective_date: DateTime.new(2016, 11, 1)}),
-      pr5 = Payroll.make!({employee_id: employee3.id, salary: 1_000,
+      Payroll.make!({employee_id: employee3.id, salary: 1_000,
                             effective_date: DateTime.new(2016, 11, 1)}),
     ]
   end
@@ -73,14 +74,14 @@ describe 'Payroll Edit', js: true do
   end
 
   before do
+    user.add_role :admin
     taxrates
     payrolls
-    login_as(user, scope: :user)
+    login_as(user)
   end
 
   it 'should edit salary' do
     visit "/somsri_payroll#/payroll"
-
     eventually { expect(page).to have_content 'นาง สมศรี เป็นชื่อแอพ 5-234-34532-2342 1,000.00 0.00 0.00 0.00 0.00 0.00 0.00 0.00 0.00 0.00 0.00 0.00 0.00 0.00 1,000.00' }
     eventually { expect(page).to have_content 'รวมทั้งหมด 2,000.00 0.00 0.00 0.00 0.00 0.00 0.00 0.00 0.00 0.00 0.00 0.00 0.00 0.00 2,000.00' }
 

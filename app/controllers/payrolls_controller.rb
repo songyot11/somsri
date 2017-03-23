@@ -1,6 +1,7 @@
 class PayrollsController < ApplicationController
   include PdfUtils
   skip_before_action :verify_authenticity_token, :only => [:update, :create]
+  load_and_authorize_resource
 
   # GET /payrolls
   def index
@@ -183,15 +184,15 @@ class PayrollsController < ApplicationController
   def create
     employees = Employee.active.where(school_id: current_user.school.id).to_a
     payrolls = Payroll.joins(:employee)
-                      .where(employee_id: employees, effective_date: DateTime.parse(params[:effective_date]))
-    render json: {error: "PAYROLLS_EXIST"}, status: :ok and return if payrolls.count > 0 && !params[:force_create]
+                      .where(employee_id: employees, effective_date: DateTime.parse(create_params[:effective_date]))
+    render json: {error: "PAYROLLS_EXIST"}, status: :ok and return if payrolls.count > 0 && !create_params[:force_create]
     payrolls.destroy_all if payrolls.count > 0
     employees.each do |employee|
       if employee.lastest_payroll.nil?
         payroll = Payroll.new({
           employee_id: employee.id,
           salary: employee.salary,
-          effective_date: params[:effective_date]
+          effective_date: create_params[:effective_date]
         })
       else
         payroll = Payroll.new({
@@ -199,7 +200,7 @@ class PayrollsController < ApplicationController
           salary: employee.lastest_payroll.salary,
           position_allowance: employee.lastest_payroll.position_allowance,
           allowance: employee.lastest_payroll.allowance,
-          effective_date: params[:effective_date]
+          effective_date: create_params[:effective_date]
         })
       end
       payroll.save
@@ -251,7 +252,11 @@ class PayrollsController < ApplicationController
     def params_payroll
       params.require(:payroll).permit(:salary, :allowance, :attendance_bonus, :ot, :bonus, :position_allowance,
                                       :extra_etc, :absence, :late, :tax, :social_insurance, :fee_etc, :pvf,
-                                      :advance_payment)
+                                      :advance_payment, :effective_date)
+    end
+
+    def create_params
+      params.require(:create).permit(:effective_date, :force_create)
     end
 
     def satang(money)

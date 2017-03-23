@@ -90,6 +90,7 @@ describe 'Employee Lists', js: true do
 
   before do |example|
     unless example.metadata[:skip_before]
+      user.add_role :admin
       payrolls
       login_as(user, scope: :user)
     end

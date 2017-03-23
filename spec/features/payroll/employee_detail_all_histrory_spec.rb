@@ -57,6 +57,7 @@ describe 'Employee Details History Modal', js: true do
   end
 
   before :each do
+    user.add_role :admin
     payrolls
     login_as(user, scope: :user)
   end

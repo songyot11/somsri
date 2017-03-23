@@ -3,28 +3,42 @@
     <div class="row">
         <div class="col-xs-4">
             <div class="dropdown-menu-btn">
-              <a href="/somsri_payroll">
-                <div class="wraptocenter">
+              <% if can? :manage, Payroll %>
+                <a href="/somsri_payroll">
+                  <div class="wraptocenter">
+                    <%= image_tag 'payroll-icon.png', class: "img-menu-nav" %>
+                  </div>
+                </a>
+              <% else %>
+                <div class="wraptocenter disabled">
                   <%= image_tag 'payroll-icon.png', class: "img-menu-nav" %>
                 </div>
-              </a>
+              <% end %>
             </div>
             <p>เงินเดือน</p>
         </div>
         <div class="col-xs-4">
             <div class="dropdown-menu-btn">
-              <a href="/somsri_invoice">
-                <div class="wraptocenter">
+              <% if can? :manage, Invoice %>
+                <a href="/somsri_invoice">
+                  <div class="wraptocenter">
+                    <%= image_tag 'fee-icon.png', class: "img-menu-nav" %>
+                  </div>
+                </a>
+              <% else %>
+                <div class="wraptocenter disabled">
                   <%= image_tag 'fee-icon.png', class: "img-menu-nav" %>
                 </div>
-              </a>
+              <% end %>
             </div>
             <p>ค่าเทอม</p>
         </div>
         <div class="col-xs-4">
             <div class="dropdown-menu-btn">
-                <div class="wraptocenter">
-                  <a href="/somsri_rollcall"><%= image_tag 'roll-icon.png', class: "img-menu-nav" %></a>
+                <div class="wraptocenter disabled">
+                  <!-- <a href="/somsri_rollcall"> -->
+                    <%= image_tag 'roll-icon.png', class: "img-menu-nav" %>
+                  <!-- </a> -->
                 </div>
             </div>
             <p>นับแถว</p>
@@ -34,31 +48,49 @@
     <div class="row" style="margin-top:50px;">
         <div class="col-xs-4">
             <div class="dropdown-menu-btn">
-              <a href="/somsri_payroll#/employees">
-                <div class="wraptocenter">
+              <% if can? :manage, Employee %>
+                <a href="/somsri_payroll#/employees">
+                  <div class="wraptocenter">
+                    <%= image_tag 'hr-icon.png', class: "img-menu-nav" %>
+                  </div>
+                </a>
+              <% else %>
+                <div class="wraptocenter disabled">
                   <%= image_tag 'hr-icon.png', class: "img-menu-nav" %>
                 </div>
-              </a>
+              <% end %>
             </div>
             <p>บุคลากร</p>
         </div>
         <div class="col-xs-4">
             <div class="dropdown-menu-btn">
-              <a href="/parents">
-                <div class="wraptocenter">
+              <% if can? :manage, Parent %>
+                <a href="/parents">
+                  <div class="wraptocenter">
+                      <%= image_tag 'parent.png', class: "img-menu-nav" %>
+                  </div>
+                </a>
+              <% else %>
+                <div class="wraptocenter disabled">
                     <%= image_tag 'parent.png', class: "img-menu-nav" %>
                 </div>
-              </a>
+              <% end %>
             </div>
             <p>ผู้ปกครอง</p>
         </div>
         <div class="col-xs-4">
             <div class="dropdown-menu-btn">
-              <a href="/students">
-                <div class="wraptocenter">
+              <% if can? :manage, Student %>
+                <a href="/students">
+                  <div class="wraptocenter">
+                      <%= image_tag 'child.png', class: "img-menu-nav" %>
+                  </div>
+                </a>
+              <% else %>
+                <div class="wraptocenter disabled">
                     <%= image_tag 'child.png', class: "img-menu-nav" %>
                 </div>
-              </a>
+              <% end %>
             </div>
             <p>นักเรียน</p>
         </div>
