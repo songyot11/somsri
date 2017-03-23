@@ -1,10 +1,10 @@
 <div id="payroll" class="row">
   <div class="col-lg-12">
     <div class="row">
-      <div class="col-lg-4">
+      <div class="col-lg-3">
         <div class="dropdown">
           <h2 id="month-list" data-toggle="dropdown">
-            <span ng-bind="payroll.currentDateString" ></span>
+            <span ng-bind="payroll.currentDateString" role="button"></span>
             <span class="caret"></span>
           </h2>
           <ul class="dropdown-menu" aria-labelledby="month-list">
@@ -16,7 +16,7 @@
           </ul>
         </div>
       </div>
-      <div class="col-lg-6" style="padding-right: 0px;">
+      <div class="col-lg-5" style="padding-right: 0px;">
         <div class="btn-group pull-right">
             <label class="btn btn-info btn-lg employee-type" ng-click="payroll.employeeTypeFilter()" ng-model="payroll.employeeTypeMode.normal" style="border-radius: 0px;" uib-btn-checkbox>ลูกจ้างประจำ</label>
             <label class="btn btn-info btn-lg employee-type" ng-click="payroll.employeeTypeFilter()" ng-model="payroll.employeeTypeMode.temporary" uib-btn-checkbox>ลูกจ้างชั่วคราว</label>
@@ -25,7 +25,7 @@
         </div>
       </div>
       <div class="col-lg-2">
-        <a class="btn btn-lg bg-yellow btn-block"
+        <a class="btn btn-info btn-lg bg-blue"
           href="/payrolls/social_insurance_pdf?effective_date={{payroll.currentEffectiveDate['date_time'] | encodeString }}"
           target="_blank">ประกันสังคม</a>
       </div>
@@ -33,6 +33,11 @@
         <button type="button" class="btn btn-lg bg-yellow btn-block">
           <i class="fa fa-upload" aria-hidden="true"></i>
           Export for bank</button>
+      </div>
+      <div class="col-lg-2">
+        <a class="btn btn-info btn-lg bg-blue" ng-click="payroll.createPayrolls()" href="javascript:void(0)">
+          เริ่มออกเงินเดือน
+        </a>
       </div>
     </div>
     <div class="row payroll-content container-fluid">

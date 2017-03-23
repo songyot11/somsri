@@ -109,22 +109,6 @@ describe 'Employee Lists', js: true do
     expect(page).not_to have_content "Harabas"
   end
 
-  it 'should create new payroll' do
-    login_as(user, scope: :user)
-    visit "/somsri_payroll#/employees"
-
-    sleep(1)
-    first('a[ng-click="employees.createPayrolls()"]').trigger('click')
-    sleep(1)
-    find('input[type="text"]').set(DateTime.now.next_month(1).strftime("%d/%m/%Y"))
-    sleep(1)
-    find('button[type="submit"]').click
-    sleep(1)
-
-    expect(page).to have_content('นาง สมศรี เป็นชื่อแอพ '+employees[0].account_number+' 50,000.00 0.00 0.00 3,000.00')
-    expect(page).to have_content('นาย สมจิตร เป็นนักมวย '+employees[1].account_number+' 50,000.00 0.00 10,000.00')
-  end
-
   # it 'should create new employee' , skip_before: true  do
   #   login_as(user, scope: :user)
   #   visit "/#/employees"

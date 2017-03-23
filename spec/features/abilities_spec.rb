@@ -30,7 +30,7 @@ describe 'Abilities', js: true do
     it 'can goto payroll menu' do
       visit "/somsri_payroll"
       expect(page).to have_current_path '/somsri_payroll'
-      expect(page).to have_content 'เงินเดือน รายงาน ตั้งค่า'
+      expect(page).to have_content 'เงินเดือน รายงาน'
     end
 
     it 'can goto payroll' do

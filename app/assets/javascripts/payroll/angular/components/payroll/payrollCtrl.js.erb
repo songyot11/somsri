@@ -2,7 +2,7 @@
   'use strict';
   angular.module('somsri.payroll.payroll', [
   ])
-  .controller('payrollCtrl', ['$filter', 'reportService', 'payrollService', 'employeesService', '$rootScope', '$state', function($filter, reportService, payrollService, employeesService, $rootScope, $state) {
+  .controller('payrollCtrl', ['$filter', 'reportService', 'payrollService', 'employeesService', '$rootScope', '$state', '$uibModal', '$scope', function($filter, reportService, payrollService, employeesService, $rootScope, $state, $uibModal, $scope) {
     $rootScope.menu = "Payroll"
 
     var ctrl = this
@@ -154,6 +154,29 @@
             ctrl.currentDateString = current['date_string'];
             ctrl.currentEffectiveDate = current;
           });
+        }
+      });
+    }
+    
+    ctrl.createPayrolls = function(){
+      $uibModal.open({
+        animation: true,
+        backdrop: 'static',
+        keyboard: false,
+        scope: $scope,
+        templateUrl: "<%= asset_path('payroll/angular/components/modal/createPayrolls/createPayrollsModalView.html') %>",
+        controller: 'createPayrollsModalCtrl as createPayrolls',
+        size: 'md',
+        resolve: {
+          resources: ['$ocLazyLoad', 'ASSETS', function($ocLazyLoad, ASSETS) {
+            return $ocLazyLoad.load([
+              ASSETS.somsri.payroll.create_payrolls_modal
+            ]);
+          }]
+        }
+      }).result.then(function (isSuccess) {
+        if (isSuccess) {
+          $rootScope.openEmployees();
         }
       });
     }

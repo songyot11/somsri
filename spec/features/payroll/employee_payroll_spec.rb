@@ -195,4 +195,50 @@ describe 'Payroll', js: true do
     expect(page).to_not have_content 'นาย สมจิตร เป็นนักมวย'
     expect(page).to_not have_content 'นาง สมศรี เป็นชื่อแอพ'
   end
+
+  it 'should create new payroll' do
+    login_as(user, scope: :user)
+    visit "/somsri_payroll#/payroll"
+
+    sleep(1)
+    first('a[ng-click="payroll.createPayrolls()"]').trigger('click')
+    sleep(1)
+    find('input[type="text"]').set(DateTime.now.next_month(1).strftime("%d/%m/%Y"))
+    sleep(1)
+    find('button[type="submit"]').click
+    sleep(1)
+
+    expect(page).to have_content('นาง สมศรี เป็นชื่อแอพ '+employee1.account_number+' 1,000,000.00')
+    expect(page).to have_content('นาย สมจิตร เป็นนักมวย '+employee2.account_number+' 1,000,000.00')
+  end
+
+  it 'should warning before create new payrolls with same date' do
+    visit "/somsri_payroll#/payroll"
+    sleep(1)
+    # craete payroll
+    click_link('เริ่มออกเงินเดือน')
+    sleep(1)
+    find('#effective_date').set('13/12/2010')
+    click_button('บันทึก')
+    sleep(1)
+
+    # craete same payroll
+    visit "/somsri_payroll#/payroll"
+    sleep(1)
+    click_link('เริ่มออกเงินเดือน')
+    sleep(1)
+    find('#effective_date').set('13/12/2010')
+    click_button('บันทึก')
+    sleep(1)
+    click_button('ตกลง')
+    sleep(1)
+    visit "/somsri_payroll#/payroll"
+    sleep(1)
+    find('#month-list').click
+    sleep(1)
+    find('ul.dropdown-menu li a', text: "13 ธันวาคม 2553").click
+    sleep(1)
+    expect(page).to have_content('นาง สมศรี เป็นชื่อแอพ '+employee1.account_number+' 1,000,000.00')
+    expect(page).to have_content('เงินเดือนสุทธิ')
+  end
 end

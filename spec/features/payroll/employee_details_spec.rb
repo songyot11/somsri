@@ -115,67 +115,6 @@ describe 'Employee Details', js: true do
       sleep(1)
       expect(page).to have_css('div.employee-details')
     end
-
-    it 'should create new payrolls' do
-      visit "/somsri_payroll#/employees"
-      sleep(1)
-      click_link('เริ่มออกเงินเดือน')
-      sleep(1)
-      find('#effective_date').set('03/12/2000')
-      click_button('บันทึก')
-      sleep(1)
-      visit "/somsri_payroll#/employees"
-      sleep(1)
-      first('.card').click
-      sleep(1)
-      click_link('เงินเดือน')
-      sleep(1)
-      find('#month-list').click
-      sleep(1)
-      find('ul.dropdown-menu li a', text: "3 ธันวาคม 2543").click
-      sleep(1)
-
-      expect(find_field('ค่าแรง / เงินเดือนปัจจุบัน').value).to eq '50000'
-      # expect(find_field('ภาษี').value.to_i).to be >= 0
-      expect(page).to have_content('เงินเดือนสุทธิ')
-    end
-
-    it 'should warning before create new payrolls with same date' do
-      visit "/somsri_payroll#/employees"
-      sleep(1)
-      # craete payroll
-      click_link('เริ่มออกเงินเดือน')
-      sleep(1)
-      find('#effective_date').set('13/12/2010')
-      click_button('บันทึก')
-      sleep(1)
-
-      # craete same payroll
-      visit "/somsri_payroll#/employees"
-      sleep(1)
-      click_link('เริ่มออกเงินเดือน')
-      sleep(1)
-      find('#effective_date').set('13/12/2010')
-      click_button('บันทึก')
-      sleep(1)
-      click_button('ตกลง')
-      sleep(1)
-      visit "/somsri_payroll#/employees"
-      sleep(1)
-      first('.card').click
-      sleep(1)
-      click_link('เงินเดือน')
-      sleep(1)
-      find('#month-list').click
-      sleep(1)
-      find('ul.dropdown-menu li a', text: "13 ธันวาคม 2553").click
-      sleep(1)
-
-      expect(find_field('ค่าแรง / เงินเดือนปัจจุบัน').value).to eq '50000'
-      # expect(find_field('ภาษี').value.to_i).to be >= 0
-      expect(page).to have_content('เงินเดือนสุทธิ')
-    end
-
   end
 
   describe 'employee detail screen' do

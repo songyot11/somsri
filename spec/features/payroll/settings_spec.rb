@@ -52,4 +52,46 @@ describe 'Employee Details', js: true do
     visit "/somsri_payroll#"
     expect(page).to have_css('.main-menu')
   end
+
+  it 'should go to setting page' do
+    visit "/"
+    sleep(1)
+    first('a[class="nav-user avatar"]').trigger('click')
+    sleep(1)
+    find('a[href="somsri_payroll#/setting"]').trigger('click')
+    sleep(1)
+    expect(page).to have_content('เปลี่ยนรหัสผ่าน')
+    expect(page).to have_content('บันทึก')
+    expect(page).to have_content('ยกเลิก')
+
+    visit "/somsri_payroll#/"
+    sleep(1)
+    first('a[class="nav-user avatar"]').trigger('click')
+    sleep(1)
+    find('a[href="somsri_payroll#/setting"]').trigger('click')
+    sleep(1)
+    expect(page).to have_content('เปลี่ยนรหัสผ่าน')
+    expect(page).to have_content('บันทึก')
+    expect(page).to have_content('ยกเลิก')
+
+    visit "/somsri_invoice#/"
+    sleep(1)
+    first('a[class="nav-user avatar"]').trigger('click')
+    sleep(1)
+    find('a[href="somsri_payroll#/setting"]').trigger('click')
+    sleep(1)
+    expect(page).to have_content('เปลี่ยนรหัสผ่าน')
+    expect(page).to have_content('บันทึก')
+    expect(page).to have_content('ยกเลิก')
+    
+    visit "/somsri_rollcall#/"
+    sleep(1)
+    first('a[class="nav-user avatar"]').trigger('click')
+    sleep(1)
+    find('a[href="somsri_payroll#/setting"]').trigger('click')
+    sleep(1)
+    expect(page).to have_content('เปลี่ยนรหัสผ่าน')
+    expect(page).to have_content('บันทึก')
+    expect(page).to have_content('ยกเลิก')
+  end
 end
