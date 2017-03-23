@@ -48,7 +48,6 @@
           ctrl.total = getTotalSalary(ctrl.employees);
           ctrl.currentDateString = effectiveDate["date_string"];
           ctrl.currentEffectiveDate = effectiveDate
-          setTableHeader();
           ctrl.employeeTypeFilter();
         });
       }
@@ -110,10 +109,27 @@
         })
       }
 
+      ctrl.printReport = function() {
+        clearForPrint();
+        ctrl.reportCtrl = angular.copy(ctrl);
+        ctrl.reportCtrl.employees = [];
+        for (var i = 0; i < ctrl.employees.length; i += 30) {
+          ctrl.reportCtrl.employees.push(ctrl.employees.slice(i, i + 30));
+        }
+        var containerDiv = $('#payroll-report')
+        var reportDiv = $compile('<report-content model=report.reportCtrl class="for_print"/>')($scope);
+        angular.element(containerDiv).append(reportDiv);
+        setTimeout(function() {
+          window.print();
+        }, 500);
+      }
+
       function clearForPrint(){
         $('slip-all-content').remove();
         $('slip-content').remove();
+        $('report-content.for_print').remove();
       }
+
 
       function getPayrolls() {
         reportService.getMonths().then(function(resp) {
@@ -127,7 +143,6 @@
               getTotalSalary(ctrl.employees)
               ctrl.currentDateString = current['date_string']
               ctrl.currentEffectiveDates = current
-              setTableHeader();
             });
           }
         });
@@ -164,18 +179,7 @@
         ctrl.total = getTotalSalary(ctrl.employees);
         getTotalSalary(ctrl.employees);
       }
-
-      function setTableHeader(){
-        $timeout(function () {
-          var tdHeader = document.getElementById("tableHeader").rows[0].cells;
-          var tdData = document.getElementById("tableData").rows[0].cells;
-
-          for (var i = 0; i < tdData.length; i++)
-              tdHeader[i].style.width = tdData[i].offsetWidth + 'px';
-        });
-      }
       getPayrolls();
     });
-
   }]);
 })();

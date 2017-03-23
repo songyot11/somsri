@@ -11,4 +11,13 @@
       return moment(date_string).add(543, 'years').format('DD/MM/YYYY');
     }
   }])
+  .filter('filterEmployeesReport', [function() {
+    return function(employees, mode) {
+      if(mode == "for_print"){
+        return employees;
+      }else{
+        return [employees];
+      }
+    }
+  }])
 })();

@@ -24,67 +24,11 @@
               <label class="btn btn-info btn-lg employee-type" ng-click="report.employeeTypeFilter()" ng-model="report.employeeTypeMode.temporary" uib-btn-checkbox>ลูกจ้างชั่วคราว</label>
               <label class="btn btn-info btn-lg employee-type" ng-click="report.employeeTypeFilter()" ng-model="report.employeeTypeMode.probationary" uib-btn-checkbox>ลูกจ้างทดลองงาน</label>
               <label class="btn btn-info btn-lg employee-type" ng-click="report.employeeTypeFilter()" ng-model="report.employeeTypeMode.daily" style="border-radius: 0px;" uib-btn-checkbox>ลูกจ้างรายวัน</label>
-              <label class="btn btn-info btn-lg employee-print" style="border-radius: 0px; margin-left:30px;" onclick="window.print()"><i class="fa fa-print"></i>&nbsp;&nbsp;พิมพ์สรุปรายการ</label>
+              <label class="btn btn-info btn-lg employee-print" style="border-radius: 0px; margin-left:30px;" ng-click="report.printReport()"><i class="fa fa-print"></i>&nbsp;&nbsp;พิมพ์สรุปรายการ</label>
           </div>
         </div>
       </div>
-
-      <div class="row report-content">
-        <table id="tableHeader" class="table text-right scrollable-header">
-          <thead>
-           <tr>
-              <th class="report_for_print_hide">รหัส</th>
-              <th class="forprint-h_table print_name">ชื่อ</th>
-              <th class="text-center forprint-h_table">เลขบัญชี</th>
-              <th class="text-center report_for_print_hide">เงินเดือน</th>
-              <th class="text-center report_for_print_hide">เงินเพิ่ม</th>
-              <th class="text-center report_for_print_hide">เงินหัก</th>
-              <th class="text-center forprint-h_table">เงินเดือนสุทธิ</th>
-              <th class="text-right">
-                <a ng-click="report.printSlips()" href="javascript:void(0)">
-                  <i class="fa fa-print"></i>
-                </a>
-              </th>
-           </tr>
-          </thead>
-        </table>
-        <div class="scrollable-content" style="max-height: calc(100vh - 270px);">
-          <table id="tableData" class="table text-right">
-            <tbody>
-              <tr ng-repeat="employee in report.employees">
-                <td class="text-left report_for_print_hide">{{employee.code}}</td>
-                <td class="text-left forprint_table this_name">
-                  <a href="/somsri_payroll#/employees/{{employee.code}}?payroll_id={{employee.payroll_id}}">
-                    <strong>{{employee.name}}</strong>
-                  </a>
-                </td>
-                <td class="text-center forprint_table this_account">{{employee.account_number}}</td>
-                <td class="report_for_print_hide">{{employee.salary | currency: ""}}</td>
-                <td class="text-green report_for_print_hide">{{employee.extra_pay | currency: ""}}</td>
-                <td class="text-red report_for_print_hide">{{employee.extra_fee | currency: ""}}</td>
-                <td class="text-green forprint_table this_netsalary">{{report.getNetSalary(employee) | currency: ""}}</td>
-                <td class="report_for_print_hide">
-                  <a ng-click="report.printSlip(employee.code, report.payroll_id)" href="javascript:void(0)">
-                    <i class="fa fa-print"></i>
-                  </a>
-                </td>
-              </tr>
-            </tbody>
-            <tfoot>
-              <tr>
-                <td></td>
-                <td class="report_for_print_hide"></td>
-                <td class="text-center forprint-h_table">รวมทั้งหมด</td>
-                <td class="report_for_print_hide">{{report.total.salary | currency: ""}}</td>
-                <td class="text-green report_for_print_hide">{{report.total.extraPay | currency: ""}}</td>
-                <td class="text-red report_for_print_hide">{{report.total.extraFee | currency: ""}}</td>
-                <td class="text-green">{{report.total.netSalary | currency: ""}}</td>
-                <td class="report_for_print_hide"></td>
-              </tr>
-            </tfoot>
-          </table>
-        </div>
-      </div>
+      <report-content model=report class="no_display_print" />
     </div>
   </div>
 </div>

@@ -1,0 +1,17 @@
+(function() {
+  'use strict';
+  angular.module('somsri.payroll.report.directive', [])
+    .directive('reportContent', reportContent);
+
+  function reportContent() {
+    return {
+      restrict: 'E',
+      scope: {
+        report: '=model',
+        class: '@class'
+      },
+      templateUrl: "<%= asset_path('payroll/angular/components/shared/report/reportView.html') %>",
+    };
+  }
+
+})();
