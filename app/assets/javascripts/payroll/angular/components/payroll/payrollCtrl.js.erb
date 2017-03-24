@@ -156,7 +156,7 @@
         }
       });
     }
-    
+
     ctrl.createPayrolls = function(){
       $uibModal.open({
         animation: true,
@@ -173,9 +173,9 @@
             ]);
           }]
         }
-      }).result.then(function (isSuccess) {
-        if (isSuccess) {
-          $rootScope.openEmployees();
+      }).result.then(function (effective_date) {
+        if (effective_date) {
+          $rootScope.openPayroll(effective_date);
         }
       });
     }

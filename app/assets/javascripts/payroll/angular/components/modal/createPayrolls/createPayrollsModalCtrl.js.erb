@@ -7,31 +7,30 @@
     $rootScope.loadAndAuthorizeResource("payroll", function(){
 
       ctrl.submit = function(){
-        var params = { create: { effective_date: ctrl.effective_date } };
+        var params = { create: { effective_date: ctrl.effective_date }, option: {force_create: false} };
         service.createPayrolls(params).then(function(res) {
           if(res.data["error"] == "PAYROLLS_EXIST"){
             var message = "มีรายการ payroll ในวันนี้อยู่แล้ว ท่านต้องการจะสร้างรายการใหม่และลบรายการเดิมหรือไม่"
             $rootScope.openConfirmationModal(message, function(res) {
-              params["force_create"] = true;
+              params["option"]["force_create"] = true;
               service.createPayrolls(params).then(function(res) {
-                $uibModalInstance.close();
-                $rootScope.openPayroll(params["effective_date"]);
+                $uibModalInstance.close(params["create"]["effective_date"]);
               }, function(res) {
                 console.log("ERROR");
               })
-              $uibModalInstance.close();
             }, function(res) {
               console.log("DISMISS CONFIRM");
             })
+          }else{
+            $uibModalInstance.close(params["create"]["effective_date"]);
           }
-          $rootScope.openPayroll(params["effective_date"]);
         },function(res) {
           console.log("ERROR");
         });
       }
 
       ctrl.cancel = function () {
-        $uibModalInstance.close();
+        $uibModalInstance.close(false);
       };
 
       ctrl.openEffectiveDatePopup = function() {

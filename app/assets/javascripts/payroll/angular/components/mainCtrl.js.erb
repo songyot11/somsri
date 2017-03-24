@@ -2,7 +2,7 @@
   'use strict';
   angular.module('somsri.payroll.main', [
   ])
-  .controller('mainCtrl', ['$rootScope', '$state', '$scope', '$uibModal', '$filter', '$http', function($rootScope, $state, $scope, $uibModal, $filter, $http) {
+  .controller('mainCtrl', ['$rootScope', '$state', '$scope', '$uibModal', '$filter', '$http', '$window', function($rootScope, $state, $scope, $uibModal, $filter, $http, $window) {
 
     function checkAbility(model, callback){
       if($rootScope.abilities.manage && $rootScope.abilities.manage.all){
@@ -43,9 +43,17 @@
 
     $rootScope.openPayroll = function (effectiveDate) {
       if(effectiveDate){
-        $state.go('payroll',{ effective_date: effectiveDate });
+        if($state.is('payroll', { effective_date: effectiveDate })){
+          $window.location.reload();
+        }else{
+          $state.go('payroll',{ effective_date: effectiveDate });
+        }
       }else{
-        $state.go('payroll');
+        if($state.is('payroll')){
+          $window.location.reload();
+        }else{
+          $state.go('payroll');
+        }
       }
     };
 

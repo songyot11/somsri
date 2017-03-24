@@ -185,7 +185,7 @@ class PayrollsController < ApplicationController
     employees = Employee.active.where(school_id: current_user.school.id).to_a
     payrolls = Payroll.joins(:employee)
                       .where(employee_id: employees, effective_date: DateTime.parse(create_params[:effective_date]))
-    render json: {error: "PAYROLLS_EXIST"}, status: :ok and return if payrolls.count > 0 && !create_params[:force_create]
+    render json: {error: "PAYROLLS_EXIST"}, status: :ok and return if payrolls.count > 0 && !option_params[:force_create]
     payrolls.destroy_all if payrolls.count > 0
     employees.each do |employee|
       if employee.lastest_payroll.nil?
@@ -256,7 +256,11 @@ class PayrollsController < ApplicationController
     end
 
     def create_params
-      params.require(:create).permit(:effective_date, :force_create)
+      params.require(:create).permit(:effective_date)
+    end
+
+    def option_params
+      params.require(:option).permit(:force_create)
     end
 
     def satang(money)
