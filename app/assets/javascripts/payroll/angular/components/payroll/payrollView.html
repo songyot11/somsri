@@ -24,17 +24,10 @@
             <label class="btn btn-info btn-lg employee-type" ng-click="payroll.employeeTypeFilter()" ng-model="payroll.employeeTypeMode.daily" style="border-radius: 0px;" uib-btn-checkbox>ลูกจ้างรายวัน</label>
         </div>
       </div>
-      <div class="col-lg-2">
+      <div class="col-lg-4">
         <a class="btn btn-info btn-lg bg-blue"
           href="/payrolls/social_insurance_pdf?effective_date={{payroll.currentEffectiveDate['date_time'] | encodeString }}"
-          target="_blank">ประกันสังคม</a>
-      </div>
-      <div class="col-lg-2" ng-hide="true">
-        <button type="button" class="btn btn-lg bg-yellow btn-block">
-          <i class="fa fa-upload" aria-hidden="true"></i>
-          Export for bank</button>
-      </div>
-      <div class="col-lg-2">
+          target="_blank">ยื่นประกันสังคม</a>
         <a class="btn btn-info btn-lg bg-blue" ng-click="payroll.createPayrolls()" href="javascript:void(0)">
           เริ่มออกเงินเดือน
         </a>
