@@ -113,7 +113,7 @@ describe 'Employee Details', js: true do
       sleep(1)
       first('.card').click
       sleep(1)
-      expect(page).to have_css('div.employee-details')
+      eventually { expect(page).to have_css('div.employee-details') }
     end
   end
 
@@ -124,16 +124,18 @@ describe 'Employee Details', js: true do
     end
 
     it 'should diplay lastest employee details' do
+      sleep(1)
       click_link('เงินเดือน')
       sleep(1)
-      expect(find_field('ค่าแรง / เงินเดือนปัจจุบัน').value).to eq '50000'
+      eventually { expect(find_field('ค่าแรง / เงินเดือนปัจจุบัน').value).to eq '50000' }
       # expect(find_field('ภาษี').value.to_i).to be > 0
-      expect(find_field('เบิกล่วงหน้า').value).to eq '2000'
-      expect(find_field('ค่ากะ / ค่าเบี้ยเลี้ยง').value).to eq '3000'
+      eventually { expect(find_field('เบิกล่วงหน้า').value).to eq '2000' }
+      eventually { expect(find_field('ค่ากะ / ค่าเบี้ยเลี้ยง').value).to eq '3000' }
       # expect(page).to have_content('เงินเดือนสุทธิ 50900')
     end
 
     it 'should diplay total pay depend on payroll change' do
+      sleep(1)
       click_link('เงินเดือน')
       sleep(1)
       page.fill_in 'ค่าแรง / เงินเดือนปัจจุบัน', :with => '2000000'
@@ -150,7 +152,7 @@ describe 'Employee Details', js: true do
       # page.fill_in 'ภาษี', :with => '1000000'
       # page.fill_in 'ประกันสังคม', :with => '300000'
       sleep(1)
-      expect(page).to have_content('เงินเดือนสุทธิ ')
+      eventually { expect(page).to have_content('เงินเดือนสุทธิ ') }
     end
 
     it 'should diplay confirmation modal when change detail and click ยกเลิก' do
@@ -161,11 +163,12 @@ describe 'Employee Details', js: true do
       sleep(1)
       click_button('ยกเลิก')
       sleep(1)
-      expect(page).to have_content("คุณต้องการออกจากหน้านี้โดยไม่บันทึกค่าหรือไม่?")
+      eventually { expect(page).to have_content("คุณต้องการออกจากหน้านี้โดยไม่บันทึกค่าหรือไม่?") }
     end
 
     it 'should save change and goto employee lists' do
       page.fill_in 'นามสกุล', :with => 'โอชา'
+      sleep(1)
       click_link('เงินเดือน')
       sleep(1)
       page.fill_in 'ค่าแรง / เงินเดือนปัจจุบัน', :with => '200'
@@ -178,10 +181,10 @@ describe 'Employee Details', js: true do
       employee = Employee.find(employees[0].id)
       payroll = Payroll.find(payrolls[0].id)
 
-      expect(employee.last_name_thai).to eq 'โอชา'
-      expect(employee.salary).to eq 200
-      expect(payroll.salary).to eq 200
-      expect(page).to have_css('div.employee-details')
+      eventually { expect(employee.last_name_thai).to eq 'โอชา' }
+      eventually { expect(employee.salary).to eq 200 }
+      eventually { expect(payroll.salary).to eq 200 }
+      eventually { expect(page).to have_css('div.employee-details') }
     end
 
     it 'should diplay histories when select histories dropdown' do
@@ -191,14 +194,15 @@ describe 'Employee Details', js: true do
       sleep(1)
       find('ul.dropdown-menu li a', text: "สิงหาคม 2559").click
       sleep(1)
-      expect(find_field('ค่าแรง / เงินเดือนปัจจุบัน', disabled: false).value.to_i).to be > 0
+      eventually { expect(find_field('ค่าแรง / เงินเดือนปัจจุบัน', disabled: false).value.to_i).to be > 0 }
       # expect(find_field('ภาษี', disabled: false).value.to_i).to be > 0
-      expect(find_field('เบิกล่วงหน้า', disabled: false).value.to_i).to be > 0
-      expect(find_field('ค่ากะ / ค่าเบี้ยเลี้ยง', disabled: false).value.to_i).to be > 0
-      expect(page).to have_content('เงินเดือนสุทธิ ')
+      eventually { expect(find_field('เบิกล่วงหน้า', disabled: false).value.to_i).to be > 0 }
+      eventually { expect(find_field('ค่ากะ / ค่าเบี้ยเลี้ยง', disabled: false).value.to_i).to be > 0 }
+      eventually { expect(page).to have_content('เงินเดือนสุทธิ ') }
     end
 
     it 'should not diplay warning modal when select histories dropdown after edit employee detail' do
+      sleep(1)
       page.fill_in 'นามสกุล', :with => 'โอชา'
       sleep(1)
       click_link('เงินเดือน')
@@ -207,11 +211,11 @@ describe 'Employee Details', js: true do
       sleep(1)
       find('ul.dropdown-menu li a', text: "สิงหาคม 2559").click
       sleep(1)
-      expect(find_field('ค่าแรง / เงินเดือนปัจจุบัน', disabled: false).value.to_i).to be > 0
+      eventually { expect(find_field('ค่าแรง / เงินเดือนปัจจุบัน', disabled: false).value.to_i).to be > 0 }
       # expect(find_field('ภาษี', disabled: false).value.to_i).to be > 0
-      expect(find_field('เบิกล่วงหน้า', disabled: false).value.to_i).to be > 0
-      expect(find_field('ค่ากะ / ค่าเบี้ยเลี้ยง', disabled: false).value.to_i).to be > 0
-      expect(page).to have_content('เงินเดือนสุทธิ ')
+      eventually { expect(find_field('เบิกล่วงหน้า', disabled: false).value.to_i).to be > 0 }
+      eventually { expect(find_field('ค่ากะ / ค่าเบี้ยเลี้ยง', disabled: false).value.to_i).to be > 0 }
+      eventually { expect(page).to have_content('เงินเดือนสุทธิ ') }
     end
 
     it 'should diplay warning modal when select histories dropdown after edit payroll' do
@@ -223,7 +227,7 @@ describe 'Employee Details', js: true do
       sleep(1)
       find('ul.dropdown-menu li a', text: "สิงหาคม 2559").click
       sleep(1)
-      expect(page).to have_content("คุณต้องการออกจากหน้านี้โดยไม่บันทึกค่าหรือไม่?")
+      eventually { expect(page).to have_content("คุณต้องการออกจากหน้านี้โดยไม่บันทึกค่าหรือไม่?") }
     end
 
     it 'should save only employee data when in histories mode and click บันทึก' do
@@ -244,10 +248,10 @@ describe 'Employee Details', js: true do
       sleep(1)
       visit "/somsri_payroll#/employees/#{employees[0].id}"
       sleep(1)
-      expect(find_field('นามสกุล').value).to eq 'โอชา'
+      eventually { expect(find_field('นามสกุล').value).to eq 'โอชา' }
       click_link('เงินเดือน')
       sleep(1)
-      expect(find_field('ค่าแรง / เงินเดือนปัจจุบัน').value).to eq '50000'
+      eventually { expect(find_field('ค่าแรง / เงินเดือนปัจจุบัน').value).to eq '50000' }
     end
 
     # it 'can edit history data' do
@@ -288,7 +292,7 @@ describe 'Employee Details', js: true do
 
     it 'should edit birthdate' do
       click_link('ข้อมูลส่วนตัว')
-      expect(find('#birthdate').value).to_not have_content '03/12/1990'
+      eventually { expect(find('#birthdate').value).to_not have_content '03/12/1990' }
 
       find('#birthdate').set('03/12/1990')
       sleep(1)
@@ -301,11 +305,11 @@ describe 'Employee Details', js: true do
       visit "/somsri_payroll#/employees/#{employees[0].id}"
       sleep(1)
       click_link('ข้อมูลส่วนตัว')
-      expect(find('#birthdate').value).to have_content '03/12/1990'
+      eventually { expect(find('#birthdate').value).to have_content '03/12/1990' }
     end
 
     it 'should edit start_date' do
-      expect(find('#start_date').value).to_not have_content '03/12/1990'
+      eventually { expect(find('#start_date').value).to_not have_content '03/12/1990' }
 
       find('#start_date').set('03/12/1990')
       sleep(1)
@@ -315,13 +319,13 @@ describe 'Employee Details', js: true do
       sleep(1)
       employee = Employee.find(employees[0].id)
       visit "/somsri_payroll#/employees/#{employees[0].id}"
-      expect(find('#start_date').value).to have_content '03/12/1990'
+      eventually { expect(find('#start_date').value).to have_content '03/12/1990' }
     end
 
     describe 'employee_type' do
       it 'can edit' do
         sleep(1)
-        expect(page).to have_select('ประเภทการจ้างงาน', selected: 'ลูกจ้างประจำ')
+        eventually { expect(page).to have_select('ประเภทการจ้างงาน', selected: 'ลูกจ้างประจำ') }
         select 'ลูกจ้างชั่วคราว', from: 'ประเภทการจ้างงาน'
         click_button('บันทึก')
         sleep(1)
@@ -330,7 +334,7 @@ describe 'Employee Details', js: true do
 
         visit "/somsri_payroll#/employees/#{employees[0].id}"
         sleep(1)
-        expect(page).to have_select('ประเภทการจ้างงาน', selected: 'ลูกจ้างชั่วคราว')
+        eventually { expect(page).to have_select('ประเภทการจ้างงาน', selected: 'ลูกจ้างชั่วคราว') }
       end
     end
 
@@ -339,8 +343,8 @@ describe 'Employee Details', js: true do
         cbx_pvf = find('#pay_pvf')
         cbx_social_insurance = find('#pay_social_insurance')
 
-        expect(cbx_pvf).to_not be_checked
-        expect(cbx_social_insurance).to_not be_checked
+        eventually { expect(cbx_pvf).to_not be_checked }
+        eventually { expect(cbx_social_insurance).to_not be_checked }
 
         cbx_pvf.click
         cbx_social_insurance.click
@@ -353,8 +357,8 @@ describe 'Employee Details', js: true do
         visit "/somsri_payroll#/employees/#{employees[0].id}"
         sleep(1)
 
-        expect(cbx_pvf).to be_checked
-        expect(cbx_social_insurance).to be_checked
+        eventually { expect(cbx_pvf).to be_checked }
+        eventually { expect(cbx_social_insurance).to be_checked }
       end
     end
   end

@@ -166,8 +166,9 @@
         var nowDate = new Date();
         // Clone to prevent the reset value
         ctrl.datas = JSON.parse(JSON.stringify(DEFAULT_INVOICE))
-        ctrl.grades = [{"value": 'Preschool', "text": "เตรียมอนุบาล"}, {"value": 'Kindergarten 1', "text": "อนุบาล 1"},  {"value": 'Kindergarten 2', "text": "อนุบาล 2"},  {"value": 'Kindergarten 3', "text": "อนุบาล 3"}];
-        ctrl.datas.invoice.grade = 'Preschool';
+        ctrl.grades = [{"value": 'Preschool'}, {"value": 'Kindergarten 1'},  {"value": 'Kindergarten 2'},  {"value": 'Kindergarten 3'}];
+        ctrl.datas.invoice.grade_name = {"value": 'Preschool'}
+        ctrl.datas.invoice.semester = "1" ;
         ctrl.datas.payment_method = {};
         ctrl.datas.payment_method.is_cash = true;
         ctrl.datas.payment_method.is_credit_card = false;
@@ -183,6 +184,7 @@
       angular.element(document).ready(function () {
         // Set focus
         document.getElementById('student_code').focus();
+        $('.btn.btn-grades').find('option').first().remove();
       });
     });
   }]);

@@ -25,9 +25,9 @@
             <td><label for="grade_select">เลือกระดับชั้น</label></td>
             <td>
               <select name="grade_select" id="grade_select" class="btn-grades" onchange="this.form.submit()">
-                  <option value='all'>ทั้งหมด</option>
+                  <option value='all'>All Grade</option>
                   <% Grade.all.each do |grade| %>
-                    <option value="<%= grade.name %>"<%= @filter_grade.to_s == grade.name.to_s ? "selected" : "" %>> <%= t(grade.name) %> </option>
+                    <option value="<%= grade.name %>"<%= @filter_grade.to_s == grade.name.to_s ? "selected" : "" %>> <%= grade.name %> </option>
                   <% end %>
               </select>
             </td>
