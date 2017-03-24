@@ -58,7 +58,7 @@ class ParentsController < ApplicationController
     respond_to do |format|
       if @parent.save
         relation_assign
-        format.html { redirect_to @parent, notice: 'Parent was successfully created.' }
+        format.html { redirect_to @parent}
         format.json { render :show, status: :created, location: @parent }
       else
         format.html { render :new }
@@ -74,7 +74,7 @@ class ParentsController < ApplicationController
     respond_to do |format|
       if @parent.update(parent_params)
         relation_assign
-        format.html { redirect_to @parent, notice: 'Parent was successfully updated.' }
+        format.html { redirect_to @parent}
         format.json { render :show, status: :ok, location: @parent }
       else
         format.html { render :edit }
@@ -88,7 +88,7 @@ class ParentsController < ApplicationController
   def destroy
     @parent.destroy
     respond_to do |format|
-      format.html { redirect_to parents_url, notice: 'Parent was successfully destroyed.' }
+      format.html { redirect_to parents_url}
       format.json { head :no_content }
     end
   end
