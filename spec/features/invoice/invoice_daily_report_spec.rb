@@ -65,7 +65,7 @@ describe 'Invoice-Report', js: true do
   it 'shoud show daily report page' do
     visit 'somsri_invoice#/daily_report'
     sleep(1)
-    eventually { expect(page).to have_content("นำส่งเงิน") }
+    expect(page).to have_content("นำส่งเงิน")
   end
 
   it 'should go to repot menu when click ยกเลิก button' do
@@ -73,8 +73,7 @@ describe 'Invoice-Report', js: true do
     sleep(1)
     click_button("ยกเลิก")
     sleep(1)
-
-    eventually { expect(page).to have_content("รายงานค่าเทอม") }
+    expect(page).to have_content("รายงานค่าเทอม")
   end
 
   it 'should go to print page when click on บันทึก button' do
@@ -87,20 +86,20 @@ describe 'Invoice-Report', js: true do
 
   it 'should show sum of credit card payment' do
     visit 'somsri_invoice#/daily_report'
-
-    eventually { expect(page).to have_content("102") }
+    sleep(1)
+    expect(page).to have_content("102")
   end
 
   it 'should show sum of real cash payment' do
     visit 'somsri_invoice#/daily_report'
     sleep(1)
-    eventually { expect(page).to have_content("101") }
+    expect(page).to have_content("101")
   end
 
   it 'should show sum of cheque payment' do
     visit 'somsri_invoice#/daily_report'
     sleep(1)
-    eventually { expect(page).to have_content("103") }
+    expect(page).to have_content("103")
   end
 
   it 'should show sum of tranfer payment' do
@@ -112,7 +111,7 @@ describe 'Invoice-Report', js: true do
   it 'should show the sum of all payment method' do
     visit 'somsri_invoice#/daily_report'
     sleep(1)
-    eventually { expect(page).to have_content("410") }
+    expect(page).to have_content("410")
   end
 
   it 'should calculate ยอดเงินที่จัดส่ง' do
