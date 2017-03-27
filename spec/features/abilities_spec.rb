@@ -24,7 +24,7 @@ describe 'Abilities', js: true do
     it 'can goto main menu' do
       visit "/"
       expect(page).to have_current_path '/'
-      expect(page).to have_content 'เงินเดือน ค่าเทอม นับแถว บุคลากร ผู้ปกครอง นักเรียน'
+      expect(page).to have_content 'เงินเดือน ค่าเทอม บุคลากร ผู้ปกครอง นักเรียน'
     end
 
     it 'can goto payroll menu' do
@@ -35,7 +35,7 @@ describe 'Abilities', js: true do
 
     it 'can goto payroll' do
       visit "/somsri_payroll#/payroll"
-      expect(page).to have_content 'เงินสอนพิเศษ	ค่าตำแหน่ง เบี้ยเลี้ยง เบี้ยขยัน โบนัส อื่นๆ'
+      expect(page).to have_content 'เงินสอนพิเศษ ค่าตำแหน่ง เบี้ยเลี้ยง เบี้ยขยัน โบนัส อื่นๆ'
     end
 
     it 'can goto payroll report' do
@@ -104,35 +104,37 @@ describe 'Abilities', js: true do
       login_as(users[1])
     end
 
+    let(:menu_content) { 'ค่าเทอม' }
+
     it 'can goto main menu' do
       visit "/"
       expect(page).to have_current_path '/'
-      expect(page).to have_content 'เงินเดือน ค่าเทอม นับแถว บุคลากร ผู้ปกครอง นักเรียน'
+      expect(page).to have_content menu_content
     end
 
     it 'can goto payroll menu' do
       visit "/somsri_payroll"
       expect(page).to have_current_path '/'
       expect(page).to have_content 'บัญชีของคุณไม่สามารถใช้งานฟังก์ชันนี้ได้'
-      expect(page).to have_content 'เงินเดือน ค่าเทอม นับแถว บุคลากร ผู้ปกครอง นักเรียน'
+      expect(page).to have_content menu_content
     end
 
     it 'can goto payroll' do
       visit "/somsri_payroll#/payroll"
       expect(page).to have_content 'บัญชีของคุณไม่สามารถใช้งานฟังก์ชันนี้ได้'
-      expect(page).to have_content 'เงินเดือน ค่าเทอม นับแถว บุคลากร ผู้ปกครอง นักเรียน'
+      expect(page).to have_content menu_content
     end
 
     it 'can goto payroll report' do
       visit "/somsri_payroll#/report"
       expect(page).to have_content 'บัญชีของคุณไม่สามารถใช้งานฟังก์ชันนี้ได้'
-      expect(page).to have_content 'เงินเดือน ค่าเทอม นับแถว บุคลากร ผู้ปกครอง นักเรียน'
+      expect(page).to have_content menu_content
     end
 
     it 'can goto payroll setting' do
       visit "/somsri_payroll#/setting"
       expect(page).to have_content 'บัญชีของคุณไม่สามารถใช้งานฟังก์ชันนี้ได้'
-      expect(page).to have_content 'เงินเดือน ค่าเทอม นับแถว บุคลากร ผู้ปกครอง นักเรียน'
+      expect(page).to have_content menu_content
     end
 
     it 'can goto invoice menu' do
@@ -173,13 +175,13 @@ describe 'Abilities', js: true do
     it 'can goto employees' do
       visit "/somsri_payroll#/employees"
       expect(page).to have_content 'บัญชีของคุณไม่สามารถใช้งานฟังก์ชันนี้ได้'
-      expect(page).to have_content 'เงินเดือน ค่าเทอม นับแถว บุคลากร ผู้ปกครอง นักเรียน'
+      expect(page).to have_content menu_content
     end
 
     it 'can goto parents' do
       visit "/parents"
       expect(page).to have_content 'บัญชีของคุณไม่สามารถใช้งานฟังก์ชันนี้ได้'
-      expect(page).to have_content 'เงินเดือน ค่าเทอม นับแถว บุคลากร ผู้ปกครอง นักเรียน'
+      expect(page).to have_content menu_content
     end
 
     it 'can goto students' do
