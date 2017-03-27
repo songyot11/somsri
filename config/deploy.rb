@@ -2,7 +2,7 @@
 lock '3.4.1'
 
 set :application, 'somsri-payroll'
-set :repo_url, 'git@github.com:BananaCoding/somsri-payroll.git'
+set :repo_url, 'git@github.com:BananaCoding/somsri.git'
 
 set :default_stage, "production"
 
