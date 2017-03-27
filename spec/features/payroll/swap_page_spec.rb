@@ -18,7 +18,7 @@ describe 'Payroll Swap Page', js: true do
     visit "/somsri_payroll#/report"
     find('#menu').click
 
-    eventually { expect(page).to have_content 'รายงาน เงินเดือน ค่าเทอม นับแถว บุคลากร ผู้ปกครอง นักเรียน' }
+    eventually { expect(page).to have_content 'รายงาน เงินเดือน ค่าเทอม บุคลากร ผู้ปกครอง นักเรียน' }
     eventually { expect(URI.parse(current_url).to_s).to have_content 'report' }
   end
 
@@ -26,7 +26,7 @@ describe 'Payroll Swap Page', js: true do
     visit "/somsri_payroll#/employees"
     find('#menu').click
 
-    eventually { expect(page).to have_content 'บุคลากร เงินเดือน ค่าเทอม นับแถว บุคลากร ผู้ปกครอง นักเรียน' }
+    eventually { expect(page).to have_content 'บุคลากร เงินเดือน ค่าเทอม บุคลากร ผู้ปกครอง นักเรียน' }
     eventually { expect(URI.parse(current_url).to_s).to have_content 'employees' }
   end
 
@@ -34,7 +34,7 @@ describe 'Payroll Swap Page', js: true do
     visit "/somsri_payroll#/payroll"
     find('#menu').click
 
-    eventually { expect(page).to have_content 'เงินเดือน เงินเดือน ค่าเทอม นับแถว บุคลากร ผู้ปกครอง นักเรียน' }
+    eventually { expect(page).to have_content 'เงินเดือน เงินเดือน ค่าเทอม บุคลากร ผู้ปกครอง นักเรียน' }
     eventually { expect(URI.parse(current_url).to_s).to have_content 'payroll' }
   end
 
@@ -45,7 +45,7 @@ describe 'Payroll Swap Page', js: true do
     sleep(1)
     find('#menu').click
 
-    eventually { expect(page).to have_content 'บุคลากร เงินเดือน ค่าเทอม นับแถว บุคลากร ผู้ปกครอง นักเรียน' }
+    eventually { expect(page).to have_content 'บุคลากร เงินเดือน ค่าเทอม บุคลากร ผู้ปกครอง นักเรียน' }
     eventually { expect(URI.parse(current_url).to_s).to have_content 'employees' }
   end
 
