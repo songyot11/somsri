@@ -189,6 +189,7 @@ describe 'Employee Details', js: true do
     end
 
     it 'should diplay histories when select histories dropdown' do
+      sleep(1)
       click_link('เงินเดือน')
       sleep(1)
       find('#month-list').click
