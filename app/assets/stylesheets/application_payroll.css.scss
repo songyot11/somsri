@@ -17,7 +17,7 @@
  */
 @import "navigation_menu";
 body {
-  background-color: #fff;
+  background-color: #F3F9FC;
   font-family: 'Maitree', serif;
   color: #595959;
   -webkit-print-color-adjust: exact !important;
@@ -112,7 +112,9 @@ img {
 #payroll-report #month-list {
   cursor: pointer;
 }
-
+h2#month-list{
+  margin-top: 10px;
+}
 #payroll-report .dropdown-menu button {
   background-color: transparent;
   border: 0px;
@@ -213,7 +215,18 @@ img {
   color: #fff;
   border-radius: 0px
 }
-
+.btn-payroll{
+  background-color: #00D2D7;
+  border: none;
+  border-radius: inherit;
+  color: #fff;
+  padding: 10px 20px;
+  transition: all 0.25s ease;
+}
+.btn-payroll:hover{
+  color: #fff;
+  background-color: #0b999c;
+}
 .btn-submit {
   background-color: #69C406;
   color: #FFFFFF;
@@ -894,14 +907,19 @@ input.btn-prefix.active:-moz-placeholder { /* Firefox 18- */
 
 .employee-details .img-profile{
   position: relative;
+  width: 245px;
+  float: right;
 }
 
 .employee-details .img-bg {
-  width: 100% !important;
   margin-top: -60px;
-  padding-bottom: -20px;
 }
-
+.employee-details i.fa.fa-camera.center{
+  margin-top: -30px;
+}
+.tab-content{
+  margin-top: 65px;
+}
 .employee-details h1#employeeName {
   margin-top: 0px !important;
 }
@@ -919,7 +937,7 @@ input.btn-prefix.active:-moz-placeholder { /* Firefox 18- */
 }
 
 #payroll {
-  margin: 0px 10px;
+  margin: 20px 10px 0px 10px;
 }
 
 #payroll .payroll-content {
@@ -1047,7 +1065,7 @@ table.scrollable-header {
 
 .nav-tabs.main {
   padding-left: 15px;
-  border-bottom: 1px solid white;
+  border: none !important;
 }
 
 .nav-tabs.main > li.cyan > a {
@@ -1174,8 +1192,14 @@ table.scrollable-header {
 }
 .btn.employee-type {
   background-color: #AAAAAA;
-  border-color: white;
+  border-color: #F3F9FC;
   box-shadow: none;
+  color: #fff;
+  transition: all 0.25s ease;
+}
+.btn.employee-type.active:hover{
+  border-color: #F3F9FC;
+  background-color: #f59c0b;
 }
 .btn.employee-print,.btn.employee-print:focus {
   background-color: #333;

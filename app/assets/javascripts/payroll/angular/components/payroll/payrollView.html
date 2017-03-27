@@ -1,6 +1,6 @@
 <div id="payroll" class="row">
   <div class="col-lg-12">
-    <div class="row">
+    <div class="row" style="margin-bottom: 15px;">
       <div class="col-lg-3">
         <div class="dropdown">
           <h2 id="month-list" data-toggle="dropdown">
@@ -16,19 +16,19 @@
           </ul>
         </div>
       </div>
-      <div class="col-lg-5" style="padding-right: 0px;">
+      <div class="col-lg-5 col-lg-offset-1" style="padding-right: 0px;">
         <div class="btn-group pull-right">
-            <label class="btn btn-info btn-lg employee-type" ng-click="payroll.employeeTypeFilter()" ng-model="payroll.employeeTypeMode.normal" style="border-radius: 0px;" uib-btn-checkbox>ลูกจ้างประจำ</label>
-            <label class="btn btn-info btn-lg employee-type" ng-click="payroll.employeeTypeFilter()" ng-model="payroll.employeeTypeMode.temporary" uib-btn-checkbox>ลูกจ้างชั่วคราว</label>
-            <label class="btn btn-info btn-lg employee-type" ng-click="payroll.employeeTypeFilter()" ng-model="payroll.employeeTypeMode.probationary" uib-btn-checkbox>ลูกจ้างทดลองงาน</label>
-            <label class="btn btn-info btn-lg employee-type" ng-click="payroll.employeeTypeFilter()" ng-model="payroll.employeeTypeMode.daily" style="border-radius: 0px;" uib-btn-checkbox>ลูกจ้างรายวัน</label>
+            <label class="btn btn-lg employee-type" ng-click="payroll.employeeTypeFilter()" ng-model="payroll.employeeTypeMode.normal" style="border-radius: 0px;" uib-btn-checkbox>ลูกจ้างประจำ</label>
+            <label class="btn btn-lg employee-type" ng-click="payroll.employeeTypeFilter()" ng-model="payroll.employeeTypeMode.temporary" uib-btn-checkbox>ลูกจ้างชั่วคราว</label>
+            <label class="btn btn-lg employee-type" ng-click="payroll.employeeTypeFilter()" ng-model="payroll.employeeTypeMode.probationary" uib-btn-checkbox>ลูกจ้างทดลองงาน</label>
+            <label class="btn btn-lg employee-type" ng-click="payroll.employeeTypeFilter()" ng-model="payroll.employeeTypeMode.daily" style="border-radius: 0px;" uib-btn-checkbox>ลูกจ้างรายวัน</label>
         </div>
       </div>
-      <div class="col-lg-4">
-        <a class="btn btn-info btn-lg bg-blue"
+      <div class="col-lg-3">
+        <a class="btn btn-lg btn-payroll"
           href="/payrolls/social_insurance_pdf?effective_date={{payroll.currentEffectiveDate['date_time'] | encodeString }}"
           target="_blank">ยื่นประกันสังคม</a>
-        <a class="btn btn-info btn-lg bg-blue" ng-click="payroll.createPayrolls()" href="javascript:void(0)">
+        <a class="btn btn-lg btn-payroll" ng-click="payroll.createPayrolls()" href="javascript:void(0)">
           เริ่มออกเงินเดือน
         </a>
       </div>

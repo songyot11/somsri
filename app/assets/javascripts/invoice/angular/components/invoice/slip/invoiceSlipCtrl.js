@@ -4,6 +4,7 @@
   ])
   .controller('invoiceSlipCtrl', ['$scope', '$http', '$state', 'DEFAULT_LOGO', 'invoiceSlipService', '$rootScope', function($scope, $http, $state, DEFAULT_LOGO, service, $rootScope) {
     var ctrl = this;
+    $rootScope.menu = "การเงิน"
     $rootScope.loadAndAuthorizeResource("invoice", function(){
       ctrl.title = 'Invoice Slip';
       var invoiceId = $state.params.id;

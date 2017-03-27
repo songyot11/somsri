@@ -156,6 +156,7 @@ describe 'Employee Details', js: true do
     end
 
     it 'should diplay confirmation modal when change detail and click ยกเลิก' do
+      sleep(1)
       page.fill_in 'First Name', :with => 'Eve'
       click_link('เงินเดือน')
       sleep(1)
