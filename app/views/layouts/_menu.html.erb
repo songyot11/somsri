@@ -1,0 +1,74 @@
+<div class="row row-centered">
+  <% if can? :manage, Payroll %>
+    <div class="col-xs-2 col-centered">
+        <div class="menu-btn">
+            <a href="/somsri_payroll">
+              <div class="wraptocenter">
+                <%= image_tag 'payroll-icon.png', class: (is_topbar ? 'img-menu-nav' : '') %>
+              </div>
+            </a>
+        </div>
+        <p>เงินเดือน</p>
+    </div>
+  <% end %>
+  <% if can? :manage, Invoice %>
+    <div class="col-xs-2 col-xs-offset-1 col-centered">
+        <div class="menu-btn">
+            <a href="/somsri_invoice">
+              <div class="wraptocenter">
+                <%= image_tag 'fee-icon.png', class: (is_topbar ? 'img-menu-nav' : '') %>
+              </div>
+            </a>
+        </div>
+        <p>ค่าเทอม</p>
+    </div>
+  <% end %>
+    <!-- <div class="col-xs-2 col-xs-offset-1 hide">
+        <div class="menu-btn">
+            <a href="/somsri_rollcall">
+              <div class="wraptocenter disabled">
+                <%= image_tag 'roll-icon.png', class: "" %>
+              </div>
+            </a>
+        </div>
+        <p>นับแถว</p>
+    </div> -->
+</div>
+<div class="row row-centered" style="margin-top:50px;">
+  <% if can? :manage, Employee %>
+    <div class="col-xs-2  col-centered">
+        <div class="menu-btn">
+            <a href="/somsri_payroll#/employees">
+              <div class="wraptocenter">
+                <%= image_tag 'hr-icon.png', class: (is_topbar ? 'img-menu-nav' : '') %>
+              </div>
+            </a>
+        </div>
+        <p>บุคลากร</p>
+    </div>
+  <% end %>
+  <% if can? :manage, Parent %>
+    <div class="col-xs-2 col-xs-offset-1 col-centered">
+        <div class="menu-btn">
+            <a href="/parents">
+              <div class="wraptocenter">
+                  <%= image_tag 'parent.png', class: (is_topbar ? 'img-menu-nav' : '') %>
+              </div>
+            </a>
+        </div>
+        <p>ผู้ปกครอง</p>
+    </div>
+  <% end %>
+  <% if can? :manage, Student %>
+    <div class="col-xs-2 col-xs-offset-1 col-centered">
+        <div class="menu-btn">
+            <a href="/students">
+              <div class="wraptocenter">
+                  <%= image_tag 'child.png', class: (is_topbar ? 'img-menu-nav' : '') %>
+              </div>
+            </a>
+        </div>
+        <p>นักเรียน</p>
+    </div>
+  <% end %>
+</div>
