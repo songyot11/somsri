@@ -208,7 +208,7 @@ class InvoicesController < ApplicationController
     student_nickname = ""
     student_nickname = " (#{@invoice.student.nickname})" if @invoice.student && @invoice.student.nickname
     student_display_name = "#{student_prefix} #{@invoice.student.full_name}#{student_nickname}"
-    grade_name = @invoice.grade_name ? t(@invoice.grade_name) : ""
+    grade_name = @invoice.grade_name ? (@invoice.grade_name) : ""
     if @invoice.student && @invoice.student.classroom && @invoice.student.classroom.size > 0
       grade_name << " (#{@invoice.student.classroom})"
     end
