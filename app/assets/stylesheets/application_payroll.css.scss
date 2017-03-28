@@ -1140,6 +1140,16 @@ table.scrollable-header {
   border-left: 1px solid #F59C0B;
 }
 
+.employee-details .panel-default a {
+  color: #333;
+  border: none;
+  text-decoration: none !important;
+}
+
+.employee-details .accordion-selected {
+  color: #F59C0B !important;
+}
+
 .somsri-select {
   border-top: none;
   border-left: none;
