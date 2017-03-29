@@ -475,9 +475,16 @@ textarea {
     margin-left: -15px;
 }
 .right-receiver{
-    font-size: 18px;
+    font-size: 16px;
     margin-top: 80px;
-    margin-left: 70%;
+    margin-left: 60%;
+}
+.right-sign{
+  text-align: right !important;
+}
+.center-sign{
+  font-size: 14px;
+  text-align: center !important;
 }
 .table-with1{
     width: 8%;

@@ -225,6 +225,7 @@ class InvoicesController < ApplicationController
       school_year_thai: (@invoice.school_year.to_i - 543).to_s,
       payment_methods: [],
       grade_name: grade_name,
+      receiver_name: @invoice.user.name,
       parent: {
         display_name: @invoice.parent.full_name
       },
