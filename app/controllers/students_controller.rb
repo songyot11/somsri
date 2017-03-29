@@ -3,7 +3,6 @@ class StudentsController < ApplicationController
   before_action :authenticate_user!, unless: :is_api?
   load_and_authorize_resource except: [:index, :show, :get_roll_calls, :info]
 
-
   def is_api?
     !params[:pin].blank?
   end
@@ -25,20 +24,11 @@ class StudentsController < ApplicationController
     else
       authorize! :read, Student
       grade_select = (params[:grade_select] || 'All')
-      if !params[:student_report]
-        if grade_select.downcase == 'all'
-          @students = Student.order("student_number ASC").search(params[:search]).all.page(params[:page]).to_a
-        else
-          grade = Grade.where(name: grade_select).first
-          @students = Student.where(grade_id: grade.id).order("classroom ASC, classroom_number ASC").search(params[:search]).page(params[:page]).to_a
-        end
+      if grade_select.downcase == 'all'
+        @students = Student.order("student_number ASC").search(params[:search]).all.page(params[:page]).to_a
       else
-        if grade_select.downcase == 'all'
-          @students = Student.all.order("grade_id ASC , classroom_number ASC").to_a
-        else
-          grade = Grade.where(name: grade_select).first
-          @students = Student.where(grade_id: grade.id).order("classroom_number ASC").to_a
-        end
+        grade = Grade.where(name: grade_select).first
+        @students = Student.where(grade_id: grade.id).order("classroom ASC, classroom_number ASC").search(params[:search]).page(params[:page]).to_a
       end
       @filter_grade = grade_select
       render "students/index", layout: "application_invoice"
@@ -185,6 +175,29 @@ class StudentsController < ApplicationController
     else
       render json: { errors: "Invalid token or user not registered" }, status: 422 and return
     end
+  end
+
+  # GET /invoice_total_amount
+  def invoice_total_amount
+    grade_select = (params[:grade_select] || 'All')
+    @students = Student
+    if grade_select.downcase == 'all'
+      @students = @students.search(params[:search]).all.to_a
+    else
+      grade = Grade.where(name: grade_select).first
+      @students = @students.where(grade_id: grade.id).search(params[:search]).to_a
+    end
+
+    other_fee = 0
+    tuition_fee = 0
+    amount = 0
+
+    @students.each do |student|
+      other_fee += student.active_invoice_other_fee if !student.active_invoice_other_fee.blank?
+      tuition_fee += student.active_invoice_tuition_fee if !student.active_invoice_tuition_fee.blank?
+      amount += student.active_invoice_total_amount if !student.active_invoice_total_amount.blank?
+    end
+    render json: [{other_fee: other_fee, tuition_fee: tuition_fee, amount: amount}], status: :ok
   end
 
   private

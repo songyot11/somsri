@@ -64,7 +64,9 @@ Rails.application.routes.draw do
   resources :students, only: [:index, :show] do
     collection do
       get 'get_roll_calls'
+      # get 'invoice_total_amount'
     end
   end
+  get "/invoice_total_amount" => "students#invoice_total_amount"
 
 end

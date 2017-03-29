@@ -6,30 +6,47 @@
     $rootScope.menu = "รายงาน"
     var ctrl = this
     $rootScope.loadAndAuthorizeResource("invoice", function(){
+      ctrl.currentPage = 1;
+      ctrl.grade_name = "All"
+      ctrl.total = { other_fee: 0.0, amount: 0.0, tuition_fee: 0.0 }
+      ctrl.pageChanged = function() {
+        getStudents()
+      };
+
       ctrl.switchGrade = function(grade_name) {
-        getStudents(grade_name);
+        ctrl.grade_name = grade_name
+        getStudents();
+        getInvoiceTotalAmount();
       }
 
-      function getStudents(grade_name) {
+      function getStudents() {
         studentReportService.getGrades().then(function(grade_resp) {
-          ctrl.currentGradeString = grade_name
+          ctrl.currentGradeString = ctrl.grade_name
           ctrl.grades = grade_resp.data
-          studentReportService.getStudents(grade_name).then(function(resp) {
-            ctrl.students = resp.data
-            ctrl.total = { other_fee: 0.0, amount: 0.0, tuition_fee: 0.0 }
-
-            angular.forEach(ctrl.students, function(value, key) {
-              if(value.active_invoice_status == "ชำระแล้ว"){
-                ctrl.total.other_fee += value.active_invoice_other_fee
-                ctrl.total.tuition_fee += value.active_invoice_tuition_fee
-                ctrl.total.amount += value.active_invoice_total_amount
-              }
-            });
+          studentReportService.getStudents(ctrl.grade_name, ctrl.currentPage).then(function(resp) {
+            ctrl.datas = [];
+            if (resp.data[0] && resp.data[0].datas){
+              ctrl.datas = resp.data[0].datas
+              ctrl.students = resp.data[0].datas
+              ctrl.totalItems = resp.data[0].total_records;
+              ctrl.currentPage = resp.data[0].current_page;
+            }
+            ctrl.maxSize = 5;
           });
         });
       }
 
-      getStudents('All');
+      function getInvoiceTotalAmount(){
+        studentReportService.getInvoiceTotalAmount(ctrl.grade_name).then(function(resp) {
+          ctrl.total.other_fee = resp.data[0].other_fee
+          ctrl.total.tuition_fee = resp.data[0].tuition_fee
+          ctrl.total.amount = resp.data[0].amount
+        });
+      }
+
+      getStudents();
+      getInvoiceTotalAmount();
+
     });
   }]);
 })();

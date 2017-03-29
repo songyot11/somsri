@@ -73,3 +73,9 @@
     </div>
   </div>
 </div>
+
+<div class="row row-centered">
+  <div class="col-centered">
+    <ul uib-pagination ng-change="studentReport.pageChanged()" total-items="studentReport.totalItems" ng-model="studentReport.currentPage" max-size="studentReport.maxSize" class="pagination-md" boundary-links="true" num-pages="numPages"></ul>
+  </div>
+</div>
