@@ -14,6 +14,8 @@ class Student < ApplicationRecord
   self.per_page = 10
 
   validates :full_name , presence: true
+  validates :student_number , uniqueness: true , allow_nil: true 
+
 
   def full_name_with_title
     if gender_id != nil
@@ -218,6 +220,10 @@ class Student < ApplicationRecord
     else
       invoice_screen_full_name_display
     end
+  end
+
+  def student_num
+    self.student_number.nil? ? "-" : self.student_number
   end
 
 end

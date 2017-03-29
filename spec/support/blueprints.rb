@@ -60,7 +60,7 @@ Student.blueprint do
   prefix { Faker::Name.prefix }
   first_name { Faker::Name.first_name }
   last_name { Faker::Name.last_name }
-  student_number { Faker::Number.number(4).to_i }
+  student_number{ rand(100000)+1 }
 end
 
 List.blueprint do

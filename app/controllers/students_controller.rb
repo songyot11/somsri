@@ -94,6 +94,7 @@ class StudentsController < ApplicationController
         format.html { redirect_to @student }
         format.json { render :show, status: :created, location: @student }
       else
+        @relations = Relationship.all
         format.html { render :new }
         format.json { render json: @student.errors, status: :unprocessable_entity }
       end
@@ -110,6 +111,7 @@ class StudentsController < ApplicationController
         format.html { redirect_to @student }
         format.json { render :show, status: :ok, location: @student }
       else
+        @relations = Relationship.all
         format.html { render :edit }
         format.json { render json: @student.errors, status: :unprocessable_entity }
       end

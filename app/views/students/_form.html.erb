@@ -2,7 +2,7 @@
 <% if @student.errors.any? %>
 <div id="error_expl" class="panel panel-danger">
   <div class="panel-heading">
-    <h3 class="panel-title"><%= pluralize(@student.errors.count, "error") %> prohibited this student from being saved:</h3>
+    <h3 class="panel-title">ข้อมูลของนักเรียนไม่สามารถบันทึกได้ : </h3>
   </div>
   <div class="panel-body">
     <ul>
@@ -19,9 +19,9 @@
     <div class="row add-st-pr">
       <div class="col-md-6">
         <div class="form-group">
-          <%= f.label :full_name, 'ชื่อ-นามสกุล', :class => 'control-label' %>
+          <%= f.label :full_name, 'ชื่อ-นามสกุล', :class => 'control-label'%>
           <div class="col-md-12">
-            <%= f.text_field :full_name, :class => 'form-control', required: true %>
+            <%= f.text_field :full_name, :class => 'form-control', required: true , autocomplete: "off" %>
           </div>
         </div>
       </div>
@@ -29,7 +29,7 @@
         <div class="form-group">
           <%= f.label :nickname, 'ชื่อเล่น', :class => 'control-label' %>
           <div class="col-md-12">
-            <%= f.text_field :nickname, :class => 'form-control' %>
+            <%= f.text_field :nickname, :class => 'form-control' , autocomplete: "off" %>
           </div>
         </div>
       </div>
@@ -39,7 +39,7 @@
         <div class="form-group ">
           <%= f.label :full_name_english, 'Full Name', :class => 'control-label' %>
           <div class="col-md-12">
-            <%= f.text_field :full_name_english, :class => 'form-control'%>
+            <%= f.text_field :full_name_english, :class => 'form-control' , autocomplete: "off"%>
           </div>
         </div>
       </div>
@@ -47,7 +47,7 @@
         <div class="form-group">
           <%= f.label :nickname_english, 'Nick Name', :class => 'control-label' %>
           <div class="col-md-12">
-            <%= f.text_field :nickname_english, :class => 'form-control' %>
+            <%= f.text_field :nickname_english, :class => 'form-control' , autocomplete: "off" %>
           </div>
         </div>
       </div>
@@ -84,7 +84,7 @@
         <div class="form-group">
           <%= f.label :classroom, 'ห้อง', :class => 'control-label' %>
           <div class="col-md-12">
-            <%= f.text_field :classroom, :class => 'form-control'%>
+            <%= f.text_field :classroom, :class => 'form-control' , autocomplete: "off"%>
           </div>
         </div>
       </div>
@@ -92,7 +92,7 @@
         <div class="form-group">
           <%= f.label :classroom_number, 'เลขที่', :class => 'control-label ' %>
           <div class="col-md-12">
-            <%= f.text_field :classroom_number, :class => 'form-control'%>
+            <%= f.text_field :classroom_number, :class => 'form-control', autocomplete: "off"%>
           </div>
         </div>
       </div>
@@ -100,7 +100,7 @@
         <div class="form-group">
           <%= f.label :student_number, 'เลขประจำตัวนักเรียน', :class => 'control-label ' %>
           <div class="col-md-12">
-            <%= f.text_field :student_number, :class => 'form-control'%>
+            <%= f.text_field :student_number, :class => 'form-control' , autocomplete: "off"%>
           </div>
         </div>
       </div>
@@ -112,7 +112,7 @@
         <div class="form-group ">
           <%= f.label :national_id, 'รหัสประจำตัวประชาชน', :class => 'control-label' %>
           <div class="col-md-12">
-            <%= f.text_field :national_id, :class => 'form-control'%>
+            <%= f.text_field :national_id, :class => 'form-control' , autocomplete: "off"%>
           </div>
         </div>
       </div>
