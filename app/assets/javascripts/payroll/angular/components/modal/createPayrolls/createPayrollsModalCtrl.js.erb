@@ -7,26 +7,30 @@
     $rootScope.loadAndAuthorizeResource("payroll", function(){
 
       ctrl.submit = function(){
-        var params = { create: { effective_date: ctrl.effective_date }, option: {force_create: false} };
-        service.createPayrolls(params).then(function(res) {
-          if(res.data["error"] == "PAYROLLS_EXIST"){
-            var message = "มีรายการ payroll ในวันนี้อยู่แล้ว ท่านต้องการจะสร้างรายการใหม่และลบรายการเดิมหรือไม่"
-            $rootScope.openConfirmationModal(message, function(res) {
-              params["option"]["force_create"] = true;
-              service.createPayrolls(params).then(function(res) {
-                $uibModalInstance.close(params["create"]["effective_date"]);
+        if(Date.parse(ctrl.effective_date)){
+          var params = { create: { effective_date: ctrl.effective_date }, option: {force_create: false} };
+          service.createPayrolls(params).then(function(res) {
+            if(res.data["error"] == "PAYROLLS_EXIST"){
+              var message = "มีรายการ payroll ในวันนี้อยู่แล้ว ท่านต้องการจะสร้างรายการใหม่และลบรายการเดิมหรือไม่"
+              $rootScope.openConfirmationModal(message, function(res) {
+                params["option"]["force_create"] = true;
+                service.createPayrolls(params).then(function(res) {
+                  $uibModalInstance.close(params["create"]["effective_date"]);
+                }, function(res) {
+                  console.log("ERROR");
+                })
               }, function(res) {
-                console.log("ERROR");
+                console.log("DISMISS CONFIRM");
               })
-            }, function(res) {
-              console.log("DISMISS CONFIRM");
-            })
-          }else{
-            $uibModalInstance.close(params["create"]["effective_date"]);
-          }
-        },function(res) {
-          console.log("ERROR");
-        });
+            }else{
+              $uibModalInstance.close(params["create"]["effective_date"]);
+            }
+          },function(res) {
+            console.log("ERROR");
+          });
+        }else{
+          console.log("ERROR BOBO::" + Date.parse(ctrl.effective_date));
+        }
       }
 
       ctrl.cancel = function () {
