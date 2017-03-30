@@ -14,10 +14,10 @@ class ParentsController < ApplicationController
       end
     end
     if class_select.downcase == 'all'
-      @parents = Parent.all.page(params[:page]).search(params[:search]).order("full_name ASC").includes(:students, :relationships, :invoices)
+      @parents = Parent.with_deleted.page(params[:page]).search(params[:search]).order("deleted_at DESC , full_name ASC").includes(:students, :relationships, :invoices)
     else
       parent_joins = Parent.joins(:students).where(students:{classroom: class_select})
-      @parents = parent_joins.search(params[:search]).page(params[:page]).order("parents.full_name ASC").includes(:students, :relationships, :invoices)
+      @parents = parent_joins.with_deleted.search(params[:search]).page(params[:page]).order("parents.deleted_at DESC , parents.full_name ASC").includes(:students, :relationships, :invoices)
     end
       @filter_grade = class_select
       @menu = "ผู้ปกครอง"
@@ -93,6 +93,23 @@ class ParentsController < ApplicationController
     end
   end
 
+  def restore
+    Parent.restore(params[:parent_id])
+    respond_to do |format|
+      format.html { redirect_to parents_url}
+      format.json { head :no_content }
+    end
+  end
+
+  def real_destroy
+    @parent = Parent.find(params[:parent_id])
+    @parent.really_destroy!
+    respond_to do |format|
+      format.html { redirect_to parents_url}
+      format.json { head :no_content }
+    end
+  end
+
   private
     # Use callbacks to share common setup or constraints between actions.
     def set_parent
@@ -101,7 +118,7 @@ class ParentsController < ApplicationController
 
     # Never trust parameters from the scary internet, only allow the white list through.
     def parent_params
-      params.require(:parent).permit(:full_name, :nickname, :id_card_no, :mobile, :email, :line_id)
+      params.require(:parent).permit(:full_name, :nickname, :id_card_no, :mobile, :email, :line_id )
     end
 
     def relation_assign

@@ -51,7 +51,10 @@ Rails.application.routes.draw do
     end
   end
 
-  resources :parents
+  resources :parents do
+    post 'restore'
+    delete 'real_destroy'
+  end
   resources :grades
   resources :daily_reports
   resources :students

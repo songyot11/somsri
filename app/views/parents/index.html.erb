@@ -55,6 +55,7 @@
       </thead>
       <tbody>
         <% @parents.each do |parent| %>
+          <% if parent.deleted_at == nil %>
           <tr>
             <td><%= parent.full_name %></td>
             <td><%= parent.mobile %></td>
@@ -63,17 +64,41 @@
             <td><%= student_link_with_full_name(parent.students.first) %></td>
             <td id="text-status"><%= parent.invoices.first.nil? ? "<span id='no-pay'>ยังไม่ได้ชำระเงิน</span>".html_safe : "<span id='this-pay'>ชำระเงินแล้ว</span>".html_safe %></td>
             <td>
-              <%= link_to t('.show', :default => t("helpers.links.show")),
-                          parent_path(parent), :class => 'btn btn-se' %>
-              <%= link_to t('.edit', :default => t("helpers.links.edit")),
-                          edit_parent_path(parent), :class => 'btn btn-se' %>
-              <%= link_to "<i class='fa fa-times'></i>".html_safe ,
-                          parent_path(parent),
-                          :method => :delete,
-                          :data => { :confirm => t('.confirm', :default => t("helpers.links.confirm.parent_confirm", :default => 'Are you sure?')) },
-                          :class => 'btn btn-delete-sp' %>
+                <%= link_to t('.show', :default => t("helpers.links.show")),
+                            parent_path(parent), :class => 'btn btn-se' %>
+                <%= link_to t('.edit', :default => t("helpers.links.edit")),
+                            edit_parent_path(parent), :class => 'btn btn-se' %>
+                <%= link_to "<i class='fa fa-archive'></i>".html_safe ,
+                            parent_path(parent),
+                            :id => "parent_archive" ,
+                            :method => :delete,
+                            :data => { :confirm => t('.confirm', :default => t("helpers.links.confirm.parent_archive", :default => 'Are you sure?')) },
+                            :class => 'btn btn-archive-sp tooltips', 'data-toggle' => 'tooltip', 'data-placement' => 'top', :title => 'ลบข้อมูลออกจากระบบ (สามารถนำกลับมาได้้)'  %>
+
+                <%= link_to "<i class='fa fa-trash'></i>".html_safe ,
+                            parent_real_destroy_path(parent),
+                            :id => 'parent_delete' ,
+                            :method => :delete,
+                            :data => { :confirm => t('.confirm', :default => t("helpers.links.confirm.parent_delete", :default => 'Are you sure?')) },
+                            :class => 'btn btn-delete-sp tooltips', 'data-toggle' => 'tooltip', 'data-placement' => 'top', :title => 'ลบข้อมูลออกจากระบบ (ไม่สามารถนำกลับมาได้)'  %>
             </td>
           </tr>
+          <% else %>
+          <tr style="color: #dddbdb !important">
+            <td><%= parent.full_name %></td>
+            <td><%= parent.mobile %></td>
+            <td><%= parent.email %></td>
+            <td><%= parent.relationships.first.nil? ? "" : t(parent.relationships.first.name) %></td>
+            <td><%= student_link_with_full_name(parent.students.first) %></td>
+            <!-- <td id="text-status"><%= parent.invoices.first.nil? ? "<span id='no-pay'>ยังไม่ได้ชำระเงิน</span>".html_safe : "<span id='this-pay'>ชำระเงินแล้ว</span>".html_safe %></td> -->
+            <td><%= parent.deleted_at.nil? ? "" : "ผู้ปกครองถูกนำออกจากระบบชั่วคราว" %></td>
+            <td><%= link_to "นำกลับสู่ระบบ" ,
+                    parent_restore_path(parent) ,
+                    :id => 'parent_restore' ,
+                    :method=> :post %>
+            </td>
+          </tr>
+          <% end %>
         <% end %>
       </tbody>
     </table>

@@ -1163,7 +1163,7 @@ table.table.table-sp-report>tbody{
 }
 .save-sp{
   margin-top: 50px;
-}
+}btn-delete-sp
 .add-st-pr{
   margin-top: 25px;
 }
@@ -1221,4 +1221,13 @@ table.table.table-sp-report>tbody{
     text-align:left;
     /* inline-block space fix */
     margin-right:-4px;
+}
+
+.btn-archive-sp{
+  color: #777 ;
+  // font-size: 20px
+
+}
+.btn-archive-sp:hover{
+  color: #777;
 }
