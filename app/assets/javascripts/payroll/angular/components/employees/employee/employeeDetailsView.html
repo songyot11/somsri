@@ -656,7 +656,7 @@
             </div>
             <div class="col-md-4">
               <div class="form-group">
-                <label for="tax">ภาษี</label>
+                <label for="tax">{{employee.datas.employee.employee_type=="ลูกจ้างประจำ" ? 'ภาษีเงินได้บุคคลธรรมดา': 'ภาษีหัก ณ ที่จ่าย'}}</label>
                 <input class="form-control text-red" id="tax" ng-model="employee.datas.payroll.tax" disabled>
               </div>
             </div>
