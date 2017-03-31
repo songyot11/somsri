@@ -1185,10 +1185,6 @@ table.scrollable-header {
   top: -10px !important;
 }
 
-.popover {
-  background: AntiqueWhite;
-}
-
 .popover-wrapper.bottom-popup form:after {
   content: "";
   width: 0;
@@ -1200,6 +1196,39 @@ table.scrollable-header {
   top: -9px !important;
   border-top: 0px !important;
 }
+
+.popover-wrapper.right-popup form {
+  margin-left: -40px;
+}
+
+.popover-wrapper.right-popup form:before {
+  content: "";
+  width: 0;
+  height: 0;
+  border-left: 10px solid transparent;
+  border-right: 10px solid transparent;
+  border-top: 10px solid #AAA;
+  position: absolute;
+  bottom: -10px;
+  margin-left: -70px;
+}
+
+.popover-wrapper.right-popup form:after {
+  content: "";
+  width: 0;
+  height: 0;
+  border-left: 9px solid transparent;
+  border-right: 9px solid transparent;
+  border-top: 9px solid #FFF;
+  position: absolute;
+  bottom: -9px;
+  margin-left: -70px;
+}
+
+.popover {
+  background: AntiqueWhite;
+}
+
 .btn.employee-type {
   background-color: #AAAAAA;
   border-color: #F3F9FC;
@@ -1274,6 +1303,163 @@ a.dropdown-item{
     /* inline-block space fix */
     margin-right:-4px;
 }
+
 #tableData tr:hover{
   background-color: AntiqueWhite !important;
+}
+
+/** Test CSS **/
+.fix-column {
+    float: left;
+}
+.thead {
+    height: 40px;
+    white-space: nowrap;
+}
+.thead > span {
+    display: inline-block;
+    width: 120px;
+    line-height: 40px;
+    text-align: center;
+    border-top: 1px solid #cccccc;
+}
+
+.theadtop {
+    height: 40px;
+    white-space: nowrap;
+}
+.theadtop > span {
+    display: inline-block;
+    width: 120px;
+    line-height: 40px;
+    text-align: center;
+    border-top: 1px solid #cccccc;
+    font-weight: 600;
+}
+
+.theadtop > span.income {
+    width: 865px;
+    border-right: 1px solid #cccccc;
+}
+
+.theadtop > span.expenses {
+    width: 960px;
+}
+
+.theadtop > span.total {
+    width: 120px;
+    border-top: 1px solid #fff;
+}
+
+.thead > span.code {
+    width: 50px;
+}
+
+.thead > span.name {
+    width: 350px;
+}
+.trow.tfoot> span{
+  border-bottom: 2px solid #FFAA00;
+}
+.thead > span.account {
+    width: 150px;
+    border-right: 1px solid #cccccc;
+}
+
+.thead > span.gap {
+    width: 150px;
+    border-top: 1px solid #fff;
+    border-bottom: 1px solid #fff;
+}
+
+.trow {
+    white-space: nowrap;
+}
+.trow > span {
+    display: inline-block;
+    width: 120px;
+    border-right: 1px solid #cccccc;
+    border-bottom: 1px solid #cccccc;
+    line-height: 40px;
+    height: 40px;
+    text-align: center;
+}
+
+.trow > span.code {
+    width: 50px;
+}
+
+.trow > span.name {
+    width: 350px;
+}
+
+.trow > span.account {
+    width: 150px;
+}
+
+.tbody {
+    height: 450px;
+    overflow: auto;
+    -moz-box-sizing: border-box;
+    box-sizing: border-box;
+}
+.fix-column{
+  .top{
+    border-bottom: 1px solid #ccc;
+  }
+
+  .top > span{
+    border-right: 1px solid #ccc;
+    font-weight: 600;
+  }
+}
+.fix-column > .tbody {
+    overflow: hidden;
+    /*padding-bottom: 50px;*/
+}
+/*.fix-column > .tbody > .trow:last-child {margin-bottom: 50px;}*/
+
+.fix-column > .tbody > .trow {
+    margin-top: -50px;
+    margin-bottom: 50px;
+}
+.fix-column > .tbody > .trow:first-child {
+    margin-top: 0px;
+}
+
+.rest-columns {
+    /*width: 350px;*/
+    max-width: calc(100vw);
+
+    .top{
+      border-bottom: 1px solid #ccc;
+    }
+
+    .top > span{
+      border-right: 1px solid #ccc;
+      font-weight: 600;
+    }
+}
+.rest-columns > .thead {
+    /*padding-right: 50px;*/
+    overflow: hidden;
+}
+/*.rest-columns > .thead > :last-child {margin-right: 50px;}*/
+.rest-columns > .thead > span {
+    margin-right: 50px;
+    margin-left: -50px;
+}
+.rest-columns > .thead > :first-child {margin-left: 0px;}
+
+.rest-columns > .theadtop {
+    /*padding-right: 50px;*/
+    overflow: hidden;
+}
+/*.rest-columns > .thead > :last-child {margin-right: 50px;}*/
+.rest-columns > .theadtop > span {
+    margin-right: 50px;
+    margin-left: -50px;
+}
+.rest-columns > .theadtop > :first-child {
+  margin-left: 0px;
 }

@@ -18,6 +18,18 @@
       daily: true
     }
 
+    $scope.$on('$viewContentLoaded', function() {
+      var fcBody = document.querySelector(".fix-column > .tbody"),
+      rcBody = document.querySelector(".rest-columns > .tbody"),
+      rcHead = document.querySelector(".rest-columns > .thead"),
+      rcHeadTop = document.querySelector(".rest-columns > .theadtop");
+      rcBody.addEventListener("scroll", function() {
+          fcBody.scrollTop = this.scrollTop;
+          rcHead.scrollLeft = this.scrollLeft;
+          rcHeadTop.scrollLeft = this.scrollLeft;
+      });
+    });
+
     var effectiveDateParm = $state.params.effective_date;
 
     ctrl.selectValue = function($event){
