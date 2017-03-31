@@ -14,9 +14,10 @@ class Student < ApplicationRecord
   self.per_page = 10
 
   validates :full_name , presence: true
-  validates :student_number , uniqueness: true , allow_nil: true 
+  validates :student_number , uniqueness: true , allow_nil: true
 
-
+  acts_as_paranoid
+  
   def full_name_with_title
     if gender_id != nil
       title = self.gender_id == 1  ? 'ด.ช.' : 'ด.ญ.'

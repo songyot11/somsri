@@ -57,7 +57,12 @@ Rails.application.routes.draw do
   end
   resources :grades
   resources :daily_reports
-  resources :students
+  resources :students do
+    delete 'real_destroy'
+    post 'restore'
+    post 'graduate'
+    post 'resign'
+  end
   resources :abilities, only: [:index]
 
   get "/auth_api" => "home#auth_api"

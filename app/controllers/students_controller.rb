@@ -25,7 +25,7 @@ class StudentsController < ApplicationController
       authorize! :read, Student
       grade_select = (params[:grade_select] || 'All')
       if grade_select.downcase == 'all'
-        @students = Student.order("student_number ASC").search(params[:search]).all.page(params[:page]).to_a
+        @students = Student.order("deleted_at DESC , student_number ASC").search(params[:search]).with_deleted.page(params[:page]).to_a
       else
         grade = Grade.where(name: grade_select).first
         @students = Student.where(grade_id: grade.id).order("classroom ASC, classroom_number ASC").search(params[:search]).page(params[:page]).to_a
@@ -115,6 +115,51 @@ class StudentsController < ApplicationController
     respond_to do |format|
       format.html { redirect_to students_url }
       format.json { head :no_content }
+    end
+  end
+
+  def real_destroy
+    @student = Student.find(params[:student_id])
+    @student.really_destroy!
+    respond_to do |format|
+      format.html { redirect_to students_url }
+      format.json { head :no_content }
+    end
+  end
+
+  def graduate
+    @student = Student.find(params[:student_id])
+    @student.destroy
+
+    if @student.destroy
+      @student = Student.unscoped.find(params[:student_id]).update(status: 'จบการศึกษา')
+      respond_to do |format|
+        format.html { redirect_to students_url }
+        format.json { head :no_content }
+      end
+    end
+  end
+
+  def resign
+    @student = Student.find(params[:student_id])
+    @student.destroy
+
+    if @student.destroy
+      @student = Student.unscoped.find(params[:student_id]).update(status: 'ลาออก')
+      respond_to do |format|
+        format.html { redirect_to students_url }
+        format.json { head :no_content }
+      end
+    end
+  end
+
+  def restore
+      if @student = Student.restore(params[:student_id])
+        @student = Student.unscoped.find(params[:student_id]).update(status: 'กำลังศึกษา')
+      respond_to do |format|
+        format.html { redirect_to students_url }
+        format.json { head :no_content }
+      end
     end
   end
 
@@ -208,7 +253,7 @@ class StudentsController < ApplicationController
 
     # Never trust parameters from the scary internet, only allow the white list through.
     def student_params
-      params.require(:student).permit(:full_name, :full_name_english, :nickname, :nickname_english, :gender_id, :birthdate, :grade_id, :classroom, :classroom_number, :student_number, :national_id, :remark)
+      params.require(:student).permit(:full_name, :full_name_english, :nickname, :nickname_english, :gender_id, :birthdate, :grade_id, :classroom, :classroom_number, :student_number, :national_id, :remark , :status)
     end
 
     def relation_assign
