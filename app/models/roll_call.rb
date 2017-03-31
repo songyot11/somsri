@@ -15,8 +15,8 @@ class RollCall < ApplicationRecord
           RollCall.fill_with_blank(afternoon, student, list)
         end
 
-        morning.sort!{|a,b| a.student.number <=> b.student.number}
-        afternoon.sort!{|a,b| a.student.number <=> b.student.number}
+        morning.sort!{|a,b| a.student.number.to_i <=> b.student.number.to_i}
+        afternoon.sort!{|a,b| a.student.number.to_i <=> b.student.number.to_i}
 
         result << {
           date: date,
@@ -48,8 +48,8 @@ class RollCall < ApplicationRecord
           RollCall.fill_with_blank(afternoon, student, list)
         end
 
-        morning.sort!{|a,b| a.student.number <=> b.student.number}
-        afternoon.sort!{|a,b| a.student.number <=> b.student.number}
+        morning.sort!{|a,b| a.student.number.to_i <=> b.student.number.to_i}
+        afternoon.sort!{|a,b| a.student.number.to_i <=> b.student.number.to_i}
 
         result << {
           date: date,
