@@ -259,7 +259,8 @@
               openConfirmationModal("คุณต้องการบันทึกการเปลี่ยนแปลงครั้งนี้หรือไม่?", function(){
                 var datas_result = $.extend(true, {}, ctrl.datas);
                 service.saveEmployee(ctrl.datas.employee.id, datas_result).then(function(resp) {
-                  ctrl.isSubmit = false
+                  ctrl.isSubmit = false;
+                  ctrl.datas_original = $.extend(true, {}, ctrl.datas);
                 });
               }, function(){
                 ctrl.isSubmit = false
