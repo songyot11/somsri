@@ -64,9 +64,9 @@ Rails.application.routes.draw do
     post 'resign'
   end
   resources :abilities, only: [:index]
-
   get "/auth_api" => "home#auth_api"
   get "/report" => "roll_calls#report"
+  get "/report_month" => "roll_calls#report_month"
   get "/info" =>"students#info"
   resources :roll_calls, only: [:create, :index]
   resources :students, only: [:index, :show] do
@@ -76,5 +76,14 @@ Rails.application.routes.draw do
     end
   end
   get "/invoice_total_amount" => "students#invoice_total_amount"
+
+  resources :report_roll_calls, only: [] do
+    collection do
+      get 'report'
+      get 'date_in_month'
+      get 'lists'
+      get 'months'
+    end
+  end
 
 end

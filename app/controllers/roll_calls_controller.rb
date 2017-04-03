@@ -122,6 +122,20 @@ class RollCallsController < ApplicationController
     end
   end
 
+  def report_month
+    date = params[:date]
+    user = get_current_user(params[:pin])
+    if user
+      if date
+        render json: RollCall.get_by_month(user, date, format_api: true).to_json(format_api: true)
+      else
+        render json: { errors: "Date is required in report_month." }, status: 422 and return
+      end
+    else
+      render json: { errors: "Invalid token or user not registered" }, status: 422 and return
+    end
+  end
+
   private
   def add_round_property(datas, round)
     datas.each do |d|

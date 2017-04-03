@@ -16,7 +16,8 @@
     "angular-xeditable": "",
     "angular-scrollable-table": "",
     "moment": "",
-    "angular-input-masks": ""
+    "angular-input-masks": "",
+    "angular-sanitize": "1.5.9"
   },
   "resolutions": {
     "angular": "1.5.9"

@@ -1,3 +1,86 @@
-<div id="rollcall-report" class="row">
-  REPORT ROLLCALL
+<div ng-controller="reportCtrl" class="container-rollcall-report">
+  <div id="rollcall-report" class="row form_1">
+    <div class="row head_title_rollcall">
+      <div class="col-xs-4">
+        <span class="dropdown">
+          <div class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="true">
+            <span>ประจำเดือน</span>
+            <span ng-bind="report.displayMonth"></span>
+            <span class="caret"></span>
+          </div>
+          <ul class="dropdown-menu ">
+            <li ng-repeat="data in report.months">
+              <a ng-click="report.selectMonth(data)" href="javascript:void(0)">
+                {{data.name}}
+              </a>
+            </li>
+          </ul>
+        </span>
+      </div>
+      <div class="col-xs-2 col-xs-offset-6">
+        <span class="dropdown pull-right">
+          <div class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="true">
+            <span>ชั้น</span>
+            <span ng-bind="report.displayListName" style="color:#337ab7;"></span>
+            <span class="caret" style="color:#337ab7 !important;"></span>
+          </div>
+          <ul class="dropdown-menu ">
+            <li ng-repeat="data in report.lists">
+              <a ng-click="report.selectList(data)" href="javascript:void(0)">
+                {{data.name}}
+              </a>
+            </li>
+          </ul>
+        </span>
+      </div>
+    </div>
+
+    <div class="row head-sp">
+        <table class="table">
+          <thead>
+            <th>เลขที่</th>
+            <th>ชื่อ - สกุล</th>
+            <th>วันที่</th>
+            <th ng-repeat="date in report.dates">{{date}}</th>
+            <th>มา</th>
+          </thead>
+          <tbody>
+            <tr ng-repeat="data in report.datas">
+              <th class="name_student" style="text-align:center;">{{data.classroom_number}}</th>
+              <th class="name_student">{{data.name}}</th>
+              <td class="time_half">
+                <table class="time_rollcall">
+                  <tr>
+                    <td>เช้า</td>
+                  </tr>
+                  <tr>
+                    <td>เย็น</td>
+                  </tr>
+                </table>
+              </td>
+              <td ng-repeat="roll_call in data.roll_calls">
+                <table class="status_rollcall">
+                  <tr>
+                    <td  ng-bind-html="report.translateStatus(roll_call.morning)" ></td>
+                  </tr>
+                  <tr>
+                    <td  ng-bind-html="report.translateStatus(roll_call.afternoon)" ></td>
+                  </tr>
+                </table>
+              </td>
+              <td class="status_rollcall_data">
+                <table>
+                  <tr>
+                    <td>{{ data.checked_morning  || 0 }}</td>
+                  </tr>
+                  <tr>
+                    <td>{{ data.checked_afternoon || 0 }}</td>
+                  </tr>
+                </table>
+              </td>
+            </tr>
+          </tbody>
+        </table>
+    </div>
+  </div>
 </div>

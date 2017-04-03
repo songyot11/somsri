@@ -24,7 +24,7 @@ describe 'Abilities', js: true do
     it 'can goto main menu' do
       visit "/"
       expect(page).to have_current_path '/'
-      expect(page).to have_content 'เงินเดือน ค่าเทอม บุคลากร ผู้ปกครอง นักเรียน'
+      expect(page).to have_content 'เงินเดือน ค่าเทอม นับแถว บุคลากร ผู้ปกครอง นักเรียน'
     end
 
     it 'can goto payroll menu' do
