@@ -3,7 +3,7 @@
     <div class="row">
       <div class="col-md-12">
         <div class="row">
-          <div class="col-md-9">
+          <div class="col-md-6">
             <div class="dropdown" ng-show="employee.isEdit">
               <small>Select employee</small>
               <h1 id="employeeName" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="true">
@@ -19,7 +19,11 @@
               </ul>
             </div>
           </div>
-          <div class="col-md-3" style="line-height: 69px;" ng-show="employee.isEdit">
+          <div class="col-md-3 employee-pin">
+            <small ng-show="employee.pinChars.length > 0">PIN Number</small><br>
+            <span class="pin-char" ng-show="employee.pinChars.length > 0" ng-repeat="pinChar in employee.pinChars">{{pinChar}}</span>
+          </div>
+          <div class="col-md-3" style="margin-top:10px;"ng-show="employee.isEdit">
             <a ng-click="employee.openEmployeeDetails(0)" href="javascript:void(0)" class="btn btn-lg btn-block bg-yellow">
               + เพิ่มพนักงานใหม่
             </a>

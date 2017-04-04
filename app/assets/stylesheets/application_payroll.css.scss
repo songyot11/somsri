@@ -924,7 +924,7 @@ input.btn-prefix.active:-moz-placeholder { /* Firefox 18- */
   margin-top: 0px !important;
 }
 
-.employee-details .dropdown small {
+.employee-details .dropdown small,.employee-pin>small {
   color: #A6A6A7;
 }
 
@@ -1019,14 +1019,13 @@ table#payroll-history-table {
 }
 
 .employee-details.employee-menu {
-  padding-top: 100px;
+  padding-top: 120px;
   background-color: #F3F9FC;
 }
 
 .employee-details.employee-menu-space {
   padding-top: 100px;
 }
-
 .z-index-lv-1{
   z-index: 999;
 }
@@ -1466,4 +1465,14 @@ a.dropdown-item{
 
 .filter-btn {
   margin-right: 20px;
+}
+.pin-char {
+  background-color: #00D2D7;
+  border-radius: 4px;
+  padding: 0px 10px;
+  font-size: 20px;
+  font-weight: bold;
+  margin-right: 2px;
+  margin-bottom: 3px;
+  color: #fff;
 }

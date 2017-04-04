@@ -16,6 +16,7 @@
       ctrl.activeTab = 'general';
       ctrl.activeTabPrivate = 'basic';
       ctrl.hasPayroll =  true;
+      ctrl.pinChars = [];
 
       function openConfirmationModal(message, success, dismiss) {
         $scope.message = message;
@@ -145,6 +146,14 @@
           ctrl.datas_original = $.extend(true, {}, ctrl.datas);
           if(ctrl.hasPayroll){
             ctrl.calTotal();
+          }
+
+          // transform pin number
+          var pin = e.pin;
+          if (pin) {
+            ctrl.pinChars = pin.split('');
+          } else {
+            ctrl.pinChars = []
           }
 
           // set display name
