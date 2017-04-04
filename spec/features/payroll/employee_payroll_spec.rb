@@ -90,7 +90,7 @@ describe 'Payroll', js: true do
     visit "/somsri_payroll#/payroll"
     sleep(1)
     eventually { expect(page).to have_content 'รายการได้รายการหัก' }
-    eventually { expect(page).to have_content 'รหัส ชื่อ เลขบัญชีธนาคาร' }
+    eventually { expect(page).to have_content 'รหัส ชื่อ' }
     eventually { expect(page).to have_content 'เงินเดือน เงินสอนพิเศษ ค่าตำแหน่ง เบี้ยเลี้ยง เบี้ยขยัน โบนัส อื่นๆ' }
     eventually { expect(page).to have_content 'รวมทั้งหมด' }
   end
@@ -98,9 +98,9 @@ describe 'Payroll', js: true do
   it 'should see month latest' do
     visit "/somsri_payroll#/payroll"
     sleep(1)
-    eventually { expect(page).to have_content /นาง สมศรี เป็นชื่อแอพ 5-234-34532-2342.*1,000,000.00 0.00 0.00 0.00 0.00 0.00 0.00/i }
-    eventually { expect(page).to have_content /นาย สมจิตร เป็นนักมวย 5-234-34532-2341.*1,000,000.00 0.00 0.00 0.00 0.00 0.00 0.00/i }
-    eventually { expect(page).to have_content /พี ดี เอ็ม 5-234-34532-xxxx.*1,000,000.00 0.00 0.00 0.00 0.00 0.00 0.00/i }
+    eventually { expect(page).to have_content /นาง สมศรี เป็นชื่อแอพ.*1,000,000.00 0.00 0.00 0.00 0.00 0.00 0.00/i }
+    eventually { expect(page).to have_content /นาย สมจิตร เป็นนักมวย.*1,000,000.00 0.00 0.00 0.00 0.00 0.00 0.00/i }
+    eventually { expect(page).to have_content /พี ดี เอ็ม.*1,000,000.00 0.00 0.00 0.00 0.00 0.00 0.00/i }
     eventually { expect(page).to have_content /รวมทั้งหมด.*3,000,000.00 0.00 0.00 0.00 0.00 0.00 0.00/i }
   end
 
@@ -120,11 +120,11 @@ describe 'Payroll', js: true do
     sleep(1)
 
     eventually { expect(page).to have_content 'รายการได้รายการหัก' }
-    eventually { expect(page).to have_content 'รหัส ชื่อ เลขบัญชีธนาคาร' }
+    eventually { expect(page).to have_content 'รหัส ชื่อ' }
     eventually { expect(page).to have_content 'เงินเดือน เงินสอนพิเศษ ค่าตำแหน่ง เบี้ยเลี้ยง เบี้ยขยัน โบนัส อื่นๆ' }
     eventually { expect(page).to have_content 'ขาดงาน สาย ภาษี ประกันสังคม เงินสะสม เบิกล่วงหน้า อื่นๆ เงินเดือนสุทธิ' }
-    eventually { expect(page).to have_content /นาง สมศรี เป็นชื่อแอพ 5-234-34532-2342.*50,000.00 0.00 0.00 0.00 0.00 0.00 0.00/i }
-    eventually { expect(page).to have_content /นาย สมจิตร เป็นนักมวย 5-234-34532-2341.*50,000.00 0.00 0.00 0.00 0.00 0.00 0.00/i }
+    eventually { expect(page).to have_content /นาง สมศรี เป็นชื่อแอพ.*50,000.00 0.00 0.00 0.00 0.00 0.00 0.00/i }
+    eventually { expect(page).to have_content /นาย สมจิตร เป็นนักมวย.*50,000.00 0.00 0.00 0.00 0.00 0.00 0.00/i }
     eventually { expect(page).not_to have_content 'ฮาราบาส' }
     eventually { expect(page).not_to have_content 'Harabas' }
     eventually { expect(page).to have_content /รวมทั้งหมด.*100,000.00 0.00 0.00 0.00 0.00 0.00 0.00/i }

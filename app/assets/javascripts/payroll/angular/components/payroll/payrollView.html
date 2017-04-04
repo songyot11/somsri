@@ -1,42 +1,40 @@
 <div id="payroll" class="row">
     <div class="col-lg-12">
       <div class="row" style="margin-bottom: 15px;">
-        <div class="col-lg-3">
-          <div class="dropdown">
-            <h2 id="month-list" data-toggle="dropdown">
-              <span ng-bind="payroll.currentDateString" role="button"></span>
-              <span class="caret"></span>
-            </h2>
-            <ul class="dropdown-menu" aria-labelledby="month-list">
-              <li ng-repeat="effectiveDate in payroll.effectiveDates">
-                <a ng-click="payroll.switchMonth(effectiveDate)">
-                  <button>{{ effectiveDate["date_string"] }}</button>
-                </a>
-              </li>
-            </ul>
+        <div class="col-md-12">
+          <div class="pull-right">
+            <div class="btn-group filter-btn">
+                <label class="btn btn-md employee-type" ng-click="payroll.employeeTypeFilter()" ng-model="payroll.employeeTypeMode.normal" style="border-radius: 0px;" uib-btn-checkbox>ลูกจ้างประจำ</label>
+                <label class="btn btn-md employee-type" ng-click="payroll.employeeTypeFilter()" ng-model="payroll.employeeTypeMode.temporary" uib-btn-checkbox>ลูกจ้างชั่วคราว</label>
+                <label class="btn btn-md employee-type" ng-click="payroll.employeeTypeFilter()" ng-model="payroll.employeeTypeMode.probationary" uib-btn-checkbox>ลูกจ้างทดลองงาน</label>
+                <label class="btn btn-md employee-type" ng-click="payroll.employeeTypeFilter()" ng-model="payroll.employeeTypeMode.daily" style="border-radius: 0px;" uib-btn-checkbox>ลูกจ้างรายวัน</label>
+            </div>
+            <a class="btn btn-md btn-payroll"
+              href="/payrolls/social_insurance_pdf?effective_date={{payroll.currentEffectiveDate['date_time'] | encodeString }}"
+              target="_blank">ยื่นประกันสังคม</a>
+            <a class="btn btn-md btn-payroll" ng-click="payroll.createPayrolls()" href="javascript:void(0)">
+              เริ่มออกเงินเดือน
+            </a>
           </div>
-        </div>
-        <div class="col-lg-5 col-lg-offset-1" style="padding-right: 0px;">
-          <div class="btn-group pull-right">
-              <label class="btn btn-lg employee-type" ng-click="payroll.employeeTypeFilter()" ng-model="payroll.employeeTypeMode.normal" style="border-radius: 0px;" uib-btn-checkbox>ลูกจ้างประจำ</label>
-              <label class="btn btn-lg employee-type" ng-click="payroll.employeeTypeFilter()" ng-model="payroll.employeeTypeMode.temporary" uib-btn-checkbox>ลูกจ้างชั่วคราว</label>
-              <label class="btn btn-lg employee-type" ng-click="payroll.employeeTypeFilter()" ng-model="payroll.employeeTypeMode.probationary" uib-btn-checkbox>ลูกจ้างทดลองงาน</label>
-              <label class="btn btn-lg employee-type" ng-click="payroll.employeeTypeFilter()" ng-model="payroll.employeeTypeMode.daily" style="border-radius: 0px;" uib-btn-checkbox>ลูกจ้างรายวัน</label>
-          </div>
-        </div>
-        <div class="col-lg-3">
-          <a class="btn btn-lg btn-payroll"
-            href="/payrolls/social_insurance_pdf?effective_date={{payroll.currentEffectiveDate['date_time'] | encodeString }}"
-            target="_blank">ยื่นประกันสังคม</a>
-          <a class="btn btn-lg btn-payroll" ng-click="payroll.createPayrolls()" href="javascript:void(0)">
-            เริ่มออกเงินเดือน
-          </a>
         </div>
       </div>
         <div class="total-wrapper payroll-content container-fluid">
-          <p class="text-right" ng-show="false">
-              แก้ไขล่าสุด 25 ธ.ค. 59 10:50 โดย Somkid
-          </p>
+            <p class="text-right" ng-show="false">
+                แก้ไขล่าสุด 25 ธ.ค. 59 10:50 โดย Somkid
+            </p>
+            <div class="dropdown">
+              <h3 id="month-list" data-toggle="dropdown">
+                <span ng-bind="payroll.currentDateString" role="button"></span>
+                <span class="caret"></span>
+              </h3>
+              <ul class="dropdown-menu" aria-labelledby="month-list">
+                <li ng-repeat="effectiveDate in payroll.effectiveDates">
+                  <a ng-click="payroll.switchMonth(effectiveDate)">
+                    <button>{{ effectiveDate["date_string"] }}</button>
+                  </a>
+                </li>
+              </ul>
+            </div>
             <div class="fix-column">
                 <div class="thead">
                     <span class="gap"></span>
@@ -44,7 +42,6 @@
                 <div class="thead top">
                     <span class="code">รหัส</span>
                     <span class="name">ชื่อ</span>
-                    <span class="account">เลขบัญชีธนาคาร</span>
                 </div>
                 <div class="tbody">
                     <div class="trow" ng-repeat="(index, employee) in payroll.employees" ng-mouseover="hoverIn(employee.code)" ng-class="{'hilight': sel==employee.code}">
@@ -54,7 +51,6 @@
                             <strong>{{employee.name}}</strong>
                           </a>
                         </span>
-                        <span class="account">{{employee.account_number}}</span>
                     </div>
                     <div class="trow tfoot">
                       <span style="width: 558px;"><strong>รวมทั้งหมด</strong></span>
@@ -84,7 +80,7 @@
                 </div>
                 <div class="tbody">
                     <div class="trow" ng-repeat="(index, employee) in payroll.employees" ng-mouseover="hoverIn(employee.code)">
-                        <span ng-class="{'hilight': sel==employee.code}">
+                        <span ng-class="{'hilight': sel==employee.code, 'salary': true }">
                           <div class="popover-wrapper right-popup" ng-class="{'bottom-popup': index === 0}">
                             <a id="{{index}}-salary" href="#" e-ng-focus="payroll.selectValue($event)" editable-number="employee.salary" e-step="0.01" class="text-green" onbeforesave="payroll.updatePayroll(index, employee.payroll_id, $data, 'salary')">
                                 {{employee.salary || 0 | currency: ""}}

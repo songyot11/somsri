@@ -100,9 +100,10 @@ img {
 }
 
 #payroll-report .report-content {
-  padding-top: 30px;
+  padding: 15px;
   background-color: #fff;
   border-left: 4px solid #00D2D7;
+  margin-top: 10px;
 }
 
 #payroll-report tfoot {
@@ -220,7 +221,6 @@ h2#month-list{
   border: none;
   border-radius: inherit;
   color: #fff;
-  padding: 10px 20px;
   transition: all 0.25s ease;
 }
 .btn-payroll:hover{
@@ -941,7 +941,7 @@ input.btn-prefix.active:-moz-placeholder { /* Firefox 18- */
 }
 
 #payroll .payroll-content {
-  padding-top: 30px;
+  padding-top: 10px;
   background-color: #fff;
   border-left: 4px solid #00D2D7;
 }
@@ -1338,12 +1338,12 @@ a.dropdown-item{
 }
 
 .theadtop > span.income {
-    width: 865px;
+    width: 833px;
     border-right: 1px solid #cccccc;
 }
 
 .theadtop > span.expenses {
-    width: 960px;
+    width: 990px;
 }
 
 .theadtop > span.total {
@@ -1356,14 +1356,10 @@ a.dropdown-item{
 }
 
 .thead > span.name {
-    width: 350px;
+    width: 320px;
 }
 .trow.tfoot> span{
   border-bottom: 2px solid #FFAA00;
-}
-.thead > span.account {
-    width: 150px;
-    border-right: 1px solid #cccccc;
 }
 
 .thead > span.gap {
@@ -1383,9 +1379,11 @@ a.dropdown-item{
     width: 120px;
     border-right: 1px solid #cccccc;
     border-bottom: 1px solid #cccccc;
+    border-left: 1px solid #cccccc;
     line-height: 40px;
     height: 40px;
     text-align: center;
+    margin-right: -5px;
 }
 
 .trow > span.code {
@@ -1393,11 +1391,11 @@ a.dropdown-item{
 }
 
 .trow > span.name {
-    width: 350px;
+    width: 320px;
 }
 
-.trow > span.account {
-    width: 150px;
+.trow > span.salary {
+  margin-left: -1px;
 }
 
 .tbody {
@@ -1414,17 +1412,23 @@ a.dropdown-item{
   .top > span{
     border-right: 1px solid #ccc;
     font-weight: 600;
+    margin-right: -5px;
   }
 }
+.fix-column > .thead {
+  width: 370px;
+}
+
 .fix-column > .tbody {
     overflow: hidden;
+    width: 370px;
     /*padding-bottom: 50px;*/
 }
 /*.fix-column > .tbody > .trow:last-child {margin-bottom: 50px;}*/
 
 .fix-column > .tbody > .trow {
-    margin-top: -50px;
-    margin-bottom: 50px;
+    // margin-top: -50px;
+    // margin-bottom: 50px;
 }
 .fix-column > .tbody > .trow:first-child {
     margin-top: 0px;
@@ -1441,6 +1445,7 @@ a.dropdown-item{
     .top > span{
       border-right: 1px solid #ccc;
       font-weight: 600;
+      margin-right: -5px;
     }
 }
 .rest-columns > .thead {
@@ -1450,19 +1455,15 @@ a.dropdown-item{
 /*.rest-columns > .thead > :last-child {margin-right: 50px;}*/
 .rest-columns > .thead > span {
     margin-right: 50px;
-    margin-left: -50px;
+    margin-left: -55px;
 }
-.rest-columns > .thead > :first-child {margin-left: 0px;}
+.rest-columns > .thead > :first-child {margin-left: -1px;}
 
 .rest-columns > .theadtop {
     /*padding-right: 50px;*/
     overflow: hidden;
 }
-/*.rest-columns > .thead > :last-child {margin-right: 50px;}*/
-.rest-columns > .theadtop > span {
-    margin-right: 50px;
-    margin-left: -50px;
-}
-.rest-columns > .theadtop > :first-child {
-  margin-left: 0px;
+
+.filter-btn {
+  margin-right: 20px;
 }
