@@ -2,7 +2,7 @@
   'use strict';
   angular.module('somsri.payroll.employee_details', [
   ])
-  .controller('employeeDetailsCtrl', ['employeesService', '$log', '$state', '$rootScope','$scope', '$uibModal', 'reportService', '$filter', '$location', 'individualsService', function(service, $log, $state, $rootScope, $scope, $uibModal, reportService, $filter, $location, individualsService) {
+  .controller('employeeDetailsCtrl', ['employeesService', 'studentReportService', '$log', '$state', '$rootScope','$scope', '$uibModal', 'reportService', '$filter', '$location', 'individualsService', function(service, studentReportService, $log, $state, $rootScope, $scope, $uibModal, reportService, $filter, $location, individualsService) {
     $rootScope.menu = "บุคลากร";
     var ctrl = this;
     $rootScope.loadAndAuthorizeResource("employee", function(){
@@ -11,12 +11,29 @@
       ctrl.currentEffectiveDate = "";
       ctrl.empId = employeeId;
       ctrl.isEdit = employeeId > 0 ? true : false
-      ctrl.data = { employee: {}};
+      ctrl.grades = []
+      ctrl.datas = { employee: { grade_id: 0 }};
       ctrl.isSubmit = false;
       ctrl.activeTab = 'general';
       ctrl.activeTabPrivate = 'basic';
       ctrl.hasPayroll =  true;
       ctrl.pinChars = [];
+
+      studentReportService.getGrades().then(function(grade_resp) {
+        // remove option 'All'
+        var allIndex = -1;
+        for(var i = 0; i < grade_resp.data.length; i++) {
+          var option = grade_resp.data[i];
+          if (option.name === 'All') {
+            allIndex = i;
+            break;
+          }
+        }
+        if(allIndex > -1) {
+          grade_resp.data.splice(allIndex, 1);
+        }
+        ctrl.grades = grade_resp.data
+      });
 
       function openConfirmationModal(message, success, dismiss) {
         $scope.message = message;

@@ -11,6 +11,8 @@ describe 'Employee Details', js: true do
     ]
   end
 
+  let(:grade) { Grade.make!(name: 'K1') }
+
   let(:school) { school = School.make!({ name: "โรงเรียนแห่งหนึ่ง" }) }
 
   let(:user) { User.make!({ school_id: school.id }) }
@@ -104,6 +106,7 @@ describe 'Employee Details', js: true do
     user.add_role :admin
     taxrates
     payrolls
+    grade
     login_as(user, scope: :user)
   end
 
@@ -167,13 +170,18 @@ describe 'Employee Details', js: true do
       eventually { expect(page).to have_content("คุณต้องการออกจากหน้านี้โดยไม่บันทึกค่าหรือไม่?") }
     end
 
-    it 'should save change and goto employee lists' do
+    it 'should save change and stay still on the current page' do
       page.fill_in 'นามสกุล', :with => 'โอชา'
       sleep(1)
       click_link('เงินเดือน')
       sleep(1)
       page.fill_in 'ค่าแรง / เงินเดือนปัจจุบัน', :with => '200'
+
+      click_link('ข้อมูลทั่วไป')
+      page.find("#grade_id").select("K1")
+      page.fill_in 'ห้อง', :with => '1/1'
       sleep(1)
+
       click_button('บันทึก')
       sleep(1)
       click_button('ตกลง')
@@ -184,6 +192,8 @@ describe 'Employee Details', js: true do
 
       eventually { expect(employee.last_name_thai).to eq 'โอชา' }
       eventually { expect(employee.salary).to eq 200 }
+      eventually { expect(employee.classroom).to eq "1/1" }
+      eventually { expect(employee.grade).to eq grade }
       eventually { expect(payroll.salary).to eq 200 }
       eventually { expect(page).to have_css('div.employee-details') }
     end

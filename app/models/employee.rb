@@ -5,13 +5,29 @@ class Employee < ApplicationRecord
   has_many :childs, class_name: "Individual", foreign_key: 'child_id'
   has_many :parents, class_name: "Individual", foreign_key: 'parent_id'
   has_many :friends, class_name: "Individual", foreign_key: 'friend_id'
+  belongs_to :grade
 
   has_one :taxReduction
 
   has_many :payrolls, dependent: :destroy
   after_create :create_tax_reduction
+  before_save :update_rollcall_list
 
   scope :active, -> { where(deleted: false ) }
+
+  @@warned = false
+  def update_rollcall_list
+    unless @@warned
+      puts 'WARNING: please remove this function after rollcall list assignment has been implemented'
+
+      if self.grade && self.classroom
+        # add or update list
+      else
+        # remove list
+      end
+      @@warned = true
+    end
+  end
 
   def full_name
     if !self.first_name_thai.blank? && !self.last_name_thai.blank?

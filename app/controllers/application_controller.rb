@@ -1,8 +1,8 @@
 class ApplicationController < ActionController::Base
   include CanCan::ControllerAdditions
   protect_from_forgery with: :exception
-  before_filter :set_cache_buster
-  after_filter :set_csrf_cookie_for_ng
+  before_action :set_cache_buster
+  after_action :set_csrf_cookie_for_ng
 
   rescue_from CanCan::AccessDenied do |exception|
     if current_user

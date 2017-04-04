@@ -95,3 +95,7 @@ LineItem.blueprint(:tuition) do
   detail { "ค่าธรรมเนียมการศึกษา / Tuition Fee" }
   amount { 48000 }
 end
+
+Grade.blueprint do
+  name { Faker::Lorem.word }
+end

@@ -176,7 +176,22 @@
                   <option value="ลูกจ้างชั่วคราว">ลูกจ้างชั่วคราว</option>
                   <option value="ลูกจ้างทดลองงาน">ลูกจ้างทดลองงาน</option>
                   <option value="ลูกจ้างรายวัน">ลูกจ้างรายวัน</option>
-                </select><br>
+                </select>
+              </div>
+            </div>
+          </div>
+          <div class="row">
+            <div class="col-md-4">
+              <div class="form-group">
+                <label for="grade_id">ระดับชั้น</label>
+                <select class="form-control somsri-select" ng-options="item.id as item.name for item in employee.grades" id="grade_id" ng-model="employee.datas.employee.grade_id">
+                </select>
+              </div>
+            </div>
+            <div class="col-md-4">
+              <div class="form-group">
+                <label for="classroom">ห้อง</label>
+                <input type="text" class="form-control" id="classroom" ng-model="employee.datas.employee.classroom">
               </div>
             </div>
           </div>

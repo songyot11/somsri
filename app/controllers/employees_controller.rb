@@ -58,16 +58,12 @@ class EmployeesController < ApplicationController
   end
 
   def create
-    school = current_user.school
-    render json: employee.errors, status: 500 and return if !school
-
-    employee = school.employees.new(employee_params)
-    if employee.save
-        render json: {
-          employee: employee
-        }, status: :ok
+    if @employee.save
+      render json: {
+        employee: @employee
+      }, status: :ok
     else
-      render json: employee.errors, status: 500
+      render json: @employee.errors, status: 500
     end
   end
 
@@ -80,22 +76,22 @@ class EmployeesController < ApplicationController
     e.pay_social_insurance = params[:employee_pay_s_ins]
     t = params[:tax_reduction]
     render json: {
-      tax: Payroll.generate_tax(p, e, t), 
-      social_insurance: Payroll.generate_social_insurance(p, e), 
+      tax: Payroll.generate_tax(p, e, t),
+      social_insurance: Payroll.generate_social_insurance(p, e),
       pvf: Payroll.generate_pvf(p, e)
     }, status: :ok
   end
 
   # PATCH /employees/:id
   def update
-    employee_datas = employee_params
-    employee_datas.delete(:id)
-    employee = Employee.update(params[:id] , employee_datas)
+    employee_data = employee_params
+    @employee.attributes = employee_data
+    @employee.save
 
     if params[:payroll]
       payroll_datas = payroll_params
       payroll_id = payroll_datas[:id]
-      payroll_datas[:salary] = employee_datas[:salary]
+      payroll_datas[:salary] = employee_data[:salary]
       payroll_datas.delete(:id)
       payroll = Payroll.update(payroll_id, payroll_datas)
     end
@@ -107,9 +103,9 @@ class EmployeesController < ApplicationController
     end
 
     render json: {
-      employee: employee,
-      payroll: employee.lastest_payroll,
-      tax_reduction: employee.tax_reduction
+      employee: @employee,
+      payroll: @employee.lastest_payroll,
+      tax_reduction: @employee.tax_reduction
     }
   end
 
@@ -124,7 +120,6 @@ class EmployeesController < ApplicationController
   private
   def employee_params
     result = params.require(:employee).permit([
-      :id,
       :prefix_thai,
       :first_name_thai,
       :last_name_thai,
@@ -151,7 +146,9 @@ class EmployeesController < ApplicationController
       :email,
       :status,
       :pay_pvf,
-      :pay_social_insurance
+      :pay_social_insurance,
+      :grade_id,
+      :classroom
     ]).to_h
     result[:salary] = 0 if result[:salary].blank?
     return result
