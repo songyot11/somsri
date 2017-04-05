@@ -1,13 +1,10 @@
 class List < ApplicationRecord
-  belongs_to :user
   has_many :student_lists, dependent: :destroy
   has_many :roll_calls, dependent: :destroy
-  has_many :class_permisions, dependent: :destroy
+  has_many :teacher_attendance_lists, dependent: :destroy
 
   def get_students
-    students = []
-    student_lists = self.student_lists.to_a
-    student_ids = student_lists.collect(&:student_id)
+    student_ids = StudentList.where(list_id: self.id).pluck(:student_id).to_a
     return Student.where({ id: student_ids }).to_a
   end
 

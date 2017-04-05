@@ -36,12 +36,6 @@ class ApplicationController < ActionController::Base
       super || valid_authenticity_token?(session, request.headers['X-XSRF-TOKEN'])
     end
 
-    def get_current_user(pin)
-      return current_user if current_user
-      return User.where(pin: pin).first if pin
-      return
-    end
-
     def is_json(string)
       begin
         !!JSON.parse(string)

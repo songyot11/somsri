@@ -4,7 +4,6 @@ User.blueprint do
   name { Faker::Name.first_name }
   email { Faker::Internet.email }
   password { 'password' }
-  pin { Faker::Lorem.characters }
 end
 
 School.blueprint do
@@ -42,6 +41,9 @@ Taxrate.blueprint do
 end
 
 TaxReduction.blueprint do
+end
+
+TeacherAttendanceList.blueprint do
 end
 
 Individual.blueprint do

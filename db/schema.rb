@@ -91,6 +91,7 @@ ActiveRecord::Schema.define(version: 20170404042644) do
     t.boolean  "pay_pvf"
     t.integer  "grade_id"
     t.string   "classroom"
+    t.string   "pin"
     t.index ["school_id"], name: "index_employees_on_school_id", using: :btree
   end
 
@@ -170,13 +171,10 @@ ActiveRecord::Schema.define(version: 20170404042644) do
   end
 
   create_table "lists", force: :cascade do |t|
-    t.integer  "user_id"
     t.string   "name",       default: "", null: false
     t.string   "category",   default: "", null: false
     t.datetime "created_at",              null: false
     t.datetime "updated_at",              null: false
-    t.index ["user_id", "name"], name: "index_lists_on_user_id_and_name", unique: true, using: :btree
-    t.index ["user_id"], name: "index_lists_on_user_id", using: :btree
   end
 
   create_table "parents", force: :cascade do |t|
@@ -344,6 +342,13 @@ ActiveRecord::Schema.define(version: 20170404042644) do
     t.float   "tax"
   end
 
+  create_table "teacher_attendance_lists", force: :cascade do |t|
+    t.integer "employee_id"
+    t.integer "list_id"
+    t.index ["employee_id"], name: "index_teacher_attendance_lists_on_employee_id", using: :btree
+    t.index ["list_id"], name: "index_teacher_attendance_lists_on_list_id", using: :btree
+  end
+
   create_table "users", force: :cascade do |t|
     t.string   "email",                  default: "", null: false
     t.string   "encrypted_password",     default: "", null: false
@@ -360,8 +365,6 @@ ActiveRecord::Schema.define(version: 20170404042644) do
     t.integer  "school_id"
     t.string   "name"
     t.string   "full_name"
-    t.string   "classroom"
-    t.string   "pin"
     t.index ["email"], name: "index_users_on_email", unique: true, using: :btree
     t.index ["reset_password_token"], name: "index_users_on_reset_password_token", unique: true, using: :btree
     t.index ["school_id"], name: "index_users_on_school_id", using: :btree

@@ -2,6 +2,10 @@ describe 'RollCall report', js: true do
   let(:school) { school = School.make!({ name: "โรงเรียนแห่งหนึ่ง" }) }
   let(:user) { User.make!({ school_id: school.id }) }
 
+  let(:employee) do
+    Employee.make!({ school_id: school.id, pin: "1111" })
+  end
+
   let(:students) do
     [
       Student.make!({
@@ -41,8 +45,15 @@ describe 'RollCall report', js: true do
 
   let(:lists) do
     [
-      List.make!({ user_id: user.id, name: "1A" }),
-      List.make!({ user_id: user.id, name: "1B" })
+      List.make!({ name: "1A" }),
+      List.make!({ name: "1B" })
+    ]
+  end
+
+  let(:teacher_attendance_lists) do
+    [
+      TeacherAttendanceList.make!({ list_id: lists[0].id, employee_id: employee.id}),
+      TeacherAttendanceList.make!({ list_id: lists[1].id, employee_id: employee.id})
     ]
   end
 
@@ -68,6 +79,7 @@ describe 'RollCall report', js: true do
     roll_calls
     user.add_role :admin
     login_as(user, scope: :user)
+    teacher_attendance_lists
   end
 
   it 'should go to rollcall report' do

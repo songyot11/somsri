@@ -11,48 +11,24 @@ class StudentsController < ApplicationController
   # GET /students.json
   def index
     @menu = "นักเรียน"
-    if params[:pin]
-      user = get_current_user(params[:pin])
-      if user.cannot? :read, Student
-        raise CanCan::AccessDenied.new("Not authorized!", :read, Student)
-      end
-      if user
-        render json: Student.where({ school_id: user.school.id  })
-      else
-        render json: { errors: "Invalid token or user not registered" }, status: 422 and return
-      end
+    authorize! :read, Student
+    grade_select = (params[:grade_select] || 'All')
+    if grade_select.downcase == 'all'
+      @students = Student.order("deleted_at DESC , student_number ASC").search(params[:search]).with_deleted.page(params[:page]).to_a
     else
-      authorize! :read, Student
-      grade_select = (params[:grade_select] || 'All')
-      if grade_select.downcase == 'all'
-        @students = Student.order("deleted_at DESC , student_number ASC").search(params[:search]).with_deleted.page(params[:page]).to_a
-      else
-        grade = Grade.where(name: grade_select).first
-        @students = Student.where(grade_id: grade.id).order("classroom ASC, classroom_number ASC").search(params[:search]).page(params[:page]).to_a
-      end
-      @filter_grade = grade_select
-      render "students/index", layout: "application_invoice"
+      grade = Grade.where(name: grade_select).first
+      @students = Student.where(grade_id: grade.id).order("classroom ASC, classroom_number ASC").search(params[:search]).page(params[:page]).to_a
     end
+    @filter_grade = grade_select
+    render "students/index", layout: "application_invoice"
   end
 
   # GET /students/1
   # GET /students/1.json
   def show
     @menu = "นักเรียน"
-    if params[:pin]
-      user = get_current_user(params[:pin])
-      if user.ability.cannot? :read, Student
-        raise CanCan::AccessDenied.new("Not authorized!", :read, Student)
-      end
-      if user
-        render json: Student.where({ student_number: params[:id], school_id: user.school.id })
-      else
-        render json: { errors: "Invalid token or user not registered" }, status: 422 and return
-      end
-    else
-      authorize! :read, Student
-      render "students/show", layout: "application_invoice"
-    end
+    authorize! :read, Student
+    render "students/show", layout: "application_invoice"
   end
 
   # GET /students/new
@@ -165,10 +141,10 @@ class StudentsController < ApplicationController
 
   # GET /get_roll_calls
   def get_roll_calls
-    user = get_current_user(params[:pin])
-    if user && user.lists && user.lists.size > 0
+    employee = Employee.where(pin: params[:pin]).first
+    if employee && employee.lists && employee.lists.size > 0
       # select list
-      list = user.lists[0]
+      list = employee.lists[0]
       render json: list.get_students and return
     else
       render json: { errors: "Invalid token or user not registered" }, status: 422 and return
@@ -176,49 +152,53 @@ class StudentsController < ApplicationController
   end
 
   def info
-    user = get_current_user(params[:pin])
-    student = Student.find_by(code: params[:id])
-    d =  Date.strptime(params[:date], "%Y-%m-%d")
-    if student
-      s_rollcall = student.roll_call
-      if s_rollcall
-        date = d
-        @studet_r = []
-        @morning = []
-        @afternoon = []
+    employee = Employee.where(pin: params[:pin]).first
+    if employee
+      student = Student.find_by(code: params[:id])
+      d =  Date.strptime(params[:date], "%Y-%m-%d")
+      if student
+        s_rollcall = student.roll_call
+        if s_rollcall
+          date = d
+          @studet_r = []
+          @morning = []
+          @afternoon = []
 
-        roll_date_1 = s_rollcall.where(check_date:date.strftime("%Y-%m-%d"))
-        @studet_r << roll_date_1 if roll_date_1
+          roll_date_1 = s_rollcall.where(check_date:date.strftime("%Y-%m-%d"))
+          @studet_r << roll_date_1 if roll_date_1
 
-        morning  = s_rollcall.where(check_date:date.strftime("%Y-%m-%d"), round:"morning")
-        @morning  << morning if morning
-        afternoon = s_rollcall.where(check_date:date.strftime("%Y-%m-%d"), round:"afternoon")
-        @afternoon << afternoon if afternoon
+          morning  = s_rollcall.where(check_date:date.strftime("%Y-%m-%d"), round:"morning")
+          @morning  << morning if morning
+          afternoon = s_rollcall.where(check_date:date.strftime("%Y-%m-%d"), round:"afternoon")
+          @afternoon << afternoon if afternoon
 
-        (1..Time.days_in_month(d.month)).each do |i|
-            date = d + i.days
-            roll_date = s_rollcall.where(check_date:date.strftime("%Y-%m-%d"))
-            @studet_r << roll_date if roll_date
-            #do count rollcall status
-            morning  = s_rollcall.where(check_date:date.strftime("%Y-%m-%d"), round:"morning")
-            @morning  << morning if morning
-            afternoon = s_rollcall.where(check_date:date.strftime("%Y-%m-%d"), round:"afternoon")
-            @afternoon << afternoon if afternoon
+          (1..Time.days_in_month(d.month)).each do |i|
+              date = d + i.days
+              roll_date = s_rollcall.where(check_date:date.strftime("%Y-%m-%d"))
+              @studet_r << roll_date if roll_date
+              #do count rollcall status
+              morning  = s_rollcall.where(check_date:date.strftime("%Y-%m-%d"), round:"morning")
+              @morning  << morning if morning
+              afternoon = s_rollcall.where(check_date:date.strftime("%Y-%m-%d"), round:"afternoon")
+              @afternoon << afternoon if afternoon
+          end
         end
-      end
-        result = []
-        result << {
-          date: d,
-          first_name: student.first_name,
-          last_name: student.last_name,
-          prefix: student.prefix,
-          morning: @morning.flatten,
-          afternoon: @afternoon.flatten
-        }
+          result = []
+          result << {
+            date: d,
+            first_name: student.first_name,
+            last_name: student.last_name,
+            prefix: student.prefix,
+            morning: @morning.flatten,
+            afternoon: @afternoon.flatten
+          }
 
-      render json: result
+        render json: result
+      else
+        render json: { errors: "Invalid student code" }, status: 422 and return
+      end
     else
-      render json: { errors: "Invalid token or user not registered" }, status: 422 and return
+      render json: { errors: "Invalid PIN" }, status: 422 and return
     end
   end
 

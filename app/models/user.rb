@@ -7,8 +7,6 @@ class User < ApplicationRecord
 
   belongs_to :school
   has_many :invoices, dependent: :destroy
-  has_many :lists, dependent: :destroy
-  has_many :class_permisions, dependent: :destroy
   belongs_to :role
   delegate :can?, :cannot?, :to => :ability
 

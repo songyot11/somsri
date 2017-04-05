@@ -6,6 +6,7 @@ class Employee < ApplicationRecord
   has_many :parents, class_name: "Individual", foreign_key: 'parent_id'
   has_many :friends, class_name: "Individual", foreign_key: 'friend_id'
   belongs_to :grade
+  has_many :teacher_attendance_lists, dependent: :destroy
 
   has_one :taxReduction
 
@@ -35,6 +36,11 @@ class Employee < ApplicationRecord
     else
       [self.prefix, self.first_name, self.middle_name, self.last_name].join(" ")
     end
+  end
+
+  def lists
+    list_ids = TeacherAttendanceList.where(employee_id: self.id).pluck(:list_id).to_a
+    return List.where(id: list_ids).to_a
   end
 
   def annual_income_outcome(id)

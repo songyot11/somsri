@@ -2,71 +2,35 @@ class RollCall < ApplicationRecord
   belongs_to :list
   belongs_to :student
 
-  def self.get_by_date(user, date, options={})
-    if options[:format_api]
-      result = []
-      lists = user.lists
-      lists = List.where(user_id: user.school.users.collect(&:id)).to_a if options[:all]
-      lists.each do |list|
-        morning = list.get_roll_calls_by_round(date, "morning")
-        afternoon = list.get_roll_calls_by_round(date, "afternoon")
-        list.get_students.each do |student|
-          RollCall.fill_with_blank(morning, student, list)
-          RollCall.fill_with_blank(afternoon, student, list)
-        end
-
-        morning.sort!{|a,b| a.student.number.to_i <=> b.student.number.to_i}
-        afternoon.sort!{|a,b| a.student.number.to_i <=> b.student.number.to_i}
-
-        result << {
-          date: date,
-          class: list.name,
-          morning: morning,
-          afternoon: afternoon
-        }
-      end
-      return result
+  def self.get_by_date(employee, date)
+    result = []
+    lists = []
+    
+    if employee
+      lists = employee.lists
+    else
+      lists = List.all.to_a
     end
 
-    sql = where({
-      user_id: user.lists.collect{ |l| l.id },
-      check_date: date
-    })
-    return sql
-
-  end
-
-  def self.get_by_permision(user, date, options={})
-    if options[:format_api]
-      result = []
-      user.class_permisions.each do |p|
-        list = List.find_by(id:p.list_id)
-        morning = list.get_roll_calls_by_round(date, "morning")
-        afternoon = list.get_roll_calls_by_round(date, "afternoon")
-        list.get_students.each do |student|
-          RollCall.fill_with_blank(morning, student, list)
-          RollCall.fill_with_blank(afternoon, student, list)
-        end
-
-        morning.sort!{|a,b| a.student.number.to_i <=> b.student.number.to_i}
-        afternoon.sort!{|a,b| a.student.number.to_i <=> b.student.number.to_i}
-
-        result << {
-          date: date,
-          class: list.name,
-          morning: morning,
-          afternoon: afternoon
-        }
+    lists.each do |list|
+      morning = list.get_roll_calls_by_round(date, "morning")
+      afternoon = list.get_roll_calls_by_round(date, "afternoon")
+      list.get_students.each do |student|
+        RollCall.fill_with_blank(morning, student, list)
+        RollCall.fill_with_blank(afternoon, student, list)
       end
-      return result
+
+      morning.sort!{|a,b| a.student.number.to_i <=> b.student.number.to_i}
+      afternoon.sort!{|a,b| a.student.number.to_i <=> b.student.number.to_i}
+
+      result << {
+        date: date,
+        class: list.name,
+        morning: morning,
+        afternoon: afternoon
+      }
     end
-
-    sql = where({
-      user_id: user.lists.collect{ |l| l.id },
-      check_date: date
-    })
-    return sql
-
+    return result
   end
 
   def self.get_by_month(user, date, options={})
@@ -163,11 +127,11 @@ class RollCall < ApplicationRecord
         # hash.store("date", r.check_date)
         hash.store("status", status)
 
-        if i > 0 
+        if i > 0
           if arr.last["code"] != r.student.student_number
             arr.push(hash)
           end
-        else 
+        else
           arr.push(hash)
         end
       end
