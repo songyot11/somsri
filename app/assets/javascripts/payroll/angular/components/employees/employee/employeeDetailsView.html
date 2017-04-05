@@ -47,7 +47,7 @@
   </div>
 </nav>
 
-<div class="container employee-details employee-menu-space">
+<div class="container employee-details" ng-class="{'employee-menu-space': employee.isEdit}">
   <form name="createProjectForm" ng-submit="employee.submit(employee.datas)">
     <div class="tab-content">
       <div ng-class="{ 'in active' : employee.activeTab === 'general' }" id="generalInfo" class="tab-pane fade">
