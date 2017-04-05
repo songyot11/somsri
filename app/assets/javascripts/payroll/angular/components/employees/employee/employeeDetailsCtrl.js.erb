@@ -311,22 +311,22 @@
             p.tax = resp.data.tax;
             p.pvf = resp.data.pvf;
             p.social_insurance = resp.data.social_insurance;
+            ctrl.total = 0;
+            if(p.salary){ ctrl.total += p.salary }
+            if(p.ot){ ctrl.total += p.ot }
+            if(p.position_allowance){ ctrl.total += p.position_allowance }
+            if(p.allowance ){ ctrl.total += p.allowance }
+            if(p.attendance_bonus){ ctrl.total += p.attendance_bonus}
+            if(p.bonus){ ctrl.total += p.bonus}
+            if(p.extra_etc){ ctrl.total += p.extra_etc}
+            if(p.tax){ ctrl.total -= p.tax}
+            if(p.pvf){ ctrl.total -= p.pvf}
+            if(p.absence){ ctrl.total -= p.absence}
+            if(p.late){ ctrl.total -= p.late}
+            if(p.advance_payment){ ctrl.total -= p.advance_payment}
+            if(p.fee_etc){ ctrl.total -= p.fee_etc}
+            if(p.social_insurance){ ctrl.total -= p.social_insurance}
           });
-          ctrl.total = 0;
-          if(p.salary){ ctrl.total += p.salary }
-          if(p.ot){ ctrl.total += p.ot }
-          if(p.position_allowance){ ctrl.total += p.position_allowance }
-          if(p.allowance ){ ctrl.total += p.allowance }
-          if(p.attendance_bonus){ ctrl.total += p.attendance_bonus}
-          if(p.bonus){ ctrl.total += p.bonus}
-          if(p.extra_etc){ ctrl.total += p.extra_etc}
-          if(p.tax){ ctrl.total -= p.tax}
-          if(p.pvf){ ctrl.total -= p.pvf}
-          if(p.absence){ ctrl.total -= p.absence}
-          if(p.late){ ctrl.total -= p.late}
-          if(p.advance_payment){ ctrl.total -= p.advance_payment}
-          if(p.fee_etc){ ctrl.total -= p.fee_etc}
-          if(p.social_insurance){ ctrl.total -= p.social_insurance}
         }
       }
 
