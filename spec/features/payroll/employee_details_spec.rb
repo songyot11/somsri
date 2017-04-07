@@ -198,6 +198,86 @@ describe 'Employee Details', js: true do
       eventually { expect(page).to have_css('div.employee-details') }
     end
 
+    describe "generate attendance list" do
+
+      let(:students) do
+        [
+          Student.make!({
+            first_name: 'มั่งมี',
+            last_name: 'ศรีสุข',
+            nickname: 'รวย' ,
+            gender_id: 1 ,
+            grade_id: 2 ,
+            classroom: '1A' ,
+            classroom_number: 13 ,
+            student_number: 23 ,
+          }),
+          Student.make!({
+            first_name: 'สมศรี',
+            last_name: 'ณ บานาน่าโค๊ดดิ้ง',
+            nickname: 'กล้วย' ,
+            gender_id: 2 ,
+            grade_id: 4 ,
+            classroom: '1A' ,
+            classroom_number: 14 ,
+            student_number: 22 ,
+            birthdate: Time.now
+          }),
+          Student.make!({
+            first_name: 'สมศรี',
+            last_name: 'ณ บานาน่าโค๊ดดิ้ง',
+            nickname: 'กั้ง' ,
+            gender_id: 2 ,
+            grade_id: 4 ,
+            classroom: '1B' ,
+            classroom_number: 14 ,
+            student_number: 21 ,
+            birthdate: Time.now
+          })
+        ]
+      end
+
+      let(:lists) do
+        [
+          List.make!({ name: "1A" })
+        ]
+      end
+
+      let(:student_lists) do
+        [
+          StudentList.make!({ student_id: students[0].id, list_id: lists[0].id }),
+          StudentList.make!({ student_id: students[1].id, list_id: lists[0].id })
+        ]
+      end
+
+      it 'should generate pin and list' do
+        student_lists
+        sleep(1)
+        page.fill_in 'ห้อง', :with => '1A'
+        sleep(1)
+
+        click_button('บันทึก')
+        sleep(1)
+        click_button('ตกลง')
+        sleep(1)
+
+        employee = Employee.find(employees[0].id)
+
+        found_list = nil
+        employee.lists.each do |list|
+          if list.name == "1A"
+            found_list = list
+          end
+        end
+        expect(employee.pin).not_to be_nil
+        expect(found_list).not_to be_nil
+        expect(found_list.name).to eq("1A")
+        expect(found_list.get_students.size).to eq(2)
+        expect(found_list.get_students.collect(&:student_number)).to include(22)
+        eventually { expect(employee.classroom).to eq "1A" }
+      end
+    end
+
     it 'should diplay histories when select histories dropdown' do
       sleep(1)
       click_link('เงินเดือน')

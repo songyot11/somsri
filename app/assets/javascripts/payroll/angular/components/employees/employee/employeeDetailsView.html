@@ -21,7 +21,7 @@
           </div>
           <div class="col-md-3 employee-pin">
             <small ng-show="employee.pinChars.length > 0">PIN Number</small><br>
-            <span class="pin-char" ng-show="employee.pinChars.length > 0" ng-repeat="pinChar in employee.pinChars">{{pinChar}}</span>
+            <span class="pin-char" ng-show="employee.pinChars.length > 0" ng-repeat="pinChar in employee.pinChars track by $index">{{pinChar}}</span>
           </div>
           <div class="col-md-3" style="margin-top:10px;"ng-show="employee.isEdit">
             <a ng-click="employee.openEmployeeDetails(0)" href="javascript:void(0)" class="btn btn-lg btn-block bg-yellow">

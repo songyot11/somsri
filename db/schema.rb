@@ -89,9 +89,9 @@ ActiveRecord::Schema.define(version: 20170404042644) do
     t.string   "employee_type",        default: "ลูกจ้างประจำ", null: false
     t.boolean  "pay_social_insurance"
     t.boolean  "pay_pvf"
+    t.string   "pin"
     t.integer  "grade_id"
     t.string   "classroom"
-    t.string   "pin"
     t.index ["school_id"], name: "index_employees_on_school_id", using: :btree
   end
 

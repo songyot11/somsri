@@ -1,4 +1,5 @@
 class Employee < ApplicationRecord
+  include ActiveModel::Dirty
   belongs_to :school
   has_many :emergency_calls, class_name: "Individual", foreign_key: 'emergency_call_id'
   has_many :spouses, class_name: "Individual", foreign_key: 'spouse_id'
@@ -20,13 +21,15 @@ class Employee < ApplicationRecord
   def update_rollcall_list
     unless @@warned
       puts 'WARNING: please remove this function after rollcall list assignment has been implemented'
-
-      if self.grade && self.classroom
-        # add or update list
-      else
-        # remove list
-      end
       @@warned = true
+    end
+    if self.classroom && !self.classroom.blank? && self.classroom_changed?
+      # add or update list
+      self.teacher_attendance_lists.destroy_all
+      generate_teacher_attendance_lists
+    elsif self.classroom.blank?
+      # remove list
+      self.teacher_attendance_lists.destroy_all
     end
   end
 
@@ -110,6 +113,35 @@ class Employee < ApplicationRecord
 
   def tax_reduction
     TaxReduction.where(employee_id: self.id).first
+  end
+
+  def generate_teacher_attendance_lists
+    if self.classroom
+      TeacherAttendanceList.transaction do
+        if !self.pin
+          self.generate_pin
+        end
+        list = List.where(name: self.classroom).first
+        if !list
+          list = List.create(name: self.classroom, category: "roll_call")
+          Student.where(classroom: self.classroom).pluck(:id).each do |student_id|
+            StudentList.create(student_id: student_id, list_id: list.id)
+          end
+        end
+        if TeacherAttendanceList.where(employee_id: self.id, list_id: list.id).count == 0
+          if TeacherAttendanceList.where(employee_id: self.id).count > 0
+            TeacherAttendanceList.where(employee_id: self.id).destroy_all
+          end
+          TeacherAttendanceList.create(employee_id: self.id, list_id: list.id)
+        end
+      end
+    end
+  end
+
+  def generate_pin
+    pins = Employee.where.not(pin: nil).pluck(:id)
+    self.pin = ([*0..1000] - pins).sample.to_s.rjust(4, '0')
+    self.save
   end
 
   private
