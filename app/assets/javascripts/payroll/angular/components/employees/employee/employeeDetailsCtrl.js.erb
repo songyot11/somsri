@@ -18,6 +18,7 @@
       ctrl.activeTabPrivate = 'basic';
       ctrl.hasPayroll =  true;
       ctrl.pinChars = [];
+      ctrl.filterKeyword = '';
 
       studentReportService.getGrades().then(function(grade_resp) {
         // remove option 'All'
@@ -185,6 +186,7 @@
             if(e.middle_name && e.middle_name.length > 0){ ctrl.displayName += e.middle_name + " " }
             ctrl.displayName += e.last_name;
           }
+          ctrl.displayName = e.id + ': ' + ctrl.displayName;
 
           // init tax reduction default
           if(ctrl.datas.tax_reduction.no_income_spouse > 0)
@@ -205,10 +207,12 @@
           // get others employee
           service.getAllEmployee().then(function(resp) {
             if (resp.data.length > 0) {
-              ctrl.employee_lists = resp.data
-              for(var i = 0; i < ctrl.employee_lists.length; i++){
-                if (ctrl.employee_lists[i].name == ctrl.displayName){
-                  ctrl.employee_lists.splice(i, 1);
+              ctrl.employee_lists = []; //resp.data
+              for(var i = 0; i < resp.data.length; i++){
+                var employee = resp.data[i];
+                if (employee.id + ': ' + employee.name !== ctrl.displayName){
+                  // ctrl.employee_lists.splice(i, 1);
+                  ctrl.employee_lists.push({name: employee.name, id: employee.id});
                 }
               }
             }

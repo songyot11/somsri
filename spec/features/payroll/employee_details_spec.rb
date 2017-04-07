@@ -1,3 +1,4 @@
+
 describe 'Employee Details', js: true do
   let(:taxrates) do
     [
@@ -124,6 +125,26 @@ describe 'Employee Details', js: true do
     before :each do
       visit "/somsri_payroll#/employees/#{employees[0].id}"
       sleep(1)
+    end
+
+    it 'have employees list' do
+      sleep(1)
+      expect(page).to have_content('สมศรี')
+      expect(page).to_not have_content('สมจิตร')
+
+      find('#employeeName').click()
+      eventually { expect(page).to have_content('สมศรี') }
+      eventually { expect(page).to have_content('สมจิตร') }
+    end
+
+    it 'can filter employees list' do
+      sleep(1)
+
+      find('#employeeName').click()
+      eventually { expect(page).to have_content('สมจิตร') }
+
+      fill_in 'employeeFilter', with: 'ศรี'
+      eventually { expect(page).to_not have_content('สมจิตร') }
     end
 
     it 'should diplay lastest employee details' do
@@ -323,6 +344,7 @@ describe 'Employee Details', js: true do
     end
 
     it 'should save only employee data when in histories mode and click บันทึก' do
+      sleep(1)
       page.fill_in 'นามสกุล', :with => 'โอชา'
       click_link('เงินเดือน')
       sleep(1)

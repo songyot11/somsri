@@ -24,6 +24,11 @@ body {
   margin-bottom: 60px;
 }
 
+.employee-filter {
+  width: calc(100% - 40px);
+  margin: 3px 20px 3px 20px;
+}
+
 .navbar-default {
   background-color: #ffffff;
   box-shadow: 0 2px 4px 0 rgba(0, 0, 0, 0.3);

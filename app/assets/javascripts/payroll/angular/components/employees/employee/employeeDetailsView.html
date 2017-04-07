@@ -6,14 +6,15 @@
           <div class="col-md-6">
             <div class="dropdown" ng-show="employee.isEdit">
               <small>Select employee</small>
-              <h1 id="employeeName" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="true">
+              <h1 id="employeeName" onclick="window.setTimeout(function(){ $('#employeeFilter').val('').trigger('change').focus()}, 100)" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="true">
                 <span ng-bind="employee.displayName"></span>
                 <span class="caret"></span>
               </h1>
-              <ul class="dropdown-menu ">
-                <li ng-repeat="data in employee.employee_lists">
+              <ul class="dropdown-menu">
+                <li ng-show="employee.employee_lists.length > 0"><input class="employee-filter" id="employeeFilter" type="text" ng-model="employee.filterKeyword" /></li>
+                <li ng-repeat="data in employee.employee_lists | filter:employee.filterKeyword">
                   <a ng-click="employee.openEmployeeDetails(data.id)" href="javascript:void(0)">
-                    {{data.name}}
+                    {{data.id}}: {{data.name}}
                   </a>
                 </li>
               </ul>
