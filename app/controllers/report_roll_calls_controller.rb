@@ -44,7 +44,7 @@ class ReportRollCallsController < ApplicationController
   end
 
   def months
-    check_dates = RollCall.uniq.pluck(:check_date).to_a
+    check_dates = RollCall.distinct.pluck(:check_date).to_a
     results = check_dates.collect do |x|
       {name: DateTime.parse(x).strftime("%B %Y"), date: DateTime.parse(x).strftime("%Y-%m-%d")}
     end

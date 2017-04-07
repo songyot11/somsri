@@ -28,9 +28,12 @@ describe EmployeesController do
   describe '#update' do
     it 'can update grade and classroom' do
       grade = Grade.make!
-      patch :update, id: employee.id, employee: {
-        classroom: '1/1',
-        grade_id: grade.id
+      patch :update, params: {
+        id: employee.id,
+        employee: {
+          classroom: '1/1',
+          grade_id: grade.id
+        }
       }
 
       expect(employee.reload.grade).to eq grade
