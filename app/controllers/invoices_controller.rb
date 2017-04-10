@@ -9,12 +9,12 @@ class InvoicesController < ApplicationController
     if grade_select.downcase == 'all'
       # @invoices = Invoice.order("id DESC").to_a
       # @invoices = Invoice.order("id DESC").search(params[:search]).all.page(params[:page]).to_a
-      @invoices = Invoice.order("id DESC").all.page(params[:page]).per_page(10).to_a
+      @invoices = Invoice.order("id DESC").all.paginate(page: params[:page], per_page: 10).to_a
     else
       # @invoices = Invoice.where(grade_name: grade_select).order("id DESC").to_a
       # @invoices = Invoice.where(grade_id: grade.id).order("id DESC").search(params[:search]).page(params[:page]).to_a
       grade = Grade.where(name: grade_select).first
-      @invoices = Invoice.where(grade_name: grade.name).order("id DESC").page(params[:page]).per_page(10).to_a
+      @invoices = Invoice.where(grade_name: grade.name).order("id DESC").paginate(page: params[:page], per_page: 10).to_a
     end
     @filter_grade = grade_select
   end

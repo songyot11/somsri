@@ -14,10 +14,10 @@ class StudentsController < ApplicationController
     authorize! :read, Student
     grade_select = (params[:grade_select] || 'All')
     if grade_select.downcase == 'all'
-      @students = Student.order("deleted_at DESC , student_number ASC").search(params[:search]).with_deleted.page(params[:page]).to_a
+      @students = Student.order("deleted_at DESC , student_number ASC").search(params[:search]).with_deleted.paginate(page: params[:page], per_page: 10).to_a
     else
       grade = Grade.where(name: grade_select).first
-      @students = Student.where(grade_id: grade.id).order("classroom ASC, classroom_number ASC").search(params[:search]).page(params[:page]).to_a
+      @students = Student.where(grade_id: grade.id).order("classroom ASC, classroom_number ASC").search(params[:search]).paginate(page: params[:page], per_page: 10).to_a
     end
     @filter_grade = grade_select
     render "students/index", layout: "application_invoice"
