@@ -2,9 +2,9 @@
   <div class="container">
     <div class="row">
       <div class="col-md-12">
-        <div class="row">
+        <div class="row" ng-show="employee.isEdit">
           <div class="col-md-6">
-            <div class="dropdown" ng-show="employee.isEdit">
+            <div class="dropdown">
               <small>Select employee</small>
               <h1 id="employeeName" onclick="window.setTimeout(function(){ $('#employeeFilter').val('').trigger('change').focus()}, 100)" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="true">
                 <span ng-bind="employee.displayName"></span>
@@ -24,7 +24,7 @@
             <small ng-show="employee.pinChars.length > 0">PIN Number</small><br>
             <span class="pin-char" ng-show="employee.pinChars.length > 0" ng-repeat="pinChar in employee.pinChars track by $index">{{pinChar}}</span>
           </div>
-          <div class="col-md-3" style="margin-top:10px;"ng-show="employee.isEdit">
+          <div class="col-md-3" style="margin-top:10px;">
             <a ng-click="employee.openEmployeeDetails(0)" href="javascript:void(0)" class="btn btn-lg btn-block bg-yellow">
               + เพิ่มพนักงานใหม่
             </a>

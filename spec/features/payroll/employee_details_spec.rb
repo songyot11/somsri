@@ -332,6 +332,7 @@ describe 'Employee Details', js: true do
     end
 
     it 'should diplay warning modal when select histories dropdown after edit payroll' do
+      sleep(1)
       click_link('เงินเดือน')
       sleep(1)
       page.fill_in 'ค่าแรง / เงินเดือนปัจจุบัน', :with => '999'
@@ -346,6 +347,7 @@ describe 'Employee Details', js: true do
     it 'should save only employee data when in histories mode and click บันทึก' do
       sleep(1)
       page.fill_in 'นามสกุล', :with => 'โอชา'
+      sleep(1)
       click_link('เงินเดือน')
       sleep(1)
       page.fill_in 'ค่าแรง / เงินเดือนปัจจุบัน', :with => '999'
