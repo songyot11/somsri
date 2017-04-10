@@ -19,6 +19,7 @@
       ctrl.hasPayroll =  true;
       ctrl.pinChars = [];
       ctrl.filterKeyword = '';
+      ctrl.total = '';
 
       studentReportService.getGrades().then(function(grade_resp) {
         // remove option 'All'
@@ -309,7 +310,7 @@
       }
 
       ctrl.calTotal = function(){
-        if (ctrl.isEdit) {
+        if (isDataChange() || ctrl.total=='') {
           var p = ctrl.datas.payroll;
           var datas_result = $.extend(true, {}, ctrl.datas);
           service.getEmployeeDeduction(ctrl.datas.employee.id, p.id , datas_result).then(function(resp) {
