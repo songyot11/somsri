@@ -32,6 +32,18 @@
               </select>
             </td>
           </tr>
+          <br>
+          <tr>
+            <td><label for="class_select">เลือกห้อง</label></td>
+            <td>
+              <select name="class_select" id="class_select" class="btn-grades" onchange="this.form.submit()">
+                  <option value='all'>All Classroom</option>
+                  <% @class_display.each do |classroom| %>
+                    <option value="<%= classroom %>"<%= @filter_class == classroom ? "selected" : "" %>> <%= classroom %> </option>
+                  <% end %>
+              </select>
+            </td>
+          </tr>
         </div>
       <% end %>
     <table class="table table-sp-report">

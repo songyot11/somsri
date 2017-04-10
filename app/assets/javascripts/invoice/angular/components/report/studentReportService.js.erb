@@ -4,7 +4,7 @@
   ])
   .service('studentReportService', ['$http', function($http) {
     this.getStudents = function(grade_name, page) {
-      return $http.get('/students', { params: { grade_select: grade_name, page: page } })
+      return $http.get('/students', { params: { grade_select: grade_name, page: page , student_report: true } })
     }
 
     this.getInvoiceTotalAmount = function(grade_name) {

@@ -13,13 +13,35 @@ class StudentsController < ApplicationController
     @menu = "นักเรียน"
     authorize! :read, Student
     grade_select = (params[:grade_select] || 'All')
-    if grade_select.downcase == 'all'
-      @students = Student.order("deleted_at DESC , student_number ASC").search(params[:search]).with_deleted.paginate(page: params[:page], per_page: 10).to_a
+    class_select = (params[:class_select] || 'All')
+    @class_display = Student.order("classroom ASC").select(:classroom).map(&:classroom).uniq.compact
+
+    if !params[:student_report]
+      # without angular
+      if grade_select.downcase == 'all' && class_select.downcase == 'all'
+        students = Student.with_deleted
+      elsif grade_select.downcase == 'all' && class_select.downcase != 'all'
+        students = Student.where(classroom: class_select)
+      elsif grade_select != 'all' && class_select.downcase == 'all'
+        grade = Grade.where(name: grade_select).first
+        students = Student.where(grade: grade.id)
+      elsif grade_select != 'all' && class_select != 'all'
+        grade = Grade.where(name: grade_select).first
+        students = Student.where(grade: grade.id , classroom: class_select)
+      end
+      @students = students.order("classroom ASC, classroom_number ASC").search(params[:search]).page(params[:page]).to_a
     else
-      grade = Grade.where(name: grade_select).first
-      @students = Student.where(grade_id: grade.id).order("classroom ASC, classroom_number ASC").search(params[:search]).paginate(page: params[:page], per_page: 10).to_a
+      # with angular
+      if grade_select.downcase == 'all'
+        @students = Student.order("deleted_at DESC , student_number ASC").search(params[:search]).with_deleted.paginate(page: params[:page], per_page: 10).to_a
+      else
+        grade = Grade.where(name: grade_select).first
+        @students = Student.where(grade_id: grade.id).order("classroom ASC, classroom_number ASC").search(params[:search]).paginate(page: params[:page], per_page: 10).to_a
+      end
     end
+
     @filter_grade = grade_select
+    @filter_class = class_select
     render "students/index", layout: "application_invoice"
   end
 
@@ -274,5 +296,4 @@ class StudentsController < ApplicationController
         end
       end
     end
-
 end
