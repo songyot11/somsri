@@ -117,11 +117,18 @@ class StudentsController < ApplicationController
   end
 
   def real_destroy
-    @student = Student.find(params[:student_id])
-    @student.really_destroy!
-    respond_to do |format|
-      format.html { redirect_to students_url }
-      format.json { head :no_content }
+    begin
+      @student = Student.find(params[:student_id])
+      @student.really_destroy!
+      flash[:success] = "ลบนักเรียนเรียบร้อยแล้ว"
+    rescue ActiveRecord::DeleteRestrictionError => e
+      @student.errors.add(:base, e)
+      flash[:error] = "#{e}"
+    ensure
+      respond_to do |format|
+        format.html { redirect_to students_url}
+        format.json { head :no_content }
+      end
     end
   end
 

@@ -102,11 +102,18 @@ class ParentsController < ApplicationController
   end
 
   def real_destroy
-    @parent = Parent.find(params[:parent_id])
-    @parent.really_destroy!
-    respond_to do |format|
-      format.html { redirect_to parents_url}
-      format.json { head :no_content }
+    begin
+      @parent = Parent.find(params[:parent_id])
+      @parent.really_destroy!
+      flash[:success] = "ลบผู้ปกครองเรียบร้อยแล้ว"
+    rescue ActiveRecord::DeleteRestrictionError => e
+      @parent.errors.add(:base, e)
+      flash[:error] = "#{e}"
+    ensure
+      respond_to do |format|
+        format.html { redirect_to parents_url}
+        format.json { head :no_content }
+      end
     end
   end
 

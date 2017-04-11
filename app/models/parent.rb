@@ -1,7 +1,7 @@
 class Parent < ApplicationRecord
   has_and_belongs_to_many :students, join_table: "students_parents"
   has_and_belongs_to_many :relationships, join_table: "students_parents"
-  has_many :invoices
+  has_many :invoices, dependent: :restrict_with_exception
   belongs_to :school
 
   acts_as_paranoid

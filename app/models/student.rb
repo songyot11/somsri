@@ -4,7 +4,7 @@ class Student < ApplicationRecord
   belongs_to :school
   has_and_belongs_to_many :parents, join_table: 'students_parents'
   has_and_belongs_to_many :relationships, join_table: "students_parents"
-  has_many :invoices
+  has_many :invoices, dependent: :restrict_with_exception
 
   has_many :student_lists, dependent: :destroy
   alias_attribute :code, :student_number

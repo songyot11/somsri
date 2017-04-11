@@ -75,11 +75,11 @@
                     parents_path, :class => 'btn btn-default'  %>
       <%= link_to t('.edit', :default => t("helpers.links.edit")),
                     edit_parent_path(@parent), :class => 'btn btn-default' %>
-      <%= link_to t('.destroy', :default => t("helpers.links.destroy")),
+      <span ng-show="<%=@parent.invoices.first.nil?%>"><%= link_to t('.destroy', :default => t("helpers.links.destroy")),
                     parent_path(@parent),
                     :method => 'delete',
                     :data => { :confirm => t('.confirm', :default => t("helpers.links.confirm", :default => 'Are you sure?')) },
-                    :class => 'btn btn-remove' %>
+                    :class => 'btn btn-remove' %></span>
     </div>
   </div>
 </div>

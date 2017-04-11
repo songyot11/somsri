@@ -9,14 +9,22 @@ describe 'Invoice-Report', js: true do
     [
       parent1 = Parent.make!({
         full_name: 'สมศรี ใบเสร็จ'
+      }),
+      parent2 = Parent.make!({
+        full_name: 'สมหมาย ใบไม่เสร็จ'
       })
     ]
   end
+  let(:invoice) { inv1 = Invoice.make!({
+    parent_id: parent[1].id,
+    invoice_status_id: 1
+  })}
 
   before do
     user.add_role :admin
     login_as(user, scope: :user)
     parent
+    invoice
   end
 
   it 'should access to parent page' do
@@ -28,7 +36,7 @@ describe 'Invoice-Report', js: true do
   it 'should archive parent' do
     visit '/parents#/'
     sleep(1)
-    find('#parent_archive').click
+    first('#parent_archive').click
     sleep(1)
     page.accept_alert
     sleep(1)
@@ -41,11 +49,11 @@ describe 'Invoice-Report', js: true do
 
   it 'should restore parent' do
     visit '/parents#/'
-    find('#parent_archive').click
+    first('#parent_archive').click
     sleep(1)
     page.accept_alert
     sleep(1)
-    find('#parent_restore').click
+    first('#parent_restore').click
     sleep(1)
 
     eventually { expect(page).to have_no_content("ผู้ปกครองถูกนำออกจากระบบชั่วคราว") }
@@ -56,9 +64,17 @@ describe 'Invoice-Report', js: true do
     sleep(1)
     eventually { expect(page).to have_content("สมศรี ใบเสร็จ") }
     sleep(1)
-    find('#parent_delete').click
+    first('#parent_delete').click
     sleep(1)
 
     eventually { expect(page).to have_no_content("สมศรี ใบเสร็จ") }
   end
+
+  it 'should can not destroy parent' do
+    visit "/parents/#{parent[1].id}"
+    sleep(1)
+    page.save_screenshot('~/screenshot.png')
+    eventually { expect(page).to have_no_content("Destroy") }
+  end
+
 end

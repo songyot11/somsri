@@ -1,4 +1,5 @@
 <%- model_class = Student -%>
+<%= render 'layouts/messages' %>
 <div class="container-fluid">
   <div class="row head-sp">
     <div class="col-xs-2">
@@ -91,12 +92,12 @@
                           :method => :post ,
                           :data => { :confirm => t('.confirm', :default => t("helpers.links.confirm.student_resign", :default => 'Are you sure?')) } ,
                           :class => 'btn btn-resign tooltips', 'data-toggle' => 'tooltip', 'data-placement' => 'top', :title => 'นักเรียนขอลาออก'  %>
-              <%= link_to "<i class='fa fa-trash'></i>".html_safe ,
+              <span ng-show="<%=student.invoices.first.nil?%>"><%= link_to "<i class='fa fa-trash'></i>".html_safe ,
                             student_real_destroy_path(student) ,
                             :id => 'student_destroy' ,
                             :method => :delete ,
                             :data => { :confirm => t('.confirm', :default => t("helpers.links.confirm.student_delete", :default => 'Are you sure?'))} ,
-                            :class => 'btn btn-trash tooltips', 'data-toggle' => 'tooltip', 'data-placement' => 'top', :title => 'ลบข้อมูลจากระบบแบบถาวร'  %>
+                            :class => 'btn btn-trash tooltips', 'data-toggle' => 'tooltip', 'data-placement' => 'top', :title => 'ลบข้อมูลจากระบบแบบถาวร'  %></span>
             </td>
           </tr>
           <% else %>

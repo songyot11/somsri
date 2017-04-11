@@ -1,4 +1,5 @@
 <%- model_class = Parent -%>
+<%= render 'layouts/messages' %>
 <div class="container-fluid">
   <div class="row head-sp">
     <div class="col-xs-2">
@@ -75,12 +76,12 @@
                             :data => { :confirm => t('.confirm', :default => t("helpers.links.confirm.parent_archive", :default => 'Are you sure?')) },
                             :class => 'btn btn-archive-sp tooltips', 'data-toggle' => 'tooltip', 'data-placement' => 'top', :title => 'ลบข้อมูลออกจากระบบ (สามารถนำกลับมาได้้)'  %>
 
-                <%= link_to "<i class='fa fa-trash'></i>".html_safe ,
+                <span ng-show="<%=parent.invoices.first.nil?%>"><%= link_to "<i class='fa fa-trash'></i>".html_safe ,
                             parent_real_destroy_path(parent),
                             :id => 'parent_delete' ,
                             :method => :delete,
                             :data => { :confirm => t('.confirm', :default => t("helpers.links.confirm.parent_delete", :default => 'Are you sure?')) },
-                            :class => 'btn btn-delete-sp tooltips', 'data-toggle' => 'tooltip', 'data-placement' => 'top', :title => 'ลบข้อมูลออกจากระบบ (ไม่สามารถนำกลับมาได้)'  %>
+                            :class => 'btn btn-delete-sp tooltips', 'data-toggle' => 'tooltip', 'data-placement' => 'top', :title => 'ลบข้อมูลออกจากระบบ (ไม่สามารถนำกลับมาได้)'  %></span>
             </td>
           </tr>
           <% else %>
