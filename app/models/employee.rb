@@ -13,7 +13,7 @@ class Employee < ApplicationRecord
 
   has_many :payrolls, dependent: :destroy
   after_create :create_tax_reduction
-  before_save :update_rollcall_list
+  after_save :update_rollcall_list
 
   scope :active, -> { where(deleted: false ) }
 
@@ -127,7 +127,14 @@ class Employee < ApplicationRecord
           Student.where(classroom: self.classroom).pluck(:id).each do |student_id|
             StudentList.create(student_id: student_id, list_id: list.id)
           end
+        else
+          student_ids = Student.where(classroom: self.classroom).pluck(:id)
+          exclude_student_ids = StudentList.where(list_id: list.id).pluck(:id)
+          (student_ids - exclude_student_ids).each do |student_id|
+            StudentList.create(student_id: student_id, list_id: list.id)
+          end
         end
+
         if TeacherAttendanceList.where(employee_id: self.id, list_id: list.id).count == 0
           if TeacherAttendanceList.where(employee_id: self.id).count > 0
             TeacherAttendanceList.where(employee_id: self.id).destroy_all

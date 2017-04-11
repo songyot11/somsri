@@ -1,4 +1,5 @@
 class Student < ApplicationRecord
+  include ActiveModel::Dirty
   belongs_to :grade
   belongs_to :gender
   belongs_to :school
@@ -17,7 +18,38 @@ class Student < ApplicationRecord
   validates :student_number , uniqueness: true , allow_nil: true
 
   acts_as_paranoid
-  
+  after_save :update_rollcall_list
+
+  @@warned = false
+  def update_rollcall_list
+    unless @@warned
+      puts 'WARNING: please remove this function after rollcall list assignment has been implemented'
+      @@warned = true
+    end
+    if self.classroom && !self.classroom.blank? && self.classroom_changed?
+      # add or update list
+      StudentList.transaction do
+        self.student_lists.destroy_all
+        list = List.where(name: self.classroom).first
+        if !list
+          list = List.create(name: self.classroom, category: "roll_call")
+          Student.where(classroom: self.classroom).pluck(:id).each do |student_id|
+            StudentList.create(student_id: student_id, list_id: list.id)
+          end
+        else
+          student_ids = Student.where(classroom: self.classroom).pluck(:id)
+          exclude_student_ids = StudentList.where(list_id: list.id).pluck(:id)
+          (student_ids - exclude_student_ids).each do |student_id|
+            StudentList.create(student_id: student_id, list_id: list.id)
+          end
+        end
+      end
+    elsif self.classroom.blank?
+      # remove list
+      self.student_lists.destroy_all
+    end
+  end
+
   def full_name_with_title
     if gender_id != nil
       title = self.gender_id == 1  ? 'ด.ช.' : 'ด.ญ.'

@@ -258,21 +258,9 @@ describe 'Employee Details', js: true do
         ]
       end
 
-      let(:lists) do
-        [
-          List.make!({ name: "1A" })
-        ]
-      end
-
-      let(:student_lists) do
-        [
-          StudentList.make!({ student_id: students[0].id, list_id: lists[0].id }),
-          StudentList.make!({ student_id: students[1].id, list_id: lists[0].id })
-        ]
-      end
-
       it 'should generate pin and list' do
-        student_lists
+        students
+        visit "/somsri_payroll#/employees/#{employees[0].id}"
         sleep(1)
         page.fill_in 'ห้อง', :with => '1A'
         sleep(1)
@@ -283,18 +271,11 @@ describe 'Employee Details', js: true do
         sleep(1)
 
         employee = Employee.find(employees[0].id)
-
-        found_list = nil
-        employee.lists.each do |list|
-          if list.name == "1A"
-            found_list = list
-          end
-        end
         expect(employee.pin).not_to be_nil
-        expect(found_list).not_to be_nil
-        expect(found_list.name).to eq("1A")
-        expect(found_list.get_students.size).to eq(2)
-        expect(found_list.get_students.collect(&:student_number)).to include(22)
+        expect(employee.lists.size).to eq(1)
+        expect(employee.lists[0].name).to eq("1A")
+        expect(employee.lists[0].get_students.size).to eq(2)
+        expect(employee.lists[0].get_students.collect(&:student_number)).to include(22)
         eventually { expect(employee.classroom).to eq "1A" }
       end
     end

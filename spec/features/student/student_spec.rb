@@ -92,4 +92,33 @@ describe 'Student', js: true do
     eventually { expect(page).to have_no_content("Destroy") }
   end
 
+  it 'should create student with list' do
+    visit '/students/new#/'
+    sleep(1)
+    page.fill_in 'ชื่อ-นามสกุล', :with => 'นักเรียนเพิ่มใหม่'
+    page.fill_in 'ชื่อเล่น', :with => 'ใหม่'
+    page.fill_in 'Full Name', :with => 'Nakreanpermmai'
+    page.fill_in 'Nick Name', :with => 'Mai'
+    page.fill_in 'ห้อง', :with => '2B'
+    sleep(1)
+    click_button("บันทึก")
+    sleep(1)
+    new_student = Student.where(full_name: "นักเรียนเพิ่มใหม่").first
+    eventually { expect(new_student.student_lists.size).to eq(1) }
+    eventually { expect(new_student.student_lists[0].list.name).to eq("2B") }
+  end
+
+  it 'should create list when add classroom to student' do
+    visit "/students/#{student[0].id}/edit#/"
+    sleep(1)
+    page.fill_in 'ห้อง', :with => '2B'
+    sleep(1)
+    click_button("บันทึก")
+    sleep(1)
+
+    new_student = Student.where(id: student[0].id).first
+    eventually { expect(new_student.student_lists.length).to eq(1) }
+    eventually { expect(new_student.student_lists[0].list.name).to eq("2B") }
+  end
+
 end

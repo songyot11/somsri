@@ -63,6 +63,8 @@ describe Employee do
   end
 
   before do
+    employee
+    lists
     student_lists
     user.add_role :admin
     login_as(user, scope: :user)
@@ -72,54 +74,41 @@ describe Employee do
   it 'generate new list for employee' do
     employee.classroom = "1B"
     employee.save
-    employee.generate_teacher_attendance_lists
     employee.reload
 
-    found_list = nil
-    employee.lists.each do |list|
-      if list.name == "1B"
-        found_list = list
-      end
-    end
-    expect(employee.pin).not_to be_nil
-    expect(found_list).not_to be_nil
-    expect(found_list.name).to eq("1B")
-    expect(found_list.get_students.collect(&:student_number)).to include(21)
+    expect(employee.lists.size).to eq(1)
+    expect(employee.lists[0].name).to eq("1B")
+    expect(employee.lists[0].get_students.collect(&:student_number)).to include(21)
   end
 
   it 'link relationship between exist list and new employee' do
     em = Employee.make!({ school_id: school.id })
     em.classroom = "1A"
     em.save
-    em.generate_teacher_attendance_lists
     em.reload
 
-    found_list = nil
-    em.lists.each do |list|
-      if list.name == "1A"
-        found_list = list
-      end
-    end
     expect(employee.pin).not_to be_nil
-    expect(found_list).not_to be_nil
-    expect(found_list.id).to eq(lists[0].id)
-    expect(found_list.get_students.collect(&:student_number)).to include(22)
+    expect(em.lists.size).to eq(1)
+    expect(em.lists[0].id).to eq(lists[0].id)
+    expect(em.lists[0].get_students.collect(&:student_number)).to include(22)
   end
 
-  it 'do nothing if employee already have list' do
-    employee.generate_teacher_attendance_lists
+  it 'should use same list if list already exist' do
+    employee.classroom = "1A"
+    employee.save
     employee.reload
 
-    found_list = nil
-    employee.lists.each do |list|
-      if list.name == "1A"
-        found_list = list
-      end
-    end
-    expect(employee.pin).not_to be_nil
-    expect(found_list).not_to be_nil
-    expect(found_list.id).to eq(lists[0].id)
-    expect(found_list.get_students.collect(&:student_number)).to include(22)
+    expect(employee.lists.size).to eq(1)
+    expect(employee.lists[0].id).to eq(lists[0].id)
+    expect(employee.lists[0].get_students.collect(&:student_number)).to include(22)
+  end
+
+  it 'should do nothing if employee.classroom not change' do
+    employee.first_name = "firstname"
+    employee.save
+    employee.reload
+
+    expect(employee.lists.size).to eq(0)
   end
 
 end

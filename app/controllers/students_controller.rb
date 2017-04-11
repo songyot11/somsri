@@ -278,14 +278,16 @@ class StudentsController < ApplicationController
     def parent_assign
       prn_params = params[:parent]
       rel_params = params[:relationship]
-
       prn_rel = Hash.new
       if !prn_params.nil?
-        prn_params.each_with_index { |value, index| prn_rel[value] = rel_params[index] }
+        prn_params.each_with_index do |value, index|
+          if prn_rel[value] && rel_params[index]
+            prn_rel[value] = rel_params[index]
+          end
+        end
       end
       prn_params = prn_rel.keys
       @relationships = prn_rel.values
-
       @parents = Array.new
       if !prn_params.nil?
         prn_params.each_with_index.map do |p, index|

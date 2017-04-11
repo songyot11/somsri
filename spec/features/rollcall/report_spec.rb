@@ -75,6 +75,7 @@ describe 'RollCall report', js: true do
   end
 
   before do
+    lists
     student_lists
     roll_calls
     user.add_role :admin
