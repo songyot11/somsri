@@ -57,7 +57,7 @@ describe 'Employee delete', js: true do
     sleep(1)
     click_button("ลบ")
     sleep(1)
-    eventually { expect(page).to have_content("คุณต้องการลบพนักงานหรือไม่?") }
+    eventually { expect(page).to have_content("คุณต้องการลบข้อมูลพนักงานออกถาวรหรือไม่?") }
   end
 
   describe 'when confirmed modal' do
@@ -75,7 +75,7 @@ describe 'Employee delete', js: true do
     end
 
     it 'should have this employee in database' do
-      eventually { expect(Employee.count).to eq 2 }
+      eventually { expect(Employee.count).to eq 1}
     end
 
     it 'should not display on employee list' do

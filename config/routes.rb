@@ -40,6 +40,8 @@ Rails.application.routes.draw do
       get 'calculate_deduction'
       patch 'upload_photo'
     end
+    post 'restore'
+    delete 'real_destroy'
   end
 
   resources :individuals, only: [:create, :update, :destroy, :index]

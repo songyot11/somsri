@@ -32,8 +32,17 @@
       return $http.post('/employees/', data);
     };
 
-    this.deleteEmployee = function(id) {
+    this.archiveEmployee = function(id) {
       return $http.delete('/employees/' + id);
     };
+
+    this.restoreEmployees = function(employee_id) {
+      return $http.post('/employees/' + employee_id + '/restore');
+    };
+
+    this.destroyEmployees = function(employee_id) {
+      return $http.delete('/employees/' + employee_id + '/real_destroy');
+    }
+
   }]);
 })();

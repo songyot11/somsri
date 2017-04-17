@@ -4,14 +4,14 @@ class EmployeesController < ApplicationController
 
   # GET /employees
   def index
-    employee = Employee.active.order('employees.start_date ASC, employees.created_at ASC')
+    employee = Employee.with_deleted.order('employees.deleted_at DESC ,employees.start_date ASC, employees.created_at ASC')
                               .as_json(employee_list: true)
     render json: employee, status: :ok
   end
 
   # GET /employees/:id/slip
   def slip
-    employee = Employee.active.find(params[:id]).as_json({ slip: true, payroll_id: params[:payroll_id] })
+    employee = Employee.find(params[:id]).as_json({ slip: true, payroll_id: params[:payroll_id] })
     employee[:payroll][:fee_orders] = employee[:payroll][:fee_orders]
                                                       .select { |key, value| value[:value] > 0}
     employee[:payroll][:pay_orders] = employee[:payroll][:pay_orders]
@@ -35,7 +35,7 @@ class EmployeesController < ApplicationController
 
   # GET /employees/:id/payrolls
   def payrolls
-    payrolls = Employee.active.find(params[:id]).payrolls
+    payrolls = Employee.find(params[:id]).payrolls
                        .order("created_at desc")
                        .as_json("history")
     render json: payrolls, status: :ok
@@ -43,7 +43,7 @@ class EmployeesController < ApplicationController
 
   # GET /employees/:id
   def show
-    @employee = Employee.active.find(params[:id])
+    @employee = Employee.find(params[:id])
     tax_reduction = @employee.tax_reduction
     if params[:payroll_id]
       payroll = @employee.payroll(params[:payroll_id])
@@ -71,7 +71,7 @@ class EmployeesController < ApplicationController
   # POST /employees/:id/calculate_deduction
   def calculate_deduction
     p = JSON.parse(params[:payroll])
-    e = Employee.active.find(params[:id])
+    e = Employee.find(params[:id])
     e.employee_type = params[:employee_type]
     e.pay_pvf = params[:employee_pay_pvf]
     e.pay_social_insurance = params[:employee_pay_s_ins]
@@ -113,7 +113,24 @@ class EmployeesController < ApplicationController
 
   # DELETE /employees/:id
   def destroy
-    @employee.update(deleted: true)
+    @employee.destroy
+
+    data = {status: "success"}
+    render json: data, status: :ok
+  end
+
+  def restore
+    @employee = Employee.restore(params[:employee_id])
+    payroll = Payroll.only_deleted.where(employee_id: params[:employee_id])
+    payroll = Payroll.restore(payroll.first.id)
+
+    data = {status: "success"}
+    render json: data, status: :ok
+  end
+
+  def real_destroy
+    @employee = Employee.find(params[:employee_id])
+    @employee.really_destroy!
 
     data = {status: "success"}
     render json: data, status: :ok

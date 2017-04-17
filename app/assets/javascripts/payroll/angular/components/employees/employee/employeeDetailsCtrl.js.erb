@@ -354,9 +354,29 @@
         }
       }
 
-      ctrl.deleteEmployee = function(id) {
-        openConfirmationModal("คุณต้องการลบพนักงานหรือไม่?", function() {
-          service.deleteEmployee(id).then(function(resp) {
+      ctrl.archiveEmployee = function(id) {
+        openConfirmationModal("คุณต้องการนำข้อมูลพนักงานออกชั่วคราวหรือไม่?", function() {
+          service.archiveEmployee(id).then(function(resp) {
+            $rootScope.openEmployees();
+          })
+        }, function(){
+          // $log.info("DISMISS!!");
+        })
+      }
+
+      ctrl.restoreEmployees = function(id) {
+        openConfirmationModal("คุณต้องการนำข้อมูลพนักงานกลับมาหรือไม่?", function() {
+          service.restoreEmployees(id).then(function(resp) {
+            $rootScope.openEmployees();
+          })
+        }, function(){
+          // $log.info("DISMISS!!");
+        })
+      }
+
+      ctrl.destroyEmployees = function(id) {
+        openConfirmationModal("คุณต้องการลบข้อมูลพนักงานออกถาวรหรือไม่?", function() {
+          service.destroyEmployees(id).then(function(resp) {
             $rootScope.openEmployees();
           })
         }, function(){

@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20170410044218) do
+ActiveRecord::Schema.define(version: 20170412072642) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -79,7 +79,6 @@ ActiveRecord::Schema.define(version: 20170410044218) do
     t.string   "prefix_thai"
     t.string   "nickname"
     t.datetime "start_date"
-    t.boolean  "deleted",              default: false
     t.datetime "birthdate"
     t.text     "address"
     t.string   "tel"
@@ -95,6 +94,8 @@ ActiveRecord::Schema.define(version: 20170410044218) do
     t.string   "img_url_content_type"
     t.integer  "img_url_file_size"
     t.datetime "img_url_updated_at"
+    t.datetime "deleted_at"
+    t.index ["deleted_at"], name: "index_employees_on_deleted_at", using: :btree
     t.index ["school_id"], name: "index_employees_on_school_id", using: :btree
   end
 
@@ -229,6 +230,8 @@ ActiveRecord::Schema.define(version: 20170410044218) do
     t.datetime "created_at",                         null: false
     t.datetime "updated_at",                         null: false
     t.datetime "effective_date",                     null: false
+    t.datetime "deleted_at"
+    t.index ["deleted_at"], name: "index_payrolls_on_deleted_at", using: :btree
     t.index ["employee_id"], name: "index_payrolls_on_employee_id", using: :btree
   end
 

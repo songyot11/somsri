@@ -744,19 +744,30 @@
       <div class="col-md-4">
         <button ng-show="employee.isEdit" type="button" class="btn btn-lg btn-block btn-print" ng-click="openSlip(employee.datas.employee.id, employee.currentEffectiveDate['payroll_id'])">พิมพ์ใบจ่ายเงินเดือน</button>
       </div>
-
-      <div class="col-md-2 {{employee.isEdit ? '': 'col-md-offset-2'}}">
+      <!-- <div class="col-md-2 {{employee.isEdit ? '': 'col-md-offset-2'}}">
         <button ng-show="false" type="button" class="btn btn-lg btn-block btn-memo">บันทึกช่วยจำ</button>
-      </div>
+      </div> -->
       <div class="col-md-2 text-right">
         <button type="submit" class="btn btn-lg btn-block btn-submit" ng-disabled="employee.isSubmit">บันทึก</button>
       </div>
       <div class="col-md-2 text-right">
         <button type="button" class="btn btn-lg btn-block btn-cancel" ng-click="employee.cancel()">ยกเลิก</button>
       </div>
-      <div ng-show="employee.isEdit" class="col-md-2 text-right">
-        <button type="button" class="btn btn-lg btn-block btn-danger" ng-click="employee.deleteEmployee(employee.empId)">ลบ</button>
+      <div ng-if="employee.datas.employee.deleted_at == nil">
+        <div ng-show="employee.isEdit" class="col-md-2 text-right">
+          <button type="button" class="btn btn-lg btn-block btn-archive" ng-click="employee.archiveEmployee(employee.empId)">นำออกชั่วคราว</button>
+        </div>
       </div>
+      <div ng-if="employee.datas.employee.deleted_at != nil">
+        <div ng-show="employee.isEdit" class="col-md-2 text-right">
+          <button type="button" class="btn btn-lg btn-block btn-restore" ng-click="employee.restoreEmployees(employee.empId)">นำข้อมูลกลับ</button>
+        </div>
+      </div>
+      <!-- <div ng-if="employee.datas.employee.deleted_at == nil"> -->
+        <div ng-show="employee.isEdit" class="col-md-2 text-right">
+          <button type="button" class="btn btn-lg btn-block btn-danger" ng-click="employee.destroyEmployees(employee.empId)">ลบ</button>
+        </div>
+      <!-- </div> -->
     </div>
 
   </form>
