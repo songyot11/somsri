@@ -6,6 +6,9 @@ class Parent < ApplicationRecord
 
   acts_as_paranoid
 
+  has_attached_file :img_url, AppConfig.paperclip 
+  validates_attachment_content_type :img_url, content_type: /\Aimage\/.*\z/
+
   self.per_page = 10
 
   def self.search(search)

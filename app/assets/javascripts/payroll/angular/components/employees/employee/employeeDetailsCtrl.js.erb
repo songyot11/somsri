@@ -2,7 +2,7 @@
   'use strict';
   angular.module('somsri.payroll.employee_details', [
   ])
-  .controller('employeeDetailsCtrl', ['employeesService', 'studentReportService', '$log', '$state', '$rootScope','$scope', '$uibModal', 'reportService', '$filter', '$location', 'individualsService', function(service, studentReportService, $log, $state, $rootScope, $scope, $uibModal, reportService, $filter, $location, individualsService) {
+  .controller('employeeDetailsCtrl', ['employeesService', 'studentReportService', '$log', '$state', '$rootScope','$scope', '$uibModal', 'reportService', '$filter', '$location', 'individualsService', 'Upload', function(service, studentReportService, $log, $state, $rootScope, $scope, $uibModal, reportService, $filter, $location, individualsService, Upload) {
     $rootScope.menu = "บุคลากร";
     var ctrl = this;
     $rootScope.loadAndAuthorizeResource("employee", function(){
@@ -278,9 +278,23 @@
         }
       }
 
+      ctrl.uploadPhoto = function(file) {
+        Upload.upload({
+            url: '/employees/' + ctrl.datas.employee.id + '/upload_photo',
+            method: 'PATCH',
+            data: { employee: {
+                file: file
+              }
+            }
+        }).then(function (resp) {
+          ctrl.datas.img_url = resp.data[0].url
+        });
+      };
+
+
+
       ctrl.submit = function(parm){
         var isValid = true
-
         if (isValid) {
           ctrl.isSubmit = true
           if (ctrl.isEdit) {

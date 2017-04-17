@@ -10,7 +10,7 @@ class ParentsController < ApplicationController
     @classroom_display = []
     students.each do |student|
       if !@classroom_display.include?(student.classroom)
-          @classroom_display.push(student.classroom)
+        @classroom_display.push(student.classroom)
       end
     end
     if class_select.downcase == 'all'
@@ -117,6 +117,10 @@ class ParentsController < ApplicationController
     end
   end
 
+  def upload_photo
+    @parent = Parent.where(id: params[:id]).update( upload_photo_params )
+  end
+
   private
     # Use callbacks to share common setup or constraints between actions.
     def set_parent
@@ -125,7 +129,7 @@ class ParentsController < ApplicationController
 
     # Never trust parameters from the scary internet, only allow the white list through.
     def parent_params
-      params.require(:parent).permit(:full_name, :nickname, :id_card_no, :mobile, :email, :line_id )
+      params.require(:parent).permit(:full_name, :nickname, :id_card_no, :mobile, :email, :line_id, :img_url )
     end
 
     def relation_assign
@@ -165,6 +169,10 @@ class ParentsController < ApplicationController
           end
         end
       end
+    end
+
+    def upload_photo_params
+      params.require(:parent).permit(:img_url)
     end
 
 end

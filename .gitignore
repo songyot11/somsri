@@ -27,6 +27,10 @@
 # Ignore application configuration
 /config/application.yml
 
+/config/paperclip.yml
+
 # vim
 *.swp
 *.orig
+
+public/system/*

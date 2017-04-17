@@ -17,6 +17,9 @@ class Employee < ApplicationRecord
 
   scope :active, -> { where(deleted: false ) }
 
+  has_attached_file :img_url, AppConfig.paperclip 
+  validates_attachment_content_type :img_url, content_type: /\Aimage\/.*\z/
+
   @@warned = false
   def update_rollcall_list
     unless @@warned
@@ -96,7 +99,7 @@ class Employee < ApplicationRecord
         salary: self.payrolls.size > 0 ? self.payrolls.latest.salary.to_f : 0,
         extra_fee: self.payrolls.size > 0 ? self.payrolls.latest.extra_fee.to_f : 0,
         extra_pay: self.payrolls.size > 0 ? self.payrolls.latest.extra_pay.to_f : 0,
-        img: self.img_url
+        img: self.img_url.exists? ? self.img_url.url : nil
       }
     else
       super()

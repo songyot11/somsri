@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20170404042644) do
+ActiveRecord::Schema.define(version: 20170410044218) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -72,7 +72,6 @@ ActiveRecord::Schema.define(version: 20170404042644) do
     t.string   "bank_branch",          default: ""
     t.string   "account_number",       default: ""
     t.decimal  "salary",               default: "0.0",          null: false
-    t.string   "img_url",              default: ""
     t.datetime "created_at",                                    null: false
     t.datetime "updated_at",                                    null: false
     t.string   "first_name_thai"
@@ -92,6 +91,10 @@ ActiveRecord::Schema.define(version: 20170404042644) do
     t.string   "pin"
     t.integer  "grade_id"
     t.string   "classroom"
+    t.string   "img_url_file_name"
+    t.string   "img_url_content_type"
+    t.integer  "img_url_file_size"
+    t.datetime "img_url_updated_at"
     t.index ["school_id"], name: "index_employees_on_school_id", using: :btree
   end
 
@@ -185,10 +188,14 @@ ActiveRecord::Schema.define(version: 20170404042644) do
     t.string   "mobile"
     t.string   "email"
     t.string   "line_id"
-    t.datetime "created_at",        null: false
-    t.datetime "updated_at",        null: false
+    t.datetime "created_at",           null: false
+    t.datetime "updated_at",           null: false
     t.string   "id_card_no"
     t.datetime "deleted_at"
+    t.string   "img_url_file_name"
+    t.string   "img_url_content_type"
+    t.integer  "img_url_file_size"
+    t.datetime "img_url_updated_at"
     t.index ["deleted_at"], name: "index_parents_on_deleted_at", using: :btree
   end
 
@@ -288,11 +295,15 @@ ActiveRecord::Schema.define(version: 20170404042644) do
     t.integer  "student_number"
     t.string   "national_id"
     t.text     "remark"
-    t.datetime "created_at",        null: false
-    t.datetime "updated_at",        null: false
+    t.datetime "created_at",           null: false
+    t.datetime "updated_at",           null: false
     t.integer  "school_id"
     t.datetime "deleted_at"
     t.string   "status"
+    t.string   "img_url_file_name"
+    t.string   "img_url_content_type"
+    t.integer  "img_url_file_size"
+    t.datetime "img_url_updated_at"
     t.index ["deleted_at"], name: "index_students_on_deleted_at", using: :btree
     t.index ["school_id"], name: "index_students_on_school_id", using: :btree
   end

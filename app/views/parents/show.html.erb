@@ -4,6 +4,8 @@
     <h1>รายละเอียดผู้ปกครอง</h1>
   </div>
   <div class="content-student-parent-show">
+    <%= image_tag(@parent.img_url.url(:medium)) if @parent.img_url.exists? %>
+    <div class="space20"></div>
     <div class="row add-st-pr">
       <div class="col-3">
         <b>ชื่อ - นามสกุล : </b>

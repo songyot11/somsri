@@ -38,6 +38,7 @@ Rails.application.routes.draw do
       get 'slip'
       get 'payrolls'
       get 'calculate_deduction'
+      patch 'upload_photo'
     end
   end
 
@@ -54,6 +55,9 @@ Rails.application.routes.draw do
   resources :parents do
     post 'restore'
     delete 'real_destroy'
+    member do
+      patch 'upload_photo'
+    end
   end
   resources :grades
   resources :daily_reports
@@ -62,6 +66,9 @@ Rails.application.routes.draw do
     post 'restore'
     post 'graduate'
     post 'resign'
+    member do
+      patch 'upload_photo'
+    end
   end
   resources :abilities, only: [:index]
   get "/auth_api" => "home#auth_api"

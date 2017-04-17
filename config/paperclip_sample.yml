@@ -1,0 +1,19 @@
+common: &common
+  :styles:
+    :thumb: "100x100>"
+    :medium: "300x300>"
+  :default_url:
+
+
+development:
+  <<: *common
+
+production:
+  <<: *common
+  :storage: :s3
+  :bucket: "your-bucket-name"
+  :path: "/:some/:path/:id"
+  :url: "s3_domain_url"
+
+test:
+  <<: *common

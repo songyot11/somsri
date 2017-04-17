@@ -118,10 +118,10 @@
               </div>
             </div>
             <div class="col-md-4">
-              <div class="img-profile">
-                <div ng-switch on="employee.datas.employee.img_url.length > 0">
+              <div class="img-profile cursor-pointer" ngf-select="employee.uploadPhoto($file)">
+                <div ng-switch on="employee.datas.img_url.length > 0">
                   <div ng-switch-when="true">
-                    <div class="img-bg" style="background: url('{{ employee.datas.employee.img_url }}')"></div>
+                    <div class="img-bg" style="background: url('{{ employee.datas.img_url }}')"></div>
                   </div>
                   <div ng-switch-default>
                     <i class="fa fa-camera center font-size-40 font-white" aria-hidden="true"></i>

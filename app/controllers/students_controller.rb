@@ -254,6 +254,10 @@ class StudentsController < ApplicationController
     render json: [{other_fee: other_fee, tuition_fee: tuition_fee, amount: amount}], status: :ok
   end
 
+  def upload_photo
+    @student = Student.where(id: params[:id]).update( upload_photo_params )
+  end
+
   private
     # Use callbacks to share common setup or constraints between actions.
     def set_student
@@ -262,7 +266,7 @@ class StudentsController < ApplicationController
 
     # Never trust parameters from the scary internet, only allow the white list through.
     def student_params
-      params.require(:student).permit(:full_name, :full_name_english, :nickname, :nickname_english, :gender_id, :birthdate, :grade_id, :classroom, :classroom_number, :student_number, :national_id, :remark , :status)
+      params.require(:student).permit(:full_name, :full_name_english, :nickname, :nickname_english, :gender_id, :birthdate, :grade_id, :classroom, :classroom_number, :student_number, :national_id, :remark , :status, :img_url)
     end
 
     def relation_assign
@@ -304,5 +308,9 @@ class StudentsController < ApplicationController
           end
         end
       end
+    end
+
+    def upload_photo_params
+      params.require(:student).permit(:img_url)
     end
 end

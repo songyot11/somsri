@@ -51,6 +51,7 @@ class EmployeesController < ApplicationController
       payroll = @employee.lastest_payroll
     end
     render json: {
+      img_url: @employee.img_url.exists? ? @employee.img_url.url : nil ,
       employee: @employee,
       payroll: payroll,
       tax_reduction: tax_reduction
@@ -103,6 +104,7 @@ class EmployeesController < ApplicationController
     end
 
     render json: {
+      img_url: @employee.img_url.exists? ? @employee.img_url.url : nil ,
       employee: @employee,
       payroll: @employee.lastest_payroll,
       tax_reduction: @employee.tax_reduction
@@ -115,6 +117,12 @@ class EmployeesController < ApplicationController
 
     data = {status: "success"}
     render json: data, status: :ok
+  end
+
+  def upload_photo
+    @employee = Employee.where(id: params[:id]).update( img_url: upload_photo_params[:file] ).first
+    @employee.reload
+    render json: [{ url: @employee.img_url.url }], status: :ok
   end
 
   private
@@ -210,5 +218,9 @@ class EmployeesController < ApplicationController
     ])
     result.to_h.each { |k,v| result[k] = 0 if k != "id" && v.blank? }
     return result
+  end
+
+  def upload_photo_params
+    params.require(:employee).permit(:file)
   end
 end

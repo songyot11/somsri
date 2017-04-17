@@ -1,5 +1,4 @@
 <%= form_for @parent, :html => { :class => "form-horizontal parent" } do |f| %>
-
 <% if @parent.errors.any? %>
 <div id="error_expl" class="panel panel-danger">
   <div class="panel-heading">
@@ -17,6 +16,18 @@
 
 <div class="content-student-parent">
   <div class="card-block">
+    <%= image_tag(@parent.img_url.url(:medium)) if @parent.img_url.exists? %>
+    <div class="space20"></div>
+    <div class="row">
+      <div class="col-md-12">
+        <div class="form-group">
+          <%= f.label :img_url, 'รูปโปรไฟล์ ', :class => 'control-label' %>
+          <div class="col-md-12">
+            <%= f.file_field :img_url, class: 'border-none pointer-cursor' %>
+          </div>
+        </div>
+      </div>
+    </div>
     <div class="row">
       <div class="col-md-6">
         <div class="form-group">

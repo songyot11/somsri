@@ -16,6 +16,18 @@
 
 <div class="content-student-parent">
   <div class="panel">
+    <%= image_tag(@student.img_url.url(:medium)) if @student.img_url.exists? %>
+    <div class="space20"></div>
+    <div class="row">
+      <div class="col-md-12">
+        <div class="form-group">
+          <%= f.label :img_url, 'รูปโปรไฟล์ ', class: 'control-label' %>
+          <div class="col-md-12">
+            <%= f.file_field :img_url, class: 'border-none pointer-cursor' %>
+          </div>
+        </div>
+      </div>
+    </div>
     <div class="row add-st-pr">
       <div class="col-md-6">
         <div class="form-group">
