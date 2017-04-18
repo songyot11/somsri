@@ -5,7 +5,7 @@ class RollCall < ApplicationRecord
   def self.get_by_date(employee, date)
     result = []
     lists = []
-    
+
     if employee
       lists = employee.lists
     else
@@ -118,7 +118,7 @@ class RollCall < ApplicationRecord
         status.store("morning", morning)
         status.store("afternoon", afternoon)
 
-        hash.store("code", r.student.student_number)
+        hash.store("code", r.student.id)
         hash.store("first_name", r.student.first_name)
         hash.store("last_name", r.student.last_name)
         hash.store("prefix", r.student.prefix)
@@ -128,7 +128,7 @@ class RollCall < ApplicationRecord
         hash.store("status", status)
 
         if i > 0
-          if arr.last["code"] != r.student.student_number
+          if arr.last["code"] != r.student.id
             arr.push(hash)
           end
         else

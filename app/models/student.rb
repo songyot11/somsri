@@ -8,7 +8,7 @@ class Student < ApplicationRecord
   has_many :invoices, dependent: :restrict_with_exception
 
   has_many :student_lists, dependent: :destroy
-  alias_attribute :code, :student_number
+  alias_attribute :code, :id
   alias_attribute :number, :classroom_number
   attr_accessor :first_name, :last_name, :prefix
 

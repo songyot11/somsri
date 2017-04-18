@@ -71,7 +71,7 @@ class RollCallsController < ApplicationController
         roll_call_datas = []
         students.each do |student|
           datas.each do |data|
-            if student.student_number.to_s == data['student_code'].to_s
+            if student.id.to_s == data['student_code'].to_s
               roll_call_datas << RollCall.new({
                 student_id: student.id,
                 status: data['status'],
