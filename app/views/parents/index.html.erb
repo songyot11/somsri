@@ -50,7 +50,6 @@
           <th>อีเมล์</th>
           <th>ความสัมพันธ์</th>
           <th>ชื่อ-สกุลนักเรียน</th>
-          <th>สถานะ</th>
           <th></th>
         </tr>
       </thead>
@@ -63,7 +62,6 @@
             <td><%= parent.email %></td>
             <td><%= parent.relationships.first.nil? ? "" : t(parent.relationships.first.name) %></td>
             <td><%= student_link_with_full_name(parent.students.first) %></td>
-            <td id="text-status"><%= parent.invoices.first.nil? ? "<span id='no-pay'>ยังไม่ได้ชำระเงิน</span>".html_safe : "<span id='this-pay'>ชำระเงินแล้ว</span>".html_safe %></td>
             <td>
                 <%= link_to t('.show', :default => t("helpers.links.show")),
                             parent_path(parent), :class => 'btn btn-se' %>
