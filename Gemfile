@@ -58,6 +58,7 @@ gem 'rolify'
 #Paranoia
  gem 'paranoia', '~> 2.1', '>= 2.1.5'
 
+gem "aws-sdk"
 gem "paperclip", "~> 5.0.0"
 
 group :development, :test do
