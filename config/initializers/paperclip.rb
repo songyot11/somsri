@@ -1,1 +1,1 @@
-Paperclip::Attachment.default_options[:s3_host_name] = 's3-ap-southeast-1.amazonaws.com'
+Paperclip::Attachment.default_options.merge!(YAML.load(ERB.new(File.read("#{Rails.root}/config/paperclip.yml")).result)[Rails.env].symbolize_keys!)

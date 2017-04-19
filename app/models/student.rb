@@ -18,7 +18,7 @@ class Student < ApplicationRecord
   validates :student_number , uniqueness: true , allow_nil: true
 
   acts_as_paranoid
-  has_attached_file :img_url, AppConfig.paperclip
+  has_attached_file :img_url
   validates_attachment_content_type :img_url, content_type: /\Aimage\/.*\z/
 
   after_save :update_rollcall_list

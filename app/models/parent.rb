@@ -6,7 +6,7 @@ class Parent < ApplicationRecord
 
   acts_as_paranoid
 
-  has_attached_file :img_url, AppConfig.paperclip 
+  has_attached_file :img_url
   validates_attachment_content_type :img_url, content_type: /\Aimage\/.*\z/
 
   self.per_page = 10
