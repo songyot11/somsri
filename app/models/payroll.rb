@@ -147,7 +147,7 @@ class Payroll < ApplicationRecord
     end
 
     def self.assume_year_income(payroll)
-      income = (payroll["salary"].to_i + payroll["allowance"].to_i + payroll["attendance_bonus"].to_i + payroll["ot"].to_i + payroll["bonus"].to_i + payroll["position_allowance"].to_i - payroll["absence"].to_i - payroll["late"].to_i)*12
+      income = (payroll["salary"].to_i + payroll["allowance"].to_i + payroll["attendance_bonus"].to_i + payroll["ot"].to_i + payroll["bonus"].to_i + payroll["position_allowance"].to_i + payroll["extra_etc"].to_i - payroll["absence"].to_i - payroll["late"].to_i)*12
     end
 
     def self.tax_break(payroll, tax_reduction)
