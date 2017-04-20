@@ -37,7 +37,6 @@ gem 'pdf-forms'
 gem 'rmagick'
 
 gem 'rails_admin'
-gem 'gravtastic'
 gem 'figaro'
 
 # Exception Notification

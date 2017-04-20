@@ -27,7 +27,7 @@
       <ul class="nav navbar-nav navbar-right dropdown">
           <% if user_signed_in? %>
             <a class="nav-user avatar" href="javascript:void(0)" id="navbarDropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-              <%= user_avatar(current_user.gravatar_url) %> <%= current_user.full_name.nil? ? current_user.email : current_user.full_name %>
+              <%= current_user.full_name.nil? ? current_user.email : current_user.full_name %>
               <i class="fa fa-chevron-down"></i>
             </a>
             <!-- <a class="help-invoice" href="javascript:void(0)"><i class="fa fa-question"></i></a> -->

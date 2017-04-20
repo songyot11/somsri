@@ -22,6 +22,4 @@ class User < ApplicationRecord
     self.has_role? :finance_officer
   end
 
-  include Gravtastic
-  gravtastic
 end

@@ -117,7 +117,6 @@ GEM
       railties (>= 3.2, < 5.1)
     globalid (0.3.7)
       activesupport (>= 4.1.0)
-    gravtastic (3.2.6)
     haml (4.0.7)
       tilt
     hashery (2.1.2)
@@ -339,7 +338,6 @@ DEPENDENCIES
   figaro
   fileutils
   font-awesome-rails
-  gravtastic
   jbuilder (~> 2.5)
   jquery-rails
   listen (~> 3.0.5)

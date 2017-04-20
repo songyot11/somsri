@@ -71,7 +71,9 @@ describe 'Employee Details History Modal', js: true do
   end
 
   it 'should see payroll when click history button' do
+    sleep(1)
     visit "/somsri_payroll#/employees/#{employee.id}"
+    sleep(1)
     click_link('เงินเดือน')
     sleep(1)
     click_button('ประวัติเงินเดือน')
