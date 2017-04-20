@@ -93,6 +93,14 @@ class ParentsController < ApplicationController
     end
   end
 
+  def archive
+    @parent = Parent.find(params[:parent_id]).update(deleted_at: Time.now)
+    respond_to do |format|
+      format.html { redirect_to parents_url}
+      format.json { head :no_content }
+    end
+  end
+
   def restore
     Parent.restore(params[:parent_id])
     respond_to do |format|

@@ -68,9 +68,9 @@
                 <%= link_to t('.edit', :default => t("helpers.links.edit")),
                             edit_parent_path(parent), :class => 'btn btn-se' %>
                 <%= link_to "<i class='fa fa-archive'></i>".html_safe ,
-                            parent_path(parent),
+                            parent_archive_path(parent),
                             :id => "parent_archive" ,
-                            :method => :delete,
+                            :method => :post,
                             :data => { :confirm => t('.confirm', :default => t("helpers.links.confirm.parent_archive", :default => 'Are you sure?')) },
                             :class => 'btn btn-archive-sp tooltips', 'data-toggle' => 'tooltip', 'data-placement' => 'top', :title => 'ลบข้อมูลออกจากระบบ (สามารถนำกลับมาได้้)'  %>
 

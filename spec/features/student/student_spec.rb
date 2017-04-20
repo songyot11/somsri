@@ -121,4 +121,15 @@ describe 'Student', js: true do
     eventually { expect(new_student.student_lists[0].list.name).to eq("2B") }
   end
 
+  it 'should archive student when student belong to invoice ' do
+    visit "/students/"
+    sleep(1)
+    first('#student_resign').click
+    sleep(1)
+    page.accept_alert
+
+    eventually { expect(page).to have_content("ลาออก") }
+    eventually { expect(page).to have_no_content("ลบ") }
+  end
+
 end

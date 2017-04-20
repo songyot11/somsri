@@ -57,6 +57,7 @@ Rails.application.routes.draw do
 
   resources :parents do
     post 'restore'
+    post 'archive'
     delete 'real_destroy'
     member do
       patch 'upload_photo'

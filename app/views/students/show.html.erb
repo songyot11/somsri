@@ -43,7 +43,7 @@
         <b>เพศ : </b>
       </div>
       <div class="col-8">
-        <%= @student.gender_id %>
+        <%= @student.gender_id.nil? ? "" : t(@student.gender.name) %>
       </div>
     </div>
     <div class="row add-st-pr">
@@ -51,7 +51,7 @@
         <b>วัน เดือน ปี เกิด : </b>
       </div>
       <div class="col-8">
-        <%= @student.birthdate %>
+        <%= @student.birthdate.nil? ? "" : @student.birthdate.strftime("%d/%B/%Y") %>
       </div>
     </div>
     <div class="row add-st-pr">
@@ -59,7 +59,7 @@
         <b> ระดับชั้น : </b>
       </div>
       <div class="col-8">
-        <%= @student.grade_id %>
+        <%= @student.grade_id.nil? ? "" : t(@student.grade.name) %>
       </div>
     </div>
     <div class="row add-st-pr">

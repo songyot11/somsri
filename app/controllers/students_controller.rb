@@ -29,7 +29,7 @@ class StudentsController < ApplicationController
         grade = Grade.where(name: grade_select).first
         students = Student.where(grade: grade.id , classroom: class_select)
       end
-      @students = students.order("classroom ASC, classroom_number ASC").search(params[:search]).page(params[:page]).to_a
+      @students = students.order("deleted_at DESC , classroom ASC, classroom_number ASC").search(params[:search]).page(params[:page]).to_a
     else
       # with angular
       if grade_select.downcase == 'all'
@@ -133,27 +133,19 @@ class StudentsController < ApplicationController
   end
 
   def graduate
-    @student = Student.find(params[:student_id])
-    @student.destroy
-
-    if @student.destroy
-      @student = Student.unscoped.find(params[:student_id]).update(status: 'จบการศึกษา')
+    if @student = Student.find(params[:student_id]).update(deleted_at: Time.now , status: 'จบการศึกษา')
       respond_to do |format|
-        format.html { redirect_to students_url }
-        format.json { head :no_content }
+          format.html { redirect_to students_url }
+          format.json { head :no_content }
       end
     end
   end
 
   def resign
-    @student = Student.find(params[:student_id])
-    @student.destroy
-
-    if @student.destroy
-      @student = Student.unscoped.find(params[:student_id]).update(status: 'ลาออก')
+    if @student = Student.find(params[:student_id]).update(deleted_at: Time.now , status: 'ลาออก')
       respond_to do |format|
-        format.html { redirect_to students_url }
-        format.json { head :no_content }
+          format.html { redirect_to students_url }
+          format.json { head :no_content }
       end
     end
   end
