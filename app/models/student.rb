@@ -7,6 +7,7 @@ class Student < ApplicationRecord
   has_and_belongs_to_many :relationships, join_table: "students_parents"
   has_many :invoices, dependent: :restrict_with_exception
 
+  has_many :roll_calls, dependent: :destroy
   has_many :student_lists, dependent: :destroy
   alias_attribute :code, :id
   alias_attribute :number, :classroom_number

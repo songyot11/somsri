@@ -11,10 +11,10 @@ class ReportRollCallsController < ApplicationController
     if params[:list_id]
       list = List.where(id: params[:list_id]).first
     end
-    student_ids = StudentList.where(list_id: list.id).pluck(:student_id)
-    students = Student.where(id: student_ids).order(:classroom_number).to_a
 
-    roll_calls = RollCall.where(check_date: dates.collect{ |d| d[0] }, student_id: student_ids).to_a
+    roll_calls = RollCall.where(check_date: dates.collect{ |d| d[0] }, list_id: list.id).to_a
+    student_ids = roll_calls.collect{ |rc| rc.student_id }.uniq
+    students = Student.with_deleted.where(id: student_ids).order(:classroom_number).to_a
 
     results = []
     students.each do |student|

@@ -9,14 +9,18 @@ class List < ApplicationRecord
   end
 
   def get_roll_calls_by_round(date, round)
+    _result = []
+    _student_ids = self.roll_calls.collect {|rc| rc.student_id}
+    _students = Student.with_deleted.where(id: _student_ids).to_a
+
     if round && date
-      return roll_calls.collect { |rc| rc if rc.round == round && rc.check_date == date }.compact
+      return self.roll_calls.collect {|rc| rc.merge_classroom_number(_students) if rc.round == round && rc.check_date == date}.compact
     elsif round
-      return roll_calls.collect { |rc| rc if rc.round == round }.compact
+      return self.roll_calls.collect {|rc| rc.merge_classroom_number(_students) if rc.round == round}.compact
     elsif date
-      return roll_calls.collect { |rc| rc if rc.check_date == date }.compact
+      return self.roll_calls.collect {|rc| rc.merge_classroom_number(_students) if rc.check_date == date}.compact
     else
-      return roll_calls
+      return self.roll_calls.collect {|rc| rc.merge_classroom_number(_students) }
     end
   end
 
