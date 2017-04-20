@@ -119,21 +119,32 @@ class EmployeesController < ApplicationController
     render json: data, status: :ok
   end
 
+  def archive
+    @employee = Employee.find(params[:employee_id]).update(deleted_at: Time.now)
+    payroll = Payroll.where(employee_id: params[:employee_id]).update(deleted_at: Time.now)
+    
+    data = {status: "success"}
+    render json: data, status: :ok
+  end
+
   def restore
-    @employee = Employee.restore(params[:employee_id])
-    payroll = Payroll.only_deleted.where(employee_id: params[:employee_id])
-    payroll = Payroll.restore(payroll.first.id)
+    @employee = Employee.update(deleted_at: nil)
+    payroll = Payroll.only_deleted.where(employee_id: params[:employee_id]).update(deleted_at: nil)
 
     data = {status: "success"}
     render json: data, status: :ok
   end
 
   def real_destroy
-    @employee = Employee.find(params[:employee_id])
-    @employee.really_destroy!
-
-    data = {status: "success"}
-    render json: data, status: :ok
+    begin
+      @employee = Employee.find(params[:employee_id])
+      @employee.really_destroy!
+    rescue ActiveRecord::DeleteRestrictionError => e
+      @employee.errors.add(:base, e)
+    ensure
+      data = {status: "success"}
+      render json: data, status: :ok
+    end
   end
 
   def upload_photo

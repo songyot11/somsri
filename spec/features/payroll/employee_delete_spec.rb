@@ -35,10 +35,7 @@ describe 'Employee delete', js: true do
 
   let(:payrolls) do
     [
-      pr1 = Payroll.make!({employee_id: employee1.id, salary: 1_000_000, tax: 100,
-                            effective_date: DateTime.new(2016, 12, 1)}),
-      pr2 = Payroll.make!({employee_id: employee1.id, salary: 50_000, tax: 100,
-                            effective_date: DateTime.new(2016, 11, 1)}),
+
       pr3 = Payroll.make!({employee_id: employee2.id, salary: 50_000, tax: 100,
                             effective_date: DateTime.new(2016, 11, 1)}),
       pr3 = Payroll.make!({employee_id: employee2.id, salary: 50_000, tax: 100,
@@ -60,7 +57,7 @@ describe 'Employee delete', js: true do
     eventually { expect(page).to have_content("คุณต้องการลบข้อมูลพนักงานออกถาวรหรือไม่?") }
   end
 
-  describe 'when confirmed modal' do
+  describe 'when confirmed modal with employee not belong to payroll' do
     before do
       visit "/somsri_payroll#/employees/#{employee1.id}"
       click_button("ลบ")
@@ -98,6 +95,14 @@ describe 'Employee delete', js: true do
       sleep(1)
 
       eventually { expect(page).to have_selector('tbody tr', count: 1) }
+    end
+  end
+
+  describe 'when confirmed modal with employee belong to payroll' do
+    it 'should not delete employee that belong to payroll' do
+      visit "/somsri_payroll#/employees/#{employee2.id}"
+
+      eventually { expect(page).to have_no_content("ลบ") }
     end
   end
 end

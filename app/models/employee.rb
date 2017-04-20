@@ -11,11 +11,10 @@ class Employee < ApplicationRecord
 
   has_one :taxReduction
 
-  has_many :payrolls, dependent: :destroy
+  has_many :payrolls, dependent: :restrict_with_exception
   after_create :create_tax_reduction
   after_save :update_rollcall_list
 
-  # scope :active, -> { where(deleted: false ) }
   acts_as_paranoid without_default_scope: true
 
   has_attached_file :img_url

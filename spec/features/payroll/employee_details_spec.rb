@@ -141,10 +141,10 @@ describe 'Employee Details', js: true do
       sleep(1)
 
       find('#employeeName').click()
-      eventually { expect(page).to have_content('สมจิตร') }
+      eventually { expect(page).to have_content('สมจิตร เป็นนักมวย') }
 
       fill_in 'employeeFilter', with: 'ศรี'
-      eventually { expect(page).to_not have_content('สมจิตร') }
+      eventually { expect(page).to_not have_content('สมจิตร เป็นนักมวย') }
     end
 
     it 'should diplay lastest employee details' do

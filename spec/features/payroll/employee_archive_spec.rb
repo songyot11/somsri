@@ -33,10 +33,25 @@ describe 'Employee archive', js: true do
     }
   )}
 
+  let(:employee3) {employee3 = Employee.make!(
+    {
+      school_id: school.id,
+      first_name: "Somchit",
+      middle_name: "Is",
+      last_name: "Boxing",
+      prefix: "Mr",
+      first_name_thai: "กล้าหาญ",
+      last_name_thai: "ชาญชัย",
+      prefix_thai: "นาย",
+      sex: 1,
+      account_number: "5-234-34532-2342",
+      salary: 20000
+    }
+  )}
+
   let(:payrolls) do
     [
-      pr1 = Payroll.make!({employee_id: employee1.id, salary: 1_000_000, tax: 100,
-                            effective_date: DateTime.new(2016, 12, 1)}),
+
       pr2 = Payroll.make!({employee_id: employee1.id, salary: 50_000, tax: 100,
                             effective_date: DateTime.new(2016, 11, 1)}),
       pr3 = Payroll.make!({employee_id: employee2.id, salary: 50_000, tax: 100,
@@ -93,14 +108,14 @@ describe 'Employee archive', js: true do
   end
 
   it 'should destory employee' do
-    visit "/somsri_payroll#/employees/#{employee1.id}"
-    eventually {expect(page) .to have_content('สมชาย เป็นน้องสมปอง')}
+    visit "/somsri_payroll#/employees/#{employee3.id}"
+    eventually {expect(page) .to have_content('กล้าหาญ ชาญชัย')}
     sleep(1)
     click_button('ลบ')
     sleep(1)
     click_button("ตกลง")
     sleep(1)
 
-    eventually { expect(page).to have_no_content("สมชาย เป็นน้องสมปอง") }
+    eventually { expect(page).to have_no_content("กล้าหาญ ชาญชัย") }
   end
 end

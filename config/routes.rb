@@ -41,6 +41,7 @@ Rails.application.routes.draw do
       patch 'upload_photo'
     end
     post 'restore'
+    post 'archive'
     delete 'real_destroy'
   end
 
