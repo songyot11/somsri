@@ -125,9 +125,9 @@ describe 'Payroll', js: true do
     eventually { expect(page).to have_content 'ขาดงาน สาย ภาษี ประกันสังคม เงินสะสม เบิกล่วงหน้า อื่นๆ เงินเดือนสุทธิ' }
     eventually { expect(page).to have_content /นาง สมศรี เป็นชื่อแอพ.*50,000.00 0.00 0.00 0.00 0.00 0.00 0.00/i }
     eventually { expect(page).to have_content /นาย สมจิตร เป็นนักมวย.*50,000.00 0.00 0.00 0.00 0.00 0.00 0.00/i }
-    eventually { expect(page).not_to have_content 'ฮาราบาส' }
-    eventually { expect(page).not_to have_content 'Harabas' }
-    eventually { expect(page).to have_content /รวมทั้งหมด.*100,000.00 0.00 0.00 0.00 0.00 0.00 0.00/i }
+    eventually { expect(page).to have_content /นาย คิง ฮาราบาส.*20.00 0.00 0.00 0.00 0.00 0.00 0.00/i }
+    eventually { expect(page).not_to have_content 'พี ดี เอ็ม' }
+    eventually { expect(page).to have_content /รวมทั้งหมด.*100,020.00 0.00 0.00 0.00 0.00 0.00 0.00/i }
   end
 
   describe 'employee link' do

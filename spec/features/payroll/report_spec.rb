@@ -47,7 +47,7 @@ describe 'Payroll Report', js: true do
       sex: 1,
       employee_type: "ลูกจ้างรายวัน",
       account_number: "5-234-34532-0000",
-      salary: 20
+      salary: 20000
     }
   )}
 
@@ -74,7 +74,7 @@ describe 'Payroll Report', js: true do
                             effective_date: DateTime.new(2016, 11, 1)}),
       pr4 = Payroll.make!({employee_id: employee2.id, salary: 50_000,
                             effective_date: DateTime.new(2016, 11, 1)}),
-      pr5 = Payroll.make!({employee_id: employee3.id, salary: 20,
+      pr5 = Payroll.make!({employee_id: employee3.id, salary: 20_000,
                             effective_date: DateTime.new(2016, 11, 1)}),
       pr6 = Payroll.make!({employee_id: employee4.id, salary: 1_000_000,
                             effective_date: DateTime.new(2016, 12, 1)}),
@@ -132,9 +132,10 @@ describe 'Payroll Report', js: true do
     eventually { expect(page).to have_content 'รหัส ชื่อ เลขบัญชี เงินเดือน เงินเพิ่ม เงินหัก เงินเดือนสุทธิ' }
     eventually { expect(page).to have_content 'สมศรี เป็นชื่อแอพ 5-234-34532-2342 50,000.00 0.00 2,125.00 47,875.00' }
     eventually { expect(page).to have_content 'สมจิตร เป็นนักมวย 5-234-34532-2342 50,000.00 0.00 1,500.00 48,500.00' }
-    eventually { expect(page).not_to have_content 'ฮาราบาส' }
-    eventually { expect(page).not_to have_content 'Harabas' }
-    eventually { expect(page).to have_content 'รวมทั้งหมด 100,000.00 0.00 3,625.00 96,375.00' }
+    eventually { expect(page).to have_content 'นาย คิง ฮาราบาส 5-234-34532-0000 20,000.00 0.00 600.00 19,400.00' }
+
+    eventually { expect(page).not_to have_content 'พี ดี เอ็ม' }
+    eventually { expect(page).to have_content 'รวมทั้งหมด 120,000.00 0.00 4,225.00 115,775.00' }
   end
 
   describe 'employee link' do
@@ -152,21 +153,6 @@ describe 'Payroll Report', js: true do
       eventually { expect(page).to have_content '1 พฤศจิกายน 2559' }
       expect(find_field('ค่าแรง / เงินเดือนปัจจุบัน').value).to eq '50000'
     end
-  end
-
-  it 'should switch month' do
-    visit "/somsri_payroll#/report"
-    find('#month-list').click
-    sleep(1)
-    click_on("พฤศจิกายน 2559")
-    sleep(1)
-
-    eventually { expect(page).to have_content 'รหัส ชื่อ เลขบัญชี เงินเดือน เงินเพิ่ม เงินหัก เงินเดือนสุทธิ' }
-    eventually { expect(page).to have_content 'สมศรี เป็นชื่อแอพ 5-234-34532-2342 50,000.00 0.00 2,125.00 47,875.00' }
-    eventually { expect(page).to have_content 'สมจิตร เป็นนักมวย 5-234-34532-2342 50,000.00 0.00 1,500.00 48,500.00' }
-    eventually { expect(page).not_to have_content 'ฮาราบาส' }
-    eventually { expect(page).not_to have_content 'Harabas' }
-    eventually { expect(page).to have_content 'รวมทั้งหมด 100,000.00 0.00 3,625.00 96,375.00' }
   end
 
   it 'should see fliter button with actived status' do

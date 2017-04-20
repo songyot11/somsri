@@ -16,7 +16,7 @@
       ctrl.isSubmit = false;
       ctrl.activeTab = 'general';
       ctrl.activeTabPrivate = 'basic';
-      ctrl.hasPayroll =  true;
+      ctrl.hasPayroll =  ctrl.isEdit ? true : false;
       ctrl.pinChars = [];
       ctrl.filterKeyword = '';
       ctrl.total = '';
@@ -90,7 +90,7 @@
       }
 
       function isDataChange(){
-        return isPayrollChange() || isEmployeeChange() || isTaxReductionChange();
+        return ctrl.isEdit && (isPayrollChange() || isEmployeeChange() || isTaxReductionChange());
       }
 
       // convert string to float
@@ -171,7 +171,6 @@
           } else {
             ctrl.pinChars = []
           }
-          console.log(ctrl.pinChars);
 
           // set display name
           var hasPrefixThai = e.prefix_thai && e.prefix_thai.length > 0
@@ -321,7 +320,7 @@
       }
 
       ctrl.calTotal = function(){
-        if (isDataChange() || ctrl.total=='') {
+        if ( ctrl.isEdit && (isDataChange() || ctrl.total=='')) {
           var p = ctrl.datas.payroll;
           var datas_result = $.extend(true, {}, ctrl.datas);
           service.getEmployeeDeduction(ctrl.datas.employee.id, p.id , datas_result).then(function(resp) {

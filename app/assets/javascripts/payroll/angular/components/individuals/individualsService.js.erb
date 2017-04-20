@@ -6,7 +6,7 @@
   .service('individualsService', ['$http', '$log', function($http, $log) {
 
     this.createIndividual = function(data) {
-      return $http.post('/individuals/', data);
+      return $http.post('/individuals', data);
     };
 
     this.editIndividual = function(data) {
@@ -15,7 +15,7 @@
 
     this.getIndividuals = function(employee_id) {
       if(employee_id){
-        return $http.get('/individuals/', { params: { employee_id: employee_id } });
+        return $http.get('/individuals', { params: { employee_id: employee_id } });
       }
     };
 
