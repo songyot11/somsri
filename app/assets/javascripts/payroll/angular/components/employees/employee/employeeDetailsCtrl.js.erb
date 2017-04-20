@@ -67,7 +67,7 @@
         if(ctrl.hasPayroll){
           var keys = Object.keys(ctrl.datas_original.payroll)
           for(var i = 1; i < keys.length; i++){
-            if(ctrl.datas.payroll[keys[i]] != ctrl.datas_original.payroll[keys[i]]){ return true }
+            if(ctrl.datas.payroll[keys[i]] != ctrl.datas_original.payroll[keys[i]] && keys[i] != 'deleted_at'){ return true }
           }
         }
         return false;
@@ -249,7 +249,6 @@
       }
 
       ctrl.openEmployeeDetails = function(id){
-        console.log('openEmployeeDetails');
         if(isDataChange()){
           openConfirmationModal("คุณต้องการออกจากหน้านี้โดยไม่บันทึกค่าหรือไม่?", function(){
             $rootScope.openEmployeeDetails(id);
