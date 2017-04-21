@@ -42,7 +42,7 @@ class Student < ApplicationRecord
           end
         else
           student_ids = Student.where(classroom: self.classroom).pluck(:id)
-          exclude_student_ids = StudentList.where(list_id: list.id).pluck(:id)
+          exclude_student_ids = StudentList.where(list_id: list.id).pluck(:student_id)
           (student_ids - exclude_student_ids).each do |student_id|
             StudentList.create(student_id: student_id, list_id: list.id)
           end
