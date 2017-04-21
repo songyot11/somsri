@@ -38,7 +38,11 @@ Rails.application.routes.draw do
       get 'slip'
       get 'payrolls'
       get 'calculate_deduction'
+      patch 'upload_photo'
     end
+    post 'restore'
+    post 'archive'
+    delete 'real_destroy'
   end
 
   resources :individuals, only: [:create, :update, :destroy, :index]
@@ -51,19 +55,45 @@ Rails.application.routes.draw do
     end
   end
 
-  resources :parents
+  resources :parents do
+    post 'restore'
+    post 'archive'
+    delete 'real_destroy'
+    member do
+      patch 'upload_photo'
+    end
+  end
   resources :grades
   resources :daily_reports
-  resources :students
+  resources :students do
+    delete 'real_destroy'
+    post 'restore'
+    post 'graduate'
+    post 'resign'
+    member do
+      patch 'upload_photo'
+    end
+  end
   resources :abilities, only: [:index]
-
   get "/auth_api" => "home#auth_api"
   get "/report" => "roll_calls#report"
+  get "/report_month" => "roll_calls#report_month"
   get "/info" =>"students#info"
   resources :roll_calls, only: [:create, :index]
   resources :students, only: [:index, :show] do
     collection do
       get 'get_roll_calls'
+      # get 'invoice_total_amount'
+    end
+  end
+  get "/invoice_total_amount" => "students#invoice_total_amount"
+
+  resources :report_roll_calls, only: [] do
+    collection do
+      get 'report'
+      get 'date_in_month'
+      get 'lists'
+      get 'months'
     end
   end
 

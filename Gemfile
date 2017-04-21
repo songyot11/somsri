@@ -37,7 +37,6 @@ gem 'pdf-forms'
 gem 'rmagick'
 
 gem 'rails_admin'
-gem 'gravtastic'
 gem 'figaro'
 
 # Exception Notification
@@ -54,6 +53,12 @@ gem 'will_paginate-bootstrap4'
 
 gem "activerecord-import"
 gem 'rolify'
+
+#Paranoia
+ gem 'paranoia', '~> 2.1', '>= 2.1.5'
+
+gem "aws-sdk"
+gem "paperclip", "~> 5.0.0"
 
 group :development, :test do
   # Call 'byebug' anywhere in the code to stop execution and get a debugger console

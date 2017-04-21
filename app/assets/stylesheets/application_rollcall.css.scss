@@ -62,7 +62,7 @@ body{
   font-weight: lighter;
 }
 ul.nav.navbar-nav.navbar-right.dropdown{
-  margin-top: 25px;
+  margin-top: 35px;
 }
 .sign-in.actions{
   margin-top: 10px;
@@ -94,4 +94,71 @@ ul.nav.navbar-nav.navbar-right.dropdown{
     text-align:left;
     /* inline-block space fix */
     margin-right:-4px;
+}
+
+.row.form_1{
+  margin-top: 50px;
+}
+.head_title_rollcall{
+  color: #5a5a5a;
+  font-size: 24px;
+  margin-bottom: 30px;
+  border-bottom: 2px solid #ddd;
+}
+.time_half{
+  color: #337ab7;
+  font-weight: bold;
+}
+.fa.fa-heartbeat,.fa.fa-briefcase{
+  color:#FFAA00;
+}
+.fa.fa-times{
+  color:#E70A0E;
+}
+.fa.fa-trophy,.fa.fa-clock-o{
+  color: #0b999c;
+}
+.fa.fa-check{
+  color: #5bab67;
+}
+.fa.fa-minus{
+  color: #ddd;
+}
+th.name_student.ng-binding{
+  vertical-align: inherit;
+  border-top: 2px solid #c5c2c2;
+  border-bottom: 2px solid #c5c2c2;
+}
+#rollcall-report .table>tbody>tr>td{
+  padding: 0px;
+  border-right: 1px solid #ddd;
+  border-left: 1px solid #ddd;
+  border-top: 2px solid #c5c2c2;
+  border-bottom: 2px solid #c5c2c2;
+}
+#rollcall-report table.status_rollcall>tbody>tr>td{
+  padding: 5px 10px 5px 10px;
+  border-bottom: 1px solid #ddd;
+}
+#rollcall-report table.time_rollcall>tbody>tr>td{
+  border-bottom: 1px solid #ddd;
+  padding: 5px 10px 5px 10px;
+}
+td.time_half {
+  border-right: none !important;
+  border-left: none !important;
+}
+#rollcall-report td.status_rollcall_data>table>tbody>tr>td{
+  border-bottom: 1px solid #ddd;
+  padding: 5px 10px 5px 10px;
+}
+td.status_rollcall_data{
+  border-right: none !important;
+  border-left: none !important;
+}
+.container-rollcall-report{
+  margin: 150px 100px 150px 100px;
+}
+.row.head-sp{
+  font-size: 16px;
 }

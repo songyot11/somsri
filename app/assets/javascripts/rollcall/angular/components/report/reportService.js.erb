@@ -2,8 +2,25 @@
   'use strict';
 
   angular.module('somsri.rollcall.report.service', [
+
   ])
-  .service('reportService', ['$http', function($http) {
+  .service('reportService', ['$http','$rootScope', function($http , $rootScope) {
+
+    this.getRollCall = function(listId, date) {
+      return $http.get('/report_roll_calls/report', { params: {list_id: listId, date: date } });
+    }
+
+    this.getDateInMonth = function(date) {
+      return $http.get('/report_roll_calls/date_in_month', { params: { date: date } });
+    }
+
+    this.getLists = function() {
+      return $http.get('/report_roll_calls/lists');
+    }
+
+    this.getMonths = function() {
+      return $http.get('/report_roll_calls/months');
+    }
 
   }]);
 })();

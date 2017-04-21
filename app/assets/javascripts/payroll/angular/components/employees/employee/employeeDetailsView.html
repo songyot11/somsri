@@ -2,24 +2,29 @@
   <div class="container">
     <div class="row">
       <div class="col-md-12">
-        <div class="row">
-          <div class="col-md-9">
-            <div class="dropdown" ng-show="employee.isEdit">
+        <div class="row" ng-show="employee.isEdit">
+          <div class="col-md-6">
+            <div class="dropdown">
               <small>Select employee</small>
-              <h1 id="employeeName" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="true">
+              <h1 id="employeeName" onclick="window.setTimeout(function(){ $('#employeeFilter').val('').trigger('change').focus()}, 100)" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="true">
                 <span ng-bind="employee.displayName"></span>
                 <span class="caret"></span>
               </h1>
-              <ul class="dropdown-menu ">
-                <li ng-repeat="data in employee.employee_lists">
+              <ul class="dropdown-menu">
+                <li ng-show="employee.employee_lists.length > 0"><input class="employee-filter" id="employeeFilter" type="text" ng-model="employee.filterKeyword" /></li>
+                <li ng-repeat="data in employee.employee_lists | filter:employee.filterKeyword">
                   <a ng-click="employee.openEmployeeDetails(data.id)" href="javascript:void(0)">
-                    {{data.name}}
+                    {{data.id}}: {{data.name}}
                   </a>
                 </li>
               </ul>
             </div>
           </div>
-          <div class="col-md-3" style="line-height: 69px;" ng-show="employee.isEdit">
+          <div class="col-md-3 employee-pin">
+            <small ng-show="employee.pinChars.length > 0">PIN Number</small><br>
+            <span class="pin-char" ng-show="employee.pinChars.length > 0" ng-repeat="pinChar in employee.pinChars track by $index">{{pinChar}}</span>
+          </div>
+          <div class="col-md-3" style="margin-top:10px;">
             <a ng-click="employee.openEmployeeDetails(0)" href="javascript:void(0)" class="btn btn-lg btn-block bg-yellow">
               + เพิ่มพนักงานใหม่
             </a>
@@ -43,7 +48,7 @@
   </div>
 </nav>
 
-<div class="container employee-details employee-menu-space">
+<div class="container employee-details" ng-class="{'employee-menu-space': employee.isEdit}">
   <form name="createProjectForm" ng-submit="employee.submit(employee.datas)">
     <div class="tab-content">
       <div ng-class="{ 'in active' : employee.activeTab === 'general' }" id="generalInfo" class="tab-pane fade">
@@ -113,14 +118,14 @@
               </div>
             </div>
             <div class="col-md-4">
-              <div class="img-profile">
-                <div ng-switch on="employee.datas.employee.img_url.length > 0">
+              <div class="img-profile cursor-pointer" ngf-select="employee.uploadPhoto($file)">
+                <div ng-switch on="employee.datas.img_url.length > 0">
                   <div ng-switch-when="true">
-                    <div class="img-bg" style="background: url('{{ employee.datas.employee.img_url }}')"></div>
+                    <div class="img-bg circle" style="background: url('{{ employee.datas.img_url }}')"></div>
                   </div>
                   <div ng-switch-default>
                     <i class="fa fa-camera center font-size-40 font-white" aria-hidden="true"></i>
-                    <div class="img-bg bg-light-gray"></div>
+                    <div class="img-bg bg-light-gray circle"></div>
                   </div>
                 </div>
               </div>
@@ -139,7 +144,7 @@
                 <p class="input-group">
                   <input id="start_date" type="text" class="form-control" uib-datepicker-popup="dd/MM/yyyy" ng-model="employee.datas.employee.start_date" is-open="employee.startDatePopup.opened" close-text="Close"/>
                   <span class="input-group-btn">
-                    <button type="button" class="btn btn-default" ng-click="employee.openStartDatePopup()"><i class="glyphicon glyphicon-calendar"></i></button>
+                    <button type="button" class="btn btn-default" ng-click="employee.openStartDatePopup()"><i class="fa fa-calendar"></i></button>
                   </span>
                 </p>
               </div>
@@ -172,7 +177,22 @@
                   <option value="ลูกจ้างชั่วคราว">ลูกจ้างชั่วคราว</option>
                   <option value="ลูกจ้างทดลองงาน">ลูกจ้างทดลองงาน</option>
                   <option value="ลูกจ้างรายวัน">ลูกจ้างรายวัน</option>
-                </select><br>
+                </select>
+              </div>
+            </div>
+          </div>
+          <div class="row">
+            <div class="col-md-4">
+              <div class="form-group">
+                <label for="grade_id">ระดับชั้น</label>
+                <select class="form-control somsri-select" ng-options="item.id as item.name for item in employee.grades" id="grade_id" ng-model="employee.datas.employee.grade_id">
+                </select>
+              </div>
+            </div>
+            <div class="col-md-4">
+              <div class="form-group">
+                <label for="classroom">ห้อง</label>
+                <input type="text" class="form-control" id="classroom" ng-model="employee.datas.employee.classroom">
               </div>
             </div>
           </div>
@@ -281,7 +301,7 @@
                       <p class="input-group">
                         <input id="birthdate" type="text" class="form-control" uib-datepicker-popup="dd/MM/yyyy" ng-model="employee.datas.employee.birthdate" is-open="employee.birthdatePopup.opened" close-text="Close"/>
                         <span class="input-group-btn">
-                          <button type="button" class="btn btn-default" ng-click="employee.openBirthdatePopup()"><i class="glyphicon glyphicon-calendar"></i></button>
+                          <button type="button" class="btn btn-default" ng-click="employee.openBirthdatePopup()"><i class="fa fa-calendar"></i></button>
                         </span>
                       </p>
                     </div>
@@ -341,13 +361,13 @@
               <div ng-class="{ 'in active' : employee.activeTabPrivate === 'tax' }" class="tab-pane fade">
                 <div class="row" ng-controller="TaxReductionCtrl">
                   <uib-accordion close-others="true">
-                    <div uib-accordion-group class="panel-default">
+                    <div uib-accordion-group class="panel-default" is-open="status.tab1">
                       <uib-accordion-heading>
-                        ค่าลดหย่อนส่วนตัว<i class="pull-right glyphicon" ng-class="{'glyphicon-chevron-down': status.open, 'glyphicon-chevron-right': !status.open}"></i>
+                        <a ng-class="{'accordion-selected': status.tab1}">ค่าลดหย่อนส่วนตัว</a><i class="pull-right fa" ng-class="{'fa-chevron-down': status.tab1, 'fa-chevron-right': !status.tab1}"></i>
                       </uib-accordion-heading>
                       <div class="col-md-6">
                         <div class="form-group">
-                          <label for="expenses">ค่าใช้จ่ายส่วนตัว</label> <i class="glyphicon glyphicon-info-sign" popover-trigger="'mouseenter'" uib-popover-html="expenses"></i>
+                          <label for="expenses">ค่าใช้จ่ายส่วนตัว</label> <i class="fa fa-info-circle" popover-trigger="'mouseenter'" uib-popover-html="expenses"></i>
                           <input string-to-number
                           class="form-control" id="expenses" ng-model="employee.datas.tax_reduction.expenses" disabled />
                         </div>
@@ -355,7 +375,7 @@
                           <table class="checkbox-group">
                             <tr>
                               <td><input type="checkbox" class="form-control cbox" id="cbox_no_income_spouse" ng-model="cbox_no_income_spouse" ng-change="set_no_income_spouse(this.cbox_no_income_spouse)" /></td>
-                              <td><label for="no_income_spouse">คู่สมรส (ไม่มีรายได้)</label> <i class="glyphicon glyphicon-info-sign" popover-trigger="'mouseenter'" uib-popover-html="no_income_spouse"></i>
+                              <td><label for="no_income_spouse">คู่สมรส (ไม่มีรายได้)</label> <i class="fa fa-info-circle" popover-trigger="'mouseenter'" uib-popover-html="no_income_spouse"></i>
                               <input string-to-number
                           class="form-control" id="no_income_spouse" ng-model="employee.datas.tax_reduction.no_income_spouse" disabled />
                               </td>
@@ -365,9 +385,9 @@
                       </div>
                     </div>
 
-                    <div uib-accordion-group class="panel-default">
+                    <div uib-accordion-group class="panel-default" is-open="status.tab2">
                       <uib-accordion-heading>
-                        ค่าลดหย่อนบิดามารดา บุตร ผู้พิการ<i class="pull-right glyphicon" ng-class="{'glyphicon-chevron-down': status.open, 'glyphicon-chevron-right': !status.open}"></i>
+                        <a ng-class="{'accordion-selected': status.tab2}">ค่าลดหย่อนบิดามารดา บุตร ผู้พิการ</a><i class="pull-right fa" ng-class="{'fa-chevron-down': status.tab2, 'fa-chevron-right': !status.tab2}"></i>
                       </uib-accordion-heading>
                       <div class="col-md-6">
                         <div class="form-group">
@@ -377,7 +397,7 @@
                                 <input type="checkbox" class="form-control cbox" id="cbox_father_alimony" ng-model="cbox_father_alimony" ng-change="set_father_alimony(this.cbox_father_alimony)" />
                               </td>
                               <td>
-                                <label for="father_alimony">บิดา</label> <i class="glyphicon glyphicon-info-sign" popover-trigger="'mouseenter'" uib-popover-html="parent_alimony"></i>
+                                <label for="father_alimony">บิดา</label> <i class="fa fa-info-circle" popover-trigger="'mouseenter'" uib-popover-html="parent_alimony"></i>
                                 <input string-to-number
                           class="form-control" id="father_alimony" ng-model="employee.datas.tax_reduction.father_alimony" disabled />
                               </td>
@@ -387,7 +407,7 @@
                                 <input type="checkbox" class="form-control cbox" id="cbox_mother_alimony" ng-model="cbox_mother_alimony" ng-change="set_mother_alimony(this.cbox_mother_alimony)" />
                               </td>
                               <td>
-                                <label for="mother_alimony">มารดา</label> <i class="glyphicon glyphicon-info-sign" popover-trigger="'mouseenter'" uib-popover-html="parent_alimony"></i>
+                                <label for="mother_alimony">มารดา</label> <i class="fa fa-info-circle" popover-trigger="'mouseenter'" uib-popover-html="parent_alimony"></i>
                                 <input string-to-number
                           class="form-control" id="mother_alimony" ng-model="employee.datas.tax_reduction.mother_alimony" disabled />
                               </td>
@@ -397,7 +417,7 @@
                               <td>
                               </td>
                               <td>
-                                <label for="child">บุตร</label> <i class="glyphicon glyphicon-info-sign" popover-trigger="'mouseenter'" uib-popover-html="child"></i>
+                                <label for="child">บุตร</label> <i class="fa fa-info-circle" popover-trigger="'mouseenter'" uib-popover-html="child"></i>
                                 <table>
                                   <tr>
                                     <td class="child"><input step="1" type="number" class="form-control cbox" id="numchild" ng-model="numchild" ng-change="set_child(this.numchild)" min="0" /></td>
@@ -419,7 +439,7 @@
                                 <input type="checkbox" class="form-control cbox" id="cbox_spouse_father_alimony" ng-model="cbox_spouse_father_alimony" ng-change="set_spouse_father_alimony(this.cbox_spouse_father_alimony)" />
                               </td>
                               <td>
-                                <label for="spouse_father_alimony">บิดาของคู่สมรส</label> <i class="glyphicon glyphicon-info-sign" popover-trigger="'mouseenter'" uib-popover-html="parent_alimony"></i>
+                                <label for="spouse_father_alimony">บิดาของคู่สมรส</label> <i class="fa fa-info-circle" popover-trigger="'mouseenter'" uib-popover-html="parent_alimony"></i>
                                 <input string-to-number
                           class="form-control" id="spouse_father_alimony" ng-model="employee.datas.tax_reduction.spouse_father_alimony" disabled />
                               </td>
@@ -429,7 +449,7 @@
                                 <input type="checkbox" class="form-control cbox" id="cbox_spouse_mother_alimony" ng-model="cbox_spouse_mother_alimony" ng-change="set_spouse_mother_alimony(this.cbox_spouse_mother_alimony)" />
                               </td>
                               <td>
-                                <label for="spouse_mother_alimony">มารดาของคู่สมรส</label> <i class="glyphicon glyphicon-info-sign" popover-trigger="'mouseenter'" uib-popover-html="parent_alimony"></i>
+                                <label for="spouse_mother_alimony">มารดาของคู่สมรส</label> <i class="fa fa-info-circle" popover-trigger="'mouseenter'" uib-popover-html="parent_alimony"></i>
                                 <input string-to-number
                           class="form-control" id="spouse_mother_alimony" ng-model="employee.datas.tax_reduction.spouse_mother_alimony" disabled />
                               </td>
@@ -438,7 +458,7 @@
                               <td>
                               </td>
                               <td>
-                                <label for="cripple_alimony">คนพิการ และหรือคนทุพพลภาพ</label> <i class="glyphicon glyphicon-info-sign" popover-trigger="'mouseenter'" uib-popover-html="cripple_alimony"></i>
+                                <label for="cripple_alimony">คนพิการ และหรือคนทุพพลภาพ</label> <i class="fa fa-info-circle" popover-trigger="'mouseenter'" uib-popover-html="cripple_alimony"></i>
                                 <table>
                                   <tr>
                                     <td class="child"><input step="1" type="number" class="form-control cbox" id="numcripple_alimony" ng-model="numcripple_alimony" ng-change="set_cripple_alimony(this.numcripple_alimony)" min="0" /></td>
@@ -454,109 +474,109 @@
                       </div>
                     </div>
 
-                    <div uib-accordion-group class="panel-default">
+                    <div uib-accordion-group class="panel-default" is-open="status.tab3">
                       <uib-accordion-heading>
-                        กองทุนรวมและประกันชีวิต<i class="pull-right glyphicon" ng-class="{'glyphicon-chevron-down': status.open, 'glyphicon-chevron-right': !status.open}"></i>
+                        <a ng-class="{'accordion-selected': status.tab3}">กองทุนรวมและประกันชีวิต</a><i class="pull-right fa" ng-class="{'fa-chevron-down': status.tab3, 'fa-chevron-right': !status.tab3}"></i>
                       </uib-accordion-heading>
                       <div class="col-md-6">
                         <div class="form-group">
-                          <label for="insurance">เบี้ยประกันชีวิต</label> <i class="glyphicon glyphicon-info-sign" popover-trigger="'mouseenter'" uib-popover-html="insurance"></i>
+                          <label for="insurance">เบี้ยประกันชีวิต</label> <i class="fa fa-info-circle" popover-trigger="'mouseenter'" uib-popover-html="insurance"></i>
                           <input step="any" type="number" string-to-number
                           class="form-control" id="insurance" ng-model="employee.datas.tax_reduction.insurance" min="0" max="100000" ng-blur="check_not_null('insurance')" />
-                          <label for="retirement_mutual_fund">ค่าซื้อหน่วยลงทุนในกองทุนรวมเพื่อการเลี้ยงชีพ (RMF)</label> <i class="glyphicon glyphicon-info-sign" popover-trigger="'mouseenter'" uib-popover-html="retirement_mutual_fund"></i>
+                          <label for="retirement_mutual_fund">ค่าซื้อหน่วยลงทุนในกองทุนรวมเพื่อการเลี้ยงชีพ (RMF)</label> <i class="fa fa-info-circle" popover-trigger="'mouseenter'" uib-popover-html="retirement_mutual_fund"></i>
                           <input step="any" type="number" string-to-number
                           class="form-control" id="retirement_mutual_fund" ng-model="employee.datas.tax_reduction.retirement_mutual_fund" min="0" ng-blur="check_not_null('retirement_mutual_fund')" />
                         </div>
                       </div>
                       <div class="col-md-6">
                         <div class="form-group">
-                          <label for="pension_insurance">เบี้ยประกันชีวิตแบบบำนาญ</label> <i class="glyphicon glyphicon-info-sign" popover-trigger="'mouseenter'" uib-popover-html="pension_insurance"></i>
+                          <label for="pension_insurance">เบี้ยประกันชีวิตแบบบำนาญ</label> <i class="fa fa-info-circle" popover-trigger="'mouseenter'" uib-popover-html="pension_insurance"></i>
                           <input step="any" type="number" string-to-number
                           class="form-control" id="pension_insurance" ng-model="employee.datas.tax_reduction.pension_insurance" min="0" ng-change="employee.checkInsurance()" ng-blur="check_not_null('pension_insurance')" />
-                          <label for="long_term_equity_fund">ค่าซื้อหน่วยลงทุนในกองทุนรวมหุ้นระยะยาว (LTF)</label> <i class="glyphicon glyphicon-info-sign" popover-trigger="'mouseenter'" uib-popover-html="long_term_equity_fund"></i>
+                          <label for="long_term_equity_fund">ค่าซื้อหน่วยลงทุนในกองทุนรวมหุ้นระยะยาว (LTF)</label> <i class="fa fa-info-circle" popover-trigger="'mouseenter'" uib-popover-html="long_term_equity_fund"></i>
                           <input step="any" type="number" string-to-number
                           class="form-control" id="long_term_equity_fund" ng-model="employee.datas.tax_reduction.long_term_equity_fund" min="0" ng-blur="check_not_null('long_term_equity_fund')" />
                         </div>
                       </div>
                       <div class="col-md-6">
                         <div class="form-group">
-                          <label for="national_savings_fund">กองทุนการออมแห่งชาติ</label> <i class="glyphicon glyphicon-info-sign" popover-trigger="'mouseenter'" uib-popover-html="national_savings_fund"></i>
+                          <label for="national_savings_fund">กองทุนการออมแห่งชาติ</label> <i class="fa fa-info-circle" popover-trigger="'mouseenter'" uib-popover-html="national_savings_fund"></i>
                           <input step="any" type="number" string-to-number
                           class="form-control" id="national_savings_fund" ng-model="employee.datas.tax_reduction.national_savings_fund" min="0" ng-blur="check_not_null('national_savings_fund')" />
                         </div>
                       </div>
                     </div>
 
-                    <div uib-accordion-group class="panel-default">
+                    <div uib-accordion-group class="panel-default" is-open="status.tab4">
                       <uib-accordion-heading>
-                        ประกันสังคม<i class="pull-right glyphicon" ng-class="{'glyphicon-chevron-down': status.open, 'glyphicon-chevron-right': !status.open}"></i>
+                        <a ng-class="{'accordion-selected': status.tab4}">ประกันสังคม</a><i class="pull-right fa" ng-class="{'fa-chevron-down': status.tab4, 'fa-chevron-right': !status.tab4}"></i>
                       </uib-accordion-heading>
                       <div class="col-md-6">
                         <div class="form-group">
-                          <label for="social_insurance">เงินสมทบกองทุนประกันสังคมทั้งปี</label> <i class="glyphicon glyphicon-info-sign" popover-trigger="'mouseenter'" uib-popover-html="social_insurance"></i>
+                          <label for="social_insurance">เงินสมทบกองทุนประกันสังคมทั้งปี</label> <i class="fa fa-info-circle" popover-trigger="'mouseenter'" uib-popover-html="social_insurance"></i>
                           <input step="any" type="number" string-to-number
                           class="form-control" id="social_insurance" ng-model="employee.datas.tax_reduction.social_insurance" min="0" max="9000" ng-blur="check_not_null('social_insurance')" />
                         </div>
                       </div>
                     </div>
 
-                    <div uib-accordion-group class="panel-default">
+                    <div uib-accordion-group class="panel-default" is-open="status.tab5">
                       <uib-accordion-heading>
-                        กองทุนสำรองเลี้ยงชีพ/กบข./กองทุนสงเคราะห์ครูโรงเรียนเอกชน<i class="pull-right glyphicon" ng-class="{'glyphicon-chevron-down': status.open, 'glyphicon-chevron-right': !status.open}"></i>
+                        <a ng-class="{'accordion-selected': status.tab5}">กองทุนสำรองเลี้ยงชีพ/กบข./กองทุนสงเคราะห์ครูโรงเรียนเอกชน</a><i class="pull-right fa" ng-class="{'fa-chevron-down': status.tab5, 'fa-chevron-right': !status.tab5}"></i>
                       </uib-accordion-heading>
                       <div class="col-md-6">
                         <div class="form-group">
-                          <label for="pension_fund">กองทุนสำรองเลี้ยงชีพ</label> <i class="glyphicon glyphicon-info-sign" popover-trigger="'mouseenter'" uib-popover-html="pension_fund"></i>
+                          <label for="pension_fund">กองทุนสำรองเลี้ยงชีพ</label> <i class="fa fa-info-circle" popover-trigger="'mouseenter'" uib-popover-html="pension_fund"></i>
                           <input step="any" type="number" string-to-number
                           class="form-control" id="pension_fund" ng-model="employee.datas.tax_reduction.pension_fund" min="0" ng-blur="check_not_null('pension_fund')" />
-                          <label for="government_pension_fund">เงินสะสม กบข</label> <i class="glyphicon glyphicon-info-sign" popover-trigger="'mouseenter'" uib-popover-html="government_pension_fund"></i>
+                          <label for="government_pension_fund">เงินสะสม กบข</label> <i class="fa fa-info-circle" popover-trigger="'mouseenter'" uib-popover-html="government_pension_fund"></i>
                           <input step="any" type="number" string-to-number
                           class="form-control" id="government_pension_fund" ng-model="employee.datas.tax_reduction.government_pension_fund" min="0" ng-blur="check_not_null('government_pension_fund')" />
-                          <label for="private_teacher_aid_fund">เงินสะสมกองทุนสงเคราะห์ครูโรงเรียนเอกชน</label> <i class="glyphicon glyphicon-info-sign" popover-trigger="'mouseenter'" uib-popover-html="private_teacher_aid_fund"></i>
+                          <label for="private_teacher_aid_fund">เงินสะสมกองทุนสงเคราะห์ครูโรงเรียนเอกชน</label> <i class="fa fa-info-circle" popover-trigger="'mouseenter'" uib-popover-html="private_teacher_aid_fund"></i>
                           <input step="any" type="number" string-to-number
                           class="form-control" id="private_teacher_aid_fund" ng-model="employee.datas.tax_reduction.private_teacher_aid_fund" min="0" ng-blur="check_not_null('private_teacher_aid_fund')" />
                         </div>
                       </div>
                     </div>
 
-                    <div uib-accordion-group class="panel-default">
+                    <div uib-accordion-group class="panel-default" is-open="status.tab6">
                       <uib-accordion-heading>
-                        ดอกเบี้ยเงินกู้ยืมเพื่อที่อยู่อาศัย<i class="pull-right glyphicon" ng-class="{'glyphicon-chevron-down': status.open, 'glyphicon-chevron-right': !status.open}"></i>
+                        <a ng-class="{'accordion-selected': status.tab6}">ดอกเบี้ยเงินกู้ยืมเพื่อที่อยู่อาศัย</a><i class="pull-right fa" ng-class="{'fa-chevron-down': status.tab6, 'fa-chevron-right': !status.tab6}"></i>
                       </uib-accordion-heading>
                       <div class="col-md-6">
                         <div class="form-group">
-                          <label for="house_loan_interest">ค่าดอกเบี้ยเงินกู้ยืมเพื่อที่อยู่อาศัย</label> <i class="glyphicon glyphicon-info-sign" popover-trigger="'mouseenter'" uib-popover-html="house_loan_interest"></i>
+                          <label for="house_loan_interest">ค่าดอกเบี้ยเงินกู้ยืมเพื่อที่อยู่อาศัย</label> <i class="fa fa-info-circle" popover-trigger="'mouseenter'" uib-popover-html="house_loan_interest"></i>
                           <input step="any" type="number" string-to-number
                           class="form-control" id="house_loan_interest" ng-model="employee.datas.tax_reduction.house_loan_interest" min="0" max="100000" ng-blur="check_not_null('house_loan_interest')" />
                         </div>
                       </div>
                     </div>
 
-                    <div uib-accordion-group class="panel-default">
+                    <div uib-accordion-group class="panel-default" is-open="status.tab7">
                       <uib-accordion-heading>
-                        สิทธิประโยชน์อื่นๆ<i class="pull-right glyphicon" ng-class="{'glyphicon-chevron-down': status.open, 'glyphicon-chevron-right': !status.open}"></i>
+                        <a ng-class="{'accordion-selected': status.tab7}">สิทธิประโยชน์อื่นๆ</a><i class="pull-right fa" ng-class="{'fa-chevron-down': status.tab7, 'fa-chevron-right': !status.tab7}"></i>
                       </uib-accordion-heading>
                       <div class="col-md-6">
                         <div class="form-group">
-                          <label for="father_insurance">เบี้ยประกันสุขภาพบิดา</label> <i class="glyphicon glyphicon-info-sign" popover-trigger="'mouseenter'" uib-popover-html="parent_insurance"></i>
+                          <label for="father_insurance">เบี้ยประกันสุขภาพบิดา</label> <i class="fa fa-info-circle" popover-trigger="'mouseenter'" uib-popover-html="parent_insurance"></i>
                           <input step="any" type="number" string-to-number
                           class="form-control" id="father_insurance" ng-model="employee.datas.tax_reduction.father_insurance" min="0" max="15000" ng-blur="check_not_null('father_insurance')" />
-                          <label for="mother_insurance">เบี้ยประกันสุขภาพมารดา</label> <i class="glyphicon glyphicon-info-sign" popover-trigger="'mouseenter'" uib-popover-html="parent_insurance"></i>
+                          <label for="mother_insurance">เบี้ยประกันสุขภาพมารดา</label> <i class="fa fa-info-circle" popover-trigger="'mouseenter'" uib-popover-html="parent_insurance"></i>
                           <input step="any" type="number" string-to-number
                           class="form-control" id="mother_insurance" ng-model="employee.datas.tax_reduction.mother_insurance" min="0" max="15000" ng-blur="check_not_null('mother_insurance')" />
-                          <label for="spouse_father_insurance">เบี้ยประกันสุขภาพบิดาของคู่สมรส</label> <i class="glyphicon glyphicon-info-sign" popover-trigger="'mouseenter'" uib-popover-html="parent_insurance"></i>
+                          <label for="spouse_father_insurance">เบี้ยประกันสุขภาพบิดาของคู่สมรส</label> <i class="fa fa-info-circle" popover-trigger="'mouseenter'" uib-popover-html="parent_insurance"></i>
                           <input step="any" type="number" string-to-number
                           class="form-control" id="spouse_father_insurance" ng-model="employee.datas.tax_reduction.spouse_father_insurance" min="0" max="15000" ng-blur="check_not_null('spouse_father_insurance')" />
-                          <label for="spouse_mother_insurance">เบี้ยประกันสุขภาพมารดาของคู่สมรส</label> <i class="glyphicon glyphicon-info-sign" popover-trigger="'mouseenter'" uib-popover-html="parent_insurance"></i>
+                          <label for="spouse_mother_insurance">เบี้ยประกันสุขภาพมารดาของคู่สมรส</label> <i class="fa fa-info-circle" popover-trigger="'mouseenter'" uib-popover-html="parent_insurance"></i>
                           <input step="any" type="number" string-to-number
                           class="form-control" id="spouse_mother_insurance" ng-model="employee.datas.tax_reduction.spouse_mother_insurance" min="0" max="15000" ng-blur="check_not_null('spouse_mother_insurance')" />
-                          <label for="double_donation">เงินบริจาคที่ได้รับสิทธิลดหย่อน 2 เท่า</label> <i class="glyphicon glyphicon-info-sign" popover-trigger="'mouseenter'" uib-popover-html="double_donation"></i>
+                          <label for="double_donation">เงินบริจาคที่ได้รับสิทธิลดหย่อน 2 เท่า</label> <i class="fa fa-info-circle" popover-trigger="'mouseenter'" uib-popover-html="double_donation"></i>
                           <input step="any" type="number" string-to-number
                           class="form-control" id="double_donation" ng-model="employee.datas.tax_reduction.double_donation" min="0" ng-blur="check_not_null('double_donation')" />
-                          <label for="donation">เงินบริจาคทั่วไป</label> <i class="glyphicon glyphicon-info-sign" popover-trigger="'mouseenter'" uib-popover-html="donation"></i>
+                          <label for="donation">เงินบริจาคทั่วไป</label> <i class="fa fa-info-circle" popover-trigger="'mouseenter'" uib-popover-html="donation"></i>
                           <input step="any" type="number" string-to-number
                           class="form-control" id="donation" ng-model="employee.datas.tax_reduction.donation" min="0" ng-blur="check_not_null('donation')" />
-                          <label for="other">ค่าลดหย่อนอื่นๆ</label> <i class="glyphicon glyphicon-info-sign" popover-trigger="'mouseenter'" uib-popover-html="other"></i>
+                          <label for="other">ค่าลดหย่อนอื่นๆ</label> <i class="fa fa-info-circle" popover-trigger="'mouseenter'" uib-popover-html="other"></i>
                           <input step="any" type="number" string-to-number
                           class="form-control" id="other" ng-model="employee.datas.tax_reduction.other" min="0" ng-blur="check_not_null('other')" />
                         </div>
@@ -656,7 +676,7 @@
             </div>
             <div class="col-md-4">
               <div class="form-group">
-                <label for="tax">ภาษี</label>
+                <label for="tax">{{employee.datas.employee.employee_type=="ลูกจ้างประจำ" ? 'ภาษีเงินได้บุคคลธรรมดา': 'ภาษีหัก ณ ที่จ่าย'}}</label>
                 <input class="form-control text-red" id="tax" ng-model="employee.datas.payroll.tax" disabled>
               </div>
             </div>
@@ -724,18 +744,29 @@
       <div class="col-md-4">
         <button ng-show="employee.isEdit" type="button" class="btn btn-lg btn-block btn-print" ng-click="openSlip(employee.datas.employee.id, employee.currentEffectiveDate['payroll_id'])">พิมพ์ใบจ่ายเงินเดือน</button>
       </div>
-
-      <div class="col-md-2 {{employee.isEdit ? '': 'col-md-offset-2'}}">
+      <!-- <div class="col-md-2 {{employee.isEdit ? '': 'col-md-offset-2'}}">
         <button ng-show="false" type="button" class="btn btn-lg btn-block btn-memo">บันทึกช่วยจำ</button>
-      </div>
+      </div> -->
       <div class="col-md-2 text-right">
         <button type="submit" class="btn btn-lg btn-block btn-submit" ng-disabled="employee.isSubmit">บันทึก</button>
       </div>
       <div class="col-md-2 text-right">
         <button type="button" class="btn btn-lg btn-block btn-cancel" ng-click="employee.cancel()">ยกเลิก</button>
       </div>
-      <div ng-show="employee.isEdit" class="col-md-2 text-right">
-        <button type="button" class="btn btn-lg btn-block btn-danger" ng-click="employee.deleteEmployee(employee.empId)">ลบ</button>
+      <div ng-if="employee.datas.employee.deleted_at == nil">
+        <div ng-show="employee.isEdit" class="col-md-2 text-right">
+          <button type="button" class="btn btn-lg btn-block btn-archive" ng-click="employee.archiveEmployee(employee.empId)">นำออกชั่วคราว</button>
+        </div>
+      </div>
+      <div ng-if="employee.datas.employee.deleted_at != nil">
+        <div ng-show="employee.isEdit" class="col-md-2 text-right">
+          <button type="button" class="btn btn-lg btn-block btn-restore" ng-click="employee.restoreEmployees(employee.empId)">นำข้อมูลกลับ</button>
+        </div>
+      </div>
+      <div ng-if="employee.datas.payroll == nil">
+        <div ng-show="employee.isEdit" class="col-md-2 text-right">
+          <button type="button" class="btn btn-lg btn-block btn-danger" ng-click="employee.destroyEmployees(employee.empId)">ลบ</button>
+        </div>
       </div>
     </div>
 

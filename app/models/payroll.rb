@@ -1,4 +1,5 @@
 class Payroll < ApplicationRecord
+  acts_as_paranoid
   belongs_to :employee
   validate :already_payroll_on_month, on: :create
   before_validation :set_created_at
@@ -146,7 +147,7 @@ class Payroll < ApplicationRecord
     end
 
     def self.assume_year_income(payroll)
-      income = (payroll["salary"].to_i + payroll["allowance"].to_i + payroll["attendance_bonus"].to_i + payroll["ot"].to_i + payroll["bonus"].to_i + payroll["position_allowance"].to_i - payroll["absence"].to_i - payroll["late"].to_i)*12
+      income = (payroll["salary"].to_i + payroll["allowance"].to_i + payroll["attendance_bonus"].to_i + payroll["ot"].to_i + payroll["bonus"].to_i + payroll["position_allowance"].to_i + payroll["extra_etc"].to_i - payroll["absence"].to_i - payroll["late"].to_i)*12
     end
 
     def self.tax_break(payroll, tax_reduction)
@@ -181,7 +182,7 @@ class Payroll < ApplicationRecord
 
     def self.generate_social_insurance(payroll, employee)
       return 0 unless employee["pay_social_insurance"]
-      income = payroll["salary"].to_i + payroll["position_allowance"].to_i + payroll["allowance"].to_i - payroll["late"].to_i - payroll["absence"].to_i
+      income = payroll["salary"].to_i - payroll["late"].to_i - payroll["absence"].to_i
       income = 15000 if income > 15000
       income >= 1650 ? (income * 0.05).round : 0
     end

@@ -8,8 +8,8 @@ class HomeController < ApplicationController
   # /auth_api?id_token=STRING
   def auth_api
     pin = params['pin']
-    user = User.where(pin: pin).first
-    render json: user and return if user
-    render json: { errors: "Invalid PIN or user not registered" }, status: 422 and return
+    employee = Employee.where(pin: pin).first
+    render json: employee and return if employee
+    render json: { errors: "Invalid PIN" }, status: 422 and return
   end
 end

@@ -19,6 +19,8 @@ class Ability
     manage[:menu] = true if self.can? :manage, :menu
     manage[:invoice] = true if self.can? :manage, Invoice
     manage[:daily_report] = true if self.can? :manage, DailyReport
+    manage[:roll_call] = true if self.can? :manage, RollCall
+    manage[:report_roll_call] = true if self.can? :manage, :report_roll_call
     result = {
       manage: manage
     }

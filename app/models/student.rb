@@ -1,19 +1,58 @@
 class Student < ApplicationRecord
+  include ActiveModel::Dirty
   belongs_to :grade
   belongs_to :gender
   belongs_to :school
   has_and_belongs_to_many :parents, join_table: 'students_parents'
   has_and_belongs_to_many :relationships, join_table: "students_parents"
-  has_many :invoices
+  has_many :invoices, dependent: :restrict_with_exception
 
+  has_many :roll_calls, dependent: :destroy
   has_many :student_lists, dependent: :destroy
-  alias_attribute :code, :student_number
+  alias_attribute :code, :id
   alias_attribute :number, :classroom_number
   attr_accessor :first_name, :last_name, :prefix
 
   self.per_page = 10
 
   validates :full_name , presence: true
+  validates :student_number , uniqueness: true , allow_nil: true
+
+  acts_as_paranoid
+  has_attached_file :img_url
+  validates_attachment_content_type :img_url, content_type: /\Aimage\/.*\z/
+
+  after_save :update_rollcall_list
+
+  @@warned = false
+  def update_rollcall_list
+    unless @@warned
+      puts 'WARNING: please remove this function after rollcall list assignment has been implemented'
+      @@warned = true
+    end
+    if self.classroom && !self.classroom.blank? && self.classroom_changed?
+      # add or update list
+      StudentList.transaction do
+        self.student_lists.destroy_all
+        list = List.where(name: self.classroom).first
+        if !list
+          list = List.create(name: self.classroom, category: "roll_call")
+          Student.where(classroom: self.classroom).pluck(:id).each do |student_id|
+            StudentList.create(student_id: student_id, list_id: list.id)
+          end
+        else
+          student_ids = Student.where(classroom: self.classroom).pluck(:id)
+          exclude_student_ids = StudentList.where(list_id: list.id).pluck(:id)
+          (student_ids - exclude_student_ids).each do |student_id|
+            StudentList.create(student_id: student_id, list_id: list.id)
+          end
+        end
+      end
+    elsif self.classroom.blank?
+      # remove list
+      self.student_lists.destroy_all
+    end
+  end
 
   def full_name_with_title
     if gender_id != nil
@@ -218,6 +257,10 @@ class Student < ApplicationRecord
     else
       invoice_screen_full_name_display
     end
+  end
+
+  def student_num
+    self.student_number.nil? ? "-" : self.student_number
   end
 
 end

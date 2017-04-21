@@ -1,34 +1,33 @@
 <div class="container-fluid">
   <div id="payroll-report" class="row">
     <div class="col-lg-10 col-lg-offset-1">
-
       <div class="row no_display_print">
-        <div class="col-lg-3">
-          <div class="dropdown">
-            <h2 id="month-list" data-toggle="dropdown">
-              <span ng-bind="report.currentDateString" ></span>
-              <span class="caret"></span>
-            </h2>
-            <ul class="dropdown-menu" aria-labelledby="month-list">
-              <li ng-repeat="effectiveDate in report.effectiveDates">
-                <a ng-click="report.switchMonth(effectiveDate)">
-                  <button>{{ effectiveDate["date_string"] }}</button>
-                </a>
-              </li>
-            </ul>
-          </div>
-        </div>
-        <div class="col-lg-9" style="padding-right: 0px;">
+        <div class="col-lg-12" style="padding-right: 0px;margin-top: 10px;">
           <div class="btn-group pull-right">
-              <label class="btn btn-info btn-lg employee-type" ng-click="report.employeeTypeFilter()" ng-model="report.employeeTypeMode.normal" style="border-radius: 0px;" uib-btn-checkbox>ลูกจ้างประจำ</label>
-              <label class="btn btn-info btn-lg employee-type" ng-click="report.employeeTypeFilter()" ng-model="report.employeeTypeMode.temporary" uib-btn-checkbox>ลูกจ้างชั่วคราว</label>
-              <label class="btn btn-info btn-lg employee-type" ng-click="report.employeeTypeFilter()" ng-model="report.employeeTypeMode.probationary" uib-btn-checkbox>ลูกจ้างทดลองงาน</label>
-              <label class="btn btn-info btn-lg employee-type" ng-click="report.employeeTypeFilter()" ng-model="report.employeeTypeMode.daily" style="border-radius: 0px;" uib-btn-checkbox>ลูกจ้างรายวัน</label>
-              <label class="btn btn-info btn-lg employee-print" style="border-radius: 0px; margin-left:30px;" ng-click="report.printReport()"><i class="fa fa-print"></i>&nbsp;&nbsp;พิมพ์สรุปรายการ</label>
+              <label class="btn btn-info btn-md employee-type" ng-click="report.employeeTypeFilter()" ng-model="report.employeeTypeMode.normal" style="border-radius: 0px;" uib-btn-checkbox>ลูกจ้างประจำ</label>
+              <label class="btn btn-info btn-md employee-type" ng-click="report.employeeTypeFilter()" ng-model="report.employeeTypeMode.temporary" uib-btn-checkbox>ลูกจ้างชั่วคราว</label>
+              <label class="btn btn-info btn-md employee-type" ng-click="report.employeeTypeFilter()" ng-model="report.employeeTypeMode.probationary" uib-btn-checkbox>ลูกจ้างทดลองงาน</label>
+              <label class="btn btn-info btn-md employee-type" ng-click="report.employeeTypeFilter()" ng-model="report.employeeTypeMode.daily" style="border-radius: 0px;" uib-btn-checkbox>ลูกจ้างรายวัน</label>
+              <label class="btn btn-info btn-md employee-print" style="border-radius: 0px; margin-left:30px;" ng-click="report.printReport()"><i class="fa fa-print"></i>&nbsp;&nbsp;พิมพ์สรุปรายการ</label>
           </div>
         </div>
       </div>
-      <report-content model=report class="no_display_print" />
+      <div class="row report-content" class="no_display_print">
+        <div class="dropdown no_display_print">
+          <h3 id="month-list" data-toggle="dropdown">
+            <span ng-bind="report.currentDateString" ></span>
+            <span class="caret"></span>
+          </h3>
+          <ul class="dropdown-menu" aria-labelledby="month-list">
+            <li ng-repeat="effectiveDate in report.effectiveDates">
+              <a ng-click="report.switchMonth(effectiveDate)">
+                <button>{{ effectiveDate["date_string"] }}</button>
+              </a>
+            </li>
+          </ul>
+        </div>
+        <report-content model=report class="no_display_print"/>
+      </div>
     </div>
   </div>
 </div>

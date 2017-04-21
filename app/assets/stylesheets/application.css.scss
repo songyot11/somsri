@@ -67,7 +67,7 @@ body{
   }
 }
 ul.nav.navbar-nav.navbar-right.dropdown{
-  margin-top: 25px;
+  margin-top: 35px;
 }
 .sign-in.actions{
   margin-top: 10px;
@@ -97,4 +97,17 @@ ul.nav.navbar-nav.navbar-right.dropdown{
     text-align:left;
     /* inline-block space fix */
     margin-right:-4px;
+}
+.download_android{
+  text-align: center;
+  margin-top: 30px;
+  letter-spacing: 1px;
+  text-decoration: underline;
+  a{
+    font-size: 16px;
+  }
+  .fa-android{
+    font-size: 24px;
+    margin-right: 10px;
+  }
 }

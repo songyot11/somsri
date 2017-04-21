@@ -2,7 +2,7 @@
   'use strict';
   angular.module('somsri.payroll.employee_details', [
   ])
-  .controller('employeeDetailsCtrl', ['employeesService', '$log', '$state', '$rootScope','$scope', '$uibModal', 'reportService', '$filter', '$location', 'individualsService', function(service, $log, $state, $rootScope, $scope, $uibModal, reportService, $filter, $location, individualsService) {
+  .controller('employeeDetailsCtrl', ['employeesService', 'studentReportService', '$log', '$state', '$rootScope','$scope', '$uibModal', 'reportService', '$filter', '$location', 'individualsService', 'Upload', function(service, studentReportService, $log, $state, $rootScope, $scope, $uibModal, reportService, $filter, $location, individualsService, Upload) {
     $rootScope.menu = "บุคลากร";
     var ctrl = this;
     $rootScope.loadAndAuthorizeResource("employee", function(){
@@ -11,11 +11,31 @@
       ctrl.currentEffectiveDate = "";
       ctrl.empId = employeeId;
       ctrl.isEdit = employeeId > 0 ? true : false
-      ctrl.data = { employee: {}};
+      ctrl.grades = []
+      ctrl.datas = { employee: { grade_id: 0 }};
       ctrl.isSubmit = false;
       ctrl.activeTab = 'general';
       ctrl.activeTabPrivate = 'basic';
-      ctrl.hasPayroll =  true;
+      ctrl.hasPayroll =  ctrl.isEdit ? true : false;
+      ctrl.pinChars = [];
+      ctrl.filterKeyword = '';
+      ctrl.total = '';
+
+      studentReportService.getGrades().then(function(grade_resp) {
+        // remove option 'All'
+        var allIndex = -1;
+        for(var i = 0; i < grade_resp.data.length; i++) {
+          var option = grade_resp.data[i];
+          if (option.name === 'All') {
+            allIndex = i;
+            break;
+          }
+        }
+        if(allIndex > -1) {
+          grade_resp.data.splice(allIndex, 1);
+        }
+        ctrl.grades = grade_resp.data
+      });
 
       function openConfirmationModal(message, success, dismiss) {
         $scope.message = message;
@@ -47,7 +67,7 @@
         if(ctrl.hasPayroll){
           var keys = Object.keys(ctrl.datas_original.payroll)
           for(var i = 1; i < keys.length; i++){
-            if(ctrl.datas.payroll[keys[i]] != ctrl.datas_original.payroll[keys[i]]){ return true }
+            if(ctrl.datas.payroll[keys[i]] != ctrl.datas_original.payroll[keys[i]] && keys[i] != 'deleted_at'){ return true }
           }
         }
         return false;
@@ -70,7 +90,7 @@
       }
 
       function isDataChange(){
-        return isPayrollChange() || isEmployeeChange() || isTaxReductionChange();
+        return ctrl.isEdit && (isPayrollChange() || isEmployeeChange() || isTaxReductionChange());
       }
 
       // convert string to float
@@ -111,9 +131,6 @@
                   break;
                 }
               }
-              ctrl.hasPayroll = true;
-            }else{
-              ctrl.hasPayroll = false;
             }
             displayEffectiveDate(ctrl.currentEffectiveDate);
           }
@@ -147,6 +164,14 @@
             ctrl.calTotal();
           }
 
+          // transform pin number
+          var pin = e.pin;
+          if (pin) {
+            ctrl.pinChars = pin.split('');
+          } else {
+            ctrl.pinChars = []
+          }
+
           // set display name
           var hasPrefixThai = e.prefix_thai && e.prefix_thai.length > 0
           var hasFirstNameThai = e.first_name_thai && e.first_name_thai.length > 0
@@ -158,6 +183,7 @@
             if(e.middle_name && e.middle_name.length > 0){ ctrl.displayName += e.middle_name + " " }
             ctrl.displayName += e.last_name;
           }
+          ctrl.displayName = e.id + ': ' + ctrl.displayName;
 
           // init tax reduction default
           if(ctrl.datas.tax_reduction.no_income_spouse > 0)
@@ -178,10 +204,12 @@
           // get others employee
           service.getAllEmployee().then(function(resp) {
             if (resp.data.length > 0) {
-              ctrl.employee_lists = resp.data
-              for(var i = 0; i < ctrl.employee_lists.length; i++){
-                if (ctrl.employee_lists[i].name == ctrl.displayName){
-                  ctrl.employee_lists.splice(i, 1);
+              ctrl.employee_lists = []; //resp.data
+              for(var i = 0; i < resp.data.length; i++){
+                var employee = resp.data[i];
+                if (employee.id + ': ' + employee.name !== ctrl.displayName){
+                  // ctrl.employee_lists.splice(i, 1);
+                  ctrl.employee_lists.push({name: employee.name, id: employee.id});
                 }
               }
             }
@@ -221,7 +249,6 @@
       }
 
       ctrl.openEmployeeDetails = function(id){
-        console.log('openEmployeeDetails');
         if(isDataChange()){
           openConfirmationModal("คุณต้องการออกจากหน้านี้โดยไม่บันทึกค่าหรือไม่?", function(){
             $rootScope.openEmployeeDetails(id);
@@ -249,9 +276,23 @@
         }
       }
 
+      ctrl.uploadPhoto = function(file) {
+        Upload.upload({
+            url: '/employees/' + ctrl.datas.employee.id + '/upload_photo',
+            method: 'PATCH',
+            data: { employee: {
+                file: file
+              }
+            }
+        }).then(function (resp) {
+          ctrl.datas.img_url = resp.data[0].url
+        });
+      };
+
+
+
       ctrl.submit = function(parm){
         var isValid = true
-
         if (isValid) {
           ctrl.isSubmit = true
           if (ctrl.isEdit) {
@@ -259,7 +300,8 @@
               openConfirmationModal("คุณต้องการบันทึกการเปลี่ยนแปลงครั้งนี้หรือไม่?", function(){
                 var datas_result = $.extend(true, {}, ctrl.datas);
                 service.saveEmployee(ctrl.datas.employee.id, datas_result).then(function(resp) {
-                  ctrl.isSubmit = false
+                  ctrl.isSubmit = false;
+                  ctrl.datas_original = $.extend(true, {}, ctrl.datas);
                 });
               }, function(){
                 ctrl.isSubmit = false
@@ -277,29 +319,29 @@
       }
 
       ctrl.calTotal = function(){
-        if (ctrl.isEdit) {
+        if ( ctrl.isEdit && (isDataChange() || ctrl.total=='')) {
           var p = ctrl.datas.payroll;
           var datas_result = $.extend(true, {}, ctrl.datas);
           service.getEmployeeDeduction(ctrl.datas.employee.id, p.id , datas_result).then(function(resp) {
             p.tax = resp.data.tax;
             p.pvf = resp.data.pvf;
             p.social_insurance = resp.data.social_insurance;
+            ctrl.total = 0;
+            if(p.salary){ ctrl.total += p.salary }
+            if(p.ot){ ctrl.total += p.ot }
+            if(p.position_allowance){ ctrl.total += p.position_allowance }
+            if(p.allowance ){ ctrl.total += p.allowance }
+            if(p.attendance_bonus){ ctrl.total += p.attendance_bonus}
+            if(p.bonus){ ctrl.total += p.bonus}
+            if(p.extra_etc){ ctrl.total += p.extra_etc}
+            if(p.tax){ ctrl.total -= p.tax}
+            if(p.pvf){ ctrl.total -= p.pvf}
+            if(p.absence){ ctrl.total -= p.absence}
+            if(p.late){ ctrl.total -= p.late}
+            if(p.advance_payment){ ctrl.total -= p.advance_payment}
+            if(p.fee_etc){ ctrl.total -= p.fee_etc}
+            if(p.social_insurance){ ctrl.total -= p.social_insurance}
           });
-          ctrl.total = 0;
-          if(p.salary){ ctrl.total += p.salary }
-          if(p.ot){ ctrl.total += p.ot }
-          if(p.position_allowance){ ctrl.total += p.position_allowance }
-          if(p.allowance ){ ctrl.total += p.allowance }
-          if(p.attendance_bonus){ ctrl.total += p.attendance_bonus}
-          if(p.bonus){ ctrl.total += p.bonus}
-          if(p.extra_etc){ ctrl.total += p.extra_etc}
-          if(p.tax){ ctrl.total -= p.tax}
-          if(p.pvf){ ctrl.total -= p.pvf}
-          if(p.absence){ ctrl.total -= p.absence}
-          if(p.late){ ctrl.total -= p.late}
-          if(p.advance_payment){ ctrl.total -= p.advance_payment}
-          if(p.fee_etc){ ctrl.total -= p.fee_etc}
-          if(p.social_insurance){ ctrl.total -= p.social_insurance}
         }
       }
 
@@ -310,9 +352,29 @@
         }
       }
 
-      ctrl.deleteEmployee = function(id) {
-        openConfirmationModal("คุณต้องการลบพนักงานหรือไม่?", function() {
-          service.deleteEmployee(id).then(function(resp) {
+      ctrl.archiveEmployee = function(id) {
+        openConfirmationModal("คุณต้องการนำข้อมูลพนักงานออกชั่วคราวหรือไม่?", function() {
+          service.archiveEmployee(id).then(function(resp) {
+            $rootScope.openEmployees();
+          })
+        }, function(){
+          // $log.info("DISMISS!!");
+        })
+      }
+
+      ctrl.restoreEmployees = function(id) {
+        openConfirmationModal("คุณต้องการนำข้อมูลพนักงานกลับมาหรือไม่?", function() {
+          service.restoreEmployees(id).then(function(resp) {
+            $rootScope.openEmployees();
+          })
+        }, function(){
+          // $log.info("DISMISS!!");
+        })
+      }
+
+      ctrl.destroyEmployees = function(id) {
+        openConfirmationModal("คุณต้องการลบข้อมูลพนักงานออกถาวรหรือไม่?", function() {
+          service.destroyEmployees(id).then(function(resp) {
             $rootScope.openEmployees();
           })
         }, function(){

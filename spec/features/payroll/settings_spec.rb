@@ -1,7 +1,18 @@
 describe 'Employee Details', js: true do
   let(:school) { school = School.make!({ name: "โรงเรียนแห่งหนึ่ง" }) }
   let(:user) { User.make!({ school_id: school.id }) }
-
+  let(:student) do
+    [
+      student1 = Student.make!({
+        first_name: 'สมศรี',
+        last_name: 'ใบเสร็จ'
+      }),
+      student2 = Student.make!({
+        first_name: 'สมชาย',
+        last_name: 'ใบไม่เสร็จ'
+      })
+    ]
+  end
   before do
     user.add_role :admin
     login_as(user, scope: :user)
@@ -78,12 +89,12 @@ describe 'Employee Details', js: true do
     sleep(1)
     first('a[class="nav-user avatar"]').trigger('click')
     sleep(1)
-    find('a[href="somsri_payroll#/setting"]').trigger('click')
+    find('a[href="/somsri_payroll#/setting"]').trigger('click')
     sleep(1)
     expect(page).to have_content('เปลี่ยนรหัสผ่าน')
     expect(page).to have_content('บันทึก')
     expect(page).to have_content('ยกเลิก')
-    
+
     visit "/somsri_rollcall#/"
     sleep(1)
     first('a[class="nav-user avatar"]').trigger('click')
@@ -93,5 +104,17 @@ describe 'Employee Details', js: true do
     expect(page).to have_content('เปลี่ยนรหัสผ่าน')
     expect(page).to have_content('บันทึก')
     expect(page).to have_content('ยกเลิก')
+
+    visit "/students/#{student[1].id}"
+    sleep(1)
+    eventually { expect(page).to have_content("รายละเอียดนักเรียน") }
+    sleep(1)
+    first('a[class="nav-user avatar"]').trigger('click')
+    sleep(1)
+    find('a[href="/somsri_payroll#/setting"]').trigger('click')
+    sleep(1)
+    eventually { expect(page).to have_content('เปลี่ยนรหัสผ่าน') }
+    eventually { expect(page).to have_content('บันทึก') }
+    eventually { expect(page).to have_content('ยกเลิก') }
   end
 end

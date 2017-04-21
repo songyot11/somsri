@@ -61,4 +61,6 @@ Rails.application.configure do
     port: 1025
   }
   config.action_mailer.asset_host = 'http://localhost:3000'
+
+  Paperclip.options[:command_path] = "/usr/local/bin/"
 end

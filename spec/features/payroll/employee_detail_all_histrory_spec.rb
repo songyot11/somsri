@@ -64,13 +64,16 @@ describe 'Employee Details History Modal', js: true do
 
   it 'should see view history button' do
     visit "/somsri_payroll#/employees/#{employee.id}"
+    sleep(1)
     click_link('เงินเดือน')
     sleep(1)
     expect(page).to have_content('ประวัติเงินเดือน')
   end
 
   it 'should see payroll when click history button' do
+    sleep(1)
     visit "/somsri_payroll#/employees/#{employee.id}"
+    sleep(1)
     click_link('เงินเดือน')
     sleep(1)
     click_button('ประวัติเงินเดือน')

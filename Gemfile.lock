@@ -45,6 +45,12 @@ GEM
       public_suffix (~> 2.0, >= 2.0.2)
     afm (0.2.2)
     arel (7.1.4)
+    aws-sdk (2.3.12)
+      aws-sdk-resources (= 2.3.12)
+    aws-sdk-core (2.3.12)
+      jmespath (~> 1.0)
+    aws-sdk-resources (2.3.12)
+      aws-sdk-core (= 2.3.12)
     bcrypt (3.1.11)
     bower-rails (0.11.0)
     builder (3.2.2)
@@ -74,7 +80,10 @@ GEM
       rack (>= 1.0.0)
       rack-test (>= 0.5.4)
       xpath (~> 2.0)
+    climate_control (0.1.0)
     cliver (0.3.2)
+    cocaine (0.5.8)
+      climate_control (>= 0.0.3, < 1.0)
     coffee-rails (4.2.1)
       coffee-script (>= 2.2.0)
       railties (>= 4.0.0, < 5.2.x)
@@ -108,7 +117,6 @@ GEM
       railties (>= 3.2, < 5.1)
     globalid (0.3.7)
       activesupport (>= 4.1.0)
-    gravtastic (3.2.6)
     haml (4.0.7)
       tilt
     hashery (2.1.2)
@@ -116,12 +124,15 @@ GEM
     jbuilder (2.6.1)
       activesupport (>= 3.0.0, < 5.1)
       multi_json (~> 1.2)
+    jmespath (1.2.4)
+      json_pure (>= 1.8.1)
     jquery-rails (4.2.1)
       rails-dom-testing (>= 1, < 3)
       railties (>= 4.2.0)
       thor (>= 0.14, < 2.0)
     jquery-ui-rails (5.0.5)
       railties (>= 3.2.16)
+    json_pure (1.8.3)
     kaminari (0.17.0)
       actionpack (>= 3.0.0)
       activesupport (>= 3.0.0)
@@ -138,6 +149,7 @@ GEM
     mime-types (3.1)
       mime-types-data (~> 3.2015)
     mime-types-data (3.2016.0521)
+    mimemagic (0.3.2)
     mini_portile2 (2.1.0)
     minitest (5.10.1)
     multi_json (1.12.1)
@@ -149,6 +161,14 @@ GEM
     nokogiri (1.6.8.1)
       mini_portile2 (~> 2.1.0)
     orm_adapter (0.5.0)
+    paperclip (5.0.0)
+      activemodel (>= 4.2.0)
+      activesupport (>= 4.2.0)
+      cocaine (~> 0.5.5)
+      mime-types
+      mimemagic (~> 0.3.0)
+    paranoia (2.2.1)
+      activerecord (>= 4.0, < 5.1)
     pdf-core (0.6.1)
     pdf-forms (1.1.1)
       cliver (~> 0.3.2)
@@ -299,6 +319,7 @@ PLATFORMS
 
 DEPENDENCIES
   activerecord-import
+  aws-sdk
   bower-rails
   byebug
   cancancan
@@ -317,11 +338,12 @@ DEPENDENCIES
   figaro
   fileutils
   font-awesome-rails
-  gravtastic
   jbuilder (~> 2.5)
   jquery-rails
   listen (~> 3.0.5)
   machinist
+  paperclip (~> 5.0.0)
+  paranoia (~> 2.1, >= 2.1.5)
   pdf-forms
   pdf-reader
   pdf-toolkit

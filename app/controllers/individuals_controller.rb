@@ -8,7 +8,7 @@ class IndividualsController < ApplicationController
     if params[:employee_id]=="0"
       employee = Employee.new
     else
-      employee = Employee.where(id: params[:employee_id], school_id: current_user.school.id).first
+      employee = Employee.where(id: params[:employee_id]).first
     end
     if employee
       render json: {

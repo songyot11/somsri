@@ -4,14 +4,14 @@ class EmployeesController < ApplicationController
 
   # GET /employees
   def index
-    employee = Employee.active.order('employees.start_date ASC, employees.created_at ASC')
+    employee = Employee.with_deleted.order('employees.deleted_at DESC ,employees.start_date ASC, employees.created_at ASC')
                               .as_json(employee_list: true)
     render json: employee, status: :ok
   end
 
   # GET /employees/:id/slip
   def slip
-    employee = Employee.active.find(params[:id]).as_json({ slip: true, payroll_id: params[:payroll_id] })
+    employee = Employee.find(params[:id]).as_json({ slip: true, payroll_id: params[:payroll_id] })
     employee[:payroll][:fee_orders] = employee[:payroll][:fee_orders]
                                                       .select { |key, value| value[:value] > 0}
     employee[:payroll][:pay_orders] = employee[:payroll][:pay_orders]
@@ -35,7 +35,7 @@ class EmployeesController < ApplicationController
 
   # GET /employees/:id/payrolls
   def payrolls
-    payrolls = Employee.active.find(params[:id]).payrolls
+    payrolls = Employee.find(params[:id]).payrolls
                        .order("created_at desc")
                        .as_json("history")
     render json: payrolls, status: :ok
@@ -43,7 +43,7 @@ class EmployeesController < ApplicationController
 
   # GET /employees/:id
   def show
-    @employee = Employee.active.find(params[:id])
+    @employee = Employee.find(params[:id])
     tax_reduction = @employee.tax_reduction
     if params[:payroll_id]
       payroll = @employee.payroll(params[:payroll_id])
@@ -51,6 +51,7 @@ class EmployeesController < ApplicationController
       payroll = @employee.lastest_payroll
     end
     render json: {
+      img_url: @employee.img_url.exists? ? @employee.img_url.url : nil ,
       employee: @employee,
       payroll: payroll,
       tax_reduction: tax_reduction
@@ -58,44 +59,40 @@ class EmployeesController < ApplicationController
   end
 
   def create
-    school = current_user.school
-    render json: employee.errors, status: 500 and return if !school
-
-    employee = school.employees.new(employee_params)
-    if employee.save
-        render json: {
-          employee: employee
-        }, status: :ok
+    if @employee.save
+      render json: {
+        employee: @employee
+      }, status: :ok
     else
-      render json: employee.errors, status: 500
+      render json: @employee.errors, status: 500
     end
   end
 
   # POST /employees/:id/calculate_deduction
   def calculate_deduction
     p = JSON.parse(params[:payroll])
-    e = Employee.active.find(params[:id])
+    e = Employee.find(params[:id])
     e.employee_type = params[:employee_type]
     e.pay_pvf = params[:employee_pay_pvf]
     e.pay_social_insurance = params[:employee_pay_s_ins]
     t = params[:tax_reduction]
     render json: {
-      tax: Payroll.generate_tax(p, e, t), 
-      social_insurance: Payroll.generate_social_insurance(p, e), 
+      tax: Payroll.generate_tax(p, e, t),
+      social_insurance: Payroll.generate_social_insurance(p, e),
       pvf: Payroll.generate_pvf(p, e)
     }, status: :ok
   end
 
   # PATCH /employees/:id
   def update
-    employee_datas = employee_params
-    employee_datas.delete(:id)
-    employee = Employee.update(params[:id] , employee_datas)
+    employee_data = employee_params
+    @employee.attributes = employee_data
+    @employee.save
 
     if params[:payroll]
       payroll_datas = payroll_params
       payroll_id = payroll_datas[:id]
-      payroll_datas[:salary] = employee_datas[:salary]
+      payroll_datas[:salary] = employee_data[:salary]
       payroll_datas.delete(:id)
       payroll = Payroll.update(payroll_id, payroll_datas)
     end
@@ -107,24 +104,58 @@ class EmployeesController < ApplicationController
     end
 
     render json: {
-      employee: employee,
-      payroll: employee.lastest_payroll,
-      tax_reduction: employee.tax_reduction
+      img_url: @employee.img_url.exists? ? @employee.img_url.url : nil ,
+      employee: @employee,
+      payroll: @employee.lastest_payroll,
+      tax_reduction: @employee.tax_reduction
     }
   end
 
   # DELETE /employees/:id
   def destroy
-    @employee.update(deleted: true)
+    @employee.destroy
 
     data = {status: "success"}
     render json: data, status: :ok
   end
 
+  def archive
+    @employee = Employee.find(params[:employee_id]).update(deleted_at: Time.now)
+    payroll = Payroll.where(employee_id: params[:employee_id]).update(deleted_at: Time.now)
+    
+    data = {status: "success"}
+    render json: data, status: :ok
+  end
+
+  def restore
+    @employee = Employee.update(deleted_at: nil)
+    payroll = Payroll.only_deleted.where(employee_id: params[:employee_id]).update(deleted_at: nil)
+
+    data = {status: "success"}
+    render json: data, status: :ok
+  end
+
+  def real_destroy
+    begin
+      @employee = Employee.find(params[:employee_id])
+      @employee.really_destroy!
+    rescue ActiveRecord::DeleteRestrictionError => e
+      @employee.errors.add(:base, e)
+    ensure
+      data = {status: "success"}
+      render json: data, status: :ok
+    end
+  end
+
+  def upload_photo
+    @employee = Employee.where(id: params[:id]).update( img_url: upload_photo_params[:file] ).first
+    @employee.reload
+    render json: [{ url: @employee.img_url.url }], status: :ok
+  end
+
   private
   def employee_params
     result = params.require(:employee).permit([
-      :id,
       :prefix_thai,
       :first_name_thai,
       :last_name_thai,
@@ -151,7 +182,9 @@ class EmployeesController < ApplicationController
       :email,
       :status,
       :pay_pvf,
-      :pay_social_insurance
+      :pay_social_insurance,
+      :grade_id,
+      :classroom
     ]).to_h
     result[:salary] = 0 if result[:salary].blank?
     return result
@@ -213,5 +246,9 @@ class EmployeesController < ApplicationController
     ])
     result.to_h.each { |k,v| result[k] = 0 if k != "id" && v.blank? }
     return result
+  end
+
+  def upload_photo_params
+    params.require(:employee).permit(:file)
   end
 end

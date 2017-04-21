@@ -6,6 +6,8 @@ class Invoice < ApplicationRecord
   has_many :line_items
   has_many :payment_methods
 
+  self.per_page = 10
+
   scope :latest, -> { order("created_at DESC").first }
 
   def total_amount

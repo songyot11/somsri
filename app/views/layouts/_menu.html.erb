@@ -25,16 +25,18 @@
             <p>ค่าเทอม</p>
         </div>
       <% end %>
-        <!-- <div class=" <%= is_topbar ? 'col-xs-4' : 'col-xs-2 col-xs-offset-1' %> hide">
+      <% if can? :manage, RollCall %>
+        <div class=" <%= is_topbar ? 'col-xs-4' : 'col-xs-2 col-xs-offset-1' %> col-centered">
             <div class="<%= is_topbar ? 'dropdown-menu-btn' : 'menu-btn' %>">
                 <a href="/somsri_rollcall">
-                  <div class="wraptocenter disabled">
-                    <%= image_tag 'roll-icon.png', class: "" %>
+                  <div class="wraptocenter">
+                    <%= image_tag 'roll-icon.png', class: (is_topbar ? 'img-menu-nav' : '') %>
                   </div>
                 </a>
             </div>
             <p>นับแถว</p>
-        </div> -->
+        </div>
+      <% end %>
     </div>
     <div class="row row-centered" style="margin-top:50px;">
       <% if can? :manage, Employee %>

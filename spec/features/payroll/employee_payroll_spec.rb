@@ -88,19 +88,20 @@ describe 'Payroll', js: true do
   end
   it 'should see header table' do
     visit "/somsri_payroll#/payroll"
-    eventually { expect(page).to have_content 'รายการได้ รายการหัก' }
-    eventually { expect(page).to have_content 'รหัส ชื่อ เลขบัญชีธนาคาร' }
+    sleep(1)
+    eventually { expect(page).to have_content 'รายการได้รายการหัก' }
+    eventually { expect(page).to have_content 'รหัส ชื่อ' }
     eventually { expect(page).to have_content 'เงินเดือน เงินสอนพิเศษ ค่าตำแหน่ง เบี้ยเลี้ยง เบี้ยขยัน โบนัส อื่นๆ' }
     eventually { expect(page).to have_content 'รวมทั้งหมด' }
   end
 
   it 'should see month latest' do
     visit "/somsri_payroll#/payroll"
-
-    eventually { expect(page).to have_content 'นาง สมศรี เป็นชื่อแอพ 5-234-34532-2342 1,000,000.00 0.00 0.00 0.00 0.00 0.00 0.00' }
-    eventually { expect(page).to have_content 'นาย สมจิตร เป็นนักมวย 5-234-34532-2341 1,000,000.00 0.00 0.00 0.00 0.00 0.00 0.00' }
-    eventually { expect(page).to have_content 'พี ดี เอ็ม 5-234-34532-xxxx 1,000,000.00 0.00 0.00 0.00 0.00 0.00 0.00' }
-    eventually { expect(page).to have_content 'รวมทั้งหมด 3,000,000.00 0.00 0.00 0.00 0.00 0.00 0.00' }
+    sleep(1)
+    eventually { expect(page).to have_content /นาง สมศรี เป็นชื่อแอพ.*1,000,000.00 0.00 0.00 0.00 0.00 0.00 0.00/i }
+    eventually { expect(page).to have_content /นาย สมจิตร เป็นนักมวย.*1,000,000.00 0.00 0.00 0.00 0.00 0.00 0.00/i }
+    eventually { expect(page).to have_content /พี ดี เอ็ม.*1,000,000.00 0.00 0.00 0.00 0.00 0.00 0.00/i }
+    eventually { expect(page).to have_content /รวมทั้งหมด.*3,000,000.00 0.00 0.00 0.00 0.00 0.00 0.00/i }
   end
 
   it 'should see month list' do
@@ -118,15 +119,15 @@ describe 'Payroll', js: true do
     click_on("พฤศจิกายน 2559")
     sleep(1)
 
-    eventually { expect(page).to have_content 'รายการได้ รายการหัก' }
-    eventually { expect(page).to have_content 'รหัส ชื่อ เลขบัญชีธนาคาร' }
+    eventually { expect(page).to have_content 'รายการได้รายการหัก' }
+    eventually { expect(page).to have_content 'รหัส ชื่อ' }
     eventually { expect(page).to have_content 'เงินเดือน เงินสอนพิเศษ ค่าตำแหน่ง เบี้ยเลี้ยง เบี้ยขยัน โบนัส อื่นๆ' }
-    eventually { expect(page).to have_content 'ขาดงาน สาย ภาษี ประกันสังคม เงินสะสม เบิกล่วงหน้า อืนๆ เงินเดือนสุทธิ' }
-    eventually { expect(page).to have_content 'นาง สมศรี เป็นชื่อแอพ 5-234-34532-2342 50,000.00 0.00 0.00 0.00 0.00 0.00 0.00' }
-    eventually { expect(page).to have_content 'นาย สมจิตร เป็นนักมวย 5-234-34532-2341 50,000.00 0.00 0.00 0.00 0.00 0.00 0.00' }
-    eventually { expect(page).not_to have_content 'ฮาราบาส' }
-    eventually { expect(page).not_to have_content 'Harabas' }
-    eventually { expect(page).to have_content 'รวมทั้งหมด 100,000.00 0.00 0.00 0.00 0.00 0.00 0.00' }
+    eventually { expect(page).to have_content 'ขาดงาน สาย ภาษี ประกันสังคม เงินสะสม เบิกล่วงหน้า อื่นๆ เงินเดือนสุทธิ' }
+    eventually { expect(page).to have_content /นาง สมศรี เป็นชื่อแอพ.*50,000.00 0.00 0.00 0.00 0.00 0.00 0.00/i }
+    eventually { expect(page).to have_content /นาย สมจิตร เป็นนักมวย.*50,000.00 0.00 0.00 0.00 0.00 0.00 0.00/i }
+    eventually { expect(page).to have_content /นาย คิง ฮาราบาส.*20.00 0.00 0.00 0.00 0.00 0.00 0.00/i }
+    eventually { expect(page).not_to have_content 'พี ดี เอ็ม' }
+    eventually { expect(page).to have_content /รวมทั้งหมด.*100,020.00 0.00 0.00 0.00 0.00 0.00 0.00/i }
   end
 
   describe 'employee link' do
@@ -208,8 +209,8 @@ describe 'Payroll', js: true do
     find('button[type="submit"]').click
     sleep(1)
 
-    expect(page).to have_content('นาง สมศรี เป็นชื่อแอพ '+employee1.account_number+' 1,000,000.00')
-    expect(page).to have_content('นาย สมจิตร เป็นนักมวย '+employee2.account_number+' 1,000,000.00')
+    expect(page).to have_content(/นาง สมศรี เป็นชื่อแอพ.*1,000,000.00/i)
+    expect(page).to have_content(/นาย สมจิตร เป็นนักมวย.*1,000,000.00/i)
   end
 
   it 'should warning before create new payrolls with same date' do
@@ -238,7 +239,7 @@ describe 'Payroll', js: true do
     sleep(1)
     find('ul.dropdown-menu li a', text: "13 ธันวาคม 2553").click
     sleep(1)
-    expect(page).to have_content('นาง สมศรี เป็นชื่อแอพ '+employee1.account_number+' 1,000,000.00')
+    expect(page).to have_content(/นาง สมศรี เป็นชื่อแอพ.*1,000,000.00/i)
     expect(page).to have_content('เงินเดือนสุทธิ')
   end
 end

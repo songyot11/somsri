@@ -20,6 +20,7 @@
 //= require angular-ui-router.stateHelper
 //= require moment
 //= require angular-moment
+//= require angular-sanitize
 //= require ocLazyLoad/dist/ocLazyLoad.min
 //= require angular-input-masks
 

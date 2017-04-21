@@ -4,10 +4,10 @@ describe RollCallsController do
     School.make!
   end
 
-  let(:users) do
+  let(:employees) do
     [
-      User.make!(school_id: school.id),
-      User.make!(school_id: school.id)
+      Employee.make!({ school_id: school.id, pin: "1111" }),
+      Employee.make!({ school_id: school.id, pin: "2222" })
     ]
   end
 
@@ -23,8 +23,15 @@ describe RollCallsController do
 
   let(:lists) do
     [
-      List.make!({ name: "ม. 1/1", category: "roll_call", user_id: users[0].id }),
-      List.make!({ name: "ม. 1/2", category: "roll_call", user_id: users[1].id })
+      List.make!({ name: "ม. 1/1", category: "roll_call"}),
+      List.make!({ name: "ม. 1/2", category: "roll_call"})
+    ]
+  end
+
+  let(:teacher_attendance_lists) do
+    [
+      TeacherAttendanceList.make!({ list_id: lists[0].id, employee_id: employees[0].id}),
+      TeacherAttendanceList.make!({ list_id: lists[1].id, employee_id: employees[1].id})
     ]
   end
 
@@ -40,7 +47,7 @@ describe RollCallsController do
 
   let(:datas) do
     {
-      pin: users[0]['pin'],
+      pin: employees[0]['pin'],
       date_check_line: "2016-12-13",
       class: lists[0].name,
       morning: [{"student_code":"#{students[0].code}","status":"อัพเดต"}].to_json,
@@ -50,7 +57,7 @@ describe RollCallsController do
 
   let(:datas_new) do
     {
-      pin: users[0]['pin'],
+      pin: employees[0]['pin'],
       date_check_line: "2016-12-14",
       class: lists[0].name,
       morning: [{"student_code":"#{students[0].code}","status":"มา"}].to_json,
@@ -70,14 +77,14 @@ describe RollCallsController do
   end
 
   before :each do
-    users[0].add_role :admin
     students
     student_list
+    teacher_attendance_lists
     roll_calls
   end
 
   describe "post: create /roll_calls" do
-    it "should update roll_calls using ID_TOKEN" do
+    it "should update roll_calls using PIN" do
       post 'create', params: datas
       data = JSON.parse(response.body)
       expect(data.size).to eq(1)
@@ -88,7 +95,7 @@ describe RollCallsController do
       expect(data[0]["afternoon"][0]["status"]).to eq("อัพเดต")
     end
 
-    it "should create roll_calls using ID_TOKEN" do
+    it "should create roll_calls using PIN" do
       post 'create', params: datas_new
       data = JSON.parse(response.body)
       expect(data.size).to eq(1)
@@ -102,7 +109,7 @@ describe RollCallsController do
 
   describe "get: index /roll_calls" do
     it "should return roll call with data" do
-      get 'index', params: { pin: users[0]['pin'], date: "2016-12-13" }
+      get 'index', params: { pin: employees[0]['pin'], date: "2016-12-13" }
       data = JSON.parse(response.body)
       expect(data.size).to eq(1)
       expect(data[0]["morning"].size).to eq(3)
@@ -112,7 +119,7 @@ describe RollCallsController do
     end
 
     it "should return blank roll call if there is no data" do
-      get 'index', params: { pin: users[0]['pin'], date: "2016-12-14" }
+      get 'index', params: { pin: employees[0]['pin'], date: "2016-12-14" }
       data = JSON.parse(response.body)
       expect(data.size).to eq(1)
       expect(data[0]["morning"].size).to eq(3)
@@ -122,7 +129,7 @@ describe RollCallsController do
     end
 
     it "should return roll call order by number" do
-      get 'index', params: { pin: users[0]['pin'], date: "2016-12-13" }
+      get 'index', params: { pin: employees[0]['pin'], date: "2016-12-13" }
       data = JSON.parse(response.body)
       expect(data.size).to eq(1)
       expect(data[0]["morning"].size).to eq(3)

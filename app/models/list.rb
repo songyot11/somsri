@@ -1,25 +1,26 @@
 class List < ApplicationRecord
-  belongs_to :user
   has_many :student_lists, dependent: :destroy
   has_many :roll_calls, dependent: :destroy
-  has_many :class_permisions, dependent: :destroy
+  has_many :teacher_attendance_lists, dependent: :destroy
 
   def get_students
-    students = []
-    student_lists = self.student_lists.to_a
-    student_ids = student_lists.collect(&:student_id)
+    student_ids = StudentList.where(list_id: self.id).pluck(:student_id).to_a
     return Student.where({ id: student_ids }).to_a
   end
 
   def get_roll_calls_by_round(date, round)
+    _result = []
+    _student_ids = self.roll_calls.collect {|rc| rc.student_id}
+    _students = Student.with_deleted.where(id: _student_ids).to_a
+
     if round && date
-      return roll_calls.collect { |rc| rc if rc.round == round && rc.check_date == date }.compact
+      return self.roll_calls.collect {|rc| rc.merge_classroom_number(_students) if rc.round == round && rc.check_date == date}.compact
     elsif round
-      return roll_calls.collect { |rc| rc if rc.round == round }.compact
+      return self.roll_calls.collect {|rc| rc.merge_classroom_number(_students) if rc.round == round}.compact
     elsif date
-      return roll_calls.collect { |rc| rc if rc.check_date == date }.compact
+      return self.roll_calls.collect {|rc| rc.merge_classroom_number(_students) if rc.check_date == date}.compact
     else
-      return roll_calls
+      return self.roll_calls.collect {|rc| rc.merge_classroom_number(_students) }
     end
   end
 
