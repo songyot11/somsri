@@ -1,6 +1,7 @@
 describe 'Payroll Edit', js: true do
   let(:school) {school = School.make!({ name: "โรงเรียนแห่งหนึ่ง" })}
   let(:school2) {School.make!({ name: "โรงเรียนแห่ง2" })}
+
   let(:user) { User.make!({ school_id: school.id }) }
   let(:employee1) {employee1 = Employee.make!(
     {
@@ -47,15 +48,15 @@ describe 'Payroll Edit', js: true do
 
   let(:payrolls) do
     [
-      pr1 = Payroll.make!({employee_id: employee1.id, salary: 1_000,
+      Payroll.make!({employee_id: employee1.id, salary: 1_000,
                             effective_date: DateTime.new(2016, 12, 1)}),
-      pr3 = Payroll.make!({employee_id: employee2.id, salary: 1_000,
+      Payroll.make!({employee_id: employee2.id, salary: 1_000,
                             effective_date: DateTime.new(2016, 12, 1)}),
-      pr2 = Payroll.make!({employee_id: employee1.id, salary: 1_000,
+      Payroll.make!({employee_id: employee1.id, salary: 1_000,
                             effective_date: DateTime.new(2016, 11, 1)}),
-      pr4 = Payroll.make!({employee_id: employee2.id, salary: 1_000,
+      Payroll.make!({employee_id: employee2.id, salary: 1_000,
                             effective_date: DateTime.new(2016, 11, 1)}),
-      pr5 = Payroll.make!({employee_id: employee3.id, salary: 1_000,
+      Payroll.make!({employee_id: employee3.id, salary: 1_000,
                             effective_date: DateTime.new(2016, 11, 1)}),
     ]
   end
@@ -76,14 +77,13 @@ describe 'Payroll Edit', js: true do
     user.add_role :admin
     taxrates
     payrolls
-    login_as(user, scope: :user)
+    login_as(user)
   end
 
   it 'should edit salary' do
     visit "/somsri_payroll#/payroll"
-
-    eventually { expect(page).to have_content 'นาง สมศรี เป็นชื่อแอพ 5-234-34532-2342 1,000.00 0.00 0.00 0.00 0.00 0.00 0.00 0.00 0.00 0.00 0.00 0.00 0.00 0.00 1,000.00' }
-    eventually { expect(page).to have_content 'รวมทั้งหมด 2,000.00 0.00 0.00 0.00 0.00 0.00 0.00 0.00 0.00 0.00 0.00 0.00 0.00 0.00 2,000.00' }
+    eventually { expect(page).to have_content /นาง สมศรี เป็นชื่อแอพ.*1,000.00 0.00 0.00 0.00 0.00 0.00 0.00 0.00 0.00 0.00 0.00 0.00 0.00 0.00 1,000.00/i }
+    eventually { expect(page).to have_content /รวมทั้งหมด.*2,000.00 0.00 0.00 0.00 0.00 0.00 0.00 0.00 0.00 0.00 0.00 0.00 0.00 0.00 2,000.00/i }
 
     payroll = Payroll.find(payrolls[0].id)
     eventually { expect(payroll.tax).to eq 0.00 }
@@ -97,8 +97,8 @@ describe 'Payroll Edit', js: true do
     sleep(1)
 
     eventually { expect(payroll.reload.salary).to eq 5000.0 }
-    eventually { expect(page).to have_content 'นาง สมศรี เป็นชื่อแอพ 5-234-34532-2342 5,000.00 0.00 0.00 0.00 0.00 0.00 0.00 0.00 0.00 0.00 0.00 0.00 0.00 0.00 5,000.00' }
-    eventually { expect(page).to have_content 'รวมทั้งหมด 6,000.00 0.00 0.00 0.00 0.00 0.00 0.00 0.00 0.00 0.00 0.00 0.00 0.00 0.00 6,000.00' }
+    eventually { expect(page).to have_content /นาง สมศรี เป็นชื่อแอพ.*5,000.00 0.00 0.00 0.00 0.00 0.00 0.00 0.00 0.00 0.00 0.00 0.00 0.00 0.00 5,000.00/i }
+    eventually { expect(page).to have_content /รวมทั้งหมด.*6,000.00 0.00 0.00 0.00 0.00 0.00 0.00 0.00 0.00 0.00 0.00 0.00 0.00 0.00 6,000.00/i }
   end
 
   it 'should edit ot' do
@@ -107,8 +107,8 @@ describe 'Payroll Edit', js: true do
     payroll = Payroll.find(payrolls[0].id)
 
     eventually { expect(payroll.ot).to eq 0.00 }
-    eventually { expect(page).to have_content 'นาง สมศรี เป็นชื่อแอพ 5-234-34532-2342 1,000.00 0.00 0.00 0.00 0.00 0.00 0.00 0.00 0.00 0.00 0.00 0.00 0.00 0.00 1,000.00' }
-    eventually { expect(page).to have_content 'รวมทั้งหมด 2,000.00 0.00 0.00 0.00 0.00 0.00 0.00 0.00 0.00 0.00 0.00 0.00 0.00 0.00 2,000.00' }
+    eventually { expect(page).to have_content /นาง สมศรี เป็นชื่อแอพ.*1,000.00 0.00 0.00 0.00 0.00 0.00 0.00 0.00 0.00 0.00 0.00 0.00 0.00 0.00 1,000.00/i }
+    eventually { expect(page).to have_content /รวมทั้งหมด.*2,000.00 0.00 0.00 0.00 0.00 0.00 0.00 0.00 0.00 0.00 0.00 0.00 0.00 0.00 2,000.00/i }
 
     sleep(1)
     first('a[editable-number="employee.ot"]').click
@@ -121,8 +121,8 @@ describe 'Payroll Edit', js: true do
     payroll = Payroll.find(payrolls[0].id)
 
     eventually { expect(payroll.ot).to eq 5000.0 }
-    eventually { expect(page).to have_content 'นาง สมศรี เป็นชื่อแอพ 5-234-34532-2342 1,000.00 5,000.00 0.00 0.00 0.00 0.00 0.00 0.00 0.00 0.00 0.00 0.00 0.00 0.00 6,000.00' }
-    eventually { expect(page).to have_content 'รวมทั้งหมด 2,000.00 5,000.00 0.00 0.00 0.00 0.00 0.00 0.00 0.00 0.00 0.00 0.00 0.00 0.00 7,000.00' }
+    eventually { expect(page).to have_content /นาง สมศรี เป็นชื่อแอพ.*1,000.00 5,000.00 0.00 0.00 0.00 0.00 0.00 0.00 0.00 0.00 0.00 0.00 0.00 0.00 6,000.00/i }
+    eventually { expect(page).to have_content /รวมทั้งหมด.*2,000.00 5,000.00 0.00 0.00 0.00 0.00 0.00 0.00 0.00 0.00 0.00 0.00 0.00 0.00 7,000.00/i }
   end
 
   it 'should edit position_allowance' do
@@ -131,8 +131,8 @@ describe 'Payroll Edit', js: true do
     payroll = Payroll.find(payrolls[0].id)
 
     eventually { expect(payroll.position_allowance).to eq 0.00 }
-    eventually { expect(page).to have_content 'นาง สมศรี เป็นชื่อแอพ 5-234-34532-2342 1,000.00 0.00 0.00 0.00 0.00 0.00 0.00 0.00 0.00 0.00 0.00 0.00 0.00 0.00 1,000.00' }
-    eventually { expect(page).to have_content 'รวมทั้งหมด 2,000.00 0.00 0.00 0.00 0.00 0.00 0.00 0.00 0.00 0.00 0.00 0.00 0.00 0.00 2,000.00' }
+    eventually { expect(page).to have_content /นาง สมศรี เป็นชื่อแอพ.*1,000.00 0.00 0.00 0.00 0.00 0.00 0.00 0.00 0.00 0.00 0.00 0.00 0.00 0.00 1,000.00/i }
+    eventually { expect(page).to have_content /รวมทั้งหมด.*2,000.00 0.00 0.00 0.00 0.00 0.00 0.00 0.00 0.00 0.00 0.00 0.00 0.00 0.00 2,000.00/i }
 
     sleep(1)
     first('a[editable-number="employee.position_allowance"]').click
@@ -145,8 +145,8 @@ describe 'Payroll Edit', js: true do
     payroll = Payroll.find(payrolls[0].id)
 
     eventually { expect(payroll.position_allowance).to eq 5000.0 }
-    eventually { expect(page).to have_content 'สมศรี เป็นชื่อแอพ 5-234-34532-2342 1,000.00 0.00 5,000.00 0.00 0.00 0.00 0.00 0.00 0.00 0.00 0.00 0.00 0.00 0.00 6,000.00' }
-    eventually { expect(page).to have_content 'รวมทั้งหมด 2,000.00 0.00 5,000.00 0.00 0.00 0.00 0.00 0.00 0.00 0.00 0.00 0.00 0.00 0.00 7,000.00' }
+    eventually { expect(page).to have_content /สมศรี เป็นชื่อแอพ.*1,000.00 0.00 5,000.00 0.00 0.00 0.00 0.00 0.00 0.00 0.00 0.00 0.00 0.00 0.00 6,000.00/i }
+    eventually { expect(page).to have_content /รวมทั้งหมด.*2,000.00 0.00 5,000.00 0.00 0.00 0.00 0.00 0.00 0.00 0.00 0.00 0.00 0.00 0.00 7,000.00/i }
   end
 
   it 'should edit allowance' do
@@ -155,8 +155,8 @@ describe 'Payroll Edit', js: true do
     payroll = Payroll.find(payrolls[0].id)
 
     eventually { expect(payroll.allowance).to eq 0.00 }
-    eventually { expect(page).to have_content 'นาง สมศรี เป็นชื่อแอพ 5-234-34532-2342 1,000.00 0.00 0.00 0.00 0.00 0.00 0.00 0.00 0.00 0.00 0.00 0.00 0.00 0.00 1,000.00' }
-    eventually { expect(page).to have_content 'รวมทั้งหมด 2,000.00 0.00 0.00 0.00 0.00 0.00 0.00 0.00 0.00 0.00 0.00 0.00 0.00 0.00 2,000.00' }
+    eventually { expect(page).to have_content /นาง สมศรี เป็นชื่อแอพ.*1,000.00 0.00 0.00 0.00 0.00 0.00 0.00 0.00 0.00 0.00 0.00 0.00 0.00 0.00 1,000.00/i }
+    eventually { expect(page).to have_content /รวมทั้งหมด.*2,000.00 0.00 0.00 0.00 0.00 0.00 0.00 0.00 0.00 0.00 0.00 0.00 0.00 0.00 2,000.00/i }
 
     sleep(1)
     first('a[editable-number="employee.allowance"]').click
@@ -169,8 +169,8 @@ describe 'Payroll Edit', js: true do
     payroll = Payroll.find(payrolls[0].id)
 
     eventually { expect(payroll.allowance).to eq 5000.0 }
-    eventually { expect(page).to have_content 'นาง สมศรี เป็นชื่อแอพ 5-234-34532-2342 1,000.00 0.00 0.00 5,000.00 0.00 0.00 0.00 0.00 0.00 0.00 0.00 0.00 0.00 0.00 6,000.00' }
-    eventually { expect(page).to have_content 'รวมทั้งหมด 2,000.00 0.00 0.00 5,000.00 0.00 0.00 0.00 0.00 0.00 0.00 0.00 0.00 0.00 0.00 7,000.00' }
+    eventually { expect(page).to have_content /นาง สมศรี เป็นชื่อแอพ.*1,000.00 0.00 0.00 5,000.00 0.00 0.00 0.00 0.00 0.00 0.00 0.00 0.00 0.00 0.00 6,000.00/i }
+    eventually { expect(page).to have_content /รวมทั้งหมด.*2,000.00 0.00 0.00 5,000.00 0.00 0.00 0.00 0.00 0.00 0.00 0.00 0.00 0.00 0.00 7,000.00/i }
   end
 
   it 'should edit attendance_bonus' do
@@ -179,8 +179,8 @@ describe 'Payroll Edit', js: true do
     payroll = Payroll.find(payrolls[0].id)
 
     eventually { expect(payroll.attendance_bonus).to eq 0.00 }
-    eventually { expect(page).to have_content 'นาง สมศรี เป็นชื่อแอพ 5-234-34532-2342 1,000.00 0.00 0.00 0.00 0.00 0.00 0.00 0.00 0.00 0.00 0.00 0.00 0.00 0.00 1,000.00' }
-    eventually { expect(page).to have_content 'รวมทั้งหมด 2,000.00 0.00 0.00 0.00 0.00 0.00 0.00 0.00 0.00 0.00 0.00 0.00 0.00 0.00 2,000.00' }
+    eventually { expect(page).to have_content /นาง สมศรี เป็นชื่อแอพ.*1,000.00 0.00 0.00 0.00 0.00 0.00 0.00 0.00 0.00 0.00 0.00 0.00 0.00 0.00 1,000.00/i }
+    eventually { expect(page).to have_content /รวมทั้งหมด.*2,000.00 0.00 0.00 0.00 0.00 0.00 0.00 0.00 0.00 0.00 0.00 0.00 0.00 0.00 2,000.00/i }
 
     sleep(1)
     first('a[editable-number="employee.attendance_bonus"]').click
@@ -193,8 +193,8 @@ describe 'Payroll Edit', js: true do
     payroll = Payroll.find(payrolls[0].id)
 
     eventually { expect(payroll.attendance_bonus).to eq 5000.0 }
-    eventually { expect(page).to have_content 'นาง สมศรี เป็นชื่อแอพ 5-234-34532-2342 1,000.00 0.00 0.00 0.00 5,000.00 0.00 0.00 0.00 0.00 0.00 0.00 0.00 0.00 0.00 6,000.00' }
-    eventually { expect(page).to have_content 'รวมทั้งหมด 2,000.00 0.00 0.00 0.00 5,000.00 0.00 0.00 0.00 0.00 0.00 0.00 0.00 0.00 0.00 7,000.00' }
+    eventually { expect(page).to have_content /นาง สมศรี เป็นชื่อแอพ.*1,000.00 0.00 0.00 0.00 5,000.00 0.00 0.00 0.00 0.00 0.00 0.00 0.00 0.00 0.00 6,000.00/i }
+    eventually { expect(page).to have_content /รวมทั้งหมด.*2,000.00 0.00 0.00 0.00 5,000.00 0.00 0.00 0.00 0.00 0.00 0.00 0.00 0.00 0.00 7,000.00/i }
   end
 
   it 'should edit bonus' do
@@ -203,8 +203,8 @@ describe 'Payroll Edit', js: true do
     payroll = Payroll.find(payrolls[0].id)
 
     eventually { expect(payroll.bonus).to eq 0.00 }
-    eventually { expect(page).to have_content 'นาง สมศรี เป็นชื่อแอพ 5-234-34532-2342 1,000.00 0.00 0.00 0.00 0.00 0.00 0.00 0.00 0.00 0.00 0.00 0.00 0.00 0.00 1,000.00' }
-    eventually { expect(page).to have_content 'รวมทั้งหมด 2,000.00 0.00 0.00 0.00 0.00 0.00 0.00 0.00 0.00 0.00 0.00 0.00 0.00 0.00 2,000.00' }
+    eventually { expect(page).to have_content /นาง สมศรี เป็นชื่อแอพ.*1,000.00 0.00 0.00 0.00 0.00 0.00 0.00 0.00 0.00 0.00 0.00 0.00 0.00 0.00 1,000.00/i }
+    eventually { expect(page).to have_content /รวมทั้งหมด.*2,000.00 0.00 0.00 0.00 0.00 0.00 0.00 0.00 0.00 0.00 0.00 0.00 0.00 0.00 2,000.00/i }
 
     sleep(1)
     first('a[editable-number="employee.bonus"]').click
@@ -217,8 +217,8 @@ describe 'Payroll Edit', js: true do
     payroll = Payroll.find(payrolls[0].id)
 
     eventually { expect(payroll.bonus).to eq 5000.0 }
-    eventually { expect(page).to have_content 'สมศรี เป็นชื่อแอพ 5-234-34532-2342 1,000.00 0.00 0.00 0.00 0.00 5,000.00 0.00 0.00 0.00 0.00 0.00 0.00 0.00 0.00 6,000.00' }
-    eventually { expect(page).to have_content 'รวมทั้งหมด 2,000.00 0.00 0.00 0.00 0.00 5,000.00 0.00 0.00 0.00 0.00 0.00 0.00 0.00 0.00 7,000.00' }
+    eventually { expect(page).to have_content /สมศรี เป็นชื่อแอพ.*1,000.00 0.00 0.00 0.00 0.00 5,000.00 0.00 0.00 0.00 0.00 0.00 0.00 0.00 0.00 6,000.00/i }
+    eventually { expect(page).to have_content /รวมทั้งหมด.*2,000.00 0.00 0.00 0.00 0.00 5,000.00 0.00 0.00 0.00 0.00 0.00 0.00 0.00 0.00 7,000.00/i }
   end
 
   it 'should edit extra_etc' do
@@ -227,8 +227,8 @@ describe 'Payroll Edit', js: true do
     payroll = Payroll.find(payrolls[0].id)
 
     eventually { expect(payroll.extra_etc).to eq 0.00 }
-    eventually { expect(page).to have_content 'นาง สมศรี เป็นชื่อแอพ 5-234-34532-2342 1,000.00 0.00 0.00 0.00 0.00 0.00 0.00 0.00 0.00 0.00 0.00 0.00 0.00 0.00 1,000.00' }
-    eventually { expect(page).to have_content 'รวมทั้งหมด 2,000.00 0.00 0.00 0.00 0.00 0.00 0.00 0.00 0.00 0.00 0.00 0.00 0.00 0.00 2,000.00' }
+    eventually { expect(page).to have_content /นาง สมศรี เป็นชื่อแอพ.*1,000.00 0.00 0.00 0.00 0.00 0.00 0.00 0.00 0.00 0.00 0.00 0.00 0.00 0.00 1,000.00/i }
+    eventually { expect(page).to have_content /รวมทั้งหมด.*2,000.00 0.00 0.00 0.00 0.00 0.00 0.00 0.00 0.00 0.00 0.00 0.00 0.00 0.00 2,000.00/i }
 
     sleep(1)
     first('a[editable-number="employee.extra_etc"]').click
@@ -241,8 +241,8 @@ describe 'Payroll Edit', js: true do
     payroll = Payroll.find(payrolls[0].id)
 
     eventually { expect(payroll.extra_etc).to eq 5000.0 }
-    eventually { expect(page).to have_content 'สมศรี เป็นชื่อแอพ 5-234-34532-2342 1,000.00 0.00 0.00 0.00 0.00 0.00 5,000.00 0.00 0.00 0.00 0.00 0.00 0.00 0.00 6,000.00' }
-    eventually { expect(page).to have_content 'รวมทั้งหมด 2,000.00 0.00 0.00 0.00 0.00 0.00 5,000.00 0.00 0.00 0.00 0.00 0.00 0.00 0.00 7,000.00' }
+    eventually { expect(page).to have_content /สมศรี เป็นชื่อแอพ.*1,000.00 0.00 0.00 0.00 0.00 0.00 5,000.00 0.00 0.00 0.00 0.00 0.00 0.00 0.00 6,000.00/i }
+    eventually { expect(page).to have_content /รวมทั้งหมด.*2,000.00 0.00 0.00 0.00 0.00 0.00 5,000.00 0.00 0.00 0.00 0.00 0.00 0.00 0.00 7,000.00/i }
   end
 
   it 'should edit absence' do
@@ -251,8 +251,8 @@ describe 'Payroll Edit', js: true do
     payroll = Payroll.find(payrolls[0].id)
 
     eventually { expect(payroll.absence).to eq 0.00 }
-    eventually { expect(page).to have_content 'นาง สมศรี เป็นชื่อแอพ 5-234-34532-2342 1,000.00 0.00 0.00 0.00 0.00 0.00 0.00 0.00 0.00 0.00 0.00 0.00 0.00 0.00 1,000.00' }
-    eventually { expect(page).to have_content 'รวมทั้งหมด 2,000.00 0.00 0.00 0.00 0.00 0.00 0.00 0.00 0.00 0.00 0.00 0.00 0.00 0.00 2,000.00' }
+    eventually { expect(page).to have_content /นาง สมศรี เป็นชื่อแอพ.*1,000.00 0.00 0.00 0.00 0.00 0.00 0.00 0.00 0.00 0.00 0.00 0.00 0.00 0.00 1,000.00/i }
+    eventually { expect(page).to have_content /รวมทั้งหมด.*2,000.00 0.00 0.00 0.00 0.00 0.00 0.00 0.00 0.00 0.00 0.00 0.00 0.00 0.00 2,000.00/i }
 
     sleep(1)
     first('a[editable-number="employee.absence"]').click
@@ -265,8 +265,8 @@ describe 'Payroll Edit', js: true do
     payroll = Payroll.find(payrolls[0].id)
 
     eventually { expect(payroll.absence).to eq 500.0 }
-    eventually { expect(page).to have_content 'สมศรี เป็นชื่อแอพ 5-234-34532-2342 1,000.00 0.00 0.00 0.00 0.00 0.00 0.00 500.00 0.00 0.00 0.00 0.00 0.00 0.00 500.00' }
-    eventually { expect(page).to have_content 'รวมทั้งหมด 2,000.00 0.00 0.00 0.00 0.00 0.00 0.00 500.00 0.00 0.00 0.00 0.00 0.00 0.00 1,500.00' }
+    eventually { expect(page).to have_content /สมศรี เป็นชื่อแอพ.*1,000.00 0.00 0.00 0.00 0.00 0.00 0.00 500.00 0.00 0.00 0.00 0.00 0.00 0.00 500.00/i }
+    eventually { expect(page).to have_content /รวมทั้งหมด.*2,000.00 0.00 0.00 0.00 0.00 0.00 0.00 500.00 0.00 0.00 0.00 0.00 0.00 0.00 1,500.00/i }
   end
 
   it 'should edit late' do
@@ -275,8 +275,8 @@ describe 'Payroll Edit', js: true do
     payroll = Payroll.find(payrolls[0].id)
 
     eventually { expect(payroll.late).to eq 0.00 }
-    eventually { expect(page).to have_content 'นาง สมศรี เป็นชื่อแอพ 5-234-34532-2342 1,000.00 0.00 0.00 0.00 0.00 0.00 0.00 0.00 0.00 0.00 0.00 0.00 0.00 0.00 1,000.00' }
-    eventually { expect(page).to have_content 'รวมทั้งหมด 2,000.00 0.00 0.00 0.00 0.00 0.00 0.00 0.00 0.00 0.00 0.00 0.00 0.00 0.00 2,000.00' }
+    eventually { expect(page).to have_content /นาง สมศรี เป็นชื่อแอพ.*1,000.00 0.00 0.00 0.00 0.00 0.00 0.00 0.00 0.00 0.00 0.00 0.00 0.00 0.00 1,000.00/i }
+    eventually { expect(page).to have_content /รวมทั้งหมด.*2,000.00 0.00 0.00 0.00 0.00 0.00 0.00 0.00 0.00 0.00 0.00 0.00 0.00 0.00 2,000.00/i }
 
     sleep(1)
     first('a[editable-number="employee.late"]').click
@@ -289,8 +289,8 @@ describe 'Payroll Edit', js: true do
     payroll = Payroll.find(payrolls[0].id)
 
     eventually { expect(payroll.late).to eq 500.0 }
-    eventually { expect(page).to have_content 'สมศรี เป็นชื่อแอพ 5-234-34532-2342 1,000.00 0.00 0.00 0.00 0.00 0.00 0.00 0.00 500.00 0.00 0.00 0.00 0.00 0.00 500.00' }
-    eventually { expect(page).to have_content 'รวมทั้งหมด 2,000.00 0.00 0.00 0.00 0.00 0.00 0.00 0.00 500.00 0.00 0.00 0.00 0.00 0.00 1,500.00' }
+    eventually { expect(page).to have_content /สมศรี เป็นชื่อแอพ.*1,000.00 0.00 0.00 0.00 0.00 0.00 0.00 0.00 500.00 0.00 0.00 0.00 0.00 0.00 500.00/i }
+    eventually { expect(page).to have_content /รวมทั้งหมด.*2,000.00 0.00 0.00 0.00 0.00 0.00 0.00 0.00 500.00 0.00 0.00 0.00 0.00 0.00 1,500.00/i }
   end
 
   it 'should edit fee_etc' do
@@ -299,8 +299,8 @@ describe 'Payroll Edit', js: true do
     payroll = Payroll.find(payrolls[0].id)
 
     eventually { expect(payroll.social_insurance).to eq 0.00 }
-    eventually { expect(page).to have_content 'นาง สมศรี เป็นชื่อแอพ 5-234-34532-2342 1,000.00 0.00 0.00 0.00 0.00 0.00 0.00 0.00 0.00 0.00 0.00 0.00 0.00 0.00 1,000.00' }
-    eventually { expect(page).to have_content 'รวมทั้งหมด 2,000.00 0.00 0.00 0.00 0.00 0.00 0.00 0.00 0.00 0.00 0.00 0.00 0.00 0.00 2,000.00' }
+    eventually { expect(page).to have_content /นาง สมศรี เป็นชื่อแอพ.*1,000.00 0.00 0.00 0.00 0.00 0.00 0.00 0.00 0.00 0.00 0.00 0.00 0.00 0.00 1,000.00/i }
+    eventually { expect(page).to have_content /รวมทั้งหมด.*2,000.00 0.00 0.00 0.00 0.00 0.00 0.00 0.00 0.00 0.00 0.00 0.00 0.00 0.00 2,000.00/i }
 
     sleep(1)
     first('a[editable-number="employee.fee_etc"]').click
@@ -313,8 +313,8 @@ describe 'Payroll Edit', js: true do
     payroll = Payroll.find(payrolls[0].id)
 
     eventually { expect(payroll.fee_etc).to eq 500.0 }
-    eventually { expect(page).to have_content 'สมศรี เป็นชื่อแอพ 5-234-34532-2342 1,000.00 0.00 0.00 0.00 0.00 0.00 0.00 0.00 0.00 0.00 0.00 0.00 0.00 500.00 500.00' }
-    eventually { expect(page).to have_content 'รวมทั้งหมด 2,000.00 0.00 0.00 0.00 0.00 0.00 0.00 0.00 0.00 0.00 0.00 0.00 0.00 500.00 1,500.00' }
+    eventually { expect(page).to have_content /สมศรี เป็นชื่อแอพ.*1,000.00 0.00 0.00 0.00 0.00 0.00 0.00 0.00 0.00 0.00 0.00 0.00 0.00 500.00 500.00/i }
+    eventually { expect(page).to have_content /รวมทั้งหมด.*2,000.00 0.00 0.00 0.00 0.00 0.00 0.00 0.00 0.00 0.00 0.00 0.00 0.00 500.00 1,500.00/i }
   end
 
   it 'should edit advance_payment' do
@@ -323,8 +323,8 @@ describe 'Payroll Edit', js: true do
     payroll = Payroll.find(payrolls[0].id)
 
     eventually { expect(payroll.advance_payment).to eq 0.00 }
-    eventually { expect(page).to have_content 'นาง สมศรี เป็นชื่อแอพ 5-234-34532-2342 1,000.00 0.00 0.00 0.00 0.00 0.00 0.00 0.00 0.00 0.00 0.00 0.00 0.00 0.00 1,000.00' }
-    eventually { expect(page).to have_content 'รวมทั้งหมด 2,000.00 0.00 0.00 0.00 0.00 0.00 0.00 0.00 0.00 0.00 0.00 0.00 0.00 0.00 2,000.00' }
+    eventually { expect(page).to have_content /นาง สมศรี เป็นชื่อแอพ.*1,000.00 0.00 0.00 0.00 0.00 0.00 0.00 0.00 0.00 0.00 0.00 0.00 0.00 0.00 1,000.00/i }
+    eventually { expect(page).to have_content /รวมทั้งหมด.*2,000.00 0.00 0.00 0.00 0.00 0.00 0.00 0.00 0.00 0.00 0.00 0.00 0.00 0.00 2,000.00/i }
 
     sleep(1)
     first('a[editable-number="employee.advance_payment"]').click
@@ -337,8 +337,8 @@ describe 'Payroll Edit', js: true do
     payroll = Payroll.find(payrolls[0].id)
 
     eventually { expect(payroll.advance_payment).to eq 500.00 }
-    eventually { expect(page).to have_content 'สมศรี เป็นชื่อแอพ 5-234-34532-2342 1,000.00 0.00 0.00 0.00 0.00 0.00 0.00 0.00 0.00 0.00 0.00 0.00 500.00 0.00 500.00' }
-    eventually { expect(page).to have_content 'รวมทั้งหมด 2,000.00 0.00 0.00 0.00 0.00 0.00 0.00 0.00 0.00 0.00 0.00 0.00 500.00 0.00 1,500.00' }
+    eventually { expect(page).to have_content /สมศรี เป็นชื่อแอพ.*1,000.00 0.00 0.00 0.00 0.00 0.00 0.00 0.00 0.00 0.00 0.00 0.00 500.00 0.00 500.00/i }
+    eventually { expect(page).to have_content /รวมทั้งหมด.*2,000.00 0.00 0.00 0.00 0.00 0.00 0.00 0.00 0.00 0.00 0.00 0.00 500.00 0.00 1,500.00/i }
   end
 
   it 'should default 0.00 when empty' do
@@ -355,7 +355,7 @@ describe 'Payroll Edit', js: true do
     payroll = Payroll.find(payrolls[0].id)
 
     eventually { expect(payroll.salary).to eq 0.00 }
-    eventually { expect(page).to have_content 'สมศรี เป็นชื่อแอพ 5-234-34532-2342 0.00 0.00 0.00 0.00 0.00 0.00 0.00 0.00 0.00 0.00 0.00 0.00 0.00 0.00 0.00' }
-    eventually { expect(page).to have_content 'รวมทั้งหมด 1,000.00 0.00 0.00 0.00 0.00 0.00 0.00 0.00 0.00 0.00 0.00 0.00 0.00 0.00 1,000.00' }
+    eventually { expect(page).to have_content /สมศรี เป็นชื่อแอพ.*0.00 0.00 0.00 0.00 0.00 0.00 0.00 0.00 0.00 0.00 0.00 0.00 0.00 0.00 0.00/i }
+    eventually { expect(page).to have_content /รวมทั้งหมด.*1,000.00 0.00 0.00 0.00 0.00 0.00 0.00 0.00 0.00 0.00 0.00 0.00 0.00 0.00 1,000.00/i }
   end
 end

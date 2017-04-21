@@ -1,4 +1,5 @@
 <%- model_class = Student -%>
+<%= render 'layouts/messages' %>
 <div class="container-fluid">
   <div class="row head-sp">
     <div class="col-xs-2">
@@ -10,9 +11,7 @@
                   :class => 'btn btn-add-ps float-right' %>
     </div>
   </div>
-  <div class="content-student-parent" style="
-    padding-left: 60px;
-    padding-right: 60px;">
+  <div class="content-student-parent">
       <%= form_tag(students_path, method: :get, id: "search-form", class:"row search-form-st justify-content-between") do %>
         <div class="col-xs-4 form-group">
           <%= text_field_tag :search, params[:search], placeholder: "ค้นหา..." ,class: 'search-sp'%>
@@ -32,6 +31,17 @@
               </select>
             </td>
           </tr>
+          <tr>
+            <td><label for="class_select">เลือกห้อง</label></td>
+            <td>
+              <select name="class_select" id="class_select" class="btn-grades" onchange="this.form.submit()">
+                  <option value='all'>All Classroom</option>
+                  <% @class_display.each do |classroom| %>
+                    <option value="<%= classroom %>"<%= @filter_class == classroom ? "selected" : "" %>> <%= classroom %> </option>
+                  <% end %>
+              </select>
+            </td>
+          </tr>
         </div>
       <% end %>
     <table class="table table-sp-report">
@@ -45,32 +55,67 @@
           <th>รหัสประจำตัวนักเรียน</th>
           <th>เพศ</th>
           <th>วันเกิด</th>
-          <th></th>
+          <th>สถานะ</th>
         </tr>
       </thead>
       <tbody>
         <% @students.each do |student| %>
+          <% if student.deleted_at == nil %>
           <tr>
             <td><%= student.full_name_eng_thai_with_title%></td>
             <td><%= student.nickname_eng_thai %></td>
             <td><%= student.grade.nil? ? "" : student.grade.name %></td>
             <td><%= student.classroom %></td>
             <td><%= student.classroom_number %></td>
-            <td><%= student.student_number %></td>
+            <td><%= student.student_num %></td>
             <td><%= student.gender.nil? ? "" : t(student.gender.name) %></td>
             <td><%= student.birthdate.nil? ? '' : student.birthdate.strftime('%d/%m/%Y') %></td>
+            <td><%= student.status.nil? ? 'กำลังศึกษา' : student.status %></td>
             <td>
               <%= link_to t('.show', :default => t("helpers.links.show")),
                           student_path(student), :class => 'btn btn-se' %>
               <%= link_to t('.edit', :default => t("helpers.links.edit")),
                           edit_student_path(student), :class => 'btn btn-se' %>
-              <%= link_to "<i class='fa fa-times'></i>".html_safe ,
-                          student_path(student),
-                          :method => :delete,
-                          :data => { :confirm => t('.confirm', :default => t("helpers.links.confirm.student_confirm", :default => 'Are you sure?')) },
-                          :class => 'btn btn-delete-sp' %>
+
+              <%= link_to "<i class='fa fa-graduation-cap'></i>".html_safe ,
+                          student_graduate_path(student) ,
+                          :id => 'student_graduated' ,
+                          :method => :post ,
+                          :data => { :confirm => t('.confirm', :default => t("helpers.links.confirm.student_graduated", :default => 'Are you sure?')) } ,
+                          :class => 'btn btn-graduation tooltips', 'data-toggle' => 'tooltip', 'data-placement' => 'top', :title => 'ให้นักเรียนจบการศึกษา'  %>
+              <%= link_to "<i class='fa fa-external-link'></i>".html_safe ,
+                          student_resign_path(student) ,
+                          :id => 'student_resign' ,
+                          :method => :post ,
+                          :data => { :confirm => t('.confirm', :default => t("helpers.links.confirm.student_resign", :default => 'Are you sure?')) } ,
+                          :class => 'btn btn-resign tooltips', 'data-toggle' => 'tooltip', 'data-placement' => 'top', :title => 'นักเรียนขอลาออก'  %>
+              <span ng-show="<%=student.invoices.first.nil?%>"><%= link_to "<i class='fa fa-trash'></i>".html_safe ,
+                            student_real_destroy_path(student) ,
+                            :id => 'student_destroy' ,
+                            :method => :delete ,
+                            :data => { :confirm => t('.confirm', :default => t("helpers.links.confirm.student_delete", :default => 'Are you sure?'))} ,
+                            :class => 'btn btn-trash tooltips', 'data-toggle' => 'tooltip', 'data-placement' => 'top', :title => 'ลบข้อมูลจากระบบแบบถาวร'  %></span>
             </td>
           </tr>
+          <% else %>
+          <tr style="color: #dddbdb !important">
+            <td><%= student.full_name_eng_thai_with_title%></td>
+            <td><%= student.nickname_eng_thai %></td>
+            <td><%= student.grade.nil? ? "" : student.grade.name %></td>
+            <td><%= student.classroom %></td>
+            <td><%= student.classroom_number %></td>
+            <td><%= student.student_num %></td>
+            <td><%= student.gender.nil? ? "" : t(student.gender.name) %></td>
+            <td><%= student.birthdate.nil? ? '' : student.birthdate.strftime('%d/%m/%Y') %></td>
+            <td><%= student.status.nil? ? '' : student.status %></td>
+            <td><%= link_to "นำกลับสู่ระบบ" ,
+                    student_restore_path(student) ,
+                    :id => 'student_restore' ,
+                    :method=> :post %>
+            </td>
+          </tr>
+
+        <% end %>
         <% end %>
       </tbody>
     </table>

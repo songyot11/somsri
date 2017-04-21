@@ -1,2 +1,0 @@
-class ClassPermision < ApplicationRecord
-end

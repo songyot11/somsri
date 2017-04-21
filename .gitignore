@@ -30,3 +30,5 @@
 # vim
 *.swp
 *.orig
+
+public/system/*

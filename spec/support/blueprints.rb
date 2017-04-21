@@ -4,7 +4,6 @@ User.blueprint do
   name { Faker::Name.first_name }
   email { Faker::Internet.email }
   password { 'password' }
-  pin { Faker::Lorem.characters }
 end
 
 School.blueprint do
@@ -44,6 +43,9 @@ end
 TaxReduction.blueprint do
 end
 
+TeacherAttendanceList.blueprint do
+end
+
 Individual.blueprint do
   first_name { Faker::Name.first_name }
   last_name { Faker::Name.last_name }
@@ -60,7 +62,7 @@ Student.blueprint do
   prefix { Faker::Name.prefix }
   first_name { Faker::Name.first_name }
   last_name { Faker::Name.last_name }
-  student_number { Faker::Number.number(4).to_i }
+  student_number{ rand(100000)+1 }
 end
 
 List.blueprint do
@@ -94,4 +96,8 @@ end
 LineItem.blueprint(:tuition) do
   detail { "ค่าธรรมเนียมการศึกษา / Tuition Fee" }
   amount { 48000 }
+end
+
+Grade.blueprint do
+  name { Faker::Lorem.word }
 end

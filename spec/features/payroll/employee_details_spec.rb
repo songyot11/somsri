@@ -1,3 +1,4 @@
+
 describe 'Employee Details', js: true do
   let(:taxrates) do
     [
@@ -10,6 +11,8 @@ describe 'Employee Details', js: true do
       Taxrate.make!({order_id: "7", income: "150000", tax: "0.05"})
     ]
   end
+
+  let(:grade) { Grade.make!(name: 'K1') }
 
   let(:school) { school = School.make!({ name: "โรงเรียนแห่งหนึ่ง" }) }
 
@@ -104,6 +107,7 @@ describe 'Employee Details', js: true do
     user.add_role :admin
     taxrates
     payrolls
+    grade
     login_as(user, scope: :user)
   end
 
@@ -121,6 +125,26 @@ describe 'Employee Details', js: true do
     before :each do
       visit "/somsri_payroll#/employees/#{employees[0].id}"
       sleep(1)
+    end
+
+    it 'have employees list' do
+      sleep(1)
+      expect(page).to have_content('สมศรี')
+      expect(page).to_not have_content('สมจิตร')
+
+      find('#employeeName').click()
+      eventually { expect(page).to have_content('สมศรี') }
+      eventually { expect(page).to have_content('สมจิตร') }
+    end
+
+    it 'can filter employees list' do
+      sleep(1)
+
+      find('#employeeName').click()
+      eventually { expect(page).to have_content('สมจิตร เป็นนักมวย') }
+
+      fill_in 'employeeFilter', with: 'ศรี'
+      eventually { expect(page).to_not have_content('สมจิตร เป็นนักมวย') }
     end
 
     it 'should diplay lastest employee details' do
@@ -167,13 +191,18 @@ describe 'Employee Details', js: true do
       eventually { expect(page).to have_content("คุณต้องการออกจากหน้านี้โดยไม่บันทึกค่าหรือไม่?") }
     end
 
-    it 'should save change and goto employee lists' do
+    it 'should save change and stay still on the current page' do
       page.fill_in 'นามสกุล', :with => 'โอชา'
       sleep(1)
       click_link('เงินเดือน')
       sleep(1)
       page.fill_in 'ค่าแรง / เงินเดือนปัจจุบัน', :with => '200'
+
+      click_link('ข้อมูลทั่วไป')
+      page.find("#grade_id").select("K1")
+      page.fill_in 'ห้อง', :with => '1/1'
       sleep(1)
+
       click_button('บันทึก')
       sleep(1)
       click_button('ตกลง')
@@ -184,11 +213,75 @@ describe 'Employee Details', js: true do
 
       eventually { expect(employee.last_name_thai).to eq 'โอชา' }
       eventually { expect(employee.salary).to eq 200 }
+      eventually { expect(employee.classroom).to eq "1/1" }
+      eventually { expect(employee.grade).to eq grade }
       eventually { expect(payroll.salary).to eq 200 }
       eventually { expect(page).to have_css('div.employee-details') }
     end
 
+    describe "generate attendance list" do
+
+      let(:students) do
+        [
+          Student.make!({
+            first_name: 'มั่งมี',
+            last_name: 'ศรีสุข',
+            nickname: 'รวย' ,
+            gender_id: 1 ,
+            grade_id: 2 ,
+            classroom: '1A' ,
+            classroom_number: 13 ,
+            student_number: 23 ,
+          }),
+          Student.make!({
+            first_name: 'สมศรี',
+            last_name: 'ณ บานาน่าโค๊ดดิ้ง',
+            nickname: 'กล้วย' ,
+            gender_id: 2 ,
+            grade_id: 4 ,
+            classroom: '1A' ,
+            classroom_number: 14 ,
+            student_number: 22 ,
+            birthdate: Time.now
+          }),
+          Student.make!({
+            first_name: 'สมศรี',
+            last_name: 'ณ บานาน่าโค๊ดดิ้ง',
+            nickname: 'กั้ง' ,
+            gender_id: 2 ,
+            grade_id: 4 ,
+            classroom: '1B' ,
+            classroom_number: 14 ,
+            student_number: 21 ,
+            birthdate: Time.now
+          })
+        ]
+      end
+
+      it 'should generate pin and list' do
+        students
+        visit "/somsri_payroll#/employees/#{employees[0].id}"
+        sleep(1)
+        page.fill_in 'ห้อง', :with => '1A'
+        sleep(1)
+
+        click_button('บันทึก')
+        sleep(1)
+        click_button('ตกลง')
+        sleep(1)
+
+        employee = Employee.find(employees[0].id)
+        expect(employee.pin).not_to be_nil
+        expect(employee.lists.size).to eq(1)
+        expect(employee.lists[0].name).to eq("1A")
+        expect(employee.lists[0].get_students.size).to eq(2)
+        expect(employee.lists[0].get_students.collect(&:student_number)).to include(22)
+        eventually { expect(employee.classroom).to eq "1A" }
+      end
+    end
+
     it 'should diplay histories when select histories dropdown' do
+      sleep(1)
       click_link('เงินเดือน')
       sleep(1)
       find('#month-list').click
@@ -220,6 +313,7 @@ describe 'Employee Details', js: true do
     end
 
     it 'should diplay warning modal when select histories dropdown after edit payroll' do
+      sleep(1)
       click_link('เงินเดือน')
       sleep(1)
       page.fill_in 'ค่าแรง / เงินเดือนปัจจุบัน', :with => '999'
@@ -232,7 +326,9 @@ describe 'Employee Details', js: true do
     end
 
     it 'should save only employee data when in histories mode and click บันทึก' do
+      sleep(1)
       page.fill_in 'นามสกุล', :with => 'โอชา'
+      sleep(1)
       click_link('เงินเดือน')
       sleep(1)
       page.fill_in 'ค่าแรง / เงินเดือนปัจจุบัน', :with => '999'

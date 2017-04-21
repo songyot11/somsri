@@ -3,7 +3,6 @@ class StudentsController < ApplicationController
   before_action :authenticate_user!, unless: :is_api?
   load_and_authorize_resource except: [:index, :show, :get_roll_calls, :info]
 
-
   def is_api?
     !params[:pin].blank?
   end
@@ -12,57 +11,46 @@ class StudentsController < ApplicationController
   # GET /students.json
   def index
     @menu = "นักเรียน"
-    if params[:pin]
-      user = get_current_user(params[:pin])
-      if user.cannot? :read, Student
-        raise CanCan::AccessDenied.new("Not authorized!", :read, Student)
+    authorize! :read, Student
+    grade_select = (params[:grade_select] || 'All')
+    class_select = (params[:class_select] || 'All')
+    @class_display = Student.order("classroom ASC").select(:classroom).map(&:classroom).uniq.compact
+
+    if !params[:student_report]
+      # without angular
+      if grade_select.downcase == 'all' && class_select.downcase == 'all'
+        students = Student.with_deleted
+      elsif grade_select.downcase == 'all' && class_select.downcase != 'all'
+        students = Student.where(classroom: class_select)
+      elsif grade_select != 'all' && class_select.downcase == 'all'
+        grade = Grade.where(name: grade_select).first
+        students = Student.where(grade: grade.id)
+      elsif grade_select != 'all' && class_select != 'all'
+        grade = Grade.where(name: grade_select).first
+        students = Student.where(grade: grade.id , classroom: class_select)
       end
-      if user
-        render json: Student.where({ school_id: user.school.id  })
-      else
-        render json: { errors: "Invalid token or user not registered" }, status: 422 and return
-      end
+      @students = students.order("deleted_at DESC , classroom ASC, classroom_number ASC").search(params[:search]).page(params[:page]).to_a
     else
-      authorize! :read, Student
-      grade_select = (params[:grade_select] || 'All')
-      if !params[:student_report]
-        if grade_select.downcase == 'all'
-          @students = Student.order("student_number ASC").search(params[:search]).all.page(params[:page]).to_a
-        else
-          grade = Grade.where(name: grade_select).first
-          @students = Student.where(grade_id: grade.id).order("classroom ASC, classroom_number ASC").search(params[:search]).page(params[:page]).to_a
-        end
+      # with angular
+      if grade_select.downcase == 'all'
+        @students = Student.order("deleted_at DESC , student_number ASC").search(params[:search]).with_deleted.paginate(page: params[:page], per_page: 10).to_a
       else
-        if grade_select.downcase == 'all'
-          @students = Student.all.order("grade_id ASC , classroom_number ASC").to_a
-        else
-          grade = Grade.where(name: grade_select).first
-          @students = Student.where(grade_id: grade.id).order("classroom_number ASC").to_a
-        end
+        grade = Grade.where(name: grade_select).first
+        @students = Student.where(grade_id: grade.id).order("classroom ASC, classroom_number ASC").search(params[:search]).paginate(page: params[:page], per_page: 10).to_a
       end
-      @filter_grade = grade_select
-      render "students/index", layout: "application_invoice"
     end
+
+    @filter_grade = grade_select
+    @filter_class = class_select
+    render "students/index", layout: "application_invoice"
   end
 
   # GET /students/1
   # GET /students/1.json
   def show
     @menu = "นักเรียน"
-    if params[:pin]
-      user = get_current_user(params[:pin])
-      if user.ability.cannot? :read, Student
-        raise CanCan::AccessDenied.new("Not authorized!", :read, Student)
-      end
-      if user
-        render json: Student.where({ student_number: params[:id], school_id: user.school.id })
-      else
-        render json: { errors: "Invalid token or user not registered" }, status: 422 and return
-      end
-    else
-      authorize! :read, Student
-      render "students/show", layout: "application_invoice"
-    end
+    authorize! :read, Student
+    render "students/show", layout: "application_invoice"
   end
 
   # GET /students/new
@@ -94,6 +82,7 @@ class StudentsController < ApplicationController
         format.html { redirect_to @student }
         format.json { render :show, status: :created, location: @student }
       else
+        @relations = Relationship.all
         format.html { render :new }
         format.json { render json: @student.errors, status: :unprocessable_entity }
       end
@@ -110,6 +99,7 @@ class StudentsController < ApplicationController
         format.html { redirect_to @student }
         format.json { render :show, status: :ok, location: @student }
       else
+        @relations = Relationship.all
         format.html { render :edit }
         format.json { render json: @student.errors, status: :unprocessable_entity }
       end
@@ -126,12 +116,56 @@ class StudentsController < ApplicationController
     end
   end
 
+  def real_destroy
+    begin
+      @student = Student.find(params[:student_id])
+      @student.really_destroy!
+      flash[:success] = "ลบนักเรียนเรียบร้อยแล้ว"
+    rescue ActiveRecord::DeleteRestrictionError => e
+      @student.errors.add(:base, e)
+      flash[:error] = "#{e}"
+    ensure
+      respond_to do |format|
+        format.html { redirect_to students_url}
+        format.json { head :no_content }
+      end
+    end
+  end
+
+  def graduate
+    if @student = Student.find(params[:student_id]).update(deleted_at: Time.now , status: 'จบการศึกษา')
+      respond_to do |format|
+          format.html { redirect_to students_url }
+          format.json { head :no_content }
+      end
+    end
+  end
+
+  def resign
+    if @student = Student.find(params[:student_id]).update(deleted_at: Time.now , status: 'ลาออก')
+      respond_to do |format|
+          format.html { redirect_to students_url }
+          format.json { head :no_content }
+      end
+    end
+  end
+
+  def restore
+      if @student = Student.restore(params[:student_id])
+        @student = Student.unscoped.find(params[:student_id]).update(status: 'กำลังศึกษา')
+      respond_to do |format|
+        format.html { redirect_to students_url }
+        format.json { head :no_content }
+      end
+    end
+  end
+
   # GET /get_roll_calls
   def get_roll_calls
-    user = get_current_user(params[:pin])
-    if user && user.lists && user.lists.size > 0
+    employee = Employee.where(pin: params[:pin]).first
+    if employee && employee.lists && employee.lists.size > 0
       # select list
-      list = user.lists[0]
+      list = employee.lists[0]
       render json: list.get_students and return
     else
       render json: { errors: "Invalid token or user not registered" }, status: 422 and return
@@ -139,50 +173,81 @@ class StudentsController < ApplicationController
   end
 
   def info
-    user = get_current_user(params[:pin])
-    student = Student.find_by(code: params[:id])
-    d =  Date.strptime(params[:date], "%Y-%m-%d")
-    if student
-      s_rollcall = student.roll_call
-      if s_rollcall
-        date = d
-        @studet_r = []
-        @morning = []
-        @afternoon = []
+    employee = Employee.where(pin: params[:pin]).first
+    if employee
+      student = Student.find_by(code: params[:id])
+      d =  Date.strptime(params[:date], "%Y-%m-%d")
+      if student
+        s_rollcall = student.roll_call
+        if s_rollcall
+          date = d
+          @studet_r = []
+          @morning = []
+          @afternoon = []
 
-        roll_date_1 = s_rollcall.where(check_date:date.strftime("%Y-%m-%d"))
-        @studet_r << roll_date_1 if roll_date_1
+          roll_date_1 = s_rollcall.where(check_date:date.strftime("%Y-%m-%d"))
+          @studet_r << roll_date_1 if roll_date_1
 
-        morning  = s_rollcall.where(check_date:date.strftime("%Y-%m-%d"), round:"morning")
-        @morning  << morning if morning
-        afternoon = s_rollcall.where(check_date:date.strftime("%Y-%m-%d"), round:"afternoon")
-        @afternoon << afternoon if afternoon
+          morning  = s_rollcall.where(check_date:date.strftime("%Y-%m-%d"), round:"morning")
+          @morning  << morning if morning
+          afternoon = s_rollcall.where(check_date:date.strftime("%Y-%m-%d"), round:"afternoon")
+          @afternoon << afternoon if afternoon
 
-        (1..Time.days_in_month(d.month)).each do |i|
-            date = d + i.days
-            roll_date = s_rollcall.where(check_date:date.strftime("%Y-%m-%d"))
-            @studet_r << roll_date if roll_date
-            #do count rollcall status
-            morning  = s_rollcall.where(check_date:date.strftime("%Y-%m-%d"), round:"morning")
-            @morning  << morning if morning
-            afternoon = s_rollcall.where(check_date:date.strftime("%Y-%m-%d"), round:"afternoon")
-            @afternoon << afternoon if afternoon
+          (1..Time.days_in_month(d.month)).each do |i|
+              date = d + i.days
+              roll_date = s_rollcall.where(check_date:date.strftime("%Y-%m-%d"))
+              @studet_r << roll_date if roll_date
+              #do count rollcall status
+              morning  = s_rollcall.where(check_date:date.strftime("%Y-%m-%d"), round:"morning")
+              @morning  << morning if morning
+              afternoon = s_rollcall.where(check_date:date.strftime("%Y-%m-%d"), round:"afternoon")
+              @afternoon << afternoon if afternoon
+          end
         end
-      end
-        result = []
-        result << {
-          date: d,
-          first_name: student.first_name,
-          last_name: student.last_name,
-          prefix: student.prefix,
-          morning: @morning.flatten,
-          afternoon: @afternoon.flatten
-        }
+          result = []
+          result << {
+            date: d,
+            first_name: student.first_name,
+            last_name: student.last_name,
+            prefix: student.prefix,
+            morning: @morning.flatten,
+            afternoon: @afternoon.flatten
+          }
 
-      render json: result
+        render json: result
+      else
+        render json: { errors: "Invalid student code" }, status: 422 and return
+      end
     else
-      render json: { errors: "Invalid token or user not registered" }, status: 422 and return
+      render json: { errors: "Invalid PIN" }, status: 422 and return
     end
+  end
+
+  # GET /invoice_total_amount
+  def invoice_total_amount
+    grade_select = (params[:grade_select] || 'All')
+    @students = Student
+    if grade_select.downcase == 'all'
+      @students = @students.search(params[:search]).all.to_a
+    else
+      grade = Grade.where(name: grade_select).first
+      @students = @students.where(grade_id: grade.id).search(params[:search]).to_a
+    end
+
+    other_fee = 0
+    tuition_fee = 0
+    amount = 0
+
+    @students.each do |student|
+      other_fee += student.active_invoice_other_fee if !student.active_invoice_other_fee.blank?
+      tuition_fee += student.active_invoice_tuition_fee if !student.active_invoice_tuition_fee.blank?
+      amount += student.active_invoice_total_amount if !student.active_invoice_total_amount.blank?
+    end
+    render json: [{other_fee: other_fee, tuition_fee: tuition_fee, amount: amount}], status: :ok
+  end
+
+  def upload_photo
+    @student = Student.where(id: params[:id]).update( upload_photo_params )
   end
 
   private
@@ -193,7 +258,7 @@ class StudentsController < ApplicationController
 
     # Never trust parameters from the scary internet, only allow the white list through.
     def student_params
-      params.require(:student).permit(:full_name, :full_name_english, :nickname, :nickname_english, :gender_id, :birthdate, :grade_id, :classroom, :classroom_number, :student_number, :national_id, :remark)
+      params.require(:student).permit(:full_name, :full_name_english, :nickname, :nickname_english, :gender_id, :birthdate, :grade_id, :classroom, :classroom_number, :student_number, :national_id, :remark , :status, :img_url)
     end
 
     def relation_assign
@@ -209,14 +274,16 @@ class StudentsController < ApplicationController
     def parent_assign
       prn_params = params[:parent]
       rel_params = params[:relationship]
-
       prn_rel = Hash.new
       if !prn_params.nil?
-        prn_params.each_with_index { |value, index| prn_rel[value] = rel_params[index] }
+        prn_params.each_with_index do |value, index|
+          if prn_rel[value] && rel_params[index]
+            prn_rel[value] = rel_params[index]
+          end
+        end
       end
       prn_params = prn_rel.keys
       @relationships = prn_rel.values
-
       @parents = Array.new
       if !prn_params.nil?
         prn_params.each_with_index.map do |p, index|
@@ -235,4 +302,7 @@ class StudentsController < ApplicationController
       end
     end
 
+    def upload_photo_params
+      params.require(:student).permit(:img_url)
+    end
 end

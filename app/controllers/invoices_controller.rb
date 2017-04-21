@@ -7,11 +7,14 @@ class InvoicesController < ApplicationController
   def index
     grade_select = (params[:grade_select] || 'All')
     if grade_select.downcase == 'all'
-      @invoices = Invoice.order("id DESC").to_a
+      # @invoices = Invoice.order("id DESC").to_a
       # @invoices = Invoice.order("id DESC").search(params[:search]).all.page(params[:page]).to_a
+      @invoices = Invoice.order("id DESC").all.paginate(page: params[:page], per_page: 10).to_a
     else
-      @invoices = Invoice.where(grade_name: grade_select).order("id DESC").to_a
+      # @invoices = Invoice.where(grade_name: grade_select).order("id DESC").to_a
       # @invoices = Invoice.where(grade_id: grade.id).order("id DESC").search(params[:search]).page(params[:page]).to_a
+      grade = Grade.where(name: grade_select).first
+      @invoices = Invoice.where(grade_name: grade.name).order("id DESC").paginate(page: params[:page], per_page: 10).to_a
     end
     @filter_grade = grade_select
   end
@@ -222,6 +225,7 @@ class InvoicesController < ApplicationController
       school_year_thai: (@invoice.school_year.to_i - 543).to_s,
       payment_methods: [],
       grade_name: grade_name,
+      receiver_name: @invoice.user.name,
       parent: {
         display_name: @invoice.parent.full_name
       },

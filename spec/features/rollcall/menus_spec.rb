@@ -1,4 +1,4 @@
-describe 'Employee delete', js: true do
+describe 'RollCall menu', js: true do
   let(:school) { school = School.make!({ name: "โรงเรียนแห่งหนึ่ง" }) }
   let(:user) { User.make!({ school_id: school.id }) }
   before do

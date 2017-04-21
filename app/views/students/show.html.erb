@@ -4,6 +4,8 @@
     <h1>รายละเอียดนักเรียน</h1>
   </div>
   <div class="content-student-parent-show">
+    <%= image_tag(@student.img_url.url(:medium)) if @student.img_url.exists? %>
+    <div class="space20"></div>
     <div class="row add-st-pr">
       <div class="col-3">
         <b>ชื่อ - นามสกุล : </b>
@@ -41,7 +43,7 @@
         <b>เพศ : </b>
       </div>
       <div class="col-8">
-        <%= @student.gender_id %>
+        <%= @student.gender_id.nil? ? "" : t(@student.gender.name) %>
       </div>
     </div>
     <div class="row add-st-pr">
@@ -49,7 +51,7 @@
         <b>วัน เดือน ปี เกิด : </b>
       </div>
       <div class="col-8">
-        <%= @student.birthdate %>
+        <%= @student.birthdate.nil? ? "" : @student.birthdate.strftime("%d/%B/%Y") %>
       </div>
     </div>
     <div class="row add-st-pr">
@@ -57,7 +59,7 @@
         <b> ระดับชั้น : </b>
       </div>
       <div class="col-8">
-        <%= @student.grade_id %>
+        <%= @student.grade_id.nil? ? "" : t(@student.grade.name) %>
       </div>
     </div>
     <div class="row add-st-pr">
@@ -115,11 +117,11 @@
                     students_path, :class => 'btn btn-default'  %>
       <%= link_to t('.edit', :default => t("helpers.links.edit")),
                     edit_student_path(@student), :class => 'btn btn-default' %>
-      <%= link_to t('.destroy', :default => t("helpers.links.destroy")),
+      <span ng-show="<%=@student.invoices.first.nil?%>"><%= link_to t('.destroy', :default => t("helpers.links.destroy")),
                     student_path(@student),
                     :method => 'delete',
                     :data => { :confirm => t('.confirm', :default => t("helpers.links.confirm", :default => 'Are you sure?')) },
-                    :class => 'btn btn-remove' %>
+                    :class => 'btn btn-remove' %></span>
     </div>
   </div>
 </div>

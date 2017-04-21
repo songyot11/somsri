@@ -6,7 +6,7 @@ class PayrollsController < ApplicationController
   # GET /payrolls
   def index
     effective_date = DateTime.parse(params[:effective_date])
-    employees = Employee.active.where(school_id: current_user.school.id)
+    employees = Employee.all
     payrolls = Payroll.joins(:employee)
                       .where(employee_id: employees, effective_date: effective_date.beginning_of_day..effective_date.end_of_day)
                       .order('employees.start_date ASC, employees.created_at ASC')
@@ -36,7 +36,7 @@ class PayrollsController < ApplicationController
   # GET /payrolls/social_insurance_pdf
   def social_insurance_pdf
     effective_date = DateTime.parse(params[:effective_date])
-    employees = Employee.where(school_id: current_user.school.id).order(:id).to_a
+    employees = Employee.all.order(:id).to_a
     payrolls = Payroll.joins(:employee)
                       .where(employee_id: employees, effective_date: effective_date.beginning_of_day..effective_date.end_of_day)
                       .where("social_insurance > ?", 0)
@@ -182,7 +182,7 @@ class PayrollsController < ApplicationController
 
   # POST /payrolls/
   def create
-    employees = Employee.active.where(school_id: current_user.school.id).to_a
+    employees = Employee.all.to_a
     payrolls = Payroll.joins(:employee)
                       .where(employee_id: employees, effective_date: DateTime.parse(create_params[:effective_date]))
     render json: {error: "PAYROLLS_EXIST"}, status: :ok and return if payrolls.count > 0 && !option_params[:force_create]
@@ -212,7 +212,7 @@ class PayrollsController < ApplicationController
 
   private
     def get_months()
-      employee_ids = Employee.active.where(school_id: current_user.school.id)
+      employee_ids = Employee.all
       payroll_dates = Payroll.where(employee_id: employee_ids)
                              .order("effective_date DESC")
                              .distinct.pluck(:effective_date).uniq

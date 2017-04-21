@@ -16,7 +16,9 @@
     "angular-xeditable": "",
     "angular-scrollable-table": "",
     "moment": "",
-    "angular-input-masks": ""
+    "angular-input-masks": "",
+    "angular-sanitize": "1.5.9",
+    "ng-file-upload-shim": ""
   },
   "resolutions": {
     "angular": "1.5.9"

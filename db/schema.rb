@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20170322062002) do
+ActiveRecord::Schema.define(version: 20170412072642) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -72,7 +72,6 @@ ActiveRecord::Schema.define(version: 20170322062002) do
     t.string   "bank_branch",          default: ""
     t.string   "account_number",       default: ""
     t.decimal  "salary",               default: "0.0",          null: false
-    t.string   "img_url",              default: ""
     t.datetime "created_at",                                    null: false
     t.datetime "updated_at",                                    null: false
     t.string   "first_name_thai"
@@ -80,7 +79,6 @@ ActiveRecord::Schema.define(version: 20170322062002) do
     t.string   "prefix_thai"
     t.string   "nickname"
     t.datetime "start_date"
-    t.boolean  "deleted",              default: false
     t.datetime "birthdate"
     t.text     "address"
     t.string   "tel"
@@ -89,6 +87,15 @@ ActiveRecord::Schema.define(version: 20170322062002) do
     t.string   "employee_type",        default: "ลูกจ้างประจำ", null: false
     t.boolean  "pay_social_insurance"
     t.boolean  "pay_pvf"
+    t.string   "pin"
+    t.integer  "grade_id"
+    t.string   "classroom"
+    t.string   "img_url_file_name"
+    t.string   "img_url_content_type"
+    t.integer  "img_url_file_size"
+    t.datetime "img_url_updated_at"
+    t.datetime "deleted_at"
+    t.index ["deleted_at"], name: "index_employees_on_deleted_at", using: :btree
     t.index ["school_id"], name: "index_employees_on_school_id", using: :btree
   end
 
@@ -168,13 +175,10 @@ ActiveRecord::Schema.define(version: 20170322062002) do
   end
 
   create_table "lists", force: :cascade do |t|
-    t.integer  "user_id"
     t.string   "name",       default: "", null: false
     t.string   "category",   default: "", null: false
     t.datetime "created_at",              null: false
     t.datetime "updated_at",              null: false
-    t.index ["user_id", "name"], name: "index_lists_on_user_id_and_name", unique: true, using: :btree
-    t.index ["user_id"], name: "index_lists_on_user_id", using: :btree
   end
 
   create_table "parents", force: :cascade do |t|
@@ -185,9 +189,15 @@ ActiveRecord::Schema.define(version: 20170322062002) do
     t.string   "mobile"
     t.string   "email"
     t.string   "line_id"
-    t.datetime "created_at",        null: false
-    t.datetime "updated_at",        null: false
+    t.datetime "created_at",           null: false
+    t.datetime "updated_at",           null: false
     t.string   "id_card_no"
+    t.datetime "deleted_at"
+    t.string   "img_url_file_name"
+    t.string   "img_url_content_type"
+    t.integer  "img_url_file_size"
+    t.datetime "img_url_updated_at"
+    t.index ["deleted_at"], name: "index_parents_on_deleted_at", using: :btree
   end
 
   create_table "payment_methods", force: :cascade do |t|
@@ -220,6 +230,8 @@ ActiveRecord::Schema.define(version: 20170322062002) do
     t.datetime "created_at",                         null: false
     t.datetime "updated_at",                         null: false
     t.datetime "effective_date",                     null: false
+    t.datetime "deleted_at"
+    t.index ["deleted_at"], name: "index_payrolls_on_deleted_at", using: :btree
     t.index ["employee_id"], name: "index_payrolls_on_employee_id", using: :btree
   end
 
@@ -286,9 +298,16 @@ ActiveRecord::Schema.define(version: 20170322062002) do
     t.integer  "student_number"
     t.string   "national_id"
     t.text     "remark"
-    t.datetime "created_at",        null: false
-    t.datetime "updated_at",        null: false
+    t.datetime "created_at",           null: false
+    t.datetime "updated_at",           null: false
     t.integer  "school_id"
+    t.datetime "deleted_at"
+    t.string   "status"
+    t.string   "img_url_file_name"
+    t.string   "img_url_content_type"
+    t.integer  "img_url_file_size"
+    t.datetime "img_url_updated_at"
+    t.index ["deleted_at"], name: "index_students_on_deleted_at", using: :btree
     t.index ["school_id"], name: "index_students_on_school_id", using: :btree
   end
 
@@ -337,6 +356,13 @@ ActiveRecord::Schema.define(version: 20170322062002) do
     t.float   "tax"
   end
 
+  create_table "teacher_attendance_lists", force: :cascade do |t|
+    t.integer "employee_id"
+    t.integer "list_id"
+    t.index ["employee_id"], name: "index_teacher_attendance_lists_on_employee_id", using: :btree
+    t.index ["list_id"], name: "index_teacher_attendance_lists_on_list_id", using: :btree
+  end
+
   create_table "users", force: :cascade do |t|
     t.string   "email",                  default: "", null: false
     t.string   "encrypted_password",     default: "", null: false
@@ -353,8 +379,6 @@ ActiveRecord::Schema.define(version: 20170322062002) do
     t.integer  "school_id"
     t.string   "name"
     t.string   "full_name"
-    t.string   "classroom"
-    t.string   "pin"
     t.index ["email"], name: "index_users_on_email", unique: true, using: :btree
     t.index ["reset_password_token"], name: "index_users_on_reset_password_token", unique: true, using: :btree
     t.index ["school_id"], name: "index_users_on_school_id", using: :btree

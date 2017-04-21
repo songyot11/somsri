@@ -36,8 +36,8 @@ class RollCallsController < ApplicationController
   # }
   # POST /roll_calls/
   def create
-    user = get_current_user(params[:pin])
-    if user
+    employee = Employee.where(pin: params[:pin]).first
+    if employee
       # get data
       render json: { errors: "class is required params" }, status: 422 and return if !params[:class]
       list_name = params[:class]
@@ -58,7 +58,9 @@ class RollCallsController < ApplicationController
       roll_calls = []
       RollCall.transaction do
         # get target class
-        list = List.where({ name: list_name, user_id: user.id }).first
+        list_ids = TeacherAttendanceList.where(employee_id: employee.id).pluck(:list_id).to_a
+
+        list = List.where({ name: list_name, id: list_ids }).first
         render json: { errors: "class not found" }, status: 422 and return if !list
 
         # get students
@@ -69,7 +71,7 @@ class RollCallsController < ApplicationController
         roll_call_datas = []
         students.each do |student|
           datas.each do |data|
-            if student.student_number.to_s == data['student_code'].to_s
+            if student.id.to_s == data['student_code'].to_s
               roll_call_datas << RollCall.new({
                 student_id: student.id,
                 status: data['status'],
@@ -85,37 +87,50 @@ class RollCallsController < ApplicationController
         conflict_target = [:student_id, :round, :list_id, :check_date]
         result_ids = RollCall.import(roll_call_datas, on_duplicate_key_update: {conflict_target: conflict_target, columns: [:status]})[:ids]
       end
-      render json: RollCall.get_by_date(user, date, format_api: true).to_json(format_api: true) and return
+      render json: RollCall.get_by_date(employee, date).to_json(format_api: true) and return
     else
-      render json: { errors: "Invalid token or user not registered" }, status: 422 and return
+      render json: { errors: "Invalid PIN" }, status: 422 and return
     end
   end
 
+  # get all rollcall that teacher can menage
   def index
     date = params[:date]
-    user = get_current_user(params[:pin])
-    if user
+    employee = Employee.where(pin: params[:pin].to_s).first
+    if employee
       if date
-        render json: RollCall.get_by_date(user, date, format_api: true).to_json(format_api: true)
+        render json: RollCall.get_by_date(employee, date).to_json(format_api: true)
       else
-        list_ids = user.lists.collect{ |l| l.id }
-        render json: RollCall.where({ list_id: list_ids })
+        render json: { errors: "Required date" }, status: 422 and return
       end
     else
-      render json: { errors: "Invalid token or user not registered" }, status: 422 and return
+      render json: { errors: "Invalid PIN" }, status: 422 and return
     end
   end
 
-
+  # get all rollcall that teacher can read
   def report
+    date = params[:date]
+    employee = Employee.where(pin: params[:pin]).first
+    if employee
+      if date
+        render json: RollCall.get_by_date(nil, date).to_json(format_api: true)
+      else
+        render json: { errors: "Required date" }, status: 422 and return
+      end
+    else
+      render json: { errors: "Invalid PIN" }, status: 422 and return
+    end
+  end
+
+  def report_month
     date = params[:date]
     user = get_current_user(params[:pin])
     if user
       if date
-        render json: RollCall.get_by_permision(user, date, format_api: true).to_json(format_api: true)
+        render json: RollCall.get_by_month(user, date, format_api: true).to_json(format_api: true)
       else
-        list_ids = user.lists.collect{ |l| l.id }
-        render json: RollCall.where({ list_id: list_ids })
+        render json: { errors: "Date is required in report_month." }, status: 422 and return
       end
     else
       render json: { errors: "Invalid token or user not registered" }, status: 422 and return
