@@ -136,13 +136,21 @@ th.name_student.ng-binding{
   border-top: 2px solid #c5c2c2;
   border-bottom: 2px solid #c5c2c2;
 }
+table.status_rollcall{
+  width: 100%;
+}
 #rollcall-report table.status_rollcall>tbody>tr>td{
   padding: 5px 10px 5px 10px;
   border-bottom: 1px solid #ddd;
+  text-align: center;
+}
+table.time_rollcall{
+  width: 100%;
 }
 #rollcall-report table.time_rollcall>tbody>tr>td{
   border-bottom: 1px solid #ddd;
   padding: 5px 10px 5px 10px;
+  text-align: center;
 }
 td.time_half {
   border-right: none !important;
