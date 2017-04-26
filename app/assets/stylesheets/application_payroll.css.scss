@@ -476,6 +476,11 @@ input.btn-prefix.active:-moz-placeholder { /* Firefox 18- */
 }
 
 @media print {
+
+  body {
+    margin: 0px;
+  }
+
   a[href]:after {
     content: none !important;
   }
@@ -1280,7 +1285,7 @@ a.dropdown-item{
 }
 
 .slip-content .page-space{
-  height: 500px;
+  height: 20px;
 }
 
 .slip-content .new-page{
