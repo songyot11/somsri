@@ -104,9 +104,9 @@ describe 'RollCall report', js: true do
   it 'should go to rollcall report' do
     visit "/somsri_rollcall#/report"
     sleep(1)
-    find('.ng-binding', :text => 'March 2017').click
+    find('.ng-binding', :text => 'มีนาคม 2560').click
     sleep(1)
-    click_link('April 2017')
+    click_link('เมษายน 2560')
     sleep(1)
     expect(page).to have_selector('.fa.fa-check', count: 1)
     expect(page).not_to have_selector('.fa.fa-times')

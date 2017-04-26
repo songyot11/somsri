@@ -28,13 +28,14 @@ class ReportRollCallsController < ApplicationController
       end
       results << result
     end
-    render json: results
+    school = School.first
+    render json: { info: { name: school.name, address: school.address }, rollcall: results }
   end
 
   def date_in_month
     dates = date_exclude_weeken(DateTime.parse(params[:date]))
     dates.collect! do |date|
-      date.strftime("%d")
+      date.strftime("%d").to_i.to_s
     end
     render json: dates
   end
@@ -46,10 +47,11 @@ class ReportRollCallsController < ApplicationController
   def months
     check_dates = RollCall.distinct.pluck(:check_date).to_a
     results = check_dates.collect do |x|
-      {name: DateTime.parse(x).strftime("%B %Y"), date: DateTime.parse(x).strftime("%Y-%m-%d")}
+      date_thai = to_thai_date(DateTime.parse(x))
+      {name: "#{date_thai[1]} #{date_thai[2]}", date: DateTime.parse(x).strftime("%Y-%m-%d")}
     end
     results.uniq! do |x|
-      DateTime.parse(x[:date]).strftime("%B %Y")
+      DateTime.parse(x[:date]).strftime("%m %Y")
     end
     render json: results
   end
@@ -70,6 +72,11 @@ class ReportRollCallsController < ApplicationController
       end
     end
     return nil
+  end
+
+  def to_thai_date(date_time)
+    d = I18n.l(date_time, format: "%d %B %Y").split(" ")
+    return [ d[0].to_i, d[1], d[2].to_i + 543 ]
   end
 
 end
