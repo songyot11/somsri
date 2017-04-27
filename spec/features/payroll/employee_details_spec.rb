@@ -45,6 +45,16 @@ describe 'Employee Details', js: true do
     ]
   end
 
+  let(:employee_without_payroll) do
+    Employee.make!({
+      school_id: school.id,
+      first_name: "คนใหม่",
+      last_name: "เดือนแรกเลย",
+      prefix_thai: "นาย",
+      salary: 20000
+    })
+  end
+
   let(:payrolls) do
     [
       Payroll.make!({
@@ -125,6 +135,12 @@ describe 'Employee Details', js: true do
     before :each do
       visit "/somsri_payroll#/employees/#{employees[0].id}"
       sleep(1)
+    end
+
+    it 'should not diplay print slip button' do
+      visit "/somsri_payroll#/employees/#{employee_without_payroll.id}"
+      sleep(1)
+      eventually { expect(page).not_to have_content('พิมพ์ใบจ่ายเงินเดือน') }
     end
 
     it 'have employees list' do

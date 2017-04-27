@@ -11,12 +11,16 @@ class EmployeesController < ApplicationController
 
   # GET /employees/:id/slip
   def slip
-    employee = Employee.find(params[:id]).as_json({ slip: true, payroll_id: params[:payroll_id] })
-    employee[:payroll][:fee_orders] = employee[:payroll][:fee_orders]
-                                                      .select { |key, value| value[:value] > 0}
-    employee[:payroll][:pay_orders] = employee[:payroll][:pay_orders]
-                                                      .select { |key, value| value[:value] > 0}
-    render json: employee, status: :ok
+    if Payroll.where({ employee_id: params[:id] }).count > 0
+      employee = Employee.find(params[:id]).as_json({ slip: true, payroll_id: params[:payroll_id] })
+      employee[:payroll][:fee_orders] = employee[:payroll][:fee_orders]
+                                                        .select { |key, value| value[:value] > 0}
+      employee[:payroll][:pay_orders] = employee[:payroll][:pay_orders]
+                                                        .select { |key, value| value[:value] > 0}
+      render json: employee, status: :ok
+    else
+      render json: [], status: :ok
+    end
   end
 
   # GET /employees/slips
@@ -122,7 +126,7 @@ class EmployeesController < ApplicationController
   def archive
     @employee = Employee.find(params[:employee_id]).update(deleted_at: Time.now)
     payroll = Payroll.where(employee_id: params[:employee_id]).update(deleted_at: Time.now)
-    
+
     data = {status: "success"}
     render json: data, status: :ok
   end

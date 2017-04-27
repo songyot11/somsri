@@ -742,7 +742,7 @@
     </div>
     <div class="footer-menu row">
       <div class="col-md-4">
-        <button ng-show="employee.isEdit" type="button" class="btn btn-lg btn-block btn-print" ng-click="openSlip(employee.datas.employee.id, employee.currentEffectiveDate['payroll_id'])">พิมพ์ใบจ่ายเงินเดือน</button>
+        <button ng-show="employee.isEdit && employee.hasPayroll" type="button" class="btn btn-lg btn-block btn-print" ng-click="openSlip(employee.datas.employee.id, employee.currentEffectiveDate['payroll_id'])">พิมพ์ใบจ่ายเงินเดือน</button>
       </div>
       <!-- <div class="col-md-2 {{employee.isEdit ? '': 'col-md-offset-2'}}">
         <button ng-show="false" type="button" class="btn btn-lg btn-block btn-memo">บันทึกช่วยจำ</button>

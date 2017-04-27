@@ -49,10 +49,26 @@ describe 'Payroll Slip', js: true do
     ]
   end
 
+  let(:employee_without_payroll) do
+    Employee.make!({
+      school_id: school.id,
+      first_name: "คนใหม่",
+      last_name: "เดือนแรกเลย",
+      prefix_thai: "นาย",
+      salary: 20000
+    })
+  end
+
   before do
     user.add_role :admin
     payrolls
     login_as(user, scope: :user)
+  end
+
+  it 'should redirect to employee detail' do
+    visit "/somsri_payroll#/employees/#{employee_without_payroll.id}/slip"
+    sleep(1)
+    eventually { expect(page).to have_content '+ เพิ่มพนักงานใหม่' }
   end
 
   it 'should see label and data in employee slip' do
