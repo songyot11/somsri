@@ -133,7 +133,7 @@ class EmployeesController < ApplicationController
   end
 
   def restore
-    @employee = Employee.update(deleted_at: nil)
+    @employee = Employee.only_deleted.where(id: params[:employee_id]).update(deleted_at: nil)
     payroll = Payroll.only_deleted.where(employee_id: params[:employee_id]).update(deleted_at: nil)
 
     data = {status: "success"}
