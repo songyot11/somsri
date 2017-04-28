@@ -117,10 +117,10 @@ Employee.all.each do |employee|
 end
 
 TaxReduction.all.each do |tax|
-    if tax.expenses == 0
-        tax.expenses = 60000.0
-        tax.save
-    end
+  if tax.expenses == 0
+    tax.expenses = 60000.0
+    tax.save
+  end
 end
 
 # invoice

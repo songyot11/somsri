@@ -28,6 +28,7 @@ describe 'Payroll Swap Page', js: true do
     sleep(1)
     find('#menu').click
     sleep(1)
+    
     eventually { expect(page).to have_content 'บุคลากร เงินเดือน ค่าเทอม นับแถว บุคลากร ผู้ปกครอง นักเรียน' }
     eventually { expect(URI.parse(current_url).to_s).to have_content 'employees' }
   end
