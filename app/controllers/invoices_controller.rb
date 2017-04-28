@@ -277,6 +277,16 @@ class InvoicesController < ApplicationController
     render json: slip_info, status: :ok
   end
 
+  def invoice_years
+    all_years = Invoice.pluck(:school_year).uniq
+    render json: all_years, status: :ok
+  end
+
+  def invoice_semesters
+    all_semesters_of_year = Invoice.where(school_year: params[:year]).pluck(:semester).uniq
+    render json: all_semesters_of_year
+  end
+
   private
     # Use callbacks to share common setup or constraints between actions.
     def set_invoice

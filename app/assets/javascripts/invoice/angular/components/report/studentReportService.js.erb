@@ -3,16 +3,24 @@
   angular.module('somsri.invoice.studentReport.service', [
   ])
   .service('studentReportService', ['$http', function($http) {
-    this.getStudents = function(grade_name, page) {
-      return $http.get('/students', { params: { grade_select: grade_name, page: page , student_report: true } })
+    this.getStudents = function(grade_name, page, year, semester, status) {
+      return $http.get('/students', { params: { grade_select: grade_name, page: page , student_report: true, year_select: year, semester_select: semester, status: status } })
     }
 
-    this.getInvoiceTotalAmount = function(grade_name) {
-      return $http.get('/invoice_total_amount', { params: { grade_select: grade_name } })
+    this.getInvoiceTotalAmount = function(grade_name, year, semester, status) {
+      return $http.get('/invoice_total_amount', { params: { grade_select: grade_name, year_select: year, semester_select: semester, status: status } })
     }
 
     this.getGrades = function() {
       return $http.get('/grades')
+    }
+
+    this.getYears = function() {
+      return $http.get('/invoice_years')
+    }
+
+    this.getSemesters = function(year) {
+      return $http.get('/invoice_semesters', { params: { year: year } })
     }
   }]);
 })();

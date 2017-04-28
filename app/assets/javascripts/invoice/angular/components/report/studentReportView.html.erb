@@ -17,8 +17,39 @@
             </ul>
           </div>
         </div>
+        <div class="col-lg-6">
+          <div class="dropdown pull-right">
+            <h4 id="year-list" data-toggle="dropdown">
+              <span ng-bind="studentReport.currentYearString" ></span>
+              <i class="fa fa-caret-down" aria-hidden="true"></i>
+            </h4>
+            <ul class="dropdown-menu" aria-labelledby="year-list">
+              <li ng-repeat="year in studentReport.years">
+                <a ng-click="studentReport.switchYear(year)">
+                  <button>{{ year }}</button>
+                </a>
+              </li>
+            </ul>
+          </div>
+          <div class="dropdown pull-right" style="margin-right: 20px;">
+            <h4 id="semester-list" data-toggle="dropdown">
+              <span ng-bind="studentReport.currentSemesterString" ></span>
+              <i class="fa fa-caret-down" aria-hidden="true"></i>
+            </h4>
+            <ul class="dropdown-menu" aria-labelledby="semester-list">
+              <li ng-repeat="semester in studentReport.semesters">
+                <a ng-click="studentReport.switchSemester(semester)">
+                  <button>{{ semester }}</button>
+                </a>
+              </li>
+            </ul>
+          </div>
+          <div class="dropdown pull-right" style="margin-right: 20px;">
+            <label class="btn btn-md invoice-status" ng-click="studentReport.invoiceStatusFilter()" ng-model="studentReport.invoiceFilter" uib-btn-checkbox>ยังไม่ได้ชำระ</label>
+          </div>
+        </div>
       </div>
-
+      
       <div class="row report-content container-fluid">
         <table id="tableHeader" class="table scrollable-header">
           <thead>

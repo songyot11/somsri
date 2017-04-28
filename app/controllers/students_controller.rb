@@ -15,6 +15,9 @@ class StudentsController < ApplicationController
     grade_select = (params[:grade_select] || 'All')
     class_select = (params[:class_select] || 'All')
     @class_display = Student.with_deleted.order("classroom ASC").select(:classroom).map(&:classroom).uniq.compact
+    year_select = (params[:year_select] || Date.current.year + 543)
+    semester_select = params[:semester_select]
+    invoice_status = params[:status]
 
     if !params[:student_report]
       # without angular
@@ -33,11 +36,31 @@ class StudentsController < ApplicationController
     else
       # with angular
       if grade_select.downcase == 'all'
-        @students = Student.order("deleted_at DESC , student_number ASC").search(params[:search]).with_deleted.paginate(page: params[:page], per_page: 10).to_a
+        @students_all = Student.order("deleted_at DESC , student_number ASC").search(params[:search]).with_deleted.to_a
       else
         grade = Grade.where(name: grade_select).first
-        @students = Student.where(grade_id: grade.id).order("classroom ASC, classroom_number ASC").search(params[:search]).paginate(page: params[:page], per_page: 10).to_a
+        @students_all = Student.where(grade_id: grade.id).order("classroom ASC, classroom_number ASC").search(params[:search]).to_a
       end
+
+      student_index = Array.new
+      @students_all.each_with_index do |student, index| 
+        # if (!student.all_active_invoice_year.include?(year_select) || student.active_invoice_semester != semester_select) || (student.active_invoice_tuition_fee == nil)
+        if !student.is_active_invoice_year_semester(year_select, semester_select)
+          student.active_invoice_status = "ยังไม่ได้ชำระ"
+        else
+          student_index.push(index)
+        end
+      end
+      
+      if invoice_status == "unpaid"
+        shift = 0
+        student_index.each do |index| 
+          @students_all.delete_at(index-shift)
+          shift += 1
+        end
+      end
+
+      @students = @students_all.paginate(:page => params[:page], :per_page => 10)
     end
 
     @filter_grade = grade_select
@@ -226,6 +249,9 @@ class StudentsController < ApplicationController
   # GET /invoice_total_amount
   def invoice_total_amount
     grade_select = (params[:grade_select] || 'All')
+    year_select = (params[:year_select] || Date.current.year + 543)
+    semester_select = (params[:semester_select] || nil)
+    invoice_status = params[:status]
     @students = Student
     if grade_select.downcase == 'all'
       @students = @students.search(params[:search]).all.to_a
@@ -238,10 +264,14 @@ class StudentsController < ApplicationController
     tuition_fee = 0
     amount = 0
 
-    @students.each do |student|
-      other_fee += student.active_invoice_other_fee if !student.active_invoice_other_fee.blank?
-      tuition_fee += student.active_invoice_tuition_fee if !student.active_invoice_tuition_fee.blank?
-      amount += student.active_invoice_total_amount if !student.active_invoice_total_amount.blank?
+    if invoice_status != "unpaid"
+      @students.each do |student|
+        if student.is_active_invoice_year_semester(year_select, semester_select)
+          other_fee += student.active_invoice_other_fee if !student.active_invoice_other_fee.blank?
+          tuition_fee += student.active_invoice_tuition_fee if !student.active_invoice_tuition_fee.blank?
+          amount += student.active_invoice_total_amount if !student.active_invoice_total_amount.blank?
+        end
+      end
     end
     render json: [{other_fee: other_fee, tuition_fee: tuition_fee, amount: amount}], status: :ok
   end

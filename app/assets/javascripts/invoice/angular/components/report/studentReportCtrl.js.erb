@@ -8,6 +8,7 @@
     $rootScope.loadAndAuthorizeResource("invoice", function(){
       ctrl.currentPage = 1;
       ctrl.grade_name = "All"
+      ctrl.currentInvoiceStatus = null;
       ctrl.total = { other_fee: 0.0, amount: 0.0, tuition_fee: 0.0 }
       ctrl.pageChanged = function() {
         getStudents()
@@ -19,11 +20,34 @@
         getInvoiceTotalAmount();
       }
 
+      ctrl.switchYear = function(year) {
+        ctrl.currentYearString = year
+        getSemesters();
+        getStudents();
+        getInvoiceTotalAmount();
+      }
+
+      ctrl.switchSemester = function(semester) {
+        ctrl.currentSemesterString = semester
+        getStudents();
+        getInvoiceTotalAmount();
+      }
+
+      ctrl.invoiceStatusFilter = function() {
+        if (ctrl.currentInvoiceStatus == null) {
+          ctrl.currentInvoiceStatus = "unpaid";
+        } else {
+          ctrl.currentInvoiceStatus = null;
+        }
+        getStudents();
+        getInvoiceTotalAmount();
+      }
+
       function getStudents() {
         studentReportService.getGrades().then(function(grade_resp) {
           ctrl.currentGradeString = ctrl.grade_name
           ctrl.grades = grade_resp.data
-          studentReportService.getStudents(ctrl.grade_name, ctrl.currentPage).then(function(resp) {
+          studentReportService.getStudents(ctrl.grade_name, ctrl.currentPage, ctrl.currentYearString, ctrl.currentSemesterString, ctrl.currentInvoiceStatus).then(function(resp) {
             ctrl.datas = [];
             if (resp.data[0] && resp.data[0].datas){
               console.log(JSON.stringify(resp.data[0]));
@@ -38,15 +62,34 @@
       }
 
       function getInvoiceTotalAmount(){
-        studentReportService.getInvoiceTotalAmount(ctrl.grade_name).then(function(resp) {
+        studentReportService.getInvoiceTotalAmount(ctrl.grade_name, ctrl.currentYearString, ctrl.currentSemesterString, ctrl.currentInvoiceStatus).then(function(resp) {
           ctrl.total.other_fee = resp.data[0].other_fee
           ctrl.total.tuition_fee = resp.data[0].tuition_fee
           ctrl.total.amount = resp.data[0].amount
         });
       }
 
-      getStudents();
-      getInvoiceTotalAmount();
+      function getYears() {
+        var nowDate = new Date();
+        ctrl.current_year = nowDate.getFullYear() + 543;
+        ctrl.currentYearString = ctrl.current_year
+        studentReportService.getYears().then(function(resp) {
+          ctrl.years = resp.data;
+        });
+      }
+
+      function getSemesters() {
+        studentReportService.getSemesters(ctrl.currentYearString).then(function(resp) {
+          ctrl.semesters = resp.data;
+          ctrl.currentSemesterString = ctrl.semesters[ctrl.semesters.length - 1]
+          getStudents();
+          getInvoiceTotalAmount();
+          console.log(ctrl.semesters)
+        });
+      }
+
+      getYears();
+      getSemesters();
 
     });
   }]);

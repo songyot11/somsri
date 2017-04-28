@@ -790,7 +790,7 @@ body.somsri-invoice >.container-fluid {
   border-bottom: 2px solid #FFAA00;
 }
 
-#student-report #grade-list {
+#student-report #grade-list, #year-list {
   cursor: pointer;
 }
 
@@ -801,6 +801,22 @@ body.somsri-invoice >.container-fluid {
 
 #student-report .text-currency {
   text-align: right;
+}
+
+.btn.invoice-status {
+  background-color: #AAAAAA;
+  border-color: #F3F9FC;
+  box-shadow: none;
+  color: #fff;
+  transition: all 0.25s ease;
+}
+.btn.invoice-status.active:hover{
+  border-color: #F3F9FC;
+  background-color: #3fa1e6;
+}
+
+.btn.invoice-status.active {
+  background-color: #3fa1e6;
 }
 
 .dropdown-menu.on-nav-bar {
