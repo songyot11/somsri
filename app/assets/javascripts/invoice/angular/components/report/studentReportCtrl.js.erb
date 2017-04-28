@@ -50,7 +50,6 @@
           studentReportService.getStudents(ctrl.grade_name, ctrl.currentPage, ctrl.currentYearString, ctrl.currentSemesterString, ctrl.currentInvoiceStatus).then(function(resp) {
             ctrl.datas = [];
             if (resp.data[0] && resp.data[0].datas){
-              console.log(JSON.stringify(resp.data[0]));
               ctrl.datas = resp.data[0].datas
               ctrl.students = resp.data[0].datas
               ctrl.totalItems = resp.data[0].total_records;

@@ -71,7 +71,7 @@ List.blueprint do
 end
 
 Parent.blueprint do
-  full_name { Faker::Name.full_name }
+  full_name { Faker::Name.name }
   mobile { Faker::PhoneNumber.cell_phone }
 end
 

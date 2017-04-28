@@ -100,13 +100,15 @@ class StudentsController < ApplicationController
     @student = Student.new(student_params)
     @student.full_name = student_params[:full_name].gsub('ด.ช.', '').gsub('ด.ญ.', '').gsub('เด็กหญิง', '').gsub('เด็กชาย', '').gsub("ดช" , '').gsub('ดญ' , '')
     parent_assign
-    respond_to do |format|
-      if @student.save
-        relation_assign
+    if @student.save
+      relation_assign
+      respond_to do |format|
         format.html { redirect_to @student }
         format.json { render :show, status: :created, location: @student }
-      else
-        @relations = Relationship.all
+      end
+    else
+      @relations = Relationship.all
+      respond_to do |format|
         format.html { render :new }
         format.json { render json: @student.errors, status: :unprocessable_entity }
       end
@@ -303,30 +305,31 @@ class StudentsController < ApplicationController
     end
 
     def parent_assign
-      prn_params = params[:parent]
-      rel_params = params[:relationship]
-      prn_rel = Hash.new
-      if !prn_params.nil?
-        prn_params.each_with_index do |value, index|
-          if prn_rel[value] && rel_params[index]
-            prn_rel[value] = rel_params[index]
-          end
+      parent_params = params[:parent]
+      relation_params = params[:relationship]
+      @parents = Array.new
+      @relationships = Array.new
+      return unless parent_params
+      return unless relation_params
+      parent_relation = Hash.new
+      if !parent_params.nil?
+        parent_params.each_with_index do |value, index|
+          parent_relation[value] = relation_params[index]
         end
       end
-      prn_params = prn_rel.keys
-      @relationships = prn_rel.values
-      @parents = Array.new
-      if !prn_params.nil?
-        prn_params.each_with_index.map do |p, index|
+      parent_params = parent_relation.keys
+      @relationships = parent_relation.values
+      if !parent_params.nil?
+        parent_params.each_with_index.map do |p, index|
           if p.to_i != 0
             begin
-            prn = Parent.find(p)
+              prn = Parent.find(p)
             rescue
-            prn = Parent.find_or_create_by(full_name: p)
+              prn = Parent.find_or_create_by(full_name: p)
             end
             @parents.push(prn)
           elsif p.length > 0 && p.to_i == 0
-            new_prn = Parent.find_or_create_by(full_name: prn_params[index])
+            new_prn = Parent.find_or_create_by(full_name: parent_params[index])
             @parents.push(new_prn)
           end
         end

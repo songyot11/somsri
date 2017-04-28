@@ -4,6 +4,8 @@ describe StudentsController do
     School.make!
   end
 
+  let(:parent) { Parent.make! }
+
   let(:admin) do
     user = User.make!
     user.add_role :admin
@@ -26,6 +28,8 @@ describe StudentsController do
       Student.make!(first_name: 'five' , school_id: school.id, student_number: 105, classroom_number: 2 , classroom: "5A" , grade_id: 1)
     ]
   end
+
+  let(:student) { students.first }
 
   let(:lists) do
     [
@@ -88,36 +92,76 @@ describe StudentsController do
   end
 
   describe "students" do
-    it "should show all student" do
-      get :index ,  grade_select: 'all' , class_select: 'all'
+    describe '#index' do
+      it "should show all student" do
+        get :index, params: { grade_select: 'all' , class_select: 'all' }
 
-      expect(response.body).to have_content "one"
-      expect(response.body).to have_content "two"
-      expect(response.body).to have_content "three"
-      expect(response.body).to have_content "four"
-      expect(response.body).to have_content "five"
+        expect(response.body).to have_content "one"
+        expect(response.body).to have_content "two"
+        expect(response.body).to have_content "three"
+        expect(response.body).to have_content "four"
+        expect(response.body).to have_content "five"
+      end
+
+      it 'should show only grade that selected' do
+        get :index , params: { grade_select: 'Preschool' }
+
+        expect(response.body).to have_content "one"
+        expect(response.body).to have_content "five"
+      end
+
+      it 'should show only classroom that selected' do
+        get :index , params: { class_select: '4A' }
+
+        expect(response.body).to have_content "four"
+      end
+
+      it 'should show both grade and classroom that selected' do
+        get :index , params: { grade_select: 'Kindergarten 1' , class_select: '2A' }
+
+        expect(response.body).to have_content "two"
+      end
     end
 
-    it 'should show only grade that selected' do
-      get :index , grade_select: 'Preschool'
+    describe '#update' do
+      it 'can update student' do
+        new_name = 'new_one'
+        patch :update, params: { id: student.id, student: { full_name: new_name} }
+        expect(student.reload.first_name).to eq new_name
+      end
 
-      expect(response.body).to have_content "one"
-      expect(response.body).to have_content "five"
-    end
+      it 'can handle full name' do
+        new_name = 'one two'
+        patch :update, params: { id: student.id, student: { full_name: new_name} }
+        expect(student.reload.first_name).to eq 'one'
+        expect(student.last_name).to eq 'two'
+      end
 
-    it 'should show only classroom that selected' do
-      get :index , class_select: '4A'
+      it 'can add parent' do
+        expect do
+          patch :update, params: {
+            id: student.id,
+            student: { full_name: student.full_name },
+            parent: ['sn'],
+            relationship: ['1']
+          }
+          expect(assigns['parents'].length).to eq 1
+        end.to change{ Parent.count }.by 1
+      end
 
-      expect(response.body).to have_content "four"
-    end
-
-    it 'should show both grade and classroom that selected' do
-      get :index , grade_select: 'Kindergarten 1' , class_select: '2A'
-
-      expect(response.body).to have_content "two"
+      it 'can add assign existing parent' do
+        parent # create new parent
+        
+        expect do
+          patch :update, params: {
+            id: student.id,
+            student: { full_name: student.full_name },
+            parent: [parent.id],
+            relationship: ['1']
+          }
+          expect(student.reload.parents.first).to eq parent
+        end.to change{ Parent.count }.by 0
+      end
     end
   end
-
-
-
 end
