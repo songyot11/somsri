@@ -14,20 +14,20 @@ class StudentsController < ApplicationController
     authorize! :read, Student
     grade_select = (params[:grade_select] || 'All')
     class_select = (params[:class_select] || 'All')
-    @class_display = Student.order("classroom ASC").select(:classroom).map(&:classroom).uniq.compact
+    @class_display = Student.with_deleted.order("classroom ASC").select(:classroom).map(&:classroom).uniq.compact
 
     if !params[:student_report]
       # without angular
       if grade_select.downcase == 'all' && class_select.downcase == 'all'
         students = Student.with_deleted
       elsif grade_select.downcase == 'all' && class_select.downcase != 'all'
-        students = Student.where(classroom: class_select)
+        students = Student.with_deleted.where(classroom: class_select)
       elsif grade_select != 'all' && class_select.downcase == 'all'
         grade = Grade.where(name: grade_select).first
-        students = Student.where(grade: grade.id)
+        students = Student.with_deleted.where(grade: grade.id)
       elsif grade_select != 'all' && class_select != 'all'
         grade = Grade.where(name: grade_select).first
-        students = Student.where(grade: grade.id , classroom: class_select)
+        students = Student.with_deleted.where(grade: grade.id , classroom: class_select)
       end
       @students = students.order("deleted_at DESC , classroom ASC, classroom_number ASC").search(params[:search]).page(params[:page]).to_a
     else
