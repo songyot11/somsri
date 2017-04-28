@@ -101,3 +101,7 @@ end
 Grade.blueprint do
   name { Faker::Lorem.word }
 end
+
+StudentsParent.blueprint do
+  
+end
