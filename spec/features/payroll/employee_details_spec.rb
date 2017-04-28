@@ -55,6 +55,16 @@ describe 'Employee Details', js: true do
     })
   end
 
+  let(:employee_without_prefix) do
+    Employee.make!({
+      school_id: school.id,
+      first_name_thai: "สมจิตร",
+      last_name_thai: "เป็นนักมวย",
+      prefix_thai: nil,
+      salary: 20000
+    })
+  end
+
   let(:payrolls) do
     [
       Payroll.make!({
@@ -135,6 +145,13 @@ describe 'Employee Details', js: true do
     before :each do
       visit "/somsri_payroll#/employees/#{employees[0].id}"
       sleep(1)
+    end
+
+    it 'should not diplay employee name without prefix' do
+        employee_without_prefix
+        visit "/somsri_payroll#/employees/#{employee_without_prefix.id}"
+        sleep(1)
+        eventually { expect(page).to have_content('3: สมจิตร เป็นนักมวย') }
     end
 
     it 'should not diplay print slip button' do

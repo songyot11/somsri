@@ -57,6 +57,7 @@ class EmployeesController < ApplicationController
     render json: {
       img_url: @employee.img_url.exists? ? @employee.img_url.url : nil ,
       employee: @employee,
+      employee_display_name: @employee.full_name,
       payroll: payroll,
       tax_reduction: tax_reduction
     }
