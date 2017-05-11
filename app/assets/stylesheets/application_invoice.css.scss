@@ -1292,3 +1292,7 @@ table.table.table-sp-report>tbody{
 .red-color {
   color: #d0021b;
 }
+
+.pagination .page-item.disabled i.page-link {
+  display: none;
+}
