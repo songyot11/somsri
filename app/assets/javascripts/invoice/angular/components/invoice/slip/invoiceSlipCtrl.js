@@ -2,7 +2,7 @@
   'use strict';
   angular.module('somsri.invoice.invoice_slip', [
   ])
-  .controller('invoiceSlipCtrl', ['$scope', '$http', '$state', 'DEFAULT_LOGO', 'invoiceSlipService', '$rootScope', function($scope, $http, $state, DEFAULT_LOGO, service, $rootScope) {
+  .controller('invoiceSlipCtrl', ['$scope', '$sce', '$http', '$state', 'DEFAULT_LOGO', 'invoiceSlipService', '$rootScope', function($scope, $sce, $http, $state, DEFAULT_LOGO, service, $rootScope) {
     var ctrl = this;
     $rootScope.menu = "การเงิน"
     $rootScope.loadAndAuthorizeResource("invoice", function(){
@@ -17,12 +17,13 @@
         var heigth = 240 - (item_count * 34);
         if(heigth < 0){ heigth = 0; }
         ctrl.autoHeigth = heigth.toString() + 'px';
+        ctrl.header = $sce.trustAsHtml(ctrl.datas.header);
       });
 
       ctrl.goBack = function(){
-        if(page){
+        if (page) {
           $rootScope.openPage(page);
-        }else{
+        } else {
           $rootScope.openPayment();
         }
       };

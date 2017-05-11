@@ -308,3 +308,37 @@ User.find(2).add_role "admin" if !User.find(2).has_any_role?
 User.find(3).add_role "finance_officer" if !User.find(3).has_any_role?
 User.find(4).add_role "finance_officer" if !User.find(4).has_any_role?
 User.find(5).add_role "admin" if !User.find(5).has_any_role?
+
+school = School.first
+if school
+  if !school.invoice_header
+    school.invoice_header = <<-HEAD
+    <div class="col-xs-8 text-slip1-school ng-binding" ng-bind-html="slip.header">
+      <div class="row">
+        <b class="name-school">โรงเรียนอนุบาลซันชายน์</b>
+      </div>
+      <div class="row">
+        สามหน่อยพอเพียง จำกัด
+      </div>
+      <div class="row">
+        305 หมู่ 7 ตำบลหนองควาย อำเภอหางดง จังหวัด เชียงใหม่ 50230
+      </div>
+      <div class="row">
+        <b>โทร/แฟซ์.</b> &nbsp;053 131 206-7, 090 606 6595
+      </div>
+      <div class="row">
+        <b>E-mail:</b> &nbsp;info@sunshinekindergarten.com
+      </div>
+      <div class="row">
+        <b>เลขประจำตัวผู้เสียภาษี: </b>&nbsp; 0505551005106 &nbsp;<b>สาขาที่: </b>&nbsp;000000
+      </div>
+    </div>
+    HEAD
+    school.save
+  end
+
+  if !school.invoice_logo_src
+    school.invoice_logo_src = "https://lh6.googleusercontent.com/_pvBazaApnPmebcIq6gXLiZkx842-iRYnHWAMZtsX11bWpDjWmIHUaIu37Bw4-DRVNNQqKpfw8PAaIg=w1283-h759"
+    school.save
+  end
+end
