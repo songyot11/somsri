@@ -35,6 +35,9 @@
       $state.go('report')
     };
 
+    $rootScope.openRoot = function() {
+      $window.location.href = "/";
+    };
     $('body').addClass('somsri-payroll');
 
     $rootScope.openEmployees = function () {

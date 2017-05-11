@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20170511063725) do
+ActiveRecord::Schema.define(version: 20170511091415) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -276,6 +276,7 @@ ActiveRecord::Schema.define(version: 20170511063725) do
     t.string   "fax"
     t.text     "invoice_header"
     t.string   "invoice_logo_src"
+    t.string   "email"
   end
 
   create_table "student_lists", force: :cascade do |t|
