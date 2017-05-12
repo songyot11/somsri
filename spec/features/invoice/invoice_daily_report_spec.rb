@@ -1,5 +1,45 @@
 describe 'Invoice-Report', js: true do
 
+  let(:school) {School.create!({
+    name: 'โรงเรียนแห่งหนึ่ง',
+    address: '305 หมู่ 7 ตำบลหนองควาย อำเภอหางดง จังหวัด เชียงใหม่ database',
+    zip_code: '50200',
+    phone: '090 606 65xx',
+    fax: '053 131 20x-x',
+    daily_report_header: <<-HEAD
+    <div class="row">
+      <div class="col-xs-12">
+        <b class="name-school">โรงเรียนแห่งหนึ่ง</b>
+      </div>
+    </div>
+    <div class="row">
+      <div class="col-xs-12">
+        สามหน่อยพอเพียง จำกัด
+      </div>
+    </div>
+    <div class="row">
+      <div class="col-xs-12">
+        305 หมู่ 7 ตำบลหนองควาย อำเภอหางดง จังหวัด เชียงใหม่ database 50200
+      </div>
+    </div>
+    <div class="row">
+      <div class="col-xs-12">
+        <b>โทร/แฟซ์.</b> &nbsp;053 131 20x-x, 090 606 65xx
+      </div>
+    </div>
+    <div class="row">
+      <div class="col-xs-12">
+        <b>E-mail:</b> &nbsp;info@sunshinekindergarten.com
+      </div>
+    </div>
+    <div class="row">
+      <div class="col-xs-12">
+        <b>เลขประจำตัวผู้เสียภาษี: </b>&nbsp; 0505551005106 &nbsp;<b>สาขาที่: </b>&nbsp;000000
+      </div>
+    </div>
+    HEAD
+  })}
+
   let(:user) {User.create!({
     email: 'test@mail.com',
     password: '123456789'
@@ -56,6 +96,7 @@ describe 'Invoice-Report', js: true do
   end
 
   before do
+    school
     user.add_role :admin
     login_as(user, scope: :user)
     grade
@@ -82,6 +123,11 @@ describe 'Invoice-Report', js: true do
     click_button("บันทึก")
     sleep(1)
     eventually { expect(page).to have_content("ใบนำส่งเงิน") }
+    eventually { expect(page).to have_content("โรงเรียนแห่งหนึ่ง") }
+    eventually { expect(page).to have_content("305 หมู่ 7 ตำบลหนองควาย อำเภอหางดง จังหวัด เชียงใหม่ database") }
+    eventually { expect(page).to have_content("50200") }
+    eventually { expect(page).to have_content("090 606 65xx") }
+    eventually { expect(page).to have_content("053 131 20x-x") }
   end
 
   it 'should show sum of credit card payment' do

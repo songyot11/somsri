@@ -337,6 +337,42 @@ if school
     school.save
   end
 
+  if !school.daily_report_header
+    school.daily_report_header = <<-HEAD
+    <div class="row">
+      <div class="col-xs-12">
+        <b class="name-school">โรงเรียนอนุบาลซันชายน์</b>
+      </div>
+    </div>
+    <div class="row">
+      <div class="col-xs-12">
+        สามหน่อยพอเพียง จำกัด
+      </div>
+    </div>
+    <div class="row">
+      <div class="col-xs-12">
+        305 หมู่ 7 ตำบลหนองควาย อำเภอหางดง จังหวัด เชียงใหม่ 50230
+      </div>
+    </div>
+    <div class="row">
+      <div class="col-xs-12">
+        <b>โทร/แฟซ์.</b> &nbsp;053 131 206-7, 090 606 6595
+      </div>
+    </div>
+    <div class="row">
+      <div class="col-xs-12">
+        <b>E-mail:</b> &nbsp;info@sunshinekindergarten.com
+      </div>
+    </div>
+    <div class="row">
+      <div class="col-xs-12">
+        <b>เลขประจำตัวผู้เสียภาษี: </b>&nbsp; 0505551005106 &nbsp;<b>สาขาที่: </b>&nbsp;000000
+      </div>
+    </div>
+    HEAD
+    school.save
+  end
+
   if !school.invoice_logo_src
     school.invoice_logo_src = "https://lh6.googleusercontent.com/_pvBazaApnPmebcIq6gXLiZkx842-iRYnHWAMZtsX11bWpDjWmIHUaIu37Bw4-DRVNNQqKpfw8PAaIg=w1283-h759"
     school.save
