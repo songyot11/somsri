@@ -1,6 +1,6 @@
 if School.count == 0
   School.create!([
-    {name: "Sunshine Kindergarten"}
+    {name: "Banana Kindergarten"}
   ])
 end
 schools = School.all
@@ -315,22 +315,22 @@ if school
     school.invoice_header = <<-HEAD
     <div class="col-xs-8 text-slip1-school ng-binding" ng-bind-html="slip.header">
       <div class="row">
-        <b class="name-school">โรงเรียนอนุบาลซันชายน์</b>
+        <b class="name-school">โรงเรียนอนุบาลบานาน่า</b>
       </div>
       <div class="row">
         โดย บริษัท สามหน่อยพอเพียง จำกัด
       </div>
       <div class="row">
-        305 หมู่ 7 ตำบลหนองควาย อำเภอหางดง จังหวัด เชียงใหม่ 50230
+        000 หมู่ 0 ตำบลหนองควาย อำเภอหางดง จังหวัด เชียงใหม่ 50000
       </div>
       <div class="row">
-        <b>โทร/แฟซ์.</b> &nbsp;053 131 206-7, 090 606 6595
+        <b>โทร/แฟซ์.</b> &nbsp;000 000 000-0, 000 0000 0000
       </div>
       <div class="row">
         <b>E-mail:</b> &nbsp;info@sunshinekindergarten.com
       </div>
       <div class="row">
-        <b>เลขประจำตัวผู้เสียภาษี: </b>&nbsp; 0505551005106 &nbsp;<b>สาขาที่: </b>&nbsp;000000
+        <b>เลขประจำตัวผู้เสียภาษี: </b>&nbsp; 0000000000000 &nbsp;<b>สาขาที่: </b>&nbsp;000000
       </div>
     </div>
     HEAD
@@ -341,7 +341,7 @@ if school
     school.daily_report_header = <<-HEAD
     <div class="row">
       <div class="col-xs-12">
-        <b class="name-school">โรงเรียนอนุบาลซันชายน์</b>
+        <b class="name-school">โรงเรียนอนุบาลบานาน่า</b>
       </div>
     </div>
     <div class="row">
@@ -351,12 +351,12 @@ if school
     </div>
     <div class="row">
       <div class="col-xs-12">
-        305 หมู่ 7 ตำบลหนองควาย อำเภอหางดง จังหวัด เชียงใหม่ 50230
+        000 หมู่ 0 ตำบลหนองควาย อำเภอหางดง จังหวัด เชียงใหม่ 50000
       </div>
     </div>
     <div class="row">
       <div class="col-xs-12">
-        <b>โทร/แฟซ์.</b> &nbsp;053 131 206-7, 090 606 6595
+        <b>โทร/แฟซ์.</b> &nbsp;000 000 000-0, 000 0000 0000
       </div>
     </div>
     <div class="row">
@@ -366,7 +366,7 @@ if school
     </div>
     <div class="row">
       <div class="col-xs-12">
-        <b>เลขประจำตัวผู้เสียภาษี: </b>&nbsp; 0505551005106 &nbsp;<b>สาขาที่: </b>&nbsp;000000
+        <b>เลขประจำตัวผู้เสียภาษี: </b>&nbsp; 0000000000000 &nbsp;<b>สาขาที่: </b>&nbsp;000000
       </div>
     </div>
     HEAD
@@ -436,7 +436,7 @@ if school
   end
 
   if !school.invoice_logo_src
-    school.invoice_logo_src = "https://lh6.googleusercontent.com/_pvBazaApnPmebcIq6gXLiZkx842-iRYnHWAMZtsX11bWpDjWmIHUaIu37Bw4-DRVNNQqKpfw8PAaIg=w1283-h759"
+    school.invoice_logo_src = "/logo_c.png"
     school.save
   end
 end
