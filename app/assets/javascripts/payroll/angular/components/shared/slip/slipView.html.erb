@@ -1,15 +1,14 @@
-<div class="row slip-content">
+<div class="row slip-content" style="padding-left: 25px;padding-right: 25px;">
   <div ng-repeat="employee in slipInfo.employee_slips">
     <!-- line logo -->
     <div class="row">
-      <div class="col-xs-6">
-        <center><%= image_tag("slipLogo.png", id: "slipLogo") %></center>
+      <div class="col-xs-2">
+        <center><img id="slipLogo" ng-src="{{ employee.school.invoice_logo_src }}" class="img-responsive"></center>
       </div>
-      <div class="col-xs-6 text-center">
-        <h4 class="for_print">{{slipTitle}}</h4>
+      <div class="col-xs-10 school-name">
+        <span class="school-name">{{ employee.school.name }}</span>
       </div>
     </div>
-
 
     <!-- line 1 -->
     <div class="row">

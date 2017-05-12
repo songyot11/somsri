@@ -471,6 +471,19 @@ input.btn-prefix.active:-moz-placeholder { /* Firefox 18- */
   border-top: 1px dashed #000 !important;
 }
 
+.slip-content .school-name {
+  font-size: 24px;
+}
+
+#payroll-report #slipLogo,
+#payroll-slip #slipLogo {
+  height: 100px;
+}
+
+.slip-content .school-name{
+  padding-top: 36px;
+}
+
 @print {
   size: A4;
 }
@@ -552,7 +565,7 @@ input.btn-prefix.active:-moz-placeholder { /* Firefox 18- */
 
   #payroll-report #date_table,
   #payroll-slip #date_table {
-    margin-bottom: 100px;
+    margin-bottom: 70px;
   }
 
   #payroll-report td,
@@ -573,7 +586,7 @@ input.btn-prefix.active:-moz-placeholder { /* Firefox 18- */
   #payroll-slip #order tbody td {
     border-bottom: 0px;
     border-top: 0px;
-    height: 200px;
+    height: 170px;
     vertical-align: top !important;
   }
 
@@ -589,7 +602,15 @@ input.btn-prefix.active:-moz-placeholder { /* Firefox 18- */
 
   #payroll-report #slipLogo,
   #payroll-slip #slipLogo {
-    width: 200px;
+    height: 50px;
+  }
+
+  .slip-content .school-name {
+    font-size: 16px;
+  }
+
+  .slip-content .school-name{
+    padding-top: 10px;
   }
 
   #payroll-report td.big,
