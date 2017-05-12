@@ -1,7 +1,7 @@
 class StudentsController < ApplicationController
-  before_action :set_student, only: [:show, :edit, :update, :destroy], unless: :is_api?
+  before_action :set_student, only: [:edit, :update, :destroy], unless: :is_api?
   before_action :authenticate_user!, unless: :is_api?
-  load_and_authorize_resource except: [:index, :show, :get_roll_calls, :info]
+  load_and_authorize_resource except: [:index, :get_roll_calls, :info]
 
   def is_api?
     !params[:pin].blank?
@@ -43,7 +43,7 @@ class StudentsController < ApplicationController
       end
 
       student_index = Array.new
-      @students_all.each_with_index do |student, index| 
+      @students_all.each_with_index do |student, index|
         # if (!student.all_active_invoice_year.include?(year_select) || student.active_invoice_semester != semester_select) || (student.active_invoice_tuition_fee == nil)
         if !student.is_active_invoice_year_semester(year_select, semester_select)
           student.active_invoice_status = "ยังไม่ได้ชำระ"
@@ -51,10 +51,10 @@ class StudentsController < ApplicationController
           student_index.push(index)
         end
       end
-      
+
       if invoice_status == "unpaid"
         shift = 0
-        student_index.each do |index| 
+        student_index.each do |index|
           @students_all.delete_at(index-shift)
           shift += 1
         end
@@ -66,14 +66,6 @@ class StudentsController < ApplicationController
     @filter_grade = grade_select
     @filter_class = class_select
     render "students/index", layout: "application_invoice"
-  end
-
-  # GET /students/1
-  # GET /students/1.json
-  def show
-    @menu = "นักเรียน"
-    authorize! :read, Student
-    render "students/show", layout: "application_invoice"
   end
 
   # GET /students/new
@@ -103,7 +95,10 @@ class StudentsController < ApplicationController
     if @student.save
       relation_assign
       respond_to do |format|
-        format.html { redirect_to @student }
+        format.html do
+          flash[:success] = "เพิ่มนักเรียนเรียบร้อยแล้ว"
+          redirect_to students_url
+        end
         format.json { render :show, status: :created, location: @student }
       end
     else
@@ -122,7 +117,10 @@ class StudentsController < ApplicationController
     respond_to do |format|
       if @student.update(student_params)
         relation_assign
-        format.html { redirect_to @student }
+        format.html do
+          flash[:success] = "แก้ไขข้อมูลนักเรียนเรียบร้อยแล้ว"
+          redirect_to students_url
+        end
         format.json { render :show, status: :ok, location: @student }
       else
         @relations = Relationship.all

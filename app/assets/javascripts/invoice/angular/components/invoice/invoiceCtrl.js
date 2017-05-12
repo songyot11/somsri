@@ -77,7 +77,7 @@
           ctrl.datas = JSON.parse(JSON.stringify(DEFAULT_INVOICE))
           $rootScope.openSlip(resp.data.id);
         },function(resp) {
-          console.log("ERROR");
+
         });
       }
 
@@ -107,7 +107,6 @@
       }
 
       ctrl.cancel = function() {
-        console.log("CANCEL");
       };
 
       ctrl.save = function() {
@@ -162,7 +161,6 @@
           ctrl.parent_info = resp.data.parent_info;
           ctrl.line_items_info = resp.data.line_items_info;
         },function(resp) {
-          console.log("ERROR LOAD NEW INVOICE");
         });
         var nowDate = new Date();
         // Clone to prevent the reset value

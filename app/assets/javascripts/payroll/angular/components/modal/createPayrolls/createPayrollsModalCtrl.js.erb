@@ -17,19 +17,16 @@
                 service.createPayrolls(params).then(function(res) {
                   $uibModalInstance.close(params["create"]["effective_date"]);
                 }, function(res) {
-                  console.log("ERROR");
                 })
               }, function(res) {
-                console.log("DISMISS CONFIRM");
               })
             }else{
               $uibModalInstance.close(params["create"]["effective_date"]);
             }
           },function(res) {
-            console.log("ERROR");
           });
         }else{
-          console.log("ERROR BOBO::" + Date.parse(ctrl.effective_date));
+
         }
       }
 

@@ -9,13 +9,8 @@ describe 'Invoice-Report', js: true do
     name: "Kindergarten 1"
   )}
 
-  let(:invoiceStatus1){invoiceStatus1 = InvoiceStatus.create!(
-    name: 'Active'
-  )}
-
-  let(:invoiceStatus2){invoiceStatus2 = InvoiceStatus.create!(
-    name: 'Canceled'
-  )}
+  let(:invoice_status_1) { InvoiceStatus.make! name: 'Active' }
+  let(:invoice_status_2) { InvoiceStatus.make! name: 'Canceled' }
 
   let(:students) do
     [
@@ -149,7 +144,7 @@ describe 'Invoice-Report', js: true do
     [
       invoice1 = Invoice.make!({
         student_id: students[0].id,
-        invoice_status_id:  invoiceStatus1.id,
+        invoice_status_id:  invoice_status_1.id,
         school_year: "2560",
         semester: "1",
         line_items: [
@@ -160,7 +155,7 @@ describe 'Invoice-Report', js: true do
       }),
       invoice2 = Invoice.make!({
         student_id: students[1].id,
-        invoice_status_id: invoiceStatus2.id,
+        invoice_status_id: invoice_status_2.id,
         school_year: "2560",
         semester: "1",
         line_items: [
@@ -170,7 +165,7 @@ describe 'Invoice-Report', js: true do
       }),
       invoice3 = Invoice.make!({
         student_id: students[2].id,
-        invoice_status_id: invoiceStatus1.id,
+        invoice_status_id: invoice_status_1.id,
         school_year: "2560",
         semester: "1",
         line_items: [
@@ -189,7 +184,7 @@ describe 'Invoice-Report', js: true do
     [
       invoice4 = Invoice.make!({
         student_id: student4.id,
-        invoice_status_id: invoiceStatus1.id,
+        invoice_status_id: invoice_status_1.id,
         school_year: "2560",
         semester: "1",
         line_items: [
@@ -199,7 +194,7 @@ describe 'Invoice-Report', js: true do
       }),
       invoice5 = Invoice.make!({
         student_id: student5.id,
-        invoice_status_id: invoiceStatus1.id,
+        invoice_status_id: invoice_status_1.id,
         school_year: "2560",
         semester: "1",
         line_items: [
@@ -209,7 +204,7 @@ describe 'Invoice-Report', js: true do
       }),
       invoice6 = Invoice.make!({
         student_id: student6.id,
-        invoice_status_id: invoiceStatus1.id,
+        invoice_status_id: invoice_status_1.id,
         school_year: "2560",
         semester: "1",
         line_items: [
@@ -219,7 +214,7 @@ describe 'Invoice-Report', js: true do
       }),
       invoice7 = Invoice.make!({
         student_id: student7.id,
-        invoice_status_id: invoiceStatus1.id,
+        invoice_status_id: invoice_status_1.id,
         school_year: "2560",
         semester: "1",
         line_items: [
@@ -229,7 +224,7 @@ describe 'Invoice-Report', js: true do
       }),
       invoice8 = Invoice.make!({
         student_id: student8.id,
-        invoice_status_id: invoiceStatus1.id,
+        invoice_status_id: invoice_status_1.id,
         school_year: "2560",
         semester: "1",
         line_items: [
@@ -239,7 +234,7 @@ describe 'Invoice-Report', js: true do
       }),
       invoice9 = Invoice.make!({
         student_id: student9.id,
-        invoice_status_id: invoiceStatus1.id,
+        invoice_status_id: invoice_status_1.id,
         school_year: "2560",
         semester: "1",
         line_items: [
@@ -249,7 +244,7 @@ describe 'Invoice-Report', js: true do
       }),
       invoice10 = Invoice.make!({
         student_id: student10.id,
-        invoice_status_id: invoiceStatus1.id,
+        invoice_status_id: invoice_status_1.id,
         school_year: "2560",
         semester: "1",
         line_items: [
@@ -259,7 +254,7 @@ describe 'Invoice-Report', js: true do
       }),
       invoice11 = Invoice.make!({
         student_id: student11.id,
-        invoice_status_id: invoiceStatus1.id,
+        invoice_status_id: invoice_status_1.id,
         school_year: "2560",
         semester: "1",
         line_items: [

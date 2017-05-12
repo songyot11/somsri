@@ -44,13 +44,11 @@
           service.editIndividual({ individual: ctrl.datas }).then(function(res) {
             $uibModalInstance.close(res.data);
           },function(res) {
-            console.log("ERROR");
           });
         }else{
           service.createIndividual({ individual: ctrl.datas }).then(function(res) {
             $uibModalInstance.close(res.data);
           },function(res) {
-            console.log("ERROR");
           });
         }
       }

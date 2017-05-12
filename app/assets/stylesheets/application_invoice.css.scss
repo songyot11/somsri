@@ -1272,3 +1272,27 @@ table.table.table-sp-report>tbody{
 .space20 {
   height: 20px;
 }
+
+#parent-index th.tools {
+  width: 120px;
+}
+
+#parent-index .tools .icon{
+  padding: 0px;
+}
+
+#student-index th.tools {
+  width: 200px;
+}
+
+#student-index .tools .icon{
+  padding: 0px;
+}
+
+.red-color {
+  color: #d0021b;
+}
+
+.pagination .page-item.disabled i.page-link {
+  display: none;
+}

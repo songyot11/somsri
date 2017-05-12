@@ -123,11 +123,28 @@ describe StudentsController do
       end
     end
 
+    describe '#index' do
+      it 'redirect to #index' do
+        params = Student.make.attributes
+        params.delete 'id'
+        expect do
+          post :create, params: { student: params }
+        end.to change{ Student.count }.by 1
+        expect(response).to redirect_to students_path
+      end
+    end
+
     describe '#update' do
       it 'can update student' do
         new_name = 'new_one'
         patch :update, params: { id: student.id, student: { full_name: new_name} }
         expect(student.reload.first_name).to eq new_name
+      end
+
+      it 'redirect to #index' do
+          new_name = 'new_one'
+          patch :update, params: { id: student.id, student: { full_name: new_name} }
+          expect(response).to redirect_to students_path
       end
 
       it 'can handle full name' do
@@ -151,7 +168,7 @@ describe StudentsController do
 
       it 'can add assign existing parent' do
         parent # create new parent
-        
+
         expect do
           patch :update, params: {
             id: student.id,

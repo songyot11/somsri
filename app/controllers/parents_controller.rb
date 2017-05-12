@@ -1,5 +1,5 @@
 class ParentsController < ApplicationController
-  before_action :set_parent, only: [:show, :edit, :update, :destroy]
+  before_action :set_parent, only: [:edit, :update, :destroy]
   before_action :authenticate_user!
   load_and_authorize_resource
   # GET /parents
@@ -31,13 +31,6 @@ class ParentsController < ApplicationController
       render "parents/index", layout: "application_invoice"
   end
 
-  # GET /parents/1
-  # GET /parents/1.json
-  def show
-    @menu = "ผู้ปกครอง"
-    render "parents/show", layout: "application_invoice"
-  end
-
   # GET /parents/new
   def new
     @menu = "ผู้ปกครอง"
@@ -65,7 +58,10 @@ class ParentsController < ApplicationController
     respond_to do |format|
       if @parent.save
         relation_assign
-        format.html { redirect_to @parent}
+        format.html do
+          flash[:success] = "เพิ่มผู้ปกครองเรียบร้อยแล้ว"
+          redirect_to parents_url
+        end
         format.json { render :show, status: :created, location: @parent }
       else
         format.html { render :new }
@@ -81,7 +77,10 @@ class ParentsController < ApplicationController
     respond_to do |format|
       if @parent.update(parent_params)
         relation_assign
-        format.html { redirect_to @parent}
+        format.html do
+          flash[:success] = "แก้ไขข้อมูลผู้ปกครองเรียบร้อยแล้ว"
+          redirect_to parents_url
+        end
         format.json { render :show, status: :ok, location: @parent }
       else
         format.html { render :edit }

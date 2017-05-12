@@ -13,7 +13,7 @@
 
       ctrl.submit = function(parm){
         service.saveSetting(parm).then(function(resp) {
-          $rootScope.openEmployees();
+          $rootScope.openRoot();
         });
       }
 
@@ -35,7 +35,7 @@
           }
         }).result.then(function (isSuccess) {
           if (isSuccess) {
-            $rootScope.openEmployees();
+            $rootScope.openRoot();
           }
         });
       }

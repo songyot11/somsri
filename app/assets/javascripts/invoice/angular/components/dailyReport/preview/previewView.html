@@ -11,21 +11,13 @@
 
 <div class="container" id="dailyReportPreview">
   <div class="row">
-    <div class="col-xs-2">
-      <img src="logo_school.png" class="img-responsive">
-    </div>
-    <div class="col-xs-6 text-report-school text-head-report">
+    <div class="col-xs-8 text-report-school text-head-report">
       <div class="row">
-        <b>โรงเรียนอนุบาลซันชายน์</b>&nbsp;&nbsp;โดย บริษัทสามหน่อพอเพียง จำกัด
-      </div>
-      <div class="row">
-        305 หมู่ 7 ตำบลหนองควาย อำเภอหางดง จังหวัด เชียงใหม่ 50230
-      </div>
-      <div class="row">
-        โทรฝแฟซ์. 053 131 206-7, 090 606 6595
-      </div>
-      <div class="row">
-        E-mail:info@sunshinekindergarten.com
+        <div class="col-xs-3">
+          <img ng-src="{{ dailyReportPreview.datas.school.invoice_logo_src }}" class="img-responsive">
+        </div>
+        <div class="col-xs-9" ng-bind-html="dailyReportPreview.header">
+        </div>
       </div>
     </div>
     <div class="col-xs-4 text-date-report text-head-report">
@@ -36,7 +28,7 @@
   </div>
   <div class="row">
     <div class="col--xs-8 text-date-report2" style="margin-top:75px; margin-bottom:75px;">
-      <div class="row"><span class="large-receipt-report">ใบนำส่งเงิน</span>&nbsp;&nbsp;ประจำวันที่ {{ dailyReportPreview.datas.thai_now_date }}</div>
+      <div class="row" style="margin-left: 0px;"><span class="large-receipt-report">ใบนำส่งเงิน</span>&nbsp;&nbsp;ประจำวันที่ {{ dailyReportPreview.datas.thai_now_date }}</div>
     </div>
   </div>
   <div class="row text-title-table">ตามรายละเอียดดังต่อไปนี้</div>
