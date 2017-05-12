@@ -1272,6 +1272,12 @@ table.scrollable-header {
 .card-employees{
   width: 20% !important;
 }
+
+@-moz-document url-prefix(){
+  .card-employees{
+    margin-bottom: 25px;
+  }
+}
 .dropdown-menu.on-nav-bar {
     padding: 10px 10px;
     width: 62%;
