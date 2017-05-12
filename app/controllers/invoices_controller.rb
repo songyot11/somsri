@@ -219,6 +219,7 @@ class InvoicesController < ApplicationController
     school = School.first
     slip_info = {
       header: school.invoice_header,
+      footer: school.invoice_footer,
       logo: school.invoice_logo_src,
       slip_id: @invoice.id,
       thai_now_date: I18n.l(@invoice.created_at, format: "%d %B #{@invoice.created_at.year + 543}"),
@@ -237,6 +238,7 @@ class InvoicesController < ApplicationController
         student_number: @invoice.student.student_number
       }
     }
+
     @invoice.payment_methods.to_a.each do |pm|
       if pm.payment_method == "เงินสด"
         slip_info[:is_cash] = true
@@ -273,6 +275,7 @@ class InvoicesController < ApplicationController
         amount: line_item.amount,
       }
     end
+
     slip_info["line_items"] = line_items if line_items.length > 0
     slip_info["total_amount"] = total
     slip_info["total_amount_thai"] = ""

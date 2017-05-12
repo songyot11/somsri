@@ -65,12 +65,6 @@ describe 'Abilities', js: true do
       expect(page).to have_content 'แบบชำระเงิน'
     end
 
-    it 'can goto invoice create' do
-      visit "/somsri_invoice#/invoice"
-      sleep(1)
-      expect(page).to have_content 'แบบชำระเงิน'
-    end
-
     it 'can goto invoice report menu' do
       visit "/somsri_invoice#/report"
       sleep(1)

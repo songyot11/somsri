@@ -18,6 +18,7 @@
         if(heigth < 0){ heigth = 0; }
         ctrl.autoHeigth = heigth.toString() + 'px';
         ctrl.header = $sce.trustAsHtml(ctrl.datas.header);
+        ctrl.footer = $sce.trustAsHtml(ctrl.datas.footer);
       });
 
       ctrl.goBack = function(){

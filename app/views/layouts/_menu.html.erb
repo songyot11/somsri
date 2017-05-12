@@ -3,7 +3,7 @@
     <div class="row row-centered">
       <% if can? :manage, Payroll %>
         <div class=" <%= is_topbar ? 'col-xs-4' : 'col-xs-2' %>  col-centered">
-            <div class="<%= is_topbar ? 'dropdown-menu-btn' : 'menu-btn' %>">
+            <div class="<%= is_topbar ? 'dropdown-menu-btn' : 'menu-btn' %> payrolls">
                 <a href="/somsri_payroll">
                   <div class="wraptocenter">
                     <%= image_tag 'payroll-icon.png', class: (is_topbar ? 'img-menu-nav' : '') %>
@@ -15,7 +15,7 @@
       <% end %>
       <% if can? :manage, Invoice %>
         <div class=" <%= is_topbar ? 'col-xs-4' : 'col-xs-2 col-xs-offset-1' %> col-centered">
-            <div class="<%= is_topbar ? 'dropdown-menu-btn' : 'menu-btn' %>">
+            <div class="<%= is_topbar ? 'dropdown-menu-btn' : 'menu-btn' %> invoices">
                 <a href="/somsri_invoice">
                   <div class="wraptocenter">
                     <%= image_tag 'fee-icon.png', class: (is_topbar ? 'img-menu-nav' : '') %>
@@ -27,7 +27,7 @@
       <% end %>
       <% if can? :manage, RollCall %>
         <div class=" <%= is_topbar ? 'col-xs-4' : 'col-xs-2 col-xs-offset-1' %> col-centered">
-            <div class="<%= is_topbar ? 'dropdown-menu-btn' : 'menu-btn' %>">
+            <div class="<%= is_topbar ? 'dropdown-menu-btn' : 'menu-btn' %> rollcalls">
                 <a href="/somsri_rollcall">
                   <div class="wraptocenter">
                     <%= image_tag 'roll-icon.png', class: (is_topbar ? 'img-menu-nav' : '') %>
@@ -41,7 +41,7 @@
     <div class="row row-centered" style="margin-top:50px;">
       <% if can? :manage, Employee %>
         <div class=" <%= is_topbar ? 'col-xs-4' : 'col-xs-2' %> col-centered">
-            <div class="<%= is_topbar ? 'dropdown-menu-btn' : 'menu-btn' %>">
+            <div class="<%= is_topbar ? 'dropdown-menu-btn' : 'menu-btn' %> employees">
                 <a href="/somsri_payroll#/employees">
                   <div class="wraptocenter">
                     <%= image_tag 'hr-icon.png', class: (is_topbar ? 'img-menu-nav' : '') %>
@@ -53,7 +53,7 @@
       <% end %>
       <% if can? :manage, Parent %>
         <div class="<%= is_topbar ? 'col-xs-4' : 'col-xs-2 col-xs-offset-1' %> col-centered">
-            <div class="<%= is_topbar ? 'dropdown-menu-btn' : 'menu-btn' %>">
+            <div class="<%= is_topbar ? 'dropdown-menu-btn' : 'menu-btn' %> parents">
                 <a href="/parents">
                   <div class="wraptocenter">
                       <%= image_tag 'parent.png', class: (is_topbar ? 'img-menu-nav' : '') %>
@@ -65,7 +65,7 @@
       <% end %>
       <% if can? :manage, Student %>
         <div class="<%= is_topbar ? 'col-xs-4' : 'col-xs-2 col-xs-offset-1' %> col-centered">
-            <div class="<%= is_topbar ? 'dropdown-menu-btn' : 'menu-btn' %>">
+            <div class="<%= is_topbar ? 'dropdown-menu-btn' : 'menu-btn' %> students">
                 <a href="/students">
                   <div class="wraptocenter">
                       <%= image_tag 'child.png', class: (is_topbar ? 'img-menu-nav' : '') %>

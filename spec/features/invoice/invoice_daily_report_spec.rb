@@ -88,10 +88,10 @@ describe 'Invoice-Report', js: true do
 
   let(:payment_methods) do
     [
-      PaymentMethod.create!({payment_method:'เงินสด' , invoice_id: invoices[0].id , amount: '101' }),
-      PaymentMethod.create!({payment_method:'บัตรเครดิต' , invoice_id: invoices[0].id , amount: '102' }),
-      PaymentMethod.create!({payment_method: 'เช็คธนาคาร' , invoice_id: invoices[0].id , amount: '103'}),
-      PaymentMethod.create!({payment_method: 'เงินโอน' , invoice_id: invoices[0].id , amount: '104'}),
+      PaymentMethod.create!({payment_method: 'เงินสด', invoice_id: invoices[0].id , amount: '101' }),
+      PaymentMethod.create!({payment_method: 'บัตรเครดิต', invoice_id: invoices[0].id , amount: '102' }),
+      PaymentMethod.create!({payment_method: 'เช็คธนาคาร', invoice_id: invoices[0].id , amount: '103'}),
+      PaymentMethod.create!({payment_method: 'เงินโอน', invoice_id: invoices[0].id , amount: '104'}),
     ]
   end
 

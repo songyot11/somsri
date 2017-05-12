@@ -318,7 +318,7 @@ if school
         <b class="name-school">โรงเรียนอนุบาลซันชายน์</b>
       </div>
       <div class="row">
-        สามหน่อยพอเพียง จำกัด
+        โดย บริษัท สามหน่อยพอเพียง จำกัด
       </div>
       <div class="row">
         305 หมู่ 7 ตำบลหนองควาย อำเภอหางดง จังหวัด เชียงใหม่ 50230
@@ -370,6 +370,68 @@ if school
       </div>
     </div>
     HEAD
+    school.save
+  end
+
+  if !school.invoice_footer
+    school.invoice_footer = <<-FOOT
+    <div class="row name-school">
+      <b>เงื่อนไขการคืนเงิน / Refund Condition</b>
+    </div>
+    <div class="row">
+      <div class="col-xs-6 text-slip4-refund1">
+        <div class="row">** โรงเรียนขอสงวนสิทธิ์ในการคืนเงินค่าแรกเข้าทุกกรณี **</div>
+        <div class="row">** ชุดฟอร์มซื้อแล้วไม่รับคืน **</div>
+        <div class="row">
+          <div class="col-xs-6">หลังจากชำระค่าเทอม 2 สัปดาห์</div>
+          <div class="col-xs-6 pull-right">คืนเงิน 70%</div>
+        </div>
+        <div class="row">
+          <div class="col-xs-6">เรียน 1 สัปดาห์ (หรือน้อยกว่า)</div>
+          <div class="col-xs-6 pull-right">คืนเงิน 70%</div>
+        </div>
+        <div class="row">
+          <div class="col-xs-6">เรียน 2 สัปดาห์</div>
+          <div class="col-xs-6 pull-right">คืนเงิน 60%</div>
+        </div>
+        <div class="row">
+          <div class="col-xs-6">เรียน 3 สัปดาห์</div>
+          <div class="col-xs-6 pull-right">คืนเงิน 50%</div>
+        </div>
+        <div class="row">
+          <div class="col-xs-6">เรียน 4 สัปดาห์</div>
+          <div class="col-xs-6 pull-right">คืนเงิน 40%</div>
+        </div>
+        <div class="row">
+          <div class="col-xs-12">**กรณีเรียนมากกว่า 4 สัปดาห์ ขอสงวนสิทธิ์ในการคืนค่าเทอม**</div>
+        </div>
+      </div>
+      <div class="col-xs-6 text-slip4-refund2">
+        <div class="row">**&nbsp;<b>Entrance fee</b>&nbsp;once paid will not be refunded under any circumstances.**</div>
+        <div class="row">
+          <div class="col-xs-6">After 2 weeks tution paid</div>
+          <div class="col-xs-6 pull-right">Refund 70%</div>
+        </div>
+        <div class="row">
+          <div class="col-xs-6">Study 1 weeks(or less then 1 week)</div>
+          <div class="col-xs-6 pull-right">Refund 70%</div>
+        </div>
+        <div class="row">
+          <div class="col-xs-6">Study 2 weeks</div>
+          <div class="col-xs-6 pull-right">Refund 60%</div>
+        </div>
+        <div class="row">
+          <div class="col-xs-6">Study 3 weeks</div>
+          <div class="col-xs-6 pull-right">Refund 50%</div>
+        </div>
+        <div class="row">
+          <div class="col-xs-6">Study 4 weeks</div>
+          <div class="col-xs-6 pull-right">Refund 40%</div>
+        </div>
+        <div class="row">** After 4 weeks Non Refund **</div>
+      </div>
+    </div>
+    FOOT
     school.save
   end
 
