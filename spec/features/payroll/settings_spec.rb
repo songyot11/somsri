@@ -107,9 +107,7 @@ describe 'Employee Details', js: true do
     expect(page).to have_content('บันทึก')
     expect(page).to have_content('ยกเลิก')
 
-    visit "/students/#{student[1].id}"
-    sleep(1)
-    eventually { expect(page).to have_content("รายละเอียดนักเรียน") }
+    visit "/students"
     sleep(1)
     first('a[class="nav-user avatar"]').trigger('click')
     sleep(1)

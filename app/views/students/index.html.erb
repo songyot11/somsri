@@ -74,11 +74,6 @@
             <td><%= student.status.nil? ? 'กำลังศึกษา' : student.status %></td>
             <td class="tools">
               <div class="row">
-                <div class="col-xs-offset-2 col-xs-2 icon text-center">
-                  <%= link_to t('.show', :default => '<i class="fa fa-info" aria-hidden="true"></i>'.html_safe),
-                              student_path(student),
-                              :title => 'แสดงข้อมูลเพิ่มเติม' %>
-                </div>
                 <div class="col-xs-2 icon text-center">
                   <%= link_to t('.edit', :default => '<i class="fa fa-pencil-square-o" aria-hidden="true"></i>'.html_safe),
                               edit_student_path(student),
