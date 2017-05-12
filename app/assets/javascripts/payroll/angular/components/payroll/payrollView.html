@@ -11,7 +11,7 @@
             </div>
             <a class="btn btn-md btn-payroll"
               href="/payrolls/social_insurance_pdf?effective_date={{payroll.currentEffectiveDate['date_time'] | encodeString }}"
-              target="_blank">ยื่นประกันสังคม</a>
+              target="_blank" ng-show="payroll.currentEffectiveDate">ยื่นประกันสังคม</a>
             <a class="btn btn-md btn-payroll" ng-click="payroll.createPayrolls()" href="javascript:void(0)">
               เริ่มออกเงินเดือน
             </a>
