@@ -45,7 +45,6 @@ gem 'slack-notifier'
 
 gem 'prawn'
 gem 'pdf-toolkit'
-gem 'fileutils'
 
 # Pagination
 gem 'will_paginate', '~> 3.1.0'
