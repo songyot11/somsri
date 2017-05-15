@@ -160,13 +160,13 @@
           ctrl.student_info = resp.data.student_info;
           ctrl.parent_info = resp.data.parent_info;
           ctrl.line_items_info = resp.data.line_items_info;
+          ctrl.grades = resp.data.grades;
+          ctrl.datas.invoice.grade_name = resp.data.grades[0];
         },function(resp) {
         });
         var nowDate = new Date();
         // Clone to prevent the reset value
         ctrl.datas = JSON.parse(JSON.stringify(DEFAULT_INVOICE))
-        ctrl.grades = [{"value": 'Preschool'}, {"value": 'Kindergarten 1'},  {"value": 'Kindergarten 2'},  {"value": 'Kindergarten 3'}];
-        ctrl.datas.invoice.grade_name = {"value": 'Preschool'}
         ctrl.datas.invoice.semester = "1" ;
         ctrl.datas.payment_method = {};
         ctrl.datas.payment_method.is_cash = true;

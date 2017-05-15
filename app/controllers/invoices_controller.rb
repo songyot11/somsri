@@ -83,6 +83,7 @@ class InvoicesController < ApplicationController
       last_invoice_id: last_invoice_id,
       student_info: student_info,
       parent_info: parent_info,
+      grades: Grade.names,
       line_items_info: line_items_info
     }, status: :ok
   end
