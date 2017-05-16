@@ -365,6 +365,8 @@ textarea {
   display: none;
 }
 
+.pagebreak { page-break-before: always; }
+
 @print {
   size: A4;
 }
