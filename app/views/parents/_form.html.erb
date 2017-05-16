@@ -16,94 +16,103 @@
 
 <div class="content-student-parent">
   <div class="card-block">
-    <%= image_tag(@parent.img_url.url(:medium)) if @parent.img_url.exists? %>
-    <div class="space20"></div>
-    <div class="row">
-      <div class="col-md-12">
-        <div class="form-group">
-          <%= f.label :img_url, 'รูปโปรไฟล์ ', :class => 'control-label' %>
-          <div class="col-md-12">
-            <%= f.file_field :img_url, class: 'border-none pointer-cursor' %>
+
+    <div class="col-md-8">
+      <div class="row">
+        <div class="col-md-6">
+          <div class="form-group">
+            <%= f.label :full_name, 'ชื่อ-นามสกุล', :class => 'control-label' %>
+            <div class="col-md-12">
+              <%= f.text_field :full_name, :class => 'form-control', required: true %>
+            </div>
+          </div>
+        </div>
+        <div class="col-md-6">
+          <div class="form-group">
+            <%= f.label :nickname, 'ชื่อเล่น', :class => 'control-label' %>
+            <div class="col-md-12">
+              <%= f.text_field :nickname, :class => 'form-control' %>
+            </div>
           </div>
         </div>
       </div>
-    </div>
-    <div class="row">
-      <div class="col-md-6">
-        <div class="form-group">
-          <%= f.label :full_name, 'ชื่อ-นามสกุล', :class => 'control-label' %>
-          <div class="col-md-12">
-            <%= f.text_field :full_name, :class => 'form-control', required: true %>
+      <div class="row">
+        <div class="col-md-6">
+          <div class="form-group">
+            <%= f.label :id_card_no, 'เลขบัตรประชาชนน', :class => 'control-label' %>
+            <div class="col-md-12">
+              <%= f.text_field :id_card_no, :class => 'form-control' %>
+            </div>
+          </div>
+        </div>
+        <div class="col-md-6">
+          <div class="form-group">
+            <%= f.label :mobile, 'โทรศัพท์', :class => 'control-label' %>
+            <div class="col-md-12">
+              <%= f.text_field :mobile, :class => 'form-control' %>
+            </div>
           </div>
         </div>
       </div>
-      <div class="col-md-6">
-        <div class="form-group">
-          <%= f.label :nickname, 'ชื่อเล่น', :class => 'control-label' %>
-          <div class="col-md-12">
-            <%= f.text_field :nickname, :class => 'form-control' %>
+      <div class="row">
+        <div class="col-md-6">
+          <div class="form-group">
+            <%= f.label :email, 'อีเมล์', :class => 'control-label' %>
+            <div class="col-md-12">
+              <%= f.text_field :email, :class => 'form-control' %>
+            </div>
           </div>
         </div>
-      </div>
-    </div>
-    <div class="row">
-      <div class="col-md-6">
-        <div class="form-group">
-          <%= f.label :id_card_no, 'เลขบัตรประชาชนน', :class => 'control-label' %>
-          <div class="col-md-12">
-            <%= f.text_field :id_card_no, :class => 'form-control' %>
-          </div>
-        </div>
-      </div>
-      <div class="col-md-6">
-        <div class="form-group">
-          <%= f.label :mobile, 'โทรศัพท์', :class => 'control-label' %>
-          <div class="col-md-12">
-            <%= f.text_field :mobile, :class => 'form-control' %>
-          </div>
-        </div>
-      </div>
-    </div>
-    <div class="row">
-      <div class="col-md-6">
-        <div class="form-group">
-          <%= f.label :email, 'อีเมล์', :class => 'control-label' %>
-          <div class="col-md-12">
-            <%= f.text_field :email, :class => 'form-control' %>
-          </div>
-        </div>
-      </div>
-      <div class="col-md-6">
-        <div class="form-group">
-          <%= f.label :line_id, 'Line ID', :class => 'control-label col-6' %>
-          <div class="col-md-12">
-            <%= f.text_field :line_id, :class => 'form-control' %>
+        <div class="col-md-6">
+          <div class="form-group">
+            <%= f.label :line_id, 'Line ID', :class => 'control-label col-6' %>
+            <div class="col-md-12">
+              <%= f.text_field :line_id, :class => 'form-control' %>
+            </div>
           </div>
         </div>
       </div>
     </div>
 
-  <% if @parent.new_record? || @parent.students.size == 0 %>
-    <% 1.times do |index| %>
-      <%= render :partial => 'add_student', :locals => {:index => index, :ps => nil} %>
-      <% @round = index %>
-    <% end %>
-  <% else %>
-    <% @parent.students.each_with_index do |ps, index| %>
-      <%= render :partial => 'add_student', :locals => {:index => index, :ps => ps} %>
-      <% @round = index %>
-    <% end %>
-  <% end %>
+    <div class="col-md-4">
+      <%= image_tag(@parent.img_url.url(:medium), :class => 'img-bg circle') if @parent.img_url.exists? %>
+      <div class="space20"></div>
+      <div class="row">
+        <div class="col-md-12">
+          <div class="form-group">
+            <%= f.label :img_url, 'รูปโปรไฟล์ ', :class => 'control-label' %>
+            <div class="col-md-12">
+              <%= f.file_field :img_url, class: 'border-none pointer-cursor' %>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="col-md-12">
+      <% if @parent.new_record? || @parent.students.size == 0 %>
+        <% 1.times do |index| %>
+          <%= render :partial => 'add_student', :locals => {:index => index, :ps => nil} %>
+          <% @round = index %>
+        <% end %>
+      <% else %>
+        <% @parent.students.each_with_index do |ps, index| %>
+          <%= render :partial => 'add_student', :locals => {:index => index, :ps => ps} %>
+          <% @round = index %>
+        <% end %>
+      <% end %>
 
-  <div id="add-student"></div>
-  <a id="student-link" class="btn-add-st">+ เพิ่มชื่อนักเรียน</a>
-
-  <div class="form-group somsri-invoice" style="margin-top: 25px; text-align:center">
-      <%= f.submit 'บันทึก', :class => 'btn btn-submit' %>
-       <%= link_to t('.cancel', :default => t("helpers.links.cancel")),
-                parents_path, :class => 'btn btn-cancel' %>
+      <div id="add-student"></div>
+      <a id="student-link" class="btn-add-st">+ เพิ่มชื่อนักเรียน</a>
+    </div>
+ </div>
+ <div class="row">
+   <div class="col-md-12">
+     <div class="form-group somsri-invoice" style="margin-top: 25px; text-align:center">
+         <%= f.submit 'บันทึก', :class => 'btn btn-submit' %>
+          <%= link_to t('.cancel', :default => t("helpers.links.cancel")),
+                   parents_path, :class => 'btn btn-cancel' %>
+      </div>
    </div>
-
  </div>
 </div>
 
