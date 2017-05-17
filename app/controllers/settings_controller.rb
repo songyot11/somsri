@@ -10,7 +10,7 @@ class SettingsController < ApplicationController
   # PATCH /settings
   def update_current_user
     User.transaction do
-      if current_user.update(params_user) && current_user.school.update(params_school)
+      if current_user.update(params_user) && School.first.update(params_school)
         render json: getSetting(), status: :ok
       else
         render json: {error: "Cannot update settings."}, status: :bad_request
@@ -33,7 +33,7 @@ class SettingsController < ApplicationController
     def getSetting
       {
         user: current_user,
-        school: current_user.school
+        school: School.first
       }
     end
 
