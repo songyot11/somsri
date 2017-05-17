@@ -511,7 +511,7 @@ input.btn-prefix.active:-moz-placeholder { /* Firefox 18- */
   .report_for_print_hide{
     display: none;
   }
-  th.text-right{
+  .fa.fa-sort{
     display: none;
   }
   th.forprint-h_table{
@@ -522,18 +522,21 @@ input.btn-prefix.active:-moz-placeholder { /* Firefox 18- */
   }
   td.text-center.forprint_table.this_account{
     min-width: 200px;
+    text-align: right;
   }
   td.text-green.forprint_table.this_netsalary{
     min-width: 200px;
   }
-  td.text-center.forprint_table.this_account{
-    text-align: right;
-  }
-  td.text-center.forprint-h_table,th.text-center.forprint-h_table {
+  td.text-center.forprint-h_table,
+  th.text-center.forprint-h_table,
+  th.text-right.forprint-h_table {
     text-align: right;
   }
   th.forprint-h_table.print_name{
     width: 60px !important;
+  }
+  th.text-center.forprint-h_table.forprint_table.this_account{
+    width: 184px !important;
   }
   .top-bar-space{
     height: 0px !important;
@@ -849,6 +852,9 @@ table.scrollable-header {
   overflow-x:hidden;
 }
 
+.scrollable-content::-webkit-scrollbar {
+  display: none;
+}
 .nav-tabs.main > li > a {
   padding: 20px 40px 20px 40px;
 }
