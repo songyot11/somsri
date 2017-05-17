@@ -12,21 +12,23 @@ class ReportRollCallsController < ApplicationController
       list = List.where(id: params[:list_id]).first
     end
 
-    roll_calls = RollCall.where(check_date: dates.collect{ |d| d[0] }, list_id: list.id).to_a
-    student_ids = roll_calls.collect{ |rc| rc.student_id }.uniq
-    students = Student.with_deleted.where(id: student_ids).order(:classroom_number).to_a
-
     results = []
-    students.each do |student|
-      result = { classroom_number: student.classroom_number, name: student.full_name_with_title, roll_calls: [] }
-      dates.each do |date|
-        result[:roll_calls] << {
-          date: date[1],
-          morning: getRollCallStatus(roll_calls, "morning", date[0], student.id),
-          afternoon: getRollCallStatus(roll_calls, "afternoon", date[0], student.id)
-        }
+    if list
+      roll_calls = RollCall.where(check_date: dates.collect{ |d| d[0] }, list_id: list.id).to_a
+      student_ids = roll_calls.collect{ |rc| rc.student_id }.uniq
+      students = Student.with_deleted.where(id: student_ids).order(:classroom_number).to_a
+
+      students.each do |student|
+        result = { classroom_number: student.classroom_number, name: student.full_name_with_title, roll_calls: [] }
+        dates.each do |date|
+          result[:roll_calls] << {
+            date: date[1],
+            morning: getRollCallStatus(roll_calls, "morning", date[0], student.id),
+            afternoon: getRollCallStatus(roll_calls, "afternoon", date[0], student.id)
+          }
+        end
+        results << result
       end
-      results << result
     end
     school = School.first
     render json: { info: { name: school.name, address: school.address }, rollcall: results }
