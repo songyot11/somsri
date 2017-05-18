@@ -182,7 +182,7 @@ class Payroll < ApplicationRecord
 
     def self.generate_social_insurance(payroll, employee)
       return 0 unless employee["pay_social_insurance"]
-      income = payroll["salary"].to_i - payroll["late"].to_i - payroll["absence"].to_i
+      income = payroll["salary"].to_i
       income = 15000 if income > 15000
       income >= 1650 ? (income * 0.05).round : 0
     end
