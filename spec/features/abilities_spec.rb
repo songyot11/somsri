@@ -203,8 +203,7 @@ describe 'Abilities', js: true do
     it 'can goto parents' do
       visit "/parents"
       sleep(1)
-      expect(page).to have_content 'บัญชีของคุณไม่สามารถใช้งานฟังก์ชันนี้ได้'
-      expect(page).to have_content menu_content
+      expect(page).to have_content 'ผู้ปกครอง'
     end
 
     it 'can goto students' do

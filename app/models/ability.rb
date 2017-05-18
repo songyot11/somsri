@@ -9,7 +9,8 @@ class Ability
       can :manage, Invoice
       can :manage, DailyReport
       can :read, Grade
-      can :read, Student
+      can :manage, Student
+      can :manage, Parent
     end
   end
 
@@ -21,6 +22,8 @@ class Ability
     manage[:daily_report] = true if self.can? :manage, DailyReport
     manage[:roll_call] = true if self.can? :manage, RollCall
     manage[:report_roll_call] = true if self.can? :manage, :report_roll_call
+    manage[:student] = true if self.can? :manage, Student
+    manage[:parent] = true if self.can? :manage, Parent
     result = {
       manage: manage
     }
