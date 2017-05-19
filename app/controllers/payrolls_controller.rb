@@ -61,7 +61,7 @@ class PayrollsController < ApplicationController
     FileUtils.mkdir_p "tmp/sps1" unless File.directory?("tmp/sps1")
 
     page_amount = (payrolls.count / 10.0).ceil.to_i
-    school = current_user.school
+    school = School.first
     thai_date = to_thai_date(payrolls[0].effective_date)
 
     # generate header page pdf

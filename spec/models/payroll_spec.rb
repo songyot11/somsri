@@ -115,4 +115,22 @@ describe Payroll do
     expect(Payroll.generate_tax(payrolls[0],employee1,taxs[0])).to be > 0
   end
 
+  it 'should update employee.salary if changed lasted payroll.salary' do
+    payrolls[0].salary = 2000
+    payrolls[0].save
+    payrolls[0].reload
+    employee1.reload
+    expect(employee1.salary).to eq 2000.00
+    expect(payrolls[0].salary).to eq 2000.00
+  end
+
+  it 'should not update employee.salary if changed history payroll.salary' do
+    payrolls[1].salary = 2000
+    payrolls[1].save
+    payrolls[1].reload
+    employee1.reload
+    expect(employee1.salary).to eq 1000000.00
+    expect(payrolls[1].salary).to eq 2000.00
+  end
+
 end

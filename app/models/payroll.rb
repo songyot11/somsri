@@ -1,11 +1,20 @@
 class Payroll < ApplicationRecord
+  include ActiveModel::Dirty
   acts_as_paranoid without_default_scope: true
   belongs_to :employee
   validate :already_payroll_on_month, on: :create
   before_validation :set_created_at
   after_create :set_default_val
+  after_save :update_employee_salary
 
   scope :latest, -> { order("effective_date ASC").last }
+
+  def update_employee_salary
+    if self.salary_changed? && self.employee && self.employee.lastest_payroll.id == self.id
+      employee.salary = self.salary
+      employee.save
+    end
+  end
 
   def already_payroll_on_month
     if Payroll.where(employee_id: self.employee_id, effective_date: self.effective_date).count > 0

@@ -434,9 +434,4 @@ if school
     FOOT
     school.save
   end
-
-  if !school.invoice_logo_src
-    school.invoice_logo_src = "/logo_c.png"
-    school.save
-  end
 end

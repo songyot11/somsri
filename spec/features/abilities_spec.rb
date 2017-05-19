@@ -48,9 +48,10 @@ describe 'Abilities', js: true do
     end
 
     it 'can goto payroll setting' do
-      visit "/somsri_payroll#/setting"
+      visit "/main#/setting"
       sleep(1)
       expect(page).to have_content 'ชื่อ อีเมล รหัสผ่าน เปลี่ยนรหัสผ่าน'
+      expect(page).to have_content 'ชื่อโรงเรียน'
     end
 
     it 'can goto invoice menu' do
@@ -122,7 +123,7 @@ describe 'Abilities', js: true do
       expect(page).to have_content menu_content
     end
 
-    it 'can goto payroll menu' do
+    it 'cant goto payroll menu' do
       visit "/somsri_payroll"
       sleep(1)
       expect(page).to have_current_path '/'
@@ -130,14 +131,14 @@ describe 'Abilities', js: true do
       expect(page).to have_content menu_content
     end
 
-    it 'can goto payroll' do
+    it 'cant goto payroll' do
       visit "/somsri_payroll#/payroll"
       sleep(1)
       expect(page).to have_content 'บัญชีของคุณไม่สามารถใช้งานฟังก์ชันนี้ได้'
       expect(page).to have_content menu_content
     end
 
-    it 'can goto payroll report' do
+    it 'cant goto payroll report' do
       visit "/somsri_payroll#/report"
       sleep(1)
       expect(page).to have_content 'บัญชีของคุณไม่สามารถใช้งานฟังก์ชันนี้ได้'
@@ -145,10 +146,10 @@ describe 'Abilities', js: true do
     end
 
     it 'can goto payroll setting' do
-      visit "/somsri_payroll#/setting"
+      visit "/main#/setting"
       sleep(1)
-      expect(page).to have_content 'บัญชีของคุณไม่สามารถใช้งานฟังก์ชันนี้ได้'
-      expect(page).to have_content menu_content
+      expect(page).to have_content 'ชื่อ อีเมล รหัสผ่าน เปลี่ยนรหัสผ่าน'
+      expect(page).not_to have_content 'ชื่อโรงเรียน'
     end
 
     it 'can goto invoice menu' do
@@ -193,14 +194,14 @@ describe 'Abilities', js: true do
       expect(page).to have_content 'Invoice # ชื่อนักเรียน ชั้น'
     end
 
-    it 'can goto employees' do
+    it 'cant goto employees' do
       visit "/somsri_payroll#/employees"
       sleep(1)
       expect(page).to have_content 'บัญชีของคุณไม่สามารถใช้งานฟังก์ชันนี้ได้'
       expect(page).to have_content menu_content
     end
 
-    it 'can goto parents' do
+    it 'cant goto parents' do
       visit "/parents"
       sleep(1)
       expect(page).to have_content 'ผู้ปกครอง'

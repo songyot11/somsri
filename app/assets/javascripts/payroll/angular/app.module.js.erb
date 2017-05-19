@@ -94,19 +94,6 @@
             ]);
           }]
         }
-      }).
-      state({
-        url: '/setting',
-        name: 'setting',
-        templateUrl: "<%= asset_path('payroll/angular/components/setting/settingView.html') %>",
-        controller: 'settingCtrl as setting',
-        resolve: {
-          resources: ['$ocLazyLoad', function($ocLazyLoad) {
-            return $ocLazyLoad.load([
-              ASSETS.somsri.payroll.setting
-            ]);
-          }]
-        }
       })
 
     $urlRouterProvider.when("", "/");

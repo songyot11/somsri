@@ -358,4 +358,45 @@ describe 'Payroll Edit', js: true do
     eventually { expect(page).to have_content /สมศรี เป็นชื่อแอพ.*0.00 0.00 0.00 0.00 0.00 0.00 0.00 0.00 0.00 0.00 0.00 0.00 0.00 0.00 0.00/i }
     eventually { expect(page).to have_content /รวมทั้งหมด.*1,000.00 0.00 0.00 0.00 0.00 0.00 0.00 0.00 0.00 0.00 0.00 0.00 0.00 0.00 1,000.00/i }
   end
+
+  it 'should update employee.salary if changed lasted payroll.salary' do
+    visit "/somsri_payroll#/payroll"
+
+    sleep(1)
+    first('a[editable-number="employee.salary"]').click
+    sleep(1)
+    find(:css, "input").set(5000)
+    sleep(1)
+    find('button[type="submit"]').click
+    sleep(1)
+
+    payrolls[0].reload
+    employee1.reload
+
+    eventually { expect(payrolls[0].salary).to eq 5000.00 }
+    eventually { expect(employee1.salary).to eq 5000.00 }
+  end
+
+  it 'should not update employee.salary if changed history payroll.salary' do
+    visit "/somsri_payroll#/payroll"
+
+    sleep(1)
+    find('#month-list').click
+    sleep(1)
+
+    find('ul.dropdown-menu li a', text: "1 พฤศจิกายน 2559").click
+    sleep(1)
+    first('a[editable-number="employee.salary"]').click
+    sleep(1)
+    find(:css, "input").set(5000)
+    sleep(1)
+    find('button[type="submit"]').click
+    sleep(1)
+
+    payrolls[2].reload
+    employee1.reload
+
+    eventually { expect(payrolls[2].salary).to eq 5000.00 }
+    eventually { expect(employee1.salary).to eq 1000.00 }
+  end
 end

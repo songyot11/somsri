@@ -1,0 +1,38 @@
+(function() {
+  'use strict';
+  var app = angular.module('somsri.main', [
+    'somsri.main.assets',
+    'oc.lazyLoad',
+    'ui.router.stateHelper',
+    'ui.bootstrap',
+    'somsri.main.main',
+    'angularMoment',
+    'ui.utils.masks'
+  ]);
+
+  app.config(['stateHelperProvider', 'ASSETS', '$urlRouterProvider', '$httpProvider', function(stateHelperProvider, ASSETS, $urlRouterProvider, $httpProvider) {
+
+    // Default as JSON Format
+    $httpProvider.defaults.headers.post['Accept'] = 'application/json, text/javascript';
+    $httpProvider.defaults.headers.post['Content-Type'] = 'application/json; charset=utf-8';
+    $httpProvider.defaults.headers.common['Accept'] = 'application/json, text/javascript';
+    $httpProvider.defaults.headers.common['Content-Type'] = 'application/json; charset=utf-8';
+
+    stateHelperProvider.state({
+      url: '/setting',
+      name: 'setting',
+      templateUrl: "<%= asset_path('main/angular/components/setting/settingView.html') %>",
+      controller: 'settingCtrl as setting',
+      resolve: {
+        resources: ['$ocLazyLoad', function($ocLazyLoad) {
+          return $ocLazyLoad.load([
+            ASSETS.somsri.main.setting
+          ]);
+        }]
+      }
+    })
+    $urlRouterProvider.when("", "/");
+  }]);
+
+  app.run();
+})();
