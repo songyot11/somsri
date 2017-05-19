@@ -103,7 +103,6 @@ class EmployeesController < ApplicationController
     if params[:payroll]
       payroll_datas = payroll_params
       payroll_id = payroll_datas[:id]
-      payroll_datas[:salary] = employee_data[:salary]
       payroll_datas.delete(:id)
       payroll = Payroll.update(payroll_id, payroll_datas)
     end
@@ -182,7 +181,6 @@ class EmployeesController < ApplicationController
       :bank_name,
       :bank_branch,
       :account_number,
-      :salary,
       :nickname,
       :start_date,
       :birthdate,
@@ -197,7 +195,6 @@ class EmployeesController < ApplicationController
       :grade_id,
       :classroom
     ]).to_h
-    result[:salary] = 0 if result[:salary].blank?
     return result
   end
 
