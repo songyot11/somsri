@@ -15,6 +15,7 @@ Rails.application.routes.draw do
   get "/somsri_invoice" => "menu#landing_invoice"
   get "/somsri_payroll" => "menu#landing_payroll"
   get "/somsri_rollcall" => "menu#landing_rollcall"
+  get "/main" => "menu#landing_main"
 
   resources :payrolls, only: [:index, :update, :create] do
     collection do

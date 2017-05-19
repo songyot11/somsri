@@ -1,0 +1,47 @@
+(function() {
+  'use strict';
+  angular.module('somsri.main.main', [
+  ])
+  .controller('mainCtrl', ['$rootScope','$state', '$http', '$window', function($rootScope, $state, $http, $window) {
+
+    function checkAbility(model, success, fail){
+      if($rootScope.abilities.manage && $rootScope.abilities.manage.all){
+        success();
+      }else if($rootScope.abilities.manage && $rootScope.abilities.manage[model]){
+        success();
+      }else{
+        if(fail){
+          fail();
+        }else{
+          $rootScope.openRoot();
+        }
+      }
+    }
+
+    $rootScope.loadAndAuthorizeResource = function(model, success, fail) {
+      if($rootScope.abilities && $rootScope.abilities.length > 0){
+        checkAbility(model, success, fail);
+      }else{
+        // load ability
+        $http.get('/abilities').then(function(resp) {
+          $rootScope.abilities = [];
+          if (resp.data.length > 0) {
+            $rootScope.abilities = resp.data[0];
+            checkAbility(model, success, fail);
+          }else{
+            if(fail){
+              fail();
+            }else{
+              $rootScope.openRoot();
+            }
+          }
+        });
+      }
+    };
+
+    $rootScope.openRoot = function() {
+      $window.location.href = "/";
+    };
+
+  }]);
+})();

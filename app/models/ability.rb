@@ -11,6 +11,8 @@ class Ability
       can :read, Grade
       can :manage, Student
       can :manage, Parent
+      can :read, School
+      can :manage, :setting
     end
   end
 
@@ -24,6 +26,8 @@ class Ability
     manage[:report_roll_call] = true if self.can? :manage, :report_roll_call
     manage[:student] = true if self.can? :manage, Student
     manage[:parent] = true if self.can? :manage, Parent
+    manage[:setting] = true if self.can? :manage, :setting
+    manage[:school] = true if self.can? :manage, School
     result = {
       manage: manage
     }

@@ -10,7 +10,11 @@ class SettingsController < ApplicationController
   # PATCH /settings
   def update_current_user
     User.transaction do
-      if current_user.update(params_user) && School.first.update(params_school)
+      update_school_status = true
+      if self.can? :update, School
+        update_school_status = School.first.update(params_school)
+      end
+      if current_user.update(params_user) && update_school_status
         render json: getSetting(), status: :ok
       else
         render json: {error: "Cannot update settings."}, status: :bad_request
