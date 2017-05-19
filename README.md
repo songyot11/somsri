@@ -75,3 +75,9 @@ example: rake payroll:generate:on[1,2016]
 ```
 rake user:create[<email>,<password>]
 ```
+
+### on z.com
+PG is need to be
+```
+   gem install pg -v '0.19.0' -- --with-pg-config=/usr/pgsql-9.6/bin/pg_config
+```

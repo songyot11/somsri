@@ -75,6 +75,28 @@ describe Student do
     expect(students[0].student_lists[0].list.name).to eq("2B")
   end
 
+  it 'generate new list for student' do
+    students[0].classroom = "9S"
+    students[0].save
+    students[1].classroom = "9S"
+    students[1].save
+    students[2].classroom = "9S"
+    students[2].save
+
+    students[0].reload
+    students[1].reload
+    students[2].reload
+
+    expect(students[0].student_lists.length).to eq(1)
+    expect(students[0].student_lists[0].list.name).to eq("9S")
+
+    expect(students[1].student_lists.length).to eq(1)
+    expect(students[1].student_lists[0].list.name).to eq("9S")
+
+    expect(students[2].student_lists.length).to eq(1)
+    expect(students[2].student_lists[0].list.name).to eq("9S")
+  end
+
   describe 'in invoice screen' do
     it 'display full name with nick name (in parentheses)' do
       student = Student.make(first_name: 'Xavi', last_name: 'Pepe', nickname: 'Tom')

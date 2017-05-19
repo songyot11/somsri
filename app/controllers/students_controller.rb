@@ -1,7 +1,7 @@
 class StudentsController < ApplicationController
-  before_action :set_student, only: [:show, :edit, :update, :destroy], unless: :is_api?
+  before_action :set_student, only: [:edit, :update, :destroy], unless: :is_api?
   before_action :authenticate_user!, unless: :is_api?
-  load_and_authorize_resource except: [:index, :show, :get_roll_calls, :info]
+  load_and_authorize_resource except: [:index, :get_roll_calls, :info]
 
   def is_api?
     !params[:pin].blank?
@@ -14,43 +14,58 @@ class StudentsController < ApplicationController
     authorize! :read, Student
     grade_select = (params[:grade_select] || 'All')
     class_select = (params[:class_select] || 'All')
-    @class_display = Student.order("classroom ASC").select(:classroom).map(&:classroom).uniq.compact
+    @class_display = Student.with_deleted.order("classroom ASC").select(:classroom).map(&:classroom).uniq.compact
+    year_select = (params[:year_select] || Date.current.year + 543)
+    semester_select = params[:semester_select]
+    invoice_status = params[:status]
 
     if !params[:student_report]
       # without angular
       if grade_select.downcase == 'all' && class_select.downcase == 'all'
         students = Student.with_deleted
       elsif grade_select.downcase == 'all' && class_select.downcase != 'all'
-        students = Student.where(classroom: class_select)
+        students = Student.with_deleted.where(classroom: class_select)
       elsif grade_select != 'all' && class_select.downcase == 'all'
         grade = Grade.where(name: grade_select).first
-        students = Student.where(grade: grade.id)
+        students = Student.with_deleted.where(grade: grade.id)
       elsif grade_select != 'all' && class_select != 'all'
         grade = Grade.where(name: grade_select).first
-        students = Student.where(grade: grade.id , classroom: class_select)
+        students = Student.with_deleted.where(grade: grade.id , classroom: class_select)
       end
       @students = students.order("deleted_at DESC , classroom ASC, classroom_number ASC").search(params[:search]).page(params[:page]).to_a
     else
       # with angular
       if grade_select.downcase == 'all'
-        @students = Student.order("deleted_at DESC , student_number ASC").search(params[:search]).with_deleted.paginate(page: params[:page], per_page: 10).to_a
+        @students_all = Student.order("deleted_at DESC , student_number ASC").search(params[:search]).with_deleted.to_a
       else
         grade = Grade.where(name: grade_select).first
-        @students = Student.where(grade_id: grade.id).order("classroom ASC, classroom_number ASC").search(params[:search]).paginate(page: params[:page], per_page: 10).to_a
+        @students_all = Student.where(grade_id: grade.id).order("classroom ASC, classroom_number ASC").search(params[:search]).to_a
       end
+
+      student_index = Array.new
+      @students_all.each_with_index do |student, index|
+        # if (!student.all_active_invoice_year.include?(year_select) || student.active_invoice_semester != semester_select) || (student.active_invoice_tuition_fee == nil)
+        if !student.is_active_invoice_year_semester(year_select, semester_select)
+          student.active_invoice_status = "ยังไม่ได้ชำระ"
+        else
+          student_index.push(index)
+        end
+      end
+
+      if invoice_status == "unpaid"
+        shift = 0
+        student_index.each do |index|
+          @students_all.delete_at(index-shift)
+          shift += 1
+        end
+      end
+
+      @students = @students_all.paginate(:page => params[:page], :per_page => 10)
     end
 
     @filter_grade = grade_select
     @filter_class = class_select
     render "students/index", layout: "application_invoice"
-  end
-
-  # GET /students/1
-  # GET /students/1.json
-  def show
-    @menu = "นักเรียน"
-    authorize! :read, Student
-    render "students/show", layout: "application_invoice"
   end
 
   # GET /students/new
@@ -75,14 +90,20 @@ class StudentsController < ApplicationController
   # POST /students.json
   def create
     @student = Student.new(student_params)
+    @student.full_name = student_params[:full_name].gsub('ด.ช.', '').gsub('ด.ญ.', '').gsub('เด็กหญิง', '').gsub('เด็กชาย', '').gsub("ดช" , '').gsub('ดญ' , '')
     parent_assign
-    respond_to do |format|
-      if @student.save
-        relation_assign
-        format.html { redirect_to @student }
+    if @student.save
+      relation_assign
+      respond_to do |format|
+        format.html do
+          flash[:success] = "เพิ่มนักเรียนเรียบร้อยแล้ว"
+          redirect_to students_url
+        end
         format.json { render :show, status: :created, location: @student }
-      else
-        @relations = Relationship.all
+      end
+    else
+      @relations = Relationship.all
+      respond_to do |format|
         format.html { render :new }
         format.json { render json: @student.errors, status: :unprocessable_entity }
       end
@@ -96,7 +117,10 @@ class StudentsController < ApplicationController
     respond_to do |format|
       if @student.update(student_params)
         relation_assign
-        format.html { redirect_to @student }
+        format.html do
+          flash[:success] = "แก้ไขข้อมูลนักเรียนเรียบร้อยแล้ว"
+          redirect_to students_url
+        end
         format.json { render :show, status: :ok, location: @student }
       else
         @relations = Relationship.all
@@ -226,6 +250,9 @@ class StudentsController < ApplicationController
   # GET /invoice_total_amount
   def invoice_total_amount
     grade_select = (params[:grade_select] || 'All')
+    year_select = (params[:year_select] || Date.current.year + 543)
+    semester_select = (params[:semester_select] || nil)
+    invoice_status = params[:status]
     @students = Student
     if grade_select.downcase == 'all'
       @students = @students.search(params[:search]).all.to_a
@@ -238,10 +265,14 @@ class StudentsController < ApplicationController
     tuition_fee = 0
     amount = 0
 
-    @students.each do |student|
-      other_fee += student.active_invoice_other_fee if !student.active_invoice_other_fee.blank?
-      tuition_fee += student.active_invoice_tuition_fee if !student.active_invoice_tuition_fee.blank?
-      amount += student.active_invoice_total_amount if !student.active_invoice_total_amount.blank?
+    if invoice_status != "unpaid"
+      @students.each do |student|
+        if student.is_active_invoice_year_semester(year_select, semester_select)
+          other_fee += student.active_invoice_other_fee if !student.active_invoice_other_fee.blank?
+          tuition_fee += student.active_invoice_tuition_fee if !student.active_invoice_tuition_fee.blank?
+          amount += student.active_invoice_total_amount if !student.active_invoice_total_amount.blank?
+        end
+      end
     end
     render json: [{other_fee: other_fee, tuition_fee: tuition_fee, amount: amount}], status: :ok
   end
@@ -272,30 +303,31 @@ class StudentsController < ApplicationController
     end
 
     def parent_assign
-      prn_params = params[:parent]
-      rel_params = params[:relationship]
-      prn_rel = Hash.new
-      if !prn_params.nil?
-        prn_params.each_with_index do |value, index|
-          if prn_rel[value] && rel_params[index]
-            prn_rel[value] = rel_params[index]
-          end
+      parent_params = params[:parent]
+      relation_params = params[:relationship]
+      @parents = Array.new
+      @relationships = Array.new
+      return unless parent_params
+      return unless relation_params
+      parent_relation = Hash.new
+      if !parent_params.nil?
+        parent_params.each_with_index do |value, index|
+          parent_relation[value] = relation_params[index]
         end
       end
-      prn_params = prn_rel.keys
-      @relationships = prn_rel.values
-      @parents = Array.new
-      if !prn_params.nil?
-        prn_params.each_with_index.map do |p, index|
+      parent_params = parent_relation.keys
+      @relationships = parent_relation.values
+      if !parent_params.nil?
+        parent_params.each_with_index.map do |p, index|
           if p.to_i != 0
             begin
-            prn = Parent.find(p)
+              prn = Parent.find(p)
             rescue
-            prn = Parent.find_or_create_by(full_name: p)
+              prn = Parent.find_or_create_by(full_name: p)
             end
             @parents.push(prn)
           elsif p.length > 0 && p.to_i == 0
-            new_prn = Parent.find_or_create_by(full_name: prn_params[index])
+            new_prn = Parent.find_or_create_by(full_name: parent_params[index])
             @parents.push(new_prn)
           end
         end

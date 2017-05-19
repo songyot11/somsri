@@ -45,6 +45,26 @@ describe 'Employee Details', js: true do
     ]
   end
 
+  let(:employee_without_payroll) do
+    Employee.make!({
+      school_id: school.id,
+      first_name: "คนใหม่",
+      last_name: "เดือนแรกเลย",
+      prefix_thai: "นาย",
+      salary: 20000
+    })
+  end
+
+  let(:employee_without_prefix) do
+    Employee.make!({
+      school_id: school.id,
+      first_name_thai: "สมจิตร",
+      last_name_thai: "เป็นนักมวย",
+      prefix_thai: nil,
+      salary: 20000
+    })
+  end
+
   let(:payrolls) do
     [
       Payroll.make!({
@@ -125,6 +145,19 @@ describe 'Employee Details', js: true do
     before :each do
       visit "/somsri_payroll#/employees/#{employees[0].id}"
       sleep(1)
+    end
+
+    it 'should not diplay employee name without prefix' do
+        employee_without_prefix
+        visit "/somsri_payroll#/employees/#{employee_without_prefix.id}"
+        sleep(1)
+        eventually { expect(page).to have_content('3: สมจิตร เป็นนักมวย') }
+    end
+
+    it 'should not diplay print slip button' do
+      visit "/somsri_payroll#/employees/#{employee_without_payroll.id}"
+      sleep(1)
+      eventually { expect(page).not_to have_content('พิมพ์ใบจ่ายเงินเดือน') }
     end
 
     it 'have employees list' do
@@ -217,6 +250,45 @@ describe 'Employee Details', js: true do
       eventually { expect(employee.grade).to eq grade }
       eventually { expect(payroll.salary).to eq 200 }
       eventually { expect(page).to have_css('div.employee-details') }
+    end
+
+    it 'should update employee.salary if changed lasted payroll.salary' do
+      sleep(1)
+      click_link('เงินเดือน')
+      sleep(1)
+      page.fill_in 'ค่าแรง / เงินเดือนปัจจุบัน', :with => '12300'
+      click_button('บันทึก')
+      sleep(1)
+      click_button('ตกลง')
+      sleep(1)
+
+      employees[0].reload
+      payrolls[0].reload
+
+      eventually { expect(employees[0].salary).to eq 12300 }
+      eventually { expect(payrolls[0].salary).to eq 12300 }
+    end
+
+    it 'should not update employee.salary if changed history payroll.salary' do
+      sleep(1)
+      click_link('เงินเดือน')
+      sleep(1)
+      find('#month-list').click
+      sleep(1)
+      find('ul.dropdown-menu li a', text: "สิงหาคม 2559").click
+      sleep(1)
+      page.fill_in 'ค่าแรง / เงินเดือนปัจจุบัน', :with => '12300'
+      click_button('บันทึก')
+      sleep(1)
+      click_button('ตกลง')
+      sleep(1)
+
+      employees[0].reload
+      payrolls[4].reload
+
+      eventually { expect(payrolls[4].salary).to eq 12300 }
+      eventually { expect(employees[0].salary).to eq 50000 }
+
     end
 
     describe "generate attendance list" do

@@ -24,7 +24,7 @@
         service.createDailyReport({ daily_report: ctrl.datas }).then(function(resp) {
           $rootScope.openDailyReportPreview(resp.data.id);
         },function(resp) {
-          console.log("CREATE DAILY REPORT ERROR");
+
         }); ;
       };
 
@@ -34,7 +34,6 @@
           ctrl.datas = resp.data;
           ctrl.datas.real_total = 0;
         },function(resp) {
-          console.log("ERROR LOAD NEW DAILY REPORT");
         });
       })()
 

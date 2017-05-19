@@ -83,6 +83,7 @@ class InvoicesController < ApplicationController
       last_invoice_id: last_invoice_id,
       student_info: student_info,
       parent_info: parent_info,
+      grades: Grade.names,
       line_items_info: line_items_info
     }, status: :ok
   end
@@ -216,7 +217,11 @@ class InvoicesController < ApplicationController
       grade_name << " (#{@invoice.student.classroom})"
     end
 
+    school = School.first
     slip_info = {
+      header: school.invoice_header,
+      footer: school.invoice_footer,
+      logo: school.logo.url(:medium),
       slip_id: @invoice.id,
       thai_now_date: I18n.l(@invoice.created_at, format: "%d %B #{@invoice.created_at.year + 543}"),
       eng_now_date: @invoice.created_at.strftime("%d %B %Y"),
@@ -234,6 +239,7 @@ class InvoicesController < ApplicationController
         student_number: @invoice.student.student_number
       }
     }
+
     @invoice.payment_methods.to_a.each do |pm|
       if pm.payment_method == "เงินสด"
         slip_info[:is_cash] = true
@@ -270,11 +276,22 @@ class InvoicesController < ApplicationController
         amount: line_item.amount,
       }
     end
+
     slip_info["line_items"] = line_items if line_items.length > 0
     slip_info["total_amount"] = total
     slip_info["total_amount_thai"] = ""
 
     render json: slip_info, status: :ok
+  end
+
+  def invoice_years
+    all_years = Invoice.pluck(:school_year).uniq
+    render json: all_years, status: :ok
+  end
+
+  def invoice_semesters
+    all_semesters_of_year = Invoice.where(school_year: params[:year]).pluck(:semester).uniq
+    render json: all_semesters_of_year
   end
 
   private

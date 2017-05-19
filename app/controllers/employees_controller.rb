@@ -11,12 +11,19 @@ class EmployeesController < ApplicationController
 
   # GET /employees/:id/slip
   def slip
-    employee = Employee.find(params[:id]).as_json({ slip: true, payroll_id: params[:payroll_id] })
-    employee[:payroll][:fee_orders] = employee[:payroll][:fee_orders]
-                                                      .select { |key, value| value[:value] > 0}
-    employee[:payroll][:pay_orders] = employee[:payroll][:pay_orders]
-                                                      .select { |key, value| value[:value] > 0}
-    render json: employee, status: :ok
+    if Payroll.where({ employee_id: params[:id] }).count > 0
+      employee = Employee.find(params[:id]).as_json({ slip: true, payroll_id: params[:payroll_id] })
+      employee[:payroll][:fee_orders] = employee[:payroll][:fee_orders]
+                                                        .select { |key, value| value[:value] > 0}
+      employee[:payroll][:pay_orders] = employee[:payroll][:pay_orders]
+                                                        .select { |key, value| value[:value] > 0}
+      school = School.first
+      employee[:school] = school
+      employee[:logo] = school.logo.url(:medium)
+      render json: employee, status: :ok
+    else
+      render json: [], status: :ok
+    end
   end
 
   # GET /employees/slips
@@ -28,6 +35,9 @@ class EmployeesController < ApplicationController
                                                         .select { |key, value| value[:value] > 0}
       employee[:payroll][:pay_orders] = employee[:payroll][:pay_orders]
                                                         .select { |key, value| value[:value] > 0}
+      school = School.first
+      employee[:school] = school
+      employee[:logo] = school.logo.url(:medium)
       employees << employee
     end
     render json: employees, status: :ok
@@ -53,6 +63,7 @@ class EmployeesController < ApplicationController
     render json: {
       img_url: @employee.img_url.exists? ? @employee.img_url.url : nil ,
       employee: @employee,
+      employee_display_name: @employee.full_name,
       payroll: payroll,
       tax_reduction: tax_reduction
     }
@@ -92,7 +103,6 @@ class EmployeesController < ApplicationController
     if params[:payroll]
       payroll_datas = payroll_params
       payroll_id = payroll_datas[:id]
-      payroll_datas[:salary] = employee_data[:salary]
       payroll_datas.delete(:id)
       payroll = Payroll.update(payroll_id, payroll_datas)
     end
@@ -122,13 +132,13 @@ class EmployeesController < ApplicationController
   def archive
     @employee = Employee.find(params[:employee_id]).update(deleted_at: Time.now)
     payroll = Payroll.where(employee_id: params[:employee_id]).update(deleted_at: Time.now)
-    
+
     data = {status: "success"}
     render json: data, status: :ok
   end
 
   def restore
-    @employee = Employee.update(deleted_at: nil)
+    @employee = Employee.only_deleted.where(id: params[:employee_id]).update(deleted_at: nil)
     payroll = Payroll.only_deleted.where(employee_id: params[:employee_id]).update(deleted_at: nil)
 
     data = {status: "success"}
@@ -171,7 +181,6 @@ class EmployeesController < ApplicationController
       :bank_name,
       :bank_branch,
       :account_number,
-      :salary,
       :nickname,
       :start_date,
       :birthdate,
@@ -186,7 +195,6 @@ class EmployeesController < ApplicationController
       :grade_id,
       :classroom
     ]).to_h
-    result[:salary] = 0 if result[:salary].blank?
     return result
   end
 

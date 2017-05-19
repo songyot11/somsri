@@ -48,7 +48,7 @@ class PayrollsController < ApplicationController
     fill_form_data = {}
     i = 1
     payrolls.each do |payroll|
-      salary = salary_by_law(payroll.salary)
+      salary = payroll.salary
       sum_salary += salary
       sum_insurance += payroll.social_insurance
       i += 1
@@ -61,7 +61,7 @@ class PayrollsController < ApplicationController
     FileUtils.mkdir_p "tmp/sps1" unless File.directory?("tmp/sps1")
 
     page_amount = (payrolls.count / 10.0).ceil.to_i
-    school = current_user.school
+    school = School.first
     thai_date = to_thai_date(payrolls[0].effective_date)
 
     # generate header page pdf
@@ -146,8 +146,8 @@ class PayrollsController < ApplicationController
           { text: "-", location: [252, (383 - new_line_margin)]},
           { text: personal_digits[12], location: [263, (383 - new_line_margin)], rect: [[258, (380 - new_line_margin)], 15, 15] },
           { text: p.employee.full_name, location: [290, (380 - new_line_margin)] },
-          { text: salary_by_law(p.salary).to_i, location: [520, (380 - new_line_margin)] },
-          { text: satang(salary_by_law(p.salary)), location: [603, (380 - new_line_margin)] },
+          { text: p.salary.to_i, location: [520, (380 - new_line_margin)] },
+          { text: satang(p.salary), location: [603, (380 - new_line_margin)] },
           { text: p.social_insurance.to_i, location: [625, (380 - new_line_margin)] }
         ]
 
@@ -182,7 +182,7 @@ class PayrollsController < ApplicationController
 
   # POST /payrolls/
   def create
-    employees = Employee.all.to_a
+    employees = Employee.all.without_deleted.to_a
     payrolls = Payroll.joins(:employee)
                       .where(employee_id: employees, effective_date: DateTime.parse(create_params[:effective_date]))
     render json: {error: "PAYROLLS_EXIST"}, status: :ok and return if payrolls.count > 0 && !option_params[:force_create]
@@ -229,10 +229,6 @@ class PayrollsController < ApplicationController
     def to_thai_date(date_time)
       d = I18n.l(date_time, format: "%d %B %Y").split(" ")
       return [ d[0].to_i, d[1], d[2].to_i + 543 ]
-    end
-
-    def salary_by_law(salary)
-      salary < 15000 ? 15000 : salary
     end
 
     def get_months_by_employee_ids(employee_ids)

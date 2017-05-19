@@ -11,7 +11,7 @@ class Student < ApplicationRecord
   has_many :student_lists, dependent: :destroy
   alias_attribute :code, :id
   alias_attribute :number, :classroom_number
-  attr_accessor :first_name, :last_name, :prefix
+  attr_accessor :first_name, :last_name, :prefix, :active_invoice_status
 
   self.per_page = 10
 
@@ -42,7 +42,7 @@ class Student < ApplicationRecord
           end
         else
           student_ids = Student.where(classroom: self.classroom).pluck(:id)
-          exclude_student_ids = StudentList.where(list_id: list.id).pluck(:id)
+          exclude_student_ids = StudentList.where(list_id: list.id).pluck(:student_id)
           (student_ids - exclude_student_ids).each do |student_id|
             StudentList.create(student_id: student_id, list_id: list.id)
           end
@@ -102,19 +102,114 @@ class Student < ApplicationRecord
   end
 
   def active_invoice
-    self.invoices.latest.is_a?(Invoice)? self.invoices.latest : nil
+    @active_invoice = self.invoices.latest.is_a?(Invoice)? self.invoices.latest : nil
+  end
+
+  def all_active_invoices
+    if self.invoices.size > 0
+      @all_active_invoices = self.invoices
+    else
+      @all_active_invoices = nil
+    end
+  end
+
+  def all_active_invoices_year
+    self.all_active_invoices.nil? ? '' : self.invoices.pluck(:school_year).uniq
+  end
+
+  def is_active_invoice_year_semester(year, semester)
+    @year = year
+    @semester = semester
+    if self.all_active_invoices_year.include?(year)
+      current_invoice = self.all_active_invoices.where(school_year: year, semester: semester)
+      if current_invoice.size > 0
+        if current_invoice.select { |i| i.line_items.first.detail =~ /Tuition/ }.size > 0
+          return true
+        else
+          return false
+        end
+      else
+        return false
+      end
+    end
+  end
+
+  def all_active_invoices_tuition_fee
+    @all_active_invoices_tuition_fee = 0.0
+    if self.all_active_invoices != nil
+      self.all_active_invoices.each do |invoice|
+        if invoice.tuition_fee != nil && invoice.school_year == @year && invoice.semester == @semester
+          @all_active_invoices_tuition_fee += invoice.tuition_fee
+        end
+      end
+    else
+      @all_active_invoices_tuition_fee = 0.0
+    end
+
+    if @all_active_invoices_tuition_fee > 0
+      return @all_active_invoices_tuition_fee
+    else
+      return ""
+    end
+
+  end
+
+  def all_active_invoices_other_fee
+    @all_active_invoices_other_fee = 0.0
+    if self.all_active_invoices != nil
+      self.all_active_invoices.each do |invoice|
+        if invoice.other_fee != nil && invoice.school_year == @year && invoice.semester == @semester
+          @all_active_invoices_other_fee += invoice.other_fee
+        end
+      end
+    else
+      @all_active_invoices_other_fee = 0.0
+    end
+
+    if @all_active_invoices_other_fee > 0.0
+      return @all_active_invoices_other_fee
+    else
+      return ""
+    end
+
+  end
+
+  def all_active_invoice_total_amount
+    all_active_invoice_total_amount = self.all_active_invoices_tuition_fee.to_f + self.all_active_invoices_other_fee.to_f
+    if all_active_invoice_total_amount > 0
+      return all_active_invoice_total_amount
+    else
+      return ""
+    end
   end
 
   def active_invoice_status
-    self.active_invoice.nil? ? 'ยังไม่ได้ชำระ' : (self.active_invoice.invoice_status.name == 'Active' ? 'ชำระแล้ว' : 'ยกเลิก')
+    if @active_invoice_status == nil
+      @active_invoice_status = self.active_invoice.nil? ? 'ยังไม่ได้ชำระ' : (self.active_invoice.invoice_status.name == 'Active' ? 'ชำระแล้ว' : 'ยกเลิก')
+    else
+      @active_invoice_status
+    end
+  end
+
+  def active_invoice_status=(value)
+    @active_invoice_status = value
+    @active_invoice_payment_method = ""
+    @active_invoice_tuition_fee = self.all_active_invoices_tuition_fee
+    @active_invoice_other_fee = self.all_active_invoices_other_fee
+    @active_invoice_total_amount = self.active_invoice_total_amount
+    @active_invoice_updated_at = ""
   end
 
   def active_invoice_payment_method
-    self.active_invoice.nil? ? '' : self.active_invoice.payment_methods.collect(&:payment_method).join(', ')
+    if @active_invoice_payment_method == nil
+      self.active_invoice.nil? ? '' : self.active_invoice.payment_methods.collect(&:payment_method).join(', ')
+    else
+      @active_invoice_payment_method
+    end
   end
 
   def active_invoice_tuition_fee
-    self.active_invoice.nil? ? '' : self.active_invoice.tuition_fee
+    self.all_active_invoices_tuition_fee
   end
 
   def active_invoice_entrance_fee
@@ -122,15 +217,27 @@ class Student < ApplicationRecord
   end
 
   def active_invoice_other_fee
-    self.active_invoice.nil? ? '' : self.active_invoice.other_fee
+    self.all_active_invoices_other_fee
   end
 
   def active_invoice_total_amount
-    self.active_invoice.nil? ? '' : self.active_invoice.total_amount
+    self.all_active_invoice_total_amount
   end
 
   def active_invoice_updated_at
-    self.active_invoice.nil? ? '' : self.active_invoice.updated_at
+    if @active_invoice_updated_at == nil
+      self.active_invoice.nil? ? '' : self.active_invoice.updated_at
+    else
+      @active_invoice_updated_at
+    end
+  end
+
+  def active_invoice_year
+    self.active_invoice.nil? ? '' : self.active_invoice.school_year
+  end
+
+  def active_invoice_semester
+    self.active_invoice.nil? ? '' : self.active_invoice.semester
   end
 
   def self.search(search)

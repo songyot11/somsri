@@ -1,5 +1,5 @@
 class ParentsController < ApplicationController
-  before_action :set_parent, only: [:show, :edit, :update, :destroy]
+  before_action :set_parent, only: [:edit, :update, :destroy]
   before_action :authenticate_user!
   load_and_authorize_resource
   # GET /parents
@@ -7,28 +7,28 @@ class ParentsController < ApplicationController
   def index
     students = Student.all.order("classroom ASC")
     class_select = (params[:class_select] || 'All')
-    @classroom_display = []
-    students.each do |student|
-      if !@classroom_display.include?(student.classroom)
-        @classroom_display.push(student.classroom)
-      end
-    end
-    if class_select.downcase == 'all'
-      @parents = Parent.with_deleted.page(params[:page]).search(params[:search]).order("deleted_at DESC , full_name ASC").includes(:students, :relationships, :invoices)
-    else
+    grade_select = (params[:grade_select] || 'All')
+    @classroom_display = Student.order("classroom ASC").select(:classroom).map(&:classroom).uniq.compact
+
+    if class_select.downcase == 'all' && grade_select.downcase == 'all'
+      parents = Parent.with_deleted
+    elsif grade_select.downcase == 'all' && class_select.downcase != 'all'
       parent_joins = Parent.joins(:students).where(students:{classroom: class_select})
-      @parents = parent_joins.with_deleted.search(params[:search]).page(params[:page]).order("parents.deleted_at DESC , parents.full_name ASC").includes(:students, :relationships, :invoices)
+      parents = parent_joins.with_deleted
+    elsif grade_select != 'all' && class_select.downcase == 'all'
+      grade = Grade.where(name: grade_select).first
+      parent_joins = Parent.joins(:students).where(students:{grade: grade.id})
+      parents = parent_joins.with_deleted
+    elsif grade_select != 'all' && class_select != 'all'
+      grade = Grade.where(name: grade_select).first
+      parent_joins = Parent.joins(:students).where(students:{grade: grade.id , classroom: class_select})
+      parents = parent_joins.with_deleted
     end
-      @filter_grade = class_select
+      @parents = parents.search(params[:search]).page(params[:page]).order("parents.deleted_at DESC , parents.full_name ASC").includes(:students, :relationships, :invoices)
+      @filter_class = class_select
+      @filter_grade = grade_select
       @menu = "ผู้ปกครอง"
       render "parents/index", layout: "application_invoice"
-  end
-
-  # GET /parents/1
-  # GET /parents/1.json
-  def show
-    @menu = "ผู้ปกครอง"
-    render "parents/show", layout: "application_invoice"
   end
 
   # GET /parents/new
@@ -58,7 +58,10 @@ class ParentsController < ApplicationController
     respond_to do |format|
       if @parent.save
         relation_assign
-        format.html { redirect_to @parent}
+        format.html do
+          flash[:success] = "เพิ่มผู้ปกครองเรียบร้อยแล้ว"
+          redirect_to parents_url
+        end
         format.json { render :show, status: :created, location: @parent }
       else
         format.html { render :new }
@@ -74,7 +77,10 @@ class ParentsController < ApplicationController
     respond_to do |format|
       if @parent.update(parent_params)
         relation_assign
-        format.html { redirect_to @parent}
+        format.html do
+          flash[:success] = "แก้ไขข้อมูลผู้ปกครองเรียบร้อยแล้ว"
+          redirect_to parents_url
+        end
         format.json { render :show, status: :ok, location: @parent }
       else
         format.html { render :edit }

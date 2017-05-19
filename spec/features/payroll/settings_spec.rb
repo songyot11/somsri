@@ -19,7 +19,7 @@ describe 'Employee Details', js: true do
   end
 
   it 'should update edit user detail' do
-    visit "/somsri_payroll#/setting"
+    visit "/main#/setting"
     sleep(1)
     page.fill_in 'username', :with => 'Akiyama Eve'
     page.fill_in 'useremail', :with => 'akiyama@eve.com'
@@ -27,12 +27,13 @@ describe 'Employee Details', js: true do
     page.fill_in 'schoolTaxId', :with => '1234567890123'
     page.fill_in 'address', :with => 'สถานที่แห่งหนึ่ง มียุงชุกชุม'
     page.fill_in 'zipcode', :with => '50000'
+    page.fill_in 'emailSchool', :with => 'mail@mail.com'
     page.fill_in 'phone', :with => '050999999'
     page.fill_in 'fax', :with => '050999999(2)'
     click_button('บันทึก')
     sleep(1)
 
-    visit "/somsri_payroll#/setting"
+    visit "/main#/setting"
     sleep(1)
     expect(find_field('username').value).to eq 'Akiyama Eve'
     expect(find_field('useremail').value).to eq 'akiyama@eve.com'
@@ -40,13 +41,14 @@ describe 'Employee Details', js: true do
     expect(find_field('schoolTaxId').value).to eq '1234567890123'
     expect(find_field('address').value).to eq 'สถานที่แห่งหนึ่ง มียุงชุกชุม'
     expect(find_field('zipcode').value).to eq '50000'
+    expect(find_field('emailSchool').value).to eq 'mail@mail.com'
     expect(find_field('phone').value).to eq '050999999'
     expect(find_field('fax').value).to eq '050999999(2)'
 
   end
 
   it 'should update password' do
-    visit "/somsri_payroll#/setting"
+    visit "/main#/setting"
     sleep(1)
     click_button('เปลี่ยนรหัสผ่าน')
     sleep(1)
@@ -69,7 +71,7 @@ describe 'Employee Details', js: true do
     sleep(1)
     first('a[class="nav-user avatar"]').trigger('click')
     sleep(1)
-    find('a[href="somsri_payroll#/setting"]').trigger('click')
+    find('a[href="/main#/setting"]').trigger('click')
     sleep(1)
     expect(page).to have_content('เปลี่ยนรหัสผ่าน')
     expect(page).to have_content('บันทึก')
@@ -79,7 +81,7 @@ describe 'Employee Details', js: true do
     sleep(1)
     first('a[class="nav-user avatar"]').trigger('click')
     sleep(1)
-    find('a[href="somsri_payroll#/setting"]').trigger('click')
+    find('a[href="/main#/setting"]').trigger('click')
     sleep(1)
     expect(page).to have_content('เปลี่ยนรหัสผ่าน')
     expect(page).to have_content('บันทึก')
@@ -89,7 +91,7 @@ describe 'Employee Details', js: true do
     sleep(1)
     first('a[class="nav-user avatar"]').trigger('click')
     sleep(1)
-    find('a[href="/somsri_payroll#/setting"]').trigger('click')
+    find('a[href="/main#/setting"]').trigger('click')
     sleep(1)
     expect(page).to have_content('เปลี่ยนรหัสผ่าน')
     expect(page).to have_content('บันทึก')
@@ -99,19 +101,17 @@ describe 'Employee Details', js: true do
     sleep(1)
     first('a[class="nav-user avatar"]').trigger('click')
     sleep(1)
-    find('a[href="somsri_payroll#/setting"]').trigger('click')
+    find('a[href="/main#/setting"]').trigger('click')
     sleep(1)
     expect(page).to have_content('เปลี่ยนรหัสผ่าน')
     expect(page).to have_content('บันทึก')
     expect(page).to have_content('ยกเลิก')
 
-    visit "/students/#{student[1].id}"
-    sleep(1)
-    eventually { expect(page).to have_content("รายละเอียดนักเรียน") }
+    visit "/students"
     sleep(1)
     first('a[class="nav-user avatar"]').trigger('click')
     sleep(1)
-    find('a[href="/somsri_payroll#/setting"]').trigger('click')
+    find('a[href="/main#/setting"]').trigger('click')
     sleep(1)
     eventually { expect(page).to have_content('เปลี่ยนรหัสผ่าน') }
     eventually { expect(page).to have_content('บันทึก') }

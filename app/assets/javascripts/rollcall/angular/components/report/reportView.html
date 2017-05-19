@@ -1,6 +1,9 @@
 <div ng-controller="reportCtrl" class="container-rollcall-report">
   <div id="rollcall-report" class="row form_1">
-    <div class="row head_title_rollcall">
+    <h2 class="text-center only-print">แบบบันทึกเวลาเรียนชั้นมัธยมศึกษาปีที่ <span ng-bind="report.displayListName"></span> ภาคเรียนที่ 1 ประจำปีการศึกษา 2560</h2>
+    <h2 class="text-center only-print">โรงเรียน <span ng-bind="report.info.name"></span> <span ng-bind="report.info.address"></span></h2>
+    <div class="space5 only-print"></div>
+    <div class="row head_title_rollcall only-view">
       <div class="col-xs-4">
         <span class="dropdown">
           <div class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="true">
@@ -27,7 +30,7 @@
           <ul class="dropdown-menu ">
             <li ng-repeat="data in report.lists">
               <a ng-click="report.selectList(data)" href="javascript:void(0)">
-                {{data.name}}
+                <span ng-bind="data.name"></span>
               </a>
             </li>
           </ul>
@@ -35,25 +38,48 @@
       </div>
     </div>
 
-    <div class="row head-sp">
+    <div class="row head-sp table-responsive">
         <table class="table">
-          <thead>
-            <th>เลขที่</th>
-            <th>ชื่อ - สกุล</th>
-            <th>วันที่</th>
-            <th ng-repeat="date in report.dates">{{date}}</th>
-            <th>มา</th>
+          <thead class="only-print-table">
+            <tr>
+              <th class="classroom-number-th" rowspan="2">เลขที่</th>
+              <th class="name-th" rowspan="2">ชื่อ - สกุล</th>
+              <th class="classroom-number-th" colspan="{{report.dates.length}}">เดือน {{ report.displayMonth.split(" ")[0] }}</th>
+              <th class="name-th" colspan="5">รวมจำนวนคาบ</th>
+            </tr>
+            <tr>
+              <th class="round-th only-view">วันที่</th>
+              <th class="date-th" ng-repeat="date in report.dates">{{date}}</th>
+              <th class="checked-th">มา</th>
+              <th class="late-th">สาย</th>
+              <th class="sick-th">ลาป่วย</th>
+              <th class="private-th">ลากิจ</th>
+              <th class="missing-th">ขาด</th>
+            </tr>
+          </thead>
+          <thead class="only-view-table">
+            <tr>
+              <th class="classroom-number-th">เลขที่</th>
+              <th class="name-th">ชื่อ - สกุล</th>
+              <th class="round-th only-view">วันที่</th>
+              <th class="date-th" ng-repeat="date in report.dates">{{date}}</th>
+              <th class="checked-th">มา</th>
+              <th class="late-th">สาย</th>
+              <th class="sick-th">ป่วย</th>
+              <th class="private-th">ลา</th>
+              <th class="missing-th">ขาด</th>
+            </tr>
           </thead>
           <tbody>
             <tr ng-repeat="data in report.datas">
               <th class="name_student" style="text-align:center;">{{data.classroom_number}}</th>
               <th class="name_student">{{data.name}}</th>
-              <td class="time_half">
+              <td class="time_half only-view">
                 <table class="time_rollcall">
                   <tr>
                     <td>เช้า</td>
                   </tr>
-                  <tr>
+                  <tr class="only-view">
                     <td>เย็น</td>
                   </tr>
                 </table>
@@ -61,20 +87,60 @@
               <td ng-repeat="roll_call in data.roll_calls">
                 <table class="status_rollcall">
                   <tr>
-                    <td  ng-bind-html="report.translateStatus(roll_call.morning)" ></td>
+                    <td ng-bind-html="report.translateStatus(roll_call.morning)" ></td>
                   </tr>
+                  <tr class="only-view">
+                    <td ng-bind-html="report.translateStatus(roll_call.afternoon)" ></td>
+                  </tr>
+                </table>
+              </td>
+              <td>
+                <table class="status_rollcall">
                   <tr>
-                    <td  ng-bind-html="report.translateStatus(roll_call.afternoon)" ></td>
+                    <td ng-bind-html="report.zeroToBlank(data.checked_morning)"></td>
+                  </tr>
+                  <tr class="only-view">
+                    <td ng-bind-html="report.zeroToBlank(data.checked_afternoon)"></td>
+                  </tr>
+                </table>
+              </td>
+              <td>
+                <table class="status_rollcall">
+                  <tr>
+                    <td><i class='fa fa-minus' aria-hidden='true'></i></td>
+                  </tr>
+                  <tr class="only-view">
+                    <td><i class='fa fa-minus' aria-hidden='true'></i></td>
+                  </tr>
+                </table>
+              </td>
+              <td>
+                <table class="status_rollcall">
+                  <tr>
+                    <td ng-bind-html="report.zeroToBlank(data.sick_leave_morning)"></td>
+                  </tr>
+                  <tr class="only-view">
+                    <td ng-bind-html="report.zeroToBlank(data.sick_leave_afternoon)"></td>
+                  </tr>
+                </table>
+              </td>
+              <td>
+                <table class="status_rollcall">
+                  <tr>
+                    <td ng-bind-html="report.zeroToBlank(data.personal_leave_morning)"></td>
+                  </tr>
+                  <tr class="only-view">
+                    <td ng-bind-html="report.zeroToBlank(data.personal_leave_afternoon)"></td>
                   </tr>
                 </table>
               </td>
               <td class="status_rollcall_data">
                 <table>
                   <tr>
-                    <td>{{ data.checked_morning  || 0 }}</td>
+                    <td ng-bind-html="report.zeroToBlank(data.missing_morning)"></td>
                   </tr>
-                  <tr>
-                    <td>{{ data.checked_afternoon || 0 }}</td>
+                  <tr class="only-view">
+                    <td ng-bind-html="report.zeroToBlank(data.missing_afternoon)"></td>
                   </tr>
                 </table>
               </td>

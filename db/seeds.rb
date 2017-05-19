@@ -1,6 +1,6 @@
 if School.count == 0
   School.create!([
-    {name: "Sunshine Kindergarten"}
+    {name: "Banana Kindergarten"}
   ])
 end
 schools = School.all
@@ -117,10 +117,10 @@ Employee.all.each do |employee|
 end
 
 TaxReduction.all.each do |tax|
-    if tax.expenses == 0
-        tax.expenses = 60000.0
-        tax.save
-    end
+  if tax.expenses == 0
+    tax.expenses = 60000.0
+    tax.save
+  end
 end
 
 # invoice
@@ -308,3 +308,130 @@ User.find(2).add_role "admin" if !User.find(2).has_any_role?
 User.find(3).add_role "finance_officer" if !User.find(3).has_any_role?
 User.find(4).add_role "finance_officer" if !User.find(4).has_any_role?
 User.find(5).add_role "admin" if !User.find(5).has_any_role?
+
+school = School.first
+if school
+  if !school.invoice_header
+    school.invoice_header = <<-HEAD
+    <div class="col-xs-8 text-slip1-school ng-binding" ng-bind-html="slip.header">
+      <div class="row">
+        <b class="name-school">โรงเรียนอนุบาลบานาน่า</b>
+      </div>
+      <div class="row">
+        โดย บริษัท สามหน่อยพอเพียง จำกัด
+      </div>
+      <div class="row">
+        000 หมู่ 0 ตำบลหนองควาย อำเภอหางดง จังหวัด เชียงใหม่ 50000
+      </div>
+      <div class="row">
+        <b>โทร/แฟซ์.</b> &nbsp;000 000 000-0, 000 0000 0000
+      </div>
+      <div class="row">
+        <b>E-mail:</b> &nbsp;info@sunshinekindergarten.com
+      </div>
+      <div class="row">
+        <b>เลขประจำตัวผู้เสียภาษี: </b>&nbsp; 0000000000000 &nbsp;<b>สาขาที่: </b>&nbsp;000000
+      </div>
+    </div>
+    HEAD
+    school.save
+  end
+
+  if !school.daily_report_header
+    school.daily_report_header = <<-HEAD
+    <div class="row">
+      <div class="col-xs-12">
+        <b class="name-school">โรงเรียนอนุบาลบานาน่า</b>
+      </div>
+    </div>
+    <div class="row">
+      <div class="col-xs-12">
+        สามหน่อยพอเพียง จำกัด
+      </div>
+    </div>
+    <div class="row">
+      <div class="col-xs-12">
+        000 หมู่ 0 ตำบลหนองควาย อำเภอหางดง จังหวัด เชียงใหม่ 50000
+      </div>
+    </div>
+    <div class="row">
+      <div class="col-xs-12">
+        <b>โทร/แฟซ์.</b> &nbsp;000 000 000-0, 000 0000 0000
+      </div>
+    </div>
+    <div class="row">
+      <div class="col-xs-12">
+        <b>E-mail:</b> &nbsp;info@sunshinekindergarten.com
+      </div>
+    </div>
+    <div class="row">
+      <div class="col-xs-12">
+        <b>เลขประจำตัวผู้เสียภาษี: </b>&nbsp; 0000000000000 &nbsp;<b>สาขาที่: </b>&nbsp;000000
+      </div>
+    </div>
+    HEAD
+    school.save
+  end
+
+  if !school.invoice_footer
+    school.invoice_footer = <<-FOOT
+    <div class="row name-school">
+      <b>เงื่อนไขการคืนเงิน / Refund Condition</b>
+    </div>
+    <div class="row">
+      <div class="col-xs-6 text-slip4-refund1">
+        <div class="row">** โรงเรียนขอสงวนสิทธิ์ในการคืนเงินค่าแรกเข้าทุกกรณี **</div>
+        <div class="row">** ชุดฟอร์มซื้อแล้วไม่รับคืน **</div>
+        <div class="row">
+          <div class="col-xs-6">หลังจากชำระค่าเทอม 2 สัปดาห์</div>
+          <div class="col-xs-6 pull-right">คืนเงิน 70%</div>
+        </div>
+        <div class="row">
+          <div class="col-xs-6">เรียน 1 สัปดาห์ (หรือน้อยกว่า)</div>
+          <div class="col-xs-6 pull-right">คืนเงิน 70%</div>
+        </div>
+        <div class="row">
+          <div class="col-xs-6">เรียน 2 สัปดาห์</div>
+          <div class="col-xs-6 pull-right">คืนเงิน 60%</div>
+        </div>
+        <div class="row">
+          <div class="col-xs-6">เรียน 3 สัปดาห์</div>
+          <div class="col-xs-6 pull-right">คืนเงิน 50%</div>
+        </div>
+        <div class="row">
+          <div class="col-xs-6">เรียน 4 สัปดาห์</div>
+          <div class="col-xs-6 pull-right">คืนเงิน 40%</div>
+        </div>
+        <div class="row">
+          <div class="col-xs-12">**กรณีเรียนมากกว่า 4 สัปดาห์ ขอสงวนสิทธิ์ในการคืนค่าเทอม**</div>
+        </div>
+      </div>
+      <div class="col-xs-6 text-slip4-refund2">
+        <div class="row">**&nbsp;<b>Entrance fee</b>&nbsp;once paid will not be refunded under any circumstances.**</div>
+        <div class="row">
+          <div class="col-xs-6">After 2 weeks tution paid</div>
+          <div class="col-xs-6 pull-right">Refund 70%</div>
+        </div>
+        <div class="row">
+          <div class="col-xs-6">Study 1 weeks(or less then 1 week)</div>
+          <div class="col-xs-6 pull-right">Refund 70%</div>
+        </div>
+        <div class="row">
+          <div class="col-xs-6">Study 2 weeks</div>
+          <div class="col-xs-6 pull-right">Refund 60%</div>
+        </div>
+        <div class="row">
+          <div class="col-xs-6">Study 3 weeks</div>
+          <div class="col-xs-6 pull-right">Refund 50%</div>
+        </div>
+        <div class="row">
+          <div class="col-xs-6">Study 4 weeks</div>
+          <div class="col-xs-6 pull-right">Refund 40%</div>
+        </div>
+        <div class="row">** After 4 weeks Non Refund **</div>
+      </div>
+    </div>
+    FOOT
+    school.save
+  end
+end

@@ -15,6 +15,7 @@ Rails.application.routes.draw do
   get "/somsri_invoice" => "menu#landing_invoice"
   get "/somsri_payroll" => "menu#landing_payroll"
   get "/somsri_rollcall" => "menu#landing_rollcall"
+  get "/main" => "menu#landing_main"
 
   resources :payrolls, only: [:index, :update, :create] do
     collection do
@@ -87,6 +88,8 @@ Rails.application.routes.draw do
     end
   end
   get "/invoice_total_amount" => "students#invoice_total_amount"
+  get "/invoice_years" => "invoices#invoice_years"
+  get "/invoice_semesters" => "invoices#invoice_semesters"
 
   resources :report_roll_calls, only: [] do
     collection do

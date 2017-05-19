@@ -45,7 +45,6 @@ gem 'slack-notifier'
 
 gem 'prawn'
 gem 'pdf-toolkit'
-gem 'fileutils'
 
 # Pagination
 gem 'will_paginate', '~> 3.1.0'
@@ -55,7 +54,7 @@ gem "activerecord-import"
 gem 'rolify'
 
 #Paranoia
- gem 'paranoia', '~> 2.1', '>= 2.1.5'
+gem 'paranoia', '~> 2.1', '>= 2.1.5'
 
 gem "aws-sdk"
 gem "paperclip", "~> 5.0.0"
@@ -67,6 +66,7 @@ end
 
 group :test do
   gem 'rspec-rails'
+  gem 'rails-controller-testing'
   gem 'machinist'
   gem 'faker'
 

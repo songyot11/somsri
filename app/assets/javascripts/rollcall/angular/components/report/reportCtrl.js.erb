@@ -7,9 +7,10 @@
     $rootScope.menu = "รายงาน"
     var ctrl = this
     $rootScope.loadAndAuthorizeResource("report_roll_call", function(){
-      var missing = ['0'];
-      var leave = ['1','2'];
-      var checked = ['3','4','5'];
+      var MISSING = ['0'];
+      var SICK_LEAVE = ['1'];
+      var PERSONAL_LEAVE = ['2'];
+      var CHECKED = ['3','4','5'];
 
       function getDateInMonth(month) {
         service.getDateInMonth(new Date(month.date)).then(function(resp){
@@ -19,20 +20,49 @@
 
       function getRollCall(list, month){
         service.getRollCall(list.id, new Date(month.date)).then(function(resp){
-          ctrl.datas = resp.data;
+          ctrl.datas = resp.data["rollcall"];
+          ctrl.info = resp.data["info"];
           // checked count
           if(ctrl.datas && ctrl.datas.length > 0){
             for(var i = 0; i < ctrl.datas.length; i++){
               if(ctrl.datas[i] && ctrl.datas[i].roll_calls && ctrl.datas[i].roll_calls.length > 0){
+
                 ctrl.datas[i].checked_morning = 0;
+                ctrl.datas[i].missing_morning = 0;
+                ctrl.datas[i].sick_leave_morning = 0;
+                ctrl.datas[i].personal_leave_morning = 0;
+
                 ctrl.datas[i].checked_afternoon = 0;
+                ctrl.datas[i].missing_afternoon = 0;
+                ctrl.datas[i].sick_leave_afternoon = 0;
+                ctrl.datas[i].personal_leave_afternoon = 0;
+
                 for(var j = 0; j < ctrl.datas[i].roll_calls.length; j++){
                   var roll_call = ctrl.datas[i].roll_calls[j];
-                  if(roll_call && checked.indexOf(roll_call.morning) > -1){
+                  if(roll_call && CHECKED.indexOf(roll_call.morning) > -1){
                     ctrl.datas[i].checked_morning += 1;
                   }
-                  if(roll_call && checked.indexOf(roll_call.afternoon) > -1){
+                  if(roll_call && MISSING.indexOf(roll_call.morning) > -1){
+                    ctrl.datas[i].missing_morning += 1;
+                  }
+                  if(roll_call && PERSONAL_LEAVE.indexOf(roll_call.morning) > -1){
+                    ctrl.datas[i].personal_leave_morning += 1;
+                  }
+                  if(roll_call && SICK_LEAVE.indexOf(roll_call.morning) > -1){
+                    ctrl.datas[i].sick_leave_morning += 1;
+                  }
+
+                  if(roll_call && CHECKED.indexOf(roll_call.afternoon) > -1){
                     ctrl.datas[i].checked_afternoon += 1;
+                  }
+                  if(roll_call && MISSING.indexOf(roll_call.afternoon) > -1){
+                    ctrl.datas[i].missing_afternoon += 1;
+                  }
+                  if(roll_call && PERSONAL_LEAVE.indexOf(roll_call.afternoon) > -1){
+                    ctrl.datas[i].personal_leave_afternoon += 1;
+                  }
+                  if(roll_call && SICK_LEAVE.indexOf(roll_call.afternoon) > -1){
+                    ctrl.datas[i].sick_leave_afternoon += 1;
                   }
                 }
               }
@@ -46,13 +76,23 @@
       }
 
       ctrl.translateStatus = function(status){
-        if(status == 0){ return '<i class="fa fa-times" aria-hidden="true"></i>' }
+        if(status && status.toString() == "0"){ return '<i class="fa fa-times" aria-hidden="true"></i>'}
         else if(status == 1){  return '<i class="fa fa-heartbeat" aria-hidden="true"></i>' }
         else if(status == 2){  return '<i class="fa fa-briefcase" aria-hidden="true"></i>' }
         else if(status == 3){  return '<i class="fa fa-check" aria-hidden="true"></i>' }
         else if(status == 4){  return '<i class="fa fa-clock-o" aria-hidden="true"></i>' }
         else if(status == 5){  return '<i class="fa fa-trophy" aria-hidden="true"></i>' }
         else { return '<i class="fa fa-minus" aria-hidden="true"></i>' }
+      }
+
+      ctrl.zeroToBlank = function(data){
+        if(data && data == 0){
+          return "<i class='fa fa-minus' aria-hidden='true'></i>"
+        }if(data){
+          return data.toString()
+        }else{
+          return "<i class='fa fa-minus' aria-hidden='true'></i>"
+        }
       }
 
       ctrl.selectList = function(list){

@@ -172,18 +172,8 @@
             ctrl.pinChars = []
           }
 
-          // set display name
-          var hasPrefixThai = e.prefix_thai && e.prefix_thai.length > 0
-          var hasFirstNameThai = e.first_name_thai && e.first_name_thai.length > 0
-          var hasLastNameThai = e.last_name_thai && e.last_name_thai.length > 0
-          if (hasPrefixThai && hasFirstNameThai && hasLastNameThai) {
-            ctrl.displayName = e.prefix_thai + " " + e.first_name_thai + " " + e.last_name_thai
-          } else {
-            ctrl.displayName = e.prefix + " " + e.first_name + " ";
-            if(e.middle_name && e.middle_name.length > 0){ ctrl.displayName += e.middle_name + " " }
-            ctrl.displayName += e.last_name;
-          }
-          ctrl.displayName = e.id + ': ' + ctrl.displayName;
+
+          ctrl.displayName = e.id + ': ' + ctrl.datas.employee_display_name;
 
           // init tax reduction default
           if(ctrl.datas.tax_reduction.no_income_spouse > 0)

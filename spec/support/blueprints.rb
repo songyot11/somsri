@@ -71,7 +71,7 @@ List.blueprint do
 end
 
 Parent.blueprint do
-  full_name { Faker::Name.full_name }
+  full_name { Faker::Name.name }
   mobile { Faker::PhoneNumber.cell_phone }
 end
 
@@ -84,8 +84,15 @@ RollCall.blueprint do
 end
 
 Invoice.blueprint do
-  student_id { object.student ? object.student.id : Student.make!.id }
-  invoice_status_id { object.invoice_status ? object.invoice_status.id : InvoiceStats.make!.id }
+  school_year       { 2560 }
+  semester          { 1 }
+  parent_id         { object.parent ? object.parent.id : Parent.make!.id }
+  student_id        { object.student ? object.student.id : Student.make!.id }
+  invoice_status_id { object.invoice_status ? object.invoice_status.id : InvoiceStatus.make!.id }
+end
+
+InvoiceStatus.blueprint do
+  name { Faker::Lorem.word }
 end
 
 LineItem.blueprint do
@@ -100,4 +107,8 @@ end
 
 Grade.blueprint do
   name { Faker::Lorem.word }
+end
+
+StudentsParent.blueprint do
+
 end
