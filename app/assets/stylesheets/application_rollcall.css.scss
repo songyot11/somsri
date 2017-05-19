@@ -97,7 +97,7 @@ ul.nav.navbar-nav.navbar-right.dropdown{
 }
 
 .row.form_1{
-  margin-top: 50px;
+  margin-top: 10px;
 }
 .head_title_rollcall{
   color: #5a5a5a;
@@ -362,4 +362,23 @@ td.status_rollcall_data{
     line-height: 14px;
     height: 20px;
   }
+  .btn-to-print-rollcall{
+    display: none;
+  }
+}
+
+.btn-to-print-rollcall,.btn-to-print-rollcall:focus{
+  padding: 8px 32px;
+  color: #fff;
+  font-size: 16px;
+  border-radius: 0px;
+  background-color: #3fa1e6;
+  float: right;
+  margin-right: -15px;
+}
+.btn-to-print-rollcall:hover{
+  color: #3fa1e6;
+  background-color: #fff;
+  transition: 0.3s;
+  border: 1px solid #3fa1e6;
 }
