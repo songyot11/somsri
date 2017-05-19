@@ -5,8 +5,10 @@ class DailyReportsController < ApplicationController
 
   # GET /daily_reports
   def show
+    school = School.first
     render json: {
-      school: School.first,
+      logo: school.logo.url(:medium),
+      school: school,
       cash: @daily_report.cash,
       credit_card: @daily_report.credit_card,
       cheque: @daily_report.cheque,

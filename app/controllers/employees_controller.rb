@@ -17,7 +17,9 @@ class EmployeesController < ApplicationController
                                                         .select { |key, value| value[:value] > 0}
       employee[:payroll][:pay_orders] = employee[:payroll][:pay_orders]
                                                         .select { |key, value| value[:value] > 0}
-      employee[:school] = School.first
+      school = School.first
+      employee[:school] = school
+      employee[:logo] = school.logo.url(:medium)
       render json: employee, status: :ok
     else
       render json: [], status: :ok
@@ -33,7 +35,9 @@ class EmployeesController < ApplicationController
                                                         .select { |key, value| value[:value] > 0}
       employee[:payroll][:pay_orders] = employee[:payroll][:pay_orders]
                                                         .select { |key, value| value[:value] > 0}
-      employee[:school] = School.first
+      school = School.first
+      employee[:school] = school
+      employee[:logo] = school.logo.url(:medium)
       employees << employee
     end
     render json: employees, status: :ok
