@@ -182,7 +182,7 @@ class PayrollsController < ApplicationController
 
   # POST /payrolls/
   def create
-    employees = Employee.all.to_a
+    employees = Employee.all.without_deleted.to_a
     payrolls = Payroll.joins(:employee)
                       .where(employee_id: employees, effective_date: DateTime.parse(create_params[:effective_date]))
     render json: {error: "PAYROLLS_EXIST"}, status: :ok and return if payrolls.count > 0 && !option_params[:force_create]

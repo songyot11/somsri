@@ -1,5 +1,5 @@
 class Payroll < ApplicationRecord
-  acts_as_paranoid
+  acts_as_paranoid without_default_scope: true
   belongs_to :employee
   validate :already_payroll_on_month, on: :create
   before_validation :set_created_at
