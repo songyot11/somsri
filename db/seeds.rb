@@ -217,13 +217,8 @@ if Student.where(student_number: 2001..2040).count == 0 && Student.where(student
 
   user_a = users[0]
   user_b = users.count > 1 ? users[1] : users[0]
-  l11 = List.create({ name: "ม. 1/1", category: "roll_call", user_id: user_a.id })
-  l12 = List.create({ name: "ม. 1/2", category: "roll_call", user_id: user_b.id })
-
-  ClassPermision.create({list_id: l11.id, user_id: user_a.id })
-  ClassPermision.create({list_id: l12.id, user_id: user_a.id })
-  ClassPermision.create({list_id: l11.id, user_id: user_b.id })
-  ClassPermision.create({list_id: l12.id, user_id: user_b.id })
+  l11 = List.create({ name: "ม. 1/1", category: "roll_call" })
+  l12 = List.create({ name: "ม. 1/2", category: "roll_call" })
 
   StudentList.create({ student_id: a11.id, list_id: l11.id })
   StudentList.create({ student_id: a12.id, list_id: l11.id })
