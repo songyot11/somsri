@@ -144,7 +144,7 @@ class StudentsController < ApplicationController
     begin
       @student = Student.find(params[:student_id])
       @student.really_destroy!
-      flash[:success] = "ลบนักเรียนเรียบร้อยแล้ว"
+      flash[:denger] = "ลบนักเรียนเรียบร้อยแล้ว"
     rescue ActiveRecord::DeleteRestrictionError => e
       @student.errors.add(:base, e)
       flash[:error] = "#{e}"

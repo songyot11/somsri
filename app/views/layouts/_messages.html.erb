@@ -1,7 +1,7 @@
 <%# Rails flash messages styled for Bootstrap 4.0 %>
 <% flash.each do |name, msg| %>
   <% if msg.is_a?(String) %>
-    <div class="alert alert-<%= name.to_s == 'notice' ? 'success' : 'danger' %>" role="alert">
+    <div class="alert alert-<%= name.to_s == 'success' ? 'success' : 'danger' %>" role="alert">
       <button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button>
       <%= content_tag :div, t(msg), :id => "flash_#{name}" %>
     </div>
