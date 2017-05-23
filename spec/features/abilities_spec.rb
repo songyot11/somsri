@@ -47,7 +47,7 @@ describe 'Abilities', js: true do
       expect(page).to have_content 'รหัส ชื่อ เลขบัญชี เงินเดือน'
     end
 
-    it 'can goto payroll setting' do
+    it 'can goto setting' do
       visit "/main#/setting"
       sleep(1)
       expect(page).to have_content 'ชื่อ อีเมล รหัสผ่าน เปลี่ยนรหัสผ่าน'
@@ -145,7 +145,7 @@ describe 'Abilities', js: true do
       expect(page).to have_content menu_content
     end
 
-    it 'can goto payroll setting' do
+    it 'can goto setting' do
       visit "/main#/setting"
       sleep(1)
       expect(page).to have_content 'ชื่อ อีเมล รหัสผ่าน เปลี่ยนรหัสผ่าน'
