@@ -95,7 +95,7 @@ class InvoicesController < ApplicationController
       parent = Parent.find_or_create_by(parent_params);
       student = nil
       # Clean Up Student's name
-      student_name = student_params[:full_name].gsub('ด.ช.', '').gsub('ด.ญ.', '').gsub('เด็กหญิง', '').gsub('เด็กชาย', '')
+      student_name = student_params[:full_name].gsub('ด.ช.', '').gsub('ด.ญ.', '').gsub('เด็กหญิง', '').gsub('เด็กชาย', '').strip.gsub(/\s+/,' ')
 
       # try to search by Student Number
       if student_params[:student_number].present? && student_params[:student_number].size > 0

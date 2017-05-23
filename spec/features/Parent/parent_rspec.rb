@@ -73,7 +73,6 @@ describe 'Invoice-Report', js: true do
   it 'should can not destroy parent' do
     visit "/parents/#{parent[1].id}"
     sleep(1)
-    page.save_screenshot('~/screenshot.png')
     eventually { expect(page).to have_no_content("Destroy") }
   end
 
