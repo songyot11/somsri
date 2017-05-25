@@ -3,7 +3,7 @@ function printStudent(){
   $.get("/students?" + params_string, { for_print: true })
     .done(function( data ) {
       var html = "";
-      var size = 50;
+      var size = 40;
       var order = 1;
       for (var i=0; i<data.student_list.length; i+=size) {
         var dataPerPage = data.student_list.slice(i,i+size);
@@ -11,7 +11,7 @@ function printStudent(){
           '<div class="list-page">' +
             '<div class="row">' +
               '<div id="student-list-header" class="col-xs-12 text-center">' +
-                'บัญชีรายชื่อนักเรียน  ชั้น.......................................... ภาคเรียนที่ .../'+ data.school_year +
+                'บัญชีรายชื่อนักเรียน  ชั้น .......................................... ภาคเรียนที่ ..../'+ data.school_year +
               '</div>' +
             '</div>' +
             '<div class="space10"></div>' +
@@ -20,22 +20,22 @@ function printStudent(){
                 '<table style="width:100%">' +
                   '<thead>' +
                     '<tr>' +
-                      '<th>ลำดับ</th>' +
-                      '<th>เลขประจำตัว</th>' +
-                      '<th>ชื่อ - นามสกุล</th>' +
-                      '<th>รหัสเลขประจำตัวประชาชน 13 หลัก</th>' +
-                      '<th>วัน เดือน ปีเกิด</th>' +
+                      '<th class="text-center">ลำดับ</th>' +
+                      '<th class="text-center">เลขประจำตัว</th>' +
+                      '<th class="text-center">ชื่อ - นามสกุล</th>' +
+                      '<th class="text-center">รหัสเลขประจำตัวประชาชน 13 หลัก</th>' +
+                      '<th class="text-center">วัน เดือน ปีเกิด</th>' +
                     '</tr>' +
                   '</thead>' +
                   '<tbody>';
         for (var j=0; j<dataPerPage.length; j++) {
           html +=
                     '<tr>' +
-                      '<td>' + order + '</td>' +
-                      '<td>' + dataPerPage[j].student_number + '</td>' +
+                      '<td class="text-center">' + order + '</td>' +
+                      '<td class="text-center">' + dataPerPage[j].student_number + '</td>' +
                       '<td>' + dataPerPage[j].full_name + '</td>' +
-                      '<td>' + dataPerPage[j].national_id + '</td>' +
-                      '<td>' + dataPerPage[j].birthdate + '</td>' +
+                      '<td class="text-center">' + dataPerPage[j].national_id + '</td>' +
+                      '<td class="text-center">' + dataPerPage[j].birthdate + '</td>' +
                     '</tr>';
           order = order + 1;
         }

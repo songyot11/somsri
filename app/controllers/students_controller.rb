@@ -70,7 +70,7 @@ class StudentsController < ApplicationController
     @filter_class = class_select
     if params[:for_print]
       results = {
-        school_year: SchoolSetting.school_year,
+        school_year: SchoolSetting.school_year_or_default(".........."),
         student_list: []
       }
       @students.to_a.each do |student|
