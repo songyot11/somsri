@@ -2,12 +2,7 @@
   <div ng-repeat="employee in slipInfo.employee_slips">
     <!-- line logo -->
     <div class="row">
-      <div class="col-xs-2">
-        <center><img id="slipLogo" ng-src="{{ employee.logo }}" class="img-responsive"></center>
-      </div>
-      <div class="col-xs-10 school-name">
-        <span class="school-name">{{ employee.school.name }}</span>
-      </div>
+      <div class="col-xs-12 text-slip1-school" ng-bind-html="employee.header"></div>
     </div>
 
     <!-- line 1 -->
