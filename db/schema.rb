@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20170518103715) do
+ActiveRecord::Schema.define(version: 20170522104634) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -263,6 +263,10 @@ ActiveRecord::Schema.define(version: 20170518103715) do
     t.index ["list_id"], name: "index_roll_calls_on_list_id", using: :btree
     t.index ["student_id", "list_id", "check_date", "round"], name: "index_roll_calls_uniq_roll", unique: true, using: :btree
     t.index ["student_id"], name: "index_roll_calls_on_student_id", using: :btree
+  end
+
+  create_table "school_settings", force: :cascade do |t|
+    t.string "school_year", default: ""
   end
 
   create_table "schools", force: :cascade do |t|

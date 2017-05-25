@@ -80,6 +80,7 @@ class InvoicesController < ApplicationController
     end
 
     render json: {
+      school_year: SchoolSetting.school_year,
       last_invoice_id: last_invoice_id,
       student_info: student_info,
       parent_info: parent_info,
@@ -137,7 +138,7 @@ class InvoicesController < ApplicationController
       invoice_hash.delete(:items)
       invoice_hash.delete(:grade)
       invoice_hash.delete(:grade_name)
-
+      invoice_hash[:school_year] = SchoolSetting.school_year
       invoice = Invoice.new(invoice_hash)
       invoice.parent_id = parent.id
       invoice.student_id = student.id

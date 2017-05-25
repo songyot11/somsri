@@ -5,6 +5,12 @@ if School.count == 0
 end
 schools = School.all
 
+if SchoolSetting.count == 0
+  SchoolSetting.create!([
+    {school_year: "2560"}
+  ])
+end
+
 if User.count == 0
   User.create!([
     {email: "test@test.com", password: "password", password_confirmation: "password", reset_password_token: nil, reset_password_sent_at: nil, remember_created_at: nil, sign_in_count: 0, current_sign_in_at: nil, last_sign_in_at: nil, current_sign_in_ip: nil, last_sign_in_ip: nil, school_id: schools[0].id, name: nil},

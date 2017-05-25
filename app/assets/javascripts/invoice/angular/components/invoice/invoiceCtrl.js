@@ -161,22 +161,25 @@
           ctrl.parent_info = resp.data.parent_info;
           ctrl.line_items_info = resp.data.line_items_info;
           ctrl.grades = resp.data.grades;
+
+          var nowDate = new Date();
+          // Clone to prevent the reset value
+          ctrl.datas = JSON.parse(JSON.stringify(DEFAULT_INVOICE))
+          ctrl.datas.invoice.semester = "1" ;
+          ctrl.datas.payment_method = {};
+          ctrl.datas.payment_method.is_cash = false;
+          ctrl.datas.payment_method.is_credit_card = true;
+          ctrl.datas.payment_method.is_transfer = false;
+          ctrl.datas.payment_method.is_cheque = false;
+          ctrl.datas.invoice.school_year = resp.data.school_year;
           ctrl.datas.invoice.grade_name = resp.data.grades[0];
+
+          ctrl.date_display = nowDate.getDate() + "/" + (nowDate.getMonth() + 1) + "/" + (nowDate.getFullYear() + 543);
+          ctrl.availableCurrencies = Currency.all();
+          ctrl.invoiceTotal();
         },function(resp) {
         });
-        var nowDate = new Date();
-        // Clone to prevent the reset value
-        ctrl.datas = JSON.parse(JSON.stringify(DEFAULT_INVOICE))
-        ctrl.datas.invoice.semester = "1" ;
-        ctrl.datas.payment_method = {};
-        ctrl.datas.payment_method.is_cash = true;
-        ctrl.datas.payment_method.is_credit_card = false;
-        ctrl.datas.payment_method.is_transfer = false;
-        ctrl.datas.payment_method.is_cheque = false;
-        ctrl.datas.invoice.school_year = nowDate.getFullYear() + 543;
-        ctrl.date_display = nowDate.getDate() + "/" + (nowDate.getMonth() + 1) + "/" + (nowDate.getFullYear() + 543);
-        ctrl.availableCurrencies = Currency.all();
-        ctrl.invoiceTotal();
+
       })()
 
       // Runs on document.ready

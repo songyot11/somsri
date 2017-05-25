@@ -1,11 +1,18 @@
 <%- model_class = Student -%>
+<%= javascript_include_tag 'print_student_list' %>
 <%= render 'layouts/messages' %>
-<div id="student-index" class="container-fluid">
+<div id="student-list-for-print" class="only-print"></div>
+<div id="student-index" class="container-fluid only-view">
   <div class="row head-sp">
     <div class="col-xs-2">
       <h1>นักเรียน</h1>
     </div>
-    <div class="col-xs-2 col-xs-offset-8" style="text-align: right; margin-top: 15px;">
+    <div class="col-xs-3 col-xs-offset-5" style="text-align: right; margin-top: 15px;">
+       <%= link_to "พิมพ์บัญชีรายชื่อนักเรียน", "#",
+              :class => 'btn btn-add-ps float-right',
+              :onclick => 'printStudent()' %>
+    </div>
+    <div class="col-xs-2" style="text-align: right; margin-top: 15px;">
        <%= link_to t('.addstudent', :default => t("helpers.links.addstudent")),
                   new_student_path,
                   :class => 'btn btn-add-ps float-right' %>
