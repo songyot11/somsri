@@ -87,9 +87,9 @@ ActiveRecord::Schema.define(version: 20170525065816) do
     t.string   "employee_type",        default: "ลูกจ้างประจำ", null: false
     t.boolean  "pay_social_insurance"
     t.boolean  "pay_pvf"
-    t.string   "pin"
     t.integer  "grade_id"
     t.string   "classroom"
+    t.string   "pin"
     t.string   "img_url_file_name"
     t.string   "img_url_content_type"
     t.integer  "img_url_file_size"
