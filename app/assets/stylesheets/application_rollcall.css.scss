@@ -96,7 +96,7 @@ ul.nav.navbar-nav.navbar-right.dropdown{
     margin-right:-4px;
 }
 
-.row.form_1{
+.form_1{
   margin-top: 10px;
 }
 .head_title_rollcall{
@@ -174,9 +174,7 @@ td.status_rollcall_data{
   border-right: none !important;
   border-left: none !important;
 }
-.container-rollcall-report{
-  margin: 120px 100px 150px 100px;
-}
+
 .row.head-sp{
   font-size: 16px;
 }
@@ -377,7 +375,7 @@ td.status_rollcall_data{
   transition: all 0.25s ease;
   font-size: 16px;
   float: right;
-  margin-right: -15px;
+  margin-top: 20px;
 
   &:hover{
     background-color: transparent;

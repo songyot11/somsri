@@ -595,7 +595,7 @@ a.text-mane-back,a.text-mane-back:focus{
     text-align: right;
   }
   th.forprint-h_table.print_name{
-    width: 60px !important;
+    width: 300px !important;
   }
   th.text-center.forprint-h_table.forprint_table.this_account{
     width: 184px !important;
@@ -1306,6 +1306,7 @@ a.dropdown-item{
 
   .top > span{
     border-right: 1px solid #ccc;
+    border-left: 1px solid #ccc;
     font-weight: 600;
     margin-right: -5px;
   }

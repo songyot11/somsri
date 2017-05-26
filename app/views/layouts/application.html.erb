@@ -35,8 +35,7 @@
       <% if !user_signed_in? %><header style="display:none;"><% else %><header><% end %>
         <%= render 'layouts/navigation' %>
       </header>
-      <div class="container">
+      <div class="top-bar-space"></div>
         <%= yield %>
-      </div>
     </body>
 </html>
