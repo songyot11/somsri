@@ -1,40 +1,50 @@
 <div id="payroll" class="row">
     <div class="col-lg-12">
       <div class="row" style="margin-bottom: 15px;">
-        <div class="col-md-12">
+        <div class="col-md-5">
+          <div class="dropdown">
+            <h3 id="month-list" data-toggle="dropdown" style="margin-top:10px;">
+              <span ng-bind="payroll.currentDateString" role="button"></span>
+              <span class="caret"></span>
+            </h3>
+            <ul class="dropdown-menu" aria-labelledby="month-list">
+              <li ng-repeat="effectiveDate in payroll.effectiveDates">
+                <a ng-click="payroll.switchMonth(effectiveDate)">
+                  <button>{{ effectiveDate["date_string"] }}</button>
+                </a>
+              </li>
+            </ul>
+          </div>
+        </div>
+        <div class="col-md-7">
           <div class="pull-right">
-            <div class="btn-group filter-btn">
-                <label class="btn btn-md employee-type" ng-click="payroll.employeeTypeFilter()" ng-model="payroll.employeeTypeMode.normal" style="border-radius: 0px;" uib-btn-checkbox>ลูกจ้างประจำ</label>
-                <label class="btn btn-md employee-type" ng-click="payroll.employeeTypeFilter()" ng-model="payroll.employeeTypeMode.temporary" uib-btn-checkbox>ลูกจ้างชั่วคราว</label>
-                <label class="btn btn-md employee-type" ng-click="payroll.employeeTypeFilter()" ng-model="payroll.employeeTypeMode.probationary" uib-btn-checkbox>ลูกจ้างทดลองงาน</label>
-                <label class="btn btn-md employee-type" ng-click="payroll.employeeTypeFilter()" ng-model="payroll.employeeTypeMode.daily" style="border-radius: 0px;" uib-btn-checkbox>ลูกจ้างรายวัน</label>
-            </div>
             <a class="btn btn-md btn-payroll"
               href="/payrolls/social_insurance_pdf?effective_date={{payroll.currentEffectiveDate['date_time'] | encodeString }}"
-              target="_blank" ng-show="payroll.currentEffectiveDate">ยื่นประกันสังคม</a>
-            <a class="btn btn-md btn-payroll" ng-click="payroll.createPayrolls()" href="javascript:void(0)">
+              target="_blank" ng-show="payroll.currentEffectiveDate">สำหรับประกันสังคม</a>
+            <a class="btn btn-md btn-payroll-starts" ng-click="payroll.createPayrolls()" href="javascript:void(0)">
               เริ่มออกเงินเดือน
             </a>
           </div>
         </div>
       </div>
         <div class="total-wrapper payroll-content container-fluid">
-            <p class="text-right" ng-show="false">
-                แก้ไขล่าสุด 25 ธ.ค. 59 10:50 โดย Somkid
-            </p>
-            <div class="dropdown">
-              <h3 id="month-list" data-toggle="dropdown">
-                <span ng-bind="payroll.currentDateString" role="button"></span>
-                <span class="caret"></span>
-              </h3>
-              <ul class="dropdown-menu" aria-labelledby="month-list">
-                <li ng-repeat="effectiveDate in payroll.effectiveDates">
-                  <a ng-click="payroll.switchMonth(effectiveDate)">
-                    <button>{{ effectiveDate["date_string"] }}</button>
-                  </a>
-                </li>
-              </ul>
+          <div class="row">
+            <div class="col-md-6">
+              <p class="text-right" ng-show="false">
+                  แก้ไขล่าสุด 25 ธ.ค. 59 10:50 โดย Somkid
+              </p>
             </div>
+            <div class="col-md-6">
+              <div class="pull-right">
+                <div class="btn-group filter-btn">
+                    <label class="btn btn-md employee-type" ng-click="payroll.employeeTypeFilter()" ng-model="payroll.employeeTypeMode.normal" style="border-radius: 50px;" uib-btn-checkbox>ลูกจ้างประจำ</label>
+                    <label class="btn btn-md employee-type" ng-click="payroll.employeeTypeFilter()" ng-model="payroll.employeeTypeMode.temporary" style="border-radius: 50px;" uib-btn-checkbox>ลูกจ้างชั่วคราว</label>
+                    <label class="btn btn-md employee-type" ng-click="payroll.employeeTypeFilter()" ng-model="payroll.employeeTypeMode.probationary" style="border-radius: 50px;" uib-btn-checkbox>ลูกจ้างทดลองงาน</label>
+                    <label class="btn btn-md employee-type" ng-click="payroll.employeeTypeFilter()" ng-model="payroll.employeeTypeMode.daily" style="border-radius: 50px;" uib-btn-checkbox>ลูกจ้างรายวัน</label>
+                </div>
+              </div>
+            </div>
+          </div>
             <div class="fix-column">
                 <div class="thead">
                     <span class="gap"></span>

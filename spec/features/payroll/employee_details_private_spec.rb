@@ -164,7 +164,7 @@ describe 'Private Details', js: true do
       expect(page).to have_content(individual_name)
       find(:css, ".fa.fa-times").click()
       sleep(1)
-      find(:css, ".modal-body .btn.btn-lg.btn-block.btn-submit").click()
+      find(:css, ".modal-body .btn.btn-submit").click()
       sleep(1)
       expect(page).to_not have_content(individual_name)
     end

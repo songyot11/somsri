@@ -263,31 +263,39 @@ ul.nav.navbar-nav.navbar-right.dropdown{
     font-family: 'Maitree', serif;
     background-color: #3fa1e6;
     color: #fff;
-    padding: 8px 46px;
-    box-shadow: 0 2px 4px 0 rgba(0, 0, 0, 0.3);
+    font-size: 16px;
+    padding: 12px 32px;
     margin-right: 20px;
     letter-spacing: 1px;
-    border: inherit;
+    border: 2px solid #3fa1e6;
+    border-radius: 0px;
+    transition: all 0.25s ease;
+
+    &:hover{
+      background-color: transparent;
+      border:2px solid #3fa1e6;
+      color: #3fa1e6;
+    }
 }
-.somsri-invoice .btn-cancel{
+.somsri-invoice .btn-cancel,
+.somsri-invoice .btn-cancel:focus{
     font-family: 'Maitree', serif;
-    background-color: #fff;
-    color: #000;
-    padding: 8px 46px;
-    box-shadow: 0 2px 4px 0 rgba(0, 0, 0, 0.3);
+    padding: 12px 32px;
+    font-size: 16px;
     letter-spacing: 1px;
-    border: inherit;
+    background-color: #9D9D9D;
+    color: #FFFFFF;
+    border: 2px solid #9D9D9D;
+    border-radius: 0px;
+    transition: all 0.25s ease;
+
+    &:hover{
+      background-color: transparent;
+      border:2px solid #9D9D9D;
+      color: #9D9D9D;
+    }
 }
-.somsri-invoice .btn-cancel:hover{
-    background-color: #f2f2f2;
-    border:inherit;
-    transition: 0.3s;
-}
-.somsri-invoice .btn-submit:hover{
-    background-color: #85cdf9;
-    border:inherit;
-    transition: 0.3s;
-}
+
 .col-total-1{
     margin-bottom: 5px;
 }
@@ -577,14 +585,7 @@ tfoot>tr>th{
 .row-print{
   padding-top: 20px !important;
 }
-.btn-to-print{
-  font-family: 'Maitree', serif;
-  font-size: 20px;
-  color: #333;
-  letter-spacing: 2px;
-  background-color: #fff;
-  padding: 8px 36px;
-}
+
 .sec-payment .checkbox{
   margin-top: 3px !important;
   margin-bottom: 3px !important;
@@ -784,12 +785,16 @@ body.somsri-invoice >.container-fluid {
 
 #student-report .report-content {
   padding-top: 30px;
+  font-size: 12px;
   background-color: #fff;
-  border-left: 4px solid #00D2D7;
+  box-shadow: 0 5px 13px 0 rgba(0, 0, 0, 0.3);
 }
 
 #student-report tfoot {
-  border-bottom: 2px solid #FFAA00;
+  border-bottom: 2px solid #9D9D9D;
+  font-size: 14px;
+  font-weight: bold;
+  color: #5b5b5b;
 }
 
 #student-report #grade-list, #year-list {
@@ -812,13 +817,14 @@ body.somsri-invoice >.container-fluid {
   color: #fff;
   transition: all 0.25s ease;
 }
-.btn.invoice-status.active:hover{
-  border-color: #F3F9FC;
-  background-color: #3fa1e6;
-}
 
 .btn.invoice-status.active {
   background-color: #3fa1e6;
+
+  &:hover{
+    border-color: #F3F9FC;
+    background-color: #3fa1e6;
+  }
 }
 
 .dropdown-menu.on-nav-bar {
@@ -960,7 +966,9 @@ th.table-foot-top,td.table-foot-top{
 .row-print{
   padding-top: 20px !important;
 }
-.btn-back_to_print, .btn-back_to_print:focus{
+.btn-back_to_print,
+.btn-back_to_print:hover,
+.btn-back_to_print:focus{
   font-family: 'Maitree', serif;
   background: transparent;
   color: #fff;
@@ -969,23 +977,22 @@ th.table-foot-top,td.table-foot-top{
   font-weight: 100;
   cursor: pointer;
 }
-.btn-back_to_print:hover{
-  color: #cec9c9;
-}
 
-.btn-to-print,.btn-to-print:focus{
+.btn-to-print,
+.btn-to-print:focus{
   font-family: 'Maitree', serif;
   font-size: 18px;
-  color: #333;
+  color: #5b5b5b;
   letter-spacing: 2px;
   background-color: #fff;
   padding: 8px 36px;
-  box-shadow: 0 5px 13px 0 rgba(0, 0, 0, 0.3);
+  border-radius: 0px;
   cursor: pointer;
-}
-.btn-to-print:hover{
-  background-color: #f2f2f2;
   transition: 0.3s;
+
+  &:hover{
+    background-color: #f2f2f2;
+  }
 }
 
 
@@ -1083,19 +1090,24 @@ a:not([href]):not([tabindex]){
   text-decoration: underline;
 }
 // Css parent
-.btn-add-ps,.btn-add-ps:focus{
+.btn-add-ps,
+.btn-add-ps:focus{
   margin-bottom: 20px;
-  padding: 8px 36px;
+  padding: 16px 32px;
   font-weight: lighter;
   background-color: #3fa1e6;
+  border: 2px solid #3fa1e6;
   color: #fff;
-  border-radius: 4px;
-  box-shadow: 0 5px 13px 0 rgba(0, 0, 0, 0.3);
+  font-size: 16px;
+  border-radius: 0px;
   cursor: pointer;
-}
-.btn-add-ps:hover{
-  color: #fff;
-  background-color: #1182d2;
+  transition: all 0.25s ease;
+
+  &:hover{
+    color: #3fa1e6;
+    background-color: transparent;
+    border: 2px solid #3fa1e6;
+  }
 }
 .content-student-parent{
   font-family: 'Maitree', serif;
@@ -1115,10 +1127,12 @@ a:not([href]):not([tabindex]){
   color: #fff;
   cursor: pointer;
   background-color: #5bab67;
-}
-.btn-search-sp:hover{
-  color: #fff;
-  background-color: #449450;
+  transition: all 0.25s ease;
+
+  &:hover{
+    color: #fff;
+    background-color: #449450;
+  }
 }
 .search-sp{
   border-bottom: 1px solid #ddd;
@@ -1136,8 +1150,8 @@ table.table.table-sp-report>tbody{
   border-bottom: 1px solid #ddd;
 }
 .table-sp-report{
-  margin-top: 50px;
-  font-size: 15px;
+  margin-top: 30px;
+  font-size: 14px;
 }
 .no-pay{
   color: yellow;
@@ -1173,12 +1187,20 @@ table.table.table-sp-report>tbody{
   text-align: right;
   margin-right: -15px;
 }
-.btn-add-st{
+
+.btn-add-st,.btn-add-st:focus{
   padding: 5px 32px;
   background-color: #5bab67;
   color: #fff !important;
-  margin-left: 15px;
+  text-decoration: none;
+  transition: all 0.25s ease;
+
+  &:hover{
+    background-color: #96e2a1;
+    text-decoration: none;
+  }
 }
+
 .save-sp{
   margin-top: 50px;
 }btn-delete-sp

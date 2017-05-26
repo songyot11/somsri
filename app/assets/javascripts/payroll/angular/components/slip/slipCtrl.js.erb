@@ -3,6 +3,7 @@
   angular.module('somsri.payroll.slip', [
   ])
   .controller('slipCtrl', ['$window', 'slipService', '$state', '$compile', '$scope', 'moment', '$rootScope', '$sce', function($window, slipService, $state, $compile, $scope, moment, $rootScope, $sce) {
+    $rootScope.menu = "พิมพ์ใบจ่ายเงินเดือน"                                    
     var ctrl = this;
     $rootScope.loadAndAuthorizeResource("employee", function(){
       var employeeId = $state.params.id;

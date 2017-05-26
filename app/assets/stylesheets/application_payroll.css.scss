@@ -17,7 +17,6 @@
  */
 @import "navigation_menu";
 body {
-  background-color: #F3F9FC;
   font-family: 'Maitree', serif;
   color: #595959;
   -webkit-print-color-adjust: exact !important;
@@ -105,14 +104,18 @@ img {
 }
 
 #payroll-report .report-content {
-  padding: 15px;
+  padding: 25px;
   background-color: #fff;
-  border-left: 4px solid #00D2D7;
   margin-top: 10px;
+  box-shadow: 0 5px 13px 0 rgba(0, 0, 0, 0.3);
+}
+
+#payroll-report .report-content .btn-group.pull-right{
+  margin: 10px 0px 30px 0px;
 }
 
 #payroll-report tfoot {
-  border-bottom: 2px solid #FFAA00;
+  border-bottom: 2px solid #ddd;
 }
 
 #payroll-report #month-list {
@@ -210,10 +213,36 @@ h2#month-list{
   color: #fff;
 }
 
-.bg-yellow {
-  background-color: #FFAA00;
+.btn-gray-payroll-history,.btn-gray-payroll-history:focus{
+  background-color: #4A4A4A;
   color: #fff;
-  border-radius: 0px
+  border: 2px solid #4A4A4A;
+  font-size: 18px;
+  padding: 8px 32px;
+  width: 100%;
+  border-radius: 0px;
+  transition: all 0.25s ease;
+
+  &:hover{
+    background-color: transparent;
+    color: #4A4A4A;
+    border: 2px solid #4A4A4A;
+  }
+}
+
+.btn-yellow {
+  background-color: #FFAB04;
+  font-size: 18px;
+  color: #fff;
+  border: 2px solid #FFAB04;
+  border-radius: 0px;
+  padding: 16px 32px;
+  transition: all 0.25s ease;
+
+  &:hover{
+    background-color: transparent;
+    color: #FFAB04;
+  }
 }
 
 .bg-blue {
@@ -221,36 +250,70 @@ h2#month-list{
   color: #fff;
   border-radius: 0px
 }
+
 .btn-payroll{
-  background-color: #00D2D7;
-  border: none;
+  background-color: #32CDD3;
+  border: 2px solid #32CDD3;
   border-radius: inherit;
   color: #fff;
+  padding: 12px 32px;
+  font-size: 14px;
   transition: all 0.25s ease;
+
+  &:hover{
+    color: #32CDD3;
+    border: 2px solid #32CDD3;
+    background-color: transparent;
+  }
 }
-.btn-payroll:hover{
+.btn-payroll-starts{
+  background-color: #FFAB04;
+  border: 2px solid #FFAB04;
+  border-radius: inherit;
   color: #fff;
-  background-color: #0b999c;
+  padding: 12px 32px;
+  font-size: 14px;
+  transition: all 0.25s ease;
+
+  &:hover{
+    color: #FFAB04;
+    border: 2px solid #FFAB04;
+    background-color: transparent;
+  }
 }
-.btn-submit {
-  background-color: #69C406;
+
+.btn-submit,.btn-submit:focus{
+  background-color: #5BAB67;
   color: #FFFFFF;
-  border-radius: 0px
+  border: 2px solid #5BAB67;
+  font-size: 18px;
+  padding: 16px 32px;
+  border-radius: 0px;
+  transition: all 0.25s ease;
+
+  &:hover{
+    background-color: transparent;
+    color: #5BAB67;
+    border: 2px solid #5BAB67;
+  }
+
 }
 
-.btn-cancel {
-  background-color: transparent;
-  color: #D7283E;
-  border: 1px solid #D7283E;
-  border-radius: 0px
-}
+.btn-cancel,.btn-cancel:focus {
+  background-color: #9D9D9D;
+  color: #FFFFFF;
+  border: 2px solid #9D9D9D;
+  font-size: 18px;
+  border-radius: 0px;
+  padding: 16px 32px;
+  transition: all 0.25s ease;
 
-.btn-print {
-  background-color: #FFAA00;
-  color: #ffffff;
-  border-radius: 0px
+  &:hover{
+    background-color: transparent;
+    color: #9D9D9D;
+    border: 2px solid #9D9D9D;
+  }
 }
-
 
 .btn-danger {
   border-radius: 0px
@@ -261,12 +324,6 @@ h2#month-list{
   border: 2px solid #4893DC;
   color: #4893DC;
   border-radius: 0px
-}
-
-.btn-print {
-  background-color: #FFAA00;
-  color: #ffffff;
-  border-radius: 0px;
 }
 
 .btn-prefix {
@@ -335,8 +392,9 @@ input.btn-prefix.active:-moz-placeholder { /* Firefox 18- */
   padding-bottom: 5px;
 }
 
-.employees-list{
-  margin-top: 50px;
+.btn-add-employee-list{
+  margin-top: 20px;
+  margin-bottom: 10px;
 }
 
 .employees-list .card {
@@ -345,7 +403,7 @@ input.btn-prefix.active:-moz-placeholder { /* Firefox 18- */
   padding-right: 30px;
   padding-top: 15px;
   padding-bottom: 15px;
-  border-bottom: 5px solid #fff;
+  border-bottom: 5px solid #1cc5db;
   margin-top: 15px;
   margin-bottom: 15px;
   height: 100%;
@@ -354,7 +412,6 @@ input.btn-prefix.active:-moz-placeholder { /* Firefox 18- */
 
   &:hover {
       box-shadow: 0 2px 10px 0 rgba(0, 0, 0, 0.5);
-      border-bottom-color: #1cc5db;
   }
 }
 
@@ -397,27 +454,31 @@ input.btn-prefix.active:-moz-placeholder { /* Firefox 18- */
   flex-direction: column;
 }
 
-#payroll-slip .btn-print {
-  background-color: #FFAA00;
+#payroll-slip .btn-print,
+#payroll-slip .btn-print:focus {
+  background-color: #5B5B5B;
   color: #ffffff;
-  margin-top: 20px;
-  border-radius: 0px
+  border: 2px solid #5B5B5B;
+  padding: 12px 32px;
+  margin: 20px -15px 20px 0px;
+  border-radius: 0px;
+  transition: all 0.25s ease;
+
+  &:hover{
+    background-color: transparent;
+    color: #5B5B5B;
+    border: 2px solid #5B5B5B;
+  }
 }
 
-#payroll-slip .btn-print:hover,
-#payroll-slip .btn-print:hover a {
-  color: #000;
+a.text-mane-back,a.text-mane-back:focus{
+  color: #5B5B5B;
   text-decoration: none;
 }
 
-#payroll-slip .btn-print a {
-  color: #ffffff;
-}
-
-
 #payroll-slip .slip-content {
   background-color: #fff;
-  padding: 60px 0px 20px 0px;
+  padding: 30px 0px 20px 0px;
   box-shadow: 0 2px 4px 0 rgba(0, 0, 0, 0.5);
 }
 
@@ -503,6 +564,7 @@ input.btn-prefix.active:-moz-placeholder { /* Firefox 18- */
   #payroll-report .report-content{
     border: none;
     padding-top: 0px;
+    box-shadow: none;
   }
   .scrollable-content{
     overflow-y: inherit !important;
@@ -547,7 +609,7 @@ input.btn-prefix.active:-moz-placeholder { /* Firefox 18- */
   }
 
   #payroll-report tfoot {
-   border-bottom: unset
+   border-bottom: unset;
   }
 
   #payroll-report .for_print{
@@ -690,9 +752,9 @@ input.btn-prefix.active:-moz-placeholder { /* Firefox 18- */
 }
 
 .paragraph.cyan,
-#bird-eye .modal-content.cyan {
-  border-left: 5px solid;
-  border-left-color: #1cc5db;
+#bird-eye .modal-content.cyan,
+.paragraph.shadow {
+  box-shadow: 0 2px 4px 0 rgba(0, 0, 0, 0.3);
 }
 
 .paragraph.orange{
@@ -739,9 +801,10 @@ input.btn-prefix.active:-moz-placeholder { /* Firefox 18- */
 }
 
 #payroll .payroll-content {
-  padding-top: 10px;
+  padding: 15px;
   background-color: #fff;
-  border-left: 4px solid #00D2D7;
+  margin-top: 10px;
+  box-shadow: 0 5px 13px 0 rgba(0, 0, 0, 0.3);
 }
 
 #payroll th,
@@ -798,7 +861,7 @@ table#payroll-history-table {
   overflow-y: scroll;
 }
 #payroll-history-table tbody {
-  height: 445px;
+  min-height: 250px;
 }
 
 .white-bg {
@@ -811,14 +874,12 @@ table#payroll-history-table {
   margin-top: 30px;
   margin-bottom: 30px;
   border: 0px solid;
-  border-left: 5px solid;
-  border-left-color: #F59C0B;
   border-radius: 0px;
 }
 
 .employee-details.employee-menu {
   padding-top: 120px;
-  background-color: #F3F9FC;
+  background-color: #fff;
 }
 
 .employee-details.employee-menu-space {
@@ -864,8 +925,8 @@ table.scrollable-header {
 }
 
 .nav-tabs.main {
-  padding-left: 15px;
-  border: none !important;
+  margin-left: 15px;
+  margin-right: 15px;
 }
 
 .nav-tabs.main > li.cyan > a {
@@ -884,15 +945,17 @@ table.scrollable-header {
 .nav-tabs.main > li.active > a,
 .nav-tabs.main > li.active > a:hover,
 .nav-tabs.main > li.active > a:focus {
-  border: none;
+  margin-top: 2px;
   background-color: white;
-  border-bottom: 1px solid white;
 }
 
-.nav-tabs.main > li > a,
-.nav-tabs.main > li > a:hover {
-  background-color: transparent;
-  border: none;
+.nav-tabs.main > li > a {
+  margin-top: 2px;
+  transition: all 0.25s ease;
+
+  &:hover{
+    background-color: #f1f1f1;
+  }
 }
 
 .employee-details .paragraph.private {
@@ -1030,27 +1093,53 @@ table.scrollable-header {
 }
 
 .btn.employee-type {
-  background-color: #AAAAAA;
-  border-color: #F3F9FC;
+  background-color: transparent;
+  border-color: #9d9d9d;
   box-shadow: none;
-  color: #fff;
+  color: #9d9d9d;
+  border: 2px solid #9d9d9d;
+  padding: 4px 16px;
+  margin-left: 5px !important;
   transition: all 0.25s ease;
+
+      &:before{
+        content: "✖";
+        font-size: 15px;
+        margin-right: 5px;
+      }
 }
-.btn.employee-type.active:hover{
-  border-color: #F3F9FC;
-  background-color: #f59c0b;
+
+.btn.employee-type.active {
+  background-color: #00D2D7;
+  color: #fff;
+  border: 2px solid #00D2D7;
+
+    &:hover{
+      background-color: #0b999c;
+      border: 2px solid #0b999c;
+      color: #fff;
+    }
+
+    &:before{
+      content: "✔";
+      font-size: 15px;
+      margin-right: 5px;
+    }
 }
 .btn.employee-print,.btn.employee-print:focus {
-  background-color: #333;
-  border-color: white;
+  background-color: #4d4d4d;
+  border:2px solid #4d4d4d;
   box-shadow: none;
+  font-size: 16px;
+  color: #fff;
+  padding: 12px 32px;
   transition: all 0.25s ease;
-}
-.btn.employee-print:hover{
-  background-color: #555;
-}
-.btn.employee-type.active {
-  background-color: #FFAA00;
+
+  &:hover{
+    background-color: transparent;
+    border-color: #4d4d4d;
+    color: #4d4d4d;
+  }
 }
 
 #payroll .dropdown-menu, #payroll-report .dropdown-menu {
@@ -1165,7 +1254,7 @@ a.dropdown-item{
     width: 320px;
 }
 .trow.tfoot> span{
-  border-bottom: 2px solid #FFAA00;
+  border-bottom: 2px solid #9d9d9d;
 }
 
 .thead > span.gap {
@@ -1271,7 +1360,7 @@ a.dropdown-item{
 }
 
 .filter-btn {
-  margin-right: 20px;
+  padding: 20px 0px;
 }
 .pin-char {
   background-color: #00D2D7;
@@ -1289,15 +1378,53 @@ a.dropdown-item{
   filter: grayscale(100%);
 }
 .btn-restore{
-  background-color: #5bc0de ;
+  background-color: #5bc0de;
+  border:2px solid #5bc0de;
+  padding: 16px 32px;
   border-radius: 0px ;
+  font-size: 18px;
   color: #FFFFFF;
+  transition: all 0.25s ease;
+
+  &:hover{
+    color: #5bc0de;
+    background-color: transparent;
+    border:2px solid #5bc0de;
+  }
 }
-.btn-archive{
-  border-radius: 0px ;
-  background-color: #e9b633 ;
-  color: #ffffff ;
+
+.btn-delete,.btn-delete:focus{
+  background-color: #DD5A2B;
+  color: #FFFFFF;
+  border: 2px solid #DD5A2B;
+  font-size: 18px;
+  padding: 16px 32px;
+  border-radius: 0px;
+  transition: all 0.25s ease;
+
+  &:hover{
+    background-color: transparent;
+    color: #DD5A2B;
+    border: 2px solid #DD5A2B;
+  }
 }
+
+.btn-archive,.btn-archive:focus{
+  background-color: #e9b633;
+  color: #FFFFFF;
+  border: 2px solid #e9b633;
+  font-size: 18px;
+  padding: 16px 32px;
+  border-radius: 0px;
+  transition: all 0.25s ease;
+
+  &:hover{
+    background-color: transparent;
+    color: #e9b633;
+    border: 2px solid #e9b633;
+  }
+}
+
 .sort-report, .sort-report:hover, .sort-report:focus{
   color: #333 ;
   text-decoration: none ;

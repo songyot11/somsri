@@ -175,7 +175,7 @@ td.status_rollcall_data{
   border-left: none !important;
 }
 .container-rollcall-report{
-  margin: 150px 100px 150px 100px;
+  margin: 120px 100px 150px 100px;
 }
 .row.head-sp{
   font-size: 16px;
@@ -367,18 +367,21 @@ td.status_rollcall_data{
   }
 }
 
-.btn-to-print-rollcall,.btn-to-print-rollcall:focus{
-  padding: 8px 32px;
-  color: #fff;
-  font-size: 16px;
+.btn-to-print-rollcall,
+.btn-to-print-rollcall:focus{
+  background-color: #5B5B5B;
+  color: #ffffff;
+  border: 2px solid #5B5B5B;
+  padding: 12px 32px;
   border-radius: 0px;
-  background-color: #3fa1e6;
+  transition: all 0.25s ease;
+  font-size: 16px;
   float: right;
   margin-right: -15px;
-}
-.btn-to-print-rollcall:hover{
-  color: #3fa1e6;
-  background-color: #fff;
-  transition: 0.3s;
-  border: 1px solid #3fa1e6;
+
+  &:hover{
+    background-color: transparent;
+    color: #5B5B5B;
+    border: 2px solid #5B5B5B;
+  }
 }
