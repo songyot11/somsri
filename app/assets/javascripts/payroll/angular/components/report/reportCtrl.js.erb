@@ -2,7 +2,7 @@
   'use strict';
   angular.module('somsri.payroll.report', [
   ])
-  .controller('reportCtrl', ['$compile', '$scope', '$window', '$filter', '$rootScope', 'reportService', 'slipService', '$timeout', function($compile, $scope, $window, $filter, $rootScope, reportService, slipService, $timeout) {
+  .controller('reportCtrl', ['$compile', '$scope', '$window', '$filter', '$rootScope', 'reportService', 'slipService', '$timeout', '$sce',function($compile, $scope, $window, $filter, $rootScope, reportService, slipService, $timeout, $sce) {
     $rootScope.menu = "รายงาน"
     var ctrl = this
     $rootScope.loadAndAuthorizeResource("payroll", function(){
@@ -58,6 +58,7 @@
         ctrl.employee_slips = []
         slipService.employeeSlip(id, payroll_id).then(function(resp) {
           ctrl.employee_slips = [resp.data]
+          ctrl.employee_slips[0].header = $sce.trustAsHtml(ctrl.employee_slips[0].header);
           if($window.navigator.userAgent.indexOf('Chrome') == -1) {
             var slipForSchool = $compile('<slip-content info=report title="สำหรับโรงเรียน" class="for_print safari"/>');
             var slipForEmployee = $compile('<slip-content info=report title="" class="for_print safari"/>');
@@ -92,6 +93,10 @@
         }
         slipService.employeeSlips(payroll_ids).then(function(resp) {
           ctrl.employee_slips = resp.data
+          for(var i = 0; i < ctrl.employee_slips.length; i++){
+            console.log(JSON.stringify(ctrl.employee_slips[i].header));
+            ctrl.employee_slips[i].header = $sce.trustAsHtml(ctrl.employee_slips[i].header);
+          }
           if($window.navigator.userAgent.indexOf('Chrome') == -1) {
             var slipForSchool = $compile('<slip-content info=report title="สำหรับโรงเรียน" class="for_print safari"/>');
             var slipForEmployee = $compile('<slip-content info=report title="" class="for_print safari"/>');

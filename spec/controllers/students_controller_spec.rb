@@ -103,8 +103,25 @@ describe StudentsController do
         expect(response.body).to have_content "five"
       end
 
+      it "should show all student on print list" do
+        get :index, params: { grade_select: 'all' , class_select: 'all', for_print: true }
+
+        expect(response.body).to have_content "one"
+        expect(response.body).to have_content "two"
+        expect(response.body).to have_content "three"
+        expect(response.body).to have_content "four"
+        expect(response.body).to have_content "five"
+      end
+
       it 'should show only grade that selected' do
         get :index , params: { grade_select: 'Preschool' }
+
+        expect(response.body).to have_content "one"
+        expect(response.body).to have_content "five"
+      end
+
+      it 'should show only grade that selected on print list' do
+        get :index , params: { grade_select: 'Preschool', for_print: true  }
 
         expect(response.body).to have_content "one"
         expect(response.body).to have_content "five"
@@ -116,8 +133,20 @@ describe StudentsController do
         expect(response.body).to have_content "four"
       end
 
+      it 'should show only classroom that selected on print list' do
+        get :index , params: { class_select: '4A', for_print: true }
+
+        expect(response.body).to have_content "four"
+      end
+
       it 'should show both grade and classroom that selected' do
         get :index , params: { grade_select: 'Kindergarten 1' , class_select: '2A' }
+
+        expect(response.body).to have_content "two"
+      end
+
+      it 'should show both grade and classroom that selected on print list' do
+        get :index , params: { grade_select: 'Kindergarten 1' , class_select: '2A', for_print: true }
 
         expect(response.body).to have_content "two"
       end

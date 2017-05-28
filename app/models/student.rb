@@ -23,6 +23,7 @@ class Student < ApplicationRecord
   validates_attachment_content_type :img_url, content_type: /\Aimage\/.*\z/
 
   after_save :update_rollcall_list
+  before_save :clean_full_name
 
   @@warned = false
   def update_rollcall_list
@@ -52,6 +53,10 @@ class Student < ApplicationRecord
       # remove list
       self.student_lists.destroy_all
     end
+  end
+
+  def clean_full_name
+    self.full_name = self.full_name.gsub('ด.ช.', '').gsub('ด.ญ.', '').gsub('เด็กหญิง', '').gsub('เด็กชาย', '').strip.gsub(/\s+/,' ') if self.full_name
   end
 
   def full_name_with_title

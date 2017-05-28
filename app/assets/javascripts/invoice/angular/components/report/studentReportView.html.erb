@@ -49,7 +49,7 @@
           </div>
         </div>
       </div>
-      
+
       <div class="row report-content container-fluid">
         <table id="tableHeader" class="table scrollable-header">
           <thead>
@@ -90,23 +90,22 @@
             </tbody>
             <tfoot>
               <tr>
-                <td colspan="7"></td>
-                <td class="text-green">รวมทั้งหมด</td>
-                <td class="text-green text-currency">{{studentReport.total.tuition_fee.toFixed(2) | number:2}}</td>
-                <td class="text-green text-currency">{{studentReport.total.other_fee.toFixed(2) | number:2}}</td>
-                <td class="text-green text-currency">{{studentReport.total.amount.toFixed(2) | number:2}}</td>
-                <td class="text-green"></td>
+                <td colspan="5"></td>
+                <td colspan="3">รวมยอดชำระทั้งหมด(บาท) :</td>
+                <td class="text-currency">{{studentReport.total.tuition_fee.toFixed(2) | number:2}}</td>
+                <td class="text-currency">{{studentReport.total.other_fee.toFixed(2) | number:2}}</td>
+                <td class="text-currency">{{studentReport.total.amount.toFixed(2) | number:2}}</td>
+                <td class=""></td>
               </tr>
             </tfoot>
           </table>
+          <div class="row row-centered">
+            <div class="col-centered">
+              <ul uib-pagination ng-change="studentReport.pageChanged()" total-items="studentReport.totalItems" ng-model="studentReport.currentPage" max-size="studentReport.maxSize" class="pagination-md" boundary-links="true" num-pages="numPages"></ul>
+            </div>
+          </div>
         </div>
       </div>
     </div>
-  </div>
-</div>
-
-<div class="row row-centered">
-  <div class="col-centered">
-    <ul uib-pagination ng-change="studentReport.pageChanged()" total-items="studentReport.totalItems" ng-model="studentReport.currentPage" max-size="studentReport.maxSize" class="pagination-md" boundary-links="true" num-pages="numPages"></ul>
   </div>
 </div>

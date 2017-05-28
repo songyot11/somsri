@@ -1,6 +1,6 @@
 <%- model_class = Parent -%>
 <%= render 'layouts/messages' %>
-<div id="parent-index" class="container-fluid">
+<div id="parent-index">
   <div class="row head-sp">
     <div class="col-xs-2">
       <h1>ผู้ปกครอง</h1>
@@ -13,14 +13,14 @@
   </div>
   <div class="content-student-parent">
     <%= form_tag(parents_path, method: :get, id: "search-form") do %>
-      <div class="form-group col-xs-4">
+      <div class="form-group col-xs-6">
         <%= text_field_tag :search, params[:search], placeholder: "ค้นหา..." ,class: 'search-sp'%>
         <%= button_tag(type: 'submit', class: "btn btn-search-sp") do %>
           <i class="fa fa-search"></i>
         <% end %>
       </div>
 
-      <div class="col-xs-4 col-xs-offset-4 form-group float-right-search">
+      <div class="col-xs-6 form-group float-right-search">
         <tr>
           <td><label for="grade_select">เลือกระดับชั้น</label></td>
           <td>

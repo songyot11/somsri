@@ -72,8 +72,8 @@ th:
 #helpers_links
   helpers:
     links:
-      addstudent: "เพิ่มนักเรียน"
-      addparent: "เพิ่มผู้ปกครอง"
+      addstudent: "✚ เพิ่มนักเรียน"
+      addparent: "✚ เพิ่มผู้ปกครอง"
       show: "แสดง"
       edit: "แก้ไข"
       cancel: "ยกเลิก"

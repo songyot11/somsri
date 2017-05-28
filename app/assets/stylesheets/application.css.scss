@@ -17,6 +17,7 @@
  */
 
 @import "application_invoice";
+
 body{
   margin-bottom: 50px;
   margin-top: 100px;
@@ -109,5 +110,86 @@ ul.nav.navbar-nav.navbar-right.dropdown{
   .fa-android{
     font-size: 24px;
     margin-right: 10px;
+  }
+}
+.space10 {
+  height: 10px;
+}
+
+.only-print{
+  display: none;
+}
+
+@print {
+  size: A4;
+}
+
+@media print {
+
+  .only-view{
+    display: none !important;
+  }
+
+  .only-print{
+    display: block;
+  }
+
+  table, th, td {
+    border: 1px solid black;
+  }
+
+  .pagebreak {
+    page-break-before: always;
+  }
+  body{
+    margin-bottom: 0px !important;
+    margin-top: 0px !important;
+  }
+  body > .container-fluid {
+    padding: 0px !important;
+  }
+
+  #student-list-for-print .list-page {
+    padding: 50px;
+  }
+
+  #student-list-for-print th {
+    padding: 10px;
+  }
+
+  #student-list-for-print td {
+    padding: 3px;
+  }
+
+  .list-page {
+    font-size: 18px;
+  }
+
+  #student-list-header {
+    font-size: 18px;
+    font-weight: bold;
+  }
+
+  .alert {
+    display: none;
+  }
+}
+.btn-to-print-student,
+.btn-to-print-student:focus{
+  margin-bottom: 20px;
+  padding: 16px 32px;
+  font-weight: lighter;
+  background-color: #5b5b5b;
+  border: 2px solid #5b5b5b;
+  color: #fff;
+  font-size: 16px;
+  border-radius: 0px;
+  cursor: pointer;
+  transition: all 0.25s ease;
+
+  &:hover{
+    color: #5b5b5b;
+    background-color: transparent;
+    border: 2px solid #5b5b5b;
   }
 }

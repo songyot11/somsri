@@ -10,6 +10,11 @@ class Parent < ApplicationRecord
   validates_attachment_content_type :img_url, content_type: /\Aimage\/.*\z/
 
   self.per_page = 10
+  before_save :clean_full_name
+
+  def clean_full_name
+    self.full_name = self.full_name.strip.gsub(/\s+/,' ') if self.full_name
+  end
 
   def self.search(search)
     where("parents.full_name LIKE ? OR parents.full_name_english LIKE ? OR parents.email LIKE ? OR parents.mobile LIKE ?", "%#{search}%", "%#{search}%", "%#{search}%" , "%#{search}%")

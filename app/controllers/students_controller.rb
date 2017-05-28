@@ -32,7 +32,11 @@ class StudentsController < ApplicationController
         grade = Grade.where(name: grade_select).first
         students = Student.with_deleted.where(grade: grade.id , classroom: class_select)
       end
-      @students = students.order("deleted_at DESC , classroom ASC, classroom_number ASC").search(params[:search]).page(params[:page]).to_a
+      if params[:for_print]
+        @students = students.order("grade_id ASC, classroom ASC, classroom_number ASC, student_number ASC").search(params[:search]).to_a
+      else
+        @students = students.order("deleted_at DESC , classroom ASC, classroom_number ASC").search(params[:search]).page(params[:page]).to_a
+      end
     else
       # with angular
       if grade_select.downcase == 'all'
@@ -59,13 +63,28 @@ class StudentsController < ApplicationController
           shift += 1
         end
       end
-
       @students = @students_all.paginate(:page => params[:page], :per_page => 10)
     end
 
     @filter_grade = grade_select
     @filter_class = class_select
-    render "students/index", layout: "application_invoice"
+    if params[:for_print]
+      results = {
+        school_year: SchoolSetting.school_year_or_default(".........."),
+        student_list: []
+      }
+      @students.to_a.each do |student|
+        results[:student_list] << {
+          student_number: student.student_number || "",
+          full_name: student.full_name_with_title || "",
+          national_id: student.national_id || "",
+          birthdate: student.birthdate ? (student.birthdate + 543.years).strftime("%d/%m/%Y") : ""
+        }
+      end
+      render json: results, status: :ok
+    else
+      render "students/index", layout: "application"
+    end
   end
 
   # GET /students/new
@@ -144,7 +163,7 @@ class StudentsController < ApplicationController
     begin
       @student = Student.find(params[:student_id])
       @student.really_destroy!
-      flash[:success] = "ลบนักเรียนเรียบร้อยแล้ว"
+      flash[:denger] = "ลบนักเรียนเรียบร้อยแล้ว"
     rescue ActiveRecord::DeleteRestrictionError => e
       @student.errors.add(:base, e)
       flash[:error] = "#{e}"

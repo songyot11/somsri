@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20170518103715) do
+ActiveRecord::Schema.define(version: 20170525065816) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -87,9 +87,9 @@ ActiveRecord::Schema.define(version: 20170518103715) do
     t.string   "employee_type",        default: "ลูกจ้างประจำ", null: false
     t.boolean  "pay_social_insurance"
     t.boolean  "pay_pvf"
-    t.string   "pin"
     t.integer  "grade_id"
     t.string   "classroom"
+    t.string   "pin"
     t.string   "img_url_file_name"
     t.string   "img_url_content_type"
     t.integer  "img_url_file_size"
@@ -265,6 +265,10 @@ ActiveRecord::Schema.define(version: 20170518103715) do
     t.index ["student_id"], name: "index_roll_calls_on_student_id", using: :btree
   end
 
+  create_table "school_settings", force: :cascade do |t|
+    t.string "school_year", default: ""
+  end
+
   create_table "schools", force: :cascade do |t|
     t.string   "name",                default: "", null: false
     t.datetime "created_at",                       null: false
@@ -282,6 +286,7 @@ ActiveRecord::Schema.define(version: 20170518103715) do
     t.string   "logo_content_type"
     t.integer  "logo_file_size"
     t.datetime "logo_updated_at"
+    t.text     "payroll_slip_header"
   end
 
   create_table "student_lists", force: :cascade do |t|

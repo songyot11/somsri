@@ -119,7 +119,7 @@ class ParentsController < ApplicationController
     begin
       @parent = Parent.find(params[:parent_id])
       @parent.really_destroy!
-      flash[:success] = "ลบผู้ปกครองเรียบร้อยแล้ว"
+      flash[:danger] = "ลบผู้ปกครองเรียบร้อยแล้ว"
     rescue ActiveRecord::DeleteRestrictionError => e
       @parent.errors.add(:base, e)
       flash[:error] = "#{e}"
