@@ -20,6 +20,12 @@
       </div>
 
       <div class="row report-content container-fluid">
+        <div class="col-xs-6 form-group">
+          <input id="searchField" type="text" ng-model="invoiceReport.searchKeyword" ng-key-enter="invoiceReport.search()" placeholder="ค้นหาใบเสร็จ" class="search-sp" />
+          <button id="searchButton" name="button" type="submit" class="btn btn-search-sp" ng-click="invoiceReport.search()">
+            <i class="fa fa-search"></i>
+          </button>
+        </div>
         <table id="tableHeader" class="table scrollable-header text-table-invoicereport">
           <thead>
            <tr>
@@ -36,7 +42,7 @@
            </tr>
           </thead>
             <tbody>
-              <tr ng-repeat="invoice in invoiceReport.datas ">
+              <tr class="tr-invoice" ng-repeat="invoice in invoiceReport.datas ">
                 <td class="text-left text-invoice-num" ng-click="openSlip(invoice.id, 'invoice_report')">{{invoice.id}}</td>
                 <td class="text-left">
                   {{invoice.student_full_name_with_nickname}}

@@ -51,4 +51,18 @@ class Invoice < ApplicationRecord
     self.invoice_status.name == 'Canceled'
   end
 
+  def self.search(keyword)
+    if keyword.to_s != ''
+      joins(:parent, :student).where(
+        "CAST(invoices.id AS TEXT) LIKE ? OR students.full_name LIKE ? OR students.nickname LIKE ? OR parents.full_name LIKE ?",
+        "%#{keyword}%",
+        "%#{keyword}%",
+        "%#{keyword}%",
+        "%#{keyword}%"
+      )
+    else
+      self
+    end
+  end
+
 end
