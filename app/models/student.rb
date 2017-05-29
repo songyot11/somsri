@@ -56,12 +56,24 @@ class Student < ApplicationRecord
   end
 
   def clean_full_name
-    self.full_name = self.full_name.gsub('ด.ช.', '').gsub('ด.ญ.', '').gsub('เด็กหญิง', '').gsub('เด็กชาย', '').strip.gsub(/\s+/,' ') if self.full_name
+    if self.full_name
+      self.full_name = self.full_name.gsub('ด.ช.', '')
+                                      .gsub('ด.ญ.', '')
+                                      .gsub('เด็กหญิง', '')
+                                      .gsub('เด็กชาย', '')
+                                      .gsub('Master', '')
+                                      .gsub('master', '')
+                                      .gsub('Miss', '')
+                                      .gsub('miss', '')
+                                      .strip.gsub(/\s+/,' ') 
+    end
   end
 
   def full_name_with_title
     if gender_id != nil
-      title = self.gender_id == 1  ? 'ด.ช.' : 'ด.ญ.'
+      title = ""
+      title = 'ด.ช.' if self.gender_id == 1
+      title = 'ด.ญ.' if self.gender_id == 2
       name = self.full_name.nil? ? self.full_name_english : self.full_name
       return "#{title} #{name}"
     else
@@ -365,7 +377,9 @@ class Student < ApplicationRecord
   end
 
   def full_name_eng_thai_with_title
-    title = self.gender_id == 1  ? 'ด.ช.' : 'ด.ญ.'
+    title = ""
+    title = 'ด.ช.' if self.gender_id == 1
+    title = 'ด.ญ.' if self.gender_id == 2
     thaiName = self.full_name.nil? ? "" : self.full_name
     engName = self.full_name_english.nil? ? "" : self.full_name_english
 

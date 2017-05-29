@@ -28,7 +28,6 @@ describe Invoice do
     end
 
     it 'can find by full_name' do
-      puts invoices.collect{|i| i.student.full_name}.to_s
       expect(Invoice.search('สมชาย ผลดี').count).to eq(1)
       expect(Invoice.search('ผลดี').count).to eq(2)
     end

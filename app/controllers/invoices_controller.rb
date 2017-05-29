@@ -107,9 +107,9 @@ class InvoicesController < ApplicationController
       if student.nil?
         student = Student.new(full_name: student_name, student_number: student_params[:student_number])
         # Detect Gender from prefix
-        if student_params[:full_name].include?('ด.ช.') || student_params[:full_name].include?('เด็กชาย')
+        if ['ด.ช.','เด็กชาย','master'].any? { |word| student_params[:full_name].downcase.include?(word) }
           student.gender_id = Gender.find_by_name("Male").id
-        elsif student_params[:full_name].include?('ด.ญ.') || student_params[:full_name].include?('เด็กหญิง')
+        elsif ['ด.ญ.','เด็กหญิง','miss'].any? { |word| student_params[:full_name].downcase.include?(word) }
           student.gender_id = Gender.find_by_name("Female").id
         end
       end
@@ -119,9 +119,6 @@ class InvoicesController < ApplicationController
         student.grade_id = grade.id
       end
 
-      if student && student.gender_id.nil?
-        student.gender_id = Gender.find_by_name("Male").id
-      end
       student.save
 
       if student.parents.size == 0 || student.parents.select{|p| p.full_name == parent.full_name}.size == 0
