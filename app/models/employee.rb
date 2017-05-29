@@ -14,11 +14,16 @@ class Employee < ApplicationRecord
   has_many :payrolls, dependent: :restrict_with_exception
   after_create :create_tax_reduction
   after_save :update_rollcall_list
+  before_save :assign_pin
 
   acts_as_paranoid without_default_scope: true
 
   has_attached_file :img_url
   validates_attachment_content_type :img_url, content_type: /\Aimage\/.*\z/
+
+  def assign_pin
+    self.pin = get_unique_pin if !pin
+  end
 
   @@warned = false
   def update_rollcall_list
@@ -122,9 +127,6 @@ class Employee < ApplicationRecord
   def generate_teacher_attendance_lists
     if self.classroom
       TeacherAttendanceList.transaction do
-        if !self.pin
-          self.generate_pin
-        end
         list = List.where(name: self.classroom).first
         if !list
           list = List.create(name: self.classroom, category: "roll_call")
@@ -149,10 +151,14 @@ class Employee < ApplicationRecord
     end
   end
 
-  def generate_pin
-    pins = Employee.where.not(pin: nil).pluck(:id)
-    self.pin = ([*0..1000] - pins).sample.to_s.rjust(4, '0')
+  def generate_pin!
+    self.pin = get_unique_pin
     self.save
+  end
+
+  def get_unique_pin
+    pins = Employee.where.not(pin: nil).pluck(:pin).collect{|s| s.to_i}
+    self.pin = ([*0..9999] - pins).sample.to_s.rjust(4, '0')
   end
 
   private

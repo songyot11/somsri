@@ -111,4 +111,14 @@ describe Employee do
     expect(employee.lists.size).to eq(0)
   end
 
+  describe '#save' do
+    it 'generate pin' do
+      # use update_all to skip before_save
+      Employee.where(id: employee.id).update_all(pin: nil)
+      expect(employee.reload.pin).to be_nil
+      employee.save
+      expect(employee.reload.pin).to_not be_nil
+    end
+  end
+
 end
