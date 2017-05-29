@@ -180,6 +180,19 @@ describe 'Invoice-Report', js: true do
     ]
   end
 
+  let(:invoice_cancel) do
+    invoice1 = Invoice.make!({
+      student_id: students[0].id,
+      invoice_status_id:  invoice_status_1.id,
+      school_year: "2560",
+      semester: "1",
+      line_items: [
+        LineItem.make!(:tuition, amount: 10000000),
+        LineItem.make!(amount: 3000000)
+      ]
+    })
+  end
+
   let(:invoice_for_paginate) do
     [
       invoice4 = Invoice.make!({
@@ -291,7 +304,7 @@ describe 'Invoice-Report', js: true do
       visit 'somsri_invoice#/student_report'
       sleep(1)
       expect(page).to have_content("มั่งมี")
-      expect(page).to have_content("ยกเลิก")
+      expect(page).to have_content("ยังไม่ได้ชำระ")
     end
 
     it 'should show paid student on report' do
@@ -343,19 +356,19 @@ describe 'Invoice-Report', js: true do
     it 'display total of total fee(of all student)' do
       visit 'somsri_invoice#/student_report'
       sleep(1)
-      expect(page).to have_content("167,750.00")
+      expect(page).to have_content("109,750.00")
     end
 
     it 'display total other fee' do
       visit 'somsri_invoice#/student_report'
       sleep(1)
-      expect(page).to have_content("23,750.00")
+      expect(page).to have_content("13,750.00")
     end
 
     it 'display total tuition fee' do
       visit 'somsri_invoice#/student_report'
       sleep(1)
-      expect(page).to have_content("144,000.00")
+      expect(page).to have_content("96,000.00")
     end
 
     it 'should display 10 row per page' do
@@ -364,7 +377,7 @@ describe 'Invoice-Report', js: true do
       sleep(5)
       expect(page).to have_selector("tr.ng-scope", count: 10)
       expect(page).to have_content("First Previous 12 Next Last")
-      expect(page).to have_content("28,000.00 103,750.00 631,750.00")
+      expect(page).to have_content("80,000.00 93,750.00 573,750.00 ")
     end
 
     it 'should display page 2' do
@@ -375,7 +388,14 @@ describe 'Invoice-Report', js: true do
       sleep(5)
       expect(page).to have_selector("tr.ng-scope", count: 1)
       expect(page).to have_content("First Previous 12 Next Last")
-      expect(page).to have_content("28,000.00 103,750.00 631,750.00")
+      expect(page).to have_content("80,000.00 93,750.00 573,750.00 ")
+    end
+
+    it 'display only active invoice' do
+      invoice_cancel
+      visit 'somsri_invoice#/student_report'
+      sleep(1)
+      expect(page).to have_content("มั่งมี ศรีสุข รวย 13 ชำระแล้ว เงินสด 10,048,000.00 3,003,750.00 13,051,750.00")
     end
   end
 

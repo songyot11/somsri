@@ -107,7 +107,23 @@ class Student < ApplicationRecord
   end
 
   def active_invoice
-    @active_invoice = self.invoices.latest.is_a?(Invoice)? self.invoices.latest : nil
+    if self.all_active_invoices_year.include?(@year)
+      current_invoice = self.all_active_invoices.where(school_year: @year, semester: @semester)
+      if current_invoice.size > 0
+          current_invoice.each do |i|
+            if !i.is_cancel
+              i.line_items.each do |l|
+                if l.detail =~ /Tuition/
+                  return i
+                end
+              end
+            end
+          end
+          return nil
+      else
+        return nil
+      end
+    end
   end
 
   def all_active_invoices
@@ -128,11 +144,16 @@ class Student < ApplicationRecord
     if self.all_active_invoices_year.include?(year)
       current_invoice = self.all_active_invoices.where(school_year: year, semester: semester)
       if current_invoice.size > 0
-        if current_invoice.select { |i| i.line_items.first.detail =~ /Tuition/ }.size > 0
-          return true
-        else
+          current_invoice.each do |i|
+            if !i.is_cancel
+              i.line_items.each do |l|
+                if l.detail =~ /Tuition/
+                  return true
+                end
+              end
+            end
+          end
           return false
-        end
       else
         return false
       end
@@ -143,7 +164,7 @@ class Student < ApplicationRecord
     @all_active_invoices_tuition_fee = 0.0
     if self.all_active_invoices != nil
       self.all_active_invoices.each do |invoice|
-        if invoice.tuition_fee != nil && invoice.school_year == @year && invoice.semester == @semester
+        if invoice.tuition_fee != nil && invoice.school_year == @year && invoice.semester == @semester && !invoice.is_cancel
           @all_active_invoices_tuition_fee += invoice.tuition_fee
         end
       end
@@ -163,7 +184,7 @@ class Student < ApplicationRecord
     @all_active_invoices_other_fee = 0.0
     if self.all_active_invoices != nil
       self.all_active_invoices.each do |invoice|
-        if invoice.other_fee != nil && invoice.school_year == @year && invoice.semester == @semester
+        if invoice.other_fee != nil && invoice.school_year == @year && invoice.semester == @semester  && !invoice.is_cancel
           @all_active_invoices_other_fee += invoice.other_fee
         end
       end
@@ -190,7 +211,7 @@ class Student < ApplicationRecord
 
   def active_invoice_status
     if @active_invoice_status == nil
-      @active_invoice_status = self.active_invoice.nil? ? 'ยังไม่ได้ชำระ' : (self.active_invoice.invoice_status.name == 'Active' ? 'ชำระแล้ว' : 'ยกเลิก')
+      @active_invoice_status = self.active_invoice.nil? ? 'ยังไม่ได้ชำระ' : (self.active_invoice.invoice_status.name == 'Active' ? 'ชำระแล้ว' : 'ยังไม่ได้ชำระ')
     else
       @active_invoice_status
     end
