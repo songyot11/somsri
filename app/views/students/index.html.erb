@@ -102,13 +102,14 @@
                           :class => 'btn-resign tooltips', 'data-toggle' => 'tooltip', 'data-placement' => 'top', :title => 'นักเรียนขอลาออก'  %>
                 </div>
                 <div class="col-xs-2 icon text-center">
-                  <span ng-show="<%=student.invoices.first.nil?%>"><%= link_to "<i class='fa fa-trash'></i>".html_safe ,
+                  <% if student.invoices.first.nil? %>
+                    <%= link_to "<i class='fa fa-trash'></i>".html_safe ,
                                 student_real_destroy_path(student) ,
                                 :id => 'student_destroy' ,
                                 :method => :delete ,
                                 :data => { :confirm => t('.confirm', :default => t("helpers.links.confirm.student_delete", :default => 'Are you sure?'))} ,
                                 :class => 'btn-trash tooltips', 'data-toggle' => 'tooltip', 'data-placement' => 'top', :title => 'ลบข้อมูลจากระบบแบบถาวร'  %>
-                  </span>
+                  <% end %>
                 </div>
               </div>
             </td>
