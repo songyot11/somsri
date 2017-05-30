@@ -2,6 +2,7 @@ class MenuController < ApplicationController
   authorize_resource :class => :menu
 
   def index
+    params[:locale] = "en"
   end
 
   def landing_payroll

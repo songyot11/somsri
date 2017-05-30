@@ -10,7 +10,7 @@
                   </div>
                 </a>
             </div>
-            <p>เงินเดือน</p>
+            <%= content_tag(:p, t('.payroll', :default => t("payroll")) ) %>
         </div>
       <% end %>
       <% if can? :manage, Invoice %>
@@ -22,7 +22,7 @@
                   </div>
                 </a>
             </div>
-            <p>ค่าเทอม</p>
+            <%= content_tag(:p, t('.invoices', :default => t("invoices")) ) %>
         </div>
       <% end %>
       <% if can? :manage, RollCall %>
@@ -34,7 +34,7 @@
                   </div>
                 </a>
             </div>
-            <p>นับแถว</p>
+            <%= content_tag(:p, t('.rollcall', :default => t("rollcall")) ) %>
         </div>
       <% end %>
     </div>
@@ -48,7 +48,7 @@
                   </div>
                 </a>
             </div>
-            <p>บุคลากร</p>
+            <%= content_tag(:p, t('.employee', :default => t("employee")) ) %>
         </div>
       <% end %>
       <% if can? :manage, Parent %>
@@ -60,7 +60,7 @@
                   </div>
                 </a>
             </div>
-            <p>ผู้ปกครอง</p>
+            <%= content_tag(:p, t('.parent', :default => t("parent")) ) %>
         </div>
       <% end %>
       <% if can? :manage, Student %>
@@ -72,7 +72,7 @@
                   </div>
                 </a>
             </div>
-            <p>นักเรียน</p>
+            <%= content_tag(:p, t('.student', :default => t("student")) ) %>
         </div>
       <% end %>
     </div>

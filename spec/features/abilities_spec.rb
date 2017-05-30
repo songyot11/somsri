@@ -28,6 +28,13 @@ describe 'Abilities', js: true do
       expect(page).to have_content 'เงินเดือน ค่าเทอม นับแถว บุคลากร ผู้ปกครอง นักเรียน'
     end
 
+    it 'can goto main menu english' do
+      visit "/?locale=en#"
+      sleep(1)
+      expect(page).to have_current_path '/?locale=en#'
+      expect(page).to have_content 'Payrolls Invoices Rollcalls Employees Parents Students'
+    end
+
     it 'can goto payroll menu' do
       visit "/somsri_payroll"
       sleep(1)

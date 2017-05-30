@@ -24,7 +24,7 @@
           </ul>
         </li>
       </ul>
-      <ul class="nav navbar-nav navbar-right dropdown">
+      <ul class="nav navbar-nav navbar-right dropdown" role="menu" aria-labelledby="dLabel">
           <% if user_signed_in? %>
             <a class="nav-user avatar" href="javascript:void(0)" id="navbarDropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
               <%= current_user.full_name.nil? ? current_user.email : current_user.full_name %>
@@ -32,15 +32,32 @@
             </a>
             <div class="dropdown-menu on-nav-bar" aria-labelledby="navbarDropdownMenuLink">
               <% if Figaro.env.ROLLCALL_APK_URL %>
-                <a class="dropdown-item" href="<%= Figaro.env.ROLLCALL_APK_URL %>" target="_blank"><i class="fa fa-download"></i> Download Rollcall</a>
-                <br>
+              <li><a class="dropdown-item" href="<%= Figaro.env.ROLLCALL_APK_URL %>" target="_blank">
+                <i class="fa fa-download"></i> Download Rollcall</a></li>
               <% end %>
-                <a class="dropdown-item" href="/main#/setting"><i class="fa fa-cog"></i> Setting</a>
-                <br>
-                <a class="dropdown-item" href="<%= destroy_user_session_path %>" rel="nofollow" data-method="DELETE"><i class="fa fa-sign-out"></i> Sign Out</a>
+
+              <% if current_page?("/") %>
+              <li class="divider"></li>
+              <li class="dropdown-submenu">
+                <a tabindex="-1" href="#"><i class="fa fa-commenting-o"></i> Switch language</a>
+                <ul class="dropdown-menu">
+                  <li><a href="/?locale=th#"><img src="./switch_language/flag-thailand.png" alt="flag-thailand">&nbsp;&nbsp; ภาษาไทย</a></li>
+                  <li class="divider"></li>
+                  <li><a href="/?locale=en#"><img src="./switch_language/flag-united-kingdom.png" alt="flag-thailand">&nbsp;&nbsp; English</a></li>
+                </ul>
+              </li>
+              <% else %><% end %>
+              <li class="divider"></li>
+              <li><a class="dropdown-item" href="/main#/setting"><i class="fa fa-cog"></i> Setting</a></li>
+
+              <li class="divider"></li>
+              <li><a class="dropdown-item" href="<%= destroy_user_session_path %>" rel="nofollow" data-method="DELETE">
+                <i class="fa fa-sign-out"></i> Sign Out</a></li>
             </div>
           <% else %>
-            <a class="nav-link" href="/"><i class="fa fa-sign-in"></i> Log In</a>
+
+            <li class="divider"></li>
+            <li><a class="nav-link" href="/"><i class="fa fa-sign-in"></i> Log In</a></li>
           <% end %>
         </ul>
     </div>
