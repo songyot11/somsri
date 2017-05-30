@@ -803,6 +803,9 @@ a.text-mane-back,a.text-mane-back:focus{
 #payroll .payroll-content {
   padding: 15px;
   background-color: #fff;
+  border-left: 4px solid #00D2D7;
+  max-height: 630px;
+  padding-bottom: 30px;
   margin-top: 10px;
   box-shadow: 0 5px 13px 0 rgba(0, 0, 0, 0.3);
 }
@@ -1256,7 +1259,9 @@ a.dropdown-item{
 .trow.tfoot> span{
   border-bottom: 2px solid #9d9d9d;
 }
-
+.trow.tfoot> span.free-space-table{
+  border: none;
+}
 .thead > span.gap {
     width: 150px;
     border-top: 1px solid #fff;
@@ -1292,10 +1297,12 @@ a.dropdown-item{
 .trow > span.salary {
   margin-left: -1px;
 }
-
+.trow > span.total_salary {
+  margin-left: -1px;
+}
 .tbody {
-    height: 450px;
-    overflow: auto;
+    max-height: 450px;
+    overflow: scroll;
     -moz-box-sizing: border-box;
     box-sizing: border-box;
 }
