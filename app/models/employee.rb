@@ -151,11 +151,6 @@ class Employee < ApplicationRecord
     end
   end
 
-  def generate_pin!
-    self.pin = get_unique_pin
-    self.save
-  end
-
   def get_unique_pin
     pins = Employee.where.not(pin: nil).pluck(:pin).collect{|s| s.to_i}
     self.pin = ([*0..9999] - pins).sample.to_s.rjust(4, '0')
