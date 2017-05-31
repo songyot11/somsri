@@ -21,6 +21,7 @@ body {
   color: #595959;
   -webkit-print-color-adjust: exact !important;
   margin-bottom: 60px;
+  background-color: #FFFFFF;
 }
 
 .employee-filter {
@@ -882,7 +883,6 @@ table#payroll-history-table {
 
 .employee-details.employee-menu {
   padding-top: 120px;
-  background-color: #fff;
 }
 
 .employee-details.employee-menu-space {
@@ -1437,4 +1437,47 @@ a.dropdown-item{
 .sort-report, .sort-report:hover, .sort-report:focus{
   color: #333 ;
   text-decoration: none ;
+}
+
+.employee-view-icon {
+  color: #9D9D9D;
+  font-size: 22px;
+  margin-right: 6px;
+  margin-top: 6px;
+  cursor: pointer;
+}
+
+.employee-view-icon.active, .employee-view-icon:hover {
+  color: #FFAB04;
+}
+
+.employees-list .list-view {
+  background-color: white;
+  padding: 10px 15px 10px 15px;
+  box-shadow: 0 2px 4px 0 rgba(0, 0, 0, 0.3);
+}
+
+.employees-list .table td.td-edit-employee-link a{
+  cursor: pointer;
+  text-decoration: none;
+}
+
+.employees-list .table td.red {
+  color: #E1693C;
+}
+
+.employees-list .table td.green {
+  color: #77BB82;
+}
+
+.employees-list .table td.blue {
+  color: #4DABE9;
+}
+
+.employees-list .table td.grey {
+  color: #A0A0A0;
+}
+
+.employees-list .icons {
+  margin-top: 23px;
 }

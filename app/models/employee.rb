@@ -101,6 +101,7 @@ class Employee < ApplicationRecord
        {
         id: self.id,
         name: self.full_name,
+        position: self.position,
         salary: self.payrolls.size > 0 ? self.payrolls.latest.salary.to_f : 0,
         extra_fee: self.payrolls.size > 0 ? self.payrolls.latest.extra_fee.to_f : 0,
         extra_pay: self.payrolls.size > 0 ? self.payrolls.latest.extra_pay.to_f : 0,
