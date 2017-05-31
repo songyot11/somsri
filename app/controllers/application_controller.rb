@@ -5,11 +5,7 @@ class ApplicationController < ActionController::Base
   after_action :set_csrf_cookie_for_ng
 
   rescue_from CanCan::AccessDenied do |exception|
-    if current_user
-      redirect_to root_path, :alert => exception.message
-    else
-      redirect_to new_user_session_path, :alert => exception.message
-    end
+    redirect_to '/', :alert => exception.message
   end
 
   def set_csrf_cookie_for_ng
