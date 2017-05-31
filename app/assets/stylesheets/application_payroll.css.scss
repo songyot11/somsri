@@ -891,6 +891,7 @@ table#payroll-history-table {
 
 .employee-details.employee-menu {
   padding-top: 120px;
+  background-color: #fff;
 }
 
 .employee-details.employee-menu-space {
@@ -1501,6 +1502,10 @@ a.dropdown-item{
 
 .employees-list .table td.blue {
   color: #4DABE9;
+}
+.employees-list .table td>.blue {
+  cursor: pointer;
+  text-decoration: none;
 }
 
 .employees-list .table td.grey {
