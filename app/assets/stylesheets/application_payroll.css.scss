@@ -117,6 +117,8 @@ img {
 
 #payroll-report tfoot {
   border-bottom: 2px solid #ddd;
+  font-size: 17px;
+  font-weight: bold;
 }
 
 #payroll-report #month-list {
@@ -131,11 +133,15 @@ h2#month-list{
 }
 
 .text-green {
-  color: #66E341;
+  color: #66E341 !important;
 }
 
 .text-red {
   color: #E70A0E !important;
+}
+
+.no-click{
+  cursor: default !important;
 }
 
 .text-yellow {
@@ -731,6 +737,9 @@ a.text-mane-back,a.text-mane-back:focus{
     background-color: #dadada !important;
     border-bottom: #dadada !important;
   }
+  .text-green {
+    color: #000 !important;
+  }
 }
 
 .form-group input, .form-group div{
@@ -804,7 +813,6 @@ a.text-mane-back,a.text-mane-back:focus{
 #payroll .payroll-content {
   padding: 15px;
   background-color: #fff;
-  border-left: 4px solid #00D2D7;
   max-height: 630px;
   padding-bottom: 30px;
   margin-top: 10px;
@@ -1217,7 +1225,7 @@ a.dropdown-item{
 }
 .thead > span {
     display: inline-block;
-    width: 120px;
+    width: 115px;
     line-height: 40px;
     text-align: center;
     border-top: 1px solid #cccccc;
@@ -1259,6 +1267,7 @@ a.dropdown-item{
 }
 .trow.tfoot> span{
   border-bottom: 2px solid #9d9d9d;
+  background-color: #fdfdfd;
 }
 .trow.tfoot> span.free-space-table{
   border: none;
@@ -1277,7 +1286,7 @@ a.dropdown-item{
 }
 .trow > span {
     display: inline-block;
-    width: 120px;
+    width: 115px;
     border-right: 1px solid #cccccc;
     border-bottom: 1px solid #cccccc;
     border-left: 1px solid #cccccc;
@@ -1297,6 +1306,26 @@ a.dropdown-item{
 
 .trow > span.salary {
   margin-left: -1px;
+  text-align: right;
+  padding-right: 10px;
+  cursor: text;
+}
+.net_salary.number_table{
+  font-weight: bold;
+  color: #66E341;
+}
+
+.editable-click, a.editable-click{
+  text-decoration: none;
+  border-bottom: solid 1px;
+  cursor: text;
+}
+
+.trow > span.number_table,
+.number_table {
+  text-align: right;
+  padding-right: 10px;
+  cursor: text;
 }
 .trow > span.total_salary {
   margin-left: -1px;
