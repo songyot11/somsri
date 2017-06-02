@@ -133,11 +133,19 @@ h2#month-list{
 }
 
 .text-green {
-  color: #66E341 !important;
+  color: #28a745 !important;
 }
 
 .text-red {
   color: #E70A0E !important;
+}
+
+.text-blue{
+  color: #4DABE9 !important;
+}
+
+.text-grey{
+  color: #A0A0A0 !important;
 }
 
 .no-click{
@@ -1313,7 +1321,7 @@ a.dropdown-item{
 }
 .net_salary.number_table{
   font-weight: bold;
-  color: #66E341;
+  color: #28a745;
 }
 
 .editable-click, a.editable-click{
@@ -1492,24 +1500,9 @@ a.dropdown-item{
   text-decoration: none;
 }
 
-.employees-list .table td.red {
-  color: #E1693C;
-}
-
-.employees-list .table td.green {
-  color: #77BB82;
-}
-
-.employees-list .table td.blue {
-  color: #4DABE9;
-}
 .employees-list .table td>.blue {
   cursor: pointer;
   text-decoration: none;
-}
-
-.employees-list .table td.grey {
-  color: #A0A0A0;
 }
 
 .employees-list .icons {

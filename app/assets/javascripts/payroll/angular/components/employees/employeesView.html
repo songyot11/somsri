@@ -130,11 +130,11 @@
           <tbody>
             <tr ng-repeat="data in employees.display_datas track by $index">
               <td><a ng-click="employees.openEmployeeDetails(data.id)" class="blue">{{ data.full_name }}</a></td>
-              <td class="grey">{{ data.position }}</td>
-              <td class="blue text-right"><span>&nbsp;{{ data.salary.toLocaleString() }}</span> บาท</td>
-              <td class="green text-right"><span>&nbsp;{{ data.extra.toLocaleString() }}</span> บาท</td>
-              <td class="red text-right"><span>&nbsp;{{ data.fee.toLocaleString() }}</span> บาท</td>
-              <td class="grey td-edit-employee-link text-center"><a ng-click="employees.openEmployeeDetails(data.id)"><i class="fa fa-pencil-square-o"></i> แก้ไข</a></td>
+              <td class="text-grey">{{ data.position }}</td>
+              <td class="text-blue text-right"><span>&nbsp;{{ data.salary.toLocaleString() }}</span> บาท</td>
+              <td class="text-green text-right"><span>&nbsp;{{ data.extra.toLocaleString() }}</span> บาท</td>
+              <td class="text-red text-right"><span>&nbsp;{{ data.fee.toLocaleString() }}</span> บาท</td>
+              <td class="td-edit-employee-link text-center"><a ng-click="employees.openEmployeeDetails(data.id)"><i class="fa fa-pencil-square-o"></i> แก้ไข</a></td>
             </tr>
           </tbody>
         </table>
