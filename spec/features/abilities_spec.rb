@@ -57,7 +57,7 @@ describe 'Abilities', js: true do
     it 'can goto setting' do
       visit "/main#/setting"
       sleep(1)
-      expect(page).to have_content 'ชื่อ อีเมล รหัสผ่าน เปลี่ยนรหัสผ่าน'
+      expect(page).to have_content 'ชื่อ อีเมล์ รหัสผ่าน เปลี่ยนรหัสผ่าน'
       expect(page).to have_content 'ชื่อโรงเรียน'
     end
 
@@ -156,7 +156,7 @@ describe 'Abilities', js: true do
     it 'can goto setting' do
       visit "/main#/setting"
       sleep(1)
-      expect(page).to have_content 'ชื่อ อีเมล รหัสผ่าน เปลี่ยนรหัสผ่าน'
+      expect(page).to have_content 'ชื่อ อีเมล์ รหัสผ่าน เปลี่ยนรหัสผ่าน'
       expect(page).not_to have_content 'ชื่อโรงเรียน'
     end
 
