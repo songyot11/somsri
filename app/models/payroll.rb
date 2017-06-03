@@ -156,7 +156,7 @@ class Payroll < ApplicationRecord
     end
 
     def self.assume_year_income(payroll)
-      income = (payroll["salary"].to_i + payroll["allowance"].to_i + payroll["attendance_bonus"].to_i + payroll["ot"].to_i + payroll["bonus"].to_i + payroll["position_allowance"].to_i + payroll["extra_etc"].to_i - payroll["absence"].to_i - payroll["late"].to_i)*12
+      income = (payroll["salary"].to_i + payroll["allowance"].to_i + payroll["attendance_bonus"].to_i + payroll["ot"].to_i + payroll["bonus"].to_i + payroll["position_allowance"].to_i + payroll["extra_etc"].to_i - payroll["absence"].to_i - payroll["late"].to_i - payroll["social_insurance"].to_i)*12
     end
 
     def self.tax_break(payroll, tax_reduction)
@@ -168,7 +168,9 @@ class Payroll < ApplicationRecord
     end
 
     def self.generate_income_tax(payroll, employee, tax_reduction)
-      income = self.assume_year_income(payroll) - self.tax_break(payroll,tax_reduction)
+      y_income = self.assume_year_income(payroll)
+      cost_of_income = (0.5*y_income) > 100000 ? 100000:(0.5*y_income)
+      income = y_income - cost_of_income - 60000
       taxrates = Taxrate.order(:order_id).map {|tr| [tr.income, tr.tax] }
       yearTax = 0
       taxrates.each do |taxrate|

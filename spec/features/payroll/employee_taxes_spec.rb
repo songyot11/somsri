@@ -107,7 +107,7 @@ describe 'Taxes', js: true do
   end
 
   it "should return tax 2" do
-    expect(Payroll.generate_tax(payrolls[1], employee2, taxs[1])).to eq(306083.33)
+    expect(Payroll.generate_tax(payrolls[1], employee2, taxs[1])).to eq(304654.17)
   end
 
   it "should return pvf 2" do
