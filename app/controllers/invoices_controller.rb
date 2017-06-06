@@ -11,6 +11,11 @@ class InvoicesController < ApplicationController
       @invoices = get_invoices(grade_select, params[:search_keyword], 1)
     end
     @filter_grade = grade_select
+    render json: {
+      current_page: @invoices.current_page,
+      total_records: @invoices.total_entries,
+      invoices: @invoices.as_json({ index: true })
+    }
   end
 
   # GET /invoices/:id

@@ -30,10 +30,10 @@
           ctrl.grades = grade_resp.data
           service.getInvoices(ctrl.grade_name, ctrl.searchKeyword, ctrl.currentPage).then(function(resp) {
             ctrl.datas = [];
-            if (resp.data[0] && resp.data[0].datas){
-              ctrl.datas = resp.data[0].datas
-              ctrl.totalItems = resp.data[0].total_records;
-              ctrl.currentPage = resp.data[0].current_page;
+            if (resp.data && resp.data.invoices){
+              ctrl.datas = resp.data.invoices
+              ctrl.totalItems = resp.data.total_records;
+              ctrl.currentPage = resp.data.current_page;
             } else {
               ctrl.totalItems = 0;
               ctrl.currentPage = 0;
