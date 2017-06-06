@@ -7,16 +7,16 @@ class Employee < ApplicationRecord
   has_many :parents, class_name: "Individual", foreign_key: 'parent_id'
   has_many :friends, class_name: "Individual", foreign_key: 'friend_id'
   belongs_to :grade
-  has_many :teacher_attendance_lists, dependent: :destroy
+  has_many :teacher_attendance_lists
 
   has_one :taxReduction
 
-  has_many :payrolls, dependent: :restrict_with_exception
+  has_many :payrolls
   after_create :create_tax_reduction
   after_save :update_rollcall_list
   before_save :assign_pin
 
-  acts_as_paranoid without_default_scope: true
+  acts_as_paranoid
 
   has_attached_file :img_url
   validates_attachment_content_type :img_url, content_type: /\Aimage\/.*\z/
@@ -55,7 +55,7 @@ class Employee < ApplicationRecord
   end
 
   def annual_income_outcome(id)
-    employee = Employee.find(id)
+    employee = Employee.with_deleted.find(id)
 
     year = employee.payrolls.latest.effective_date.year
     start_year = Date.new(year, 1, 1)

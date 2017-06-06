@@ -57,9 +57,16 @@
                     <div class="trow" ng-repeat="(index, employee) in payroll.employees" ng-mouseover="hoverIn(employee.code)" ng-class="{'hilight': sel==employee.code}">
                         <span class="code">{{employee.code}}</span>
                         <span class="name">
-                          <a href="/somsri_payroll#/employees/{{employee.code}}?payroll_id={{employee.payroll_id}}">
-                            <strong>{{employee.name}}</strong>
-                          </a>
+                          <div ng-switch on="employee.deleted">
+                            <div ng-switch-when="true">
+                              <strong>{{employee.name}}</strong>
+                            </div>
+                            <div ng-switch-default>
+                              <a href="/somsri_payroll#/employees/{{employee.code}}?payroll_id={{employee.payroll_id}}">
+                                <strong>{{employee.name}}</strong>
+                              </a>
+                            </div>
+                          </div>
                         </span>
                     </div>
                     <div class="trow tfoot">

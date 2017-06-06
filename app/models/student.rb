@@ -65,7 +65,7 @@ class Student < ApplicationRecord
                                       .gsub('master', '')
                                       .gsub('Miss', '')
                                       .gsub('miss', '')
-                                      .strip.gsub(/\s+/,' ') 
+                                      .strip.gsub(/\s+/,' ')
     end
   end
 
@@ -115,7 +115,8 @@ class Student < ApplicationRecord
   end
 
   def parent_names
-    self.parents.collect(&:full_name).join(', ')
+    parent_ids = StudentsParent.where(student_id: self.id).to_a.collect(&:parent_id)
+    Parent.with_deleted.where(id: parent_ids).all.collect(&:full_name).join(', ')
   end
 
   def active_invoice

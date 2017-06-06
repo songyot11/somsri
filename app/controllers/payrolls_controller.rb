@@ -6,10 +6,9 @@ class PayrollsController < ApplicationController
   # GET /payrolls
   def index
     effective_date = DateTime.parse(params[:effective_date])
-    employees = Employee.all
-    payrolls = Payroll.joins(:employee)
-                      .where(employee_id: employees, effective_date: effective_date.beginning_of_day..effective_date.end_of_day)
-                      .order('employees.start_date ASC, employees.created_at ASC')
+    employees = Employee.with_deleted.to_a
+    payrolls = Payroll.where(employee_id: employees, effective_date: effective_date.beginning_of_day..effective_date.end_of_day)
+                      .order('employee_id').to_a
                       .as_json("report")
     render json: payrolls, status: :ok
   end
@@ -36,9 +35,8 @@ class PayrollsController < ApplicationController
   # GET /payrolls/social_insurance_pdf
   def social_insurance_pdf
     effective_date = DateTime.parse(params[:effective_date])
-    employees = Employee.all.order(:id).to_a
-    payrolls = Payroll.joins(:employee)
-                      .where(employee_id: employees, effective_date: effective_date.beginning_of_day..effective_date.end_of_day)
+    employees = Employee.with_deleted.all.order(:id).to_a
+    payrolls = Payroll.where(employee_id: employees, effective_date: effective_date.beginning_of_day..effective_date.end_of_day)
                       .where("social_insurance > ?", 0)
                       .order('employee_id').to_a
     render plain: "ไม่มีพนักงานที่ต้องเสียค่าประกันสังคม", status: :ok and return if payrolls.size == 0 || payrolls.blank?
@@ -212,7 +210,7 @@ class PayrollsController < ApplicationController
 
   private
     def get_months()
-      employee_ids = Employee.all
+      employee_ids = Employee.with_deleted.all
       payroll_dates = Payroll.where(employee_id: employee_ids)
                              .order("effective_date DESC")
                              .distinct.pluck(:effective_date).uniq

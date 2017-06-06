@@ -77,7 +77,7 @@ describe 'Employee archive', js: true do
   it 'should archive employee' do
     visit "/somsri_payroll#/employees/#{employee1.id}"
     sleep(1)
-    click_button('นำออกชั่วคราว')
+    click_button('ลบ')
     sleep(1)
     click_button("ตกลง")
     sleep(1)
@@ -89,7 +89,7 @@ describe 'Employee archive', js: true do
   it 'should restore employee' do
     visit "/somsri_payroll#/employees/#{employee1.id}"
     sleep(1)
-    click_button('นำออกชั่วคราว')
+    click_button('ลบ')
     sleep(1)
     click_button("ตกลง")
     sleep(1)

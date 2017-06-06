@@ -11,18 +11,15 @@ class ParentsController < ApplicationController
     @classroom_display = Student.order("classroom ASC").select(:classroom).map(&:classroom).uniq.compact
 
     if class_select.downcase == 'all' && grade_select.downcase == 'all'
-      parents = Parent.with_deleted
+      parents = Parent.all
     elsif grade_select.downcase == 'all' && class_select.downcase != 'all'
-      parent_joins = Parent.joins(:students).where(students:{classroom: class_select})
-      parents = parent_joins.with_deleted
+      parents = Parent.joins(:students).where(students:{classroom: class_select})
     elsif grade_select != 'all' && class_select.downcase == 'all'
       grade = Grade.where(name: grade_select).first
-      parent_joins = Parent.joins(:students).where(students:{grade: grade.id})
-      parents = parent_joins.with_deleted
+      parents = Parent.joins(:students).where(students:{grade: grade.id})
     elsif grade_select != 'all' && class_select != 'all'
       grade = Grade.where(name: grade_select).first
-      parent_joins = Parent.joins(:students).where(students:{grade: grade.id , classroom: class_select})
-      parents = parent_joins.with_deleted
+      parents = Parent.joins(:students).where(students:{grade: grade.id , classroom: class_select})
     end
       @parents = parents.search(params[:search]).page(params[:page]).order("parents.deleted_at DESC , parents.full_name ASC").includes(:students, :relationships, :invoices)
       @filter_class = class_select

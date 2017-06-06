@@ -22,15 +22,15 @@ class StudentsController < ApplicationController
     if !params[:student_report]
       # without angular
       if grade_select.downcase == 'all' && class_select.downcase == 'all'
-        students = Student.with_deleted
+        students = Student
       elsif grade_select.downcase == 'all' && class_select.downcase != 'all'
-        students = Student.with_deleted.where(classroom: class_select)
+        students = Student.where(classroom: class_select)
       elsif grade_select != 'all' && class_select.downcase == 'all'
         grade = Grade.where(name: grade_select).first
-        students = Student.with_deleted.where(grade: grade.id)
+        students = Student.where(grade: grade.id)
       elsif grade_select != 'all' && class_select != 'all'
         grade = Grade.where(name: grade_select).first
-        students = Student.with_deleted.where(grade: grade.id , classroom: class_select)
+        students = Student.where(grade: grade.id , classroom: class_select)
       end
       if params[:for_print]
         @students = students.order("grade_id ASC, classroom ASC, classroom_number ASC, student_number ASC").search(params[:search]).to_a
@@ -43,7 +43,7 @@ class StudentsController < ApplicationController
         @students_all = Student.order("deleted_at DESC , student_number ASC").search(params[:search]).with_deleted.to_a
       else
         grade = Grade.where(name: grade_select).first
-        @students_all = Student.where(grade_id: grade.id).order("classroom ASC, classroom_number ASC").search(params[:search]).to_a
+        @students_all = Student.where(grade_id: grade.id).order("classroom ASC, classroom_number ASC").search(params[:search]).with_deleted.to_a
       end
 
       student_index = Array.new

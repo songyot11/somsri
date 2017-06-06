@@ -36,15 +36,16 @@ describe 'Employee delete', js: true do
   let(:payrolls) do
     [
 
-      pr3 = Payroll.make!({employee_id: employee2.id, salary: 50_000, tax: 100,
+      Payroll.make!({employee_id: employee2.id, salary: 50_000, tax: 100,
                             effective_date: DateTime.new(2016, 11, 1)}),
-      pr3 = Payroll.make!({employee_id: employee2.id, salary: 50_000, tax: 100,
+      Payroll.make!({employee_id: employee2.id, salary: 50_000, tax: 100,
                             effective_date: DateTime.new(2016, 12, 1)})
     ]
   end
 
   before do
     user.add_role :admin
+    employee1
     payrolls
     login_as(user, scope: :user)
   end
@@ -54,7 +55,7 @@ describe 'Employee delete', js: true do
     sleep(1)
     click_button("ลบ")
     sleep(1)
-    eventually { expect(page).to have_content("คุณต้องการลบข้อมูลพนักงานออกถาวรหรือไม่?") }
+    eventually { expect(page).to have_content("คุณต้องการนำข้อมูลพนักงานออกหรือไม่?") }
   end
 
   describe 'when confirmed modal with employee not belong to payroll' do
@@ -99,10 +100,39 @@ describe 'Employee delete', js: true do
   end
 
   describe 'when confirmed modal with employee belong to payroll' do
-    it 'should not delete employee that belong to payroll' do
+    before do
       visit "/somsri_payroll#/employees/#{employee2.id}"
+      sleep(1)
+      click_button("ลบ")
+      sleep(1)
+      click_button("ตกลง")
+      sleep(1)
+    end
 
-      eventually { expect(page).to have_no_content("ลบ") }
+    it 'should have this employee in database' do
+      eventually { expect(Employee.count).to eq 1}
+    end
+
+    it 'should not display on employee list' do
+      visit "/somsri_payroll#/employees"
+
+      eventually { expect(page).to have_selector('.card', count: 1) }
+    end
+
+    it 'should not display on employee dropdown' do
+      visit "/somsri_payroll#/employees/#{employee1.id}"
+
+      find('#employeeName').click
+      sleep(1)
+
+      eventually { expect(page).to have_selector('.dropdown-menu li', count: 0) }
+    end
+
+    it 'should display on report' do
+      visit "/somsri_payroll#/report"
+      sleep(1)
+      eventually { expect(page).to have_content('สมจิตร') }
     end
   end
+
 end

@@ -33,7 +33,7 @@
     };
 
     this.archiveEmployee = function(employee_id) {
-      return $http.post('/employees/' + employee_id + '/archive');
+      return $http.delete('/employees/' + employee_id);
     };
 
     this.restoreEmployees = function(employee_id) {

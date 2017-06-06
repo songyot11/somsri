@@ -73,9 +73,16 @@
           <tr ng-repeat="employee in employees | orderBy:sortType:sortReverse">
             <td class="text-left report_for_print_hide" style="width:60px;">{{employee.code}}</td>
             <td class="text-left forprint_table this_name" style="width:300px;">
-              <a href="/somsri_payroll#/employees/{{employee.code}}?payroll_id={{employee.payroll_id}}">
-                <strong>{{employee.name}}</strong>
-              </a>
+              <div ng-switch on="employee.deleted">
+                <div ng-switch-when="true">
+                  <strong>{{employee.name}}</strong>
+                </div>
+                <div ng-switch-default>
+                  <a href="/somsri_payroll#/employees/{{employee.code}}?payroll_id={{employee.payroll_id}}">
+                    <strong>{{employee.name}}</strong>
+                  </a>
+                </div>
+              </div>
             </td>
             <td class="text-center forprint_table this_account" style="width:184px;">{{employee.account_number}}</td>
             <td class="report_for_print_hide" style="min-width:150px;">{{employee.salary | currency: ""}}</td>

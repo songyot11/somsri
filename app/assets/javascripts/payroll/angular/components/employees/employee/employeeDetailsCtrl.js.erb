@@ -343,7 +343,7 @@
       }
 
       ctrl.archiveEmployee = function(id) {
-        openConfirmationModal("คุณต้องการนำข้อมูลพนักงานออกชั่วคราวหรือไม่?", function() {
+        openConfirmationModal("คุณต้องการนำข้อมูลพนักงานออกหรือไม่?", function() {
           service.archiveEmployee(id).then(function(resp) {
             $rootScope.openEmployees();
           })

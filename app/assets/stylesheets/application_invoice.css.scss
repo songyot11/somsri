@@ -296,6 +296,22 @@ ul.nav.navbar-nav.navbar-right.dropdown{
     }
 }
 
+.somsri-invoice .btn-remove-sp{
+  background-color: #DD5A2B;
+  color: #FFFFFF;
+  border: 2px solid #DD5A2B;
+  font-size: 18px;
+  padding: 12px 32px;
+  border-radius: 0px;
+  transition: all 0.25s ease;
+
+  &:hover{
+    background-color: transparent;
+    color: #DD5A2B;
+    border: 2px solid #DD5A2B;
+  }
+}
+
 .col-total-1{
     margin-bottom: 5px;
 }
@@ -1270,17 +1286,24 @@ table.table.table-sp-report>tbody{
   color: #5d9e00
 }
 
-.btn-resign{
-  color:#d08521
+.btn-delete-student-parent,
+.btn-delete-student-parent:hover,
+.btn-delete-student-parent:focus{
+  color:#dd5a2b;
+  text-decoration: none;
 }
-
+.btn-edit-student-parent,
+.btn-edit-student-parent:hover,
+.btn-edit-student-parent:focus{
+  color:#3fa1b6;
+  text-decoration: none;
+}
 .btn-trash {
   color: #ff0000
 }
 
 .btn-archive-sp{
   color: #777 ;
-  // font-size: 20px
 }
 .btn-archive-sp:hover{
   color: #777;
@@ -1324,4 +1347,8 @@ table.table.table-sp-report>tbody{
 
 .circle{
   border-radius: 50%;
+}
+
+a#student_remove,a#parent_archive  {
+    margin-left: 20px;
 }

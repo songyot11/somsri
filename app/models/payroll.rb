@@ -1,6 +1,6 @@
 class Payroll < ApplicationRecord
   include ActiveModel::Dirty
-  acts_as_paranoid without_default_scope: true
+  acts_as_paranoid
   belongs_to :employee
   validate :already_payroll_on_month, on: :create
   before_validation :set_created_at
@@ -11,8 +11,7 @@ class Payroll < ApplicationRecord
 
   def update_employee_salary
     if self.salary_changed? && self.employee && self.employee.lastest_payroll.id == self.id
-      employee.salary = self.salary
-      employee.save
+      Employee.update(self.employee.id, {salary: self.salary})
     end
   end
 
@@ -34,6 +33,10 @@ class Payroll < ApplicationRecord
     allowance + attendance_bonus + ot + bonus + position_allowance + extra_etc
   end
 
+  def employee
+    Employee.with_deleted.where(id: self.employee_id).first
+  end
+
   def as_json(options={})
     if options["report"]
       {
@@ -41,6 +44,7 @@ class Payroll < ApplicationRecord
         code: self.employee.id,
         prefix: self.employee.prefix,
         name: self.employee.full_name,
+        deleted: self.employee.deleted_at.blank? ? false : true,
         account_number: self.employee.account_number,
         extra_pay: extra_pay.to_f,
         extra_fee: extra_fee.to_f,

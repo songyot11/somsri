@@ -72,9 +72,14 @@
               <tr ng-repeat="student in studentReport.students ">
                 <td class="text-left">{{student.student_number}}</td>
                 <td class="text-left">
-                  <a href="/students/{{ student.id }}/edit">
-                    <strong>{{student.full_name_with_title}}</strong>
-                  </a>
+                  <div ng-if="student.deleted_at && student.deleted_at != ''">
+                    {{student.full_name_with_title}}
+                  </div>
+                  <div ng-if="!student.deleted_at">
+                    <a href="/students/{{ student.id }}/edit">
+                      <strong>{{student.full_name_with_title}}</strong>
+                    </a>
+                  </div>
                 </td>
                 <td>{{student.nickname_eng_thai}}</td>
                 <td>{{student.grade_name}}</td>

@@ -10,6 +10,14 @@ class Invoice < ApplicationRecord
 
   scope :latest, -> { order("created_at DESC").first }
 
+  def parent
+     Parent.with_deleted.where(id: self.parent_id).first
+  end
+
+  def student
+     Student.with_deleted.where(id: self.student_id).first
+  end
+
   def total_amount
     self.line_items.collect(&:amount).inject(:+)
   end

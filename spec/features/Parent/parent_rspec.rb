@@ -1,40 +1,81 @@
 describe 'Invoice-Report', js: true do
 
+  let(:school) do
+    School.make!({ name: "โรงเรียนแห่งหนึ่ง" })
+  end
+
   let(:user) { user = User.create!({
     email: 'test@mail.com',
     password: '123456789'
   })}
 
+  let(:invoice_status_1) { InvoiceStatus.make! name: 'Active' }
+  let(:invoice_status_2) { InvoiceStatus.make! name: 'Canceled' }
+
   let(:parent) do
     [
       parent1 = Parent.make!({
         full_name: 'สมศรี ใบเสร็จ'
-      }),
-      parent2 = Parent.make!({
-        full_name: 'สมหมาย ใบไม่เสร็จ'
       })
     ]
   end
+
+  let(:grade){grade = Grade.create(
+    name: "Kindergarten 1"
+  )}
+
+  let(:student) do
+    [
+      student1 = Student.make!({
+        first_name: 'ลูกศรี',
+        last_name: 'ใบเสร็จ',
+        grade_id: grade.id,
+        classroom_number: 106,
+        student_number: 9006,
+        birthdate: Time.now
+      })
+    ]
+  end
+
+  let(:studentsparent) do
+    [
+      StudentsParent.make!({student_id: student[0].id , parent_id: parent[0].id})
+    ]
+  end
+
   let(:invoice) { inv1 = Invoice.make!({
-    parent_id: parent[1].id,
-    invoice_status_id: 1
+    student_id: student[0].id,
+    user_id: user.id,
+    parent_id: parent[0].id,
+    invoice_status_id:  invoice_status_1.id,
+    school_year: "2560",
+    semester: "1",
+    line_items: [
+      LineItem.make!(:tuition, amount: 48000),
+      LineItem.make!(amount: 3000),
+      LineItem.make!(amount: 750)
+    ]
   })}
 
+
   before do
+    school
     user.add_role :admin
     login_as(user, scope: :user)
-    parent
+    studentsparent
+    invoice_status_1
+    invoice_status_2
     invoice
   end
 
   it 'should access to parent page' do
     visit '/parents#/'
-
+    sleep(1)
     eventually { expect(page).to have_content("ผู้ปกครอง") }
   end
 
   it 'should archive parent' do
-    visit '/parents#/'
+    visit "/parents/#{parent[0].id}/edit#/"
     sleep(1)
     first('#parent_archive').click
     sleep(1)
@@ -42,38 +83,43 @@ describe 'Invoice-Report', js: true do
     sleep(1)
     parent[0].reload
     sleep(1)
-
-    eventually { expect(page).to have_content("ผู้ปกครองถูกนำออกจากระบบชั่วคราว") }
-    eventually { expect(parent[0].deleted_at).to_not eq(nil) }
+    eventually { expect(parent[0].deleted_at.blank?).to eq(false) }
   end
 
-  it 'should restore parent' do
-    visit '/parents#/'
+  it 'should see parent on invoice slip, although parent is deleted' do
+    visit "/parents/#{parent[0].id}/edit#/"
+    sleep(1)
     first('#parent_archive').click
     sleep(1)
     page.accept_alert
     sleep(1)
-    first('#parent_restore').click
+    visit "/somsri_invoice#/invoice/#{invoice.id}/slip"
     sleep(1)
-
-    eventually { expect(page).to have_no_content("ผู้ปกครองถูกนำออกจากระบบชั่วคราว") }
+    eventually { expect(page).to have_content ("สมศรี") }
   end
 
-  it 'should delete parent' do
-    visit '/parents#/'
+  it 'should see parent on student_report, although parent is deleted' do
+    visit "/parents/#{parent[0].id}/edit#/"
     sleep(1)
-    eventually { expect(page).to have_content("สมศรี ใบเสร็จ") }
+    first('#parent_archive').click
     sleep(1)
-    first('#parent_delete').click
+    page.accept_alert
     sleep(1)
-
-    eventually { expect(page).to have_no_content("สมศรี ใบเสร็จ") }
+    visit "/somsri_invoice#/student_report"
+    sleep(1)
+    eventually { expect(page).to have_content ("สมศรี") }
   end
 
-  it 'should can not destroy parent' do
-    visit "/parents/#{parent[1].id}"
+  it 'should see parent on invoice_report, although parent is deleted' do
+    visit "/parents/#{parent[0].id}/edit#/"
     sleep(1)
-    eventually { expect(page).to have_no_content("Destroy") }
+    first('#parent_archive').click
+    sleep(1)
+    page.accept_alert
+    sleep(1)
+    visit '/somsri_invoice#/invoice_report'
+    sleep(1)
+    eventually { expect(page).to have_content ("สมศรี") }
   end
 
 end

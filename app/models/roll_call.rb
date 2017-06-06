@@ -15,9 +15,12 @@ class RollCall < ApplicationRecord
     lists.each do |list|
       morning = list.get_roll_calls_by_round(date, "morning")
       afternoon = list.get_roll_calls_by_round(date, "afternoon")
+
       list.get_students.each do |student|
-        RollCall.fill_with_blank(morning, student, list)
-        RollCall.fill_with_blank(afternoon, student, list)
+        if student && student.deleted_at.blank?
+          RollCall.fill_with_blank(morning, student, list)
+          RollCall.fill_with_blank(afternoon, student, list)
+        end
       end
 
       morning.sort! {|a,b| a[0] <=> b[0]}
@@ -52,12 +55,13 @@ class RollCall < ApplicationRecord
         return [_number, self]
       end
     end
+    return nil
   end
 
   def as_json(option={})
     if option[:format_api]
       st = self.student
-      st = Student.with_deleted.where(id: student_id).first if self.student.blank?
+      st = Student.where(id: student_id).first if self.student.blank?
       {
         code: st.code,
         first_name: st.first_name,
@@ -83,17 +87,19 @@ class RollCall < ApplicationRecord
 
   private
   def self.fill_with_blank(roll_calls, student, list)
-    found = false
-    roll_calls.each do |rc_morning|
-      found = true if rc_morning[1].student_id == student.id
-    end
-    if !found
-      _number = student.classroom_number
-      _number = 0 if _number.blank?
-      roll_calls << [ _number, RollCall.new({
-        student_id: student.id,
-        list_id: list.id
-      })]
+    if student
+      found = false
+      roll_calls.each do |rc_morning|
+        found = true if rc_morning[1].student_id == student.id
+      end
+      if !found
+        _number = student.classroom_number
+        _number = 0 if _number.blank?
+        roll_calls << [ _number, RollCall.new({
+          student_id: student.id,
+          list_id: list.id
+        })]
+      end
     end
   end
 
