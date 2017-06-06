@@ -1254,7 +1254,7 @@ a.dropdown-item{
 }
 
 .theadtop > span.income {
-    width: 833px;
+    width: 798px;
     border-right: 1px solid #cccccc;
 }
 
@@ -1507,4 +1507,24 @@ a.dropdown-item{
 
 .employees-list .icons {
   margin-top: 23px;
+}
+
+#scrollbar-payroll::-webkit-scrollbar-track
+{
+	-webkit-box-shadow: inset 0 0 6px rgba(0,0,0,0.1);
+	border-radius: 0px;
+	background-color: #FdFdFd;
+}
+
+#scrollbar-payroll::-webkit-scrollbar
+{
+	width: 12px;
+  height: 12px;
+	background-color: #fdFdFd;
+}
+
+#scrollbar-payroll::-webkit-scrollbar-thumb
+{
+	border-radius: 5px;
+	background-color: #5b5b5b;
 }

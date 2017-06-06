@@ -479,7 +479,7 @@ describe 'Employee Details', js: true do
 
     it 'should edit start_date' do
       eventually { expect(find('#start_date').value).to_not have_content '03/12/1990' }
-
+      sleep(1)
       find('#start_date').set('03/12/1990')
       sleep(1)
       click_button('บันทึก')

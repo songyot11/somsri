@@ -98,7 +98,7 @@
                     <span>อื่นๆ</span>
                     <span>เงินเดือนสุทธิ</span>
                 </div>
-                <div class="tbody">
+                <div class="tbody" id="scrollbar-payroll">
                     <div class="trow" ng-repeat="(index, employee) in payroll.employees" ng-mouseover="hoverIn(employee.code)">
                         <span ng-class="{'hilight': sel==employee.code, 'salary': true }">
                           <div class="popover-wrapper right-popup" ng-class="{'bottom-popup': index === 0}">
