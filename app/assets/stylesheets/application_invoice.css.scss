@@ -408,11 +408,8 @@ textarea {
     .slip-copy-top{
       margin-top: 150px;
     }
-    .form-slip{
-      margin-top: -90px !important;
-    }
-    body > .container-fluid{
-        padding: 20px 15px 0;
+    body.somsri-invoice >.container-fluid {
+        padding: 0px 15px 0 !important;
     }
     .navbar-brand{
         display: none;
@@ -446,6 +443,10 @@ textarea {
       margin-top: -80px !important;
       padding: 0px !important;
       max-width: inherit;
+    }
+    .form-slip{
+      margin-top: 0px !important;
+      padding: 0px !important;
     }
 }
 /*slip*/

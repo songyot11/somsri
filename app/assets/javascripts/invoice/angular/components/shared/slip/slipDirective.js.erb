@@ -1,0 +1,17 @@
+(function() {
+  'use strict';
+  angular.module('somsri.invoice.slip.directive', [])
+    .directive('slipContent', slipContent);
+
+  function slipContent() {
+    return {
+      restrict: 'E',
+      scope: {
+        slipContent: '=info',
+        slipTitle: '@title'
+      },
+      templateUrl: "<%= asset_path('invoice/angular/components/shared/slip/slipView.html') %>",
+    };
+  }
+
+})();
