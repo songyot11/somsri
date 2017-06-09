@@ -8,6 +8,7 @@
 
     $rootScope.loadAndAuthorizeResource("invoice", function(){
       ctrl.currentPage = 1;
+      ctrl.searchKeyword = '';
       ctrl.grade_name = "All"
       ctrl.pageChanged = function() {
         getStudents()
@@ -18,17 +19,24 @@
         getStudents()
       }
 
+      ctrl.search = function() {
+        getStudents();
+      }
+
       function getStudents() {
         if(!ctrl.currentPage){ ctrl.currentPage = 1 }
         service.getGrades().then(function(grade_resp) {
           ctrl.currentGradeString = ctrl.grade_name
           ctrl.grades = grade_resp.data
-          service.getInvoices(ctrl.grade_name, ctrl.currentPage).then(function(resp) {
+          service.getInvoices(ctrl.grade_name, ctrl.searchKeyword, ctrl.currentPage).then(function(resp) {
             ctrl.datas = [];
-            if (resp.data[0] && resp.data[0].datas){
-              ctrl.datas = resp.data[0].datas
-              ctrl.totalItems = resp.data[0].total_records;
-              ctrl.currentPage = resp.data[0].current_page;
+            if (resp.data && resp.data.invoices){
+              ctrl.datas = resp.data.invoices
+              ctrl.totalItems = resp.data.total_records;
+              ctrl.currentPage = resp.data.current_page;
+            } else {
+              ctrl.totalItems = 0;
+              ctrl.currentPage = 0;
             }
             ctrl.maxSize = 5;
           });

@@ -1,15 +1,19 @@
-<div class="container btn-add-employee-list">
+<div class="container-fluid employees-list btn-add-employee-list">
   <div class="row">
-    <div class="col-md-3 col-md-offset-9">
+    <div class="col-md-3 icons">
+      <i ng-click="employees.displayMode = 'grid'" ng-class="{ 'active' : employees.displayMode === 'grid' }" class="fa fa-th-large employee-view-icon"></i>
+      <i ng-click="employees.displayMode = 'list'" ng-class="{ 'active' : employees.displayMode === 'list' }" class="fa fa-list-ul employee-view-icon"></i>
+    </div>
+    <div class="col-md-3 col-md-offset-6">
       <a ng-click="employees.openEmployeeDetails(0)" href="javascript:void(0)" class="btn btn-yellow pull-right">
         + เพิ่มพนักงานใหม่
       </a>
     </div>
   </div>
 </div>
-<div class="container employees-list">
+<div class="container-fluid employees-list">
   <div class="row same-height">
-    <div class="col-xs-2 card-employees" ng-repeat="data in employees.display_datas">
+    <div class="col-xs-2 card-employees" ng-show="employees.displayMode === 'grid'" ng-repeat="data in employees.display_datas track by $index">
       <div ng-if="data.deleted_at != nil">
         <div class="card cursor-pointer employee-archive" ng-click="employees.openEmployeeDetails(data.id)">
           <div class="row line-space5">
@@ -60,7 +64,6 @@
         </div>
       </div>
 
-
       <div ng-if="data.deleted_at == nil">
         <div class="card cursor-pointer" ng-click="employees.openEmployeeDetails(data.id)">
           <div class="row line-space5">
@@ -109,7 +112,33 @@
           </div>
         </div>
       </div>
+    </div>
 
+    <div class="col-md-12" ng-show="employees.displayMode === 'list'">
+      <div class="list-view">
+        <table id="employeesTable" class="table">
+          <thead>
+            <tr>
+              <th style="width: 350px;">ชื่อ-นามสกุล</th>
+              <th style="width: 170px;">ตำแหน่ง</th>
+              <th class="text-right">เงินเดือน</th>
+              <th class="text-right">เงินเพิ่ม</th>
+              <th class="text-right">เงินหัก</th>
+              <th style="width: 170px;"></th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr ng-repeat="data in employees.display_datas track by $index">
+              <td><a ng-click="employees.openEmployeeDetails(data.id)" class="blue">{{ data.full_name }}</a></td>
+              <td class="text-grey">{{ data.position }}</td>
+              <td class="text-blue text-right"><span>&nbsp;{{ data.salary.toLocaleString() }}</span> บาท</td>
+              <td class="text-green text-right"><span>&nbsp;{{ data.extra.toLocaleString() }}</span> บาท</td>
+              <td class="text-red text-right"><span>&nbsp;{{ data.fee.toLocaleString() }}</span> บาท</td>
+              <td class="td-edit-employee-link text-center"><a ng-click="employees.openEmployeeDetails(data.id)"><i class="fa fa-pencil-square-o"></i> แก้ไข</a></td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
     </div>
   </div>
 </div>

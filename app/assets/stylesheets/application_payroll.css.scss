@@ -21,6 +21,7 @@ body {
   color: #595959;
   -webkit-print-color-adjust: exact !important;
   margin-bottom: 60px;
+  background-color: #FFFFFF;
 }
 
 .employee-filter {
@@ -116,6 +117,8 @@ img {
 
 #payroll-report tfoot {
   border-bottom: 2px solid #ddd;
+  font-size: 17px;
+  font-weight: bold;
 }
 
 #payroll-report #month-list {
@@ -130,11 +133,23 @@ h2#month-list{
 }
 
 .text-green {
-  color: #66E341;
+  color: #28a745 !important;
 }
 
 .text-red {
   color: #E70A0E !important;
+}
+
+.text-blue{
+  color: #4DABE9 !important;
+}
+
+.text-grey{
+  color: #A0A0A0 !important;
+}
+
+.no-click{
+  cursor: default !important;
 }
 
 .text-yellow {
@@ -272,7 +287,7 @@ h2#month-list{
   border-radius: inherit;
   color: #fff;
   padding: 12px 32px;
-  font-size: 14px;
+  font-size: 16px;
   transition: all 0.25s ease;
 
   &:hover{
@@ -420,6 +435,10 @@ input.btn-prefix.active:-moz-placeholder { /* Firefox 18- */
   top: 50%;
   left: 50%;
   transform: translate(-50%, -50%);
+}
+
+.container-fluid.employees-list{
+  max-width: 1366px;
 }
 
 .employees-list .img-profile {
@@ -730,6 +749,9 @@ a.text-mane-back,a.text-mane-back:focus{
     background-color: #dadada !important;
     border-bottom: #dadada !important;
   }
+  .text-green {
+    color: #000 !important;
+  }
 }
 
 .form-group input, .form-group div{
@@ -803,6 +825,8 @@ a.text-mane-back,a.text-mane-back:focus{
 #payroll .payroll-content {
   padding: 15px;
   background-color: #fff;
+  max-height: 630px;
+  padding-bottom: 30px;
   margin-top: 10px;
   box-shadow: 0 5px 13px 0 rgba(0, 0, 0, 0.3);
 }
@@ -1132,6 +1156,7 @@ table.scrollable-header {
   box-shadow: none;
   font-size: 16px;
   color: #fff;
+  border-radius: 0px;
   padding: 12px 32px;
   transition: all 0.25s ease;
 
@@ -1162,7 +1187,8 @@ table.scrollable-header {
 }
 .dropdown-menu.on-nav-bar {
     padding: 10px 10px;
-    width: 62%;
+    width: 80%;
+    border-radius: 0px;
 }
 a.dropdown-item{
   color: #555;
@@ -1213,7 +1239,7 @@ a.dropdown-item{
 }
 .thead > span {
     display: inline-block;
-    width: 120px;
+    width: 115px;
     line-height: 40px;
     text-align: center;
     border-top: 1px solid #cccccc;
@@ -1233,7 +1259,7 @@ a.dropdown-item{
 }
 
 .theadtop > span.income {
-    width: 833px;
+    width: 798px;
     border-right: 1px solid #cccccc;
 }
 
@@ -1255,8 +1281,11 @@ a.dropdown-item{
 }
 .trow.tfoot> span{
   border-bottom: 2px solid #9d9d9d;
+  background-color: #fdfdfd;
 }
-
+.trow.tfoot> span.free-space-table{
+  border: none;
+}
 .thead > span.gap {
     width: 150px;
     border-top: 1px solid #fff;
@@ -1271,7 +1300,7 @@ a.dropdown-item{
 }
 .trow > span {
     display: inline-block;
-    width: 120px;
+    width: 115px;
     border-right: 1px solid #cccccc;
     border-bottom: 1px solid #cccccc;
     border-left: 1px solid #cccccc;
@@ -1291,11 +1320,33 @@ a.dropdown-item{
 
 .trow > span.salary {
   margin-left: -1px;
+  text-align: right;
+  padding-right: 10px;
+  cursor: text;
+}
+.net_salary.number_table{
+  font-weight: bold;
+  color: #28a745;
 }
 
+.editable-click, a.editable-click{
+  text-decoration: none;
+  border-bottom: solid 1px;
+  cursor: text;
+}
+
+.trow > span.number_table,
+.number_table {
+  text-align: right;
+  padding-right: 10px;
+  cursor: text;
+}
+.trow > span.total_salary {
+  margin-left: -1px;
+}
 .tbody {
-    height: 450px;
-    overflow: auto;
+    max-height: 450px;
+    overflow: scroll;
     -moz-box-sizing: border-box;
     box-sizing: border-box;
 }
@@ -1429,4 +1480,57 @@ a.dropdown-item{
 .sort-report, .sort-report:hover, .sort-report:focus{
   color: #333 ;
   text-decoration: none ;
+}
+
+.employee-view-icon {
+  color: #9D9D9D;
+  font-size: 22px;
+  margin-right: 6px;
+  margin-top: 6px;
+  cursor: pointer;
+}
+
+.employee-view-icon.active, .employee-view-icon:hover {
+  color: #FFAB04;
+}
+
+.employees-list .list-view {
+  background-color: white;
+  padding: 20px 25px;
+  box-shadow: 0 2px 4px 0 rgba(0, 0, 0, 0.3);
+  font-size: 1.2em;
+}
+
+.employees-list .table td.td-edit-employee-link a{
+  cursor: pointer;
+  text-decoration: none;
+}
+
+.employees-list .table td>.blue {
+  cursor: pointer;
+  text-decoration: none;
+}
+
+.employees-list .icons {
+  margin-top: 23px;
+}
+
+#scrollbar-payroll::-webkit-scrollbar-track
+{
+	-webkit-box-shadow: inset 0 0 6px rgba(0,0,0,0.1);
+	border-radius: 0px;
+	background-color: #FdFdFd;
+}
+
+#scrollbar-payroll::-webkit-scrollbar
+{
+	width: 12px;
+  height: 12px;
+	background-color: #fdFdFd;
+}
+
+#scrollbar-payroll::-webkit-scrollbar-thumb
+{
+	border-radius: 5px;
+	background-color: #5b5b5b;
 }

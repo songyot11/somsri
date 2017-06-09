@@ -87,7 +87,8 @@ Rails.application.routes.draw do
       # get 'invoice_total_amount'
     end
   end
-  get "/invoice_total_amount" => "students#invoice_total_amount"
+  get '/student_report' => "students#student_report"
+  # get "/invoice_total_amount" => "students#invoice_total_amount"
   get "/invoice_years" => "invoices#invoice_years"
   get "/invoice_semesters" => "invoices#invoice_semesters"
 

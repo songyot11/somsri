@@ -165,7 +165,7 @@
           var nowDate = new Date();
           // Clone to prevent the reset value
           ctrl.datas = JSON.parse(JSON.stringify(DEFAULT_INVOICE))
-          ctrl.datas.invoice.semester = "1" ;
+          ctrl.datas.invoice.semester = resp.data.current_semester;
           ctrl.datas.payment_method = {};
           ctrl.datas.payment_method.is_cash = false;
           ctrl.datas.payment_method.is_credit_card = true;

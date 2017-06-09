@@ -6,17 +6,16 @@ class InvoicesController < ApplicationController
   # GET /invoices
   def index
     grade_select = (params[:grade_select] || 'All')
-    if grade_select.downcase == 'all'
-      # @invoices = Invoice.order("id DESC").to_a
-      # @invoices = Invoice.order("id DESC").search(params[:search]).all.page(params[:page]).to_a
-      @invoices = Invoice.order("id DESC").all.paginate(page: params[:page], per_page: 10).to_a
-    else
-      # @invoices = Invoice.where(grade_name: grade_select).order("id DESC").to_a
-      # @invoices = Invoice.where(grade_id: grade.id).order("id DESC").search(params[:search]).page(params[:page]).to_a
-      grade = Grade.where(name: grade_select).first
-      @invoices = Invoice.where(grade_name: grade.name).order("id DESC").paginate(page: params[:page], per_page: 10).to_a
+    @invoices = get_invoices(grade_select, params[:search_keyword], params[:page])
+    if @invoices.total_pages < @invoices.current_page
+      @invoices = get_invoices(grade_select, params[:search_keyword], 1)
     end
     @filter_grade = grade_select
+    render json: {
+      current_page: @invoices.current_page,
+      total_records: @invoices.total_entries,
+      invoices: @invoices.as_json({ index: true })
+    }
   end
 
   # GET /invoices/:id
@@ -85,7 +84,8 @@ class InvoicesController < ApplicationController
       student_info: student_info,
       parent_info: parent_info,
       grades: Grade.names,
-      line_items_info: line_items_info
+      line_items_info: line_items_info,
+      current_semester: SchoolSetting.current_semester
     }, status: :ok
   end
 
@@ -113,9 +113,9 @@ class InvoicesController < ApplicationController
       if student.nil?
         student = Student.new(full_name: student_name, student_number: student_params[:student_number])
         # Detect Gender from prefix
-        if student_params[:full_name].include?('ด.ช.') || student_params[:full_name].include?('เด็กชาย')
+        if ['ด.ช.','เด็กชาย','master'].any? { |word| student_params[:full_name].downcase.include?(word) }
           student.gender_id = Gender.find_by_name("Male").id
-        elsif student_params[:full_name].include?('ด.ญ.') || student_params[:full_name].include?('เด็กหญิง')
+        elsif ['ด.ญ.','เด็กหญิง','miss'].any? { |word| student_params[:full_name].downcase.include?(word) }
           student.gender_id = Gender.find_by_name("Female").id
         end
       end
@@ -125,9 +125,6 @@ class InvoicesController < ApplicationController
         student.grade_id = grade.id
       end
 
-      if student && student.gender_id.nil?
-        student.gender_id = Gender.find_by_name("Male").id
-      end
       student.save
 
       if student.parents.size == 0 || student.parents.select{|p| p.full_name == parent.full_name}.size == 0
@@ -287,15 +284,40 @@ class InvoicesController < ApplicationController
 
   def invoice_years
     all_years = Invoice.pluck(:school_year).uniq
-    render json: all_years, status: :ok
+    render json: {
+      all_years: all_years,
+      current_year: SchoolSetting.school_year
+    }
   end
 
   def invoice_semesters
-    all_semesters_of_year = Invoice.where(school_year: params[:year]).pluck(:semester).uniq
-    render json: all_semesters_of_year
+    render json: {
+      semesters: SchoolSetting.semesters,
+      current_semester: SchoolSetting.current_semester
+    }
   end
 
   private
+    def get_invoices(grade_select, search_keyword, page)
+      if grade_select.downcase == 'all'
+        # @invoices = Invoice.order("id DESC").to_a
+        # @invoices = Invoice.order("id DESC").search(params[:search]).all.page(params[:page]).to_a
+        @invoices = Invoice.search(search_keyword)
+                           .order("id DESC")
+                           .paginate(page: page, per_page: 10)
+                           .to_a
+      else
+        # @invoices = Invoice.where(grade_name: grade_select).order("id DESC").to_a
+        # @invoices = Invoice.where(grade_id: grade.id).order("id DESC").search(params[:search]).page(params[:page]).to_a
+        grade = Grade.where(name: grade_select).first
+        @invoices = Invoice.search(search_keyword)
+                           .where(grade_name: grade.name)
+                           .order("id DESC")
+                           .paginate(page: page, per_page: 10)
+                           .to_a
+      end
+    end
+
     # Use callbacks to share common setup or constraints between actions.
     def set_invoice
       @invoice = Invoice.find(params[:id])

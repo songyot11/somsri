@@ -17,7 +17,7 @@
           <div class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="true">
             <span>ประจำเดือน</span>
             <span ng-bind="report.displayMonth"></span>
-            <span class="caret"></span>
+            <span class="fa fa-angle-down"></span>
           </div>
           <ul class="dropdown-menu ">
             <li ng-repeat="data in report.months">
@@ -33,7 +33,7 @@
           <div class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="true">
             <span>ชั้น</span>
             <span ng-bind="report.displayListName" style="color:#337ab7;"></span>
-            <span class="caret" style="color:#337ab7 !important;"></span>
+            <span class="fa fa-angle-down" style="color:#337ab7 !important;"></span>
           </div>
           <ul class="dropdown-menu ">
             <li ng-repeat="data in report.lists">

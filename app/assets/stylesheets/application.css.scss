@@ -20,7 +20,7 @@
 
 body{
   margin-bottom: 50px;
-  margin-top: 100px;
+  // margin-top: 100px;
   background: linear-gradient(90deg, #72cef5, #55b4ed);
 }
 .form-sign-in{
@@ -77,7 +77,14 @@ ul.nav.navbar-nav.navbar-right.dropdown{
   margin-left: -15px;
 }
 .container.main-menu.main {
-    margin-top: calc(50vh - 250px);
+    // margin-top: calc(50vh - 150px);
+    margin-top: 250px;
+    -webkit-align-items: center;
+    display: grid;;
+    align-items: center;
+    max-width: 930px;
+    height: 450px;
+
 }
 
 .disabled {
@@ -94,9 +101,7 @@ ul.nav.navbar-nav.navbar-right.dropdown{
 .col-centered {
     display:inline-block;
     float:none;
-    /* reset the text-align */
     text-align:left;
-    /* inline-block space fix */
     margin-right:-4px;
 }
 .download_android{
@@ -192,4 +197,29 @@ ul.nav.navbar-nav.navbar-right.dropdown{
     background-color: transparent;
     border: 2px solid #5b5b5b;
   }
+}
+
+// dropdown-submenu
+.dropdown-submenu {
+    position: relative;
+}
+
+.dropdown-submenu>.dropdown-menu {
+    top: 0;
+    right: 100%;
+    margin-top: -6px;
+    margin-left: -1px;
+    -webkit-border-radius: 0px;
+    -moz-border-radius: 0px;
+    border-radius: 0px;
+    padding: 10px;
+}
+
+.dropdown-submenu:hover>.dropdown-menu {
+    display: block;
+}
+
+.dropdown-submenu>.dropdown-menu>li>a>img{
+  width: 20%;
+  margin-left: -10px;
 }

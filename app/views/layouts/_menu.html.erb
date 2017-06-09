@@ -1,8 +1,7 @@
 <div class="<%= is_topbar ? 'menu-dropdown' : '' %>">
   <div class="<%= is_topbar ? 'col-xs-12' : '' %>">
-    <div class="row row-centered">
       <% if can? :manage, Payroll %>
-        <div class=" <%= is_topbar ? 'col-xs-4' : 'col-xs-2' %>  col-centered">
+        <div class=" <%= is_topbar ? 'col-xs-4' : 'col-xs-4' %>  col-centered">
             <div class="<%= is_topbar ? 'dropdown-menu-btn' : 'menu-btn' %> payrolls">
                 <a href="/somsri_payroll">
                   <div class="wraptocenter">
@@ -10,11 +9,11 @@
                   </div>
                 </a>
             </div>
-            <p>เงินเดือน</p>
+            <%= content_tag(:p, t('.payroll', :default => t("payroll")) ) %>
         </div>
       <% end %>
       <% if can? :manage, Invoice %>
-        <div class=" <%= is_topbar ? 'col-xs-4' : 'col-xs-2 col-xs-offset-1' %> col-centered">
+        <div class=" <%= is_topbar ? 'col-xs-4' : 'col-xs-4' %> col-centered">
             <div class="<%= is_topbar ? 'dropdown-menu-btn' : 'menu-btn' %> invoices">
                 <a href="/somsri_invoice">
                   <div class="wraptocenter">
@@ -22,11 +21,11 @@
                   </div>
                 </a>
             </div>
-            <p>ค่าเทอม</p>
+            <%= content_tag(:p, t('.invoices', :default => t("invoices")) ) %>
         </div>
       <% end %>
       <% if can? :manage, RollCall %>
-        <div class=" <%= is_topbar ? 'col-xs-4' : 'col-xs-2 col-xs-offset-1' %> col-centered">
+        <div class=" <%= is_topbar ? 'col-xs-4' : 'col-xs-4' %> col-centered">
             <div class="<%= is_topbar ? 'dropdown-menu-btn' : 'menu-btn' %> rollcalls">
                 <a href="/somsri_rollcall">
                   <div class="wraptocenter">
@@ -34,13 +33,11 @@
                   </div>
                 </a>
             </div>
-            <p>นับแถว</p>
+            <%= content_tag(:p, t('.rollcall', :default => t("rollcall")) ) %>
         </div>
       <% end %>
-    </div>
-    <div class="row row-centered" style="margin-top:50px;">
       <% if can? :manage, Employee %>
-        <div class=" <%= is_topbar ? 'col-xs-4' : 'col-xs-2' %> col-centered">
+        <div class=" <%= is_topbar ? 'col-xs-4' : 'col-xs-4' %> col-centered" style="margin-top:50px;">
             <div class="<%= is_topbar ? 'dropdown-menu-btn' : 'menu-btn' %> employees">
                 <a href="/somsri_payroll#/employees">
                   <div class="wraptocenter">
@@ -48,11 +45,11 @@
                   </div>
                 </a>
             </div>
-            <p>บุคลากร</p>
+            <%= content_tag(:p, t('.employee', :default => t("employee")) ) %>
         </div>
       <% end %>
       <% if can? :manage, Parent %>
-        <div class="<%= is_topbar ? 'col-xs-4' : 'col-xs-2 col-xs-offset-1' %> col-centered">
+        <div class="<%= is_topbar ? 'col-xs-4' : 'col-xs-4' %> col-centered">
             <div class="<%= is_topbar ? 'dropdown-menu-btn' : 'menu-btn' %> parents">
                 <a href="/parents">
                   <div class="wraptocenter">
@@ -60,11 +57,11 @@
                   </div>
                 </a>
             </div>
-            <p>ผู้ปกครอง</p>
+            <%= content_tag(:p, t('.parent', :default => t("parent")) ) %>
         </div>
       <% end %>
       <% if can? :manage, Student %>
-        <div class="<%= is_topbar ? 'col-xs-4' : 'col-xs-2 col-xs-offset-1' %> col-centered">
+        <div class="<%= is_topbar ? 'col-xs-4' : 'col-xs-4' %> col-centered">
             <div class="<%= is_topbar ? 'dropdown-menu-btn' : 'menu-btn' %> students">
                 <a href="/students">
                   <div class="wraptocenter">
@@ -72,9 +69,8 @@
                   </div>
                 </a>
             </div>
-            <p>นักเรียน</p>
+            <%= content_tag(:p, t('.student', :default => t("student")) ) %>
         </div>
       <% end %>
-    </div>
   </div>
 </div>

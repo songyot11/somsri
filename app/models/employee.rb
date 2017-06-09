@@ -7,18 +7,23 @@ class Employee < ApplicationRecord
   has_many :parents, class_name: "Individual", foreign_key: 'parent_id'
   has_many :friends, class_name: "Individual", foreign_key: 'friend_id'
   belongs_to :grade
-  has_many :teacher_attendance_lists, dependent: :destroy
+  has_many :teacher_attendance_lists
 
   has_one :taxReduction
 
-  has_many :payrolls, dependent: :restrict_with_exception
+  has_many :payrolls
   after_create :create_tax_reduction
   after_save :update_rollcall_list
+  before_save :assign_pin
 
-  acts_as_paranoid without_default_scope: true
+  acts_as_paranoid
 
   has_attached_file :img_url
   validates_attachment_content_type :img_url, content_type: /\Aimage\/.*\z/
+
+  def assign_pin
+    self.pin = get_unique_pin if !pin
+  end
 
   @@warned = false
   def update_rollcall_list
@@ -50,7 +55,7 @@ class Employee < ApplicationRecord
   end
 
   def annual_income_outcome(id)
-    employee = Employee.find(id)
+    employee = Employee.with_deleted.find(id)
 
     year = employee.payrolls.latest.effective_date.year
     start_year = Date.new(year, 1, 1)
@@ -96,6 +101,7 @@ class Employee < ApplicationRecord
        {
         id: self.id,
         name: self.full_name,
+        position: self.position,
         salary: self.payrolls.size > 0 ? self.payrolls.latest.salary.to_f : 0,
         extra_fee: self.payrolls.size > 0 ? self.payrolls.latest.extra_fee.to_f : 0,
         extra_pay: self.payrolls.size > 0 ? self.payrolls.latest.extra_pay.to_f : 0,
@@ -122,9 +128,6 @@ class Employee < ApplicationRecord
   def generate_teacher_attendance_lists
     if self.classroom
       TeacherAttendanceList.transaction do
-        if !self.pin
-          self.generate_pin
-        end
         list = List.where(name: self.classroom).first
         if !list
           list = List.create(name: self.classroom, category: "roll_call")
@@ -149,10 +152,9 @@ class Employee < ApplicationRecord
     end
   end
 
-  def generate_pin
-    pins = Employee.where.not(pin: nil).pluck(:id)
-    self.pin = ([*0..1000] - pins).sample.to_s.rjust(4, '0')
-    self.save
+  def get_unique_pin
+    pins = Employee.where.not(pin: nil).pluck(:pin).collect{|s| s.to_i}
+    self.pin = ([*0..9999] - pins).sample.to_s.rjust(4, '0')
   end
 
   private

@@ -108,10 +108,10 @@ describe 'Payroll Report', js: true do
   it 'should see month latest' do
     visit "/somsri_payroll#/report"
 
-    eventually { expect(page).to have_content 'มศรี เป็นชื่อแอพ 5-234-34532-2342 1,000,000.00 0.00 306,083.33 693,916.67' }
+    eventually { expect(page).to have_content 'สมศรี เป็นชื่อแอพ 5-234-34532-2342 1,000,000.00 0.00 304,916.67 695,083.33' }
     eventually { expect(page).to have_content 'สมจิตร เป็นนักมวย 5-234-34532-2342 1,000,000.00 0.00 30,000.00 970,000.00' }
     eventually { expect(page).to have_content 'พี ดี เอ็ม 5-234-34532-xxxx 1,000,000.00 0.00 30,000.00 970,000.00' }
-    eventually { expect(page).to have_content 'รวมทั้งหมด 3,000,000.00 0.00 366,083.33 2,633,916.67' }
+    eventually { expect(page).to have_content 'รวมทั้งหมด 3,000,000.00 0.00 364,916.67 2,635,083.33' }
   end
 
   it 'should see month list' do
@@ -130,12 +130,12 @@ describe 'Payroll Report', js: true do
     sleep(1)
 
     eventually { expect(page).to have_content 'รหัส ชื่อ เลขบัญชี เงินเดือน เงินเพิ่ม เงินหัก เงินเดือนสุทธิ' }
-    eventually { expect(page).to have_content 'สมศรี เป็นชื่อแอพ 5-234-34532-2342 50,000.00 0.00 2,125.00 47,875.00' }
+    eventually { expect(page).to have_content 'สมศรี เป็นชื่อแอพ 5-234-34532-2342 50,000.00 0.00 1,791.67 48,208.33' }
     eventually { expect(page).to have_content 'สมจิตร เป็นนักมวย 5-234-34532-2342 50,000.00 0.00 1,500.00 48,500.00' }
     eventually { expect(page).to have_content 'นาย คิง ฮาราบาส 5-234-34532-0000 20,000.00 0.00 600.00 19,400.00' }
 
     eventually { expect(page).not_to have_content 'พี ดี เอ็ม' }
-    eventually { expect(page).to have_content 'รวมทั้งหมด 120,000.00 0.00 4,225.00 115,775.00' }
+    eventually { expect(page).to have_content 'รวมทั้งหมด 120,000.00 0.00 3,891.67 116,108.33' }
   end
 
   describe 'employee link' do

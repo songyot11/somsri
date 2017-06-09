@@ -11,6 +11,18 @@ if SchoolSetting.count == 0
   ])
 end
 
+if !SchoolSetting.first[:current_semester]
+  sc = SchoolSetting.first
+  sc.current_semester = "1"
+  sc.save
+end
+
+if !SchoolSetting.first[:semesters]
+  sc = SchoolSetting.first
+  sc.semesters = "1,2,3"
+  sc.save
+end
+
 if User.count == 0
   User.create!([
     {email: "test@test.com", password: "password", password_confirmation: "password", reset_password_token: nil, reset_password_sent_at: nil, remember_created_at: nil, sign_in_count: 0, current_sign_in_at: nil, last_sign_in_at: nil, current_sign_in_ip: nil, last_sign_in_ip: nil, school_id: schools[0].id, name: nil},

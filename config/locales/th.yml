@@ -21,6 +21,15 @@
 
 th:
   hello: "สวัสดีครับ"
+
+  #Menu
+  payroll: "เงินเดือน"
+  invoices: "ค่าเทอม"
+  rollcall: "นับแถว"
+  student: "นักเรียน"
+  parent: "ผู้ปกครอง"
+  employee: "บุคลากร"
+
   activerecord:
     attributes:
       payroll:

@@ -1,4 +1,11 @@
 describe 'Invoice-Report', js: true do
+  let(:school_setting) do
+    user = SchoolSetting.create!({
+      school_year: "2560",
+      semesters: "1,2,3",
+      current_semester: "1"
+    })
+  end
 
   let(:user) { user = User.create!({
     email: 'test@mail.com',
@@ -172,12 +179,28 @@ describe 'Invoice-Report', js: true do
           LineItem.make!(:tuition),
           LineItem.make!(amount: 10000),
         ]
-      }),
-      payment_method1 = PaymentMethod.create!({
-        payment_method:'เงินสด',
-        invoice_id: invoice1.id
       })
     ]
+  end
+
+  let(:payment_method) do
+    PaymentMethod.create!({
+      payment_method:'เงินสด',
+      invoice_id: invoice[0].id
+    })
+  end
+
+  let(:invoice_cancel) do
+    invoice1 = Invoice.make!({
+      student_id: students[0].id,
+      invoice_status_id:  invoice_status_2.id,
+      school_year: "2560",
+      semester: "1",
+      line_items: [
+        LineItem.make!(:tuition, amount: 10000000),
+        LineItem.make!(amount: 3000000)
+      ]
+    })
   end
 
   let(:invoice_for_paginate) do
@@ -270,6 +293,7 @@ describe 'Invoice-Report', js: true do
     login_as(user, scope: :user)
     grade
     invoice
+    payment_method
   end
 
   describe 'Student invoice report' do
@@ -291,7 +315,7 @@ describe 'Invoice-Report', js: true do
       visit 'somsri_invoice#/student_report'
       sleep(1)
       expect(page).to have_content("มั่งมี")
-      expect(page).to have_content("ยกเลิก")
+      expect(page).to have_content("ยังไม่ได้ชำระ")
     end
 
     it 'should show paid student on report' do
@@ -305,7 +329,7 @@ describe 'Invoice-Report', js: true do
     it 'can sort by grade' do
       #สามารถเลือกดูตามระดับชั้นเรียนได้
       visit 'somsri_invoice#/student_report'
-      sleep(1)
+      sleep(2)
       find('#grade-list').click
       sleep(1)
       click_on("Kindergarten 1")
@@ -327,7 +351,7 @@ describe 'Invoice-Report', js: true do
     it 'can sort by grade' do
       #สามารถเลือกดูตามระดับชั้นเรียนได้
       visit 'somsri_invoice#/student_report'
-      sleep(1)
+      sleep(2)
       find('#grade-list').click
       sleep(1)
       click_on("Kindergarten 1")
@@ -343,19 +367,19 @@ describe 'Invoice-Report', js: true do
     it 'display total of total fee(of all student)' do
       visit 'somsri_invoice#/student_report'
       sleep(1)
-      expect(page).to have_content("167,750.00")
+      expect(page).to have_content("109,750.00")
     end
 
     it 'display total other fee' do
       visit 'somsri_invoice#/student_report'
       sleep(1)
-      expect(page).to have_content("23,750.00")
+      expect(page).to have_content("13,750.00")
     end
 
     it 'display total tuition fee' do
       visit 'somsri_invoice#/student_report'
       sleep(1)
-      expect(page).to have_content("144,000.00")
+      expect(page).to have_content("96,000.00")
     end
 
     it 'should display 10 row per page' do
@@ -364,7 +388,7 @@ describe 'Invoice-Report', js: true do
       sleep(5)
       expect(page).to have_selector("tr.ng-scope", count: 10)
       expect(page).to have_content("First Previous 12 Next Last")
-      expect(page).to have_content("28,000.00 103,750.00 631,750.00")
+      expect(page).to have_content("80,000.00 93,750.00 573,750.00 ")
     end
 
     it 'should display page 2' do
@@ -375,7 +399,14 @@ describe 'Invoice-Report', js: true do
       sleep(5)
       expect(page).to have_selector("tr.ng-scope", count: 1)
       expect(page).to have_content("First Previous 12 Next Last")
-      expect(page).to have_content("28,000.00 103,750.00 631,750.00")
+      expect(page).to have_content("80,000.00 93,750.00 573,750.00 ")
+    end
+
+    it 'display only active invoice' do
+      invoice_cancel
+      visit 'somsri_invoice#/student_report'
+      sleep(1)
+      expect(page).to have_content("มั่งมี ศรีสุข รวย 13 ชำระแล้ว เงินสด 48,000.00 3,750.00 51,750.00")
     end
   end
 

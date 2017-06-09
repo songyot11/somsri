@@ -1,45 +1,41 @@
 <!DOCTYPE html>
 <html ng-app='somsri.invoice'>
     <head>
-        <meta name="viewport" content="width=device-width, initial-scale=1.0">
-        <title><%= content_for?(:title) ? yield(:title) : "สมศรี - สวัสดีค่ะ" %></title>
-        <meta name="description" content="<%= content_for?(:description) ? yield(:description) : " สมศรี ค่าเทอม" %>">
+      <title>สมศรี - สวัสดีค่ะ</title>
+      <%= csrf_meta_tags %>
 
-        <%= favicon_link_tag 'apple-touch-icon-57x57.png', rel: 'apple-touch-icon-precomposed', type: 'image/png', size: '57x57' %>
-        <%= favicon_link_tag 'apple-touch-icon-114x114.png', rel: 'apple-touch-icon-precomposed', type: 'image/png', size: '114x114' %>
-        <%= favicon_link_tag 'apple-touch-icon-72x72.png', rel: 'apple-touch-icon-precomposed', type: 'image/png', size: '72x72' %>
-        <%= favicon_link_tag 'apple-touch-icon-144x144.png', rel: 'apple-touch-icon-precomposed', type: 'image/png', size: '144x144' %>
-        <%= favicon_link_tag 'apple-touch-icon-60x60.png', rel: 'apple-touch-icon-precomposed', type: 'image/png', size: '60x60' %>
-        <%= favicon_link_tag 'apple-touch-icon-120x120.png', rel: 'apple-touch-icon-precomposed', type: 'image/png', size: '120x120' %>
-        <%= favicon_link_tag 'apple-touch-icon-76x76.png', rel: 'apple-touch-icon-precomposed', type: 'image/png', size: '76x76' %>
-        <%= favicon_link_tag 'apple-touch-icon-152x152.png', rel: 'apple-touch-icon-precomposed', type: 'image/png', size: '152x152' %>
-        <%= favicon_link_tag 'favicon-196x196.png', rel: 'icon', type: 'image/png', size: '196x196' %>
-        <%= favicon_link_tag 'favicon-196x196.png', rel: 'icon', type: 'image/png', size: '96x96' %>
-        <%= favicon_link_tag 'favicon-196x196.png', rel: 'icon', type: 'image/png', size: '32x32' %>
-        <%= favicon_link_tag 'favicon-196x196.png', rel: 'icon', type: 'image/png', size: '16x16' %>
-        <%= favicon_link_tag 'favicon-196x196.png', rel: 'icon', type: 'image/png', size: '128x128' %>
-        <%= favicon_link_tag 'favicon.ico' %>
-        <meta name="application-name" content="&nbsp;"/>
-        <meta name="msapplication-TileColor" content="#FFFFFF"/>
-        <meta name="msapplication-TileImage" content="<%= image_path('mstile-144x144.png') %>"/>
-        <meta name="msapplication-square70x70logo" content="<%= image_path('mstile-70x70.png') %>"/>
-        <meta name="msapplication-square150x150logo" content="<%= image_path('mstile-150x150.png') %>"/>
-        <meta name="msapplication-wide310x150logo" content="<%= image_path('mstile-310x150.png') %>"/>
-        <meta name="msapplication-square310x310logo" content="<%= image_path('mstile-310x310.png') %>"/>
+      <%= favicon_link_tag 'apple-touch-icon-57x57.png', rel: 'apple-touch-icon-precomposed', type: 'image/png', size: '57x57' %>
+      <%= favicon_link_tag 'apple-touch-icon-114x114.png', rel: 'apple-touch-icon-precomposed', type: 'image/png', size: '114x114' %>
+      <%= favicon_link_tag 'apple-touch-icon-72x72.png', rel: 'apple-touch-icon-precomposed', type: 'image/png', size: '72x72' %>
+      <%= favicon_link_tag 'apple-touch-icon-144x144.png', rel: 'apple-touch-icon-precomposed', type: 'image/png', size: '144x144' %>
+      <%= favicon_link_tag 'apple-touch-icon-60x60.png', rel: 'apple-touch-icon-precomposed', type: 'image/png', size: '60x60' %>
+      <%= favicon_link_tag 'apple-touch-icon-120x120.png', rel: 'apple-touch-icon-precomposed', type: 'image/png', size: '120x120' %>
+      <%= favicon_link_tag 'apple-touch-icon-76x76.png', rel: 'apple-touch-icon-precomposed', type: 'image/png', size: '76x76' %>
+      <%= favicon_link_tag 'apple-touch-icon-152x152.png', rel: 'apple-touch-icon-precomposed', type: 'image/png', size: '152x152' %>
+      <%= favicon_link_tag 'favicon-196x196.png', rel: 'icon', type: 'image/png', size: '196x196' %>
+      <%= favicon_link_tag 'favicon-196x196.png', rel: 'icon', type: 'image/png', size: '96x96' %>
+      <%= favicon_link_tag 'favicon-196x196.png', rel: 'icon', type: 'image/png', size: '32x32' %>
+      <%= favicon_link_tag 'favicon-196x196.png', rel: 'icon', type: 'image/png', size: '16x16' %>
+      <%= favicon_link_tag 'favicon-196x196.png', rel: 'icon', type: 'image/png', size: '128x128' %>
+      <%= favicon_link_tag 'favicon.ico' %>
+      <meta name="application-name" content="&nbsp;"/>
+      <meta name="msapplication-TileColor" content="#FFFFFF"/>
+      <meta name="msapplication-TileImage" content="<%= image_path('mstile-144x144.png') %>"/>
+      <meta name="msapplication-square70x70logo" content="<%= image_path('mstile-70x70.png') %>"/>
+      <meta name="msapplication-square150x150logo" content="<%= image_path('mstile-150x150.png') %>"/>
+      <meta name="msapplication-wide310x150logo" content="<%= image_path('mstile-310x150.png') %>"/>
+      <meta name="msapplication-square310x310logo" content="<%= image_path('mstile-310x310.png') %>"/>
 
-        <%= stylesheet_link_tag 'application_invoice', media: 'all' %>
-
-        <link href="https://fonts.googleapis.com/css?family=Maitree:400,600" rel="stylesheet">
-        <%= javascript_include_tag 'application_invoice' %>
-
-        <%= csrf_meta_tags %>
+      <link href="https://fonts.googleapis.com/css?family=Maitree:400,600" rel="stylesheet">
+      <%= stylesheet_link_tag 'application_invoice', media: 'all' %>
+      <%= javascript_include_tag 'application_invoice' %>
     </head>
     <body ng-controller="mainCtrl as main">
-        <header>
-          <%= render 'layouts/navigation' %>
-        </header>
-        <div class="container-fluid">
-            <%= yield %>
-        </div>
+      <header>
+        <%= render 'layouts/navigation' %>
+      </header>
+      <div class="container-fluid">
+          <%= yield %>
+      </div>
     </body>
 </html>

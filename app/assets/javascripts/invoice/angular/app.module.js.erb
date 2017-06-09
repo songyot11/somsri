@@ -2,13 +2,17 @@
   'use strict';
   var appInvoice = angular.module('somsri.invoice', [
     'somsri.invoice.assets',
+    'somsri.ng.key.enter',
     'oc.lazyLoad',
     'ui.router.stateHelper',
     'ui.bootstrap',
     'somsri.invoice.main',
     'angularMoment',
-    'ui.utils.masks'
+    'ui.utils.masks',
+    'ngSanitize',
+    'ngCsv'
   ]);
+
 
   appInvoice.constant('DEFAULT_LOGO', 'images/metaware_logo.png');
   appInvoice.constant('DEFAULT_INVOICE',{

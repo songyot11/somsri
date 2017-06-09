@@ -1,6 +1,6 @@
 class Payroll < ApplicationRecord
   include ActiveModel::Dirty
-  acts_as_paranoid without_default_scope: true
+  acts_as_paranoid
   belongs_to :employee
   validate :already_payroll_on_month, on: :create
   before_validation :set_created_at
@@ -11,8 +11,7 @@ class Payroll < ApplicationRecord
 
   def update_employee_salary
     if self.salary_changed? && self.employee && self.employee.lastest_payroll.id == self.id
-      employee.salary = self.salary
-      employee.save
+      Employee.update(self.employee.id, {salary: self.salary})
     end
   end
 
@@ -34,6 +33,10 @@ class Payroll < ApplicationRecord
     allowance + attendance_bonus + ot + bonus + position_allowance + extra_etc
   end
 
+  def employee
+    Employee.with_deleted.where(id: self.employee_id).first
+  end
+
   def as_json(options={})
     if options["report"]
       {
@@ -41,6 +44,7 @@ class Payroll < ApplicationRecord
         code: self.employee.id,
         prefix: self.employee.prefix,
         name: self.employee.full_name,
+        deleted: self.employee.deleted_at.blank? ? false : true,
         account_number: self.employee.account_number,
         extra_pay: extra_pay.to_f,
         extra_fee: extra_fee.to_f,
@@ -149,14 +153,14 @@ class Payroll < ApplicationRecord
   private
     def set_default_val
       e = Employee.find(self.employee_id)
-      self.tax = Payroll.generate_tax(self, e, e.tax_reduction.to_json)
+      self.tax = Payroll.generate_tax(self, e)
       self.social_insurance = Payroll.generate_social_insurance(self, e)
       self.pvf = Payroll.generate_pvf(self, e)
       self.save
     end
 
     def self.assume_year_income(payroll)
-      income = (payroll["salary"].to_i + payroll["allowance"].to_i + payroll["attendance_bonus"].to_i + payroll["ot"].to_i + payroll["bonus"].to_i + payroll["position_allowance"].to_i + payroll["extra_etc"].to_i - payroll["absence"].to_i - payroll["late"].to_i)*12
+      income = (payroll["salary"].to_i + payroll["allowance"].to_i + payroll["attendance_bonus"].to_i + payroll["ot"].to_i + payroll["bonus"].to_i + payroll["position_allowance"].to_i + payroll["extra_etc"].to_i - payroll["absence"].to_i - payroll["late"].to_i - payroll["social_insurance"].to_i)*12
     end
 
     def self.tax_break(payroll, tax_reduction)
@@ -167,8 +171,10 @@ class Payroll < ApplicationRecord
       y_income - income
     end
 
-    def self.generate_income_tax(payroll, employee, tax_reduction)
-      income = self.assume_year_income(payroll) - self.tax_break(payroll,tax_reduction)
+    def self.generate_income_tax(payroll, employee)
+      y_income = self.assume_year_income(payroll)
+      cost_of_income = (0.5*y_income) > 100000 ? 100000:(0.5*y_income)
+      income = y_income - cost_of_income - 60000
       taxrates = Taxrate.order(:order_id).map {|tr| [tr.income, tr.tax] }
       yearTax = 0
       taxrates.each do |taxrate|
@@ -196,9 +202,9 @@ class Payroll < ApplicationRecord
       income >= 1650 ? (income * 0.05).round : 0
     end
 
-    def self.generate_tax(payroll, employee, tax_reduction)
+    def self.generate_tax(payroll, employee)
       if employee["employee_type"]=='ลูกจ้างประจำ'
-        tax = self.generate_income_tax(payroll, employee, tax_reduction)
+        tax = self.generate_income_tax(payroll, employee)
       else
         tax = self.generate_withholding_tax(payroll)
       end

@@ -18,6 +18,7 @@
     "moment": "",
     "angular-input-masks": "",
     "angular-sanitize": "1.5.9",
+    "ng-csv": "",
     "ng-file-upload-shim": ""
   },
   "resolutions": {

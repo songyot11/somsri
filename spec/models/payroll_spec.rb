@@ -112,7 +112,7 @@ describe Payroll do
   end
 
   it "should return  tax" do
-    expect(Payroll.generate_tax(payrolls[0],employee1,taxs[0])).to be > 0
+    expect(Payroll.generate_tax(payrolls[0],employee1)).to be > 0
   end
 
   it 'should update employee.salary if changed lasted payroll.salary' do

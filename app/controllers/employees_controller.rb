@@ -1,18 +1,19 @@
 class EmployeesController < ApplicationController
-  load_and_authorize_resource
+  load_and_authorize_resource except: [:slip, :show]
   skip_before_action :verify_authenticity_token, :only => [:update, :create, :destroy]
 
   # GET /employees
   def index
-    employee = Employee.with_deleted.order('employees.deleted_at DESC ,employees.start_date ASC, employees.created_at ASC')
+    employee = Employee.order('employees.deleted_at DESC ,employees.start_date ASC, employees.created_at ASC')
                               .as_json(employee_list: true)
     render json: employee, status: :ok
   end
 
   # GET /employees/:id/slip
   def slip
+    authorize! :manage, Employee
     if Payroll.where({ employee_id: params[:id] }).count > 0
-      employee = Employee.find(params[:id]).as_json({ slip: true, payroll_id: params[:payroll_id] })
+      employee = Employee.with_deleted.where(id: params[:id]).first.as_json({ slip: true, payroll_id: params[:payroll_id] })
       employee[:payroll][:fee_orders] = employee[:payroll][:fee_orders]
                                                         .select { |key, value| value[:value] > 0}
       employee[:payroll][:pay_orders] = employee[:payroll][:pay_orders]
@@ -51,7 +52,8 @@ class EmployeesController < ApplicationController
 
   # GET /employees/:id
   def show
-    @employee = Employee.find(params[:id])
+    authorize! :manage, Employee
+    @employee = Employee.with_deleted.find(params[:id])
     tax_reduction = @employee.tax_reduction
     if params[:payroll_id]
       payroll = @employee.payroll(params[:payroll_id])
@@ -84,9 +86,8 @@ class EmployeesController < ApplicationController
     e.employee_type = params[:employee_type]
     e.pay_pvf = params[:employee_pay_pvf]
     e.pay_social_insurance = params[:employee_pay_s_ins]
-    t = params[:tax_reduction]
     render json: {
-      tax: Payroll.generate_tax(p, e, t),
+      tax: Payroll.generate_tax(p, e),
       social_insurance: Payroll.generate_social_insurance(p, e),
       pvf: Payroll.generate_pvf(p, e)
     }, status: :ok
@@ -122,15 +123,6 @@ class EmployeesController < ApplicationController
   # DELETE /employees/:id
   def destroy
     @employee.destroy
-
-    data = {status: "success"}
-    render json: data, status: :ok
-  end
-
-  def archive
-    @employee = Employee.find(params[:employee_id]).update(deleted_at: Time.now)
-    payroll = Payroll.where(employee_id: params[:employee_id]).update(deleted_at: Time.now)
-
     data = {status: "success"}
     render json: data, status: :ok
   end

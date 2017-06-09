@@ -296,6 +296,22 @@ ul.nav.navbar-nav.navbar-right.dropdown{
     }
 }
 
+.somsri-invoice .btn-remove-sp{
+  background-color: #DD5A2B;
+  color: #FFFFFF;
+  border: 2px solid #DD5A2B;
+  font-size: 18px;
+  padding: 12px 32px;
+  border-radius: 0px;
+  transition: all 0.25s ease;
+
+  &:hover{
+    background-color: transparent;
+    color: #DD5A2B;
+    border: 2px solid #DD5A2B;
+  }
+}
+
 .col-total-1{
     margin-bottom: 5px;
 }
@@ -392,11 +408,8 @@ textarea {
     .slip-copy-top{
       margin-top: 150px;
     }
-    .form-slip{
-      margin-top: -90px !important;
-    }
-    body > .container-fluid{
-        padding: 20px 15px 0;
+    body.somsri-invoice >.container-fluid {
+        padding: 0px 15px 0 !important;
     }
     .navbar-brand{
         display: none;
@@ -430,6 +443,10 @@ textarea {
       margin-top: -80px !important;
       padding: 0px !important;
       max-width: inherit;
+    }
+    .form-slip{
+      margin-top: 0px !important;
+      padding: 0px !important;
     }
 }
 /*slip*/
@@ -640,7 +657,7 @@ tr.text-total-display-print{
 -------------------------------------------------- */
 /* Not required for template or sticky footer method. */
 body.somsri-invoice >.container-fluid {
-    padding: 100px 15px 0;
+    padding: 85px 15px 0;
 }
 
 .container .text-muted {
@@ -706,10 +723,6 @@ body.somsri-invoice >.container-fluid {
         font-family: 'Maitree', serif;
         font-size: 18px;
         font-weight: 500;
-        font-style: normal;
-        font-stretch: normal;
-        line-height: normal;
-        letter-spacing: normal;
         text-align: center;
         color: #5b5b5b;
         margin-top: 10px;
@@ -782,9 +795,25 @@ body.somsri-invoice >.container-fluid {
   border-radius: 0px;
 }
 
+.btn-export,.btn-export:focus{
+  background-color: #00D2D7;
+  border: 2px solid #00D2D7;
+  border-radius: inherit;
+  color: #fff;
+  padding: 12px 32px;
+  font-size: 16px;
+  letter-spacing: 1px;
+  transition: all 0.25s ease;
+
+  &:hover{
+    color: #00D2D7;
+    border: 2px solid #00D2D7;
+    background-color: transparent;
+  }
+}
 
 #student-report .report-content {
-  padding-top: 30px;
+  padding: 20px;
   font-size: 14px;
   background-color: #fff;
   box-shadow: 0 5px 13px 0 rgba(0, 0, 0, 0.3);
@@ -797,10 +826,28 @@ body.somsri-invoice >.container-fluid {
   color: #5b5b5b;
 }
 
-#student-report #grade-list, #year-list {
+#student-report #grade-list{
+  font-size: 24px;
   cursor: pointer;
+  margin-top: 15px;
+}
+#student-report .dropdown-filter{
+  margin-bottom: 20px;
+}
+#student-report .dropdown-menu>li>a:focus,
+#student-report .dropdown-menu>li>a:hover{
+  color: #fff;
+  background-color: #3fa1e6 !important;
+}
+#student-report .row.head-menu{
+  margin-top: 20px;
+  margin-bottom: 10px;
 }
 
+#student-report #year-list, #semester-list {
+  font-size: 16px;
+  cursor: pointer;
+}
 #student-report .dropdown-menu button {
   background-color: transparent;
   border: 0px;
@@ -829,7 +876,8 @@ body.somsri-invoice >.container-fluid {
 
 .dropdown-menu.on-nav-bar {
     padding: 10px 10px;
-    width: 62%;
+    width: 80%;
+    border-radius: 0px;
 }
 a.dropdown-item{
   color: #555;
@@ -1079,7 +1127,7 @@ a.nav-user:hover{
 }
 a:not([href]):not([tabindex]){
   cursor: pointer;
-  color: #d0021b;
+  color: #5b5b5b;
 }
 .text-invoice-num,.text-invoice-num:focus{
   color: #0275d8;
@@ -1151,7 +1199,7 @@ table.table.table-sp-report>tbody{
 }
 .table-sp-report{
   margin-top: 30px;
-  font-size: 16px;
+  font-size: 1.2em;
 }
 .no-pay{
   color: yellow;
@@ -1257,9 +1305,7 @@ table.table.table-sp-report>tbody{
 .col-centered {
     display:inline-block;
     float:none;
-    /* reset the text-align */
     text-align:left;
-    /* inline-block space fix */
     margin-right:-4px;
 }
 
@@ -1269,17 +1315,24 @@ table.table.table-sp-report>tbody{
   color: #5d9e00
 }
 
-.btn-resign{
-  color:#d08521
+.btn-delete-student-parent,
+.btn-delete-student-parent:hover,
+.btn-delete-student-parent:focus{
+  color:#dd5a2b;
+  text-decoration: none;
 }
-
+.btn-edit-student-parent,
+.btn-edit-student-parent:hover,
+.btn-edit-student-parent:focus{
+  color:#3fa1b6;
+  text-decoration: none;
+}
 .btn-trash {
   color: #ff0000
 }
 
 .btn-archive-sp{
   color: #777 ;
-  // font-size: 20px
 }
 .btn-archive-sp:hover{
   color: #777;
@@ -1323,4 +1376,8 @@ table.table.table-sp-report>tbody{
 
 .circle{
   border-radius: 50%;
+}
+
+a#student_remove,a#parent_archive  {
+    margin-left: 20px;
 }

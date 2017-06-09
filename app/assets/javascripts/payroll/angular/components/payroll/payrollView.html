@@ -5,7 +5,7 @@
           <div class="dropdown">
             <h3 id="month-list" data-toggle="dropdown" style="margin-top:10px;">
               <span ng-bind="payroll.currentDateString" role="button"></span>
-              <span class="caret"></span>
+              <span class="fa fa-angle-down"></span>
             </h3>
             <ul class="dropdown-menu" aria-labelledby="month-list">
               <li ng-repeat="effectiveDate in payroll.effectiveDates">
@@ -18,10 +18,10 @@
         </div>
         <div class="col-md-7">
           <div class="pull-right">
-            <a class="btn btn-md btn-payroll"
+            <a class="btn employee-print" style="margin-right:10px;"
               href="/payrolls/social_insurance_pdf?effective_date={{payroll.currentEffectiveDate['date_time'] | encodeString }}"
               target="_blank" ng-show="payroll.currentEffectiveDate">สำหรับประกันสังคม</a>
-            <a class="btn btn-md btn-payroll-starts" ng-click="payroll.createPayrolls()" href="javascript:void(0)">
+            <a class="btn btn-payroll-starts" ng-click="payroll.createPayrolls()" href="javascript:void(0)">
               เริ่มออกเงินเดือน
             </a>
           </div>
@@ -57,13 +57,23 @@
                     <div class="trow" ng-repeat="(index, employee) in payroll.employees" ng-mouseover="hoverIn(employee.code)" ng-class="{'hilight': sel==employee.code}">
                         <span class="code">{{employee.code}}</span>
                         <span class="name">
-                          <a href="/somsri_payroll#/employees/{{employee.code}}?payroll_id={{employee.payroll_id}}">
-                            <strong>{{employee.name}}</strong>
-                          </a>
+                          <div ng-switch on="employee.deleted">
+                            <div ng-switch-when="true">
+                              <strong>{{employee.name}}</strong>
+                            </div>
+                            <div ng-switch-default>
+                              <a href="/somsri_payroll#/employees/{{employee.code}}?payroll_id={{employee.payroll_id}}">
+                                <strong>{{employee.name}}</strong>
+                              </a>
+                            </div>
+                          </div>
                         </span>
                     </div>
                     <div class="trow tfoot">
-                      <span style="width: 558px;"><strong>รวมทั้งหมด</strong></span>
+                      <span style="width: 369px;"><strong>รวมทั้งหมด</strong></span>
+                    </div>
+                    <div class="trow tfoot">
+                      <span class="free-space-table" style="width: 370px;"></span>
                     </div>
                 </div>
             </div>
@@ -88,7 +98,7 @@
                     <span>อื่นๆ</span>
                     <span>เงินเดือนสุทธิ</span>
                 </div>
-                <div class="tbody">
+                <div class="tbody" id="scrollbar-payroll">
                     <div class="trow" ng-repeat="(index, employee) in payroll.employees" ng-mouseover="hoverIn(employee.code)">
                         <span ng-class="{'hilight': sel==employee.code, 'salary': true }">
                           <div class="popover-wrapper right-popup" ng-class="{'bottom-popup': index === 0}">
@@ -97,118 +107,120 @@
                             </a>
                           </div>
                         </span>
-                        <span ng-class="{'hilight': sel==employee.code}">
+                        <span ng-class="{'hilight': sel==employee.code}" class="number_table">
                           <div class="popover-wrapper" ng-class="{'bottom-popup': index === 0}">
                             <a id="{{index}}-ot" href="#" e-ng-focus="payroll.selectValue($event)" editable-number="employee.ot" e-step="0.01" class="text-green" onbeforesave="payroll.updatePayroll(index, employee.payroll_id, $data, 'ot')">
                               {{employee.ot || 0 | currency: ""}}
                             </a>
                           </div>
                         </span>
-                        <span ng-class="{'hilight': sel==employee.code}">
+                        <span ng-class="{'hilight': sel==employee.code}" class="number_table">
                           <div class="popover-wrapper" ng-class="{'bottom-popup': index === 0}">
                             <a id="{{index}}-position_allowance" href="#" e-ng-focus="payroll.selectValue($event)" editable-number="employee.position_allowance" e-step="0.01" class="text-green" onbeforesave="payroll.updatePayroll(index, employee.payroll_id, $data, 'position_allowance')">
                               {{employee.position_allowance || 0 | currency: ""}}
                             </a>
                           </div>
                         </span>
-                        <span ng-class="{'hilight': sel==employee.code}">
+                        <span ng-class="{'hilight': sel==employee.code}" class="number_table">
                           <div class="popover-wrapper" ng-class="{'bottom-popup': index === 0}">
                             <a id="{{index}}-allowance" href="#" e-ng-focus="payroll.selectValue($event)" editable-number="employee.allowance" e-step="0.01" class="text-green" onbeforesave="payroll.updatePayroll(index, employee.payroll_id, $data, 'allowance')">
                               {{employee.allowance || 0 | currency: ""}}
                             </a>
                           </div>
                         </span>
-                        <span ng-class="{'hilight': sel==employee.code}">
+                        <span ng-class="{'hilight': sel==employee.code}" class="number_table">
                           <div class="popover-wrapper" ng-class="{'bottom-popup': index === 0}">
                             <a id="{{index}}-attendance_bonus" href="#" e-ng-focus="payroll.selectValue($event)" editable-number="employee.attendance_bonus" e-step="0.01" class="text-green" onbeforesave="payroll.updatePayroll(index, employee.payroll_id, $data, 'attendance_bonus')">
                               {{employee.attendance_bonus || 0 | currency: ""}}
                             </a>
                           </div>
                         </span>
-                        <span ng-class="{'hilight': sel==employee.code}">
+                        <span ng-class="{'hilight': sel==employee.code}" class="number_table">
                           <div class="popover-wrapper" ng-class="{'bottom-popup': index === 0}">
                             <a id="{{index}}-bonus" href="#" e-ng-focus="payroll.selectValue($event)" editable-number="employee.bonus" e-step="0.01" class="text-green" onbeforesave="payroll.updatePayroll(index, employee.payroll_id, $data, 'bonus')">
                               {{employee.bonus || 0 | currency: ""}}
                             </a>
                           </div>
                         </span>
-                        <span ng-class="{'hilight': sel==employee.code}">
+                        <span ng-class="{'hilight': sel==employee.code}" class="number_table">
                           <div class="popover-wrapper" ng-class="{'bottom-popup': index === 0}">
                             <a id="{{index}}-extra_etc" href="#" e-ng-focus="payroll.selectValue($event)" editable-number="employee.extra_etc" e-step="0.01" class="text-green" onbeforesave="payroll.updatePayroll(index, employee.payroll_id, $data, 'extra_etc')">
                               {{employee.extra_etc || 0 | currency: ""}}
                             </a>
                           </div>
                         </span>
-                        <span ng-class="{'hilight': sel==employee.code}">
+                        <span ng-class="{'hilight': sel==employee.code}" class="number_table">
                           <div class="popover-wrapper" ng-class="{'bottom-popup': index === 0}">
                             <a id="{{index}}-absence" href="#" e-ng-focus="payroll.selectValue($event)" editable-number="employee.absence" e-step="0.01" class="text-red" onbeforesave="payroll.updatePayroll(index, employee.payroll_id, $data, 'absence')">
                               {{employee.absence || 0 | currency: ""}}
                             </a>
                           </div>
                         </span>
-                        <span ng-class="{'hilight': sel==employee.code}">
+                        <span ng-class="{'hilight': sel==employee.code}" class="number_table">
                           <div class="popover-wrapper" ng-class="{'bottom-popup' : index === 0}">
                             <a id="{{index}}-late" href="#" e-ng-focus="payroll.selectValue($event)" editable-number="employee.late" e-step="0.01" class="text-red" onbeforesave="payroll.updatePayroll(index, employee.payroll_id, $data, 'late')">
                               {{employee.late || 0 | currency: ""}}
                             </a>
                           </div>
                         </span>
-                        <span ng-class="{'hilight': sel==employee.code}">
+                        <span ng-class="{'hilight': sel==employee.code}" class="number_table no-click">
                           <div class="popover-wrapper" ng-class="{'bottom-popup': index === 0}">
                             <span id="{{index}}-tax" class="text-red">
                               {{employee.tax || 0 | currency: ""}}
                             </span>
                           </div>
                         </span>
-                        <span ng-class="{'hilight': sel==employee.code}">
+                        <span ng-class="{'hilight': sel==employee.code}" class="number_table no-click">
                           <div class="popover-wrapper" ng-class="{'bottom-popup': index === 0}">
                             <span id="{{index}}-social_insurance" class="text-red">
                               {{employee.social_insurance || 0 | currency: ""}}
                             </span>
                           </div>
                         </span>
-                        <span ng-class="{'hilight': sel==employee.code}">
+                        <span ng-class="{'hilight': sel==employee.code}" class="number_table no-click">
                           <div class="popover-wrapper" ng-class="{'bottom-popup': index === 0}">
                             <span id="{{index}}-pvf" class="text-red">
                               {{employee.pvf || 0 | currency: ""}}
                             </span>
                           </div>
                         </span>
-                        <span ng-class="{'hilight': sel==employee.code}">
+                        <span ng-class="{'hilight': sel==employee.code}" class="number_table">
                           <div class="popover-wrapper" ng-class="{'bottom-popup': index === 0}">
                             <a id="{{index}}-advance_payment" e-ng-focus="payroll.selectValue($event)" href="#" editable-number="employee.advance_payment" e-step="0.01" class="text-red" onbeforesave="payroll.updatePayroll(index, employee.payroll_id, $data, 'advance_payment')">
                               {{employee.advance_payment || 0 | currency: ""}}
                             </a>
                           </div>
                         </span>
-                        <span ng-class="{'hilight': sel==employee.code}">
+                        <span ng-class="{'hilight': sel==employee.code}" class="number_table">
                           <div class="popover-wrapper" ng-class="{'bottom-popup': index === 0}">
                             <a id="{{index}}-fee_etc" href="#" e-ng-focus="payroll.selectValue($event)" editable-number="employee.fee_etc" e-step="0.01" class="text-red" onbeforesave="payroll.updatePayroll(index, employee.payroll_id, $data, 'fee_etc')">
                               {{employee.fee_etc || 0 | currency: ""}}
                             </a>
                           </div>
                         </span>
-                        <span ng-class="{'hilight': sel==employee.code}" id="{{index}}-net_salary" class="text-green">{{employee.net_salary || 0 | currency: ""}}</span>
+                        <span ng-class="{'hilight': sel==employee.code}" id="{{index}}-net_salary" class="net_salary number_table no-click">{{employee.net_salary || 0 | currency: ""}}</span>
                     </div>
                     <div class="trow tfoot">
                       <!-- Income -->
-                      <span class="text-green"><strong>{{payroll.total.salary | currency: "" }}</strong></span>
-                      <span class="text-green"><strong>{{payroll.total.ot | currency: "" }}</strong></span>
-                      <span class="text-green"><strong>{{payroll.total.position_allowance | currency: "" }}</strong></span>
-                      <span class="text-green"><strong>{{payroll.total.allowance | currency: "" }}</strong></span>
-                      <span class="text-green"><strong>{{payroll.total.attendance_bonus | currency: "" }}</strong></span>
-                      <span class="text-green"><strong>{{payroll.total.bonus | currency: "" }}</strong></span>
-                      <span class="text-green"><strong>{{payroll.total.extra_etc | currency: "" }}</strong></span>
+
+                      <span class="text-green number_table total_salary no-click"><strong>{{payroll.total.salary | currency: "" }}</strong></span>
+                      <span class="text-green number_table no-click"><strong>{{payroll.total.ot | currency: "" }}</strong></span>
+                      <span class="text-green number_table no-click"><strong>{{payroll.total.position_allowance | currency: "" }}</strong></span>
+                      <span class="text-green number_table no-click"><strong>{{payroll.total.allowance | currency: "" }}</strong></span>
+                      <span class="text-green number_table no-click"><strong>{{payroll.total.attendance_bonus | currency: "" }}</strong></span>
+                      <span class="text-green number_table no-click"><strong>{{payroll.total.bonus | currency: "" }}</strong></span>
+                      <span class="text-green number_table no-click"><strong>{{payroll.total.extra_etc | currency: "" }}</strong></span>
+
                       <!-- Outcome -->
-                      <span class="text-red"><strong>{{payroll.total.absence | currency: "" }}</strong></span>
-                      <span class="text-red"><strong>{{payroll.total.late | currency: "" }}</strong></span>
-                      <span class="text-red"><strong>{{payroll.total.tax | currency: "" }}</strong></span>
-                      <span class="text-red"><strong>{{payroll.total.social_insurance | currency: "" }}</strong></td></span>
-                      <span class="text-red"><strong>{{payroll.total.pvf | currency: "" }}</strong></span>
-                      <span class="text-red"><strong>{{payroll.total.advance_payment | currency: "" }}</strong></span>
-                      <span class="text-red"><strong>{{payroll.total.fee_etc | currency: "" }}</strong></span>
+                      <span class="text-red number_table no-click"><strong>{{payroll.total.absence | currency: "" }}</strong></span>
+                      <span class="text-red number_table no-click"><strong>{{payroll.total.late | currency: "" }}</strong></span>
+                      <span class="text-red number_table no-click"><strong>{{payroll.total.tax | currency: "" }}</strong></span>
+                      <span class="text-red number_table no-click"><strong>{{payroll.total.social_insurance | currency: "" }}</strong></td></span>
+                      <span class="text-red number_table no-click"><strong>{{payroll.total.pvf | currency: "" }}</strong></span>
+                      <span class="text-red number_table no-click"><strong>{{payroll.total.advance_payment | currency: "" }}</strong></span>
+                      <span class="text-red number_table no-click"><strong>{{payroll.total.fee_etc | currency: "" }}</strong></span>
                       <!-- Result -->
-                      <span class="text-green"><strong>{{payroll.total.net_salary | currency: "" }}</strong></span>
+                      <span class="net_salary number_table no-click">{{payroll.total.net_salary | currency: "" }}</span>
                     </div>
                 </div>
             </div>

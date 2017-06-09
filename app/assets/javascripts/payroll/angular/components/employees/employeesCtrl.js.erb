@@ -6,6 +6,7 @@
     $rootScope.menu = "บุคลากร"
     var ctrl = this
     var dateNow = new Date();
+    ctrl.displayMode = 'grid';
     getPayroll(dateNow.getMonth() + 1, dateNow.getFullYear());
     function getPayroll(month, year){
       employeeService.getAllEmployee().then(function(resp) {
@@ -17,6 +18,7 @@
             ctrl.display_datas.push({
               full_name: data['name'],
               id: data['id'],
+              position: data['position'],
               salary: data['salary'],
               fee: data['extra_fee'],
               extra: data['extra_pay'],

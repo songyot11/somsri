@@ -21,3 +21,11 @@
 
 en:
   hello: "Hello world"
+
+  #Menu
+  payroll: "Payrolls"
+  invoices: "Invoices"
+  rollcall: "Rollcalls"
+  student: "Students"
+  parent: "Parents"
+  employee: "Employees"

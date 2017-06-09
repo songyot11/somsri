@@ -2,14 +2,21 @@
   'use strict';
   angular.module('somsri.invoice.studentReport', [
   ])
-  .controller('studentReportCtrl', ['$compile', '$scope', '$window', '$filter', '$rootScope', 'studentReportService', '$timeout', function($compile, $scope, $window, $filter, $rootScope, studentReportService, $timeout) {
+  .controller('studentReportCtrl', ['$compile', '$scope', '$window', '$filter', '$rootScope', 'studentReportService', '$timeout', 'CSV', function($compile, $scope, $window, $filter, $rootScope, studentReportService, $timeout, CSV) {
     $rootScope.menu = "รายงาน"
     var ctrl = this
+
     $rootScope.loadAndAuthorizeResource("invoice", function(){
       ctrl.currentPage = 1;
       ctrl.grade_name = "All"
       ctrl.currentInvoiceStatus = null;
       ctrl.total = { other_fee: 0.0, amount: 0.0, tuition_fee: 0.0 }
+      ctrl.invoiceFilter = [
+        { text: "ทั้งหมด", value: "all" },
+        { text: "ชำระแล้ว", value: "paid" },
+        { text: "ยังไม่ได้ชำระ", value: "unpaid" }
+      ]
+      ctrl.invoiceFilterString = "ทั้งหมด"
       ctrl.pageChanged = function() {
         getStudents()
       };
@@ -17,30 +24,54 @@
       ctrl.switchGrade = function(grade_name) {
         ctrl.grade_name = grade_name
         getStudents();
-        getInvoiceTotalAmount();
+        ctrl.currentPage = 1;
       }
 
       ctrl.switchYear = function(year) {
         ctrl.currentYearString = year
-        getSemesters();
         getStudents();
-        getInvoiceTotalAmount();
+        ctrl.currentPage = 1;
       }
 
       ctrl.switchSemester = function(semester) {
         ctrl.currentSemesterString = semester
         getStudents();
-        getInvoiceTotalAmount();
+        ctrl.currentPage = 1;
       }
 
-      ctrl.invoiceStatusFilter = function() {
-        if (ctrl.currentInvoiceStatus == null) {
-          ctrl.currentInvoiceStatus = "unpaid";
-        } else {
-          ctrl.currentInvoiceStatus = null;
-        }
+      ctrl.invoiceStatusFilter = function(status) {
+        ctrl.currentInvoiceStatus = status.value;
+        ctrl.invoiceFilterString = status.text;
         getStudents();
-        getInvoiceTotalAmount();
+        ctrl.currentPage = 1;
+      }
+      ctrl.exportHeader = ['รหัส', 'ชื่อ', 'ชื่อเล่น', 'ชั้น', 'เลขที่', 'ผู้ปกครอง', 'สถานะ', 'ชำระโดย', 'ค่าธรรมเนียมการศึกษา', 'ค่าใช้จ่ายอื่นๆ', 'ยอดชำระ', 'วันที่ชำระ']
+      ctrl.getExportData = function() {
+        ctrl.exportFileName = "รายงานการชำระเงินนักเรียน_" + $filter('date')(new Date(),'d-MM-yyyy') + ".csv"
+        return studentReportService.getStudentsWithoutPagination(ctrl.grade_name, ctrl.currentYearString, ctrl.currentSemesterString, ctrl.currentInvoiceStatus).then(function(resp) {
+          var exportResults = []
+          if (resp.data && resp.data.datas){
+            for(var i=0; i<resp.data.datas.length; i++){
+              var data = resp.data.datas[i]
+              exportResults.push([
+                data.student_number,
+                data.full_name_with_title,
+                data.nickname_eng_thai,
+                data.grade_name,
+                data.classroom_number,
+                data.parent_names,
+                data.active_invoice_status,
+                data.active_invoice_payment_method,
+                data.active_invoice_tuition_fee.toFixed(2),
+                data.active_invoice_other_fee.toFixed(2),
+                data.active_invoice_total_amount.toFixed(2),
+                $filter('date')(data.active_invoice_updated_at,'d/MM/yyyy hh:mm')
+              ])
+            }
+            exportResults.push(['','','','','','','','',resp.data.tuition_fee,resp.data.other_fee,resp.data.amount,''])
+          }
+          return exportResults
+        });
       }
 
       function getStudents() {
@@ -49,40 +80,32 @@
           ctrl.grades = grade_resp.data
           studentReportService.getStudents(ctrl.grade_name, ctrl.currentPage, ctrl.currentYearString, ctrl.currentSemesterString, ctrl.currentInvoiceStatus).then(function(resp) {
             ctrl.datas = [];
-            if (resp.data[0] && resp.data[0].datas){
-              ctrl.datas = resp.data[0].datas
-              ctrl.students = resp.data[0].datas
-              ctrl.totalItems = resp.data[0].total_records;
-              ctrl.currentPage = resp.data[0].current_page;
+            if (resp.data && resp.data.datas){
+              ctrl.datas = resp.data.datas
+              ctrl.students = resp.data.datas
+              ctrl.totalItems = resp.data.total_records
+              ctrl.currentPage = resp.data.current_page
+              ctrl.total.other_fee = resp.data.other_fee
+              ctrl.total.tuition_fee = resp.data.tuition_fee
+              ctrl.total.amount = resp.data.amount
             }
             ctrl.maxSize = 5;
           });
         });
       }
 
-      function getInvoiceTotalAmount(){
-        studentReportService.getInvoiceTotalAmount(ctrl.grade_name, ctrl.currentYearString, ctrl.currentSemesterString, ctrl.currentInvoiceStatus).then(function(resp) {
-          ctrl.total.other_fee = resp.data[0].other_fee
-          ctrl.total.tuition_fee = resp.data[0].tuition_fee
-          ctrl.total.amount = resp.data[0].amount
-        });
-      }
-
       function getYears() {
-        var nowDate = new Date();
-        ctrl.current_year = nowDate.getFullYear() + 543;
-        ctrl.currentYearString = ctrl.current_year
         studentReportService.getYears().then(function(resp) {
-          ctrl.years = resp.data;
+          ctrl.years = resp.data.all_years
+          ctrl.currentYearString = resp.data.current_year
         });
       }
 
       function getSemesters() {
-        studentReportService.getSemesters(ctrl.currentYearString).then(function(resp) {
-          ctrl.semesters = resp.data;
-          ctrl.currentSemesterString = ctrl.semesters[ctrl.semesters.length - 1]
+        studentReportService.getSemesters().then(function(resp) {
+          ctrl.semesters = resp.data.semesters;
+          ctrl.currentSemesterString = resp.data.current_semester;
           getStudents();
-          getInvoiceTotalAmount();
         });
       }
 

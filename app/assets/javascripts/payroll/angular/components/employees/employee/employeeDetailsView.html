@@ -8,7 +8,7 @@
               <small>Select employee</small>
               <h1 id="employeeName" onclick="window.setTimeout(function(){ $('#employeeFilter').val('').trigger('change').focus()}, 100)" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="true">
                 <span ng-bind="employee.displayName"></span>
-                <span class="caret"></span>
+                <span class="fa fa-angle-down"></span>
               </h1>
               <ul class="dropdown-menu">
                 <li ng-show="employee.employee_lists.length > 0"><input class="employee-filter" id="employeeFilter" type="text" ng-model="employee.filterKeyword" /></li>
@@ -601,7 +601,7 @@
               <div class="dropdown">
                 <h3 id="month-list" data-toggle="dropdown">
                   <span ng-bind="employee.currentDateString" role="button"></span>
-                  <span class="caret"></span>
+                  <span class="fa fa-angle-down"></span>
                 </h3>
                 <ul class="dropdown-menu" aria-labelledby="month-list">
                   <li ng-repeat="effectiveDate in employee.effectiveDatesDisplay">
@@ -749,6 +749,7 @@
       <!-- <div class="col-md-2 {{employee.isEdit ? '': 'col-md-offset-2'}}">
         <button ng-show="false" type="button" class="btn btn-lg btn-block btn-memo">บันทึกช่วยจำ</button>
       </div> -->
+
       <div class="col-md-8">
         <div ng-if="employee.datas.employee.deleted_at != nil">
           <div ng-show="employee.isEdit" class="col-md-3 pull-right">
@@ -756,16 +757,9 @@
           </div>
         </div>
 
-        <div ng-if="employee.datas.payroll == nil">
-          <div ng-show="employee.isEdit" class="col-md-2 pull-right">
-            <button type="button" class="btn btn-delete" ng-click="employee.destroyEmployees(employee.empId)">ลบ</button>
-          </div>
-        </div>
-
         <div ng-if="employee.datas.employee.deleted_at == nil">
-          <div ng-show="employee.isEdit" class="col-md-3 pull-right">
-            <!-- <button type="button" class="btn btn-delete" ng-click="employee.archiveEmployee(employee.empId)"><i class="fa fa-trash"></i> ลบ</button> -->
-            <button type="button" class="btn btn-archive" ng-click="employee.archiveEmployee(employee.empId)">นำออกชั่วคราว</button>
+          <div ng-show="employee.isEdit" class="col-md-2 pull-right">
+            <button type="button" class="btn btn-delete" ng-click="employee.archiveEmployee(employee.empId)"><i class="fa fa-trash"></i> ลบ</button>
           </div>
         </div>
 

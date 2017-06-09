@@ -94,7 +94,6 @@
         slipService.employeeSlips(payroll_ids).then(function(resp) {
           ctrl.employee_slips = resp.data
           for(var i = 0; i < ctrl.employee_slips.length; i++){
-            console.log(JSON.stringify(ctrl.employee_slips[i].header));
             ctrl.employee_slips[i].header = $sce.trustAsHtml(ctrl.employee_slips[i].header);
           }
           if($window.navigator.userAgent.indexOf('Chrome') == -1) {

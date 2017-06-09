@@ -1,15 +1,11 @@
 class ApplicationController < ActionController::Base
   include CanCan::ControllerAdditions
   protect_from_forgery with: :exception
-  before_action :set_cache_buster
+  before_action :set_cache_buster, :set_locale
   after_action :set_csrf_cookie_for_ng
 
   rescue_from CanCan::AccessDenied do |exception|
-    if current_user
-      redirect_to root_path, :alert => exception.message
-    else
-      redirect_to new_user_session_path, :alert => exception.message
-    end
+    redirect_to '/', :alert => exception.message
   end
 
   def set_csrf_cookie_for_ng
@@ -29,6 +25,10 @@ class ApplicationController < ActionController::Base
     response.headers["Cache-Control"] = "no-cache, no-store, max-age=0, must-revalidate"
     response.headers["Pragma"] = "no-cache"
     response.headers["Expires"] = "Fri, 01 Jan 1990 00:00:00 GMT"
+  end
+
+  def set_locale
+    I18n.locale = params[:locale] || I18n.default_locale
   end
 
   protected
