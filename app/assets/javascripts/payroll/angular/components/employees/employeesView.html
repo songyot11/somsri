@@ -1,4 +1,4 @@
-<div class="container employees-list btn-add-employee-list">
+<div class="container-fluid employees-list btn-add-employee-list">
   <div class="row">
     <div class="col-md-3 icons">
       <i ng-click="employees.displayMode = 'grid'" ng-class="{ 'active' : employees.displayMode === 'grid' }" class="fa fa-th-large employee-view-icon"></i>
@@ -11,7 +11,7 @@
     </div>
   </div>
 </div>
-<div class="container employees-list">
+<div class="container-fluid employees-list">
   <div class="row same-height">
     <div class="col-xs-2 card-employees" ng-show="employees.displayMode === 'grid'" ng-repeat="data in employees.display_datas track by $index">
       <div ng-if="data.deleted_at != nil">
@@ -120,7 +120,7 @@
           <thead>
             <tr>
               <th style="width: 350px;">ชื่อ-นามสกุล</th>
-              <th style="width: 150px;">ตำแหน่ง</th>
+              <th style="width: 170px;">ตำแหน่ง</th>
               <th class="text-right">เงินเดือน</th>
               <th class="text-right">เงินเพิ่ม</th>
               <th class="text-right">เงินหัก</th>

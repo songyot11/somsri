@@ -287,7 +287,7 @@ h2#month-list{
   border-radius: inherit;
   color: #fff;
   padding: 12px 32px;
-  font-size: 14px;
+  font-size: 16px;
   transition: all 0.25s ease;
 
   &:hover{
@@ -435,6 +435,10 @@ input.btn-prefix.active:-moz-placeholder { /* Firefox 18- */
   top: 50%;
   left: 50%;
   transform: translate(-50%, -50%);
+}
+
+.container-fluid.employees-list{
+  max-width: 1366px;
 }
 
 .employees-list .img-profile {
@@ -1152,6 +1156,7 @@ table.scrollable-header {
   box-shadow: none;
   font-size: 16px;
   color: #fff;
+  border-radius: 0px;
   padding: 12px 32px;
   transition: all 0.25s ease;
 
@@ -1491,8 +1496,9 @@ a.dropdown-item{
 
 .employees-list .list-view {
   background-color: white;
-  padding: 10px 15px 10px 15px;
+  padding: 20px 25px;
   box-shadow: 0 2px 4px 0 rgba(0, 0, 0, 0.3);
+  font-size: 1.2em;
 }
 
 .employees-list .table td.td-edit-employee-link a{

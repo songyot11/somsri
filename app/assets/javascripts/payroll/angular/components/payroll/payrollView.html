@@ -18,10 +18,10 @@
         </div>
         <div class="col-md-7">
           <div class="pull-right">
-            <a class="btn btn-md btn-payroll"
+            <a class="btn employee-print" style="margin-right:10px;"
               href="/payrolls/social_insurance_pdf?effective_date={{payroll.currentEffectiveDate['date_time'] | encodeString }}"
               target="_blank" ng-show="payroll.currentEffectiveDate">สำหรับประกันสังคม</a>
-            <a class="btn btn-md btn-payroll-starts" ng-click="payroll.createPayrolls()" href="javascript:void(0)">
+            <a class="btn btn-payroll-starts" ng-click="payroll.createPayrolls()" href="javascript:void(0)">
               เริ่มออกเงินเดือน
             </a>
           </div>
