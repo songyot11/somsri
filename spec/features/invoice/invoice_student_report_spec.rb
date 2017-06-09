@@ -329,7 +329,7 @@ describe 'Invoice-Report', js: true do
     it 'can sort by grade' do
       #สามารถเลือกดูตามระดับชั้นเรียนได้
       visit 'somsri_invoice#/student_report'
-      sleep(1)
+      sleep(2)
       find('#grade-list').click
       sleep(1)
       click_on("Kindergarten 1")
@@ -351,7 +351,7 @@ describe 'Invoice-Report', js: true do
     it 'can sort by grade' do
       #สามารถเลือกดูตามระดับชั้นเรียนได้
       visit 'somsri_invoice#/student_report'
-      sleep(1)
+      sleep(2)
       find('#grade-list').click
       sleep(1)
       click_on("Kindergarten 1")
