@@ -153,7 +153,7 @@ class Payroll < ApplicationRecord
   private
     def set_default_val
       e = Employee.find(self.employee_id)
-      self.tax = Payroll.generate_tax(self, e, e.tax_reduction.to_json)
+      self.tax = Payroll.generate_tax(self, e)
       self.social_insurance = Payroll.generate_social_insurance(self, e)
       self.pvf = Payroll.generate_pvf(self, e)
       self.save
@@ -171,7 +171,7 @@ class Payroll < ApplicationRecord
       y_income - income
     end
 
-    def self.generate_income_tax(payroll, employee, tax_reduction)
+    def self.generate_income_tax(payroll, employee)
       y_income = self.assume_year_income(payroll)
       cost_of_income = (0.5*y_income) > 100000 ? 100000:(0.5*y_income)
       income = y_income - cost_of_income - 60000
@@ -202,9 +202,9 @@ class Payroll < ApplicationRecord
       income >= 1650 ? (income * 0.05).round : 0
     end
 
-    def self.generate_tax(payroll, employee, tax_reduction)
+    def self.generate_tax(payroll, employee)
       if employee["employee_type"]=='ลูกจ้างประจำ'
-        tax = self.generate_income_tax(payroll, employee, tax_reduction)
+        tax = self.generate_income_tax(payroll, employee)
       else
         tax = self.generate_withholding_tax(payroll)
       end
