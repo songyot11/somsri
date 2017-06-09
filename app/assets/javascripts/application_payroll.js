@@ -24,6 +24,8 @@
 //= require angular-input-masks
 //= require ng-file-upload-shim
 //= require ng-file-upload
+//= require angular-sanitize
+//= require ng-csv
 
 //= require payroll/angular/components/mainCtrl.js.erb
 //= require payroll/angular/app.module

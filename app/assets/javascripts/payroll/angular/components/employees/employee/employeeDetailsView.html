@@ -8,7 +8,7 @@
               <small>Select employee</small>
               <h1 id="employeeName" onclick="window.setTimeout(function(){ $('#employeeFilter').val('').trigger('change').focus()}, 100)" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="true">
                 <span ng-bind="employee.displayName"></span>
-                <span class="caret"></span>
+                <span class="fa fa-angle-down"></span>
               </h1>
               <ul class="dropdown-menu">
                 <li ng-show="employee.employee_lists.length > 0"><input class="employee-filter" id="employeeFilter" type="text" ng-model="employee.filterKeyword" /></li>
@@ -601,7 +601,7 @@
               <div class="dropdown">
                 <h3 id="month-list" data-toggle="dropdown">
                   <span ng-bind="employee.currentDateString" role="button"></span>
-                  <span class="caret"></span>
+                  <span class="fa fa-angle-down"></span>
                 </h3>
                 <ul class="dropdown-menu" aria-labelledby="month-list">
                   <li ng-repeat="effectiveDate in employee.effectiveDatesDisplay">

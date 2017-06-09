@@ -7,6 +7,10 @@
       return $http.get('/student_report', { params: { grade_select: grade_name, page: page, year_select: year, semester_select: semester, status: status } })
     }
 
+    this.getStudentsWithoutPagination = function(grade_name, year, semester, status) {
+      return $http.get('/student_report', { params: { grade_select: grade_name, all: true, year_select: year, semester_select: semester, status: status } })
+    }
+
     this.getInvoiceTotalAmount = function(grade_name, year, semester, status) {
       return $http.get('/invoice_total_amount', { params: { grade_select: grade_name, year_select: year, semester_select: semester, status: status } })
     }

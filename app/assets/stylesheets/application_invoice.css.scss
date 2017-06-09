@@ -795,9 +795,25 @@ body.somsri-invoice >.container-fluid {
   border-radius: 0px;
 }
 
+.btn-export,.btn-export:focus{
+  background-color: #00D2D7;
+  border: 2px solid #00D2D7;
+  border-radius: inherit;
+  color: #fff;
+  padding: 12px 32px;
+  font-size: 16px;
+  letter-spacing: 1px;
+  transition: all 0.25s ease;
+
+  &:hover{
+    color: #00D2D7;
+    border: 2px solid #00D2D7;
+    background-color: transparent;
+  }
+}
 
 #student-report .report-content {
-  padding-top: 30px;
+  padding: 20px;
   font-size: 14px;
   background-color: #fff;
   box-shadow: 0 5px 13px 0 rgba(0, 0, 0, 0.3);
@@ -810,10 +826,28 @@ body.somsri-invoice >.container-fluid {
   color: #5b5b5b;
 }
 
-#student-report #grade-list, #year-list {
+#student-report #grade-list{
+  font-size: 24px;
   cursor: pointer;
+  margin-top: 15px;
+}
+#student-report .dropdown-filter{
+  margin-bottom: 20px;
+}
+#student-report .dropdown-menu>li>a:focus,
+#student-report .dropdown-menu>li>a:hover{
+  color: #fff;
+  background-color: #3fa1e6 !important;
+}
+#student-report .row.head-menu{
+  margin-top: 20px;
+  margin-bottom: 10px;
 }
 
+#student-report #year-list, #semester-list {
+  font-size: 16px;
+  cursor: pointer;
+}
 #student-report .dropdown-menu button {
   background-color: transparent;
   border: 0px;
@@ -1093,7 +1127,7 @@ a.nav-user:hover{
 }
 a:not([href]):not([tabindex]){
   cursor: pointer;
-  color: #d0021b;
+  color: #5b5b5b;
 }
 .text-invoice-num,.text-invoice-num:focus{
   color: #0275d8;

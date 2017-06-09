@@ -23,6 +23,8 @@
 //= require ocLazyLoad/dist/ocLazyLoad.min
 //= require angular-input-masks
 //= require selectize.min
+//= require angular-sanitize
+//= require ng-csv
 
 //= require invoice/angular/components/mainCtrl.js.erb
 //= require invoice/angular/components/shared/ngKeyEnterDirective

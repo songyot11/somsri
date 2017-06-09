@@ -2,9 +2,10 @@
   'use strict';
   angular.module('somsri.invoice.studentReport', [
   ])
-  .controller('studentReportCtrl', ['$compile', '$scope', '$window', '$filter', '$rootScope', 'studentReportService', '$timeout', function($compile, $scope, $window, $filter, $rootScope, studentReportService, $timeout) {
+  .controller('studentReportCtrl', ['$compile', '$scope', '$window', '$filter', '$rootScope', 'studentReportService', '$timeout', 'CSV', function($compile, $scope, $window, $filter, $rootScope, studentReportService, $timeout, CSV) {
     $rootScope.menu = "รายงาน"
     var ctrl = this
+
     $rootScope.loadAndAuthorizeResource("invoice", function(){
       ctrl.currentPage = 1;
       ctrl.grade_name = "All"
@@ -23,22 +24,54 @@
       ctrl.switchGrade = function(grade_name) {
         ctrl.grade_name = grade_name
         getStudents();
+        ctrl.currentPage = 1;
       }
 
       ctrl.switchYear = function(year) {
         ctrl.currentYearString = year
         getStudents();
+        ctrl.currentPage = 1;
       }
 
       ctrl.switchSemester = function(semester) {
         ctrl.currentSemesterString = semester
         getStudents();
+        ctrl.currentPage = 1;
       }
 
       ctrl.invoiceStatusFilter = function(status) {
         ctrl.currentInvoiceStatus = status.value;
         ctrl.invoiceFilterString = status.text;
         getStudents();
+        ctrl.currentPage = 1;
+      }
+      ctrl.exportHeader = ['รหัส', 'ชื่อ', 'ชื่อเล่น', 'ชั้น', 'เลขที่', 'ผู้ปกครอง', 'สถานะ', 'ชำระโดย', 'ค่าธรรมเนียมการศึกษา', 'ค่าใช้จ่ายอื่นๆ', 'ยอดชำระ', 'วันที่ชำระ']
+      ctrl.getExportData = function() {
+        ctrl.exportFileName = "รายงานการชำระเงินนักเรียน_" + $filter('date')(new Date(),'d-MM-yyyy') + ".csv"
+        return studentReportService.getStudentsWithoutPagination(ctrl.grade_name, ctrl.currentYearString, ctrl.currentSemesterString, ctrl.currentInvoiceStatus).then(function(resp) {
+          var exportResults = []
+          if (resp.data && resp.data.datas){
+            for(var i=0; i<resp.data.datas.length; i++){
+              var data = resp.data.datas[i]
+              exportResults.push([
+                data.student_number,
+                data.full_name_with_title,
+                data.nickname_eng_thai,
+                data.grade_name,
+                data.classroom_number,
+                data.parent_names,
+                data.active_invoice_status,
+                data.active_invoice_payment_method,
+                data.active_invoice_tuition_fee.toFixed(2),
+                data.active_invoice_other_fee.toFixed(2),
+                data.active_invoice_total_amount.toFixed(2),
+                $filter('date')(data.active_invoice_updated_at,'d/MM/yyyy hh:mm')
+              ])
+            }
+            exportResults.push(['','','','','','','','',resp.data.tuition_fee,resp.data.other_fee,resp.data.amount,''])
+          }
+          return exportResults
+        });
       }
 
       function getStudents() {

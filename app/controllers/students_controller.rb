@@ -8,14 +8,12 @@ class StudentsController < ApplicationController
   end
 
   def student_report
-
     grade_select = (params[:grade_select] || 'All')
     class_select = (params[:class_select] || 'All')
     year_select = (params[:year_select] || Date.current.year + 543)
     semester_select = params[:semester_select]
     invoice_status = params[:status]
     student_index = Array.new
-
     if grade_select.downcase == 'all'
       @students_all = Student.order("student_number ASC").search(params[:search]).with_deleted.to_a
     else
@@ -61,20 +59,8 @@ class StudentsController < ApplicationController
 
       data = {
         id: student.id,
-        full_name: student.full_name,
-        full_name_english: student.full_name_english,
-        nickname: student.nickname,
-        nickname_english:  student.nickname_english,
-        gender_id: student.gender_id,
-        birthdate: student.birthdate,
-        grade_id: student.grade_id,
-        classroom: student.classroom,
         classroom_number: student.classroom_number,
         student_number: student.student_number,
-        national_id: student.national_id,
-        remark: student.remark,
-        created_at: student.created_at,
-        updated_at: student.updated_at,
         grade_name: last_tuition_invoice ? last_tuition_invoice.grade_name : student.grade_name,
         parent_names: student.parent_names,
         active_invoice_status: paid ? "ชำระแล้ว" : "ยังไม่ได้ชำระ",
@@ -82,9 +68,9 @@ class StudentsController < ApplicationController
         active_invoice_tuition_fee: tuition_fee,
         active_invoice_other_fee: other_fee,
         active_invoice_total_amount: total_fee,
-        active_invoice_updated_at: last_tuition_invoice ? last_tuition_invoice.updated_at : nil,
         full_name_with_title: student.full_name_with_title,
         nickname_eng_thai: student.nickname_eng_thai,
+        active_invoice_updated_at: last_tuition_invoice ? last_tuition_invoice.updated_at : nil,
         deleted_at: student.deleted_at
       }
 
@@ -105,16 +91,27 @@ class StudentsController < ApplicationController
         datas << data
       end
     end
-    datas = datas.paginate(:page => params[:page], :per_page => 10)
 
-    render json: {
-      datas: datas,
-      current_page: datas.current_page,
-      total_records: datas.total_entries,
-      other_fee: total_other,
-      tuition_fee: total_tuition,
-      amount: total_amount
-    }, status: :ok
+    if !params[:all]
+      datas = datas.paginate(:page => params[:page], :per_page => 10)
+      render json: {
+        datas: datas,
+        current_page: datas.current_page,
+        total_records: datas.total_entries,
+        other_fee: total_other,
+        tuition_fee: total_tuition,
+        amount: total_amount
+      }, status: :ok
+    else
+      render json: {
+        datas: datas,
+        other_fee: total_other,
+        tuition_fee: total_tuition,
+        amount: total_amount
+      }, status: :ok
+    end
+
+
   end
 
   # GET /students

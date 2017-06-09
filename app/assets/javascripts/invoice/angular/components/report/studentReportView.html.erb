@@ -1,74 +1,77 @@
 <div class="container-fluid">
   <div id="student-report" class="row ng-scope">
-    <div class="unused_for_print col-lg-12">
-      <div class="row">
-        <div class="col-lg-6">
-          <div class="dropdown">
-            <h4 id="grade-list" data-toggle="dropdown">
-              <span ng-bind="studentReport.currentGradeString" ></span>
-              <i class="fa fa-caret-down" aria-hidden="true"></i>
-            </h4>
-            <ul class="dropdown-menu" aria-labelledby="grade-list">
-              <li ng-repeat="grade in studentReport.grades">
-                <a ng-click="studentReport.switchGrade(grade.name)">
-                  <button>{{ grade.name }}</button>
-                </a>
-              </li>
-            </ul>
-          </div>
-        </div>
-        <div class="col-lg-6">
-          <div class="dropdown pull-right">
-            <h4 id="year-list" data-toggle="dropdown">
-              <span ng-bind="studentReport.currentYearString" ></span>
-              <i class="fa fa-caret-down" aria-hidden="true"></i>
-            </h4>
-            <ul class="dropdown-menu" aria-labelledby="year-list">
-              <li ng-repeat="year in studentReport.years">
-                <a ng-click="studentReport.switchYear(year)">
-                  <button>{{ year }}</button>
-                </a>
-              </li>
-            </ul>
-          </div>
-          <div class="dropdown pull-right" style="margin-right: 20px;">
-            <h4 id="semester-list" data-toggle="dropdown">
-              <span ng-bind="studentReport.currentSemesterString" ></span>
-              <i class="fa fa-caret-down" aria-hidden="true"></i>
-            </h4>
-            <ul class="dropdown-menu" aria-labelledby="semester-list">
-              <li ng-repeat="semester in studentReport.semesters">
-                <a ng-click="studentReport.switchSemester(semester)">
-                  <button>{{ semester }}</button>
-                </a>
-              </li>
-              <li>
-                <a ng-click="studentReport.switchSemester('อื่นๆ')">
-                  <button>อื่นๆ</button>
-                </a>
-              </li>
-            </ul>
-          </div>
-
-          <div class="dropdown pull-right" style="margin-right: 20px;">
-            <h4 id="semester-list" data-toggle="dropdown">
-              สถานะการชำระ&nbsp;&nbsp;&nbsp;<span ng-bind="studentReport.invoiceFilterString" ></span>
-              <i class="fa fa-caret-down" aria-hidden="true"></i>
-            </h4>
-            <ul class="dropdown-menu" aria-labelledby="semester-list">
-              <li ng-repeat="status in studentReport.invoiceFilter">
-                <a ng-click="studentReport.invoiceStatusFilter(status)">
-                  <button>{{ status.text }}</button>
-                </a>
-              </li>
-            </ul>
-          </div>
-
-
+    <div class="row head-menu">
+      <div class="col-md-6">
+        <div class="dropdown">
+          <h4 id="grade-list" data-toggle="dropdown">
+            <span ng-bind="studentReport.currentGradeString" ></span>
+            <i class="fa fa-angle-down" aria-hidden="true"></i>
+          </h4>
+          <ul class="dropdown-menu" aria-labelledby="grade-list">
+            <li ng-repeat="grade in studentReport.grades">
+              <a ng-click="studentReport.switchGrade(grade.name)">
+                <button>{{ grade.name }}</button>
+              </a>
+            </li>
+          </ul>
         </div>
       </div>
-
+      <div class="col-md-6">
+        <button class="btn btn-export pull-right" type="button" ng-csv="studentReport.getExportData()" csv-header="studentReport.exportHeader" filename="{{studentReport.exportFileName}}">
+          <i class="fa fa-external-link" aria-hidden="true"></i> Export
+        </button>
+      </div>
+    </div>
+    <div class="unused_for_print col-md-12">
       <div class="row report-content container-fluid">
+        <div class="row">
+          <div class="col-md-12 dropdown-filter">
+            <div class="dropdown pull-right">
+              <h4 id="year-list" data-toggle="dropdown">
+                <strong>ปีการศึกษา</strong> <span ng-bind="studentReport.currentYearString" ></span>
+                <i class="fa fa-angle-down" aria-hidden="true"></i>
+              </h4>
+              <ul class="dropdown-menu" aria-labelledby="year-list">
+                <li ng-repeat="year in studentReport.years">
+                  <a ng-click="studentReport.switchYear(year)">
+                    <button>{{ year }}</button>
+                  </a>
+                </li>
+              </ul>
+            </div>
+            <div class="dropdown pull-right" style="margin-right: 20px;">
+              <h4 id="semester-list" data-toggle="dropdown">
+              <strong>ภาคการเรียน</strong> <span ng-bind="studentReport.currentSemesterString" ></span>
+                <i class="fa fa-angle-down" aria-hidden="true"></i>
+              </h4>
+              <ul class="dropdown-menu" aria-labelledby="semester-list">
+                <li ng-repeat="semester in studentReport.semesters">
+                  <a ng-click="studentReport.switchSemester(semester)">
+                    <button>{{ semester }}</button>
+                  </a>
+                </li>
+                <li>
+                  <a ng-click="studentReport.switchSemester('อื่นๆ')">
+                    <button>ไม่ระบุภาคการเรียน</button>
+                  </a>
+                </li>
+              </ul>
+            </div>
+            <div class="dropdown pull-right" style="margin-right: 20px;">
+              <h4 id="semester-list" data-toggle="dropdown">
+                <strong>สถานะการชำระ</strong> <span ng-bind="studentReport.invoiceFilterString" ></span>
+                <i class="fa fa-angle-down" aria-hidden="true"></i>
+              </h4>
+              <ul class="dropdown-menu" aria-labelledby="semester-list">
+                <li ng-repeat="status in studentReport.invoiceFilter">
+                  <a ng-click="studentReport.invoiceStatusFilter(status)">
+                    <button>{{ status.text }}</button>
+                  </a>
+                </li>
+              </ul>
+            </div>
+          </div>
+        </div>
         <table id="tableHeader" class="table scrollable-header">
           <thead>
            <tr>
