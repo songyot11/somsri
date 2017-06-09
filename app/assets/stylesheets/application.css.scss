@@ -20,7 +20,7 @@
 
 body{
   margin-bottom: 50px;
-  margin-top: 100px;
+  // margin-top: 100px;
   background: linear-gradient(90deg, #72cef5, #55b4ed);
 }
 .form-sign-in{
@@ -77,12 +77,13 @@ ul.nav.navbar-nav.navbar-right.dropdown{
   margin-left: -15px;
 }
 .container.main-menu.main {
-    margin-top: calc(50vh - 150px);
-    -webkit-align-items: center; /* Safari 7.0+ */
+    // margin-top: calc(50vh - 150px);
+    margin-top: 250px;
+    -webkit-align-items: center;
     display: grid;;
     align-items: center;
-    max-width: 950px;
-    height: 378px;
+    max-width: 930px;
+    height: 450px;
 
 }
 
