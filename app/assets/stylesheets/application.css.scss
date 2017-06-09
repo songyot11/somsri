@@ -78,6 +78,12 @@ ul.nav.navbar-nav.navbar-right.dropdown{
 }
 .container.main-menu.main {
     margin-top: calc(50vh - 150px);
+    -webkit-align-items: center; /* Safari 7.0+ */
+    display: grid;;
+    align-items: center;
+    max-width: 950px;
+    height: 378px;
+
 }
 
 .disabled {
@@ -94,9 +100,7 @@ ul.nav.navbar-nav.navbar-right.dropdown{
 .col-centered {
     display:inline-block;
     float:none;
-    /* reset the text-align */
     text-align:left;
-    /* inline-block space fix */
     margin-right:-4px;
 }
 .download_android{
