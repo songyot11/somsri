@@ -84,7 +84,8 @@ class InvoicesController < ApplicationController
       student_info: student_info,
       parent_info: parent_info,
       grades: Grade.names,
-      line_items_info: line_items_info
+      line_items_info: line_items_info,
+      current_semester: SchoolSetting.current_semester
     }, status: :ok
   end
 
@@ -283,12 +284,17 @@ class InvoicesController < ApplicationController
 
   def invoice_years
     all_years = Invoice.pluck(:school_year).uniq
-    render json: all_years, status: :ok
+    render json: {
+      all_years: all_years,
+      current_year: SchoolSetting.school_year
+    }
   end
 
   def invoice_semesters
-    all_semesters_of_year = Invoice.where(school_year: params[:year]).pluck(:semester).uniq
-    render json: all_semesters_of_year
+    render json: {
+      semesters: SchoolSetting.semesters,
+      current_semester: SchoolSetting.current_semester
+    }
   end
 
   private

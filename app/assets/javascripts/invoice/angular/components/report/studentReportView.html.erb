@@ -42,11 +42,29 @@
                   <button>{{ semester }}</button>
                 </a>
               </li>
+              <li>
+                <a ng-click="studentReport.switchSemester('อื่นๆ')">
+                  <button>อื่นๆ</button>
+                </a>
+              </li>
             </ul>
           </div>
+
           <div class="dropdown pull-right" style="margin-right: 20px;">
-            <label class="btn btn-md invoice-status" ng-click="studentReport.invoiceStatusFilter()" ng-model="studentReport.invoiceFilter" uib-btn-checkbox>ยังไม่ได้ชำระ</label>
+            <h4 id="semester-list" data-toggle="dropdown">
+              สถานะการชำระ&nbsp;&nbsp;&nbsp;<span ng-bind="studentReport.invoiceFilterString" ></span>
+              <i class="fa fa-caret-down" aria-hidden="true"></i>
+            </h4>
+            <ul class="dropdown-menu" aria-labelledby="semester-list">
+              <li ng-repeat="status in studentReport.invoiceFilter">
+                <a ng-click="studentReport.invoiceStatusFilter(status)">
+                  <button>{{ status.text }}</button>
+                </a>
+              </li>
+            </ul>
           </div>
+
+
         </div>
       </div>
 

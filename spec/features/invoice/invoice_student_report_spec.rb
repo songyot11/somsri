@@ -1,4 +1,11 @@
 describe 'Invoice-Report', js: true do
+  let(:school_setting) do
+    user = SchoolSetting.create!({
+      school_year: "2560",
+      semesters: "1,2,3",
+      current_semester: "1"
+    })
+  end
 
   let(:user) { user = User.create!({
     email: 'test@mail.com',
@@ -172,18 +179,21 @@ describe 'Invoice-Report', js: true do
           LineItem.make!(:tuition),
           LineItem.make!(amount: 10000),
         ]
-      }),
-      payment_method1 = PaymentMethod.create!({
-        payment_method:'เงินสด',
-        invoice_id: invoice1.id
       })
     ]
+  end
+
+  let(:payment_method) do
+    PaymentMethod.create!({
+      payment_method:'เงินสด',
+      invoice_id: invoice[0].id
+    })
   end
 
   let(:invoice_cancel) do
     invoice1 = Invoice.make!({
       student_id: students[0].id,
-      invoice_status_id:  invoice_status_1.id,
+      invoice_status_id:  invoice_status_2.id,
       school_year: "2560",
       semester: "1",
       line_items: [
@@ -283,6 +293,7 @@ describe 'Invoice-Report', js: true do
     login_as(user, scope: :user)
     grade
     invoice
+    payment_method
   end
 
   describe 'Student invoice report' do
@@ -395,7 +406,7 @@ describe 'Invoice-Report', js: true do
       invoice_cancel
       visit 'somsri_invoice#/student_report'
       sleep(1)
-      expect(page).to have_content("มั่งมี ศรีสุข รวย 13 ชำระแล้ว เงินสด 10,048,000.00 3,003,750.00 13,051,750.00")
+      expect(page).to have_content("มั่งมี ศรีสุข รวย 13 ชำระแล้ว เงินสด 48,000.00 3,750.00 51,750.00")
     end
   end
 

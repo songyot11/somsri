@@ -130,6 +130,7 @@ class Student < ApplicationRecord
                   return i
                 end
               end
+              return i
             end
           end
           return nil
@@ -245,6 +246,10 @@ class Student < ApplicationRecord
     else
       @active_invoice_payment_method
     end
+  end
+
+  def active_invoice_custom_fee(type)
+    self.all_active_invoices_other_fee
   end
 
   def active_invoice_tuition_fee

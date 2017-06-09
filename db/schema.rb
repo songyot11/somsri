@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20170525065816) do
+ActiveRecord::Schema.define(version: 20170608071654) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -87,9 +87,9 @@ ActiveRecord::Schema.define(version: 20170525065816) do
     t.string   "employee_type",        default: "ลูกจ้างประจำ", null: false
     t.boolean  "pay_social_insurance"
     t.boolean  "pay_pvf"
+    t.string   "pin"
     t.integer  "grade_id"
     t.string   "classroom"
-    t.string   "pin"
     t.string   "img_url_file_name"
     t.string   "img_url_content_type"
     t.integer  "img_url_file_size"
@@ -266,7 +266,9 @@ ActiveRecord::Schema.define(version: 20170525065816) do
   end
 
   create_table "school_settings", force: :cascade do |t|
-    t.string "school_year", default: ""
+    t.string "school_year",      default: ""
+    t.string "semesters"
+    t.string "current_semester"
   end
 
   create_table "schools", force: :cascade do |t|

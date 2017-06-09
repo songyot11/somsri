@@ -10,6 +10,12 @@
       ctrl.grade_name = "All"
       ctrl.currentInvoiceStatus = null;
       ctrl.total = { other_fee: 0.0, amount: 0.0, tuition_fee: 0.0 }
+      ctrl.invoiceFilter = [
+        { text: "ทั้งหมด", value: "all" },
+        { text: "ชำระแล้ว", value: "paid" },
+        { text: "ยังไม่ได้ชำระ", value: "unpaid" }
+      ]
+      ctrl.invoiceFilterString = "ทั้งหมด"
       ctrl.pageChanged = function() {
         getStudents()
       };
@@ -17,30 +23,22 @@
       ctrl.switchGrade = function(grade_name) {
         ctrl.grade_name = grade_name
         getStudents();
-        getInvoiceTotalAmount();
       }
 
       ctrl.switchYear = function(year) {
         ctrl.currentYearString = year
-        getSemesters();
         getStudents();
-        getInvoiceTotalAmount();
       }
 
       ctrl.switchSemester = function(semester) {
         ctrl.currentSemesterString = semester
         getStudents();
-        getInvoiceTotalAmount();
       }
 
-      ctrl.invoiceStatusFilter = function() {
-        if (ctrl.currentInvoiceStatus == null) {
-          ctrl.currentInvoiceStatus = "unpaid";
-        } else {
-          ctrl.currentInvoiceStatus = null;
-        }
+      ctrl.invoiceStatusFilter = function(status) {
+        ctrl.currentInvoiceStatus = status.value;
+        ctrl.invoiceFilterString = status.text;
         getStudents();
-        getInvoiceTotalAmount();
       }
 
       function getStudents() {
@@ -49,40 +47,32 @@
           ctrl.grades = grade_resp.data
           studentReportService.getStudents(ctrl.grade_name, ctrl.currentPage, ctrl.currentYearString, ctrl.currentSemesterString, ctrl.currentInvoiceStatus).then(function(resp) {
             ctrl.datas = [];
-            if (resp.data[0] && resp.data[0].datas){
-              ctrl.datas = resp.data[0].datas
-              ctrl.students = resp.data[0].datas
-              ctrl.totalItems = resp.data[0].total_records;
-              ctrl.currentPage = resp.data[0].current_page;
+            if (resp.data && resp.data.datas){
+              ctrl.datas = resp.data.datas
+              ctrl.students = resp.data.datas
+              ctrl.totalItems = resp.data.total_records
+              ctrl.currentPage = resp.data.current_page
+              ctrl.total.other_fee = resp.data.other_fee
+              ctrl.total.tuition_fee = resp.data.tuition_fee
+              ctrl.total.amount = resp.data.amount
             }
             ctrl.maxSize = 5;
           });
         });
       }
 
-      function getInvoiceTotalAmount(){
-        studentReportService.getInvoiceTotalAmount(ctrl.grade_name, ctrl.currentYearString, ctrl.currentSemesterString, ctrl.currentInvoiceStatus).then(function(resp) {
-          ctrl.total.other_fee = resp.data[0].other_fee
-          ctrl.total.tuition_fee = resp.data[0].tuition_fee
-          ctrl.total.amount = resp.data[0].amount
-        });
-      }
-
       function getYears() {
-        var nowDate = new Date();
-        ctrl.current_year = nowDate.getFullYear() + 543;
-        ctrl.currentYearString = ctrl.current_year
         studentReportService.getYears().then(function(resp) {
-          ctrl.years = resp.data;
+          ctrl.years = resp.data.all_years
+          ctrl.currentYearString = resp.data.current_year
         });
       }
 
       function getSemesters() {
-        studentReportService.getSemesters(ctrl.currentYearString).then(function(resp) {
-          ctrl.semesters = resp.data;
-          ctrl.currentSemesterString = ctrl.semesters[ctrl.semesters.length - 1]
+        studentReportService.getSemesters().then(function(resp) {
+          ctrl.semesters = resp.data.semesters;
+          ctrl.currentSemesterString = resp.data.current_semester;
           getStudents();
-          getInvoiceTotalAmount();
         });
       }
 
