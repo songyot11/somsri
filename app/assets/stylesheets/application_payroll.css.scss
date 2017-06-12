@@ -438,7 +438,7 @@ input.btn-prefix.active:-moz-placeholder { /* Firefox 18- */
 }
 
 .container-fluid.employees-list{
-  max-width: 1366px;
+  max-width: 95%;
 }
 
 .employees-list .img-profile {
@@ -465,7 +465,7 @@ input.btn-prefix.active:-moz-placeholder { /* Firefox 18- */
   display: -webkit-box;
   display: -webkit-flex;
   display: -ms-flexbox;
-  display:         flex;
+  display: flex;
   flex-wrap: wrap;
 }
 .row.same-height > [class*='col-'] {
@@ -1533,4 +1533,19 @@ a.dropdown-item{
 {
 	border-radius: 5px;
 	background-color: #5b5b5b;
+}
+
+.dropdown-menu>li>a,.dropdown-menu>li>a:focus{
+  display: block;
+  padding: 3px 20px;
+  clear: both;
+  font-weight: 400;
+  line-height: 1.42857143;
+  color: #333;
+  white-space: nowrap;
+
+  &:hover{
+    background-color: #ffab04 !important;
+    color: #fff !important;
+  }
 }

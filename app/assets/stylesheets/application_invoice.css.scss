@@ -593,7 +593,7 @@ tfoot>tr>th{
 .nav-for-print{
   height: 80px;
   margin-left: -15px;
-  margin-top: -130px;
+  margin-top: -115px;
   width: 100%;
   background-color: #3fa1e6;
   position: fixed;
@@ -1005,7 +1005,7 @@ th.table-foot-top,td.table-foot-top{
 .nav-for-print-report{
   height: 80px;
   margin-left: -15px;
-  margin-top: -110px;
+  margin-top: -100px;
   width: 100%;
   background-color: #3fa1e6;
   position: fixed;
@@ -1163,13 +1163,29 @@ a:not([href]):not([tabindex]){
   box-shadow: 0 5px 13px 0 rgba(0, 0, 0, 0.3);
   padding: 30px;
 }
-.row.head-sp.justify-content-between {
+#student-index .row.head-sp {
     padding-top: 0px;
     border: none;
-    margin-top: 50px;
+    margin-top: 100px;
     color: #5b5b5b;
     margin-right: 0px !important;
     margin-left: 0px;
+}
+#parent-index .row.head-sp {
+    padding-top: 0px;
+    border: none;
+    margin-top: 20px;
+    color: #5b5b5b;
+    margin-right: 0px !important;
+    margin-left: 0px;
+}
+
+#student-report.invoice_report{
+  margin-top: 30px;
+}
+
+.container#dailyReport{
+  margin-top: 20px;
 }
 .btn-search-sp{
   color: #fff;
