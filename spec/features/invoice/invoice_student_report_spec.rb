@@ -1,4 +1,4 @@
-describe 'Invoice-Report', js: true do
+describe 'Student Report', js: true do
   let(:school_setting) do
     user = SchoolSetting.create!({
       school_year: "2560",
@@ -191,7 +191,7 @@ describe 'Invoice-Report', js: true do
   end
 
   let(:invoice_cancel) do
-    invoice1 = Invoice.make!({
+    Invoice.make!({
       student_id: students[0].id,
       invoice_status_id:  invoice_status_2.id,
       school_year: "2560",
@@ -289,11 +289,11 @@ describe 'Invoice-Report', js: true do
   end
 
   before do
-    user.add_role :admin
-    login_as(user, scope: :user)
-    grade
-    invoice
-    payment_method
+      user.add_role :admin
+      login_as(user, scope: :user)
+      grade
+      invoice
+      payment_method
   end
 
   describe 'Student invoice report' do
@@ -410,23 +410,6 @@ describe 'Invoice-Report', js: true do
     end
   end
 
-  describe 'Invoice report' do
-    it 'should display 10 row per page' do
-      invoice_for_paginate
-      visit 'somsri_invoice#/invoice_report'
-      sleep(5)
-      expect(page).to have_selector("tr.ng-scope", count: 10)
-      expect(page).to have_content("First Previous 12 Next Last")
-    end
-
-    it 'should display page 2' do
-      invoice_for_paginate
-      visit 'somsri_invoice#/invoice_report'
-      sleep(5)
-      all('li.pagination-page.ng-scope a').last.click
-      sleep(5)
-      expect(page).to have_selector("tr.ng-scope", count: 1)
-      expect(page).to have_content("First Previous 12 Next Last")
-    end
-  end
 end
+
+

@@ -98,7 +98,8 @@ class Invoice < ApplicationRecord
         payee_name: self.payee_name,
         payment_method_names: self.payment_method_names,
         status_name: self.status_name,
-        total_amount: self.total_amount
+        total_amount: self.total_amount,
+        is_cancel: self.is_cancel
       }
     else
       super()
