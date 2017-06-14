@@ -764,7 +764,7 @@ a.text-mane-back,a.text-mane-back:focus{
 
 .paragraph {
   background-color: white;
-  padding: 60px;
+  padding: 60px 40px 40px 40px;
   margin-top: 30px;
   margin-bottom: 30px;
 }
@@ -1004,7 +1004,8 @@ table.scrollable-header {
 }
 
 .employee-details .paragraph ul li.active {
-  border-right: 3px solid #F59C0B;
+  border: 2px solid #FFAB04;
+  background-color: #FFAB04;
 }
 
 .employee-details .paragraph ul li a {
@@ -1013,8 +1014,9 @@ table.scrollable-header {
 }
 
 .employee-details .paragraph ul li.active a {
-  color: #F59C0B;
+  color: #FFFFFF;
   border: none;
+  background-color: #FFAB04;
 }
 
 .employee-details .paragraph ul li a:hover {
@@ -1024,13 +1026,25 @@ table.scrollable-header {
 
 .employee-details .private .tab-content {
   height: 100%;
-  border-left: 1px solid #F59C0B;
+  border-left: 2px solid #FFAB04;
+  margin-top: 0px;
+  padding: 0px 40px;
 }
 
 .employee-details .panel-default a {
   color: #333;
   border: none;
   text-decoration: none !important;
+}
+
+.employee-details .panel-default.ng-scope.ng-isolate-scope.panel {
+    box-shadow: none;
+    border: none;
+}
+
+.employee-details .panel-default>.panel-heading{
+  background: none;
+  border-bottom: 1px solid #ddd;
 }
 
 .employee-details .accordion-selected {
