@@ -17,7 +17,6 @@
  */
 
 @import "application_invoice";
-
 body{
   margin-bottom: 50px;
   // margin-top: 100px;
@@ -27,10 +26,13 @@ body{
   background: #fff;
   padding: 80px 100px;
   box-shadow: 0 2px 4px 0 rgba(0, 0, 0, 0.3);
-  left: 25px;
+  margin: auto;
+  width: 40%;
 }
-.logo-login{
-  padding-bottom: 40px;
+.logo-login {
+    padding-bottom: 40px;
+    height: 200px;
+    width: auto;
 }
 .input-login{
   font-family: 'Maitree', serif;
@@ -222,4 +224,18 @@ ul.nav.navbar-nav.navbar-right.dropdown{
 .dropdown-submenu>.dropdown-menu>li>a>img{
   width: 20%;
   margin-left: -10px;
+}
+#wrap {
+  min-height: 100%;
+  height: auto !important;
+  height: 100%;
+  margin: 0 auto -60px;
+  padding: 0 0 60px;
+}
+#footer {
+  height: 60px;
+  margin-top:50px;
+  padding-top:20px;
+  padding-bottom:20px;
+  color: white;
 }
