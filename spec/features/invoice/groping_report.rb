@@ -146,6 +146,20 @@ describe 'Grouping Report', js: true do
       expect(page).to have_content("มั่งมี ศรีสุข 110,000.00 0.00 0.00 0.00 0.00 110,000.00 110,000.00")
       expect(page).to have_content("รวมทั้งหมด 112,000.00 40,000.00 30,000.00 30,000.00 2,000.00 210,000.00 212,000.00")
     end
+
+    it 'should not change if input invalid date' do
+      visit '/somsri_invoice#/grouping_report'
+      sleep(1)
+      expect(page).to have_content("#{yesterday_str} 11,000.00 0.00 0.00 0.00 0.00 1,000.00 10,000.00 11,000.00")
+      expect(page).to have_content("#{today_str} 112,000.00 40,000.00 30,000.00 30,000.00 200,000.00 2,000.00 10,000.00 212,000.00")
+      expect(page).to have_content("รวมทั้งหมด 123,000.00 40,000.00 30,000.00 30,000.00 200,000.00 3,000.00 20,000.00 223,000.00")
+      
+      find('#start_date').set("1/1/1")
+      sleep(1)
+      expect(page).to have_content("#{yesterday_str} 11,000.00 0.00 0.00 0.00 0.00 1,000.00 10,000.00 11,000.00")
+      expect(page).to have_content("#{today_str} 112,000.00 40,000.00 30,000.00 30,000.00 200,000.00 2,000.00 10,000.00 212,000.00")
+      expect(page).to have_content("รวมทั้งหมด 123,000.00 40,000.00 30,000.00 30,000.00 200,000.00 3,000.00 20,000.00 223,000.00")
+    end
   end
 
 end

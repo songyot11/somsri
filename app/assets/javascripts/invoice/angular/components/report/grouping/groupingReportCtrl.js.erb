@@ -13,10 +13,11 @@
       ctrl.options = null
 
       function loadData(){
+        ctrl.start_date = cleanDate(ctrl.start_date)
+        ctrl.end_date = cleanDate(ctrl.end_date)
         service.getGroupingReport(ctrl.start_date, ctrl.end_date, ctrl.options).then(function(resp) {
           ctrl.datas = resp.data
           ctrl.options = resp.data.options
-  console.log(JSON.stringify(ctrl.datas));
           var reportMode = getReportMode()
           if(reportMode == "per_student"){
             ctrl.first_column = "ชื่อ"
@@ -38,17 +39,25 @@
         }
       }
 
+      function cleanDate(date){
+        var cleanedDate = new Date()
+        cleanedDate.setDate(date.getDate())
+        cleanedDate.setMonth(date.getMonth())
+        cleanedDate.setYear(date.getFullYear())
+        return cleanedDate
+      }
+
       ctrl.selectDate = function(selected_date){
-        var selected_date_array = selected_date.split('/')
-        ctrl.end_date = new Date()
-        ctrl.end_date.setDate(selected_date_array[0])
-        ctrl.end_date.setMonth(selected_date_array[1] - 1)
-        ctrl.end_date.setYear(selected_date_array[2])
-        ctrl.start_date = ctrl.end_date
+        selected_date = moment(selected_date, "DD/MM/YYYY").toDate()
+        ctrl.start_date = cleanDate(selected_date)
+        ctrl.end_date = ctrl.start_date
         ctrl.optionsChange()
       }
 
       ctrl.optionsChange = function() {
+        //validate date object
+        if(new Date(ctrl.start_date) == "Invalid Date"){return;}
+        if(new Date(ctrl.end_date) == "Invalid Date"){return;}
         loadData()
       }
 
