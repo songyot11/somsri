@@ -75,10 +75,9 @@ describe 'Student Report', js: true do
 
   describe 'Student invoice report' do
     it 'should show report page' do
-      visit 'somsri_invoice#/report'
+      visit 'somsri_invoice#/'
       sleep(1)
-      expect(page).to have_content("รายงานค่าเทอม")
-      expect(page).to have_content("รายงานประจำวัน")
+      expect(page).to have_content("ชำระเงิน ใบเสร็จ รายงานค่าเทอม รายงานประจำวัน")
     end
 
     it 'should show student report page' do

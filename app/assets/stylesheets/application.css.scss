@@ -24,10 +24,10 @@ body{
 }
 .form-sign-in{
   background: #fff;
-  padding: 80px 100px;
+  padding: 50px;
   box-shadow: 0 2px 4px 0 rgba(0, 0, 0, 0.3);
   margin: auto;
-  width: 40%;
+  width: 45%;
 }
 .logo-login {
     padding-bottom: 40px;
@@ -53,20 +53,22 @@ body{
   margin-bottom: 50px;
   letter-spacing: 1px;
 }
-.btn-signin{
+.btn-signin, .btn-signin:focus{
   background-color: #3fa1e6;
-  color: #fff !important;
-  padding: 8px 46px;
-  box-shadow: 2px 7px 20px #b7b7b7;
-  letter-spacing: 1px;
-  border: inherit;
-  width: 100%;
+  color: #fff;
   font-size: 16px;
-  font-weight: lighter;
+  width: 100%;
+  padding: 12px 32px;
+  margin-right: 20px;
+  letter-spacing: 1px;
+  border: 2px solid #3fa1e6;
+  border-radius: 0px;
+  transition: all 0.25s ease;
 
   &:hover{
-    border: none !important;
-    background: #3f8ec5;
+    background-color: transparent;
+    border:2px solid #3fa1e6 !important;
+    color: #3fa1e6;
   }
 }
 ul.nav.navbar-nav.navbar-right.dropdown{

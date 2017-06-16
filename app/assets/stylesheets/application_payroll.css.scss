@@ -1549,7 +1549,12 @@ a.dropdown-item{
 	background-color: #5b5b5b;
 }
 
-.dropdown-menu>li>a,.dropdown-menu>li>a:focus{
+.employee-details .dropdown-menu>li>a,
+.employee-details .dropdown-menu>li>a:focus,
+#payroll .dropdown-menu>li>a,
+#payroll .dropdown-menu>li>a:focus,
+#payroll-report .dropdown-menu>li>a,
+#payroll-report .dropdown-menu>li>a:focus{
   display: block;
   padding: 3px 20px;
   clear: both;

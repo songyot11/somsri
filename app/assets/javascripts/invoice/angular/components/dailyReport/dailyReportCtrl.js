@@ -9,7 +9,7 @@
       ctrl.title = 'Daily Report';
 
       ctrl.cancel = function() {
-        $rootScope.openReportMenu();
+        $rootScope.openMenu();
       };
 
       ctrl.total = function() {

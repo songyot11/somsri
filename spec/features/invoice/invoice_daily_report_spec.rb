@@ -114,7 +114,7 @@ describe 'Invoice-Report', js: true do
     sleep(1)
     click_button("ยกเลิก")
     sleep(1)
-    expect(page).to have_content("รายงานค่าเทอม")
+    expect(page).to have_content("ชำระเงิน ใบเสร็จ รายงานค่าเทอม")
   end
 
   it 'should go to print page when click on บันทึก button' do
