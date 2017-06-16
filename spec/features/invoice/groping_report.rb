@@ -27,9 +27,9 @@ describe 'Grouping Report', js: true do
 
   let(:students) do
     [
-      Student.make!(student_number: 1, first_name: 'สมศรี' ),
+      Student.make!(student_number: 1, first_name: 'สมศรี', last_name: 'ศรีสุข'),
       Student.make!(student_number: 2, first_name: 'มั่งมี', last_name: 'ศรีสุข', nickname: 'รวย', classroom_number: 13 ),
-      Student.make!(student_number: 3, first_name: 'มั่งมี3', grade_id: grades[0].id )
+      Student.make!(student_number: 3, first_name: 'มั่งมี3', last_name: 'ศรีสุข', grade_id: grades[0].id )
     ]
   end
 
@@ -114,14 +114,37 @@ describe 'Grouping Report', js: true do
       expect(page).to have_content("รวมทั้งหมด 123,000.00 40,000.00 30,000.00 30,000.00 3,000.00 220,000.00 223,000.00")
     end
 
-    it 'should display report page only today' do
+    it 'should display report per student by click link' do
+      visit '/somsri_invoice#/grouping_report'
+      sleep(1)
+      first('td:nth-child(1) a').click
+      sleep(1)
+      expect(page).to_not have_content("มั่งมี ศรีสุข 11,000.00 0.00 0.00 0.00 0.00 1,000.00 10,000.00 11,000.00")
+      expect(page).to have_content(" รวมทั้งหมด 11,000.00 0.00 0.00 0.00 0.00 1,000.00 10,000.00 11,000.00")
+    end
+
+    it 'should display report per student by select same date' do
       visit '/somsri_invoice#/grouping_report'
       sleep(1)
       find('#start_date').set(today_str)
       sleep(1)
-      expect(page).to_not have_content("#{yesterday_str} 11,000.00 0.00 0.00 0.00 0.00 1,000.00 10,000.00 11,000.00")
-      expect(page).to have_content("#{today_str} 112,000.00 40,000.00 30,000.00 30,000.00 200,000.00 2,000.00 10,000.00 212,000.00")
+      expect(page).to have_content("สมศรี ศรีสุข 2,000.00 40,000.00 30,000.00 30,000.00 100,000.00 2,000.00 0.00 102,000.00")
+      expect(page).to have_content("มั่งมี ศรีสุข 110,000.00 0.00 0.00 0.00 100,000.00 0.00 10,000.00 110,000.00")
       expect(page).to have_content("รวมทั้งหมด 112,000.00 40,000.00 30,000.00 30,000.00 200,000.00 2,000.00 10,000.00 212,000.00")
+    end
+
+    it 'should display report per student by select same date and display only ค่าเสื้อ' do
+      visit '/somsri_invoice#/grouping_report'
+      sleep(1)
+      find('#start_date').set(today_str)
+      sleep(1)
+      find('span', text: 'เลือกประเภท').click
+      sleep(1)
+      find('.dropdown-menu label', text: 'ค่าเทอม').click
+      sleep(1)
+      expect(page).to have_content("สมศรี ศรีสุข 2,000.00 40,000.00 30,000.00 30,000.00 2,000.00 100,000.00 102,000.00")
+      expect(page).to have_content("มั่งมี ศรีสุข 110,000.00 0.00 0.00 0.00 0.00 110,000.00 110,000.00")
+      expect(page).to have_content("รวมทั้งหมด 112,000.00 40,000.00 30,000.00 30,000.00 2,000.00 210,000.00 212,000.00")
     end
   end
 

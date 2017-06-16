@@ -404,6 +404,14 @@ class Student < ApplicationRecord
     end
   end
 
+  def full_name_with_title_classroom
+    if(classroom.to_s.strip != '')
+      full_name_with_title + ' (' + classroom.to_s.strip + ')'
+    else
+      full_name_with_title
+    end
+  end
+
   def invoice_screen_student_number_display
     if(student_number)
       "#{student_number} - #{invoice_screen_full_name_display}"

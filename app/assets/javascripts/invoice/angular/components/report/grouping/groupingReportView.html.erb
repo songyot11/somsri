@@ -8,7 +8,7 @@
       </div>
       <div class="col-xs-6">
       </div>
-    </div>
+     </div>
     <div class="unused_for_print col-xs-12">
       <div class="row report-content container-fluid">
         <div class="row">
@@ -69,13 +69,17 @@
                  <th colspan="4">ชำระโดย</th>
                </tr>
                <tr>
-                 <th>วันที่</th>
+                 <th ng-bind="groupingReport.first_column"></th>
                  <th ng-repeat="header in groupingReport.datas.header track by $index">{{ header }}</th>
                </tr>
               </thead>
               <tbody>
                 <tr ng-repeat="row in groupingReport.datas.rows track by $index">
-                  <td class="text-center">{{row.date}}</td>
+                  <td ng-show="row.header_row" class="text-center">
+                    <div ng-show="groupingReport.isPerStudent && row.url == null">{{row.header_row}}</div>
+                    <a ng-href="{{row.url}}" ng-show="groupingReport.isPerStudent && row.url != null">{{row.header_row}}</a>
+                    <a href="javascript:void(0)" ng-click="groupingReport.selectDate(row.header_row)" ng-show="groupingReport.isPerDay">{{row.header_row}}</a>
+                  </td>
                   <td class="text-right" ng-repeat="data in row.datas track by $index">{{data.toFixed(2) | number:2}}</td>
                 </tr>
               </tbody>

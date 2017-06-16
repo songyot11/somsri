@@ -312,7 +312,17 @@ class InvoicesController < ApplicationController
       options = grouping_keyword.collect{|gk| { name: gk[:name], value: true }}
     end
 
-    invoices = query_invoice_by_date_range(params[:start_date], params[:end_date])
+    start_date = DateTime.parse(params[:start_date]).beginning_of_day
+    end_date = DateTime.parse(params[:end_date]).end_of_day
+
+    summary_mode = select_summary_mode(start_date, end_date)
+    invoices = query_invoice_by_date_range(start_date, end_date)
+
+    if summary_mode == "per_student"
+      invoices = invoices.order("student_id ASC").to_a
+    else
+      invoices = invoices.order("updated_at ASC").to_a
+    end
 
     header = ["เงินสด", "บัตรเครดิต", "เช็คธนาคาร", "เงินโอน"]
       grouping_keyword.each do |gk|
@@ -321,34 +331,51 @@ class InvoicesController < ApplicationController
     header << "อื่นๆ"
     header << "ยอดรวม"
 
-    date_tmp = ""
+    header_row_tmp = ""
+    student_id_tmp = "";
     column_size = 6 + grouping_keyword.size
     datas_tmp = Array.new(column_size, 0.0)
     total_tmp = Array.new(column_size, 0.0)
     rows = []
     invoices.each do |invoice|
-      if date_tmp != invoice.updated_at.strftime("%d/%m/%Y")
+      if summary_mode == "per_student" && student_id_tmp != invoice.student_id
+        # collect per student in one day
+        if student_id_tmp != ""
+          row = {
+            header_row: header_row_tmp,
+            datas: datas_tmp
+          }
+          row[:url] = edit_student_path(id: invoice.student_id) if Student.where(id: invoice.student_id).exists?
+          rows << row
+        end
+
+        # reset tmp data
+        student_id_tmp = invoice.student_id
+        header_row_tmp = invoice.student.full_name_with_title_classroom
+        datas_tmp = Array.new(column_size, 0.0)
+      elsif summary_mode == "per_day" && header_row_tmp != invoice.updated_at.strftime("%d/%m/%Y")
         # collect per day data
-        if date_tmp != ""
+        if header_row_tmp != ""
           rows << {
-            date: date_tmp,
+            header_row: header_row_tmp,
             datas: datas_tmp
           }
         end
 
         # reset tmp data
-        date_tmp = invoice.updated_at.strftime("%d/%m/%Y")
+        header_row_tmp = invoice.updated_at.strftime("%d/%m/%Y")
         datas_tmp = Array.new(column_size, 0.0)
       end
       set_payment_method_datas(invoice, datas_tmp, total_tmp)
       set_grouping_item(invoice, grouping_keyword, column_size, datas_tmp, total_tmp)
     end
-
     # add last date
-    rows << {
-      date: date_tmp,
-      datas: datas_tmp
+    row = {
+      header_row: header_row_tmp
     }
+    row[:datas] = datas_tmp if invoices.size > 0
+    row[:url] = edit_student_path(id: student_id_tmp) if Student.where(id: student_id_tmp).exists?
+    rows << row
 
     render json: {
       header: header,
@@ -408,12 +435,17 @@ class InvoicesController < ApplicationController
       end
     end
 
+    def select_summary_mode(start_date, end_date)
+      summary_mode = "per_day"
+      if start_date.to_date == end_date.to_date
+        summary_mode = "per_student"
+      end
+      return summary_mode
+    end
+
     def query_invoice_by_date_range(start_date, end_date)
-      start_date = DateTime.parse(start_date).beginning_of_day
-      end_date = DateTime.parse(end_date).end_of_day
       return Invoice.where(invoice_status_id: InvoiceStatus.find_by_name('Active').id)
                         .where(updated_at: start_date..end_date)
-                        .order("updated_at ASC").to_a
     end
 
     def get_invoices(grade_select, search_keyword, page)

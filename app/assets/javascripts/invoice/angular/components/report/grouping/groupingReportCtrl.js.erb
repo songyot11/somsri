@@ -2,7 +2,7 @@
   'use strict';
   angular.module('somsri.invoice.groupingReport', [
   ])
-  .controller('groupingReportCtrl', ['$compile', '$scope', '$window', '$filter', '$rootScope', 'groupingReportService', '$timeout', 'CSV', '$uibModal', function($compile, $scope, $window, $filter, $rootScope, service, $timeout, CSV, $uibModal) {
+  .controller('groupingReportCtrl', ['$compile', '$scope', '$window', '$filter', '$rootScope', 'groupingReportService', '$timeout', 'CSV', '$uibModal', 'moment', function($compile, $scope, $window, $filter, $rootScope, service, $timeout, CSV, $uibModal, moment) {
     $rootScope.menu = "รายงาน"
     var ctrl = this
 
@@ -16,7 +16,36 @@
         service.getGroupingReport(ctrl.start_date, ctrl.end_date, ctrl.options).then(function(resp) {
           ctrl.datas = resp.data
           ctrl.options = resp.data.options
+  console.log(JSON.stringify(ctrl.datas));
+          var reportMode = getReportMode()
+          if(reportMode == "per_student"){
+            ctrl.first_column = "ชื่อ"
+            ctrl.isPerStudent = true
+            ctrl.isPerDay = false
+          }else{
+            ctrl.first_column = "วันที่"
+            ctrl.isPerStudent = false
+            ctrl.isPerDay = true
+          }
         });
+      }
+
+      function getReportMode(){
+        if(ctrl.end_date.toDateString() == ctrl.start_date.toDateString()){
+          return "per_student"
+        }else{
+          return "per_day"
+        }
+      }
+
+      ctrl.selectDate = function(selected_date){
+        var selected_date_array = selected_date.split('/')
+        ctrl.end_date = new Date()
+        ctrl.end_date.setDate(selected_date_array[0])
+        ctrl.end_date.setMonth(selected_date_array[1] - 1)
+        ctrl.end_date.setYear(selected_date_array[2])
+        ctrl.start_date = ctrl.end_date
+        ctrl.optionsChange()
       }
 
       ctrl.optionsChange = function() {
