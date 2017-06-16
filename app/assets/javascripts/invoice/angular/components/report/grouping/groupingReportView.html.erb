@@ -69,8 +69,8 @@
                  <th colspan="4">ชำระโดย</th>
                </tr>
                <tr>
-                 <th ng-bind="groupingReport.first_column"></th>
-                 <th ng-repeat="header in groupingReport.datas.header track by $index">{{ header }}</th>
+                 <th ng-bind="groupingReport.first_column" class="first-column-th"></th>
+                 <th ng-repeat="header in groupingReport.datas.header track by $index"class="another-column-th">{{ header }}</th>
                </tr>
               </thead>
               <tbody>
