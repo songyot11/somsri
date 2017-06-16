@@ -1,6 +1,6 @@
 describe 'Student Report', js: true do
   let(:school_setting) do
-    user = SchoolSetting.create!({
+    SchoolSetting.create!({
       school_year: "2560",
       semesters: "1,2,3",
       current_semester: "1"
@@ -43,7 +43,7 @@ describe 'Student Report', js: true do
   let(:invoices) do
     [
       Invoice.make!(
-        student_id: students[0].id, 
+        student_id: students[0].id,
         invoice_status_id: invoice_status_1.id,
         line_items: [
           LineItem.make!(:tuition, amount: 48000),
@@ -51,7 +51,7 @@ describe 'Student Report', js: true do
           LineItem.make!(amount: 750)
         ]),
       Invoice.make!(
-        student_id: students[1].id, 
+        student_id: students[1].id,
         invoice_status_id: invoice_status_1.id,
         line_items: [
           LineItem.make!(:tuition),
@@ -181,7 +181,7 @@ describe 'Student Report', js: true do
       find('div.unused_for_print.col-md-12 > div > div:nth-child(1) > div > div:nth-child(3)').click
       click_on("ยังไม่ได้ชำระ")
       sleep(1)
-      expect(page).to have_content("ยังไม่ได้ชำระ", count: 2)    
+      expect(page).to have_content("ยังไม่ได้ชำระ", count: 2)
     end
 
     it 'can sort by grade Kindergarten 3' do
@@ -204,7 +204,7 @@ describe 'Student Report', js: true do
       find('div.unused_for_print.col-md-12 > div > div:nth-child(1) > div > div:nth-child(3)').click
       click_on("ยังไม่ได้ชำระ")
       sleep(1)
-      expect(page).to have_content("ยังไม่ได้ชำระ", count: 2)    
+      expect(page).to have_content("ยังไม่ได้ชำระ", count: 2)
     end
 
     it 'display tuition fee' do
@@ -257,5 +257,3 @@ describe 'Student Report', js: true do
   end
 
 end
-
-

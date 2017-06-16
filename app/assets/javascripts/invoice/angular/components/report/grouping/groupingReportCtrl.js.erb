@@ -1,0 +1,46 @@
+(function() {
+  'use strict';
+  angular.module('somsri.invoice.groupingReport', [
+  ])
+  .controller('groupingReportCtrl', ['$compile', '$scope', '$window', '$filter', '$rootScope', 'groupingReportService', '$timeout', 'CSV', '$uibModal', function($compile, $scope, $window, $filter, $rootScope, service, $timeout, CSV, $uibModal) {
+    $rootScope.menu = "รายงาน"
+    var ctrl = this
+
+    $rootScope.loadAndAuthorizeResource("invoice", function(){
+      // default last 7 days
+      ctrl.end_date = new Date();
+      ctrl.start_date = new Date(new Date().setDate(new Date().getDate() - 6));
+      ctrl.options = null
+
+      function loadData(){
+        service.getGroupingReport(ctrl.start_date, ctrl.end_date, ctrl.options).then(function(resp) {
+          ctrl.datas = resp.data
+          ctrl.options = resp.data.options
+        });
+      }
+
+      ctrl.optionsChange = function() {
+        loadData()
+      }
+
+      ctrl.openStartDatePopup = function() {
+        ctrl.startDatePopup.opened = true;
+      };
+
+      ctrl.startDatePopup = {
+        opened: false
+      };
+
+      ctrl.openEndDatePopup = function() {
+        ctrl.endDatePopup.opened = true;
+      };
+
+      ctrl.endDatePopup = {
+        opened: false
+      };
+
+      loadData()
+
+    });
+  }]);
+})();

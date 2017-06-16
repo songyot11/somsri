@@ -297,7 +297,125 @@ class InvoicesController < ApplicationController
     }
   end
 
+  def invoice_grouping
+    grouping_keyword = GroupingReportOption.all.to_a
+    options = []
+    if params[:options]
+      # filter grouping_keyword
+      options = JSON.parse(params[:options])
+      selected_options = options.collect{|op| op["name"] if op["value"]}
+      grouping_keyword.collect! do |gk|
+        gk if selected_options.include? gk[:name]
+      end
+      grouping_keyword.compact!
+    else
+      options = grouping_keyword.collect{|gk| { name: gk[:name], value: true }}
+    end
+
+    invoices = query_invoice_by_date_range(params[:start_date], params[:end_date])
+
+    header = ["เงินสด", "บัตรเครดิต", "เช็คธนาคาร", "เงินโอน"]
+      grouping_keyword.each do |gk|
+        header << gk[:name]
+      end
+    header << "อื่นๆ"
+    header << "ยอดรวม"
+
+    date_tmp = ""
+    column_size = 6 + grouping_keyword.size
+    datas_tmp = Array.new(column_size, 0.0)
+    total_tmp = Array.new(column_size, 0.0)
+    rows = []
+    invoices.each do |invoice|
+      if date_tmp != invoice.updated_at.strftime("%d/%m/%Y")
+        # collect per day data
+        if date_tmp != ""
+          rows << {
+            date: date_tmp,
+            datas: datas_tmp
+          }
+        end
+
+        # reset tmp data
+        date_tmp = invoice.updated_at.strftime("%d/%m/%Y")
+        datas_tmp = Array.new(column_size, 0.0)
+      end
+      set_payment_method_datas(invoice, datas_tmp, total_tmp)
+      set_grouping_item(invoice, grouping_keyword, column_size, datas_tmp, total_tmp)
+    end
+
+    # add last date
+    rows << {
+      date: date_tmp,
+      datas: datas_tmp
+    }
+
+    render json: {
+      header: header,
+      rows: rows,
+      total: total_tmp,
+      options: options
+    }
+  end
+
   private
+    def set_grouping_item(invoice, grouping_keyword, column_size, datas_tmp, total_tmp)
+      LineItem.where(invoice_id: invoice.id).to_a.each do |li|
+        is_grouped = false
+        keyword_index = 4
+        grouping_keyword.each do |gk|
+          if li.detail.downcase =~ Regexp.union(gk[:keyword].downcase.split(',').collect(&:strip))
+            #sum by keyword
+            datas_tmp[keyword_index] += li.amount
+            total_tmp[keyword_index] += li.amount
+            is_grouped = true
+          end
+          keyword_index += 1
+          break if is_grouped
+        end
+
+        if !is_grouped
+          #sum by other
+          datas_tmp[column_size - 2] += li.amount
+          total_tmp[column_size - 2] += li.amount
+        end
+
+        #sum all invoice
+        datas_tmp[column_size - 1] += li.amount
+        total_tmp[column_size - 1] += li.amount
+      end
+    end
+
+    def set_payment_method_datas(invoice, datas_tmp, total_tmp)
+      invoice.payment_methods.each do |pm|
+        # group by payment method
+        if pm.payment_method == "เงินสด"
+          datas_tmp[0] += pm.amount
+          total_tmp[0] += pm.amount
+        end
+        if pm.payment_method == "บัตรเครดิต"
+          datas_tmp[1] += pm.amount
+          total_tmp[1] += pm.amount
+        end
+        if pm.payment_method == "เช็คธนาคาร"
+          datas_tmp[2] += pm.amount
+          total_tmp[2] += pm.amount
+        end
+        if pm.payment_method == "เงินโอน"
+          datas_tmp[3] += pm.amount
+          total_tmp[3] += pm.amount
+        end
+      end
+    end
+
+    def query_invoice_by_date_range(start_date, end_date)
+      start_date = DateTime.parse(start_date).beginning_of_day
+      end_date = DateTime.parse(end_date).end_of_day
+      return Invoice.where(invoice_status_id: InvoiceStatus.find_by_name('Active').id)
+                        .where(updated_at: start_date..end_date)
+                        .order("updated_at ASC").to_a
+    end
+
     def get_invoices(grade_select, search_keyword, page)
       if grade_select.downcase == 'all'
         # @invoices = Invoice.order("id DESC").to_a

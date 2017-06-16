@@ -114,5 +114,13 @@ Gender.blueprint do
 end
 
 StudentsParent.blueprint do
+end
 
+SchoolSetting.blueprint do
+  school_year {"2560"}
+  semesters {"1,2,3"}
+  current_semester {"1"}
+end
+
+GroupingReportOption.blueprint do
 end

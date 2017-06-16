@@ -1,0 +1,94 @@
+<div class="container-fluid">
+  <div id="invoice_grouping_report" class="row ng-scope">
+    <div class="row head-menu">
+      <div class="col-xs-6">
+        <h3>
+          รายงานแยกตามประเภท
+        </h3>
+      </div>
+      <div class="col-xs-6">
+      </div>
+    </div>
+    <div class="unused_for_print col-xs-12">
+      <div class="row report-content container-fluid">
+        <div class="row">
+          <div class="dropdown-filter">
+            <div class="row">
+              <div class="col-xs-3 col-xs-offset-4 col-lg-2 col-lg-offset-6">
+                <div class="form-group">
+                  <span class="input-group">
+                    <div class="col-xs-2">
+                      <label for="start_date" class="text-status-date">จาก</label>
+                    </div>
+                    <div class="col-xs-10">
+                      <input id="start_date" type="text" class="form-control" uib-datepicker-popup="dd/MM/yyyy" ng-model="groupingReport.start_date" is-open="groupingReport.startDatePopup.opened" close-text="Close" ng-change="groupingReport.optionsChange()"/>
+                      <span class="input-group-btn" style="display: inherit;">
+                        <button type="button" class="btn btn-default" ng-click="groupingReport.openStartDatePopup()"><i class="fa fa-calendar"></i></button>
+                      </span>
+                    </div>
+                  </span>
+                </div>
+              </div>
+              <div class="col-xs-3 col-lg-2">
+                <div class="form-group">
+                  <span class="input-group">
+                    <div class="col-xs-2">
+                      <label for="end_date" class="text-status-date">ถึง</label>
+                    </div>
+                    <div class="col-xs-10">
+                      <input id="end_date" type="text" class="form-control" uib-datepicker-popup="dd/MM/yyyy" ng-model="groupingReport.end_date" is-open="groupingReport.endDatePopup.opened" close-text="Close" ng-change="groupingReport.optionsChange()"/>
+                      <span class="input-group-btn" style="display: inherit;">
+                        <button type="button" class="btn btn-default" ng-click="groupingReport.openEndDatePopup()"><i class="fa fa-calendar"></i></button>
+                      </span>
+                    </div>
+                  </span>
+                </div>
+              </div>
+              <div class="col-xs-2 col-lg-2" style="text-align:center;">
+                <div class="dropdown">
+                  <h4 id="groupingReport-list" data-toggle="dropdown">
+                    <span>เลือกประเภท</span>
+                    <i class="fa fa-angle-down" aria-hidden="true"></i>
+                  </h4>
+                  <ul class="dropdown-menu">
+                    <li ng-repeat="option in groupingReport.options track by $index">
+                      <label class="text-select-invoice"><input type="checkbox" class="select-item-invoice" ng-model="option.value" ng-checked="option.value" ng-change="groupingReport.optionsChange()">{{option.name}}</label>
+                    </li>
+                  </ul>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="table-responsive">
+          <div class="col-xs-12 dropdown-filter">
+            <table id="tableHeader" class="table scrollable-header grop-items-invoice">
+              <thead>
+                <tr>
+                 <th style="border:none;"></th>
+                 <th colspan="4">ชำระโดย</th>
+               </tr>
+               <tr>
+                 <th>วันที่</th>
+                 <th ng-repeat="header in groupingReport.datas.header track by $index">{{ header }}</th>
+               </tr>
+              </thead>
+              <tbody>
+                <tr ng-repeat="row in groupingReport.datas.rows track by $index">
+                  <td class="text-center">{{row.date}}</td>
+                  <td class="text-right" ng-repeat="data in row.datas track by $index">{{data.toFixed(2) | number:2}}</td>
+                </tr>
+              </tbody>
+              <tfoot>
+                <tr>
+                  <td class="text-center">รวมทั้งหมด</td>
+                  <td ng-repeat="total in groupingReport.datas.total track by $index" class="text-currency">{{total.toFixed(2) | number:2}}</td>
+                </tr>
+              </tfoot>
+            </table>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

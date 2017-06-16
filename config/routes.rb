@@ -91,6 +91,7 @@ Rails.application.routes.draw do
   # get "/invoice_total_amount" => "students#invoice_total_amount"
   get "/invoice_years" => "invoices#invoice_years"
   get "/invoice_semesters" => "invoices#invoice_semesters"
+  get "/invoice_grouping" => "invoices#invoice_grouping"
 
   resources :report_roll_calls, only: [] do
     collection do

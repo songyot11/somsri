@@ -1,6 +1,6 @@
-<div class="container main-menu">
+<div class="container main-menu" style="max-width: 62%;">
     <div class="row">
-        <div class="col-xs-2" style="margin-left: 30%;">
+        <div class="col-xs-4">
             <div class="menu-btn" ng-click="openStudentReport()">
                 <div class="wraptocenter">
                     <%= image_tag 'report-invoice.png', class: "" %>
@@ -8,13 +8,21 @@
             </div>
             <p>รายงานค่าเทอม</p>
         </div>
-        <div class="col-xs-2 col-xs-offset-1">
+        <div class="col-xs-4">
             <div class="menu-btn" ng-click="openDailyReport()">
                 <div class="wraptocenter">
                     <%= image_tag 'report-invoice.png', class: "" %>
                 </div>
             </div>
             <p>รายงานประจำวัน</p>
+        </div>
+        <div class="col-xs-4">
+            <div class="menu-btn" ng-click="openGroupingReport()">
+                <div class="wraptocenter">
+                    <%= image_tag 'report-invoice.png', class: "" %>
+                </div>
+            </div>
+            <p>รายงานแยกตามประเภท</p>
         </div>
     </div>
 </div>
