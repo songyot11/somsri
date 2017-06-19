@@ -737,6 +737,14 @@
               </div>
             </div>
           </div>
+          <div class="row">
+            <div class="col-md-8">
+              <div class="form-group">
+                <label for="comment">บันทึกช่วยจำ</label>
+                <textarea class="form-control" rows="5" ng-model="employee.datas.payroll.note"></textarea>
+              </div>
+            </div>
+          </div>
         </div>
       </div>
     </div>
@@ -746,9 +754,6 @@
           <i class="fa fa-print"></i> พิมพ์ใบจ่ายเงินเดือน
         </button>
       </div>
-      <!-- <div class="col-md-2 {{employee.isEdit ? '': 'col-md-offset-2'}}">
-        <button ng-show="false" type="button" class="btn btn-lg btn-block btn-memo">บันทึกช่วยจำ</button>
-      </div> -->
 
       <div class="col-md-8">
         <div ng-if="employee.datas.employee.deleted_at != nil">
