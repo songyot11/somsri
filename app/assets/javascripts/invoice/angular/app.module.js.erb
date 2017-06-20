@@ -178,6 +178,19 @@
         }
       }).
       state({
+        url: '/grouping_report',
+        name: 'grouping_report',
+        templateUrl: "<%= asset_path('invoice/angular/components/report/grouping/groupingReportView.html') %>",
+        controller: 'groupingReportCtrl as groupingReport',
+        resolve: {
+          resources: ['$ocLazyLoad', function($ocLazyLoad) {
+            return $ocLazyLoad.load([
+              ASSETS.somsri.invoice.groupingReport
+            ]);
+          }]
+        }
+      }).
+      state({
         url: '/daily_report/:id',
         name: 'daily_report_preview',
         templateUrl: "<%= asset_path('invoice/angular/components/dailyReport/preview/previewView.html') %>",

@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20170608071654) do
+ActiveRecord::Schema.define(version: 20170616090230) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -109,6 +109,11 @@ ActiveRecord::Schema.define(version: 20170608071654) do
     t.string   "name"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+  end
+
+  create_table "grouping_report_options", force: :cascade do |t|
+    t.string "name"
+    t.string "keyword"
   end
 
   create_table "individuals", force: :cascade do |t|
@@ -231,6 +236,7 @@ ActiveRecord::Schema.define(version: 20170608071654) do
     t.datetime "updated_at",                         null: false
     t.datetime "effective_date",                     null: false
     t.datetime "deleted_at"
+    t.text     "note"
     t.index ["deleted_at"], name: "index_payrolls_on_deleted_at", using: :btree
     t.index ["employee_id"], name: "index_payrolls_on_employee_id", using: :btree
   end

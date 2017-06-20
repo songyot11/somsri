@@ -1,0 +1,2 @@
+class GroupingReportOption < ApplicationRecord
+end

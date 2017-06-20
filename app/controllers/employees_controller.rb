@@ -205,6 +205,7 @@ class EmployeesController < ApplicationController
       :social_insurance,
       :fee_etc,
       :pvf,
+      :note,
       :advance_payment
     ])
     result.to_h.each { |k,v| result[k] = 0 if k != "id" && v.blank? }

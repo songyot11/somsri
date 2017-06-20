@@ -92,4 +92,9 @@ describe 'Login', js: true do
     expect(page).to have_content "#{users[0].email}"
   end
 
+  it 'should logo not empty' do
+    visit "/"
+    expect(page).to have_css("img[src*='somsri_logo.png']")
+  end
+
 end

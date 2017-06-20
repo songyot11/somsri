@@ -95,10 +95,10 @@
 
       // convert string to float
       function payrollToFloat(){
-        var skips = ["id", "created_at", "updated_at", "effective_date"];
+        var skips = ["id", "created_at", "updated_at", "effective_date", "note"];
         var keys = Object.keys(ctrl.datas.payroll);
         for(var i = 1; i < keys.length; i++){
-          if(!skips.indexOf(keys[i]) > -1){
+          if(!(skips.indexOf(keys[i]) > -1)){
             ctrl.datas.payroll[keys[i]] = parseFloat(ctrl.datas.payroll[keys[i]]);
           }
         }
@@ -171,6 +171,7 @@
           } else {
             ctrl.pinChars = []
           }
+
 
 
           ctrl.displayName = e.id + ': ' + ctrl.datas.employee_display_name;

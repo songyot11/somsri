@@ -167,8 +167,8 @@
           ctrl.datas = JSON.parse(JSON.stringify(DEFAULT_INVOICE))
           ctrl.datas.invoice.semester = resp.data.current_semester;
           ctrl.datas.payment_method = {};
-          ctrl.datas.payment_method.is_cash = false;
-          ctrl.datas.payment_method.is_credit_card = true;
+          ctrl.datas.payment_method.is_cash = true;
+          ctrl.datas.payment_method.is_credit_card = false;
           ctrl.datas.payment_method.is_transfer = false;
           ctrl.datas.payment_method.is_cheque = false;
           ctrl.datas.invoice.school_year = resp.data.school_year;

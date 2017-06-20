@@ -1,47 +1,61 @@
-<div class="container" style="margin-top:100px;">
+<style>
+  body{
+    margin-bottom: 0px !important;
+  }
+</style>
+
+<div class="container" id="warp" style="margin-top:100px;">
   <div class="row">
     <%= render 'layouts/messages' %>
-    <div class="col-md-offset-3 col-md-5 form-sign-in">
+    <div class="col-md-12">
 
-      <%= form_for(resource, as: resource_name, url: session_path(resource_name)) do |f| %>
-        <div class="row">
-          <div class="col-xs-6 col-xs-offset-3">
-            <%= image_tag 'logo_login.png', class: "img-responsive logo-login" %>
-          </div>
-        </div>
-        <div class="row">
-          <div class="field form-group">
-            <%= f.email_field :email, autofocus: true, class: "form-control input-login" ,placeholder:"User name" %>
-          </div>
-        </div>
-        <div class="row">
-          <div class="field form-group">
-            <%= f.password_field :password, autocomplete: "off", class: "form-control input-login",placeholder:"Password",style:"margin-top:10px;" %>
-          </div>
-        </div>
-        <div class="row">
-          <% if devise_mapping.rememberable? -%>
-            <div class="field form-group text-remember">
-              <%= f.check_box :remember_me, class: "form-inline" %>
-              <%= f.label :'Keep me signed in' ,style:'font-weight:normal'%>
-            </div>
-          <% end -%>
-        </div>
-        <div class="row">
-          <div class="sign-in actions">
-            <%= f.submit "Sign in", class: "btn btn-signin" %>
-          </div>
-        </div>
-        <% if Figaro.env.ROLLCALL_APK_URL %>
+      <div class="form-sign-in">
+        <%= form_for(resource, as: resource_name, url: session_path(resource_name)) do |f| %>
           <div class="row">
-            <div class="download_android">
-              <a href="<%= Figaro.env.ROLLCALL_APK_URL %>" target="_blank"><i class="fa fa-android"></i>Download Somsri Rollcall</a>
+            <div class="col-xs-12">
+              <%= image_tag School.first.logo, class: "img-responsive logo-login" %>
             </div>
           </div>
+          <div class="row">
+            <div class="field form-group">
+              <%= f.email_field :email, autofocus: true, class: "form-control input-login" ,placeholder:"User name" %>
+            </div>
+          </div>
+          <div class="row">
+            <div class="field form-group">
+              <%= f.password_field :password, autocomplete: "off", class: "form-control input-login",placeholder:"Password",style:"margin-top:10px;" %>
+            </div>
+          </div>
+          <div class="row">
+            <% if devise_mapping.rememberable? -%>
+              <div class="field form-group text-remember">
+                <%= f.check_box :remember_me, class: "form-inline" %>
+                <%= f.label :'Keep me signed in' ,style:'font-weight:normal'%>
+              </div>
+            <% end -%>
+          </div>
+          <div class="row">
+            <div class="sign-in actions">
+              <%= f.submit "Sign in", class: "btn btn-signin" %>
+            </div>
+          </div>
+          <% if Figaro.env.ROLLCALL_APK_URL %>
+            <div class="row">
+              <div class="download_android">
+                <a href="<%= Figaro.env.ROLLCALL_APK_URL %>" target="_blank"><i class="fa fa-android"></i>Download Somsri Rollcall</a>
+              </div>
+            </div>
+          <% end %>
         <% end %>
-      <% end %>
+      </div>
 
       <%= render "devise/shared/links" %>
     </div>
   </div>
 </div>
+
+<footer id="footer">
+  <div class="container">
+    <p class="text-center">© Copyright somsri.io</p>
+  </div>
+</footer>

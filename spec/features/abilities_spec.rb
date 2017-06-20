@@ -64,19 +64,13 @@ describe 'Abilities', js: true do
     it 'can goto invoice menu' do
       visit "/somsri_invoice"
       sleep(1)
-      expect(page).to have_content 'ชำระเงิน รายงาน ใบเสร็จ'
+      expect(page).to have_content 'ชำระเงิน ใบเสร็จ รายงานค่าเทอม รายงานประจำวัน'
     end
 
     it 'can goto invoice create' do
       visit "/somsri_invoice#/invoice"
       sleep(1)
       expect(page).to have_content 'แบบชำระเงิน'
-    end
-
-    it 'can goto invoice report menu' do
-      visit "/somsri_invoice#/report"
-      sleep(1)
-      expect(page).to have_content 'รายงานค่าเทอม รายงานประจำวัน'
     end
 
     it 'can goto invoice student report' do
@@ -163,7 +157,7 @@ describe 'Abilities', js: true do
     it 'can goto invoice menu' do
       visit "/somsri_invoice"
       sleep(1)
-      expect(page).to have_content 'ชำระเงิน รายงาน ใบเสร็จ'
+      expect(page).to have_content 'ชำระเงิน ใบเสร็จ รายงานค่าเทอม รายงานประจำวัน'
     end
 
     it 'can goto invoice create' do
@@ -176,12 +170,6 @@ describe 'Abilities', js: true do
       visit "/somsri_invoice#/invoice"
       sleep(1)
       expect(page).to have_content 'แบบชำระเงิน'
-    end
-
-    it 'can goto invoice report menu' do
-      visit "/somsri_invoice#/report"
-      sleep(1)
-      expect(page).to have_content 'รายงานค่าเทอม รายงานประจำวัน'
     end
 
     it 'can goto invoice student report' do

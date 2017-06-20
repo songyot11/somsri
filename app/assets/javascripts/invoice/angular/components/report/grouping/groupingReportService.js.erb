@@ -1,0 +1,34 @@
+(function() {
+  'use strict';
+  angular.module('somsri.invoice.groupingReport.service', [
+  ])
+  .service('groupingReportService', ['$http', function($http) {
+    this.getGroupingReport = function(start_date, end_date, options) {
+      if(options){
+        return $http.get('/invoice_grouping', { params: { start_date: start_date, end_date: end_date, options: JSON.stringify(options) } })
+      }else{
+        return $http.get('/invoice_grouping', { params: { start_date: start_date, end_date: end_date } })
+      }
+    }
+
+    this.getStudentsWithoutPagination = function(grade_name, year, semester, status) {
+      return $http.get('/student_report', { params: { grade_select: grade_name, all: true, year_select: year, semester_select: semester, status: status } })
+    }
+
+    this.getInvoiceTotalAmount = function(grade_name, year, semester, status) {
+      return $http.get('/invoice_total_amount', { params: { grade_select: grade_name, year_select: year, semester_select: semester, status: status } })
+    }
+
+    this.getGrades = function() {
+      return $http.get('/grades')
+    }
+
+    this.getYears = function() {
+      return $http.get('/invoice_years')
+    }
+
+    this.getSemesters = function() {
+      return $http.get('/invoice_semesters')
+    }
+  }]);
+})();

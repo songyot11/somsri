@@ -37,8 +37,8 @@
 
     $('body').addClass('somsri-invoice');
 
-    $rootScope.openReportMenu = function () {
-      $state.go('report')
+    $rootScope.openMenu = function () {
+      $state.go('menu')
     };
 
     $rootScope.openStudentReport = function () {
@@ -47,6 +47,10 @@
 
     $rootScope.openDailyReport = function () {
       $state.go('daily_report')
+    };
+
+    $rootScope.openGroupingReport = function () {
+      $state.go('grouping_report')
     };
 
     $rootScope.openSlip = function (id, page) {

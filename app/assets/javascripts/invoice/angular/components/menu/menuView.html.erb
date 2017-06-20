@@ -1,28 +1,46 @@
-<div class="container main-menu">
-    <div class="row">
-        <div class="col-xs-2 col-xs-offset-2">
-            <div class="menu-btn create-payment" ng-click="openPayment()">
-                <div class="wraptocenter">
-                    <%= image_tag 'payment.png', class: "" %>
-                </div>
-            </div>
-            <p>ชำระเงิน</p>
-        </div>
-        <div class="col-xs-2 col-xs-offset-1">
-            <div class="menu-btn report" ng-click="openReportMenu()">
-                <div class="wraptocenter">
-                    <%= image_tag 'report-invoice.png', class: "" %>
-                </div>
-            </div>
-            <p>รายงาน</p>
-        </div>
-        <div class="col-xs-2 col-xs-offset-1">
-            <div class="menu-btn slip" ng-click="openInvoiceReport()">
-                <div class="wraptocenter">
-                    <%= image_tag 'invoice-icon.png', class: "" %>
-                </div>
-            </div>
-            <p>ใบเสร็จ</p>
-        </div>
-    </div>
+<div class="container main-menu main">
+
+      <div class="col-xs-4">
+          <div class="menu-btn create-payment" ng-click="openPayment()">
+              <div class="wraptocenter">
+                  <%= image_tag 'payment.png', class: "" %>
+              </div>
+          </div>
+          <p>ชำระเงิน</p>
+      </div>
+
+      <div class="col-xs-4">
+          <div class="menu-btn slip" ng-click="openInvoiceReport()">
+              <div class="wraptocenter">
+                  <%= image_tag 'invoice-icon.png', class: "" %>
+              </div>
+          </div>
+          <p>ใบเสร็จ</p>
+      </div>
+
+      <div class="col-xs-4">
+          <div class="menu-btn" ng-click="openStudentReport()">
+              <div class="wraptocenter">
+                  <%= image_tag 'report-invoice.png', class: "" %>
+              </div>
+          </div>
+          <p>รายงานค่าเทอม</p>
+      </div>
+
+      <div class="col-xs-4" style="margin-top:50px;">
+          <div class="menu-btn" ng-click="openDailyReport()">
+              <div class="wraptocenter">
+                  <%= image_tag 'report-invoice.png', class: "" %>
+              </div>
+          </div>
+          <p>รายงานประจำวัน</p>
+      </div>
+      <div class="col-xs-4" style="margin-top:50px;">
+          <div class="menu-btn" ng-click="openGroupingReport()">
+              <div class="wraptocenter">
+                  <%= image_tag 'report-invoice.png', class: "" %>
+              </div>
+          </div>
+          <p>รายงานแยกตามประเภท</p>
+      </div>
 </div>
