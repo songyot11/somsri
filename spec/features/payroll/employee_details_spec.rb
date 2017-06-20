@@ -73,6 +73,7 @@ describe 'Employee Details', js: true do
         tax: 100,
         advance_payment: 2000,
         allowance: 3000,
+        closed: false,
         effective_date: DateTime.now.next_month(1).utc
       }),
 
@@ -82,6 +83,7 @@ describe 'Employee Details', js: true do
         tax: 1000,
         position_allowance: 10000,
         fee_etc: 200,
+        closed: false,
         effective_date: DateTime.now.next_month(1).utc
       }),
 
@@ -91,6 +93,7 @@ describe 'Employee Details', js: true do
         tax: 10,
         advance_payment: 200,
         allowance: 300,
+        closed: true,
         effective_date: DateTime.now.utc
       }),
 
@@ -100,6 +103,7 @@ describe 'Employee Details', js: true do
         tax: 100,
         position_allowance: 1000,
         fee_etc: 20,
+        closed: true,
         effective_date: DateTime.now.utc
       }),
 
@@ -109,6 +113,7 @@ describe 'Employee Details', js: true do
         tax: 1,
         advance_payment: 20,
         allowance: 30,
+        closed: true,
         effective_date: DateTime.new(2016, 8, 1).utc
       }),
 
@@ -118,6 +123,7 @@ describe 'Employee Details', js: true do
         tax: 10,
         position_allowance: 100,
         fee_etc: 2,
+        closed: true,
         effective_date: DateTime.new(2016, 8, 1).utc
       })
     ]
@@ -269,26 +275,27 @@ describe 'Employee Details', js: true do
       eventually { expect(payrolls[0].salary).to eq 12300 }
     end
 
-    it 'should not update employee.salary if changed history payroll.salary' do
+    it 'should update employee.salary if changed lasted payroll.salary' do
       sleep(1)
       click_link('เงินเดือน')
       sleep(1)
-      find('#month-list').click
-      sleep(1)
-      find('ul.dropdown-menu li a', text: "สิงหาคม 2559").click
-      sleep(1)
-      page.fill_in 'ค่าแรง / เงินเดือนปัจจุบัน', :with => '12300'
+      page.fill_in 'บันทึกช่วยจำ', :with => 'จำ จำ จำ'
       click_button('บันทึก')
       sleep(1)
       click_button('ตกลง')
       sleep(1)
 
       employees[0].reload
-      payrolls[4].reload
+      payrolls[0].reload
 
-      eventually { expect(payrolls[4].salary).to eq 12300 }
-      eventually { expect(employees[0].salary).to eq 50000 }
+      eventually { expect(payrolls[0].note).to eq "จำ จำ จำ" }
 
+      visit "/somsri_payroll#/employees/#{employees[0].id}"
+      sleep(1)
+      click_link('เงินเดือน')
+      sleep(1)
+
+      eventually { expect(first('#comment').value).to eq "จำ จำ จำ" }
     end
 
     describe "generate attendance list" do
@@ -352,7 +359,7 @@ describe 'Employee Details', js: true do
       end
     end
 
-    it 'should diplay histories when select histories dropdown' do
+    it 'should diplay histories with disabled input' do
       sleep(1)
       click_link('เงินเดือน')
       sleep(1)
@@ -360,11 +367,19 @@ describe 'Employee Details', js: true do
       sleep(1)
       find('ul.dropdown-menu li a', text: "สิงหาคม 2559").click
       sleep(1)
-      eventually { expect(find_field('ค่าแรง / เงินเดือนปัจจุบัน', disabled: false).value.to_i).to be > 0 }
-      # expect(find_field('ภาษี', disabled: false).value.to_i).to be > 0
-      eventually { expect(find_field('เบิกล่วงหน้า', disabled: false).value.to_i).to be > 0 }
-      eventually { expect(find_field('ค่ากะ / ค่าเบี้ยเลี้ยง', disabled: false).value.to_i).to be > 0 }
-      eventually { expect(page).to have_content('เงินเดือนสุทธิ ') }
+
+      eventually { expect(page).to have_field('ค่าแรง / เงินเดือนปัจจุบัน', disabled: true) }
+      eventually { expect(page).to have_field('ขาดงาน', disabled: true) }
+      eventually { expect(page).to have_field('เงินสอนพิเศษ', disabled: true) }
+      eventually { expect(page).to have_field('สาย', disabled: true) }
+      eventually { expect(page).to have_field('ค่าตำแหน่ง', disabled: true) }
+      eventually { expect(page).to have_field('ค่ากะ / ค่าเบี้ยเลี้ยง', disabled: true) }
+      eventually { expect(page).to have_field('เบี้ยขยัน', disabled: true) }
+      eventually { expect(page).to have_field('โบนัส', disabled: true) }
+      eventually { expect(page).to have_field('เบิกล่วงหน้า', disabled: true) }
+      eventually { expect(page).to have_field('รายได้อื่นๆ', disabled: true) }
+      eventually { expect(page).to have_field('หักอื่นๆ', disabled: true) }
+      eventually { expect(page).to have_field('บันทึกช่วยจำ', disabled: true) }
     end
 
     it 'should not diplay warning modal when select histories dropdown after edit employee detail' do
@@ -377,10 +392,9 @@ describe 'Employee Details', js: true do
       sleep(1)
       find('ul.dropdown-menu li a', text: "สิงหาคม 2559").click
       sleep(1)
-      eventually { expect(find_field('ค่าแรง / เงินเดือนปัจจุบัน', disabled: false).value.to_i).to be > 0 }
-      # expect(find_field('ภาษี', disabled: false).value.to_i).to be > 0
-      eventually { expect(find_field('เบิกล่วงหน้า', disabled: false).value.to_i).to be > 0 }
-      eventually { expect(find_field('ค่ากะ / ค่าเบี้ยเลี้ยง', disabled: false).value.to_i).to be > 0 }
+      eventually { expect(find_field('ค่าแรง / เงินเดือนปัจจุบัน', disabled: true).value.to_i).to be > 0 }
+      eventually { expect(find_field('เบิกล่วงหน้า', disabled: true).value.to_i).to be > 0 }
+      eventually { expect(find_field('ค่ากะ / ค่าเบี้ยเลี้ยง', disabled: true).value.to_i).to be > 0 }
       eventually { expect(page).to have_content('เงินเดือนสุทธิ ') }
     end
 
@@ -422,42 +436,6 @@ describe 'Employee Details', js: true do
       sleep(1)
       eventually { expect(find_field('ค่าแรง / เงินเดือนปัจจุบัน').value).to eq '50000' }
     end
-
-    # it 'can edit history data' do
-    #   find('#month-list').click
-    #   sleep(1)
-    #   find('ul.dropdown-menu li a', text: "สิงหาคม 2559").click
-    #   sleep(1)
-    #   page.fill_in 'ค่าแรง / เงินเดือนปัจจุบัน', :with => 1
-    #   sleep(1)
-    #   click_button('บันทึก')
-    #   sleep(1)
-    #   click_button('ตกลง')
-    #   sleep(1)
-
-    #   # revisit and check the value
-    #   visit "/#/employees/#{employees[0].id}"
-    #   sleep(1)
-    #   # check data in current month
-    #   expect(find_field('ค่าแรง / เงินเดือนปัจจุบัน').value).to eq '50000'
-    #   find('#month-list').click
-    #   sleep(1)
-    #   find('ul.dropdown-menu li a', text: "สิงหาคม 2559").click
-    #   sleep(1)
-    #   # check edited data on previous month
-    #   expect(find_field('ค่าแรง / เงินเดือนปัจจุบัน').value).to eq '1'
-    # end
-
-    # it 'should go to 2016-8 slip' do
-    #   find('#month-list').click
-    #   sleep(1)
-    #   find('ul.dropdown-menu li a', text: "สิงหาคม 2559").click
-    #   sleep(1)
-    #   click_button('พิมพ์ใบจ่ายเงินเดือน')
-    #   sleep(1)
-    #   expect(page).to have_css("#payroll-slip")
-    #   expect(page).to have_content("ส.ค. 59")
-    # end
 
     it 'should edit birthdate' do
       click_link('ข้อมูลส่วนตัว')
