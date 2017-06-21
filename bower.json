@@ -19,7 +19,8 @@
     "angular-input-masks": "",
     "angular-sanitize": "1.5.9",
     "ng-csv": "",
-    "ng-file-upload-shim": ""
+    "ng-file-upload-shim": "",
+    "bootstrap-select": ""
   },
   "resolutions": {
     "angular": "1.5.9"

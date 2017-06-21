@@ -1,4 +1,7 @@
 class Parent < ApplicationRecord
+  include StudentsHelper
+  include Rails.application.routes.url_helpers
+
   has_and_belongs_to_many :students, join_table: "students_parents"
   has_and_belongs_to_many :relationships, join_table: "students_parents"
   has_many :invoices, dependent: :restrict_with_exception
@@ -27,4 +30,28 @@ class Parent < ApplicationRecord
       full_name
     end
   end
+
+  def edit
+    ActionController::Base.helpers.link_to I18n.t('.edit', :default => '<i class="fa fa-pencil-square-o" aria-hidden="true"></i> แก้ไข'.html_safe), edit_parent_path(self), :class => 'btn-edit-student-parent'
+  end
+
+  def as_json(options={})
+    if options[:index]
+      return {
+        full_name: self.full_name,
+        mobile: self.mobile,
+        email: self.email,
+        relationships: {
+          name: self.relationships.first.nil? ? "" : I18n.t(self.relationships.first.name)
+        },
+        students: {
+          full_name: student_link_with_full_name(self.students.first) 
+        },
+        edit: edit
+      }
+    else
+      super()
+    end
+  end
+  
 end

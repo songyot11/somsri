@@ -32,3 +32,4 @@
 *.orig
 
 public/system/*
+node_modules/*

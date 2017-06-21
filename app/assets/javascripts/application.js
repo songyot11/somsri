@@ -24,3 +24,5 @@
 //= require ocLazyLoad/dist/ocLazyLoad.min
 //= require angular-input-masks
 //= require angular-xeditable/dist/js/xeditable
+//= require bootstrap-table
+

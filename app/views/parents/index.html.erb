@@ -1,82 +1,63 @@
 <%- model_class = Parent -%>
+<%= javascript_include_tag 'search_bootstrap_table' %>
 <%= render 'layouts/messages' %>
 <div id="parent-index">
   <div class="row head-sp">
     <div class="col-xs-2">
       <h1>ผู้ปกครอง</h1>
     </div>
+
     <div class="col-xs-2 col-xs-offset-8" style="text-align: right; margin-top: 10px;">
       <%= link_to t('.addparent', :default => t("helpers.links.addparent")),
-                new_parent_path,
-                :class => 'btn btn-add-ps float-right'%>
+      new_parent_path,
+      :class => 'btn btn-add-ps float-right'%>
     </div>
   </div>
+
   <div class="content-student-parent">
-    <%= form_tag(parents_path, method: :get, id: "search-form") do %>
-      <div class="form-group col-xs-6">
-        <%= text_field_tag :search, params[:search], placeholder: "ค้นหา..." ,class: 'search-sp'%>
-        <%= button_tag(type: 'submit', class: "btn btn-search-sp") do %>
-          <i class="fa fa-search"></i>
+
+    <div id="toolbar">
+      <%= form_tag(parents_path, method: :get, id: "search-form") do %>
+      
+      <span>เลือกระดับชั้น</span>
+      <select name="grade_select" id="grade_select" class="btn-grades selectpicker" onchange="this.form.submit()">
+        <option value='all'>ทั้งหมด</option>
+        <% Grade.all.each do |grade| %>
+        <option value="<%= grade.name %>"<%= @filter_grade.to_s == grade.name.to_s ? "selected" : "" %>> <%= grade.name %> </option>
         <% end %>
-      </div>
+      </select>
+      
+      <span>เลือกตามห้อง</span>
+      <select name="class_select" id="class_select"  onchange="this.form.submit()" class="btn-grades selectpicker">
+        <option value='all'>ทั้งหมด</option>
+        <% @classroom_display.each do |classroom| %>
+        <option value="<%= classroom %>"<%= @filter_class.to_s == classroom.to_s ? "selected" : "" %>> <%= classroom %> </option>
+        <% end %>
+      </select>
+      
+      <% end %>
+    </div>
 
-      <div class="col-xs-6 form-group float-right-search">
-        <tr>
-          <td><label for="grade_select">เลือกระดับชั้น</label></td>
-          <td>
-            <select name="grade_select" id="grade_select" class="btn-grades" onchange="this.form.submit()">
-                <option value='all'>All Grade</option>
-                <% Grade.all.each do |grade| %>
-                  <option value="<%= grade.name %>"<%= @filter_grade.to_s == grade.name.to_s ? "selected" : "" %>> <%= grade.name %> </option>
-                <% end %>
-            </select>
-          </td>
-        </tr>
-        <tr>
-          <td><label for="class_select">เลือกตามห้อง</label></td>
-          <td>
-            <select name="class_select" id="class_select"  onchange="this.form.submit()" class="btn-grades">
-                <option value='all'>ทั้งหมด</option>
-                <% @classroom_display.each do |classroom| %>
-                    <option value="<%= classroom %>"<%= @filter_class.to_s == classroom.to_s ? "selected" : "" %>> <%= classroom %> </option>
-                <% end %>
-            </select>
-          </td>
-        </tr>
-      </div>
-
-    <% end %>
-
-    <table class="table table-sp-report">
+    <table id="table"
+    data-toggle="table"
+    data-pagination="true"
+    data-pagination-loop="false"
+    data-url="parents.json"
+    data-side-pagination="server"
+    data-search="true"
+    data-sort-name="full_name"
+    data-sort-order="desc"
+    data-toolbar="#toolbar" >
       <thead>
         <tr>
-          <th style="width: 300px;">ชื่อ-สกุล</th>
-          <th>โทรศัพท์</th>
-          <th>อีเมล์</th>
-          <th>ความสัมพันธ์</th>
-          <th>ชื่อ-สกุลนักเรียน</th>
-          <th class="tools" style="width: 130px;"></th>
+          <th data-field="full_name" data-sortable="true" style="width: 300px;" >ชื่อ-สกุล</th>
+          <th data-field="mobile" data-sortable="true">โทรศัพท์</th>
+          <th data-field="email" data-sortable="true">อีเมล์</th>
+          <th data-field="relationships.name" data-sortable="true">ความสัมพันธ์</th>
+          <th data-field="students.full_name" data-sortable="true">ชื่อ-สกุลนักเรียน</th>
+          <th data-field="edit" ></th>
         </tr>
       </thead>
-      <tbody>
-        <% @parents.each do |parent| %>
-          <tr>
-              <td><%= parent.full_name %></td>
-              <td><%= parent.mobile %></td>
-              <td><%= parent.email %></td>
-              <td><%= parent.relationships.first.nil? ? "" : t(parent.relationships.first.name) %></td>
-              <td><%= student_link_with_full_name(parent.students.first) %></td>
-              <td class="tools">
-                <div class="icon text-center">
-                  <%= link_to t('.edit', :default => '<i class="fa fa-pencil-square-o" aria-hidden="true"></i> แก้ไข'.html_safe),
-                              edit_parent_path(parent),
-                              :class => 'btn-edit-student-parent' %>
-                </div>
-              </td>
-          </tr>
-        <% end %>
-      </tbody>
     </table>
-    <div align="center"><%= will_paginate @parents %></div>
   </div>
 </div>

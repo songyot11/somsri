@@ -32,3 +32,5 @@
 //= require invoice/angular/app.assets
 
 //= require angular-xeditable/dist/js/xeditable
+//= require bootstrap-table
+//= require bootstrap-select/js/bootstrap-select

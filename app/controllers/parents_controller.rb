@@ -21,11 +21,19 @@ class ParentsController < ApplicationController
       grade = Grade.where(name: grade_select).first
       parents = Parent.joins(:students).where(students:{grade: grade.id , classroom: class_select})
     end
-      @parents = parents.search(params[:search]).page(params[:page]).order("parents.deleted_at DESC , parents.full_name ASC").includes(:students, :relationships, :invoices)
-      @filter_class = class_select
-      @filter_grade = grade_select
-      @menu = "ผู้ปกครอง"
-      render "parents/index", layout: "application_invoice"
+    @parents = parents.includes(:students, :relationships, :invoices).search(params[:search]).order("#{params[:sort]} #{params[:order]}")
+    @filter_class = class_select
+    @filter_grade = grade_select
+    @menu = "ผู้ปกครอง"  
+    respond_to do |f|
+      f.html { render "parents/index", layout: "application_invoice" }
+      f.json { render json: {
+          total: @parents.count,
+          rows: @parents.limit(params[:limit]).offset(params[:offset]).as_json({ index: true })
+        }
+      }
+    end
+
   end
 
   # GET /parents/new
@@ -169,9 +177,9 @@ class ParentsController < ApplicationController
         std_params.each_with_index.map do |s, index|
           if s.to_i != 0
             begin
-            std = Student.find(s)
+              std = Student.find(s)
             rescue
-            std = Student.find_or_create_by(full_name: s)
+              std = Student.find_or_create_by(full_name: s)
             end
             @students.push(std)
           elsif s.length > 0 && s.to_i == 0
@@ -186,4 +194,4 @@ class ParentsController < ApplicationController
       params.require(:parent).permit(:img_url)
     end
 
-end
+  end
