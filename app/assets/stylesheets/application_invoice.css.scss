@@ -815,7 +815,7 @@ body.somsri-invoice >.container-fluid {
 }
 
 #student-report .report-content {
-  padding: 20px;
+  padding: 30px;
   font-size: 14px;
   background-color: #fff;
   box-shadow: 0 5px 13px 0 rgba(0, 0, 0, 0.3);
@@ -842,10 +842,12 @@ body.somsri-invoice >.container-fluid {
   background-color: #3fa1e6 !important;
 }
 #student-report .row.head-menu{
-  margin-top: 20px;
+  margin-top: 30px;
   margin-bottom: 10px;
 }
-
+#student-report h3{
+  margin-top: 15px;
+}
 #student-report #year-list, #semester-list {
   font-size: 16px;
   cursor: pointer;
@@ -858,7 +860,11 @@ body.somsri-invoice >.container-fluid {
 #student-report .text-currency {
   text-align: right;
 }
-
+#student-report .fix-head-table{
+  padding-left: 0px;
+  margin-top: 10px;
+  margin-bottom: 25px;
+}
 #invoice_grouping_report .report-content {
   padding: 20px 40px;
   font-size: 14px;
@@ -882,7 +888,7 @@ body.somsri-invoice >.container-fluid {
   font-weight: bold;
 }
 #invoice_grouping_report .dropdown-menu{
-  left: 20px;
+  min-width: 200px;
   padding: 10px 0px;
 
   li{
@@ -1509,6 +1515,20 @@ a#student_remove,a#parent_archive  {
 }
 #parent-index  .fixed-table-pagination{
   text-align: center;
+  margin-top: 15px;
+}
+#parent-index .fixed-table-body {
+    margin-top: 30px;
+    font-size: 1.2em;
+}
+#parent-index .fixed-table-toolbar {
+    font-size: 1.2em;
+}
+#parent-index .bootstrap-select.btn-group .dropdown-toggle .filter-option{
+  font-size: 1.2em;
+}
+#parent-index .pagination>li .disabled>a{
+  cursor: not-allowed;
 }
 .fixed-table-container tbody td {
   border-left: 0px solid #dddddd !important;

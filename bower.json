@@ -20,7 +20,8 @@
     "angular-sanitize": "1.5.9",
     "ng-csv": "",
     "ng-file-upload-shim": "",
-    "bootstrap-select": ""
+    "bootstrap-select": "",
+    "angular-ui-bootstrap-fontawesome": ""
   },
   "resolutions": {
     "angular": "1.5.9"

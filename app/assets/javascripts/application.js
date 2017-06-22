@@ -25,4 +25,4 @@
 //= require angular-input-masks
 //= require angular-xeditable/dist/js/xeditable
 //= require bootstrap-table
-
+//= require angular-ui-bootstrap-fontawesome

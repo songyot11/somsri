@@ -25,6 +25,7 @@
 //= require selectize.min
 //= require angular-sanitize
 //= require ng-csv
+//= require angular-ui-bootstrap-fontawesome
 
 //= require invoice/angular/components/mainCtrl.js.erb
 //= require invoice/angular/components/shared/ngKeyEnterDirective

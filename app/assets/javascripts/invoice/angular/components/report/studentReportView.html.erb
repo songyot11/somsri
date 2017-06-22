@@ -2,18 +2,23 @@
   <div id="student-report" class="row ng-scope">
     <div class="row head-menu">
       <div class="col-md-6">
-        <div class="dropdown">
-          <h4 id="grade-list" data-toggle="dropdown">
-            <span ng-bind="studentReport.currentGradeString" ></span>
-            <i class="fa fa-angle-down" aria-hidden="true"></i>
-          </h4>
-          <ul class="dropdown-menu" aria-labelledby="grade-list">
-            <li ng-repeat="grade in studentReport.grades">
-              <a ng-click="studentReport.switchGrade(grade.name)">
-                <button>{{ grade.name }}</button>
-              </a>
-            </li>
-          </ul>
+        <div class="col-xs-2" style="margin-right:-20px;">
+          <h3>ระดับชั้น</h3>
+        </div>
+        <div class="col-xs-9">
+          <div class="dropdown">
+            <h4 id="grade-list" data-toggle="dropdown">
+              <span ng-bind="studentReport.currentGradeString"></span>
+              <i class="fa fa-angle-down" aria-hidden="true"></i>
+            </h4>
+            <ul class="dropdown-menu" aria-labelledby="grade-list">
+              <li ng-repeat="grade in studentReport.grades">
+                <a ng-click="studentReport.switchGrade(grade.name)">
+                  <button>{{ grade.name }}</button>
+                </a>
+              </li>
+            </ul>
+          </div>
         </div>
       </div>
       <div class="col-md-6">

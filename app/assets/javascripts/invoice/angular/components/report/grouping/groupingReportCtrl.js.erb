@@ -3,13 +3,13 @@
   angular.module('somsri.invoice.groupingReport', [
   ])
   .controller('groupingReportCtrl', ['$compile', '$scope', '$window', '$filter', '$rootScope', 'groupingReportService', '$timeout', 'CSV', '$uibModal', 'moment', function($compile, $scope, $window, $filter, $rootScope, service, $timeout, CSV, $uibModal, moment) {
-    $rootScope.menu = "รายงาน"
+    $rootScope.menu = "รายงานแยกตามประเภท"
     var ctrl = this
 
     $rootScope.loadAndAuthorizeResource("invoice", function(){
       // default last 7 days
       ctrl.end_date = new Date();
-      ctrl.start_date = new Date(new Date().setDate(new Date().getDate() - 6));
+      ctrl.start_date = new Date(new Date().setMonth(new Date().getMonth() - 1));
       ctrl.options = null
 
       function loadData(){
