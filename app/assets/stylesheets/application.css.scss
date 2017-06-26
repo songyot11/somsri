@@ -19,6 +19,7 @@
  */
 
 @import "application_invoice";
+@import url('https://fonts.googleapis.com/css?family=Roboto');
 body{
   margin-bottom: 50px;
   // margin-top: 100px;
@@ -306,3 +307,7 @@ ul.nav.navbar-nav.navbar-right.dropdown{
   margin-bottom:30px;
 }
 
+.numberic{
+  font-family: 'Roboto', sans-serif;
+  font-size: 14px;
+}

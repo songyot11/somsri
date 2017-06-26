@@ -16,6 +16,7 @@
  *= require_self
  */
 @import "navigation_menu";
+@import url('https://fonts.googleapis.com/css?family=Roboto');
 body {
   font-family: 'Maitree', serif;
   color: #595959;
@@ -1432,10 +1433,11 @@ a.dropdown-item{
   padding: 20px 0px;
 }
 .pin-char {
+  font-family: 'Roboto', sans-serif;
   background-color: #00D2D7;
   border-radius: 4px;
   padding: 0px 10px;
-  font-size: 20px;
+  font-size: 24px;
   font-weight: bold;
   margin-right: 2px;
   margin-bottom: 3px;
@@ -1552,6 +1554,11 @@ a.dropdown-item{
 	background-color: #5b5b5b;
 }
 
+.tbody#scrollbar-payroll{
+  font-family: 'Roboto', sans-serif;
+  font-size: 16px;
+}
+
 .employee-details .dropdown-menu>li>a,
 .employee-details .dropdown-menu>li>a:focus,
 #payroll .dropdown-menu>li>a,
@@ -1628,4 +1635,9 @@ ul.uib-datepicker-popup.dropdown-menu {
 .uib-day button, .uib-month button, .uib-year button{
   border-radius: 0px;
   border: inherit;
+}
+
+.numberic{
+  font-family: 'Roboto', sans-serif;
+  font-size: 1.1em;
 }

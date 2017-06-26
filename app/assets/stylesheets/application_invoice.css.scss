@@ -19,6 +19,7 @@
 
  @import "selectize";
  @import "navigation_menu";
+ @import url('https://fonts.googleapis.com/css?family=Roboto');
 /* Sticky footer styles
 -------------------------------------------------- */
 
@@ -1612,4 +1613,7 @@ ul.uib-datepicker-popup.dropdown-menu {
 .uib-day button, .uib-month button, .uib-year button{
   border-radius: 0px;
   border: inherit;
+}
+.numberic{
+  font-family: 'Roboto', sans-serif;
 }

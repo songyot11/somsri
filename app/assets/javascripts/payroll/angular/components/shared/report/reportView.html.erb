@@ -71,7 +71,7 @@
       <table id="tableData" class="table text-right">
         <tbody>
           <tr ng-repeat="employee in employees | orderBy:sortType:sortReverse">
-            <td class="text-left report_for_print_hide" style="width:60px;">{{employee.code}}</td>
+            <td class="text-left report_for_print_hide numberic" style="width:60px;">{{employee.code}}</td>
             <td class="text-left forprint_table this_name" style="width:300px;">
               <div ng-switch on="employee.deleted">
                 <div ng-switch-when="true">
@@ -84,11 +84,11 @@
                 </div>
               </div>
             </td>
-            <td class="text-center forprint_table this_account" style="width:184px;">{{employee.account_number}}</td>
-            <td class="report_for_print_hide" style="min-width:150px;">{{employee.salary | currency: ""}}</td>
-            <td class="text-green report_for_print_hide" style="min-width:150px;">{{employee.extra_pay | currency: ""}}</td>
-            <td class="text-red report_for_print_hide" style="min-width:150px;">{{employee.extra_fee | currency: ""}}</td>
-            <td class="text-green forprint_table this_netsalary" style="min-width:150px;">{{report.getNetSalary(employee) | currency: ""}}</td>
+            <td class="text-center forprint_table this_account numberic" style="width:184px;">{{employee.account_number}}</td>
+            <td class="report_for_print_hide numberic" style="min-width:150px;">{{employee.salary | currency: ""}}</td>
+            <td class="text-green report_for_print_hide numberic" style="min-width:150px;">{{employee.extra_pay | currency: ""}}</td>
+            <td class="text-red report_for_print_hide numberic" style="min-width:150px;">{{employee.extra_fee | currency: ""}}</td>
+            <td class="text-green forprint_table this_netsalary numberic" style="min-width:150px;">{{report.getNetSalary(employee) | currency: ""}}</td>
             <td class="report_for_print_hide">
               <a ng-click="report.printSlip(employee.code, report.payroll_id)" href="javascript:void(0)">
                 <i class="fa fa-print"></i>
@@ -101,10 +101,10 @@
             <td></td>
             <td class="report_for_print_hide"></td>
             <td class="text-center forprint-h_table"><strong>รวมทั้งหมด</strong></td>
-            <td class="report_for_print_hide">{{report.total.salary | currency: ""}}</td>
-            <td class="text-green report_for_print_hide">{{report.total.extraPay | currency: ""}}</td>
-            <td class="text-red report_for_print_hide">{{report.total.extraFee | currency: ""}}</td>
-            <td class="text-green">{{report.total.netSalary | currency: ""}}</td>
+            <td class="report_for_print_hide numberic">{{report.total.salary | currency: ""}}</td>
+            <td class="text-green report_for_print_hide numberic">{{report.total.extraPay | currency: ""}}</td>
+            <td class="text-red report_for_print_hide numberic">{{report.total.extraFee | currency: ""}}</td>
+            <td class="text-green numberic">{{report.total.netSalary | currency: ""}}</td>
             <td class="report_for_print_hide"></td>
           </tr>
         </tfoot>

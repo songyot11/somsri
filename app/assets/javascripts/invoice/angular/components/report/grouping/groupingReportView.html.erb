@@ -78,15 +78,15 @@
                   <td ng-show="row.header_row" class="text-center">
                     <div ng-show="groupingReport.isPerStudent && row.url == null">{{row.header_row}}</div>
                     <a ng-href="{{row.url}}" ng-show="groupingReport.isPerStudent && row.url != null">{{row.header_row}}</a>
-                    <a href="javascript:void(0)" ng-click="groupingReport.selectDate(row.header_row)" ng-show="groupingReport.isPerDay">{{row.header_row}}</a>
+                    <a href="javascript:void(0)" ng-click="groupingReport.selectDate(row.header_row)" ng-show="groupingReport.isPerDay" class="numberic">{{row.header_row}}</a>
                   </td>
-                  <td class="text-right" ng-repeat="data in row.datas track by $index">{{data.toFixed(2) | number:2}}</td>
+                  <td class="text-right numberic" ng-repeat="data in row.datas track by $index">{{data.toFixed(2) | number:2}}</td>
                 </tr>
               </tbody>
               <tfoot>
                 <tr>
                   <td class="text-center">รวมทั้งหมด</td>
-                  <td ng-repeat="total in groupingReport.datas.total track by $index" class="text-currency">{{total.toFixed(2) | number:2}}</td>
+                  <td ng-repeat="total in groupingReport.datas.total track by $index" class="text-currency numberic">{{total.toFixed(2) | number:2}}</td>
                 </tr>
               </tfoot>
             </table>

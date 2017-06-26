@@ -13,10 +13,10 @@
               <div class="col-md-4 topic-right-report">เงินสดเริ่มต้น</div>
               <div class="col-md-4 input-num-center">
                 <div class="form-group">
-                  <input id="startCash" type="text" value="0.00" ng-required min="-100000" step="1000" placeholder="ระบุจำนวน" placeholder="ราคา" class="form-control" ng-model="dailyReport.datas.real_start_cash" ng-change="dailyReport.total()" ui-number-mask="2" ui-negative-number  required>
+                  <input id="startCash" type="text" value="0.00" ng-required min="-100000" step="1000" placeholder="ระบุจำนวน" placeholder="ราคา" class="form-control numberic" ng-model="dailyReport.datas.real_start_cash" ng-change="dailyReport.total()" ui-number-mask="2" ui-negative-number  required>
                 </div>
               </div>
-              <div class="col-md-2 number-report-right">
+              <div class="col-md-2 number-report-right numberic">
                 0.00
               </div>
             </div>
@@ -24,10 +24,10 @@
               <div class="col-md-4 topic-right-report">เงินสด</div>
               <div class="col-md-4 input-num-center">
                 <div class="form-group">
-                  <input type="text" ng-model="dailyReport.datas.real_cash" value="0.00" ng-required min="-100000" step="1000" placeholder="ระบุจำนวน" placeholder="ราคา" class="form-control" ng-change="dailyReport.total()" ui-number-mask="2" ui-negative-number required id="เงินสด">
+                  <input type="text" ng-model="dailyReport.datas.real_cash" value="0.00" ng-required min="-100000" step="1000" placeholder="ระบุจำนวน" placeholder="ราคา" class="form-control numberic" ng-change="dailyReport.total()" ui-number-mask="2" ui-negative-number required id="เงินสด">
                 </div>
               </div>
-              <div class="col-md-2 number-report-right">
+              <div class="col-md-2 number-report-right numberic">
                 {{ dailyReport.datas.cash.toFixed(2) | number:2 }}
               </div>
             </div>
@@ -35,10 +35,10 @@
               <div class="col-md-4 topic-right-report">บัตรเครดิต</div>
               <div class="col-md-4 input-num-center">
                 <div class="form-group">
-                  <input type="text" ng-model="dailyReport.datas.real_credit_card" value="0.00" ng-required min="-100000" step="1000" placeholder="ระบุจำนวน" placeholder="ราคา" class="form-control" ng-change="dailyReport.total()" ui-number-mask="2" ui-negative-number required id="บัตรเครดิต">
+                  <input type="text" ng-model="dailyReport.datas.real_credit_card" value="0.00" ng-required min="-100000" step="1000" placeholder="ระบุจำนวน" placeholder="ราคา" class="form-control numberic" ng-change="dailyReport.total()" ui-number-mask="2" ui-negative-number required id="บัตรเครดิต">
                 </div>
               </div>
-              <div class="col-md-2 number-report-right">
+              <div class="col-md-2 number-report-right numberic">
                 {{ dailyReport.datas.credit_card.toFixed(2) | number:2 }}
               </div>
             </div>
@@ -46,10 +46,10 @@
               <div class="col-md-4 topic-right-report">เช็คธนาคาร</div>
               <div class="col-md-4 input-num-center">
                 <div class="form-group">
-                  <input type="text" ng-model="dailyReport.datas.real_cheque" value="0.00" ng-required min="-100000" step="1000" placeholder="ระบุจำนวน" placeholder="ราคา" class="form-control" ng-change="dailyReport.total()" ui-number-mask="2" ui-negative-number required id="เช็คธนาคาร">
+                  <input type="text" ng-model="dailyReport.datas.real_cheque" value="0.00" ng-required min="-100000" step="1000" placeholder="ระบุจำนวน" placeholder="ราคา" class="form-control numberic" ng-change="dailyReport.total()" ui-number-mask="2" ui-negative-number required id="เช็คธนาคาร">
                 </div>
               </div>
-              <div class="col-md-2 number-report-right">
+              <div class="col-md-2 number-report-right numberic">
                 {{ dailyReport.datas.cheque.toFixed(2) | number:2 }}
               </div>
             </div>
@@ -57,19 +57,19 @@
               <div class="col-md-4 topic-right-report">เงินโอน</div>
               <div class="col-md-4 input-num-center">
                 <div class="form-group">
-                  <input type="text" ng-model="dailyReport.datas.real_tranfers" value="0.00" ng-required min="-100000" step="1000" placeholder="ระบุจำนวน" placeholder="ราคา" class="form-control" ng-change="dailyReport.total()" ui-number-mask="2" ui-negative-number required id="เงินโอน">
+                  <input type="text" ng-model="dailyReport.datas.real_tranfers" value="0.00" ng-required min="-100000" step="1000" placeholder="ระบุจำนวน" placeholder="ราคา" class="form-control numberic" ng-change="dailyReport.total()" ui-number-mask="2" ui-negative-number required id="เงินโอน">
                 </div>
               </div>
-              <div class="col-md-2 number-report-right" style="border-bottom:2px solid">
+              <div class="col-md-2 number-report-right numberic" style="border-bottom:2px solid">
                 {{ dailyReport.datas.tranfers.toFixed(2) | number:2 }}
               </div>
             </div>
             <div class="row">
               <div class="col-md-4 topic-right-report">ยอดเงินที่จัดส่ง</div>
-              <div class="col-md-4 input-num-center">
+              <div class="col-md-4 input-num-center numberic" style="margin-top:5px;">
                 {{ dailyReport.datas.real_total.toFixed(2) | number:2 }}
               </div>
-              <div class="col-md-2 number-report-right">
+              <div class="col-md-2 number-report-right numberic">
                 {{ dailyReport.datas.total.toFixed(2) | number:2 }}
               </div>
             </div>
