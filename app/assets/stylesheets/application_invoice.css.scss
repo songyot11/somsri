@@ -1489,7 +1489,7 @@ a#student_remove,a#parent_archive  {
   float: right !important;
 }
 .bootstrap-select:not([class*="col-"]):not([class*="form-control"]):not(.input-group-btn) {
-  width: 150px !important;
+  width: 160px !important;
 }
 #parent-index .btn-default,
 #parent-index .btn-default:hover,
@@ -1540,3 +1540,19 @@ a#student_remove,a#parent_archive  {
 .fixed-table-container {
   border: 0px solid #dddddd !important;
 }
+
+.search{
+  display: inline-flex;
+
+  .fa.fa-search{
+    padding-top: 7px;
+    font-size: 16px;
+  }
+}
+.col-xs-6.select-filter{
+  text-align: right;
+}
+.toolbar-student-parent{
+  margin-bottom:30px;
+}
+

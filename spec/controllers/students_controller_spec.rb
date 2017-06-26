@@ -94,7 +94,7 @@ describe StudentsController do
   describe "students" do
     describe '#index' do
       it "should show all student" do
-        get :index, params: { grade_select: 'all' , class_select: 'all' }
+        get :index, format: :json, params: { grade_select: 'all' , class_select: 'all' }
 
         expect(response.body).to have_content "one"
         expect(response.body).to have_content "two"
@@ -114,7 +114,7 @@ describe StudentsController do
       end
 
       it 'should show only grade that selected' do
-        get :index , params: { grade_select: 'Preschool' }
+        get :index, format: :json, params: { grade_select: 'Preschool' }
 
         expect(response.body).to have_content "one"
         expect(response.body).to have_content "five"
@@ -128,7 +128,7 @@ describe StudentsController do
       end
 
       it 'should show only classroom that selected' do
-        get :index , params: { class_select: '4A' }
+        get :index, format: :json, params: { class_select: '4A' }
 
         expect(response.body).to have_content "four"
       end
@@ -140,7 +140,7 @@ describe StudentsController do
       end
 
       it 'should show both grade and classroom that selected' do
-        get :index , params: { grade_select: 'Kindergarten 1' , class_select: '2A' }
+        get :index, format: :json, params: { grade_select: 'Kindergarten 1' , class_select: '2A' }
 
         expect(response.body).to have_content "two"
       end

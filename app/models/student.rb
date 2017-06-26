@@ -1,5 +1,7 @@
 class Student < ApplicationRecord
   include ActiveModel::Dirty
+  include Rails.application.routes.url_helpers
+
   belongs_to :grade
   belongs_to :gender
   belongs_to :school
@@ -58,14 +60,14 @@ class Student < ApplicationRecord
   def clean_full_name
     if self.full_name
       self.full_name = self.full_name.gsub('ด.ช.', '')
-                                      .gsub('ด.ญ.', '')
-                                      .gsub('เด็กหญิง', '')
-                                      .gsub('เด็กชาย', '')
-                                      .gsub('Master', '')
-                                      .gsub('master', '')
-                                      .gsub('Miss', '')
-                                      .gsub('miss', '')
-                                      .strip.gsub(/\s+/,' ')
+      .gsub('ด.ญ.', '')
+      .gsub('เด็กหญิง', '')
+      .gsub('เด็กชาย', '')
+      .gsub('Master', '')
+      .gsub('master', '')
+      .gsub('Miss', '')
+      .gsub('miss', '')
+      .strip.gsub(/\s+/,' ')
     end
   end
 
@@ -123,17 +125,17 @@ class Student < ApplicationRecord
     if self.all_active_invoices_year.include?(@year)
       current_invoice = self.all_active_invoices.where(school_year: @year, semester: @semester)
       if current_invoice.size > 0
-          current_invoice.each do |i|
-            if !i.is_cancel
-              i.line_items.each do |l|
-                if l.detail =~ /Tuition/
-                  return i
-                end
+        current_invoice.each do |i|
+          if !i.is_cancel
+            i.line_items.each do |l|
+              if l.detail =~ /Tuition/
+                return i
               end
-              return i
             end
+            return i
           end
-          return nil
+        end
+        return nil
       else
         return nil
       end
@@ -158,16 +160,16 @@ class Student < ApplicationRecord
     if self.all_active_invoices_year.include?(year)
       current_invoice = self.all_active_invoices.where(school_year: year, semester: semester)
       if current_invoice.size > 0
-          current_invoice.each do |i|
-            if !i.is_cancel
-              i.line_items.each do |l|
-                if l.detail =~ /Tuition/
-                  return true
-                end
+        current_invoice.each do |i|
+          if !i.is_cancel
+            i.line_items.each do |l|
+              if l.detail =~ /Tuition/
+                return true
               end
             end
           end
-          return false
+        end
+        return false
       else
         return false
       end
@@ -286,8 +288,8 @@ class Student < ApplicationRecord
 
   def self.search(search)
     if search
-      where("full_name ILIKE ? OR classroom ILIKE ? OR nickname ILIKE ? OR student_number::text ILIKE ? OR classroom_number::text ILIKE ? OR classroom ILIKE ? OR full_name_english ILIKE ? OR nickname_english ILIKE ? ",
-       "%#{search}%", "%#{search}%", "%#{search}%" , "%#{search}%" , "%#{search}%" , "%#{search}%" , "%#{search}%" , "%#{search}%" )
+      where("full_name ILIKE ? OR nickname ILIKE ? OR student_number::text ILIKE ? OR full_name_english ILIKE ? OR nickname_english ILIKE ? ",
+       "%#{search}%", "%#{search}%", "%#{search}%" , "%#{search}%" , "%#{search}%" )
     else
       all
     end
@@ -370,18 +372,6 @@ class Student < ApplicationRecord
     RollCall.where(student_id:self.id)
   end
 
-  def as_json(option={})
-    roll_call_json = {
-      id: self.id,
-      code: self.code,
-      first_name: self.first_name,
-      last_name: self.last_name,
-      prefix: self.prefix,
-      number: self.number
-    }
-    return roll_call_json.merge(super())
-  end
-
   def full_name_eng_thai_with_title
     title = ""
     title = 'ด.ช.' if self.gender_id == 1
@@ -422,6 +412,39 @@ class Student < ApplicationRecord
 
   def student_num
     self.student_number.nil? ? "-" : self.student_number
+  end
+
+  def edit
+    ActionController::Base.helpers.link_to I18n.t('.edit', :default => '<i class="fa fa-pencil-square-o" aria-hidden="true"></i> แก้ไข'.html_safe), edit_student_path(self) ,:class => 'btn-edit-student-parent'
+  end
+
+  def as_json(options={})
+    if options['index']
+      return {
+        full_name: self.full_name_eng_thai_with_title,
+        nickname: self.nickname_eng_thai,
+        grade_id: self.grade.nil? ? "" : self.grade.name,
+        classroom: self.classroom,
+        classroom_number: self.classroom_number,
+        student_number: self.student_num,
+        gender_id: self.gender.nil? ? "" : I18n.t(self.gender.name),
+        birthdate: self.birthdate.nil? ? '' : self.birthdate.strftime('%d/%m/%Y'),
+        edit: edit
+      }
+    elsif options['roll_call']
+      roll_call_json = {
+        id: self.id,
+        code: self.code,
+        first_name: self.first_name,
+        last_name: self.last_name,
+        prefix: self.prefix,
+        number: self.number
+      }
+      
+      return roll_call_json.merge(super())
+    else
+      super()
+    end
   end
 
 end

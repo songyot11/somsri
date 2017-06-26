@@ -1,5 +1,5 @@
 <%- model_class = Parent -%>
-<%= javascript_include_tag 'search_bootstrap_table' %>
+<%= javascript_include_tag 'custom_bootstrap_table' %>
 <%= render 'layouts/messages' %>
 <div id="parent-index">
   <div class="row head-sp">
@@ -15,27 +15,30 @@
   </div>
 
   <div class="content-student-parent">
-
-    <div id="toolbar">
-      <%= form_tag(parents_path, method: :get, id: "search-form") do %>
-      
-      <span>เลือกระดับชั้น</span>
-      <select name="grade_select" id="grade_select" class="btn-grades selectpicker" onchange="this.form.submit()">
-        <option value='all'>ทั้งหมด</option>
-        <% Grade.all.each do |grade| %>
-        <option value="<%= grade.name %>"<%= @filter_grade.to_s == grade.name.to_s ? "selected" : "" %>> <%= grade.name %> </option>
-        <% end %>
-      </select>
-      
-      <span>เลือกตามห้อง</span>
-      <select name="class_select" id="class_select"  onchange="this.form.submit()" class="btn-grades selectpicker">
-        <option value='all'>ทั้งหมด</option>
-        <% @classroom_display.each do |classroom| %>
-        <option value="<%= classroom %>"<%= @filter_class.to_s == classroom.to_s ? "selected" : "" %>> <%= classroom %> </option>
-        <% end %>
-      </select>
-      
-      <% end %>
+    <div class="row toolbar-student-parent">
+      <div class="col-xs-6">
+        <div class="search">
+          <i class="fa fa-search" aria-hidden="true"></i>
+          <input class="form-control" id="search" type="text" placeholder="ค้นหา" onchange="search()" onkeyup="this.onchange()">
+        </div>
+      </div>
+      <div class="col-xs-6 select-filter">  
+        <span>เลือกระดับชั้น</span>
+        <select name="grade_select" id="grade_select" class="btn-grades selectpicker" onchange="filter()">
+          <option value='all'>ทั้งหมด</option>
+          <% Grade.all.each do |grade| %>
+          <option value="<%= grade.name %>"<%= @filter_grade.to_s == grade.name.to_s ? "selected" : "" %>> <%= grade.name %> </option>
+          <% end %>
+        </select>
+        
+        <span>เลือกตามห้อง</span>
+        <select name="class_select" id="class_select"  onchange="filter()" class="btn-grades selectpicker">
+          <option value='all'>ทั้งหมด</option>
+          <% @classroom_display.each do |classroom| %>
+          <option value="<%= classroom %>"<%= @filter_class.to_s == classroom.to_s ? "selected" : "" %>> <%= classroom %> </option>
+          <% end %>
+        </select>
+      </div>
     </div>
 
     <table id="table"
@@ -44,13 +47,12 @@
     data-pagination-loop="false"
     data-url="parents.json"
     data-side-pagination="server"
-    data-search="true"
-    data-sort-name="full_name"
+    data-sort-name="parents.full_name"
     data-sort-order="desc"
-    data-toolbar="#toolbar" >
+    data-query-params="queryParams"  >
       <thead>
         <tr>
-          <th data-field="full_name" data-sortable="true" style="width: 300px;" >ชื่อ-สกุล</th>
+          <th data-field="parents.full_name" data-sortable="true" style="width: 300px;" >ชื่อ-สกุล</th>
           <th data-field="mobile" data-sortable="true">โทรศัพท์</th>
           <th data-field="email" data-sortable="true">อีเมล์</th>
           <th data-field="relationships.name" data-sortable="true">ความสัมพันธ์</th>

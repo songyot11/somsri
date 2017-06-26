@@ -101,26 +101,28 @@ class StudentsController < ApplicationController
         other_fee: total_other,
         tuition_fee: total_tuition,
         amount: total_amount
-      }, status: :ok
-    else
-      render json: {
-        datas: datas,
-        other_fee: total_other,
-        tuition_fee: total_tuition,
-        amount: total_amount
-      }, status: :ok
-    end
+        }, status: :ok
+      else
+        render json: {
+          datas: datas,
+          other_fee: total_other,
+          tuition_fee: total_tuition,
+          amount: total_amount
+          }, status: :ok
+        end
 
 
-  end
+      end
 
   # GET /students
   # GET /students.json
   def index
     @menu = "นักเรียน"
     authorize! :read, Student
+
     grade_select = (params[:grade_select] || 'All')
     class_select = (params[:class_select] || 'All')
+
     @class_display = Student.with_deleted.order("classroom ASC").select(:classroom).map(&:classroom).uniq.compact
     year_select = (params[:year_select] || Date.current.year + 543)
     semester_select = params[:semester_select]
@@ -138,6 +140,7 @@ class StudentsController < ApplicationController
       grade = Grade.where(name: grade_select).first
       students = Student.where(grade: grade.id , classroom: class_select)
     end
+
     if params[:for_print]
       @students = students.order("grade_id ASC, classroom ASC, classroom_number ASC, student_number ASC").search(params[:search]).to_a
     else
@@ -146,6 +149,7 @@ class StudentsController < ApplicationController
 
     @filter_grade = grade_select
     @filter_class = class_select
+
     if params[:for_print]
       results = {
         school_year: SchoolSetting.school_year_or_default(".........."),
@@ -161,8 +165,18 @@ class StudentsController < ApplicationController
       end
       render json: results, status: :ok
     else
-      render "students/index", layout: "application"
+      respond_to do |f|
+        f.html { render "students/index", layout: "application" }
+        f.json { 
+          @students = students.search(params[:search]).order("#{params[:sort]} #{params[:order]}")
+          render json: {
+            total: @students.count,
+            rows: @students.limit(params[:limit]).offset(params[:offset]).as_json('index')
+          }
+        }
+      end
     end
+
   end
 
   # GET /students/new
@@ -256,8 +270,8 @@ class StudentsController < ApplicationController
   def graduate
     if @student = Student.find(params[:student_id]).update(deleted_at: Time.now , status: 'จบการศึกษา')
       respond_to do |format|
-          format.html { redirect_to students_url }
-          format.json { head :no_content }
+        format.html { redirect_to students_url }
+        format.json { head :no_content }
       end
     end
   end
@@ -265,15 +279,15 @@ class StudentsController < ApplicationController
   def resign
     if @student = Student.find(params[:student_id]).update(deleted_at: Time.now , status: 'ลาออก')
       respond_to do |format|
-          format.html { redirect_to students_url }
-          format.json { head :no_content }
+        format.html { redirect_to students_url }
+        format.json { head :no_content }
       end
     end
   end
 
   def restore
-      if @student = Student.restore(params[:student_id])
-        @student = Student.unscoped.find(params[:student_id]).update(status: 'กำลังศึกษา')
+    if @student = Student.restore(params[:student_id])
+      @student = Student.unscoped.find(params[:student_id]).update(status: 'กำลังศึกษา')
       respond_to do |format|
         format.html { redirect_to students_url }
         format.json { head :no_content }
@@ -287,7 +301,7 @@ class StudentsController < ApplicationController
     if employee && employee.lists && employee.lists.size > 0
       # select list
       list = employee.lists[0]
-      render json: list.get_students and return
+      render json: list.get_students.as_json('roll_call') and return
     else
       render json: { errors: "Invalid token or user not registered" }, status: 422 and return
     end
@@ -315,16 +329,16 @@ class StudentsController < ApplicationController
           @afternoon << afternoon if afternoon
 
           (1..Time.days_in_month(d.month)).each do |i|
-              date = d + i.days
-              roll_date = s_rollcall.where(check_date:date.strftime("%Y-%m-%d"))
-              @studet_r << roll_date if roll_date
+            date = d + i.days
+            roll_date = s_rollcall.where(check_date:date.strftime("%Y-%m-%d"))
+            @studet_r << roll_date if roll_date
               #do count rollcall status
               morning  = s_rollcall.where(check_date:date.strftime("%Y-%m-%d"), round:"morning")
               @morning  << morning if morning
               afternoon = s_rollcall.where(check_date:date.strftime("%Y-%m-%d"), round:"afternoon")
               @afternoon << afternoon if afternoon
+            end
           end
-        end
           result = []
           result << {
             date: d,
@@ -335,14 +349,14 @@ class StudentsController < ApplicationController
             afternoon: @afternoon.flatten
           }
 
-        render json: result
+          render json: result
+        else
+          render json: { errors: "Invalid student code" }, status: 422 and return
+        end
       else
-        render json: { errors: "Invalid student code" }, status: 422 and return
+        render json: { errors: "Invalid PIN" }, status: 422 and return
       end
-    else
-      render json: { errors: "Invalid PIN" }, status: 422 and return
     end
-  end
 
   # GET /invoice_total_amount
   def invoice_total_amount
@@ -435,4 +449,4 @@ class StudentsController < ApplicationController
     def upload_photo_params
       params.require(:student).permit(:img_url)
     end
-end
+  end

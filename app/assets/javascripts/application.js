@@ -26,3 +26,4 @@
 //= require angular-xeditable/dist/js/xeditable
 //= require bootstrap-table
 //= require angular-ui-bootstrap-fontawesome
+//= require bootstrap-select/js/bootstrap-select

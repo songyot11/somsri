@@ -20,7 +20,7 @@ class Parent < ApplicationRecord
   end
 
   def self.search(search)
-    where("parents.full_name LIKE ? OR parents.full_name_english LIKE ? OR parents.email LIKE ? OR parents.mobile LIKE ?", "%#{search}%", "%#{search}%", "%#{search}%" , "%#{search}%")
+    where("parents.full_name LIKE ? OR parents.full_name_english LIKE ? OR parents.email LIKE ? OR parents.mobile LIKE ? OR students.full_name LIKE ? OR students.full_name_english LIKE ?", "%#{search}%", "%#{search}%", "%#{search}%", "%#{search}%", "%#{search}%" , "%#{search}%" )
   end
 
   def invoice_screen_full_name_display
@@ -38,7 +38,9 @@ class Parent < ApplicationRecord
   def as_json(options={})
     if options[:index]
       return {
-        full_name: self.full_name,
+        parents:{
+          full_name: self.full_name
+        },
         mobile: self.mobile,
         email: self.email,
         relationships: {
