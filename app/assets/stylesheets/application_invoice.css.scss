@@ -887,7 +887,7 @@ body.somsri-invoice >.container-fluid {
   cursor: pointer;
   font-weight: bold;
 }
-#invoice_grouping_report .dropdown-menu{
+#invoice_grouping_report .invoice-items-list .dropdown-menu{
   min-width: 200px;
   padding: 10px 0px;
 
@@ -1556,3 +1556,60 @@ a#student_remove,a#parent_archive  {
   margin-bottom:30px;
 }
 
+button.btn.btn-sm.btn-info.uib-datepicker-current,
+button.btn.btn-sm.btn-info.uib-datepicker-current:focus{
+    border-radius: 0px;
+    color: #fff;
+    background-color: #3fa1e6;
+    border: 1px solid #3fa1e6;
+    transition: all 0.25s ease;
+
+    &:hover{
+      background-color: transparent;
+      border: 1px solid #3fa1e6;
+      color: #3fa1e6;
+    }
+}
+
+button.btn.btn-sm.btn-danger.uib-clear,
+button.btn.btn-sm.btn-danger.uib-clear:focus{
+    border-radius: 0px;
+    color: #fff;
+    background-color: #DD5A2B;
+    border: 1px solid #DD5A2B;
+    transition: all 0.25s ease;
+
+    &:hover{
+      background-color: transparent;
+      border: 1px solid #DD5A2B;
+      color: #DD5A2B;
+    }
+}
+
+button.btn.btn-sm.btn-success.pull-right.uib-close,
+button.btn.btn-sm.btn-success.pull-right.uib-close:focus{
+    border-radius: 0px;
+    color: #fff;
+    background-color: #5BAB67;
+    border: 1px solid #5BAB67;
+    transition: all 0.25s ease;
+
+    &:hover{
+      background-color: transparent;
+      border: 1px solid #5BAB67;
+      color: #5BAB67;
+    }
+}
+
+.uib-button-bar {
+    padding: 10px 0px 2px !important;
+}
+
+ul.uib-datepicker-popup.dropdown-menu {
+    padding: 10px;
+}
+
+.uib-day button, .uib-month button, .uib-year button{
+  border-radius: 0px;
+  border: inherit;
+}

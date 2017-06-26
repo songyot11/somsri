@@ -21,7 +21,7 @@
                       <label for="start_date" class="text-status-date">จาก</label>
                     </div>
                     <div class="col-xs-10">
-                      <input id="start_date" type="text" class="form-control" uib-datepicker-popup="dd/MM/yyyy" ng-model="groupingReport.start_date" is-open="groupingReport.startDatePopup.opened" close-text="Close" ng-change="groupingReport.optionsChange()"/>
+                      <input id="start_date" type="text" class="form-control" uib-datepicker-popup="dd/MM/yyyy" datepicker-options="{showWeeks:false}" ng-model="groupingReport.start_date" is-open="groupingReport.startDatePopup.opened" close-text="Close" ng-change="groupingReport.optionsChange()"/>
                       <span class="input-group-btn" style="display: inherit;">
                         <button type="button" class="btn btn-default" ng-click="groupingReport.openStartDatePopup()"><i class="fa fa-calendar"></i></button>
                       </span>
@@ -36,7 +36,7 @@
                       <label for="end_date" class="text-status-date">ถึง</label>
                     </div>
                     <div class="col-xs-10">
-                      <input id="end_date" type="text" class="form-control" uib-datepicker-popup="dd/MM/yyyy" ng-model="groupingReport.end_date" is-open="groupingReport.endDatePopup.opened" close-text="Close" ng-change="groupingReport.optionsChange()"/>
+                      <input id="end_date" type="text" class="form-control" uib-datepicker-popup="dd/MM/yyyy" datepicker-options="{showWeeks:false}" ng-model="groupingReport.end_date" is-open="groupingReport.endDatePopup.opened" close-text="Close" ng-change="groupingReport.optionsChange()"/>
                       <span class="input-group-btn" style="display: inherit;">
                         <button type="button" class="btn btn-default" ng-click="groupingReport.openEndDatePopup()"><i class="fa fa-calendar"></i></button>
                       </span>
@@ -45,7 +45,7 @@
                 </div>
               </div>
               <div class="col-xs-2 col-lg-2" style="text-align:center;">
-                <div class="dropdown">
+                <div class="dropdown invoice-items-list">
                   <h4 id="groupingReport-list" data-toggle="dropdown">
                     <span>เลือกประเภท</span>
                     <i class="fa fa-angle-down" aria-hidden="true"></i>
