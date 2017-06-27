@@ -391,7 +391,7 @@ class InvoicesController < ApplicationController
         is_grouped = false
         keyword_index = 4
         grouping_keyword.each do |gk|
-          if li.detail.downcase =~ Regexp.union(gk[:keyword].downcase.split(',').collect(&:strip))
+          if li.detail.downcase =~ Regexp.union(gk[:keyword].downcase.split('|').collect(&:strip))
             #sum by keyword
             datas_tmp[keyword_index] += li.amount
             total_tmp[keyword_index] += li.amount
