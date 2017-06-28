@@ -77,7 +77,7 @@ describe 'Student Report', js: true do
     it 'should show report page' do
       visit 'somsri_invoice#/'
       sleep(1)
-      expect(page).to have_content("ชำระเงิน ใบเสร็จ รายงานค่าเทอม รายงานประจำวัน")
+      expect(page).to have_content("ชำระเงิน ใบเสร็จ นำส่งเงิน รายงานการชำระ")
     end
 
     it 'should show student report page' do
