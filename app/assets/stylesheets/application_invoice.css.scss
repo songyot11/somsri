@@ -1202,8 +1202,17 @@ a:not([href]):not([tabindex]){
   cursor: pointer;
   color: #5b5b5b;
 }
+#student-report .report-content a:not([href]):not([tabindex]){
+  color: #0275d8 !important;
+  font-weight: bold;
+  cursor: pointer;
+  text-decoration:none;
+  &:hover{
+    text-decoration:none;
+  }
+}
 .text-invoice-num,.text-invoice-num:focus{
-  color: #0275d8;
+  color: #0275d8 !important;
   font-weight: bold;
   cursor: pointer;
 }
@@ -1557,6 +1566,9 @@ a#student_remove,a#parent_archive  {
 }
 .toolbar-student-parent{
   margin-bottom:30px;
+}
+.payment-width{
+  width: 150px;
 }
 
 button.btn.btn-sm.btn-info.uib-datepicker-current,

@@ -69,7 +69,7 @@ class Invoice < ApplicationRecord
         "%#{keyword}%"
       )
     else
-      self
+      self.all
     end
   end
 
@@ -92,13 +92,25 @@ class Invoice < ApplicationRecord
         semester: self.semester,
         created_at: self.created_at,
         updated_at: self.updated_at,
-        student_full_name_with_nickname: self.student_full_name_with_nickname,
+        students: {
+          full_name: self.student_full_name_with_nickname,
+        },
         grade_name: self.grade_name,
-        parent_name: self.parent_name,
-        payee_name: self.payee_name,
-        payment_method_names: self.payment_method_names,
-        status_name: self.status_name,
-        total_amount: self.total_amount,
+        parents: {
+          full_name: self.parent_name,
+        },
+        users: {
+          full_name: self.payee_name,
+        },
+        payment_methods: {
+          payment_method: self.payment_method_names,
+        },
+        line_items: {
+          amount:self.total_amount,
+        },
+        invoice_statuses: {
+          name: self.status_name,
+        },
         is_cancel: self.is_cancel
       }
     else
@@ -106,3 +118,4 @@ class Invoice < ApplicationRecord
     end
   end
 end
+

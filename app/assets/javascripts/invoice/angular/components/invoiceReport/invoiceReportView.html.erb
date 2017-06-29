@@ -1,3 +1,4 @@
+<%= javascript_include_tag 'custom_bootstrap_table' %>
 <div class="container-fluid">
   <div id="student-report" class="row ng-scope invoice_report">
     <div class="unused_for_print col-lg-12">
@@ -26,52 +27,19 @@
 
       <div class="row report-content container-fluid">
         <div class="col-xs-6 form-group fix-head-table">
-          <input id="searchField" type="text" ng-model="invoiceReport.searchKeyword" ng-key-enter="invoiceReport.search()" placeholder="ค้นหาตามเลขที่ใบเสร็จ,ชื่อนักเรียน,ชื่อผู้ปกครอง" class="search-sp" />
-          <button id="searchButton" name="button" type="submit" class="btn btn-search-sp" ng-click="invoiceReport.search()">
-            <i class="fa fa-search"></i>
-          </button>
+          <input id="searchField" type="text" ng-model="invoiceReport.searchKeyword" ng-change="invoiceReport.search()" placeholder="ค้นหาตามเลขที่ใบเสร็จ,ชื่อนักเรียน,ชื่อผู้ปกครอง" class="search-sp" />
         </div>
-        <table id="tableHeader" class="table scrollable-header text-table-invoicereport">
-          <thead>
-           <tr>
-              <th>Invoice #</th>
-              <th>ชื่อนักเรียน</th>
-              <th>ชั้น</th>
-              <th>ผู้ปกครอง</th>
-              <th>ผู้รับเงิน</th>
-              <th>วันที่ชำระ</th>
-              <th style="width: 150px;">ชำระโดย</th>
-              <th class='text-currency'>ยอดชำระ</th>
-              <th>สถานะ</th>
-              <th></th>
-           </tr>
-          </thead>
-            <tbody>
-              <tr class="tr-invoice" ng-repeat="invoice in invoiceReport.datas ">
-                <td class="text-left text-invoice-num numberic" ng-click="openSlip(invoice.id, 'invoice_report')">{{invoice.id}}</td>
-                <td class="text-left">
-                  {{invoice.student_full_name_with_nickname}}
-                </td>
-                <td>{{invoice.grade_name}}</td>
-                <td>{{invoice.parent_name}}</td>
-                <td>{{invoice.payee_name}}</td>
-                <td class="numberic">{{invoice.created_at | date:'d/MM/yyyy hh:mm'}}</td>
-                <td>{{invoice.payment_method_names}}</td>
-                <td class="text-currency numberic">{{invoice.total_amount.toFixed(2) | number:2}}</td>
-                <td>{{invoice.status_name}}</td>
-                <td><a herf="javascript:void(0)" ng-show="!invoice.is_cancel && invoiceReport.thisDay(invoice.created_at)" ng-click="invoiceReport.cancelInvoiceModal(invoice)"><i class="fa fa-times-circle"></i>&nbsp;ยกเลิกใบเสร็จ</a></td>
-              </tr>
-            </tbody>
-          </table>
-          <div class="row row-centered">
-            <div class="col-centered">
-              <ul uib-pagination ng-change="invoiceReport.pageChanged()" total-items="invoiceReport.totalItems" ng-model="invoiceReport.currentPage" max-size="invoiceReport.maxSize" class="pagination-md" boundary-links="true" num-pages="numPages"></ul>
-            </div>
-          </div>
+
+      <table id="tableHeader" class="scrollable-header text-table-invoicereport"></table>
+
+      <div class="row row-centered">
+        <div class="col-centered">
+          <ul uib-pagination ng-change="invoiceReport.pageChanged()" total-items="invoiceReport.totalItems" ng-model="invoiceReport.currentPage" max-size="invoiceReport.maxSize" class="pagination-md" num-pages="numPages" previous-text="‹" next-text="›" boundary-link-numbers='true' rotate='false'></ul>
         </div>
       </div>
     </div>
   </div>
+</div>
 </div>
 
 <!-- Modal -->

@@ -70,7 +70,7 @@ describe 'invoice report(ใบเสร็จ)', js: true do
     sleep(1)
     # have 10 invoices on the first page
     eventually do
-      expect( all('tr.tr-invoice').count ).to eq(10)
+      expect( all('#tableHeader > tbody > tr').count ).to eq(10)
     end
     # expect to have 2 pages
     expect( all('li.pagination-page').count ).to eq(2)
@@ -80,11 +80,10 @@ describe 'invoice report(ใบเสร็จ)', js: true do
     visit 'somsri_invoice#/invoice_report'
     sleep(1)
     find('#searchField').set('สม')
-    find('#searchButton').click()
     sleep(1)
     # have 2 search results
     eventually do
-      expect( all('tr.tr-invoice').count ).to eq(2)
+      expect( all('#tableHeader > tbody > tr').count ).to eq(2)
     end
     # expect to have 1 page
     expect( all('li.pagination-page').count ).to eq(1)
@@ -93,18 +92,18 @@ describe 'invoice report(ใบเสร็จ)', js: true do
   it 'should display 10 row per page' do
     visit 'somsri_invoice#/invoice_report'
     sleep(5)
-    expect(page).to have_selector("tr.ng-scope", count: 10)
-    expect(page).to have_content("First Previous 12 Next Last")
+    expect(page).to have_selector("#tableHeader > tbody > tr", count: 10)
+    expect(page).to have_content("‹ 12 ›")
   end
 
   it 'should display page 2' do
     login_as(user, scope: :user)
     visit 'somsri_invoice#/invoice_report'
     sleep(1)
-    all('li.pagination-page.ng-scope a').last.click
+    find('#student-report > div > div.row.report-content.container-fluid > div.row.row-centered > div > ul > li.pagination-next.ng-scope > a').click
     sleep(1)
-    expect(page).to have_selector("tr.ng-scope", count: 1)
-    expect(page).to have_content("First Previous 12 Next Last")
+    expect(page).to have_selector("#tableHeader > tbody > tr", count: 1)
+    expect(page).to have_content("‹ 12 ›")
   end
 
   it 'canceled must blank', :skip_before do
@@ -116,7 +115,7 @@ describe 'invoice report(ใบเสร็จ)', js: true do
 
     visit 'somsri_invoice#/invoice_report'
     sleep(1)
-    all('tr.tr-invoice.ng-scope a').first.click
+    find("#tableHeader > tbody > tr:nth-child(1) > td:nth-child(10) > a").click
     sleep(1)
     click_on("ใช่")
     sleep(1)      

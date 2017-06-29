@@ -6,9 +6,9 @@ class InvoicesController < ApplicationController
   # GET /invoices
   def index
     grade_select = (params[:grade_select] || 'All')
-    @invoices = get_invoices(grade_select, params[:search_keyword], params[:page])
+    @invoices = get_invoices(grade_select, params[:search_keyword], params[:page], params[:sort], params[:order])
     if @invoices.total_pages < @invoices.current_page
-      @invoices = get_invoices(grade_select, params[:search_keyword], 1)
+      @invoices = get_invoices(grade_select, params[:search_keyword], 1, params[:sort], params[:order])
     end
     @filter_grade = grade_select
     render json: {
@@ -448,21 +448,24 @@ class InvoicesController < ApplicationController
                         .where(updated_at: start_date..end_date)
     end
 
-    def get_invoices(grade_select, search_keyword, page)
+    def get_invoices(grade_select, search_keyword, page, sort, order)
       if grade_select.downcase == 'all'
+
         # @invoices = Invoice.order("id DESC").to_a
         # @invoices = Invoice.order("id DESC").search(params[:search]).all.page(params[:page]).to_a
-        @invoices = Invoice.search(search_keyword)
-                           .order("id DESC")
+        @invoices = Invoice.includes(:payment_methods, :parent, :student, :user, :line_items, :invoice_status)
+                           .search(search_keyword)
+                           .order("#{sort} #{order}")
                            .paginate(page: page, per_page: 10)
                            .to_a
       else
         # @invoices = Invoice.where(grade_name: grade_select).order("id DESC").to_a
         # @invoices = Invoice.where(grade_id: grade.id).order("id DESC").search(params[:search]).page(params[:page]).to_a
         grade = Grade.where(name: grade_select).first
-        @invoices = Invoice.search(search_keyword)
+        @invoices = Invoice.includes(:payment_methods, :parent, :student, :user, :line_items, :invoice_status)
+                           .search(search_keyword)
                            .where(grade_name: grade.name)
-                           .order("id DESC")
+                           .order("#{sort} #{order}")
                            .paginate(page: page, per_page: 10)
                            .to_a
       end
