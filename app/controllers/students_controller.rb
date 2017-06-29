@@ -123,7 +123,7 @@ class StudentsController < ApplicationController
     grade_select = (params[:grade_select] || 'All')
     class_select = (params[:class_select] || 'All')
 
-    @class_display = Student.with_deleted.order("classroom ASC").select(:classroom).map(&:classroom).uniq.compact
+    @class_display = Student.order("classroom ASC").select(:classroom).map(&:classroom).uniq.compact
     year_select = (params[:year_select] || Date.current.year + 543)
     semester_select = params[:semester_select]
     invoice_status = params[:status]
@@ -167,7 +167,7 @@ class StudentsController < ApplicationController
     else
       respond_to do |f|
         f.html { render "students/index", layout: "application" }
-        f.json { 
+        f.json {
           @students = students.search(params[:search]).order("#{params[:sort]} #{params[:order]}")
           render json: {
             total: @students.count,
