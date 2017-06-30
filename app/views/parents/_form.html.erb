@@ -75,7 +75,14 @@
     </div>
 
     <div class="col-md-4">
-      <%= image_tag(@parent.img_url.url(:medium), :class => 'img-bg circle') if @parent.img_url.exists? %>
+      <% if @parent.img_url.blank? %>
+        <div class="img-default">
+          <i class="fa fa-user icons-default-img" aria-hidden="true"></i>
+          <div class="img-bg bg-light-gray circle"></div>
+        </div>
+      <% else %>
+        <%= image_tag(@parent.img_url.url(:medium), :class => 'circle') if @parent.img_url.exists? %>
+      <% end %>
       <div class="space20"></div>
       <div class="row">
         <div class="col-md-12">

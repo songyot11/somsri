@@ -27,8 +27,8 @@
         <input class="form-control" id="search" type="text" placeholder="ค้นหา" onchange="search()" onkeyup="this.onchange()">
       </div>
     </div>
-    <div class="col-xs-6 select-filter">  
-      <span>เลือกระดับชั้น</span>
+    <div class="col-xs-6 select-filter">
+      <span class="text-label">เลือกระดับชั้น</span>
       <select name="grade_select" id="grade_select" class="btn-grades selectpicker" onchange="filter()">
         <option value='all'>ระดับชั้นทั้งหมด</option>
         <% Grade.all.each do |grade| %>
@@ -36,7 +36,7 @@
         <% end %>
       </select>
 
-      <span>เลือกห้อง</span>
+      <span class="text-label">เลือกห้อง</span>
       <select name="class_select" id="class_select" class="btn-grades selectpicker" onchange="filter()">
         <option value='all'>ห้องทั้งหมด</option>
         <% @class_display.each do |classroom| %>
@@ -57,7 +57,7 @@
   data-query-params="queryParams" >
   <thead>
     <tr>
-      <th data-field="full_name" data-sortable="true" style="width: 300px;" >ชื่อ-สกุล</th>
+      <th data-field="full_name" data-sortable="true">ชื่อ-สกุล</th>
       <th data-field="nickname" data-sortable="true">ชื่อเล่น</th>
       <th data-field="grade_id" data-sortable="true">ระดับชั้น</th>
       <th data-field="classroom" data-sortable="true">ห้องเรียน</th>

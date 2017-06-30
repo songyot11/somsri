@@ -1561,8 +1561,13 @@ a#student_remove,a#parent_archive  {
     font-size: 16px;
   }
 }
-.col-xs-6.select-filter{
+.select-filter{
   text-align: right;
+
+  span.text-label{
+    font-size: 1.2em;
+    padding: 8px 12px;
+  }
 }
 .toolbar-student-parent{
   margin-bottom:30px;
@@ -1633,4 +1638,22 @@ ul.uib-datepicker-popup.dropdown-menu {
 }
 .free-space{
   margin-top: 50px;
+}
+.img-default{
+  position: relative;
+}
+.icons-default-img{
+  color: #fff;
+  font-size: 10em;
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+}
+.img-bg {
+  width: 100%;
+  padding-bottom: 100%;
+  background-size: 100% !important;
+  background-repeat: no-repeat !important;
+  background-position: center top !important;
 }

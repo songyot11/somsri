@@ -300,8 +300,13 @@ ul.nav.navbar-nav.navbar-right.dropdown{
     font-size: 16px;
   }
 }
-.col-xs-6.select-filter{
+.select-filter{
   text-align: right;
+
+  span.text-label{
+    font-size: 1.2em;
+    padding: 8px 12px;
+  }
 }
 .toolbar-student-parent{
   margin-bottom:30px;
