@@ -1475,7 +1475,10 @@ table.table.table-sp-report>tbody{
 .circle{
   border-radius: 50%;
 }
-
+.img-preView{
+  position: relative;
+  margin-top:0px;
+}
 a#student_remove,a#parent_archive  {
   margin-left: 20px;
 }
@@ -1639,14 +1642,15 @@ ul.uib-datepicker-popup.dropdown-menu {
 .free-space{
   margin-top: 50px;
 }
-.img-default{
-  position: relative;
+label.img-default{
+  display: inline;
+  cursor: pointer;
 }
 .icons-default-img{
   color: #fff;
   font-size: 10em;
   position: absolute;
-  top: 50%;
+  top: 40%;
   left: 50%;
   transform: translate(-50%, -50%);
 }
