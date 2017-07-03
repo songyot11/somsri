@@ -168,8 +168,16 @@ ul.nav.navbar-nav.navbar-right.dropdown{
   border: inherit;
 }
 
-.semester-1{
+.inline-block{
   display: -webkit-inline-box;
+
+  input#semester,
+  input#term{
+    width: 80px;
+  }
+  input#school_year{
+    width: 100px;
+  }
 }
 
 .btn-primary, .btn-primary:focus{
@@ -198,8 +206,13 @@ ul.nav.navbar-nav.navbar-right.dropdown{
   background-color: transparent;
   margin-top: -3px;
 }
-#semester{
+#semester,
+#school_year,
+#term{
   margin-top: -8px;
+}
+.form-1_2 select#grade{
+  width: 100%;
 }
 .fa-times-circle{
   color: #d0021b;

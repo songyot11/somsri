@@ -135,7 +135,13 @@ class InvoicesController < ApplicationController
       invoice_hash.delete(:items)
       invoice_hash.delete(:grade)
       invoice_hash.delete(:grade_name)
-      invoice_hash[:school_year] = SchoolSetting.school_year
+
+      if invoice_hash[:school_year].blank?
+        invoice_hash[:school_year] = SchoolSetting.school_year
+      else
+        invoice_hash[:school_year]
+      end
+
       invoice = Invoice.new(invoice_hash)
       invoice.parent_id = parent.id
       invoice.student_id = student.id
