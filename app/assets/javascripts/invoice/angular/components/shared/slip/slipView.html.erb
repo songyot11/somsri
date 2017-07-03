@@ -75,7 +75,7 @@
   <div id="min-height-pay">
     <div class="sec-payment">
       <div class="row text-slip3-payment"><b>การชำระเงิน / Payment</b></div>
-      <div class="row text-slip2-school">
+      <div class="row text-slip2-payment">
         <div class="col-xs-12">
           <div class="row" ng-show="slipContent.datas.is_cash">
             <div class="col-xs-9">
@@ -114,7 +114,8 @@
               <div class="checkbox">
                 <label>
                   <span>&nbsp;
-                    เช็คธนาคาร / Cheque {{ slipContent.datas.cheque_bank_name || '.................' }} เช็คเลขที่ / No. {{ slipContent.datas.cheque_number || '.......' }} ลงวันที่ / Date {{ slipContent.datas.cheque_date || '.......' }}
+                    เช็คธนาคาร / Cheque :&nbsp; <U>{{ slipContent.datas.cheque_bank_name || '.................' }}</U> &nbsp;เช็คเลขที่ / No. : &nbsp;<U>{{ slipContent.datas.cheque_number || '.......' }}</U>&nbsp;
+                    ลงวันที่ / Date : &nbsp;<U>{{ slipContent.datas.cheque_date || '.......' }}</U>&nbsp;
                   </span>
                 </label>
               </div>
@@ -130,7 +131,7 @@
               <div class="checkbox">
                 <label>
                   <span>&nbsp;
-                    เงินโอน {{ slipContent.datas.transfer_bank_name || '.................' }} ลงวันที่ / Date {{ slipContent.datas.transfer_date || '.......' }}
+                    เงินโอน / Transfer Payment :&nbsp; <U>{{ slipContent.datas.transfer_bank_name || '.................' }}</U> &nbsp;ลงวันที่ / Date:&nbsp; <U>{{ slipContent.datas.transfer_date || '.......' }}</U>
                   </span>
                 </label>
               </div>
