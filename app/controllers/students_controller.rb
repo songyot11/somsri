@@ -56,19 +56,19 @@ class StudentsController < ApplicationController
         last_tuition_invoice = invoice
         payment_method = invoice.payment_methods.collect{ |pm| pm.payment_method }.join(',')
       end
-
       data = {
         id: student.id,
         classroom_number: student.classroom_number,
         student_number: student.student_number,
         grade_name: last_tuition_invoice ? last_tuition_invoice.grade_name : student.grade_name,
+        classroom: student.classroom,
         parent_names: student.parent_names,
         active_invoice_status: paid ? "ชำระแล้ว" : "ยังไม่ได้ชำระ",
         active_invoice_payment_method: payment_method,
         active_invoice_tuition_fee: tuition_fee,
         active_invoice_other_fee: other_fee,
         active_invoice_total_amount: total_fee,
-        full_name_with_title: student.full_name_with_title,
+        full_name_with_title: student.invoice_screen_full_name_display,
         nickname_eng_thai: student.nickname_eng_thai,
         active_invoice_updated_at: last_tuition_invoice ? last_tuition_invoice.updated_at : nil,
         deleted_at: student.deleted_at

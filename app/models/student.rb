@@ -107,10 +107,16 @@ class Student < ApplicationRecord
   end
 
   def grade_name
-    if self.grade && self.classroom
-      return "#{self.grade.name} (#{classroom})"
-    elsif self.grade
+    if self.grade
       return self.grade.name
+    else
+      return ''
+    end
+  end
+
+  def classroom
+    if self[:classroom]
+      return self[:classroom]
     else
       return ''
     end
@@ -440,7 +446,7 @@ class Student < ApplicationRecord
         prefix: self.prefix,
         number: self.number
       }
-      
+
       return roll_call_json.merge(super())
     else
       super()

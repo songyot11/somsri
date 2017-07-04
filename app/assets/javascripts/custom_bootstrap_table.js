@@ -33,5 +33,8 @@
       class_select: $("select#class_select").val()
     };
   }
-
-
+  function cellStyle(value, row, index) {
+      return {
+        css: {"text-align": "center"}
+      };
+  }

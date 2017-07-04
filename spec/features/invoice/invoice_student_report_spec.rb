@@ -251,7 +251,7 @@ describe 'Student Report', js: true do
     it 'display only active invoice' do
       visit 'somsri_invoice#/student_report'
       sleep(1)
-      expect(page).to have_content("มั่งมี ศรีสุข รวย 13 ชำระแล้ว เงินสด 48,000.00 10,000.00 58,000.00")
+      expect(page).to have_content("มั่งมี ศรีสุข (รวย) 13 ชำระแล้ว เงินสด 48,000.00 10,000.00 58,000.00")
     end
   end
 
