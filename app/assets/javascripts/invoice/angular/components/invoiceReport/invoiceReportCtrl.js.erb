@@ -17,6 +17,19 @@
       ctrl.sort = 'invoices.id';
       ctrl.order = 'desc';
 
+      // default last 7 days
+      ctrl.end_date = new Date();
+      ctrl.start_date = new Date(new Date().setMonth(new Date().getMonth() - 1));
+
+      function cleanDate(date){
+        if(!date || new Date(date) == "Invalid Date"){return;}
+        var cleanedDate = new Date()
+        cleanedDate.setDate(date.getDate())
+        cleanedDate.setMonth(date.getMonth())
+        cleanedDate.setYear(date.getFullYear())
+        return cleanedDate
+      }
+
       function filterDate(value, row, index) {
         if (value) {
           return $filter('date')(value, 'd/MM/yyyy hh:mm');
@@ -39,7 +52,7 @@
         }
         return "-";
       }
-      
+
       function linkCancelInvoice(value, row, index) {
         if(!row.is_cancel && ctrl.thisDay(row.created_at)){
           ctrl.invoice[index] = row;
@@ -119,11 +132,13 @@
       });
 
       function getStudents() {
+        ctrl.start_date = cleanDate(ctrl.start_date)
+        ctrl.end_date = cleanDate(ctrl.end_date)
         if(!ctrl.currentPage){ ctrl.currentPage = 1 }
           service.getGrades().then(function(grade_resp) {
             ctrl.currentGradeString = ctrl.grade_name
             ctrl.grades = grade_resp.data
-            service.getInvoices(ctrl.grade_name, ctrl.searchKeyword, ctrl.currentPage, ctrl.sort, ctrl.order).then(function(resp) {
+            service.getInvoices(ctrl.grade_name, ctrl.searchKeyword, ctrl.start_date, ctrl.end_date, ctrl.currentPage, ctrl.sort, ctrl.order).then(function(resp) {
               ctrl.datas = [];
               if (resp.data && resp.data.invoices){
                 ctrl.datas = resp.data.invoices
@@ -160,6 +175,26 @@
         var d = new Date(date);
         return today.toDateString()===d.toDateString();
       }
+
+      ctrl.optionsChange = function() {
+        getStudents()
+      }
+
+      ctrl.openStartDatePopup = function() {
+        ctrl.startDatePopup.opened = true;
+      };
+
+      ctrl.startDatePopup = {
+        opened: false
+      };
+
+      ctrl.openEndDatePopup = function() {
+        ctrl.endDatePopup.opened = true;
+      };
+
+      ctrl.endDatePopup = {
+        opened: false
+      };
 
       getStudents();
 

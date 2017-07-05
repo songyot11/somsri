@@ -6,9 +6,11 @@ class InvoicesController < ApplicationController
   # GET /invoices
   def index
     grade_select = (params[:grade_select] || 'All')
-    @invoices = get_invoices(grade_select, params[:search_keyword], params[:page], params[:sort], params[:order])
+    start_date = DateTime.parse(params[:start_date]).beginning_of_day if isDate(params[:start_date])
+    end_date = DateTime.parse(params[:end_date]).end_of_day if isDate(params[:end_date])
+    @invoices = get_invoices(grade_select, params[:search_keyword], start_date, end_date, params[:page], params[:sort], params[:order])
     if @invoices.total_pages < @invoices.current_page
-      @invoices = get_invoices(grade_select, params[:search_keyword], 1, params[:sort], params[:order])
+      @invoices = get_invoices(grade_select, params[:search_keyword], start_date, end_date, 1, params[:sort], params[:order])
     end
     @filter_grade = grade_select
     render json: {
@@ -318,8 +320,8 @@ class InvoicesController < ApplicationController
       options = grouping_keyword.collect{|gk| { name: gk[:name], value: true }}
     end
 
-    start_date = DateTime.parse(params[:start_date]).beginning_of_day
-    end_date = DateTime.parse(params[:end_date]).end_of_day
+    start_date = DateTime.parse(params[:start_date]).beginning_of_day if isDate(params[:start_date])
+    end_date = DateTime.parse(params[:end_date]).end_of_day if isDate(params[:end_date])
 
     summary_mode = select_summary_mode(start_date, end_date)
     invoices = query_invoice_by_date_range(start_date, end_date)
@@ -443,38 +445,31 @@ class InvoicesController < ApplicationController
 
     def select_summary_mode(start_date, end_date)
       summary_mode = "per_day"
-      if start_date.to_date == end_date.to_date
+      if start_date && end_date && start_date.to_date == end_date.to_date
         summary_mode = "per_student"
       end
       return summary_mode
     end
 
     def query_invoice_by_date_range(start_date, end_date)
-      return Invoice.where(invoice_status_id: InvoiceStatus.find_by_name('Active').id)
-                        .where(updated_at: start_date..end_date)
+      qry_invoices = Invoice.where(invoice_status_id: InvoiceStatus.find_by_name('Active').id)
+      qry_invoices = qry_date_range(qry_invoices, start_date, end_date)
+      return qry_invoices
     end
 
-    def get_invoices(grade_select, search_keyword, page, sort, order)
-      if grade_select.downcase == 'all'
-
-        # @invoices = Invoice.order("id DESC").to_a
-        # @invoices = Invoice.order("id DESC").search(params[:search]).all.page(params[:page]).to_a
-        @invoices = Invoice.includes(:payment_methods, :parent, :student, :user, :line_items, :invoice_status)
-                           .search(search_keyword)
-                           .order("#{sort} #{order}")
-                           .paginate(page: page, per_page: 10)
-                           .to_a
-      else
-        # @invoices = Invoice.where(grade_name: grade_select).order("id DESC").to_a
-        # @invoices = Invoice.where(grade_id: grade.id).order("id DESC").search(params[:search]).page(params[:page]).to_a
+    def get_invoices(grade_select, search_keyword, start_date, end_date, page, sort, order)
+      qry_invoices = Invoice.includes(:payment_methods, :parent, :student, :user, :line_items, :invoice_status)
+                            .search(search_keyword)
+      if grade_select.downcase != 'all'
         grade = Grade.where(name: grade_select).first
-        @invoices = Invoice.includes(:payment_methods, :parent, :student, :user, :line_items, :invoice_status)
-                           .search(search_keyword)
-                           .where(grade_name: grade.name)
-                           .order("#{sort} #{order}")
-                           .paginate(page: page, per_page: 10)
-                           .to_a
+        qry_invoices = qry_invoices.where(grade_name: grade.name) if grade
       end
+
+      qry_invoices = qry_date_range(qry_invoices, start_date, end_date)
+
+      @invoices = qry_invoices.order("#{sort} #{order}")
+                              .paginate(page: page, per_page: 10)
+                              .to_a
     end
 
     # Use callbacks to share common setup or constraints between actions.

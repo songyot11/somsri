@@ -32,7 +32,7 @@
       }
 
       function getReportMode(){
-        if(ctrl.end_date.toDateString() == ctrl.start_date.toDateString()){
+        if(ctrl.end_date && ctrl.start_date && ctrl.end_date.toDateString() == ctrl.start_date.toDateString()){
           return "per_student"
         }else{
           return "per_day"
@@ -40,6 +40,7 @@
       }
 
       function cleanDate(date){
+        if(!date || new Date(date) == "Invalid Date"){return;}
         var cleanedDate = new Date()
         cleanedDate.setDate(date.getDate())
         cleanedDate.setMonth(date.getMonth())
@@ -55,9 +56,6 @@
       }
 
       ctrl.optionsChange = function() {
-        //validate date object
-        if(new Date(ctrl.start_date) == "Invalid Date"){return;}
-        if(new Date(ctrl.end_date) == "Invalid Date"){return;}
         loadData()
       }
 

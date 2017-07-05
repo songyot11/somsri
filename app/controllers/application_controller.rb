@@ -16,9 +16,20 @@ class ApplicationController < ActionController::Base
     begin
        Date.parse(date_string)
        return true
-    rescue ArgumentError
+    rescue
        return false
     end
+  end
+
+  def qry_date_range(qry, start_date, end_date)
+    if start_date && end_date
+      qry = qry.where(updated_at: start_date..end_date)
+    elsif start_date
+      qry = qry.where("updated_at > ?", start_date)
+    elsif end_date
+      qry = qry.where("updated_at < ?", end_date)
+    end
+    return qry
   end
 
   def set_cache_buster

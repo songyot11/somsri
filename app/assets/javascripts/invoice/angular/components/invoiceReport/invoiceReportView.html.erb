@@ -26,6 +26,39 @@
       </div>
 
       <div class="row report-content container-fluid">
+        <div class="row">
+          <div class="col-xs-3 col-xs-offset-4 col-lg-3 col-lg-offset-6">
+            <div class="form-group">
+              <span class="input-group">
+                <div class="col-xs-2">
+                  <label for="start_date" class="text-status-date">จาก</label>
+                </div>
+                <div class="col-xs-10">
+                  <input id="start_date" type="text" class="form-control" uib-datepicker-popup="dd/MM/yyyy" datepicker-options="{showWeeks:false}" ng-model="invoiceReport.start_date" is-open="invoiceReport.startDatePopup.opened" close-text="Close" ng-change="invoiceReport.optionsChange()"/>
+                  <span class="input-group-btn" style="display: inherit;">
+                    <button type="button" class="btn btn-default" ng-click="invoiceReport.openStartDatePopup()"><i class="fa fa-calendar"></i></button>
+                  </span>
+                </div>
+              </span>
+            </div>
+          </div>
+          <div class="col-xs-3 col-lg-3">
+            <div class="form-group">
+              <span class="input-group">
+                <div class="col-xs-2">
+                  <label for="end_date" class="text-status-date">ถึง</label>
+                </div>
+                <div class="col-xs-10">
+                  <input id="end_date" type="text" class="form-control" uib-datepicker-popup="dd/MM/yyyy" datepicker-options="{showWeeks:false}" ng-model="invoiceReport.end_date" is-open="invoiceReport.endDatePopup.opened" close-text="Close" ng-change="invoiceReport.optionsChange()"/>
+                  <span class="input-group-btn" style="display: inherit;">
+                    <button type="button" class="btn btn-default" ng-click="invoiceReport.openEndDatePopup()"><i class="fa fa-calendar"></i></button>
+                  </span>
+                </div>
+              </span>
+            </div>
+          </div>
+        </div>
+
         <div class="col-xs-6 form-group fix-head-table">
           <input id="searchField" type="text" ng-model="invoiceReport.searchKeyword" ng-change="invoiceReport.search()" placeholder="ค้นหาตามเลขที่ใบเสร็จ,ชื่อนักเรียน,ชื่อผู้ปกครอง" class="search-sp" />
         </div>
