@@ -1,12 +1,17 @@
+<style type="text/css" media="print">
+  @page {size: landscape;}
+</style>
+
 <div class="container-fluid">
   <div id="invoice_grouping_report" class="row ng-scope">
     <div class="row head-menu">
       <div class="col-xs-6">
-        <h1>
+        <h1 class="text-h-print">
           รายงานแยกตามประเภท
         </h1>
       </div>
-      <div class="col-xs-6">
+      <div class="col-xs-6 text-right">
+        <a href="#/grouping_report" class="btn btn-to-print-report" onclick="window.print()"><i class='fa fa-print'></i> พิมพ์รายงาน</a>
       </div>
      </div>
     <div class="unused_for_print col-xs-12">
@@ -14,7 +19,7 @@
         <div class="row">
           <div class="dropdown-filter">
             <div class="row">
-              <div class="col-xs-3 col-xs-offset-4 col-lg-2 col-lg-offset-6">
+              <div class="col-xs-3 col-xs-offset-4 col-lg-2 col-lg-offset-6 date-for-print">
                 <div class="form-group">
                   <span class="input-group">
                     <div class="col-xs-2">
@@ -65,7 +70,7 @@
             <table id="tableHeader" class="table scrollable-header grop-items-invoice">
               <thead>
                 <tr>
-                 <th style="border:none;"></th>
+                 <td style="border:none;"></td>
                  <th colspan="4">ชำระโดย</th>
                </tr>
                <tr>
