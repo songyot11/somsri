@@ -41,7 +41,7 @@ describe 'invoice', js: true do
     sleep(1)
     find('.menu-btn.slip').click()
     sleep(1)
-    find('#tableHeader > tbody > tr:nth-child(1) > td:nth-child(1) > a').click()
+    find('#invoice-table > tbody > tr:nth-child(1) > td:nth-child(1) > a').click()
     sleep(1)
   end
 

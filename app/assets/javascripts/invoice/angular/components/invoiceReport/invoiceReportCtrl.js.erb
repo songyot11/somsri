@@ -4,13 +4,14 @@
     ])
   .controller('invoiceReportCtrl', ['$compile', '$scope', '$window', '$filter', '$rootScope', 'invoiceReportService', '$timeout', function($compile, $scope, $window, $filter, $rootScope, service, $timeout) {
     $rootScope.menu = "ใบเสร็จ"
-    var $table = $('#tableHeader');
     var ctrl = this
     var angularScopeRoot = 'angular.element(document.getElementById("angularCtrl")).scope().$root'
     var angularScopeInvoice = 'angular.element(document.getElementById("angularCtrl")).scope().invoiceReport'
     ctrl.invoice = [];
 
     $rootScope.loadAndAuthorizeResource("invoice", function(){
+      var main_table = $('#invoice-table');
+      var print_table = $('#for-print-table');
       ctrl.currentPage = 1;
       ctrl.searchKeyword = '';
       ctrl.grade_name = "All"
@@ -76,7 +77,7 @@
         getStudents();
       }
 
-      $table.bootstrapTable({
+      var bootstrapTableOptions = {
         onSort: function(name, order){
           ctrl.sort = name;
           ctrl.order = order;
@@ -86,6 +87,7 @@
         columns: [{
           field: 'id',
           title: 'Invoice #',
+          classes: 'text-right',
           sortable: true,
           formatter: linkInvoiceID
         },{
@@ -123,13 +125,18 @@
         },{
           field: 'invoice_statuses.name',
           title: 'สถานะ',
+          class: 'for-display',
           sortable: true,
         },{
           field: '',
           title: '',
+          class: 'for-display',
           formatter: linkCancelInvoice,
         }],
-      });
+      }
+
+      print_table.bootstrapTable(bootstrapTableOptions);
+      main_table.bootstrapTable($.extend(bootstrapTableOptions, {toolbar: "#date-filter"}));
 
       function getStudents() {
         ctrl.start_date = cleanDate(ctrl.start_date)
@@ -149,9 +156,20 @@
                 ctrl.currentPage = 0;
               }
               ctrl.maxSize = 5;
-              $table.bootstrapTable('load', ctrl.datas);
+              main_table.bootstrapTable('load', ctrl.datas);
             });
           });
+      }
+
+      ctrl.getStudentsForPrint = function() {
+        ctrl.start_date = cleanDate(ctrl.start_date)
+        ctrl.end_date = cleanDate(ctrl.end_date)
+        service.getInvoices(ctrl.grade_name, ctrl.searchKeyword, ctrl.start_date, ctrl.end_date, null, ctrl.sort, ctrl.order).then(function(resp) {
+          if (resp.data && resp.data.invoices){
+            print_table.bootstrapTable('load', ctrl.datas = resp.data.invoices);
+            window.print();
+          }
+        });
       }
 
       ctrl.cancelInvoice = function() {

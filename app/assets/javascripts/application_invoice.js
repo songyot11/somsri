@@ -32,6 +32,7 @@
 //= require invoice/angular/app.module
 //= require invoice/angular/app.assets
 
+//= require invoice/angular/shared/filters
 //= require angular-xeditable/dist/js/xeditable
 //= require bootstrap-table
 //= require bootstrap-select/js/bootstrap-select

@@ -265,7 +265,8 @@ ul.nav.navbar-nav.navbar-right.dropdown{
   border-top: 1px solid #5d5d5d;
   border-bottom: 4px double #5d5d5d;
 }
-.text-right-htable{
+.text-right-htable,
+.text-right{
   text-align: right !important;
 }
 .row.invoice-item.add-invoice-item {
@@ -410,6 +411,20 @@ textarea {
 
 .pagebreak { page-break-before: always; }
 
+.fixed-table-container tbody td {
+  border-left: 0px solid #dddddd !important;
+}
+.bootstrap-table .table > thead > tr > th {
+  border-bottom: 2px solid #ddd;
+  border-left: 0px;
+}
+.fixed-table-container {
+  border: 0px solid #dddddd !important;
+}
+
+@print {
+  size: A4;
+}
 @media print {
   body{
     margin-bottom: 0px !important;
@@ -528,6 +543,47 @@ textarea {
     margin-left: 0px;
     margin-right: 0px;
   }
+  #student-report.invoice_report {
+      margin-top: 0px !important;
+  }
+  #student-report .report-content{
+    padding: 0px !important;
+  }
+  .text-title {
+    font-size: 18px !important;
+    font-weight: bold !important;
+    margin-top: 0px !important;
+    margin-bottom: 10px;
+    border-bottom: 2px solid #ddd;
+  }
+  .text-title-date{
+    font-size: 14px !important;
+    margin-bottom: 30px;
+  }
+  .fixed-table-body thead th .th-inner{
+    background-color: #f2f2f2 !important;
+  }
+  .bootstrap-table .table > thead > tr > th{
+    border: 1px solid !important;
+  }
+  .fixed-table-container tbody td{
+    border: 1px solid !important;
+  }
+  .bootstrap-table .table > thead > tr > th{
+    border-bottom: none !important;
+  }
+  .bootstrap-table .table:not(.table-condensed),
+  .bootstrap-table .table:not(.table-condensed) > tbody > tr > th,
+  .bootstrap-table .table:not(.table-condensed) > tfoot > tr > th,
+  .bootstrap-table .table:not(.table-condensed) > thead > tr > td,
+  .bootstrap-table .table:not(.table-condensed) > tbody > tr > td,
+  .bootstrap-table .table:not(.table-condensed) > tfoot > tr > td{
+    padding: 3px !important;
+  }
+  .text-table-invoicereport{
+    font-size: 11px !important;
+  }
+
 }
 /*slip*/
 .form-slip{
@@ -880,6 +936,25 @@ body.somsri-invoice >.container-fluid {
   }
 }
 
+.btn-to-print-report,
+.btn-to-print-report:focus{
+   margin-top: 5px;
+   padding: 12px 32px;
+   font-weight: lighter;
+   background-color: #5b5b5b;
+   border: 2px solid #5b5b5b;
+   color: #fff;
+   font-size: 16px;
+   border-radius: 0px;
+   cursor: pointer;
+   transition: all 0.25s ease;
+
+ &:hover{
+   color: #5b5b5b;
+   background-color: transparent;
+   border: 2px solid #5b5b5b;
+ }
+}
 
 .btn-danger {
   border-radius: 0px
@@ -1644,16 +1719,6 @@ a#student_remove,a#parent_archive  {
 #parent-index .pagination>li .disabled>a{
   cursor: not-allowed;
 }
-.fixed-table-container tbody td {
-  border-left: 0px solid #dddddd !important;
-}
-.bootstrap-table .table > thead > tr > th {
-  border-bottom: 2px solid #ddd !important;
-  border-left: 0px;
-}
-.fixed-table-container {
-  border: 0px solid #dddddd !important;
-}
 
 .search{
   display: inline-flex;
@@ -1759,4 +1824,10 @@ label.img-default{
   background-size: 100% !important;
   background-repeat: no-repeat !important;
   background-position: center top !important;
+}
+
+.col-btn-print-report{
+  padding-right: 0px;
+  text-align: right;
+  margin-bottom: 15px;
 }

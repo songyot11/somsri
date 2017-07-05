@@ -73,7 +73,7 @@ describe 'invoice report(ใบเสร็จ)', js: true do
     sleep(1)
     # have 10 invoices on the first page
     eventually do
-      expect( all('#tableHeader > tbody > tr').count ).to eq(10)
+      expect( all('#invoice-table > tbody > tr').count ).to eq(10)
     end
     # expect to have 2 pages
     expect( all('li.pagination-page').count ).to eq(2)
@@ -86,7 +86,7 @@ describe 'invoice report(ใบเสร็จ)', js: true do
     sleep(1)
     # have 2 search results
     eventually do
-      expect( all('#tableHeader > tbody > tr').count ).to eq(2)
+      expect( all('#invoice-table > tbody > tr').count ).to eq(2)
     end
     # expect to have 1 page
     expect( all('li.pagination-page').count ).to eq(1)
@@ -98,7 +98,7 @@ describe 'invoice report(ใบเสร็จ)', js: true do
     find('#start_date').set(yesterday_str)
     find('#end_date').set(yesterday_str)
     sleep(1)
-    eventually { expect( all('#tableHeader > tbody > tr').count ).to eq(3) }
+    eventually { expect( all('#invoice-table > tbody > tr').count ).to eq(3) }
     eventually { expect( all('li.pagination-page').count ).to eq(1) }
     eventually { expect( page ).to have_content(invoices[2].student.full_name) }
     eventually { expect( page ).to have_content(invoices[3].student.full_name) }
@@ -108,7 +108,7 @@ describe 'invoice report(ใบเสร็จ)', js: true do
   it 'should qry from today to present' do
     visit 'somsri_invoice#/invoice_report'
     sleep(1)
-    eventually { expect( all('#tableHeader > tbody > tr').count ).to eq(10) }
+    eventually { expect( all('#invoice-table > tbody > tr').count ).to eq(10) }
     eventually { expect( all('li.pagination-page').count ).to eq(2) }
     eventually { expect( page ).to_not have_content(invoices[0].student.full_name) }
     eventually { expect( page ).to have_content(invoices[1].student.full_name) }
@@ -126,7 +126,7 @@ describe 'invoice report(ใบเสร็จ)', js: true do
     find('#end_date').set("")
     sleep(1)
 
-    eventually { expect( all('#tableHeader > tbody > tr').count ).to eq(8) }
+    eventually { expect( all('#invoice-table > tbody > tr').count ).to eq(8) }
     eventually { expect( all('li.pagination-page').count ).to eq(1) }
     eventually { expect( page ).to have_content(invoices[0].student.full_name) }
     eventually { expect( page ).to have_content(invoices[1].student.full_name) }
@@ -144,7 +144,7 @@ describe 'invoice report(ใบเสร็จ)', js: true do
   it 'should qry from pass to yesterday' do
     visit 'somsri_invoice#/invoice_report'
     sleep(1)
-    eventually { expect( all('#tableHeader > tbody > tr').count ).to eq(10) }
+    eventually { expect( all('#invoice-table > tbody > tr').count ).to eq(10) }
     eventually { expect( all('li.pagination-page').count ).to eq(2) }
     eventually { expect( page ).to_not have_content(invoices[0].student.full_name) }
     eventually { expect( page ).to have_content(invoices[1].student.full_name) }
@@ -162,7 +162,7 @@ describe 'invoice report(ใบเสร็จ)', js: true do
     find('#end_date').set(yesterday_str)
     sleep(1)
 
-    eventually { expect( all('#tableHeader > tbody > tr').count ).to eq(3) }
+    eventually { expect( all('#invoice-table > tbody > tr').count ).to eq(3) }
     eventually { expect( all('li.pagination-page').count ).to eq(1) }
     eventually { expect( page ).to_not have_content(invoices[0].student.full_name) }
     eventually { expect( page ).to_not have_content(invoices[1].student.full_name) }
@@ -180,7 +180,7 @@ describe 'invoice report(ใบเสร็จ)', js: true do
   it 'should qry from pass to present' do
     visit 'somsri_invoice#/invoice_report'
     sleep(1)
-    eventually { expect( all('#tableHeader > tbody > tr').count ).to eq(10) }
+    eventually { expect( all('#invoice-table > tbody > tr').count ).to eq(10) }
     eventually { expect( all('li.pagination-page').count ).to eq(2) }
     eventually { expect( page ).to_not have_content(invoices[0].student.full_name) }
     eventually { expect( page ).to have_content(invoices[1].student.full_name) }
@@ -198,7 +198,7 @@ describe 'invoice report(ใบเสร็จ)', js: true do
     find('#end_date').set("")
     sleep(1)
 
-    eventually { expect( all('#tableHeader > tbody > tr').count ).to eq(10) }
+    eventually { expect( all('#invoice-table > tbody > tr').count ).to eq(10) }
     eventually { expect( all('li.pagination-page').count ).to eq(2) }
     eventually { expect( page ).to_not have_content(invoices[0].student.full_name) }
     eventually { expect( page ).to have_content(invoices[1].student.full_name) }
@@ -216,7 +216,7 @@ describe 'invoice report(ใบเสร็จ)', js: true do
   it 'should display 10 row per page' do
     visit 'somsri_invoice#/invoice_report'
     sleep(5)
-    expect(page).to have_selector("#tableHeader > tbody > tr", count: 10)
+    expect(page).to have_selector("#invoice-table > tbody > tr", count: 10)
     expect(page).to have_content("‹ 12 ›")
   end
 
@@ -226,7 +226,7 @@ describe 'invoice report(ใบเสร็จ)', js: true do
     sleep(1)
     find('#student-report > div > div.row.report-content.container-fluid > div.row.row-centered > div > ul > li.pagination-next.ng-scope > a').click
     sleep(1)
-    expect(page).to have_selector("#tableHeader > tbody > tr", count: 1)
+    expect(page).to have_selector("#invoice-table > tbody > tr", count: 1)
     expect(page).to have_content("‹ 12 ›")
   end
 
@@ -239,7 +239,7 @@ describe 'invoice report(ใบเสร็จ)', js: true do
 
     visit 'somsri_invoice#/invoice_report'
     sleep(1)
-    find("#tableHeader > tbody > tr:nth-child(1) > td:nth-child(10) > a").click
+    find("#invoice-table > tbody > tr:nth-child(1) > td:nth-child(10) > a").click
     sleep(1)
     click_on("ใช่")
     sleep(1)

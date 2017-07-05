@@ -1,8 +1,11 @@
 <%= javascript_include_tag 'custom_bootstrap_table' %>
+<style type="text/css" media="print">
+ @page {size: landscape;}
+</style>
 <div class="container-fluid">
   <div id="student-report" class="row ng-scope invoice_report">
     <div class="unused_for_print col-lg-12">
-      <div class="row">
+      <div class="row for-display">
         <div class="col-md-6" style="padding-left: 0px;">
           <div class="col-xs-2" style="margin-right:-20px;">
             <h3>ระดับชั้น</h3>
@@ -23,11 +26,13 @@
             </div>
           </div>
         </div>
+        <div class="col-md-6 col-btn-print-report">
+          <button class="btn-to-print-report" ng-click="invoiceReport.getStudentsForPrint()"><i class="fa fa-print"></i> พิมพ์รายงาน</button>
+        </div>
       </div>
-
       <div class="row report-content container-fluid">
-        <div class="row">
-          <div class="col-xs-3 col-xs-offset-4 col-lg-3 col-lg-offset-6">
+        <div id="date-filter" class="row for-display">
+          <div class="col-xs-6">
             <div class="form-group">
               <span class="input-group">
                 <div class="col-xs-2">
@@ -42,7 +47,7 @@
               </span>
             </div>
           </div>
-          <div class="col-xs-3 col-lg-3">
+          <div class="col-xs-6">
             <div class="form-group">
               <span class="input-group">
                 <div class="col-xs-2">
@@ -58,21 +63,21 @@
             </div>
           </div>
         </div>
-
-        <div class="col-xs-6 form-group fix-head-table">
+        <div class="col-xs-6 form-group fix-head-table for-display">
           <input id="searchField" type="text" ng-model="invoiceReport.searchKeyword" ng-change="invoiceReport.search()" placeholder="ค้นหาตามเลขที่ใบเสร็จ,ชื่อนักเรียน,ชื่อผู้ปกครอง" class="search-sp" />
         </div>
-
-      <table id="tableHeader" class="scrollable-header text-table-invoicereport"></table>
-
-      <div class="row row-centered">
-        <div class="col-centered">
-          <ul uib-pagination ng-change="invoiceReport.pageChanged()" total-items="invoiceReport.totalItems" ng-model="invoiceReport.currentPage" max-size="invoiceReport.maxSize" class="pagination-md" num-pages="numPages" previous-text="‹" next-text="›" boundary-link-numbers='true' rotate='false'></ul>
+        <table id="invoice-table" class="scrollable-header text-table-invoicereport for-display"></table>
+        <div class="text-title for-print">รายงานใบเสร็จ</div>
+        <div class="text-title-date for-print"><b>จาก</b> {{ invoiceReport.start_date | dateFormat }} <b>ถึง</b> {{ invoiceReport.end_date | dateFormat }}</div>
+        <table id="for-print-table" class="scrollable-header text-table-invoicereport for-print"></table>
+        <div class="row row-centered for-display">
+          <div class="col-centered">
+            <ul uib-pagination ng-change="invoiceReport.pageChanged()" total-items="invoiceReport.totalItems" ng-model="invoiceReport.currentPage" max-size="invoiceReport.maxSize" class="pagination-md" num-pages="numPages" previous-text="‹" next-text="›" boundary-link-numbers='true' rotate='false'></ul>
+          </div>
         </div>
       </div>
     </div>
   </div>
-</div>
 </div>
 
 <!-- Modal -->

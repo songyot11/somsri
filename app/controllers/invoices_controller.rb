@@ -9,15 +9,20 @@ class InvoicesController < ApplicationController
     start_date = DateTime.parse(params[:start_date]).beginning_of_day if isDate(params[:start_date])
     end_date = DateTime.parse(params[:end_date]).end_of_day if isDate(params[:end_date])
     @invoices = get_invoices(grade_select, params[:search_keyword], start_date, end_date, params[:page], params[:sort], params[:order])
-    if @invoices.total_pages < @invoices.current_page
+    if params[:page] && @invoices.total_pages < @invoices.current_page
       @invoices = get_invoices(grade_select, params[:search_keyword], start_date, end_date, 1, params[:sort], params[:order])
     end
     @filter_grade = grade_select
-    render json: {
-      current_page: @invoices.current_page,
-      total_records: @invoices.total_entries,
+    result = {
       invoices: @invoices.as_json({ index: true })
     }
+
+    if params[:page]
+      result[:current_page] = @invoices.current_page
+      result[:total_records] = @invoices.total_entries
+    end
+
+    render json: result
   end
 
   # GET /invoices/:id
@@ -467,9 +472,13 @@ class InvoicesController < ApplicationController
 
       qry_invoices = qry_date_range(qry_invoices, start_date, end_date)
 
-      @invoices = qry_invoices.order("#{sort} #{order}")
-                              .paginate(page: page, per_page: 10)
-                              .to_a
+      qry_invoices = qry_invoices.order("#{sort} #{order}")
+
+      if page
+        qry_invoices = qry_invoices.paginate(page: page, per_page: 10)
+      end
+
+      return qry_invoices.to_a
     end
 
     # Use callbacks to share common setup or constraints between actions.
