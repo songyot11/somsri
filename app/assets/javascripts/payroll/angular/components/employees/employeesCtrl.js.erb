@@ -1,11 +1,12 @@
 (function() {
   'use strict';
   angular.module('somsri.payroll.employees', [
-  ])
+    ])
   .controller('employeesCtrl', ['employeesService','$log', '$rootScope', function(employeeService, $log, $rootScope) {
     $rootScope.menu = "บุคลากร"
     var ctrl = this
     var dateNow = new Date();
+    var $table = $('#employeesTable')
     ctrl.displayMode = 'grid';
     getPayroll(dateNow.getMonth() + 1, dateNow.getFullYear());
     function getPayroll(month, year){
@@ -27,12 +28,83 @@
             });
           }
         }
+        $table.bootstrapTable('load', ctrl.display_datas);
       });
     }
 
     ctrl.openEmployeeDetails = function(id){
       $rootScope.openEmployeeDetails(id);
     }
+
+    function salary(value, row, index){
+      if (value) {
+        return '<div class="text-blue text-right" >'+ value.toLocaleString() +' บาท</div>';
+      }
+      return '<div class="text-blue text-right" >0 บาท</div>';
+    }
+
+    function extra(value, row, index){
+      if (value) {
+        return '<div class="text-green text-right" >'+ value.toLocaleString() +' บาท</div>';
+      }
+      return '<div class="text-green text-right" >0 บาท</div>';
+    }
+
+    function fee(value, row, index){
+      if (value) {
+        return '<div class="text-red text-right" >'+ value.toLocaleString() +' บาท</div>';
+      }
+      return '<div class="text-red text-right" >0 บาท</div>';
+    }
+
+    var angularScopeEmployees = "angular.element(document.getElementById('angularCtrl')).scope().employees";
+
+    function edit(value, row, index){
+      if (row) {
+        return '<a href="javascript:void(0)" class="td-edit-employee-link text-center" onclick="'+ angularScopeEmployees +'.openEmployeeDetails('+row.id+')"><i class="fa fa-pencil-square-o"></i> แก้ไข</a>';
+      }
+    }
+
+    function linkName(value, row, index){
+      if (value) {
+        return '<a href="javascript:void(0)" class="td-edit-employee-link text-center" onclick="'+ angularScopeEmployees +'.openEmployeeDetails('+row.id+')">'+ value +'</a>';
+      }
+      return '-'
+    }
+
+    $table.bootstrapTable({
+      columns: [{
+        title: 'ชื่อ-นามสกุล',
+        field: 'full_name',
+        sortable: true,
+        formatter: linkName,
+      },{
+        title: 'ตำแหน่ง',
+        field: 'position',
+        sortable: true,
+      },{
+        title: 'เงินเดือน',
+        field: 'salary',
+        align: 'right',
+        formatter: salary,
+        sortable: true,
+      },{
+        title: 'เงินเพิ่ม',
+        field: 'extra',
+        align: 'right',
+        formatter: extra,
+        sortable: true,
+      },{
+        title: 'เงินหัก',
+        field: 'fee',
+        align: 'right',
+        formatter: fee,
+        sortable: true,
+      },{
+        title: '',
+        formatter: edit,
+      },]
+    })
 
   }]);
 })();

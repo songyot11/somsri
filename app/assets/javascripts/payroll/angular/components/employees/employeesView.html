@@ -64,28 +64,7 @@
 
     <div class="col-md-12" ng-show="employees.displayMode === 'list'">
       <div class="list-view">
-        <table id="employeesTable" class="table">
-          <thead>
-            <tr>
-              <th style="width: 350px;">ชื่อ-นามสกุล</th>
-              <th style="width: 170px;">ตำแหน่ง</th>
-              <th class="text-right">เงินเดือน</th>
-              <th class="text-right">เงินเพิ่ม</th>
-              <th class="text-right">เงินหัก</th>
-              <th style="width: 170px;"></th>
-            </tr>
-          </thead>
-          <tbody>
-            <tr ng-repeat="data in employees.display_datas track by $index">
-              <td><a ng-click="employees.openEmployeeDetails(data.id)" class="blue">{{ data.full_name }}</a></td>
-              <td class="text-grey">{{ data.position }}</td>
-              <td class="text-blue text-right"><span class="numberic">&nbsp;{{ data.salary.toLocaleString() }}</span> บาท</td>
-              <td class="text-green text-right"><span class="numberic">&nbsp;{{ data.extra.toLocaleString() }}</span> บาท</td>
-              <td class="text-red text-right"><span class="numberic">&nbsp;{{ data.fee.toLocaleString() }}</span> บาท</td>
-              <td class="td-edit-employee-link text-center"><a ng-click="employees.openEmployeeDetails(data.id)"><i class="fa fa-pencil-square-o"></i> แก้ไข</a></td>
-            </tr>
-          </tbody>
-        </table>
+        <table id="employeesTable"></table>
       </div>
     </div>
   </div>
