@@ -1,7 +1,7 @@
 (function() {
   'use strict';
   angular.module('somsri.main.setting', [
-  ])
+    ])
   .controller('settingCtrl', ['$rootScope','settingService','$scope', '$uibModal', function($rootScope, service, $scope, $uibModal) {
     $rootScope.menu = "ตั้งค่า"
     var ctrl = this
@@ -34,7 +34,7 @@
             resources: ['$ocLazyLoad', 'ASSETS', function($ocLazyLoad, ASSETS) {
               return $ocLazyLoad.load([
                 ASSETS.somsri.main.password_modal
-              ]);
+                ]);
             }]
           }
         }).result.then(function (isSuccess) {
@@ -43,7 +43,9 @@
           }
         });
       }
+
     });
+
 
   }]);
 })();
