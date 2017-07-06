@@ -416,6 +416,7 @@ class StudentsController < ApplicationController
 
     def parent_assign
       parent_params = params[:parent]
+      mobile = params[:mobile]
       relation_params = params[:relationship]
       @parents = Array.new
       @relationships = Array.new
@@ -436,6 +437,10 @@ class StudentsController < ApplicationController
               prn = Parent.find(p)
             rescue
               prn = Parent.find_or_create_by(full_name: p)
+            end
+            if mobile
+              prn.mobile = mobile[index]
+              prn.save
             end
             @parents.push(prn)
           elsif p.length > 0 && p.to_i == 0

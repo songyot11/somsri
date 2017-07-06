@@ -31,13 +31,20 @@ describe 'Student', js: true do
 
   let(:parent) do
     [
-      Parent.make!({full_name: 'ฉันเป็น สุภาพบุรุษนะครับ'})
+      Parent.make!({full_name: 'ฉันเป็น สุภาพบุรุษนะครับ', mobile: "080-0987654"})
+    ]
+  end
+
+  let(:relationships) do
+    [
+      Relationship.make!({ name: 'Father' }),
+      Relationship.make!({ name: 'Mother' })
     ]
   end
 
   let(:studentsparent) do
     [
-      StudentsParent.make!({student_id: student[0].id , parent_id: parent[0].id})
+      StudentsParent.make!({student_id: student[0].id , parent_id: parent[0].id, relationship_id: relationships[0].id})
     ]
   end
 
@@ -151,5 +158,20 @@ describe 'Student', js: true do
     new_student = Student.where(id: student[0].id).first
     eventually { expect(new_student.student_lists.length).to eq(1) }
     eventually { expect(new_student.student_lists[0].list.name).to eq("2B") }
+  end
+
+  it 'should display parent mobile' do
+    visit "/students/#{student[0].id}/edit#/"
+    eventually { expect(find('#mobile0').value).to eq("080-0987654") }
+  end
+
+  it 'should edit parent mobile' do
+    visit "/students/#{student[0].id}/edit#/"
+    find('#mobile0').set("080-000000")
+    click_button("บันทึก")
+    sleep(1)
+    visit "/students/#{student[0].id}/edit#/"
+    sleep(1)
+    eventually { expect(find('#mobile0').value).to eq("080-000000") }
   end
 end
