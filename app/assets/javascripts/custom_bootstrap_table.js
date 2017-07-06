@@ -23,6 +23,8 @@
   }
 
   function queryParams(p) {
+    window.paramOder = p.order
+    window.paramSort = p.sort
     return {
       offset: p.offset,
       limit: p.limit,

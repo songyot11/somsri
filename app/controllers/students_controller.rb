@@ -140,13 +140,7 @@ class StudentsController < ApplicationController
       grade = Grade.where(name: grade_select).first
       students = Student.where(grade: grade.id , classroom: class_select)
     end
-
-    if params[:for_print]
-      @students = students.order("grade_id ASC, classroom ASC, classroom_number ASC, student_number ASC").search(params[:search]).to_a
-    else
-      @students = students.order("deleted_at DESC , classroom ASC, classroom_number ASC").search(params[:search]).page(params[:page]).to_a
-    end
-
+    @students = students.order("#{params[:sort]} #{params[:order]}").search(params[:search])
     @filter_grade = grade_select
     @filter_class = class_select
 
@@ -168,7 +162,6 @@ class StudentsController < ApplicationController
       respond_to do |f|
         f.html { render "students/index", layout: "application" }
         f.json {
-          @students = students.search(params[:search]).order("#{params[:sort]} #{params[:order]}")
           render json: {
             total: @students.count,
             rows: @students.limit(params[:limit]).offset(params[:offset]).as_json('index')

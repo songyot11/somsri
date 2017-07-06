@@ -1,6 +1,12 @@
 function printStudent(){
   var params_string = window.location.search.substring(1);
-  $.get("/students?" + params_string, { for_print: true })
+  var print_params = { for_print: true }
+  print_params["order"] = window.paramOder
+  print_params["sort"] = window.paramSort
+  print_params["search"] = $("input#search").val()
+  print_params["grade_select"] = $("#grade_select").val()
+  print_params["class_select"] = $("#class_select").val()
+  $.get("/students?" + params_string, print_params)
     .done(function( data ) {
       var html = "";
       var size = 40;
