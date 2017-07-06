@@ -95,7 +95,7 @@ describe 'Employee delete', js: true do
       visit "/somsri_payroll#/report"
       sleep(1)
 
-      eventually { expect(page).to have_selector('tbody tr', count: 1) }
+      eventually { expect(page).to have_selector('.fixed-table-body tbody tr', count: 1) }
     end
   end
 

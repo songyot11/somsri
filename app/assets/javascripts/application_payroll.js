@@ -35,3 +35,4 @@
 //= require payroll/angular/components/shared/slip/slipDirective
 
 //= require angular-xeditable/dist/js/xeditable
+//= require bootstrap-table

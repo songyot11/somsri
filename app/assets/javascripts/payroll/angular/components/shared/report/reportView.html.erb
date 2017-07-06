@@ -1,114 +1,15 @@
-
-  <div ng-repeat="employees in report.employees | filterEmployeesReport: class">
-    <table id="tableHeader" class="table text-right scrollable-header">
-      <thead>
-       <tr>
-          <th class="report_for_print_hide" style="width:60px;">
-            <a href="" ng-click="sortType = 'code'; sortReverse = !sortReverse" class="sort-report">
-              รหัส
-              <span ng-hide="sortType == 'code'" class="fa fa-sort"></span>
-              <span ng-show="sortType == 'code' && !sortReverse" class="fa fa-angle-down"></span>
-              <span ng-show="sortType == 'code' && sortReverse" class="fa fa-caret-up"></span>
-            </a>
-          </th>
-          <th class="forprint-h_table print_name" style="width:300px;">
-            <a href="" ng-click="sortType = 'name'; sortReverse = !sortReverse" class="sort-report">
-              ชื่อ
-              <span ng-hide="sortType == 'name'" class="fa fa-sort"></span>
-              <span ng-show="sortType == 'name' && !sortReverse" class="fa fa-angle-down"></span>
-              <span ng-show="sortType == 'name' && sortReverse" class="fa fa-caret-up"></span>
-            </a>
-          </th>
-          <th class="text-center forprint-h_table forprint_table this_account" style="width:184px;">
-            <a href="" ng-click="sortType = 'account_number'; sortReverse = !sortReverse" class="sort-report">
-              เลขบัญชี
-              <span ng-hide="sortType == 'account_number'" class="fa fa-sort"></span>
-              <span ng-show="sortType == 'account_number' && !sortReverse" class="fa fa-angle-down"></span>
-              <span ng-show="sortType == 'account_number' && sortReverse" class="fa fa-caret-up"></span>
-            </a>
-          </th>
-          <th class="text-right report_for_print_hide" style="min-width:150px;">
-            <a href="" ng-click="sortType = 'salary'; sortReverse = !sortReverse" class="sort-report">
-              เงินเดือน
-              <span ng-hide="sortType == 'salary'" class="fa fa-sort"></span>
-              <span ng-show="sortType == 'salary' && !sortReverse" class="fa fa-angle-down"></span>
-              <span ng-show="sortType == 'salary' && sortReverse" class="fa fa-caret-up"></span>
-            </a>
-          </th>
-          <th class="text-right report_for_print_hide" style="min-width:150px;">
-            <a href="" ng-click="sortType = 'extra_pay'; sortReverse = !sortReverse" class="sort-report">
-              เงินเพิ่ม
-              <span ng-hide="sortType == 'extra_pay'" class="fa fa-sort"></span>
-              <span ng-show="sortType == 'extra_pay' && !sortReverse" class="fa fa-angle-down"></span>
-              <span ng-show="sortType == 'extra_pay' && sortReverse" class="fa fa-caret-up"></span>
-            </a>
-          </th>
-          <th class="text-right report_for_print_hide" style="min-width:150px;">
-            <a href="" ng-click="sortType = 'extra_fee'; sortReverse = !sortReverse" class="sort-report">
-              เงินหัก
-              <span ng-hide="sortType == 'extra_fee'" class="fa fa-sort"></span>
-              <span ng-show="sortType == 'extra_fee' && !sortReverse" class="fa fa-angle-down"></span>
-              <span ng-show="sortType == 'extra_fee' && sortReverse" class="fa fa-caret-up"></span>
-            </a>
-          </th>
-          <th class="text-right forprint-h_table" style="min-width:150px;">
-            <a href="" ng-click="sortType = report.getNetSalary; sortReverse = !sortReverse" class="sort-report">
-              เงินเดือนสุทธิ
-              <span ng-hide="sortType == report.getNetSalary" class="fa fa-sort"></span>
-              <span ng-show="sortType == report.getNetSalary && !sortReverse" class="fa fa-angle-down"></span>
-              <span ng-show="sortType == report.getNetSalary && sortReverse" class="fa fa-caret-up"></span>
-            </a>
-          </th>
-          <th class="text-right report_for_print_hide">
-            <a ng-click="report.printSlips()" href="javascript:void(0)">
-              <i class="fa fa-print"></i>
-            </a>
-          </th>
-       </tr>
-      </thead>
-    </table>
-    <div class="scrollable-content" style="max-height: calc(100vh - 270px);">
-      <table id="tableData" class="table text-right">
-        <tbody>
-          <tr ng-repeat="employee in employees | orderBy:sortType:sortReverse">
-            <td class="text-left report_for_print_hide numberic" style="width:60px;">{{employee.code}}</td>
-            <td class="text-left forprint_table this_name" style="width:300px;">
-              <div ng-switch on="employee.deleted">
-                <div ng-switch-when="true">
-                  <strong>{{employee.name}}</strong>
-                </div>
-                <div ng-switch-default>
-                  <a href="/somsri_payroll#/employees/{{employee.code}}?payroll_id={{employee.payroll_id}}">
-                    <strong>{{employee.name}}</strong>
-                  </a>
-                </div>
-              </div>
-            </td>
-            <td class="text-center forprint_table this_account numberic" style="width:184px;">{{employee.account_number}}</td>
-            <td class="report_for_print_hide numberic" style="min-width:150px;">{{employee.salary | currency: ""}}</td>
-            <td class="text-green report_for_print_hide numberic" style="min-width:150px;">{{employee.extra_pay | currency: ""}}</td>
-            <td class="text-red report_for_print_hide numberic" style="min-width:150px;">{{employee.extra_fee | currency: ""}}</td>
-            <td class="text-green forprint_table this_netsalary numberic" style="min-width:150px;">{{report.getNetSalary(employee) | currency: ""}}</td>
-            <td class="report_for_print_hide">
-              <a ng-click="report.printSlip(employee.code, report.payroll_id)" href="javascript:void(0)">
-                <i class="fa fa-print"></i>
-              </a>
-            </td>
-          </tr>
-        </tbody>
-        <tfoot ng-show="$last">
-          <tr>
-            <td></td>
-            <td class="report_for_print_hide"></td>
-            <td class="text-center forprint-h_table"><strong>รวมทั้งหมด</strong></td>
-            <td class="report_for_print_hide numberic">{{report.total.salary | currency: ""}}</td>
-            <td class="text-green report_for_print_hide numberic">{{report.total.extraPay | currency: ""}}</td>
-            <td class="text-red report_for_print_hide numberic">{{report.total.extraFee | currency: ""}}</td>
-            <td class="text-green numberic">{{report.total.netSalary | currency: ""}}</td>
-            <td class="report_for_print_hide"></td>
-          </tr>
-        </tfoot>
-      </table>
-    </div>
-    <div class="pagebreak" ng-show="!$last"></div>
-  </div>
+<table class="table">
+	<tfoot>
+		<tr>
+			<td></td>
+			<td class="report_for_print_hide"></td>
+			<td class="text-center forprint-h_table"><strong>รวมทั้งหมด</strong></td>
+			<td class="report_for_print_hide numberic" style="text-align: right;">{{report.total.salary | currency: ""}}</td>
+			<td class="text-green report_for_print_hide numberic" style="text-align: right;">{{report.total.extraPay | currency: ""}}</td>
+			<td class="text-red report_for_print_hide numberic" style="text-align: right;">{{report.total.extraFee | currency: ""}}</td>
+			<td class="text-green numberic" style="text-align: right;">{{report.total.netSalary | currency: ""}}</td>
+			<td class="report_for_print_hide"></td>
+			<td class="report_for_print_hide"></td>
+		</tr>
+	</tfoot>
+</table>
