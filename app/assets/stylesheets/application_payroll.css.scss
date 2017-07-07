@@ -571,206 +571,6 @@ a.text-mane-back,a.text-mane-back:focus{
   size: A4;
 }
 
-@media print {
-  #payroll-report thead th{
-    padding:0px !important;
-    border-bottom: 2px solid #333 !important;
-  }
-  .fixed-table-container thead th .th-inner{
-    padding:2px 8px !important;
-  }
-  .fixed-table-container tbody td .th-inner {
-    display: block;
-  }
-  .fixed-table-container tbody td.for-print-NetSalary .th-inner{
-    text-align: left;
-    margin-left: 70px;
-  }
-
-  body {
-    margin: 0px;
-  }
-
-  a[href]:after {
-    content: none !important;
-  }
-  .no_display_print{
-    display: none;
-  }
-  #payroll-report .report-content{
-    border: none;
-    padding-top: 0px;
-    box-shadow: none;
-  }
-  .scrollable-content{
-    overflow-y: inherit !important;
-    overflow-x: inherit !important;
-  }
-  .report_for_print_hide{
-    display: none;
-  }
-  .fa.fa-sort{
-    display: none;
-  }
-  th.forprint-h_table{
-    background: none !important;
-  }
-  td.text-left.forprint_table.this_name{
-    min-width: 30px;
-  }
-  td.text-center.forprint_table.this_account{
-    min-width: 200px;
-    text-align: right;
-  }
-  td.text-green.forprint_table.this_netsalary{
-    min-width: 200px;
-  }
-  td.text-center.forprint-h_table,
-  th.text-center.forprint-h_table,
-  th.text-right.forprint-h_table {
-    text-align: right;
-  }
-  th.forprint-h_table.print_name{
-    width: 300px !important;
-  }
-  th.text-center.forprint-h_table.forprint_table.this_account{
-    width: 184px !important;
-  }
-  .top-bar-space{
-    height: 0px !important;
-  }
-  #payroll-report.row {
-    margin-right: 0px !important;
-    margin-left: 0px !important;
-  }
-
-  #payroll-report tfoot {
-   border-bottom: unset;
-  }
-
-  #payroll-report .for_print{
-    display: block;
-  }
-  #payroll-report .unused_for_print,
-  #payroll-slip .unused_for_print {
-    display: none;
-  }
-  #payroll-slip p,
-  #payroll-slip th,
-  #payroll-slip td,
-  #payroll-report th,
-  #payroll-report td,
-  #payroll-report p{
-    font-size: 10px;
-  }
-
-  #payroll-report #date_table,
-  #payroll-slip #date_table {
-    margin-bottom: 70px;
-  }
-
-  #payroll-report td,
-  #payroll-report th,
-  #payroll-slip td,
-  #payroll-slip th {
-    vertical-align: middle;
-    border-color: #000;
-  }
-
-  #payroll-report thead th,
-  #payroll-slip thead th {
-    padding: 5px 10px;
-    background-color: #dadada !important;
-  }
-
-  #payroll-report #order tbody td,
-  #payroll-slip #order tbody td {
-    border-bottom: 0px;
-    border-top: 0px;
-    height: 170px;
-    vertical-align: top !important;
-  }
-
-  #payroll-report .slip-content,
-  #payroll-slip .slip-content {
-    padding: 0px;
-  }
-
-  #payroll-report .for_print,
-  #payroll-slip .for_print {
-    display: block !important;
-  }
-
-  #payroll-report #slipLogo,
-  #payroll-slip #slipLogo {
-    height: 50px;
-  }
-
-  .slip-content .school-name {
-    font-size: 16px;
-  }
-
-  .slip-content .school-name{
-    padding-top: 10px;
-  }
-
-  #payroll-report td.big,
-  #payroll-slip td.big {
-    height: 45px
-  }
-
-  #payroll-report .signature,
-  #payroll-slip .signature {
-    margin-top: 85px;
-  }
-
-  #payroll-report p,
-  #payroll-slip p {
-    margin: 0px 0 6px;
-  }
-
-  /* For Safari */
-  #payroll-slip .safari td.big {
-    height: auto
-  }
-
-  #payroll-slip .safari p,
-  #payroll-slip .safari th,
-  #payroll-slip .safari td {
-    font-size: 9px;
-  }
-
-  #payroll-slip .safari #date_table {
-    margin-bottom: 100px;
-  }
-
-  #payroll-slip .safari #order tbody td {
-    border-bottom: 0px;
-    border-top: 0px;
-    height: 170px;
-    vertical-align: top !important;
-  }
-
-  #payroll-slip .safari .signature {
-    margin-top: 75px;
-  }
-
-  #payroll-slip .safari #order thead th {
-    padding: 5px 10px;
-  }
-  .pagebreak { page-break-before: always; }
-
-  #payroll-slip tfoot th,
-  #payroll-report tfoot th{
-    display: block;
-    background-color: #dadada !important;
-    border-bottom: #dadada !important;
-  }
-  .text-green {
-    color: #000 !important;
-  }
-}
-
 .form-group input, .form-group div{
   border-left: 0 !important;
   border-right: 0 !important;
@@ -1665,4 +1465,205 @@ ul.uib-datepicker-popup.dropdown-menu {
 }
 .fixed-table-container {
   border: 0px solid #dddddd !important;
+}
+
+@media print {
+  #payroll-report report-content thead th{
+    padding:0px !important;
+    border-bottom: 2px solid #333 !important;
+    border-top: none !important;
+  }
+
+  .fixed-table-container thead th .th-inner{
+    padding:2px 8px !important;
+  }
+  .fixed-table-container tbody td .th-inner {
+    display: block;
+  }
+  .fixed-table-container tbody td.for-print-NetSalary .th-inner{
+    text-align: left;
+    margin-left: 70px;
+  }
+
+  body {
+    margin: 0px;
+  }
+
+  a[href]:after {
+    content: none !important;
+  }
+  .no_display_print{
+    display: none;
+  }
+  #payroll-report .report-content{
+    border: none;
+    padding-top: 0px;
+    box-shadow: none;
+  }
+  .scrollable-content{
+    overflow-y: inherit !important;
+    overflow-x: inherit !important;
+  }
+  .report_for_print_hide{
+    display: none;
+  }
+  .fa.fa-sort{
+    display: none;
+  }
+  th.forprint-h_table{
+    background: none !important;
+  }
+  td.text-left.forprint_table.this_name{
+    min-width: 30px;
+  }
+  td.text-center.forprint_table.this_account{
+    min-width: 200px;
+  }
+  td.text-green.forprint_table.this_netsalary{
+    min-width: 200px;
+  }
+  td.text-center.forprint-h_table,
+  th.text-center.forprint-h_table,
+  th.text-right.forprint-h_table {
+    text-align: right;
+  }
+  th.forprint-h_table.print_name{
+    width: 300px !important;
+  }
+  th.text-center.forprint-h_table.forprint_table.this_account{
+    width: 184px !important;
+  }
+  .top-bar-space{
+    height: 0px !important;
+  }
+  #payroll-report.row {
+    margin-right: 0px !important;
+    margin-left: 0px !important;
+  }
+
+  #payroll-report tfoot {
+   border-bottom: unset;
+  }
+
+  #payroll-report .for_print{
+    display: block;
+  }
+  #payroll-report .unused_for_print,
+  #payroll-slip .unused_for_print {
+    display: none;
+  }
+  #payroll-slip p,
+  #payroll-slip th,
+  #payroll-slip td,
+  #payroll-report th,
+  #payroll-report td,
+  #payroll-report p{
+    font-size: 10px;
+  }
+
+  #payroll-report #date_table,
+  #payroll-slip #date_table {
+    margin-bottom: 70px;
+  }
+
+  #payroll-report td,
+  #payroll-report th,
+  #payroll-slip td,
+  #payroll-slip th {
+    vertical-align: middle;
+    border-color: #000;
+  }
+
+  #payroll-report thead th,
+  #payroll-slip thead th {
+    padding: 5px 10px;
+    background-color: #dadada !important;
+  }
+
+  #payroll-report #order tbody td,
+  #payroll-slip #order tbody td {
+    border-bottom: 0px;
+    border-top: 0px;
+    height: 170px;
+    vertical-align: top !important;
+  }
+
+  #payroll-report .slip-content,
+  #payroll-slip .slip-content {
+    padding: 0px;
+  }
+
+  #payroll-report .for_print,
+  #payroll-slip .for_print {
+    display: block !important;
+  }
+
+  #payroll-report #slipLogo,
+  #payroll-slip #slipLogo {
+    height: 50px;
+  }
+
+  .slip-content .school-name {
+    font-size: 16px;
+  }
+
+  .slip-content .school-name{
+    padding-top: 10px;
+  }
+
+  #payroll-report td.big,
+  #payroll-slip td.big {
+    height: 45px
+  }
+
+  #payroll-report .signature,
+  #payroll-slip .signature {
+    margin-top: 85px;
+  }
+
+  #payroll-report p,
+  #payroll-slip p {
+    margin: 0px 0 6px;
+  }
+
+  /* For Safari */
+  #payroll-slip .safari td.big {
+    height: auto
+  }
+
+  #payroll-slip .safari p,
+  #payroll-slip .safari th,
+  #payroll-slip .safari td {
+    font-size: 9px;
+  }
+
+  #payroll-slip .safari #date_table {
+    margin-bottom: 100px;
+  }
+
+  #payroll-slip .safari #order tbody td {
+    border-bottom: 0px;
+    border-top: 0px;
+    height: 170px;
+    vertical-align: top !important;
+  }
+
+  #payroll-slip .safari .signature {
+    margin-top: 75px;
+  }
+
+  #payroll-slip .safari #order thead th {
+    padding: 5px 10px;
+  }
+  .pagebreak { page-break-before: always; }
+
+  #payroll-slip tfoot th,
+  #payroll-report tfoot th{
+    display: block;
+    background-color: #dadada !important;
+    border-bottom: #dadada !important;
+  }
+  .text-green {
+    color: #000 !important;
+  }
 }

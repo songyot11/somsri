@@ -22,7 +22,7 @@
           var $table = $('.table');
           //console.log(data);
           $table.bootstrapTable('load', data);
-          //bootstrapTableController($filter,data)  
+          //bootstrapTableController($filter,data)
         }
       });
     }
@@ -34,34 +34,46 @@ function bootstrapTableController($filter,data) {
   var $table = $('.table');
   var angularScopeReport = "angular.element(document.getElementById('angularCtrl')).scope().report";
 
-  //console.log(data);
+  function filterCode(value, row, index){
+    if (value) {
+      return '<div class="numberic">'+value+'</div>';
+    }
+    return '<div class="numberic"></div>';
+  }
+
+  function filterAccountNumber(value, row, index){
+    if (value) {
+      return '<div class="numberic">'+value+'</div>';
+    }
+    return '<div class="numberic"></div>';
+  }
 
   function filterSalary(value, row, index){
     if (value) {
-      return '<div style="text-align: right;">'+$filter('currency')(value, '')+'</div>';
+      return '<div class="numberic" style="text-align: right;">'+$filter('currency')(value, '')+'</div>';
     }
-    return '<div style="text-align: right;">'+$filter('currency')(0, '')+'</div>';
+    return '<div class="numberic" style="text-align: right;">'+$filter('currency')(0, '')+'</div>';
   }
 
   function filterExtraPay(value, row, index){
     if (value) {
-      return '<div class="text-green" style="text-align: right;" >'+$filter('currency')(value, '')+'</div>';
+      return '<div class="text-green numberic" style="text-align: right;" >'+$filter('currency')(value, '')+'</div>';
     }
-    return '<div class="text-green" style="text-align: right;">'+$filter('currency')(0, '')+'</div>';
+    return '<div class="text-green numberic" style="text-align: right;">'+$filter('currency')(0, '')+'</div>';
   }
 
   function filterExtraFee(value, row, index){
     if (value) {
-      return '<div class="text-red" style="text-align: right;">'+$filter('currency')(value, '')+'</div>';
+      return '<div class="text-red numberic" style="text-align: right;">'+$filter('currency')(value, '')+'</div>';
     }
-    return '<div class="text-red" style="text-align: right;">'+$filter('currency')(0, '')+'</div>';
+    return '<div class="text-red numberic" style="text-align: right;">'+$filter('currency')(0, '')+'</div>';
   }
 
   function filterNetSalary(value, row, index){
     if (value) {
-      return '<div class="text-green" style="text-align: right;">'+$filter('currency')(value, '')+'</div>';
+      return '<div class="text-green numberic" style="text-align: right;">'+$filter('currency')(value, '')+'</div>';
     }
-    return '<div class="text-green" style="text-align: right;">'+$filter('currency')(0, '')+'</div>';
+    return '<div class="text-green numberic" style="text-align: right;">'+$filter('currency')(0, '')+'</div>';
   }
 
   function linkName(value, row, index){
@@ -84,48 +96,48 @@ function bootstrapTableController($filter,data) {
       field: 'code',
       title: 'รหัส ',
       sortable: true,
-      align: 'center',
+      formatter: filterCode,
       class: 'report_for_print_hide',
     },{
       field: 'name',
       title: 'ชื่อ',
       sortable: true,
       formatter: linkName,
-      align: 'center',
       class: 'forprint-h_table print_name',
     },{
       field: 'account_number',
       title: 'เลขบัญชี',
       sortable: true,
-      align: 'center',
+      align: 'right',
+      formatter: filterAccountNumber,
       class: 'text-center forprint-h_table forprint_table this_account',
     },{
       field: 'salary',
       title: 'เงินเดือน',
       sortable: true,
       formatter: filterSalary,
-      align: 'center',
+      align: 'right',
       class: 'report_for_print_hide',
     },{
       field: 'extra_pay',
       title: 'เงินเพิ่ม',
       sortable: true,
       formatter: filterExtraPay,
-      align: 'center',
+      align: 'right',
       class: 'report_for_print_hide',
     },{
       field: 'extra_fee',
       title: 'เงินหัก',
       sortable: true,
       formatter: filterExtraFee,
-      align: 'center',
+      align: 'right',
       class: 'report_for_print_hide',
     },{
       field: 'net_salary',
       title: 'เงินเดือนสุทธิ ',
       sortable: true,
       formatter: filterNetSalary,
-      align: 'center',
+      align: 'right',
       class: 'text-right forprint-h_table for-print-NetSalary',
     },{
       field: '',
