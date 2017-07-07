@@ -56,6 +56,8 @@
       }
 
       ctrl.optionsChange = function() {
+        // check date incorrect input
+        if(ctrl.start_date === undefined || ctrl.end_date === undefined){return}
         loadData()
       }
 
