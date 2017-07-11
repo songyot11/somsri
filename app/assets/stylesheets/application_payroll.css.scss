@@ -14,8 +14,10 @@
  *= require angular-xeditable/dist/css/xeditable
  *= require font-awesome
  *= require_self
+ *= require bootstrap-table
  */
 @import "navigation_menu";
+@import url('https://fonts.googleapis.com/css?family=Roboto');
 body {
   font-family: 'Maitree', serif;
   color: #595959;
@@ -281,7 +283,8 @@ h2#month-list{
     background-color: transparent;
   }
 }
-.btn-payroll-starts{
+.btn-payroll-starts,
+.btn-payroll-starts:focus{
   background-color: #FFAB04;
   border: 2px solid #FFAB04;
   border-radius: inherit;
@@ -566,192 +569,6 @@ a.text-mane-back,a.text-mane-back:focus{
 
 @print {
   size: A4;
-}
-
-@media print {
-
-  body {
-    margin: 0px;
-  }
-
-  a[href]:after {
-    content: none !important;
-  }
-  .no_display_print{
-    display: none;
-  }
-  #payroll-report .report-content{
-    border: none;
-    padding-top: 0px;
-    box-shadow: none;
-  }
-  .scrollable-content{
-    overflow-y: inherit !important;
-    overflow-x: inherit !important;
-  }
-  .report_for_print_hide{
-    display: none;
-  }
-  .fa.fa-sort{
-    display: none;
-  }
-  th.forprint-h_table{
-    background: none !important;
-  }
-  td.text-left.forprint_table.this_name{
-    min-width: 30px;
-  }
-  td.text-center.forprint_table.this_account{
-    min-width: 200px;
-    text-align: right;
-  }
-  td.text-green.forprint_table.this_netsalary{
-    min-width: 200px;
-  }
-  td.text-center.forprint-h_table,
-  th.text-center.forprint-h_table,
-  th.text-right.forprint-h_table {
-    text-align: right;
-  }
-  th.forprint-h_table.print_name{
-    width: 300px !important;
-  }
-  th.text-center.forprint-h_table.forprint_table.this_account{
-    width: 184px !important;
-  }
-  .top-bar-space{
-    height: 0px !important;
-  }
-  #payroll-report.row {
-    margin-right: 0px !important;
-    margin-left: 0px !important;
-  }
-
-  #payroll-report tfoot {
-   border-bottom: unset;
-  }
-
-  #payroll-report .for_print{
-    display: block;
-  }
-  #payroll-report .unused_for_print,
-  #payroll-slip .unused_for_print {
-    display: none;
-  }
-  #payroll-slip p,
-  #payroll-slip th,
-  #payroll-slip td,
-  #payroll-report th,
-  #payroll-report td,
-  #payroll-report p{
-    font-size: 10px;
-  }
-
-  #payroll-report #date_table,
-  #payroll-slip #date_table {
-    margin-bottom: 70px;
-  }
-
-  #payroll-report td,
-  #payroll-report th,
-  #payroll-slip td,
-  #payroll-slip th {
-    vertical-align: middle;
-    border-color: #000;
-  }
-
-  #payroll-report thead th,
-  #payroll-slip thead th {
-    padding: 5px 10px;
-    background-color: #dadada !important;
-  }
-
-  #payroll-report #order tbody td,
-  #payroll-slip #order tbody td {
-    border-bottom: 0px;
-    border-top: 0px;
-    height: 170px;
-    vertical-align: top !important;
-  }
-
-  #payroll-report .slip-content,
-  #payroll-slip .slip-content {
-    padding: 0px;
-  }
-
-  #payroll-report .for_print,
-  #payroll-slip .for_print {
-    display: block !important;
-  }
-
-  #payroll-report #slipLogo,
-  #payroll-slip #slipLogo {
-    height: 50px;
-  }
-
-  .slip-content .school-name {
-    font-size: 16px;
-  }
-
-  .slip-content .school-name{
-    padding-top: 10px;
-  }
-
-  #payroll-report td.big,
-  #payroll-slip td.big {
-    height: 45px
-  }
-
-  #payroll-report .signature,
-  #payroll-slip .signature {
-    margin-top: 85px;
-  }
-
-  #payroll-report p,
-  #payroll-slip p {
-    margin: 0px 0 6px;
-  }
-
-  /* For Safari */
-  #payroll-slip .safari td.big {
-    height: auto
-  }
-
-  #payroll-slip .safari p,
-  #payroll-slip .safari th,
-  #payroll-slip .safari td {
-    font-size: 9px;
-  }
-
-  #payroll-slip .safari #date_table {
-    margin-bottom: 100px;
-  }
-
-  #payroll-slip .safari #order tbody td {
-    border-bottom: 0px;
-    border-top: 0px;
-    height: 170px;
-    vertical-align: top !important;
-  }
-
-  #payroll-slip .safari .signature {
-    margin-top: 75px;
-  }
-
-  #payroll-slip .safari #order thead th {
-    padding: 5px 10px;
-  }
-  .pagebreak { page-break-before: always; }
-
-  #payroll-slip tfoot th,
-  #payroll-report tfoot th{
-    display: block;
-    background-color: #dadada !important;
-    border-bottom: #dadada !important;
-  }
-  .text-green {
-    color: #000 !important;
-  }
 }
 
 .form-group input, .form-group div{
@@ -1330,6 +1147,8 @@ a.dropdown-item{
 
 .trow > span.name {
     width: 320px;
+    text-align: left;
+    padding-left: 10px;
 }
 
 .trow > span.salary {
@@ -1429,10 +1248,11 @@ a.dropdown-item{
   padding: 20px 0px;
 }
 .pin-char {
+  font-family: 'Roboto', sans-serif;
   background-color: #00D2D7;
   border-radius: 4px;
   padding: 0px 10px;
-  font-size: 20px;
+  font-size: 24px;
   font-weight: bold;
   margin-right: 2px;
   margin-bottom: 3px;
@@ -1549,6 +1369,11 @@ a.dropdown-item{
 	background-color: #5b5b5b;
 }
 
+.tbody#scrollbar-payroll{
+  font-family: 'Roboto', sans-serif;
+  font-size: 16px;
+}
+
 .employee-details .dropdown-menu>li>a,
 .employee-details .dropdown-menu>li>a:focus,
 #payroll .dropdown-menu>li>a,
@@ -1566,5 +1391,279 @@ a.dropdown-item{
   &:hover{
     background-color: #ffab04 !important;
     color: #fff !important;
+  }
+}
+
+button.btn.btn-sm.btn-info.uib-datepicker-current,
+button.btn.btn-sm.btn-info.uib-datepicker-current:focus{
+    border-radius: 0px;
+    color: #fff;
+    background-color: #3fa1e6;
+    border: 1px solid #3fa1e6;
+    transition: all 0.25s ease;
+
+    &:hover{
+      background-color: transparent;
+      border: 1px solid #3fa1e6;
+      color: #3fa1e6;
+    }
+}
+
+button.btn.btn-sm.btn-danger.uib-clear,
+button.btn.btn-sm.btn-danger.uib-clear:focus{
+    border-radius: 0px;
+    color: #fff;
+    background-color: #DD5A2B;
+    border: 1px solid #DD5A2B;
+    transition: all 0.25s ease;
+
+    &:hover{
+      background-color: transparent;
+      border: 1px solid #DD5A2B;
+      color: #DD5A2B;
+    }
+}
+
+button.btn.btn-sm.btn-success.pull-right.uib-close,
+button.btn.btn-sm.btn-success.pull-right.uib-close:focus{
+    border-radius: 0px;
+    color: #fff;
+    background-color: #5BAB67;
+    border: 1px solid #5BAB67;
+    transition: all 0.25s ease;
+
+    &:hover{
+      background-color: transparent;
+      border: 1px solid #5BAB67;
+      color: #5BAB67;
+    }
+}
+
+.uib-button-bar {
+    padding: 10px 0px 2px !important;
+}
+
+ul.uib-datepicker-popup.dropdown-menu {
+    padding: 10px;
+}
+
+.uib-day button, .uib-month button, .uib-year button{
+  border-radius: 0px;
+  border: inherit;
+}
+
+.numberic{
+  font-family: 'Roboto', sans-serif;
+  font-size: 1.1em;
+}
+.fixed-table-container tbody td {
+  border-left: 0px solid #dddddd !important;
+}
+.bootstrap-table .table > thead > tr > th {
+  border-bottom: 2px solid #ddd !important;
+  border-left: 0px;
+}
+.fixed-table-container {
+  border: 0px solid #dddddd !important;
+}
+
+@media print {
+  #payroll-report report-content thead th{
+    padding:0px !important;
+    border-bottom: 2px solid #333 !important;
+    border-top: none !important;
+  }
+
+  .fixed-table-container thead th .th-inner{
+    padding:2px 8px !important;
+  }
+  .fixed-table-container tbody td .th-inner {
+    display: block;
+  }
+  .fixed-table-container tbody td.for-print-NetSalary .th-inner{
+    text-align: left;
+    margin-left: 70px;
+  }
+
+  body {
+    margin: 0px;
+  }
+
+  a[href]:after {
+    content: none !important;
+  }
+  .no_display_print{
+    display: none;
+  }
+  #payroll-report .report-content{
+    border: none;
+    padding-top: 0px;
+    box-shadow: none;
+  }
+  .scrollable-content{
+    overflow-y: inherit !important;
+    overflow-x: inherit !important;
+  }
+  .report_for_print_hide{
+    display: none;
+  }
+  .fa.fa-sort{
+    display: none;
+  }
+  th.forprint-h_table{
+    background: none !important;
+  }
+  td.text-left.forprint_table.this_name{
+    min-width: 30px;
+  }
+  td.text-center.forprint_table.this_account{
+    min-width: 200px;
+  }
+  td.text-green.forprint_table.this_netsalary{
+    min-width: 200px;
+  }
+  td.text-center.forprint-h_table,
+  th.text-center.forprint-h_table,
+  th.text-right.forprint-h_table {
+    text-align: right;
+  }
+  th.forprint-h_table.print_name{
+    width: 300px !important;
+  }
+  th.text-center.forprint-h_table.forprint_table.this_account{
+    width: 184px !important;
+  }
+  .top-bar-space{
+    height: 0px !important;
+  }
+  #payroll-report.row {
+    margin-right: 0px !important;
+    margin-left: 0px !important;
+  }
+
+  #payroll-report tfoot {
+   border-bottom: unset;
+  }
+
+  #payroll-report .for_print{
+    display: block;
+  }
+  #payroll-report .unused_for_print,
+  #payroll-slip .unused_for_print {
+    display: none;
+  }
+  #payroll-slip p,
+  #payroll-slip th,
+  #payroll-slip td,
+  #payroll-report th,
+  #payroll-report td,
+  #payroll-report p{
+    font-size: 10px;
+  }
+
+  #payroll-report #date_table,
+  #payroll-slip #date_table {
+    margin-bottom: 70px;
+  }
+
+  #payroll-report td,
+  #payroll-report th,
+  #payroll-slip td,
+  #payroll-slip th {
+    vertical-align: middle;
+    border-color: #000;
+  }
+
+  #payroll-report thead th,
+  #payroll-slip thead th {
+    padding: 5px 10px;
+    background-color: #dadada !important;
+  }
+
+  #payroll-report #order tbody td,
+  #payroll-slip #order tbody td {
+    border-bottom: 0px;
+    border-top: 0px;
+    height: 170px;
+    vertical-align: top !important;
+  }
+
+  #payroll-report .slip-content,
+  #payroll-slip .slip-content {
+    padding: 0px;
+  }
+
+  #payroll-report .for_print,
+  #payroll-slip .for_print {
+    display: block !important;
+  }
+
+  #payroll-report #slipLogo,
+  #payroll-slip #slipLogo {
+    height: 50px;
+  }
+
+  .slip-content .school-name {
+    font-size: 16px;
+  }
+
+  .slip-content .school-name{
+    padding-top: 10px;
+  }
+
+  #payroll-report td.big,
+  #payroll-slip td.big {
+    height: 45px
+  }
+
+  #payroll-report .signature,
+  #payroll-slip .signature {
+    margin-top: 85px;
+  }
+
+  #payroll-report p,
+  #payroll-slip p {
+    margin: 0px 0 6px;
+  }
+
+  /* For Safari */
+  #payroll-slip .safari td.big {
+    height: auto
+  }
+
+  #payroll-slip .safari p,
+  #payroll-slip .safari th,
+  #payroll-slip .safari td {
+    font-size: 9px;
+  }
+
+  #payroll-slip .safari #date_table {
+    margin-bottom: 100px;
+  }
+
+  #payroll-slip .safari #order tbody td {
+    border-bottom: 0px;
+    border-top: 0px;
+    height: 170px;
+    vertical-align: top !important;
+  }
+
+  #payroll-slip .safari .signature {
+    margin-top: 75px;
+  }
+
+  #payroll-slip .safari #order thead th {
+    padding: 5px 10px;
+  }
+  .pagebreak { page-break-before: always; }
+
+  #payroll-slip tfoot th,
+  #payroll-report tfoot th{
+    display: block;
+    background-color: #dadada !important;
+    border-bottom: #dadada !important;
+  }
+  .text-green {
+    color: #000 !important;
   }
 }

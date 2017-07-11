@@ -54,6 +54,7 @@ describe 'Employee Details', js: true do
     sleep(1)
     page.fill_in 'รหัสผ่านเก่า', :with => 'password'
     page.fill_in 'รหัสผ่านใหม่', :with => 'valid_password'
+    page.fill_in 'ยืนยันรหัสผ่านใหม่', :with => 'valid_password'
     first('.modal-body .btn-submit').click
     sleep(1)
 

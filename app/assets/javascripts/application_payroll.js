@@ -26,6 +26,7 @@
 //= require ng-file-upload
 //= require angular-sanitize
 //= require ng-csv
+//= require angular-ui-bootstrap-fontawesome
 
 //= require payroll/angular/components/mainCtrl.js.erb
 //= require payroll/angular/app.module
@@ -34,3 +35,4 @@
 //= require payroll/angular/components/shared/slip/slipDirective
 
 //= require angular-xeditable/dist/js/xeditable
+//= require bootstrap-table

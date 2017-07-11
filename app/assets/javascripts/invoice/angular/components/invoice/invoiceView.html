@@ -30,7 +30,7 @@
         </div>
 
         <div class="row form-1_2">
-          <div class="col-md-2">
+          <div class="col-md-3">
             <div class="form-group">
               <!-- <select class="btn btn-grades" ng-model="invoice.datas.invoice.grade_name" ng-init="invoice.datas.invoice.grade_name = invoice.grades[0]" ng-options=" obj.value for obj in invoice.grades">
               </select> -->
@@ -39,14 +39,14 @@
             </div>
           </div>
           <div class="col-md-2">
-            <div class="form-group">
-              ปีการศึกษา {{ invoice.datas.invoice.school_year }}
+            <div class="form-group inline-block">
+              <!-- ภาคเรียนที่ <input type="text" class="form-control" id="semester" placeholder="ภาคเรียน" ng-model="invoice.datas.invoice.semester" ng-init="invoice.datas.invoice.semester = '1'"> -->
+              ภาคเรียนที่ <input type="text" class="form-control" id="semester" placeholder="ภาคเรียน" ng-model="invoice.datas.invoice.semester">
             </div>
           </div>
           <div class="col-md-2">
-            <div class="form-group semester-1">
-              <!-- ภาคเรียนที่ <input type="text" class="form-control" id="semester" placeholder="ภาคเรียน" ng-model="invoice.datas.invoice.semester" ng-init="invoice.datas.invoice.semester = '1'"> -->
-              ภาคเรียนที่ <input type="text" class="form-control" id="semester" placeholder="ภาคเรียน" ng-model="invoice.datas.invoice.semester">
+            <div class="form-group inline-block">
+              ปีการศึกษา <input type="text" class="form-control" id="school_year" placeholder="ปีการศึกษา" ng-model="invoice.datas.invoice.school_year">
             </div>
           </div>
         </div>
@@ -131,7 +131,7 @@
               </div>
               <div class="input-bank">
                 <div class="col-md-3 col-payment">
-                  <input type="text" placeholder="เลขบัญชีธนาคาร" class="form-control" ng-model="invoice.datas.payment_method.transfer_bank_name">
+                  <input type="text" placeholder="ชื่อธนาคาร" class="form-control" ng-model="invoice.datas.payment_method.transfer_bank_name">
                 </div>
                 <div class="col-md-3">
                   <input type="text" placeholder="ลงวันที่" class="form-control" ng-model="invoice.datas.payment_method.transfer_date">

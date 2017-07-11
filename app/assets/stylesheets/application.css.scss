@@ -14,9 +14,12 @@
  *= require angular-xeditable/dist/css/xeditable
  *= require font-awesome
  *= require_self
+ *= require bootstrap-table
+ *= require bootstrap-select/sass/bootstrap-select
  */
 
 @import "application_invoice";
+@import url('https://fonts.googleapis.com/css?family=Roboto');
 body{
   margin-bottom: 50px;
   // margin-top: 100px;
@@ -240,4 +243,76 @@ ul.nav.navbar-nav.navbar-right.dropdown{
   padding-top:20px;
   padding-bottom:20px;
   color: white;
+}
+.bootstrap-select:not([class*="col-"]):not([class*="form-control"]):not(.input-group-btn) {
+  width: 160px !important;
+}
+#student-index .btn-default,
+#student-index .btn-default:hover,
+#student-index .btn-default:focus{
+  border: inherit !important;
+  background-color: transparent;
+}
+.bootstrap-select.btn-group .dropdown-menu li a{
+  &:hover{
+    color: #fff;
+    background-color: #3fa1e6;
+  }
+  &:focus{
+    color: #fff;
+    background-color: #3fa1e6;
+  }
+}
+#student-index .pull-left.pagination-detail {
+  display: none;
+}
+#student-index .pull-right.pagination{
+  float: inherit !important;
+}
+#student-index  .fixed-table-pagination{
+  text-align: center;
+}
+#student-index .fixed-table-body {
+    margin-top: 30px;
+    font-size: 1.2em;
+}
+#student-index .fixed-table-toolbar {
+    font-size: 1.2em;
+}
+#student-index .bootstrap-select.btn-group .dropdown-toggle .filter-option{
+  font-size: 1.2em;
+}
+.fixed-table-container tbody td {
+  border-left: 0px solid #dddddd !important;
+}
+.bootstrap-table .table > thead > tr > th {
+  border-bottom: 2px solid #ddd !important;
+  border-left: 0px;
+}
+.fixed-table-container {
+  border: 0px solid #dddddd !important;
+}
+.search{
+  display: inline-flex;
+
+  .fa.fa-search{
+    padding-top: 7px;
+    font-size: 16px;
+  }
+}
+.select-filter{
+  text-align: right;
+
+  span.text-label{
+    font-size: 1.2em;
+    padding: 8px 12px;
+  }
+}
+.toolbar-student-parent{
+  margin-bottom:30px;
+}
+
+.numberic{
+  font-family: 'Roboto', sans-serif;
+  font-size: 14px;
 }

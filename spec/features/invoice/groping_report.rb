@@ -4,8 +4,8 @@ describe 'Grouping Report', js: true do
   end
 
   let(:grouping_options) do
-    GroupingReportOption.make!( name: "ค่าเทอม", keyword: "Tuition Fee,ค่าเทอม")
-    GroupingReportOption.make!( name: "ค่าเสื้อ", keyword: "ค่าเสื้อ,ค่าชุด")
+    GroupingReportOption.make!( name: "ค่าเทอม", keyword: "Tuition Fee|ค่าเทอม")
+    GroupingReportOption.make!( name: "ค่าเสื้อ", keyword: "ค่าเสื้อ|ค่าชุด")
   end
 
   let(:user) { user = User.create!({
@@ -63,7 +63,7 @@ describe 'Grouping Report', js: true do
       Invoice.make!(
         student_id: students[1].id,
         invoice_status_id: invoice_status_2.id,
-        updated_at: DateTime.now.yesterday.to_time,
+        updated_at: DateTime.now.yesterday,
         line_items: [
           LineItem.make!(detail: "ห้องสมุด", amount: 10000000000),
           LineItem.make!(detail: "ค่าชุดพื้นเมือง", amount: 10000000000)
@@ -82,8 +82,6 @@ describe 'Grouping Report', js: true do
 
   let(:today_str){ DateTime.now.strftime("%d/%m/%Y") }
   let(:yesterday_str){ DateTime.now.yesterday.strftime("%d/%m/%Y") }
-
-
 
   before do
     grouping_options
@@ -119,7 +117,7 @@ describe 'Grouping Report', js: true do
       sleep(1)
       first('td:nth-child(1) a').click
       sleep(1)
-      expect(page).to_not have_content("มั่งมี ศรีสุข 11,000.00 0.00 0.00 0.00 0.00 1,000.00 10,000.00 11,000.00")
+      expect(page).to have_content("มั่งมี ศรีสุข 11,000.00 0.00 0.00 0.00 0.00 1,000.00 10,000.00 11,000.00")
       expect(page).to have_content(" รวมทั้งหมด 11,000.00 0.00 0.00 0.00 0.00 1,000.00 10,000.00 11,000.00")
     end
 
@@ -147,14 +145,42 @@ describe 'Grouping Report', js: true do
       expect(page).to have_content("รวมทั้งหมด 112,000.00 40,000.00 30,000.00 30,000.00 2,000.00 210,000.00 212,000.00")
     end
 
-    it 'should not change if input invalid date' do
+    it 'should qry from pass to yesterday' do
       visit '/somsri_invoice#/grouping_report'
       sleep(1)
       expect(page).to have_content("#{yesterday_str} 11,000.00 0.00 0.00 0.00 0.00 1,000.00 10,000.00 11,000.00")
       expect(page).to have_content("#{today_str} 112,000.00 40,000.00 30,000.00 30,000.00 200,000.00 2,000.00 10,000.00 212,000.00")
       expect(page).to have_content("รวมทั้งหมด 123,000.00 40,000.00 30,000.00 30,000.00 200,000.00 3,000.00 20,000.00 223,000.00")
-      
-      find('#start_date').set("1/1/1")
+
+      find('#start_date').set("")
+      find('#end_date').set(yesterday_str)
+
+      sleep(1)
+      expect(page).to have_content("#{yesterday_str} 11,000.00 0.00 0.00 0.00 0.00 1,000.00 10,000.00 11,000.00")
+      expect(page).to have_content("รวมทั้งหมด 11,000.00 0.00 0.00 0.00 0.00 1,000.00 10,000.00 11,000.00")
+    end
+
+    it 'should qry from today to present' do
+      visit '/somsri_invoice#/grouping_report'
+      sleep(1)
+      expect(page).to have_content("#{yesterday_str} 11,000.00 0.00 0.00 0.00 0.00 1,000.00 10,000.00 11,000.00")
+      expect(page).to have_content("#{today_str} 112,000.00 40,000.00 30,000.00 30,000.00 200,000.00 2,000.00 10,000.00 212,000.00")
+      expect(page).to have_content("รวมทั้งหมด 123,000.00 40,000.00 30,000.00 30,000.00 200,000.00 3,000.00 20,000.00 223,000.00")
+
+      find('#start_date').set(today_str)
+      find('#end_date').set("")
+
+      sleep(1)
+      expect(page).to have_content("#{today_str} 112,000.00 40,000.00 30,000.00 30,000.00 200,000.00 2,000.00 10,000.00 212,000.00")
+      expect(page).to have_content("รวมทั้งหมด 112,000.00 40,000.00 30,000.00 30,000.00 200,000.00 2,000.00 10,000.00 212,000.00")
+    end
+
+    it 'should qry from pass to present' do
+      visit '/somsri_invoice#/grouping_report'
+      sleep(1)
+      find('#start_date').set("")
+      find('#end_date').set("")
+
       sleep(1)
       expect(page).to have_content("#{yesterday_str} 11,000.00 0.00 0.00 0.00 0.00 1,000.00 10,000.00 11,000.00")
       expect(page).to have_content("#{today_str} 112,000.00 40,000.00 30,000.00 30,000.00 200,000.00 2,000.00 10,000.00 212,000.00")

@@ -1,3 +1,5 @@
+<%= javascript_include_tag 'preview_image' %>
+
 <%= form_for @student, :html => { :class => "form-horizontal student" } do |f| %>
 <% if @student.errors.any? %>
 <div id="error_expl" class="panel panel-danger">
@@ -74,15 +76,21 @@
       </div>
     </div>
     <div class="col-md-4">
-      <%= image_tag(@student.img_url.url(:medium), class: 'img-bg circle') if @student.img_url.exists? %>
+      <% if @student.img_url.blank? %>
+        <label for="imageUpload" class="img-default">
+            <i class="fa fa-user icons-default-img" aria-hidden="true"></i>
+            <div class="img-bg bg-light-gray circle" id="img-change"></div>
+        </label>
+      <% else %>
+      <label for="imageUpload" class="img-default">
+        <%= image_tag(@student.img_url.url(:medium), class: 'circle', id:'img-change') if @student.img_url.exists? %>
+      </label>
+      <% end %>
       <div class="space20"></div>
       <div class="row">
         <div class="col-md-12">
           <div class="form-group">
-            <%= f.label :img_url, 'รูปโปรไฟล์ ', class: 'control-label' %>
-            <div class="col-md-12">
-              <%= f.file_field :img_url, class: 'border-none pointer-cursor' %>
-            </div>
+            <%= f.file_field :img_url, class: 'border-none pointer-cursor', id: 'imageUpload', style:'display:none;', onchange:'readURL(this);' %>
           </div>
         </div>
       </div>
@@ -192,37 +200,54 @@ function gen_selectize(round) {
     });
   }
 }
-  $(function() {
-    var round = <%= @round %>;
-    gen_selectize(round);
-    $('#parent-link').click( function() {
-      round = round + 1;
-      $('#add-parent').append(
-        '<div class="form-group" id="add-prn-'+round+'">\
-          <label for="parent" class="control-label">ผู้ปกครอง</label>\
-          <div class="row add-st-pr">\
-            <div class="col-md-5" style="margin-left:15px;">\
-              <select id="parent'+round+'" name="parent[]" placeholder="Select parent...">\
-                <option value="" disabled selected></option>\
-                <% @parents.each do |p| %>\
-                  <option value="<%= p.id %>"><%= p.full_name %></option>\
-                <% end %>\
-              </select>\
-            </div>\
-            <div class="col-md-5">\
-              <select id="relationship'+round+'" name="relationship[]" class="form-control">\
-                <% @relations.each do |r| %>\
-                  <option value="<%= r.id %>"><%= t(r.name) %></option>\
-                <% end %>\
-              </select>\
-            </div>\
-            <div class="col-md-1">\
-              <button type="button" class="btn btn-delete-sp" onclick="remove_parent('+round+')"><i class="fa fa-times"></i></button>\
-            </div>\
+
+function autocompleteMobile(target){
+  var index = $(target).attr("index")
+  var parentMobile = []
+  <% @parents.each do |ps| %>
+    parentMobile.push({id: '<%= ps.id %>', mobile: '<%= ps.mobile %>'})
+  <% end %>
+  var parentId = $(target).val()
+  for(var i = 0; i<parentMobile.length; i++){
+    if(parentMobile[i]["id"] == parentId){
+      $('#mobile' + index).val(parentMobile[i]["mobile"])
+    }
+  }
+}
+$(function() {
+  var round = <%= @round %>;
+  gen_selectize(round);
+  $('#parent-link').click( function() {
+    round = round + 1;
+    $('#add-parent').append(
+      '<div class="form-group" id="add-prn-'+round+'">\
+        <label for="parent" class="control-label">ผู้ปกครอง</label>\
+        <div class="row add-st-pr">\
+          <div class="col-md-5" style="margin-left:15px;">\
+            <select id="parent'+round+'" name="parent[]" index="'+round+'" onchange="autocompleteMobile(this)"  placeholder="Select parent...">\
+              <option value="" disabled selected></option>\
+              <% @parents.each do |p| %>\
+                <option value="<%= p.id %>"><%= p.full_name %></option>\
+              <% end %>\
+            </select>\
           </div>\
-        </div>'
-      );
-      gen_selectize(round);
-    });
+          <div class="col-md-2">\
+            <select id="relationship'+round+'" name="relationship[]" class="form-control">\
+              <% @relations.each do |r| %>\
+                <option value="<%= r.id %>"><%= t(r.name) %></option>\
+              <% end %>\
+            </select>\
+          </div>\
+          <div class="col-md-3">\
+            <input type="text" id="mobile'+round+'" name="mobile[]" class="form-control">\
+          </div>\
+          <div class="col-md-1">\
+            <button type="button" class="btn btn-delete-sp" onclick="remove_parent('+round+')"><i class="fa fa-times"></i></button>\
+          </div>\
+        </div>\
+      </div>'
+    );
+    gen_selectize(round);
   });
+});
 </script>

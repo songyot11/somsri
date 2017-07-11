@@ -3,13 +3,13 @@
   angular.module('somsri.invoice.groupingReport', [
   ])
   .controller('groupingReportCtrl', ['$compile', '$scope', '$window', '$filter', '$rootScope', 'groupingReportService', '$timeout', 'CSV', '$uibModal', 'moment', function($compile, $scope, $window, $filter, $rootScope, service, $timeout, CSV, $uibModal, moment) {
-    $rootScope.menu = "รายงาน"
+    $rootScope.menu = "รายงานแยกตามประเภท"
     var ctrl = this
 
     $rootScope.loadAndAuthorizeResource("invoice", function(){
       // default last 7 days
       ctrl.end_date = new Date();
-      ctrl.start_date = new Date(new Date().setDate(new Date().getDate() - 6));
+      ctrl.start_date = new Date(new Date().setMonth(new Date().getMonth() - 1));
       ctrl.options = null
 
       function loadData(){
@@ -32,7 +32,7 @@
       }
 
       function getReportMode(){
-        if(ctrl.end_date.toDateString() == ctrl.start_date.toDateString()){
+        if(ctrl.end_date && ctrl.start_date && ctrl.end_date.toDateString() == ctrl.start_date.toDateString()){
           return "per_student"
         }else{
           return "per_day"
@@ -40,6 +40,7 @@
       }
 
       function cleanDate(date){
+        if(!date || new Date(date) == "Invalid Date"){return;}
         var cleanedDate = new Date()
         cleanedDate.setDate(date.getDate())
         cleanedDate.setMonth(date.getMonth())
@@ -55,9 +56,8 @@
       }
 
       ctrl.optionsChange = function() {
-        //validate date object
-        if(new Date(ctrl.start_date) == "Invalid Date"){return;}
-        if(new Date(ctrl.end_date) == "Invalid Date"){return;}
+        // check date incorrect input
+        if(ctrl.start_date === undefined || ctrl.end_date === undefined){return}
         loadData()
       }
 

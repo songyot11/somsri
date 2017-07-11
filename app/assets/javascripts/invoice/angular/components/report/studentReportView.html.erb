@@ -2,18 +2,23 @@
   <div id="student-report" class="row ng-scope">
     <div class="row head-menu">
       <div class="col-md-6">
-        <div class="dropdown">
-          <h4 id="grade-list" data-toggle="dropdown">
-            <span ng-bind="studentReport.currentGradeString" ></span>
-            <i class="fa fa-angle-down" aria-hidden="true"></i>
-          </h4>
-          <ul class="dropdown-menu" aria-labelledby="grade-list">
-            <li ng-repeat="grade in studentReport.grades">
-              <a ng-click="studentReport.switchGrade(grade.name)">
-                <button>{{ grade.name }}</button>
-              </a>
-            </li>
-          </ul>
+        <div class="col-xs-2" style="margin-right:-20px;">
+          <h3>ระดับชั้น</h3>
+        </div>
+        <div class="col-xs-9">
+          <div class="dropdown">
+            <h4 id="grade-list" data-toggle="dropdown">
+              <span ng-bind="studentReport.currentGradeString"></span>
+              <i class="fa fa-angle-down" aria-hidden="true"></i>
+            </h4>
+            <ul class="dropdown-menu" aria-labelledby="grade-list">
+              <li ng-repeat="grade in studentReport.grades">
+                <a ng-click="studentReport.switchGrade(grade.name)">
+                  <button>{{ grade.name }}</button>
+                </a>
+              </li>
+            </ul>
+          </div>
         </div>
       </div>
       <div class="col-md-6">
@@ -77,8 +82,8 @@
            <tr>
               <th>รหัส</th>
               <th>ชื่อ</th>
-              <th>ชื่อเล่น</th>
               <th>ชั้น</th>
+              <th>ห้อง</th>
               <th>เลขที่</th>
               <th>ผู้ปกครอง</th>
               <th>สถานะ</th>
@@ -91,7 +96,7 @@
           </thead>
             <tbody>
               <tr ng-repeat="student in studentReport.students ">
-                <td class="text-left">{{student.student_number}}</td>
+                <td class="text-left numberic">{{student.student_number}}</td>
                 <td class="text-left">
                   <div ng-if="student.deleted_at && student.deleted_at != ''">
                     {{student.full_name_with_title}}
@@ -102,25 +107,25 @@
                     </a>
                   </div>
                 </td>
-                <td>{{student.nickname_eng_thai}}</td>
                 <td>{{student.grade_name}}</td>
-                <td>{{student.classroom_number}}</td>
+                <td>{{student.classroom}}</td>
+                <td class="numberic">{{student.classroom_number}}</td>
                 <td>{{student.parent_names}}</td>
                 <td>{{student.active_invoice_status}}</td>
                 <td>{{student.active_invoice_payment_method}}</td>
-                <td class="text-currency">{{student.active_invoice_tuition_fee.toFixed(2) | number:2}}</td>
-                <td class="text-currency">{{student.active_invoice_other_fee.toFixed(2) | number:2}}</td>
-                <td class="text-currency bold">{{student.active_invoice_total_amount.toFixed(2) | number:2}}</td>
-                <td>{{student.active_invoice_updated_at | date:'d/MM/yyyy hh:mm'}}</td>
+                <td class="text-currency numberic">{{student.active_invoice_tuition_fee.toFixed(2) | number:2}}</td>
+                <td class="text-currency numberic">{{student.active_invoice_other_fee.toFixed(2) | number:2}}</td>
+                <td class="text-currency bold numberic">{{student.active_invoice_total_amount.toFixed(2) | number:2}}</td>
+                <td class="numberic">{{student.active_invoice_updated_at | date:'d/MM/yyyy hh:mm'}}</td>
               </tr>
             </tbody>
             <tfoot>
               <tr>
                 <td colspan="5"></td>
                 <td colspan="3">รวมยอดชำระทั้งหมด(บาท) :</td>
-                <td class="text-currency">{{studentReport.total.tuition_fee.toFixed(2) | number:2}}</td>
-                <td class="text-currency">{{studentReport.total.other_fee.toFixed(2) | number:2}}</td>
-                <td class="text-currency">{{studentReport.total.amount.toFixed(2) | number:2}}</td>
+                <td class="text-currency numberic">{{studentReport.total.tuition_fee.toFixed(2) | number:2}}</td>
+                <td class="text-currency numberic">{{studentReport.total.other_fee.toFixed(2) | number:2}}</td>
+                <td class="text-currency numberic">{{studentReport.total.amount.toFixed(2) | number:2}}</td>
                 <td class=""></td>
               </tr>
             </tfoot>

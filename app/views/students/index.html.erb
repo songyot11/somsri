@@ -1,5 +1,6 @@
 <%- model_class = Student -%>
 <%= javascript_include_tag 'print_student_list' %>
+<%= javascript_include_tag 'custom_bootstrap_table' %>
 <%= render 'layouts/messages' %>
 <div id="student-list-for-print" class="container only-print"></div>
 <div id="student-index" class="container-fluid only-view">
@@ -8,84 +9,65 @@
       <h1>นักเรียน</h1>
     </div>
     <div class="col-xs-6" style="text-align: right; margin-top: 15px;">
-       <%= link_to ("<i class='fa fa-print'></i> พิมพ์บัญชีรายชื่อนักเรียน").html_safe, "#",
-              :class => 'btn btn-to-print-student float-right',
-              :onclick => 'printStudent()' %>
+     <%= link_to ("<i class='fa fa-print'></i> พิมพ์บัญชีรายชื่อนักเรียน").html_safe, "#",
+     :class => 'btn btn-to-print-student float-right',
+     :onclick => 'printStudent()' %>
 
-        <%= link_to t('.addstudent', :default => t("helpers.links.addstudent")),
-                   new_student_path,
-                   :class => 'btn btn-add-ps float-right' %>
+     <%= link_to t('.addstudent', :default => t("helpers.links.addstudent")),
+     new_student_path,
+     :class => 'btn btn-add-ps float-right' %>
+   </div>
+ </div>
+
+ <div class="content-student-parent">
+  <div class="row toolbar-student-parent">
+    <div class="col-xs-6">
+      <div class="search">
+        <i class="fa fa-search" aria-hidden="true"></i>
+        <input class="form-control" id="search" type="text" placeholder="ค้นหา" onchange="search()" onkeyup="this.onchange()">
+      </div>
+    </div>
+    <div class="col-xs-6 select-filter">
+      <span class="text-label">เลือกระดับชั้น</span>
+      <select name="grade_select" id="grade_select" class="btn-grades selectpicker" onchange="filter()">
+        <option value='all'>ระดับชั้นทั้งหมด</option>
+        <% Grade.all.each do |grade| %>
+        <option name="grade" value="<%= grade.name %>"<%= @filter_grade.to_s == grade.name.to_s ? "selected" : "" %>> <%= grade.name %> </option>
+        <% end %>
+      </select>
+
+      <span class="text-label">เลือกห้อง</span>
+      <select name="class_select" id="class_select" class="btn-grades selectpicker" onchange="filter()">
+        <option value='all'>ห้องทั้งหมด</option>
+        <% @class_display.each do |classroom| %>
+        <option value="<%= classroom %>"<%= @filter_class == classroom ? "selected" : "" %>> <%= classroom %> </option>
+        <% end %>
+      </select>
     </div>
   </div>
-  <div class="content-student-parent">
-      <%= form_tag(students_path, method: :get, id: "search-form", class:"row search-form-st justify-content-between") do %>
-        <div class="col-xs-6 form-group">
-          <%= text_field_tag :search, params[:search], placeholder: "ค้นหา..." ,class: 'search-sp'%>
-          <%= button_tag(type: 'submit', class: "btn btn-search-sp") do %>
-            <i class="fa fa-search"></i>
-          <% end %>
-        </div>
-        <div class="col-xs-6 form-group float-right-search" style="padding-top:15px;">
-          <tr>
-            <td><label for="grade_select">เลือกระดับชั้น</label></td>
-            <td>
-              <select name="grade_select" id="grade_select" class="btn-grades" onchange="this.form.submit()">
-                  <option value='all'>All Grade</option>
-                  <% Grade.all.each do |grade| %>
-                    <option value="<%= grade.name %>"<%= @filter_grade.to_s == grade.name.to_s ? "selected" : "" %>> <%= grade.name %> </option>
-                  <% end %>
-              </select>
-            </td>
-          </tr>
-          <tr>
-            <td><label for="class_select">เลือกห้อง</label></td>
-            <td>
-              <select name="class_select" id="class_select" class="btn-grades" onchange="this.form.submit()">
-                  <option value='all'>All Classroom</option>
-                  <% @class_display.each do |classroom| %>
-                    <option value="<%= classroom %>"<%= @filter_class == classroom ? "selected" : "" %>> <%= classroom %> </option>
-                  <% end %>
-              </select>
-            </td>
-          </tr>
-        </div>
-      <% end %>
-    <table class="table table-sp-report">
-      <thead>
-        <tr>
-          <th style="width: 250px;">ชื่อ - นามสกุล</th>
-          <th >ชื่อเล่น</th>
-          <th>ระดับชั้น</th>
-          <th>ห้องเรียน</th>
-          <th>เลขที่ในห้อง</th>
-          <th>รหัสประจำตัวนักเรียน</th>
-          <th>เพศ</th>
-          <th>วันเกิด</th>
-          <th class="tools"></th>
-        </tr>
-      </thead>
-      <tbody>
-        <% @students.each do |student| %>
-          <tr>
-            <td><%= student.full_name_eng_thai_with_title%></td>
-            <td><%= student.nickname_eng_thai %></td>
-            <td><%= student.grade.nil? ? "" : student.grade.name %></td>
-            <td><%= student.classroom %></td>
-            <td><%= student.classroom_number %></td>
-            <td><%= student.student_num %></td>
-            <td><%= student.gender.nil? ? "" : t(student.gender.name) %></td>
-            <td><%= student.birthdate.nil? ? '' : student.birthdate.strftime('%d/%m/%Y') %></td>
-            <td class="tools">
-                <div class="icon text-center">
-                  <%= link_to t('.edit', :default => '<i class="fa fa-pencil-square-o" aria-hidden="true"></i> แก้ไข'.html_safe),
-                              edit_student_path(student) ,
-                              :class => 'btn-edit-student-parent'%>
-                </div>
-            </td>
-          </tr>
-        <% end %>
-      </tbody>
-    </table>
-    <div align="center"><%= will_paginate @students %></div>
-  </div>
+
+  <table id="table"
+  data-toggle="table"
+  data-pagination="true"
+  data-pagination-loop="false"
+  data-url="students.json"
+  data-side-pagination="server"
+  data-sort-name="full_name"
+  data-sort-order="desc"
+  data-query-params="queryParams">
+  <thead>
+    <tr>
+      <th data-field="classroom_number" data-sortable="true" data-cell-style="cellStyle">เลขที่ในห้อง</th>
+      <th data-field="full_name" data-sortable="true">ชื่อ-สกุล</th>
+      <th data-field="nickname" data-sortable="true">ชื่อเล่น</th>
+      <th data-field="grade_id" data-sortable="true">ระดับชั้น</th>
+      <th data-field="classroom" data-sortable="true">ห้องเรียน</th>
+      <th data-field="student_number" data-sortable="true">รหัสประจำตัวนักเรียน</th>
+      <th data-field="gender_id" data-sortable="true">เพศ</th>
+      <th data-field="birthdate" data-sortable="true">วันเกิด</th>
+      <th data-field="edit" ></th>
+    </tr>
+  </thead>
+</table>
+</div>
 </div>

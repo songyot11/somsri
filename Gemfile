@@ -59,6 +59,9 @@ gem 'paranoia', '~> 2.1', '>= 2.1.5'
 gem "aws-sdk"
 gem "paperclip", "~> 5.0.0"
 
+gem "bootstrap-table-rails"
+gem 'bootstrap-select-rails'
+
 group :development, :test do
   # Call 'byebug' anywhere in the code to stop execution and get a debugger console
   gem 'byebug', platform: :mri

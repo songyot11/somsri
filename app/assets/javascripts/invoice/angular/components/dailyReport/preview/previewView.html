@@ -41,22 +41,22 @@
         <tr>
           <td scope="row">1</td>
           <td class="table-center">เงินสด</td>
-          <td class="price-pay">{{ dailyReportPreview.datas.cash.toFixed(2) | number:2  }}</td>
+          <td class="price-pay numberic">{{ dailyReportPreview.datas.cash.toFixed(2) | number:2  }}</td>
         </tr>
         <tr>
           <td scope="row">2</td>
           <td class="table-center">บัตรเครดิต</td>
-          <td class="price-pay">{{ dailyReportPreview.datas.credit_card.toFixed(2) | number:2  }}</td>
+          <td class="price-pay numberic">{{ dailyReportPreview.datas.credit_card.toFixed(2) | number:2  }}</td>
         </tr>
         <tr>
           <td scope="row">3</td>
           <td class="table-center">เช็คธนาคาร</td>
-          <td class="price-pay">{{ dailyReportPreview.datas.cheque.toFixed(2) | number:2  }}</td>
+          <td class="price-pay numberic">{{ dailyReportPreview.datas.cheque.toFixed(2) | number:2  }}</td>
         </tr>
         <tr>
           <td scope="row">4</td>
           <td class="table-center">เงินโอน</td>
-          <td class="price-pay">{{ dailyReportPreview.datas.tranfers.toFixed(2) | number:2  }}</td>
+          <td class="price-pay numberic">{{ dailyReportPreview.datas.tranfers.toFixed(2) | number:2  }}</td>
         </tr>
         <tr>
           <td scope="row"></td>
@@ -68,37 +68,37 @@
         <tr>
           <td class="table-foot-top"></td>
           <td class="table-foot-center table-foot-top">เงินสดเริ่มต้น (บาท)</td>
-          <td class="table-foot-top">{{ dailyReportPreview.datas.real_start_cash.toFixed(2) | number:2  }}</td>
+          <td class="table-foot-top numberic">{{ dailyReportPreview.datas.real_start_cash.toFixed(2) | number:2  }}</td>
         </tr>
         <tr>
           <td class="table-foot-top"></td>
           <td class="table-foot-center">เงินสด (บาท)</td>
-          <td>{{ dailyReportPreview.datas.real_cash.toFixed(2) | number:2 }}</td>
+          <td class="numberic">{{ dailyReportPreview.datas.real_cash.toFixed(2) | number:2 }}</td>
         </tr>
         <tr>
           <td class="table-foot-top"></td>
           <td class="table-foot-center">บัตรเครดิต (บาท)</td>
-          <td>{{ dailyReportPreview.datas.real_credit_card.toFixed(2) | number:2 }}</td>
+          <td class="numberic">{{ dailyReportPreview.datas.real_credit_card.toFixed(2) | number:2 }}</td>
         </tr>
         <tr>
           <td class="table-foot-top"></td>
           <td class="table-foot-center">เช็คธนาคาร (บาท)</td>
-          <td>{{ dailyReportPreview.datas.real_cheque.toFixed(2) | number:2 }}</td>
+          <td class="numberic">{{ dailyReportPreview.datas.real_cheque.toFixed(2) | number:2 }}</td>
         </tr>
         <tr>
           <td class="table-foot-top"></td>
           <td class="table-foot-center">เงินโอน (บาท)</td>
-          <td>{{ dailyReportPreview.datas.real_tranfers.toFixed(2) | number:2 }}</td>
+          <td class="numberic">{{ dailyReportPreview.datas.real_tranfers.toFixed(2) | number:2 }}</td>
         </tr>
         <tr>
           <td class="table-foot-top"></td>
           <th class="table-foot-center table-foot-top">จำนวนรวมทั้งสิ้น (บาท)</th>
-          <th class="table-foot-top">{{ dailyReportPreview.datas.real_total.toFixed(2) | number:2 }}</th>
+          <th class="table-foot-top numberic">{{ dailyReportPreview.datas.real_total.toFixed(2) | number:2 }}</th>
         </tr>
         <tr>
           <td class="table-foot-top"></td>
           <th class="table-foot-center table-foot-top">ขาด/เกิน (บาท)</th>
-          <th class="table-foot-top">{{ dailyReportPreview.total.toFixed(2) | number:2 }}</th>
+          <th class="table-foot-top numberic">{{ dailyReportPreview.total.toFixed(2) | number:2 }}</th>
         </tr>
       </tfoot>
     </table>

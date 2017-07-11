@@ -124,3 +124,6 @@ end
 
 GroupingReportOption.blueprint do
 end
+
+Relationship.blueprint do
+end

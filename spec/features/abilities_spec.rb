@@ -39,7 +39,7 @@ describe 'Abilities', js: true do
       visit "/somsri_payroll"
       sleep(1)
       expect(page).to have_current_path '/somsri_payroll'
-      expect(page).to have_content 'เงินเดือน รายงาน'
+      expect(page).to have_content 'แก้ไข รายงาน'
     end
 
     it 'can goto payroll' do
@@ -64,7 +64,7 @@ describe 'Abilities', js: true do
     it 'can goto invoice menu' do
       visit "/somsri_invoice"
       sleep(1)
-      expect(page).to have_content 'ชำระเงิน ใบเสร็จ รายงานค่าเทอม รายงานประจำวัน'
+      expect(page).to have_content 'ชำระเงิน ใบเสร็จ นำส่งเงิน รายงานการชำระ'
     end
 
     it 'can goto invoice create' do
@@ -157,7 +157,7 @@ describe 'Abilities', js: true do
     it 'can goto invoice menu' do
       visit "/somsri_invoice"
       sleep(1)
-      expect(page).to have_content 'ชำระเงิน ใบเสร็จ รายงานค่าเทอม รายงานประจำวัน'
+      expect(page).to have_content 'ชำระเงิน ใบเสร็จ นำส่งเงิน รายงานการชำระ'
     end
 
     it 'can goto invoice create' do

@@ -14,101 +14,49 @@
 <div class="container-fluid employees-list">
   <div class="row same-height">
     <div class="col-xs-2 card-employees" ng-show="employees.displayMode === 'grid'" ng-repeat="data in employees.display_datas track by $index">
-      <div ng-if="data.deleted_at != nil">
-        <div class="card cursor-pointer employee-archive" ng-click="employees.openEmployeeDetails(data.id)">
-          <div class="row line-space5">
-            <div class="col-md-12">
-              <div class="img-profile">
-                <div ng-switch on="data.imgUrl.length > 0">
-                  <div ng-switch-when="true">
-                    <div class="img-bg circle" style="background: url('{{ data.imgUrl }}')"></div>
-                  </div>
-                  <div ng-switch-default>
-                    <i class="fa fa-camera center font-size-40 font-white" aria-hidden="true"></i>
-                    <div class="img-bg bg-light-gray circle"></div>
-                  </div>
+      <div class="card cursor-pointer" ng-click="employees.openEmployeeDetails(data.id)">
+        <div class="row line-space5">
+          <div class="col-md-12">
+            <div class="img-profile">
+              <div ng-switch on="data.imgUrl.length > 0">
+                <div ng-switch-when="true">
+                  <div class="img-bg circle" style="background: url('{{ data.imgUrl }}')"></div>
+                </div>
+                <div ng-switch-default>
+                  <i class="fa fa-camera center font-size-40 font-white" aria-hidden="true"></i>
+                  <div class="img-bg bg-light-gray circle"></div>
                 </div>
               </div>
-            </div>
-          </div>
-
-          <div class="row line-space5">
-            <div class="col-md-12">
-              <div class="text-center">{{ data.full_name }}</div>
-            </div>
-          </div>
-          <div class="row">
-            <div class="col-md-6 padding0">
-              <div class="pull-right line-space5">เงินเดือน :</div>
-            </div>
-            <div class="col-md-6 padding0">
-              <div class="line-space5"><span>&nbsp;{{ data.salary.toLocaleString() }}</span> บาท</div>
-            </div>
-          </div>
-          <div class="row">
-            <div class="col-md-6 padding0">
-              <div class="pull-right line-space5 font-light-gray employee-archive">เงินหัก :</div>
-            </div>
-            <div class="col-md-6 padding0">
-              <div class="line-space5 font-light-gray employee-archive"><span>&nbsp;{{ data.fee.toLocaleString() }}</span> บาท</div>
-            </div>
-          </div>
-          <div class="row">
-            <div class="col-md-6 padding0">
-              <div class="pull-right line-space5 font-light-gray employee-archive">เงินเพิ่ม :</div>
-            </div>
-            <div class="col-md-6 padding0">
-              <div class="line-space5 font-light-gray employee-archive"><span>&nbsp;{{ data.extra.toLocaleString() }}</span> บาท</div>
             </div>
           </div>
         </div>
-      </div>
-
-      <div ng-if="data.deleted_at == nil">
-        <div class="card cursor-pointer" ng-click="employees.openEmployeeDetails(data.id)">
-          <div class="row line-space5">
-            <div class="col-md-12">
-              <div class="img-profile">
-                <div ng-switch on="data.imgUrl.length > 0">
-                  <div ng-switch-when="true">
-                    <div class="img-bg circle" style="background: url('{{ data.imgUrl }}')"></div>
-                  </div>
-                  <div ng-switch-default>
-                    <i class="fa fa-camera center font-size-40 font-white" aria-hidden="true"></i>
-                    <div class="img-bg bg-light-gray circle"></div>
-                  </div>
-                </div>
-              </div>
-            </div>
+        <div class="row line-space5">
+          <div class="col-md-12">
+            <div class="text-center">{{ data.full_name }}</div>
           </div>
-          <div class="row line-space5">
-            <div class="col-md-12">
-              <div class="text-center">{{ data.full_name }}</div>
-            </div>
+        </div>
+        <div class="row">
+          <div class="col-md-6 padding0">
+            <div class="pull-right line-space5">เงินเดือน :</div>
           </div>
-          <div class="row">
-            <div class="col-md-6 padding0">
-              <div class="pull-right line-space5">เงินเดือน :</div>
-            </div>
-            <div class="col-md-6 padding0">
-              <div class="line-space5"><span>&nbsp;{{ data.salary.toLocaleString() }}</span> บาท</div>
-            </div>
+          <div class="col-md-6 padding0">
+            <div class="line-space5"><span class="numberic">&nbsp;{{ data.salary.toLocaleString() }}</span> บาท</div>
           </div>
-          <div class="row">
-            <div class="col-md-6 padding0">
-              <div class="pull-right line-space5 font-light-gray">เงินหัก :</div>
-            </div>
-            <div class="col-md-6 padding0">
-              <div class="line-space5 font-light-gray"><span>&nbsp;{{ data.fee.toLocaleString() }}</span> บาท</div>
-            </div>
+        </div>
+        <div class="row">
+          <div class="col-md-6 padding0">
+            <div class="pull-right line-space5 font-light-gray">เงินหัก :</div>
           </div>
-          <div class="row">
-            <div class="col-md-6 padding0">
-              <div class="pull-right line-space5 font-light-gray">เงินเพิ่ม :</div>
-            </div>
-            <div class="col-md-6 padding0">
-              <div class="line-space5 font-light-gray"><span>&nbsp;{{ data.extra.toLocaleString() }}</span> บาท</div>
-            </div>
+          <div class="col-md-6 padding0">
+            <div class="line-space5 font-light-gray"><span class="numberic">&nbsp;{{ data.fee.toLocaleString() }}</span> บาท</div>
+          </div>
+        </div>
+        <div class="row">
+          <div class="col-md-6 padding0">
+            <div class="pull-right line-space5 font-light-gray">เงินเพิ่ม :</div>
+          </div>
+          <div class="col-md-6 padding0">
+            <div class="line-space5 font-light-gray"><span class="numberic">&nbsp;{{ data.extra.toLocaleString() }}</span> บาท</div>
           </div>
         </div>
       </div>
@@ -116,28 +64,7 @@
 
     <div class="col-md-12" ng-show="employees.displayMode === 'list'">
       <div class="list-view">
-        <table id="employeesTable" class="table">
-          <thead>
-            <tr>
-              <th style="width: 350px;">ชื่อ-นามสกุล</th>
-              <th style="width: 170px;">ตำแหน่ง</th>
-              <th class="text-right">เงินเดือน</th>
-              <th class="text-right">เงินเพิ่ม</th>
-              <th class="text-right">เงินหัก</th>
-              <th style="width: 170px;"></th>
-            </tr>
-          </thead>
-          <tbody>
-            <tr ng-repeat="data in employees.display_datas track by $index">
-              <td><a ng-click="employees.openEmployeeDetails(data.id)" class="blue">{{ data.full_name }}</a></td>
-              <td class="text-grey">{{ data.position }}</td>
-              <td class="text-blue text-right"><span>&nbsp;{{ data.salary.toLocaleString() }}</span> บาท</td>
-              <td class="text-green text-right"><span>&nbsp;{{ data.extra.toLocaleString() }}</span> บาท</td>
-              <td class="text-red text-right"><span>&nbsp;{{ data.fee.toLocaleString() }}</span> บาท</td>
-              <td class="td-edit-employee-link text-center"><a ng-click="employees.openEmployeeDetails(data.id)"><i class="fa fa-pencil-square-o"></i> แก้ไข</a></td>
-            </tr>
-          </tbody>
-        </table>
+        <table id="employeesTable"></table>
       </div>
     </div>
   </div>

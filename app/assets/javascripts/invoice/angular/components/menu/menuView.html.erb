@@ -19,23 +19,26 @@
       </div>
 
       <div class="col-xs-4">
+          <div class="menu-btn" ng-click="openDailyReport()">
+              <div class="wraptocenter">
+                  <%= image_tag 'send_money.png', class: "" %>
+              </div>
+          </div>
+          <p>นำส่งเงิน</p>
+      </div>
+
+      <div class="col-xs-12 free-space"></div>
+
+      <div class="col-xs-4">
           <div class="menu-btn" ng-click="openStudentReport()">
               <div class="wraptocenter">
                   <%= image_tag 'report-invoice.png', class: "" %>
               </div>
           </div>
-          <p>รายงานค่าเทอม</p>
+          <p>รายงานการชำระ</p>
       </div>
 
-      <div class="col-xs-4" style="margin-top:50px;">
-          <div class="menu-btn" ng-click="openDailyReport()">
-              <div class="wraptocenter">
-                  <%= image_tag 'report-invoice.png', class: "" %>
-              </div>
-          </div>
-          <p>รายงานประจำวัน</p>
-      </div>
-      <div class="col-xs-4" style="margin-top:50px;">
+      <div class="col-xs-4">
           <div class="menu-btn" ng-click="openGroupingReport()">
               <div class="wraptocenter">
                   <%= image_tag 'report-invoice.png', class: "" %>

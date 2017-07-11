@@ -26,6 +26,7 @@
 //= require ng-file-upload
 //= require angular-sanitize
 //= require ng-csv
+//= require angular-ui-bootstrap-fontawesome
 
 //= require main/angular/components/mainCtrl.js.erb
 //= require main/angular/app.module

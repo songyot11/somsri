@@ -29,12 +29,12 @@ describe InvoicesController do
   describe '#index' do
     describe 'filter invoices' do
       it 'can filter' do
-        get :index, params: { search_keyword: 'ผลดี' }
+        get :index, params: { search_keyword: 'ผลดี', sort: 'invoices.id', order: 'desc' }
         expect(assigns[:invoices].length).to eq 2
       end
 
       it 'can handle if current page is greater than number of pages' do
-        get :index, params: { search_keyword: 'ผลดี', page: 3 }
+        get :index, params: { search_keyword: 'ผลดี', page: 3, sort: 'invoices.id', order: 'desc'  }
         expect(assigns[:invoices].length).to eq 2
         expect(assigns[:invoices].current_page).to eq 1
       end

@@ -6,16 +6,23 @@ class InvoicesController < ApplicationController
   # GET /invoices
   def index
     grade_select = (params[:grade_select] || 'All')
-    @invoices = get_invoices(grade_select, params[:search_keyword], params[:page])
-    if @invoices.total_pages < @invoices.current_page
-      @invoices = get_invoices(grade_select, params[:search_keyword], 1)
+    start_date = DateTime.parse(params[:start_date]).beginning_of_day if isDate(params[:start_date])
+    end_date = DateTime.parse(params[:end_date]).end_of_day if isDate(params[:end_date])
+    @invoices = get_invoices(grade_select, params[:search_keyword], start_date, end_date, params[:page], params[:sort], params[:order])
+    if params[:page] && @invoices.total_pages < @invoices.current_page
+      @invoices = get_invoices(grade_select, params[:search_keyword], start_date, end_date, 1, params[:sort], params[:order])
     end
     @filter_grade = grade_select
-    render json: {
-      current_page: @invoices.current_page,
-      total_records: @invoices.total_entries,
+    result = {
       invoices: @invoices.as_json({ index: true })
     }
+
+    if params[:page]
+      result[:current_page] = @invoices.current_page
+      result[:total_records] = @invoices.total_entries
+    end
+
+    render json: result
   end
 
   # GET /invoices/:id
@@ -135,7 +142,13 @@ class InvoicesController < ApplicationController
       invoice_hash.delete(:items)
       invoice_hash.delete(:grade)
       invoice_hash.delete(:grade_name)
-      invoice_hash[:school_year] = SchoolSetting.school_year
+
+      if invoice_hash[:school_year].blank?
+        invoice_hash[:school_year] = SchoolSetting.school_year
+      else
+        invoice_hash[:school_year]
+      end
+
       invoice = Invoice.new(invoice_hash)
       invoice.parent_id = parent.id
       invoice.student_id = student.id
@@ -312,8 +325,8 @@ class InvoicesController < ApplicationController
       options = grouping_keyword.collect{|gk| { name: gk[:name], value: true }}
     end
 
-    start_date = DateTime.parse(params[:start_date]).beginning_of_day
-    end_date = DateTime.parse(params[:end_date]).end_of_day
+    start_date = DateTime.parse(params[:start_date]).beginning_of_day if isDate(params[:start_date])
+    end_date = DateTime.parse(params[:end_date]).end_of_day if isDate(params[:end_date])
 
     summary_mode = select_summary_mode(start_date, end_date)
     invoices = query_invoice_by_date_range(start_date, end_date)
@@ -391,7 +404,7 @@ class InvoicesController < ApplicationController
         is_grouped = false
         keyword_index = 4
         grouping_keyword.each do |gk|
-          if li.detail.downcase =~ Regexp.union(gk[:keyword].downcase.split(',').collect(&:strip))
+          if li.detail.downcase =~ Regexp.union(gk[:keyword].downcase.split('|').collect(&:strip))
             #sum by keyword
             datas_tmp[keyword_index] += li.amount
             total_tmp[keyword_index] += li.amount
@@ -437,35 +450,35 @@ class InvoicesController < ApplicationController
 
     def select_summary_mode(start_date, end_date)
       summary_mode = "per_day"
-      if start_date.to_date == end_date.to_date
+      if start_date && end_date && start_date.to_date == end_date.to_date
         summary_mode = "per_student"
       end
       return summary_mode
     end
 
     def query_invoice_by_date_range(start_date, end_date)
-      return Invoice.where(invoice_status_id: InvoiceStatus.find_by_name('Active').id)
-                        .where(updated_at: start_date..end_date)
+      qry_invoices = Invoice.where(invoice_status_id: InvoiceStatus.find_by_name('Active').id)
+      qry_invoices = qry_date_range(qry_invoices, start_date, end_date)
+      return qry_invoices
     end
 
-    def get_invoices(grade_select, search_keyword, page)
-      if grade_select.downcase == 'all'
-        # @invoices = Invoice.order("id DESC").to_a
-        # @invoices = Invoice.order("id DESC").search(params[:search]).all.page(params[:page]).to_a
-        @invoices = Invoice.search(search_keyword)
-                           .order("id DESC")
-                           .paginate(page: page, per_page: 10)
-                           .to_a
-      else
-        # @invoices = Invoice.where(grade_name: grade_select).order("id DESC").to_a
-        # @invoices = Invoice.where(grade_id: grade.id).order("id DESC").search(params[:search]).page(params[:page]).to_a
+    def get_invoices(grade_select, search_keyword, start_date, end_date, page, sort, order)
+      qry_invoices = Invoice.includes(:payment_methods, :parent, :student, :user, :line_items, :invoice_status)
+                            .search(search_keyword)
+      if grade_select.downcase != 'all'
         grade = Grade.where(name: grade_select).first
-        @invoices = Invoice.search(search_keyword)
-                           .where(grade_name: grade.name)
-                           .order("id DESC")
-                           .paginate(page: page, per_page: 10)
-                           .to_a
+        qry_invoices = qry_invoices.where(grade_name: grade.name) if grade
       end
+
+      qry_invoices = qry_date_range(qry_invoices, start_date, end_date)
+
+      qry_invoices = qry_invoices.order("#{sort} #{order}")
+
+      if page
+        qry_invoices = qry_invoices.paginate(page: page, per_page: 10)
+      end
+
+      return qry_invoices.to_a
     end
 
     # Use callbacks to share common setup or constraints between actions.

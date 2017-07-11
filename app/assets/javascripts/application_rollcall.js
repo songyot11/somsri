@@ -23,6 +23,7 @@
 //= require angular-sanitize
 //= require ocLazyLoad/dist/ocLazyLoad.min
 //= require angular-input-masks
+//= require angular-ui-bootstrap-fontawesome
 
 //= require rollcall/angular/components/mainCtrl.js.erb
 //= require rollcall/angular/app.module

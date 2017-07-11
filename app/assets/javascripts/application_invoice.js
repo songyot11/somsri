@@ -25,10 +25,14 @@
 //= require selectize.min
 //= require angular-sanitize
 //= require ng-csv
+//= require angular-ui-bootstrap-fontawesome
 
 //= require invoice/angular/components/mainCtrl.js.erb
 //= require invoice/angular/components/shared/ngKeyEnterDirective
 //= require invoice/angular/app.module
 //= require invoice/angular/app.assets
 
+//= require invoice/angular/shared/filters
 //= require angular-xeditable/dist/js/xeditable
+//= require bootstrap-table
+//= require bootstrap-select/js/bootstrap-select
