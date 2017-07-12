@@ -131,6 +131,16 @@ describe 'Grouping Report', js: true do
       expect(page).to have_content("รวมทั้งหมด 112,000.00 40,000.00 30,000.00 30,000.00 200,000.00 2,000.00 10,000.00 212,000.00")
     end
 
+    it 'should goto correct student' do
+      visit '/somsri_invoice#/grouping_report'
+      sleep(1)
+      find('#start_date').set(today_str)
+      sleep(1)
+      click_link('สมศรี ศรีสุข')
+      sleep(1)
+      expect(page).to have_current_path("/students/#{students[0].id}/edit")
+    end
+
     it 'should display report per student by select same date and display only ค่าเสื้อ' do
       visit '/somsri_invoice#/grouping_report'
       sleep(1)
