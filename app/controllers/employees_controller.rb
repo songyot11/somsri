@@ -12,7 +12,7 @@ class EmployeesController < ApplicationController
   # GET /employees/:id/slip
   def slip
     authorize! :manage, Employee
-    if Payroll.where({ employee_id: params[:id] }).count > 0
+    if Payroll.where({ employee_id: params[:id], closed: true }).count > 0
       employee = Employee.with_deleted.where(id: params[:id]).first.as_json({ slip: true, payroll_id: params[:payroll_id] })
       employee[:payroll][:fee_orders] = employee[:payroll][:fee_orders]
                                                         .select { |key, value| value[:value] > 0}

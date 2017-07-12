@@ -48,15 +48,13 @@ describe 'Payroll Edit', js: true do
 
   let(:payrolls) do
     [
-      Payroll.make!({employee_id: employee1.id, salary: 1_000,
-                            effective_date: DateTime.new(2016, 12, 1)}),
-      Payroll.make!({employee_id: employee2.id, salary: 1_000,
-                            effective_date: DateTime.new(2016, 12, 1)}),
-      Payroll.make!({employee_id: employee1.id, salary: 1_000,
+      Payroll.update(employee1.payrolls[0].id,{ salary: 1_000 }),
+      Payroll.update(employee2.payrolls[0].id,{ salary: 1_000 }),
+      Payroll.make!({employee_id: employee1.id, salary: 1_000, closed: true,
                             effective_date: DateTime.new(2016, 11, 1)}),
-      Payroll.make!({employee_id: employee2.id, salary: 1_000,
+      Payroll.make!({employee_id: employee2.id, salary: 1_000, closed: true,
                             effective_date: DateTime.new(2016, 11, 1)}),
-      Payroll.make!({employee_id: employee3.id, salary: 1_000,
+      Payroll.make!({employee_id: employee3.id, salary: 1_000, closed: true,
                             effective_date: DateTime.new(2016, 11, 1)}),
     ]
   end
@@ -99,6 +97,21 @@ describe 'Payroll Edit', js: true do
     eventually { expect(payroll.reload.salary).to eq 5000.0 }
     eventually { expect(page).to have_content /นาง สมศรี เป็นชื่อแอพ.*5,000.00 0.00 0.00 0.00 0.00 0.00 0.00 0.00 0.00 0.00 0.00 0.00 0.00 0.00 5,000.00/i }
     eventually { expect(page).to have_content /รวมทั้งหมด.*6,000.00 0.00 0.00 0.00 0.00 0.00 0.00 0.00 0.00 0.00 0.00 0.00 0.00 0.00 6,000.00/i }
+  end
+
+  it 'should not display social_insurance_pdf button on current month' do
+    visit "/somsri_payroll#/payroll"
+    eventually { expect(page).to_not have_content /สำหรับประกันสังคม/i }
+  end
+
+  it 'should display social_insurance_pdf button on closed month' do
+    visit "/somsri_payroll#/payroll"
+    sleep(1)
+    find('#month-list').click
+    sleep(1)
+    find('ul.dropdown-menu li a', text: "1 พฤศจิกายน 2559").click
+    sleep(1)
+    eventually { expect(page).to have_content /สำหรับประกันสังคม/i }
   end
 
   it 'should edit ot' do
@@ -386,17 +399,6 @@ describe 'Payroll Edit', js: true do
 
     find('ul.dropdown-menu li a', text: "1 พฤศจิกายน 2559").click
     sleep(1)
-    first('a[editable-number="employee.salary"]').click
-    sleep(1)
-    find(:css, "input").set(5000)
-    sleep(1)
-    find('button[type="submit"]').click
-    sleep(1)
-
-    payrolls[2].reload
-    employee1.reload
-
-    eventually { expect(payrolls[2].salary).to eq 5000.00 }
-    eventually { expect(employee1.salary).to eq 1000.00 }
+    eventually { expect(first('a[editable-number="employee.salary"]')).to eq nil }
   end
 end

@@ -104,6 +104,7 @@
         getTotalSalary(ctrl.employees)
         ctrl.currentDateString = effectiveDate["date_string"];
         ctrl.currentEffectiveDate = effectiveDate;
+        checkIfLastedPayroll();
       });
     }
 
@@ -168,12 +169,22 @@
             getTotalSalary(ctrl.employees)
             ctrl.currentDateString = current['date_string'];
             ctrl.currentEffectiveDate = current;
+            checkIfLastedPayroll()
           });
         }
       });
     }
 
+    function checkIfLastedPayroll(){
+      if(ctrl.currentEffectiveDate['date_time'] == "lasted"){
+        ctrl.isClosedPayroll = false
+      }else{
+        ctrl.isClosedPayroll = true
+      }
+    }
+
     ctrl.createPayrolls = function(){
+      $scope.effectiveDates = ctrl.effectiveDates
       $uibModal.open({
         animation: true,
         backdrop: 'static',

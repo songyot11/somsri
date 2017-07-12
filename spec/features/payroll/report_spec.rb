@@ -66,17 +66,17 @@ describe 'Payroll Report', js: true do
 
   let(:payrolls) do
     [
-      pr1 = Payroll.make!({employee_id: employee1.id, salary: 1_000_000,
+      Payroll.make!({employee_id: employee1.id, salary: 1_000_000,
                             effective_date: DateTime.new(2016, 12, 1)}),
-      pr3 = Payroll.make!({employee_id: employee2.id, salary: 1_000_000,
+      Payroll.make!({employee_id: employee2.id, salary: 1_000_000,
                             effective_date: DateTime.new(2016, 12, 1)}),
-      pr2 = Payroll.make!({employee_id: employee1.id, salary: 50_000,
+      Payroll.make!({employee_id: employee1.id, salary: 50_000,
                             effective_date: DateTime.new(2016, 11, 1)}),
-      pr4 = Payroll.make!({employee_id: employee2.id, salary: 50_000,
+      Payroll.make!({employee_id: employee2.id, salary: 50_000,
                             effective_date: DateTime.new(2016, 11, 1)}),
-      pr5 = Payroll.make!({employee_id: employee3.id, salary: 20_000,
+      Payroll.make!({employee_id: employee3.id, salary: 20_000,
                             effective_date: DateTime.new(2016, 11, 1)}),
-      pr6 = Payroll.make!({employee_id: employee4.id, salary: 1_000_000,
+      Payroll.make!({employee_id: employee4.id, salary: 1_000_000,
                             effective_date: DateTime.new(2016, 12, 1)}),
     ]
   end
@@ -107,7 +107,7 @@ describe 'Payroll Report', js: true do
 
   it 'should see month latest' do
     visit "/somsri_payroll#/report"
-
+    sleep(1)
     eventually { expect(page).to have_content 'สมศรี เป็นชื่อแอพ 5-234-34532-2342 1,000,000.00 0.00 304,916.67 695,083.33' }
     eventually { expect(page).to have_content 'สมจิตร เป็นนักมวย 5-234-34532-2342 1,000,000.00 0.00 30,000.00 970,000.00' }
     eventually { expect(page).to have_content 'พี ดี เอ็ม 5-234-34532-xxxx 1,000,000.00 0.00 30,000.00 970,000.00' }
@@ -116,7 +116,7 @@ describe 'Payroll Report', js: true do
 
   it 'should see month list' do
     visit "/somsri_payroll#/report"
-
+    sleep(1)
     find('#month-list').click
     sleep(1)
     eventually { expect(page).to have_content '1 ธันวาคม 2559 1 พฤศจิกายน 2559' }
@@ -151,7 +151,7 @@ describe 'Payroll Report', js: true do
       click_link "เงินเดือน"
       sleep(1)
       eventually { expect(page).to have_content '1 พฤศจิกายน 2559' }
-      expect(find_field('ค่าแรง / เงินเดือนปัจจุบัน').value).to eq '50000'
+      expect(find_field('ค่าแรง / เงินเดือนปัจจุบัน', disabled: true).value).to eq '50000'
     end
   end
 

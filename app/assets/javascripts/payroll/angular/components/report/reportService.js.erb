@@ -16,6 +16,10 @@
       }
     }
 
+    this.getMonthsOnlyClosed = function() {
+      return $http.get('/payrolls/effective_dates/', { params: { closed: true } });
+    }
+
     this.updatePayroll = function(id, data) {
       return $http.patch('/payrolls/' + id, data);
     }

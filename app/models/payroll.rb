@@ -50,6 +50,7 @@ class Payroll < ApplicationRecord
         extra_fee: extra_fee.to_f,
         start_date: self.employee.start_date,
         employee_type: self.employee.employee_type,
+        closed: self.closed,
         # Income
         salary: self.salary.to_f,
         ot: self.ot.to_f,
@@ -71,7 +72,7 @@ class Payroll < ApplicationRecord
       }
     elsif options["history"]
       {
-        date: I18n.l(self.effective_date, format: "%B #{effective_date.year + 543}"),
+        date: self.effective_date ? I18n.l(self.effective_date, format: "%B #{effective_date.year + 543}") : "เดือนปัจจุบัน",
         salary: self.salary.to_f,
         extra_pay: extra_pay.to_f,
         extra_fee: extra_fee.to_f,

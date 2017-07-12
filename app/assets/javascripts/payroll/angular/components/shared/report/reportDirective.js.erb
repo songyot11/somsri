@@ -78,7 +78,11 @@ function bootstrapTableController($filter,data) {
 
   function linkName(value, row, index){
     if(value){
-      return '<a href="somsri_payroll#/employees/'+row.code+'?payroll_id='+row.payroll_id+'"><strong>'+value+'</strong><a>'
+      if(row.deleted){
+        return '<strong>'+value+'</strong>'
+      }else{
+        return '<a href="somsri_payroll#/employees/'+row.code+'?payroll_id='+row.payroll_id+'"><strong>'+value+'</strong><a>'
+      }
     }
     return '-';
   }

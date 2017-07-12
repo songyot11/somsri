@@ -137,7 +137,7 @@
 
 
       function getPayrolls() {
-        reportService.getMonths().then(function(resp) {
+        reportService.getMonthsOnlyClosed().then(function(resp) {
           if (resp.data.length > 0) {
             ctrl.effectiveDates = resp.data
             var current = ctrl.effectiveDates[0]

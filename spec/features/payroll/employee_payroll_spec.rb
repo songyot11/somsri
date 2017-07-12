@@ -66,18 +66,15 @@ describe 'Payroll', js: true do
 
   let(:payrolls) do
     [
-      pr1 = Payroll.make!({employee_id: employee1.id, salary: 1_000_000,
-                            effective_date: DateTime.new(2016, 12, 1), social_insurance: 750}),
-      pr3 = Payroll.make!({employee_id: employee2.id, salary: 1_000_000,
-                            effective_date: DateTime.new(2016, 12, 1), social_insurance: 750}),
-      pr2 = Payroll.make!({employee_id: employee1.id, salary: 50_000,
+      Payroll.update(employee1.payrolls[0].id,{ salary: 1_000_000, social_insurance: 750 }),
+      Payroll.update(employee2.payrolls[0].id,{ salary: 1_000_000, social_insurance: 750 }),
+      Payroll.make!({employee_id: employee1.id, salary: 50_000,
                             effective_date: DateTime.new(2016, 11, 1)}),
-      pr4 = Payroll.make!({employee_id: employee2.id, salary: 50_000,
+      Payroll.make!({employee_id: employee2.id, salary: 50_000,
                             effective_date: DateTime.new(2016, 11, 1)}),
-      pr5 = Payroll.make!({employee_id: employee3.id, salary: 20,
+      Payroll.make!({employee_id: employee3.id, salary: 20,
                             effective_date: DateTime.new(2016, 11, 1)}),
-      pr6 = Payroll.make!({employee_id: employee4.id, salary: 1_000_000,
-                            effective_date: DateTime.new(2016, 12, 1)}),
+      Payroll.update(employee4.payrolls[0].id,{ salary: 1_000_000 }),
     ]
   end
 
@@ -102,14 +99,28 @@ describe 'Payroll', js: true do
     eventually { expect(page).to have_content /นาย สมจิตร เป็นนักมวย.*1,000,000.00 0.00 0.00 0.00 0.00 0.00 0.00/i }
     eventually { expect(page).to have_content /พี ดี เอ็ม.*1,000,000.00 0.00 0.00 0.00 0.00 0.00 0.00/i }
     eventually { expect(page).to have_content /รวมทั้งหมด.*3,000,000.00 0.00 0.00 0.00 0.00 0.00 0.00/i }
+    eventually { expect(page).to_not have_content 'สำหรับประกันสังคม' }
+    eventually { expect(page).to have_content 'ปิดงวดเงินเดือน' }
   end
 
   it 'should see month list' do
     visit "/somsri_payroll#/payroll"
-
     find('#month-list').click
     sleep(1)
-    eventually { expect(page).to have_content '1 ธันวาคม 2559 1 พฤศจิกายน 2559' }
+    eventually { expect(page).to have_content 'เดือนปัจจุบัน 1 พฤศจิกายน 2559' }
+    eventually { expect(page).to_not have_content 'เดือนปัจจุบัน เดือนปัจจุบัน 1 พฤศจิกายน 2559' }
+  end
+
+  it 'should see month list' do
+    visit "/somsri_payroll#/payroll"
+    find('#month-list').click
+    sleep(1)
+    click_on("1 พฤศจิกายน 2559")
+    sleep(1)
+    find('#month-list').click
+    sleep(1)
+    eventually { expect(page).to have_content '1 พฤศจิกายน 2559 เดือนปัจจุบัน' }
+    eventually { expect(page).to_not have_content '1 พฤศจิกายน 2559 1 พฤศจิกายน 2559 เดือนปัจจุบัน' }
   end
 
   it 'should switch month' do
@@ -130,6 +141,16 @@ describe 'Payroll', js: true do
     eventually { expect(page).to have_content /รวมทั้งหมด.*100,020.00 0.00 0.00 0.00 0.00 0.00 0.00/i }
   end
 
+  it 'should display only social insurance button when select closed payroll' do
+    visit "/somsri_payroll#/payroll"
+    find('#month-list').click
+    sleep(1)
+    click_on("พฤศจิกายน 2559")
+    sleep(1)
+    eventually { expect(page).to have_content 'สำหรับประกันสังคม' }
+    eventually { expect(page).to_not have_content 'ปิดงวดเงินเดือน' }
+  end
+
   describe 'employee link' do
     it 'go to employee detail and display payroll of the same month as payroll screen' do
       visit "/somsri_payroll#/payroll"
@@ -144,7 +165,7 @@ describe 'Payroll', js: true do
       click_link "เงินเดือน"
       sleep(1)
       eventually { expect(page).to have_content '1 พฤศจิกายน 2559' }
-      expect(find_field('ค่าแรง / เงินเดือนปัจจุบัน').value).to eq '50000'
+      expect(find_field('ค่าแรง / เงินเดือนปัจจุบัน', disabled: true).value).to eq '50000'
     end
   end
 
@@ -155,8 +176,7 @@ describe 'Payroll', js: true do
     expect(page).to have_selector('.active.employee-type[ng-model="report.employeeTypeMode.temporary"]')
     expect(page).to have_selector('.active.employee-type[ng-model="report.employeeTypeMode.probationary"]')
     expect(page).to have_selector('.active.employee-type[ng-model="report.employeeTypeMode.daily"]')
-
-    expect(page).to have_content 'พี ดี เอ็ม'
+    expect(page).to have_content 'คิง ฮาราบาส'
     expect(page).to have_content 'นาย สมจิตร เป็นนักมวย'
     expect(page).to have_content 'นาง สมศรี เป็นชื่อแอพ'
   end
@@ -167,13 +187,12 @@ describe 'Payroll', js: true do
     find('.active.employee-type[ng-model="report.employeeTypeMode.normal"]').click
     find('.active.employee-type[ng-model="report.employeeTypeMode.probationary"]').click
     sleep(1)
-
     expect(page).to_not have_selector('.active.employee-type[ng-model="report.employeeTypeMode.normal"]')
     expect(page).to have_selector('.active.employee-type[ng-model="report.employeeTypeMode.temporary"]')
     expect(page).to_not have_selector('.active.employee-type[ng-model="report.employeeTypeMode.probationary"]')
     expect(page).to have_selector('.active.employee-type[ng-model="report.employeeTypeMode.daily"]')
 
-    expect(page).to have_content 'พี ดี เอ็ม'
+    expect(page).to have_content 'คิง ฮาราบาส'
     expect(page).to have_content 'นาย สมจิตร เป็นนักมวย'
     expect(page).to_not have_content 'นาง สมศรี เป็นชื่อแอพ'
   end
@@ -192,7 +211,7 @@ describe 'Payroll', js: true do
     expect(page).to_not have_selector('.active.employee-type[ng-model="report.employeeTypeMode.probationary"]')
     expect(page).to_not have_selector('.active.employee-type[ng-model="report.employeeTypeMode.daily"]')
 
-    expect(page).to_not have_content 'พี ดี เอ็ม'
+    expect(page).to_not have_content 'คิง ฮาราบาส'
     expect(page).to_not have_content 'นาย สมจิตร เป็นนักมวย'
     expect(page).to_not have_content 'นาง สมศรี เป็นชื่อแอพ'
   end
@@ -200,7 +219,7 @@ describe 'Payroll', js: true do
   it 'should create new payroll' do
     login_as(user, scope: :user)
     visit "/somsri_payroll#/payroll"
-
+    count = Payroll.all.count
     sleep(1)
     first('a[ng-click="payroll.createPayrolls()"]').trigger('click')
     sleep(1)
@@ -208,38 +227,58 @@ describe 'Payroll', js: true do
     sleep(1)
     find('button[type="submit"]').click
     sleep(1)
-
-    expect(page).to have_content(/นาง สมศรี เป็นชื่อแอพ.*1,000,000.00/i)
-    expect(page).to have_content(/นาย สมจิตร เป็นนักมวย.*1,000,000.00/i)
+    click_button('ตกลง')
+    sleep(1)
+    expect(count < Payroll.all.count).to eq true
   end
 
   it 'should warning before create new payrolls with same date' do
     visit "/somsri_payroll#/payroll"
     sleep(1)
     # craete payroll
-    click_link('เริ่มออกเงินเดือน')
-    sleep(1)
-    find('#effective_date').set('13/12/2010')
-    click_button('บันทึก')
-    sleep(1)
-
-    # craete same payroll
-    visit "/somsri_payroll#/payroll"
-    sleep(1)
-    click_link('เริ่มออกเงินเดือน')
+    click_link('ปิดงวดเงินเดือน')
     sleep(1)
     find('#effective_date').set('13/12/2010')
     click_button('บันทึก')
     sleep(1)
     click_button('ตกลง')
     sleep(1)
+
+    # craete same payroll
     visit "/somsri_payroll#/payroll"
     sleep(1)
-    find('#month-list').click
+    click_link('ปิดงวดเงินเดือน')
     sleep(1)
-    find('ul.dropdown-menu li a', text: "13 ธันวาคม 2553").click
+    find('#effective_date').set('13/12/2010')
+    click_button('บันทึก')
+    sleep(1)
+    expect(page).to have_content('ไม่สามารถเลือกวันที่ปิดงวดเงินเดือนซ้ำได้')
+    sleep(1)
+    click_button('ตกลง')
     sleep(1)
     expect(page).to have_content(/นาง สมศรี เป็นชื่อแอพ.*1,000,000.00/i)
     expect(page).to have_content('เงินเดือนสุทธิ')
   end
+
+  it 'should create new payroll' do
+    login_as(user, scope: :user)
+    visit "/somsri_payroll#/payroll"
+    count = Payroll.all.count
+    sleep(1)
+    first('a[ng-click="payroll.createPayrolls()"]').trigger('click')
+    sleep(1)
+    find('input[type="text"]').set(DateTime.now.next_month(1).strftime("%d/%m/%Y"))
+    sleep(1)
+    find('button[type="submit"]').click
+    sleep(1)
+    click_button('ตกลง')
+    sleep(1)
+    expect(count < Payroll.all.count).to eq true
+
+    sleep(1)
+    find('#month-list').click
+    sleep(1)
+    expect(page).to have_content('เดือนปัจจุบัน')
+  end
+
 end

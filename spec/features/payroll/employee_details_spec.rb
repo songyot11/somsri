@@ -67,30 +67,25 @@ describe 'Employee Details', js: true do
 
   let(:payrolls) do
     [
-      Payroll.make!({
+      Payroll.update(employees[0].payrolls[0].id,
+      {
         employee_id: employees[0].id,
         salary: 50000,
-        tax: 100,
         advance_payment: 2000,
-        allowance: 3000,
-        closed: false,
-        effective_date: DateTime.now.next_month(1).utc
+        allowance: 3000
       }),
 
-      Payroll.make!({
+      Payroll.update(employees[1].payrolls[0].id,
+      {
         employee_id: employees[1].id,
         salary: 20000,
-        tax: 1000,
         position_allowance: 10000,
-        fee_etc: 200,
-        closed: false,
-        effective_date: DateTime.now.next_month(1).utc
+        fee_etc: 200
       }),
 
       Payroll.make!({
         employee_id: employees[0].id,
         salary: 5000,
-        tax: 10,
         advance_payment: 200,
         allowance: 300,
         closed: true,
@@ -100,7 +95,6 @@ describe 'Employee Details', js: true do
       Payroll.make!({
         employee_id: employees[1].id,
         salary: 2000,
-        tax: 100,
         position_allowance: 1000,
         fee_etc: 20,
         closed: true,
@@ -110,7 +104,6 @@ describe 'Employee Details', js: true do
       Payroll.make!({
         employee_id: employees[0].id,
         salary: 500,
-        tax: 1,
         advance_payment: 20,
         allowance: 30,
         closed: true,
@@ -120,7 +113,6 @@ describe 'Employee Details', js: true do
       Payroll.make!({
         employee_id: employees[1].id,
         salary: 200,
-        tax: 10,
         position_allowance: 100,
         fee_etc: 2,
         closed: true,
@@ -186,7 +178,7 @@ describe 'Employee Details', js: true do
       eventually { expect(page).to_not have_content('สมจิตร เป็นนักมวย') }
     end
 
-    it 'should diplay lastest employee details' do
+    it 'should display lastest employee details' do
       sleep(1)
       click_link('เงินเดือน')
       sleep(1)
@@ -367,7 +359,6 @@ describe 'Employee Details', js: true do
       sleep(1)
       find('ul.dropdown-menu li a', text: "สิงหาคม 2559").click
       sleep(1)
-
       eventually { expect(page).to have_field('ค่าแรง / เงินเดือนปัจจุบัน', disabled: true) }
       eventually { expect(page).to have_field('ขาดงาน', disabled: true) }
       eventually { expect(page).to have_field('เงินสอนพิเศษ', disabled: true) }
@@ -429,12 +420,13 @@ describe 'Employee Details', js: true do
       sleep(1)
       click_button('ตกลง')
       sleep(1)
-      visit "/somsri_payroll#/employees/#{employees[0].id}"
-      sleep(1)
-      eventually { expect(find_field('นามสกุล').value).to eq 'โอชา' }
-      click_link('เงินเดือน')
-      sleep(1)
-      eventually { expect(find_field('ค่าแรง / เงินเดือนปัจจุบัน').value).to eq '50000' }
+      employees[0].reload
+      eventually { expect(employees[0].last_name_thai).to eq 'โอชา' }
+      closed_payroll = nil
+      employees[0].payrolls.each do |payroll|
+        closed_payroll = payroll if !payroll.closed
+      end
+      eventually { expect(closed_payroll.salary).to eq 50000.0 }
     end
 
     it 'should edit birthdate' do
@@ -467,6 +459,22 @@ describe 'Employee Details', js: true do
       employee = Employee.find(employees[0].id)
       visit "/somsri_payroll#/employees/#{employees[0].id}"
       eventually { expect(find('#start_date').value).to have_content '03/12/1990' }
+    end
+
+    it 'should display current month\'s salary' do
+      sleep(1)
+      click_link('เงินเดือน')
+      sleep(1)
+      find('#month-list').click
+      sleep(1)
+      find('ul.dropdown-menu li a', text: "สิงหาคม 2559").click
+      sleep(1)
+      eventually { expect(page).to have_field('ค่าแรง / เงินเดือนปัจจุบัน', disabled: true) }
+      find('#month-list').click
+      sleep(1)
+      find('ul.dropdown-menu li a', text: "เดือนปัจจุบัน").click
+      sleep(1)
+      eventually { expect(find_field('ค่าแรง / เงินเดือนปัจจุบัน').value.to_i).to be 50000 }
     end
 
     describe 'employee_type' do

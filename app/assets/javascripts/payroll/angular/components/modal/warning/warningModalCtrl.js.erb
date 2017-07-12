@@ -1,0 +1,13 @@
+(function() {
+  'use strict';
+  angular.module('somsri.payroll.warning_modal', [
+  ])
+  .controller('warningModalCtrl', ['$scope', '$uibModalInstance', function($scope, $uibModalInstance) {
+    this.message = $scope.message;
+
+    this.ok = function () {
+      $uibModalInstance.close();
+    };
+
+  }]);
+})();

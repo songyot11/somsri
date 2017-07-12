@@ -9,7 +9,7 @@
           </h3>
           <ul class="dropdown-menu" aria-labelledby="month-list">
             <li ng-repeat="effectiveDate in report.effectiveDates">
-              <a ng-click="report.switchMonth(effectiveDate)">
+              <a ng-if="report.currentDateString != effectiveDate['date_string']" ng-click="report.switchMonth(effectiveDate)">
                 <button>{{ effectiveDate["date_string"] }}</button>
               </a>
             </li>
