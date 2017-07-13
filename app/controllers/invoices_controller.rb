@@ -86,6 +86,10 @@ class InvoicesController < ApplicationController
     end
 
     render json: {
+      default_cash_payment_method: SiteConfig.get_cache.default_cash_payment_method,
+      default_credit_card_payment_method: SiteConfig.get_cache.default_credit_card_payment_method,
+      default_cheque_payment_method: SiteConfig.get_cache.default_cheque_payment_method,
+      default_transfer_payment_method: SiteConfig.get_cache.default_transfer_payment_method,
       school_year: SchoolSetting.school_year,
       last_invoice_id: last_invoice_id,
       student_info: student_info,
@@ -248,7 +252,8 @@ class InvoicesController < ApplicationController
       student: {
         display_name: student_display_name,
         student_number: @invoice.student.student_number
-      }
+      },
+      display_schools_year_with_invoice_id: SiteConfig.get_cache.display_schools_year_with_invoice_id
     }
 
     @invoice.payment_methods.to_a.each do |pm|

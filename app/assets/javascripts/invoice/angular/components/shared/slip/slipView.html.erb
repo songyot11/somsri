@@ -4,7 +4,9 @@
     </div>
     <div class="col-xs-2 text-slip1-school">
       <div class="row">
-        เลขที่ใบเสร็จ &nbsp;{{ slipContent.datas.slip_id }}<br>
+
+        <span>เลขที่ใบเสร็จ &nbsp;{{ slipContent.datas.slip_id }}<span ng-show="slipContent.datas.display_schools_year_with_invoice_id">/{{slipContent.datas.school_year }}</span></span>
+        <br>
         receipt No.
       </div>
       <div class="row sup-date">

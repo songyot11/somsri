@@ -128,3 +128,16 @@ end
 
 Relationship.blueprint do
 end
+
+PaymentMethod.blueprint do
+end
+
+SiteConfig.blueprint do
+  enable_rollcall { false }
+  default_cash_payment_method { false }
+  default_credit_card_payment_method { false }
+  default_cheque_payment_method { false }
+  default_transfer_payment_method { false }
+  display_username_password_on_login { false }
+  display_schools_year_with_invoice_id { false }
+end

@@ -32,10 +32,18 @@ body{
   margin: auto;
   width: 45%;
 }
-.logo-login {
-    padding-bottom: 40px;
-    height: 200px;
-    width: auto;
+.form-type{
+  background: #fff;
+  padding: 20px;
+  box-shadow: 0 2px 4px 0 rgba(0, 0, 0, 0.3);
+  left: 25px;
+  margin-top: 20px;
+  color: #5d5d5d;
+}
+.logo-login{
+  padding-bottom: 40px;
+  height: 200px;
+  width: auto;
 }
 .input-login{
   font-family: 'Maitree', serif;
@@ -45,6 +53,13 @@ body{
   background: none;
   font-size: 18px;
   box-shadow: none;
+}
+.status_type_login{
+  background-color: #3fa1e6;
+  border-radius: 50px;
+  color: #fff;
+  border: inherit;
+  padding: 8px 16px;
 }
 .form-control .input-login:focus{
   background: none;

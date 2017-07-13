@@ -153,6 +153,7 @@ describe 'Grouping Report', js: true do
       expect(page).to have_content("รวมทั้งหมด 123,000.00 40,000.00 30,000.00 30,000.00 200,000.00 3,000.00 20,000.00 223,000.00")
 
       find('#start_date').set("")
+      sleep(1)
       find('#end_date').set(yesterday_str)
 
       sleep(1)
@@ -168,6 +169,7 @@ describe 'Grouping Report', js: true do
       expect(page).to have_content("รวมทั้งหมด 123,000.00 40,000.00 30,000.00 30,000.00 200,000.00 3,000.00 20,000.00 223,000.00")
 
       find('#start_date').set(today_str)
+      sleep(1)
       find('#end_date').set("")
 
       sleep(1)
@@ -179,6 +181,7 @@ describe 'Grouping Report', js: true do
       visit '/somsri_invoice#/grouping_report'
       sleep(1)
       find('#start_date').set("")
+      sleep(1)
       find('#end_date').set("")
 
       sleep(1)
