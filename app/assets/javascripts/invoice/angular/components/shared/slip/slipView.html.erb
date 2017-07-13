@@ -74,7 +74,15 @@
       </tfoot>
     </table>
   </div>
+
   <div id="min-height-pay">
+    <div class="sec-remart" ng-show="slipContent.datas.remark">
+      <div class="row">
+        <div class="col-xs-12">
+          <b>หมายเหตุ / Remart</b> : {{ slipContent.datas.remark }}
+        </div>
+      </div>
+    </div>
     <div class="sec-payment">
       <div class="row text-slip3-payment"><b>การชำระเงิน / Payment</b></div>
       <div class="row text-slip2-payment">

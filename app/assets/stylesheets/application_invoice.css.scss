@@ -422,169 +422,6 @@ textarea {
   border: 0px solid #dddddd !important;
 }
 
-@print {
-  size: A4;
-}
-@media print {
-  body{
-    margin-bottom: 0px !important;
-  }
-  .form-slip-forslip-copy,
-  .for-print{
-    display: block;
-  }
-  .container.form-slip-forslip.ng-scope, main.form-slip-forslip.ng-scope{
-    margin-top: 150px !important;
-  }
-  .slip-copy-top{
-    margin-top: 150px;
-  }
-  body.somsri-invoice >.container-fluid {
-    padding: 0px 15px 0 !important;
-  }
-  .navbar-brand,
-  .for-display{
-    display: none;
-  }
-  nav.navbar.navbar-toggleable-md.fixed-top.navbar-light.bg-faded.navbar-custom{
-    display: none;
-  }
-  .nav-for-print{
-    display: none !important;
-  }
-  .nav-for-print-report{
-    display: none !important;
-  }
-  .container.form-slip.ng-scope{
-    padding: 0px;
-  }
-  .text-slip2-school{
-    line-height: 30px;
-  }
-  .text-slip1-school{
-    line-height: 20px;
-  }
-  table.table.table-sm>tbody{
-    border-bottom: 1px solid !important;
-    font-size: 16px;
-  }
-  div#min-height-pay{
-    min-height: 390px !important;
-  }
-  div#dailyReportPreview {
-    margin-top: -80px !important;
-    padding: 0px !important;
-    max-width: inherit;
-  }
-  .form-slip{
-    margin-top: 0px !important;
-    padding: 0px !important;
-  }
-  .btn{
-    display: none;
-  }
-  .dropdown.invoice-items-list{
-    display: none;
-  }
-  #invoice_grouping_report .report-content{
-    padding: 0px !important;
-  }
-  #invoice_grouping_report h1.text-h{
-    font-size: 12px;
-  }
-  .first-column-th{
-    min-width: inherit !important;
-  }
-  .another-column-th{
-    min-width: inherit !important;
-  }
-  #invoice_grouping_report .report-content,
-  #invoice_grouping_report .table.grop-items-invoice tfoot > tr > td{
-    font-size: 11px !important;
-  }
-  #invoice_grouping_report .form-control{
-    border-bottom:none;
-    font-size: 14px;
-    height: 30px;
-  }
-  #invoice_grouping_report .date-for-print{
-    margin-left: 0 !important;
-    margin-right: -100px;
-  }
-  #invoice_grouping_report label.text-status-date,
-  span.text-status-date{
-    font-size: 14px !important;
-  }
-  #invoice_grouping_report .text-h-print{
-    font-size: 18px !important;
-    font-weight: bold !important;
-    margin-top: 0px !important;
-    margin-left: -15px;
-  }
-  #invoice_grouping_report{
-    margin-top: 0px !important;
-  }
-  .col-xs-12.dropdown-filter {
-    padding: 0 !important;
-  }
-  #invoice_grouping_report .table.grop-items-invoice tbody > tr > td{
-    padding: 4px !important;
-    border: 1px solid #5b5b5b;
-  }
-  #invoice_grouping_report .table.grop-items-invoice thead > tr > th{
-    padding: 4px !important;
-    background-color: #f2f2f2 !important;
-  }
-  a[href]:after{
-    display: none;
-  }
-  .row.head-menu{
-    border-bottom: 2px solid #ddd;
-    margin-left: 0px;
-    margin-right: 0px;
-  }
-  #student-report.invoice_report {
-      margin-top: 0px !important;
-  }
-  #student-report .report-content{
-    padding: 0px !important;
-  }
-  .text-title {
-    font-size: 18px !important;
-    font-weight: bold !important;
-    margin-top: 0px !important;
-    margin-bottom: 10px;
-    border-bottom: 2px solid #ddd;
-  }
-  .text-title-date{
-    font-size: 14px !important;
-    margin-bottom: 30px;
-  }
-  .fixed-table-body thead th .th-inner{
-    background-color: #f2f2f2 !important;
-  }
-  .bootstrap-table .table > thead > tr > th{
-    border: 1px solid !important;
-  }
-  .fixed-table-container tbody td{
-    border: 1px solid !important;
-  }
-  .bootstrap-table .table > thead > tr > th{
-    border-bottom: none !important;
-  }
-  .bootstrap-table .table:not(.table-condensed),
-  .bootstrap-table .table:not(.table-condensed) > tbody > tr > th,
-  .bootstrap-table .table:not(.table-condensed) > tfoot > tr > th,
-  .bootstrap-table .table:not(.table-condensed) > thead > tr > td,
-  .bootstrap-table .table:not(.table-condensed) > tbody > tr > td,
-  .bootstrap-table .table:not(.table-condensed) > tfoot > tr > td{
-    padding: 3px !important;
-  }
-  .text-table-invoicereport{
-    font-size: 11px !important;
-  }
-
-}
 /*slip*/
 .form-slip{
   padding: 50px 100px;
@@ -638,6 +475,11 @@ textarea {
   border-bottom: 1px solid;
   padding-bottom: 20px;
   padding-top: 20px;
+  margin-bottom: 10px;
+  margin-left: -15px;
+}
+.sec-remart{
+  padding-bottom: 20px;
   margin-bottom: 10px;
   margin-left: -15px;
 }
@@ -1830,4 +1672,175 @@ label.img-default{
   padding-right: 0px;
   text-align: right;
   margin-bottom: 15px;
+}
+.btn-remark{
+  .popover-content{
+    font-size: 16px;
+  }
+}
+
+
+// For print
+@print {
+  size: A4;
+}
+@media print {
+  body{
+    margin-bottom: 0px !important;
+  }
+  .form-slip-forslip-copy,
+  .for-print{
+    display: block;
+  }
+  .container.form-slip-forslip.ng-scope, main.form-slip-forslip.ng-scope{
+    margin-top: 150px !important;
+  }
+  .slip-copy-top{
+    margin-top: 150px;
+  }
+  body.somsri-invoice >.container-fluid {
+    padding: 0px 15px 0 !important;
+  }
+  .navbar-brand,
+  .for-display{
+    display: none;
+  }
+  nav.navbar.navbar-toggleable-md.fixed-top.navbar-light.bg-faded.navbar-custom{
+    display: none;
+  }
+  .nav-for-print{
+    display: none !important;
+  }
+  .nav-for-print-report{
+    display: none !important;
+  }
+  .container.form-slip.ng-scope{
+    padding: 0px;
+  }
+  .text-slip2-school{
+    line-height: 30px;
+  }
+  .text-slip1-school{
+    line-height: 20px;
+  }
+  table.table.table-sm>tbody{
+    border-bottom: 1px solid !important;
+    font-size: 16px;
+  }
+  div#min-height-pay{
+    min-height: 390px !important;
+  }
+  div#dailyReportPreview {
+    margin-top: -80px !important;
+    padding: 0px !important;
+    max-width: inherit;
+  }
+  .form-slip{
+    margin-top: 0px !important;
+    padding: 0px !important;
+  }
+  .btn{
+    display: none;
+  }
+  .dropdown.invoice-items-list{
+    display: none;
+  }
+  #invoice_grouping_report .report-content{
+    padding: 0px !important;
+  }
+  #invoice_grouping_report h1.text-h{
+    font-size: 12px;
+  }
+  .first-column-th{
+    min-width: inherit !important;
+  }
+  .another-column-th{
+    min-width: inherit !important;
+  }
+  #invoice_grouping_report .report-content,
+  #invoice_grouping_report .table.grop-items-invoice tfoot > tr > td{
+    font-size: 11px !important;
+  }
+  #invoice_grouping_report .form-control{
+    border-bottom:none;
+    font-size: 14px;
+    height: 30px;
+  }
+  #invoice_grouping_report .date-for-print{
+    margin-left: 0 !important;
+    margin-right: -100px;
+  }
+  #invoice_grouping_report label.text-status-date,
+  span.text-status-date{
+    font-size: 14px !important;
+  }
+  #invoice_grouping_report .text-h-print{
+    font-size: 18px !important;
+    font-weight: bold !important;
+    margin-top: 0px !important;
+    margin-left: -15px;
+  }
+  #invoice_grouping_report{
+    margin-top: 0px !important;
+  }
+  .col-xs-12.dropdown-filter {
+    padding: 0 !important;
+  }
+  #invoice_grouping_report .table.grop-items-invoice tbody > tr > td{
+    padding: 4px !important;
+    border: 1px solid #5b5b5b;
+  }
+  #invoice_grouping_report .table.grop-items-invoice thead > tr > th{
+    padding: 4px !important;
+    background-color: #f2f2f2 !important;
+  }
+  a[href]:after{
+    display: none;
+  }
+  .row.head-menu{
+    border-bottom: 2px solid #ddd;
+    margin-left: 0px;
+    margin-right: 0px;
+  }
+  #student-report.invoice_report {
+      margin-top: 0px !important;
+  }
+  #student-report .report-content{
+    padding: 0px !important;
+  }
+  .text-title {
+    font-size: 18px !important;
+    font-weight: bold !important;
+    margin-top: 0px !important;
+    margin-bottom: 10px;
+    border-bottom: 2px solid #ddd;
+  }
+  .text-title-date{
+    font-size: 14px !important;
+    margin-bottom: 30px;
+  }
+  .fixed-table-body thead th .th-inner{
+    background-color: #f2f2f2 !important;
+  }
+  .bootstrap-table .table > thead > tr > th{
+    border: 1px solid !important;
+  }
+  .fixed-table-container tbody td{
+    border: 1px solid !important;
+  }
+  .bootstrap-table .table > thead > tr > th{
+    border-bottom: none !important;
+  }
+  .bootstrap-table .table:not(.table-condensed),
+  .bootstrap-table .table:not(.table-condensed) > tbody > tr > th,
+  .bootstrap-table .table:not(.table-condensed) > tfoot > tr > th,
+  .bootstrap-table .table:not(.table-condensed) > thead > tr > td,
+  .bootstrap-table .table:not(.table-condensed) > tbody > tr > td,
+  .bootstrap-table .table:not(.table-condensed) > tfoot > tr > td{
+    padding: 3px !important;
+  }
+  .text-table-invoicereport{
+    font-size: 11px !important;
+  }
+
 }
