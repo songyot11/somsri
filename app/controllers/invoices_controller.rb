@@ -358,7 +358,7 @@ class InvoicesController < ApplicationController
             header_row: header_row_tmp,
             datas: datas_tmp
           }
-          row[:url] = edit_student_path(id: invoice.student_id) if Student.where(id: invoice.student_id).exists?
+          row[:url] = edit_student_path(id: student_id_tmp) if Student.where(id: student_id_tmp).exists?
           rows << row
         end
 
