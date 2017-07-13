@@ -21,8 +21,10 @@
             </div>
           </div>
           <div class="col-md-3 employee-pin">
-            <small ng-show="employee.pinChars.length > 0">PIN Number</small><br>
-            <span class="pin-char" ng-show="employee.pinChars.length > 0" ng-repeat="pinChar in employee.pinChars track by $index">{{pinChar}}</span>
+            <div ng-show="employee.datas.enable_rollcall">
+              <small ng-show="employee.pinChars.length > 0">PIN Number</small><br>
+              <span class="pin-char" ng-show="employee.pinChars.length > 0" ng-repeat="pinChar in employee.pinChars track by $index">{{pinChar}}</span>
+            </div>
           </div>
           <div class="col-md-3" style="margin-top:10px;">
             <a ng-click="employee.openEmployeeDetails(0)" href="javascript:void(0)" class="btn btn-yellow pull-right">

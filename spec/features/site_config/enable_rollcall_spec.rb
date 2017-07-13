@@ -5,6 +5,20 @@ describe 'SiteConfig Enable Rollcall', js: true do
   let(:enable_rollcall) { SiteConfig.make!({ enable_rollcall: true }) }
   let(:disable_rollcall) { SiteConfig.make!({ enable_rollcall: false }) }
 
+  let(:employee) do
+    Employee.make!({
+      school_id: school.id,
+      first_name: "Somsri",
+      middle_name: "Is",
+      last_name: "Appname",
+      prefix: "Mrs.",
+      first_name_thai: "สมศรี",
+      last_name_thai: "เป็นชื่อแอพ",
+      prefix_thai: "นาง",
+      salary: 50000
+    })
+  end
+
   before do
     user.add_role :admin
     login_as(user, scope: :user)
@@ -26,6 +40,12 @@ describe 'SiteConfig Enable Rollcall', js: true do
       sleep(1)
       expect(page).to have_content("นับแถว")
     end
+
+    it 'should display PIN' do
+      visit "/somsri_payroll#/employees/#{employee.id}"
+      sleep(1)
+      expect(page).to have_content("PIN Number")
+    end
   end
 
   describe 'disable rollcall' do
@@ -43,6 +63,12 @@ describe 'SiteConfig Enable Rollcall', js: true do
       visit "/"
       sleep(1)
       expect(page).to_not have_content("นับแถว")
+    end
+
+    it 'should not display PIN' do
+      visit "/somsri_payroll#/employees/#{employee.id}"
+      sleep(1)
+      expect(page).to_not have_content("PIN Number")
     end
   end
 end

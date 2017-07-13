@@ -61,6 +61,7 @@ class EmployeesController < ApplicationController
       payroll = @employee.lastest_payroll
     end
     render json: {
+      enable_rollcall: SiteConfig.get_cache.enable_rollcall,
       img_url: @employee.img_url.exists? ? @employee.img_url.url : nil ,
       employee: @employee,
       employee_display_name: @employee.full_name,
