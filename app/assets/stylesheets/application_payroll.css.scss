@@ -1466,7 +1466,35 @@ ul.uib-datepicker-popup.dropdown-menu {
 .fixed-table-container {
   border: 0px solid #dddddd !important;
 }
+.btn.btn-note-bell,
+.btn.btn-note-bell:focus{
+  float: right;
+  border: none;
+  color: #FFAB04;
+  font-size: 16px;
+  padding-top: 10px;
+  background: transparent;
 
+  &:hover{
+    background: transparent;
+    color: #FFAB04;
+  }
+}
+.note-popover{
+  background: #fff;
+  padding: 5px 10px 5px 10px;
+
+  .popover-title{
+    padding: 8px 0;
+    font-size: 18px;
+    font-weight: 500;
+    background: transparent;
+    border-bottom: 1px solid #333;
+  }
+  .popover-content{
+    padding: 8px 0;
+  }
+}
 @media print {
   #payroll-report report-content thead th{
     padding:0px !important;

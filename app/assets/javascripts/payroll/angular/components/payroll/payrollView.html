@@ -65,6 +65,9 @@
                               <a href="/somsri_payroll#/employees/{{employee.code}}?payroll_id={{employee.payroll_id}}">
                                 <strong>{{employee.name}}</strong>
                               </a>
+                              <button ng-show="employee.note" uib-popover="{{employee.note}}" popover-title="หมายเหตุ" type="button" class="btn btn-note-bell" popover-class="note-popover">
+                                <i class="fa fa-bell" aria-hidden="true"></i>
+                              </button>
                             </div>
                           </div>
                         </span>

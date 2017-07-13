@@ -67,6 +67,7 @@ class Payroll < ApplicationRecord
         advance_payment: self.advance_payment.to_f,
         fee_etc: self.fee_etc.to_f,
         pvf: self.pvf.to_f,
+        note: self.note,
         #Result
         net_salary: (self.salary + extra_pay - extra_fee).to_f
       }
