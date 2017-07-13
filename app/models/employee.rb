@@ -112,13 +112,14 @@ class Employee < ApplicationRecord
       end
       return result
     elsif options[:employee_list]
-       {
+      has_last_closed_payroll = self.payrolls.size > 0 && self.last_closed_payroll
+      {
         id: self.id,
         name: self.full_name,
         position: self.position,
-        salary: self.payrolls.size > 0 ? self.last_closed_payroll.salary.to_f : 0,
-        extra_fee: self.payrolls.size > 0 ? self.last_closed_payroll.extra_fee.to_f : 0,
-        extra_pay: self.payrolls.size > 0 ? self.last_closed_payroll.extra_pay.to_f : 0,
+        salary: has_last_closed_payroll ? self.last_closed_payroll.salary.to_f : 0,
+        extra_fee: has_last_closed_payroll ? self.last_closed_payroll.extra_fee.to_f : 0,
+        extra_pay: has_last_closed_payroll ? self.last_closed_payroll.extra_pay.to_f : 0,
         img: self.img_url.exists? ? self.img_url.url(:medium) : nil,
         deleted_at: self.deleted_at
       }
