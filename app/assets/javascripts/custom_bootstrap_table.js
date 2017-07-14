@@ -1,3 +1,4 @@
+
   function search() {
     $('#table').bootstrapTable('refresh', {
       query: {

@@ -29,6 +29,7 @@
         <link href="https://fonts.googleapis.com/css?family=Maitree:400,700" rel="stylesheet">
         <%= stylesheet_link_tag    'application', media: 'all' %>
         <%= javascript_include_tag 'application' %>
+        <script src="//rawgit.com/hhurz/tableExport.jquery.plugin/master/tableExport.js"></script>
     </head>
     <% if !user_signed_in? %><body ng-controller="mainCtrl as main"><% else %><body ng-controller="mainCtrl as main" style="background:#fff !important;"><%end%>
     <body ng-controller="mainCtrl as main">
