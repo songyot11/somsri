@@ -1,6 +1,6 @@
 <div class="container-fluid">
   <div id="payroll-report">
-    <div class="container-fluid no_display_print">
+    <div class="container-fluid">
       <div class="row no_display_print">
         <div class="col-md-6 dropdown">
           <h3 id="month-list" data-toggle="dropdown">
@@ -17,18 +17,18 @@
         </div>
         <div class="col-md-6" style="padding-right: 0px;margin-top: 10px;">
           <div class="btn-group pull-right">
-            <label class="btn btn-info btn-md employee-print" style="border-radius: 0px; margin-left:30px;" ng-click="report.printReport()"><i class="fa fa-print"></i>&nbsp;&nbsp;พิมพ์สรุปรายการ</label>
+            <label class="btn btn-info btn-md employee-print" style="border-radius: 0px; margin-left:30px;" onclick="window.print()"><i class="fa fa-print"></i>&nbsp;&nbsp;พิมพ์สรุปรายการ</label>
           </div>
         </div>
       </div>
       <div class="row report-content">
-        <div class="btn-group pull-right">
+        <div class="btn-group pull-right no_display_print">
           <label class="btn btn-info btn-md employee-type" ng-click="report.employeeTypeFilter()" ng-model="report.employeeTypeMode.normal" style="border-radius: 50px;" uib-btn-checkbox>ลูกจ้างประจำ</label>
           <label class="btn btn-info btn-md employee-type" ng-click="report.employeeTypeFilter()" ng-model="report.employeeTypeMode.temporary" style="border-radius: 50px;" uib-btn-checkbox>ลูกจ้างชั่วคราว</label>
           <label class="btn btn-info btn-md employee-type" ng-click="report.employeeTypeFilter()" ng-model="report.employeeTypeMode.probationary" style="border-radius: 50px;" uib-btn-checkbox>ลูกจ้างทดลองงาน</label>
           <label class="btn btn-info btn-md employee-type" ng-click="report.employeeTypeFilter()" ng-model="report.employeeTypeMode.daily" style="border-radius: 50px;" uib-btn-checkbox>ลูกจ้างรายวัน</label>
         </div>
-          <report-content model=report class="no_display_print"/>
+        <report-content model=report style="display:block"/>
       </div>
     </div>
   </div>

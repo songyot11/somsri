@@ -113,28 +113,12 @@
         })
       }
 
-      ctrl.printReport = function() {
-        clearForPrint();
-        ctrl.reportCtrl = angular.copy(ctrl);
-        ctrl.reportCtrl.employees;
-        for (var i = 0; i < ctrl.employees.length; i += 30) {
-          ctrl.reportCtrl.employees.push(ctrl.employees.slice(i, i + 30));
-        }
-        var containerDiv = $('#payroll-report')
-        var reportDiv = $compile('<report-content model=report.reportCtrl class="for_print"/>')($scope);
-        angular.element(containerDiv).append(reportDiv);
-        setTimeout(function() {
-          window.print();
-        }, 500);
-      }
-
       function clearForPrint(){
         $('slip-all-content').remove();
         $('slip-content').remove();
         $('report-content.for_print').remove();
         $('div.fixed-table-footer').remove();
       }
-
 
       function getPayrolls() {
         reportService.getMonthsOnlyClosed().then(function(resp) {
@@ -148,8 +132,8 @@
               getTotalSalary(ctrl.employees)
               ctrl.currentDateString = current['date_string']
               ctrl.currentEffectiveDates = current
-              $scope.report.bootstrapTableController(ctrl.employees);
-              //$table.bootstrapTable('load', ctrl.employees);
+              $scope.report.employees = ctrl.employees
+              $scope.report.reportTableInit(ctrl.employees);
             });
           }
         });
@@ -182,10 +166,7 @@
           }
         }
         ctrl.employees = newArray;
-        $scope.report.bootstrapTableController(ctrl.employees);
-        //console.log($scope.report)
-        //console.log(ctrl.employees)
-        //$table.bootstrapTable('load', ctrl.employees);
+        $scope.report.reportTableLoadData(ctrl.employees);
 
         ctrl.total = getTotalSalary(ctrl.employees);
         getTotalSalary(ctrl.employees);
