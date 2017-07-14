@@ -103,9 +103,9 @@ describe 'Employee Lists', js: true do
   it 'should see employees list' do
     visit "/somsri_payroll#/employees"
     sleep(1)
-    expect(page).to have_content 'นาง สมศรี เป็นชื่อแอพ เงินเดือน : 50000 บาท เงินหัก : 2000 บาท เงินเพิ่ม : 3000 บาท'
-    expect(page).to have_content 'นาย สมจิตร เป็นนักมวย เงินเดือน : 50000 บาท เงินหัก : 200 บาท เงินเพิ่ม : 10000 บาท'
-    expect(page).to have_content 'นาย สมคิด จิตใจดี เงินเดือน : 0 บาท เงินหัก : 0 บาท เงินเพิ่ม : 0 บาท'
+    expect(page).to have_content 'นาง สมศรี เป็นชื่อแอพ เงินเดือน 50000 บาท เงินเพิ่ม 3000 บาท เงินหัก 2000 บาท'
+    expect(page).to have_content 'นาย สมจิตร เป็นนักมวย เงินเดือน 50000 บาท เงินเพิ่ม 10000 บาท เงินหัก 200 บาท'
+    expect(page).to have_content 'นาย สมคิด จิตใจดี เงินเดือน 0 บาท เงินเพิ่ม 0 บาท เงินหัก 0 บาท'
   end
 
   it 'should display only employee in user\'s school' do
@@ -115,9 +115,7 @@ describe 'Employee Lists', js: true do
 
   it 'can switch display mode' do
     visit "/somsri_payroll#/employees"
-    expect(page).not_to have_css "#employeesTable"
     find('.fa-list-ul').click()
-    expect(page).to have_css "#employeesTable"
     expect(page).to have_content 'นาง สมศรี เป็นชื่อแอพ 50000 บาท 3000 บาท 2000 บาท'
     expect(page).to have_content 'นาย สมจิตร เป็นนักมวย 50000 บาท 10000 บาท 200 บาท'
     expect(page).to have_content 'นาย สมคิด จิตใจดี 0 บาท 0 บาท 0 บาท'
