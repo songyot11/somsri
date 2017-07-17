@@ -106,6 +106,9 @@ describe 'Employee Details', js: true do
         salary: 500,
         advance_payment: 20,
         allowance: 30,
+        tax: 9999,
+        social_insurance: 999,
+        pvf: 99,
         closed: true,
         effective_date: DateTime.new(2016, 8, 1).utc
       }),
@@ -475,6 +478,19 @@ describe 'Employee Details', js: true do
       find('ul.dropdown-menu li a', text: "เดือนปัจจุบัน").click
       sleep(1)
       eventually { expect(find_field('ค่าแรง / เงินเดือนปัจจุบัน').value.to_i).to be 50000 }
+    end
+
+    it 'should diplay histories tax, social_insurance and pvf' do
+      sleep(1)
+      click_link('เงินเดือน')
+      sleep(1)
+      find('#month-list').click
+      sleep(1)
+      find('ul.dropdown-menu li a', text: "สิงหาคม 2559").click
+      sleep(1)
+      eventually { expect(find_field('ภาษีเงินได้บุคคลธรรมดา', disabled: true).value.to_i).to eq 9999 }
+      eventually { expect(find_field('ประกันสังคม', disabled: true).value.to_i).to eq 999 }
+      eventually { expect(find_field('เงินสะสมเข้ากองทุนสงเคราะห์', disabled: true).value.to_i).to eq 99 }
     end
 
     describe 'employee_type' do

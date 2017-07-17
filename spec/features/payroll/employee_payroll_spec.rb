@@ -69,7 +69,10 @@ describe 'Payroll', js: true do
       Payroll.update(employee1.payrolls[0].id,{ salary: 1_000_000, social_insurance: 750 }),
       Payroll.update(employee2.payrolls[0].id,{ salary: 1_000_000, social_insurance: 750 }),
       Payroll.make!({employee_id: employee1.id, salary: 50_000,
-                            effective_date: DateTime.new(2016, 11, 1)}),
+                            effective_date: DateTime.new(2016, 11, 1),
+                            tax: 9999,
+                            social_insurance: 999,
+                            pvf: 99 }),
       Payroll.make!({employee_id: employee2.id, salary: 50_000,
                             effective_date: DateTime.new(2016, 11, 1)}),
       Payroll.make!({employee_id: employee3.id, salary: 20,
@@ -149,6 +152,15 @@ describe 'Payroll', js: true do
     sleep(1)
     eventually { expect(page).to have_content 'สำหรับประกันสังคม' }
     eventually { expect(page).to_not have_content 'ออกเงินเดือน' }
+  end
+
+  it 'should display histories tax, pvf and social insurance' do
+    visit "/somsri_payroll#/payroll"
+    find('#month-list').click
+    sleep(1)
+    click_on("พฤศจิกายน 2559")
+    sleep(1)
+    eventually { expect(page).to have_content /นาง สมศรี เป็นชื่อแอพ.*50,000.00 0.00 0.00 0.00 0.00 0.00 0.00/i }
   end
 
   describe 'employee link' do

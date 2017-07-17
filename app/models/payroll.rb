@@ -161,8 +161,8 @@ class Payroll < ApplicationRecord
       self.save
     end
 
-    def self.assume_year_income(payroll)
-      income = (payroll["salary"].to_i + payroll["allowance"].to_i + payroll["attendance_bonus"].to_i + payroll["ot"].to_i + payroll["bonus"].to_i + payroll["position_allowance"].to_i + payroll["extra_etc"].to_i - payroll["absence"].to_i - payroll["late"].to_i - payroll["social_insurance"].to_i)*12
+    def self.assume_year_income(payroll, employee)
+      income = (payroll["salary"].to_i + payroll["allowance"].to_i + payroll["attendance_bonus"].to_i + payroll["ot"].to_i + payroll["bonus"].to_i + payroll["position_allowance"].to_i + payroll["extra_etc"].to_i - payroll["absence"].to_i - payroll["late"].to_i - generate_social_insurance(payroll, employee).to_i)*12
     end
 
     def self.tax_break(payroll, tax_reduction)
@@ -174,7 +174,7 @@ class Payroll < ApplicationRecord
     end
 
     def self.generate_income_tax(payroll, employee)
-      y_income = self.assume_year_income(payroll)
+      y_income = self.assume_year_income(payroll, employee)
       cost_of_income = (0.5*y_income) > 100000 ? 100000:(0.5*y_income)
       income = y_income - cost_of_income - 60000
       taxrates = Taxrate.order(:order_id).map {|tr| [tr.income, tr.tax] }
@@ -193,11 +193,15 @@ class Payroll < ApplicationRecord
     end
 
     def self.generate_pvf(payroll, employee)
+      payroll = Payroll.where(id: payroll["id"]).first
+      return payroll.pvf if payroll.closed
       return 0 unless employee["pay_pvf"]
       payroll["salary"].to_i > 15000 ? payroll["salary"].to_i * 0.03 : 15000 * 0.03
     end
 
     def self.generate_social_insurance(payroll, employee)
+      payroll = Payroll.where(id: payroll["id"]).first
+      return payroll.social_insurance if payroll.closed
       return 0 unless employee["pay_social_insurance"]
       income = payroll["salary"].to_i
       income = 15000 if income > 15000
@@ -205,6 +209,8 @@ class Payroll < ApplicationRecord
     end
 
     def self.generate_tax(payroll, employee)
+      payroll = Payroll.where(id: payroll["id"]).first
+      return payroll.tax if payroll.closed
       if employee["employee_type"]=='ลูกจ้างประจำ'
         tax = self.generate_income_tax(payroll, employee)
       else

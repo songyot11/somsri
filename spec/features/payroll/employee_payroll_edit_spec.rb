@@ -51,7 +51,10 @@ describe 'Payroll Edit', js: true do
       Payroll.update(employee1.payrolls[0].id,{ salary: 1_000 }),
       Payroll.update(employee2.payrolls[0].id,{ salary: 1_000 }),
       Payroll.make!({employee_id: employee1.id, salary: 1_000, closed: true,
-                            effective_date: DateTime.new(2016, 11, 1)}),
+                            effective_date: DateTime.new(2016, 11, 1),
+                            tax: 9999,
+                            social_insurance: 999,
+                            pvf: 99 }),
       Payroll.make!({employee_id: employee2.id, salary: 1_000, closed: true,
                             effective_date: DateTime.new(2016, 11, 1)}),
       Payroll.make!({employee_id: employee3.id, salary: 1_000, closed: true,
@@ -400,5 +403,17 @@ describe 'Payroll Edit', js: true do
     find('ul.dropdown-menu li a', text: "1 พฤศจิกายน 2559").click
     sleep(1)
     eventually { expect(first('a[editable-number="employee.salary"]')).to eq nil }
+  end
+
+  it 'should display histories tax, pvf and social_insurance' do
+    visit "/somsri_payroll#/payroll"
+
+    sleep(1)
+    find('#month-list').click
+    sleep(1)
+
+    find('ul.dropdown-menu li a', text: "1 พฤศจิกายน 2559").click
+    sleep(1)
+    eventually { expect(page).to have_content /สมศรี เป็นชื่อแอพ.*1,000.00 0.00 0.00 0.00 0.00 0.00 0.00 0.00 0.00 9,999.00 999.00 99.00 0.00 0.00 -10,097.00/i }
   end
 end
