@@ -2,14 +2,14 @@
   <form name="createPayrollsForm" ng-submit="createPayrolls.submit()" autocomplete="off">
     <div class="row">
       <div class="col-md-12 text-center">
-        <h2 class="modal-title" id="modal-title"><b>ปิดงวดเงินเดือน</b></h2>
+        <h2 class="modal-title" id="modal-title"><b>ออกเงินเดือน</b></h2>
       </div>
     </div>
     <div class="space20"></div>
     <div class="row">
       <div class="col-md-12">
         <div class="form-group">
-          <label for="effective_date">วันที่ปิดงวดเงินเดือน</label>
+          <label for="effective_date">วันที่ออกเงินเดือน</label>
           <p class="input-group">
             <input id="effective_date" type="text" class="form-control" uib-datepicker-popup="dd/MM/yyyy" datepicker-options="{showWeeks:false}" ng-model="createPayrolls.effective_date" is-open="createPayrolls.effectiveDatePopup.opened" close-text="Close" required />
             <span class="input-group-btn">

@@ -100,7 +100,7 @@ describe 'Payroll', js: true do
     eventually { expect(page).to have_content /พี ดี เอ็ม.*1,000,000.00 0.00 0.00 0.00 0.00 0.00 0.00/i }
     eventually { expect(page).to have_content /รวมทั้งหมด.*3,000,000.00 0.00 0.00 0.00 0.00 0.00 0.00/i }
     eventually { expect(page).to_not have_content 'สำหรับประกันสังคม' }
-    eventually { expect(page).to have_content 'ปิดงวดเงินเดือน' }
+    eventually { expect(page).to have_content 'ออกเงินเดือน' }
   end
 
   it 'should see month list' do
@@ -148,7 +148,7 @@ describe 'Payroll', js: true do
     click_on("พฤศจิกายน 2559")
     sleep(1)
     eventually { expect(page).to have_content 'สำหรับประกันสังคม' }
-    eventually { expect(page).to_not have_content 'ปิดงวดเงินเดือน' }
+    eventually { expect(page).to_not have_content 'ออกเงินเดือน' }
   end
 
   describe 'employee link' do
@@ -236,7 +236,7 @@ describe 'Payroll', js: true do
     visit "/somsri_payroll#/payroll"
     sleep(1)
     # craete payroll
-    click_link('ปิดงวดเงินเดือน')
+    click_link('ออกเงินเดือน')
     sleep(1)
     find('#effective_date').set('13/12/2010')
     click_button('บันทึก')
@@ -247,12 +247,12 @@ describe 'Payroll', js: true do
     # craete same payroll
     visit "/somsri_payroll#/payroll"
     sleep(1)
-    click_link('ปิดงวดเงินเดือน')
+    click_link('ออกเงินเดือน')
     sleep(1)
     find('#effective_date').set('13/12/2010')
     click_button('บันทึก')
     sleep(1)
-    expect(page).to have_content('ไม่สามารถเลือกวันที่ปิดงวดเงินเดือนซ้ำได้')
+    expect(page).to have_content('ไม่สามารถเลือกวันที่ออกเงินเดือนซ้ำได้')
     sleep(1)
     click_button('ตกลง')
     sleep(1)

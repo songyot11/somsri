@@ -19,9 +19,9 @@
       ctrl.submit = function(){
         if(Date.parse(ctrl.effective_date)){
           if(isSameDate(ctrl.effective_date)){
-            $rootScope.openWarningModal("ไม่สามารถเลือกวันที่ปิดงวดเงินเดือนซ้ำได้");
+            $rootScope.openWarningModal("ไม่สามารถเลือกวันที่ออกเงินเดือนซ้ำได้");
           }else{
-            $rootScope.openConfirmationModal("คุณต้องการปิดงวดเงินเดือนหรือไม่?", function(){
+            $rootScope.openConfirmationModal("คุณต้องการออกเงินเดือนหรือไม่?", function(){
               ctrl.isSaving = true
               var params = { create: { effective_date: ctrl.effective_date }, option: {force_create: false} };
               service.createPayrolls(params).then(function(resp) {
