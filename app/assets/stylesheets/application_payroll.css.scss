@@ -1779,4 +1779,18 @@ ul.uib-datepicker-popup.dropdown-menu {
   padding-left:5px;
   padding-right:5px;
 }
+.btn-export {
+  background-color: #0b999c;
+  font-size: 18px;
+  color: #fff;
+  border: 2px solid #0b999c;
+  border-radius: 0px;
+  padding: 16px 32px;
+  transition: all 0.25s ease;
+  margin-right: 3px;
 
+  &:hover{
+    background-color: transparent;
+    color: #0b999c;
+  }
+}

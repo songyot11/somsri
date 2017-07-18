@@ -19,6 +19,7 @@ describe 'Abilities', js: true do
   describe 'Admin abilities' do
     before do
       login_as(users[0])
+      SiteConfig.make!(enable_rollcall: true)
     end
 
     it 'can goto main menu' do

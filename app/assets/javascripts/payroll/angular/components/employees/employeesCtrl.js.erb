@@ -136,6 +136,7 @@
         sortable: true,
       },{
         title: '',
+        field: 'edit',
         formatter: edit,
       }],
       onPostBody: function(data){
@@ -184,6 +185,19 @@
         $("#grid").click();
       }
     }
+
+    $('#exportTable').on('click',function(){
+      //console.log('sss');
+      if(displayMode!='list'){
+        listClick()
+        $table = $('#employeesTable')
+        $table.bootstrapTable('hideColumn', 'imgUrl');
+        $table.bootstrapTable('hideColumn', 'edit');
+        $table.tableExport({type:'excel'});
+        $table.bootstrapTable('showColumn', 'imgUrl');
+        $table.bootstrapTable('showColumn', 'edit');
+      }
+    })
 
 
   }]);
