@@ -20,9 +20,9 @@ class PayrollsController < ApplicationController
   # GET /payrolls/effective_dates
   def effective_dates
     if params[:employee_id]
-      render json: get_months_by_employee_ids(params[:employee_id]), status: :ok
+      render json: get_months_by_employee_ids(params[:employee_id], params[:time_zone]), status: :ok
     else
-      render json: get_months(params[:closed]), status: :ok
+      render json: get_months(params[:closed], params[:time_zone]), status: :ok
     end
   end
 
@@ -208,7 +208,7 @@ class PayrollsController < ApplicationController
   end
 
   private
-    def get_months(isClosed)
+    def get_months(isClosed, time_zone)
       employee_ids = Employee.with_deleted.all
       payroll_dates = Payroll.where(employee_id: employee_ids)
       if isClosed
@@ -222,8 +222,8 @@ class PayrollsController < ApplicationController
       effective_dates = []
       payroll_dates.to_a.each do |payroll_date|
         effective_dates.push({
-          date_time: payroll_date ? payroll_date.localtime : "lasted",
-          date_string: payroll_date ? to_thai_date(payroll_date.localtime).join(" ") : "เดือนปัจจุบัน",
+          date_time: payroll_date ? payroll_date.in_time_zone(time_zone) : "lasted",
+          date_string: payroll_date ? to_thai_date(payroll_date.in_time_zone(time_zone)).join(" ") : "เดือนปัจจุบัน",
         })
       end
       return effective_dates
@@ -234,13 +234,13 @@ class PayrollsController < ApplicationController
       return [ d[0].to_i, d[1], d[2].to_i + 543 ]
     end
 
-    def get_months_by_employee_ids(employee_ids)
+    def get_months_by_employee_ids(employee_ids, time_zone)
       payrolls = Payroll.where(employee_id: employee_ids)
                              .order("effective_date DESC")
       effective_dates = []
       payrolls.to_a.each do |payroll|
         effective_dates.push({
-          date_string: payroll.effective_date ? to_thai_date(payroll.effective_date.localtime).join(" ") : "เดือนปัจจุบัน",
+          date_string: payroll.effective_date ? to_thai_date(payroll.effective_date.in_time_zone(time_zone)).join(" ") : "เดือนปัจจุบัน",
           payroll_id: payroll.id
         })
       end

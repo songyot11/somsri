@@ -124,9 +124,9 @@ describe 'Employee Lists', js: true do
   it 'should see employees list' do
     visit "/somsri_payroll#/employees"
     sleep(1)
-    expect(page).to have_content 'นาง สมศรี เป็นชื่อแอพ เงินเดือน : 50000 บาท เงินหัก : 2000 บาท เงินเพิ่ม : 3000 บาท'
-    expect(page).to have_content 'นาย สมจิตร เป็นนักมวย เงินเดือน : 50000 บาท เงินหัก : 200 บาท เงินเพิ่ม : 10000 บาท'
-    expect(page).to have_content 'นาย สมคิด จิตใจดี เงินเดือน : 0 บาท เงินหัก : 0 บาท เงินเพิ่ม : 0 บาท'
+    expect(page).to have_content 'นาง สมศรี เป็นชื่อแอพ เงินเดือน 50000 บาท เงินเพิ่ม 3000 บาท เงินหัก 2000 บาท'
+    expect(page).to have_content 'นาย สมจิตร เป็นนักมวย เงินเดือน 50000 บาท เงินเพิ่ม 10000 บาท เงินหัก 200 บาท'
+    expect(page).to have_content 'นาย สมคิด จิตใจดี เงินเดือน 0 บาท เงินเพิ่ม 0 บาท เงินหัก 0 บาท'
   end
 
   it 'should create employees with payroll' do
