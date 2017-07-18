@@ -92,14 +92,14 @@ describe 'Payroll Edit', js: true do
     sleep(1)
     first('a[editable-number="employee.salary"]').click
     sleep(1)
-    find(:css, "input").set(5000.0)
+    find(:css, "input").set(500000.0)
     sleep(1)
     find('button[type="submit"]').click
     sleep(1)
 
-    eventually { expect(payroll.reload.salary).to eq 5000.0 }
-    eventually { expect(page).to have_content /นาง สมศรี เป็นชื่อแอพ.*5,000.00 0.00 0.00 0.00 0.00 0.00 0.00 0.00 0.00 0.00 0.00 0.00 0.00 0.00 5,000.00/i }
-    eventually { expect(page).to have_content /รวมทั้งหมด.*6,000.00 0.00 0.00 0.00 0.00 0.00 0.00 0.00 0.00 0.00 0.00 0.00 0.00 0.00 6,000.00/i }
+    eventually { expect(payroll.reload.salary).to eq 500000.0 }
+    eventually { expect(page).to have_content /นาง สมศรี เป็นชื่อแอพ.*500,000.00 0.00 0.00 0.00 0.00 0.00 0.00 0.00 0.00 129,916.67 0.00 0.00 0.00 0.00 370,083.33/i }
+    eventually { expect(page).to have_content /รวมทั้งหมด.*501,000.00 0.00 0.00 0.00 0.00 0.00 0.00 0.00 0.00 129,916.67 0.00 0.00 0.00 0.00 371,083.33/i }
   end
 
   it 'should not display social_insurance_pdf button on current month' do

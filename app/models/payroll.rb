@@ -4,7 +4,7 @@ class Payroll < ApplicationRecord
   belongs_to :employee
   validate :already_payroll_on_month, on: :create
   before_validation :set_created_at
-  after_create :set_default_val
+  before_update :set_default_val
   after_save :update_employee_salary
 
   scope :latest, -> { order("effective_date ASC").last }
@@ -154,13 +154,14 @@ class Payroll < ApplicationRecord
 
   private
     def set_default_val
-      e = Employee.find(self.employee_id)
-      self.tax = Payroll.generate_tax(self, e)
-      self.social_insurance = Payroll.generate_social_insurance(self, e)
-      self.pvf = Payroll.generate_pvf(self, e)
-      self.save
+      if !self.closed
+        e = Employee.find(self.employee_id)
+        self.tax = Payroll.generate_tax(self, e)
+        self.social_insurance = Payroll.generate_social_insurance(self, e)
+        self.pvf = Payroll.generate_pvf(self, e)
+      end
     end
-
+    
     def self.assume_year_income(payroll, employee)
       income = (payroll["salary"].to_i + payroll["allowance"].to_i + payroll["attendance_bonus"].to_i + payroll["ot"].to_i + payroll["bonus"].to_i + payroll["position_allowance"].to_i + payroll["extra_etc"].to_i - payroll["absence"].to_i - payroll["late"].to_i - generate_social_insurance(payroll, employee).to_i)*12
     end
@@ -193,15 +194,15 @@ class Payroll < ApplicationRecord
     end
 
     def self.generate_pvf(payroll, employee)
-      payroll = Payroll.where(id: payroll["id"]).first
-      return payroll.pvf if payroll.closed
+      payroll_real = Payroll.where(id: payroll["id"]).first
+      return payroll_real.pvf if payroll_real && payroll_real.closed
       return 0 unless employee["pay_pvf"]
       payroll["salary"].to_i > 15000 ? payroll["salary"].to_i * 0.03 : 15000 * 0.03
     end
 
     def self.generate_social_insurance(payroll, employee)
-      payroll = Payroll.where(id: payroll["id"]).first
-      return payroll.social_insurance if payroll.closed
+      payroll_real = Payroll.where(id: payroll["id"]).first
+      return payroll_real.social_insurance if payroll_real && payroll_real.closed
       return 0 unless employee["pay_social_insurance"]
       income = payroll["salary"].to_i
       income = 15000 if income > 15000
@@ -209,8 +210,8 @@ class Payroll < ApplicationRecord
     end
 
     def self.generate_tax(payroll, employee)
-      payroll = Payroll.where(id: payroll["id"]).first
-      return payroll.tax if payroll.closed
+      payroll_real = Payroll.where(id: payroll["id"]).first
+      return payroll_real.tax if payroll_real && payroll_real.closed
       if employee["employee_type"]=='ลูกจ้างประจำ'
         tax = self.generate_income_tax(payroll, employee)
       else

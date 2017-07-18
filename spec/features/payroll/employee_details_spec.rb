@@ -29,6 +29,8 @@ describe 'Employee Details', js: true do
         first_name_thai: "สมศรี",
         last_name_thai: "เป็นชื่อแอพ",
         prefix_thai: "นาง",
+        pay_pvf: true,
+        pay_social_insurance: true,
         salary: 50000
       }),
       Employee.make!({
@@ -211,6 +213,26 @@ describe 'Employee Details', js: true do
       # page.fill_in 'ประกันสังคม', :with => '300000'
       sleep(1)
       eventually { expect(page).to have_content('เงินเดือนสุทธิ ') }
+    end
+
+    it 'should auto calculate tax, pvf and social insurance' do
+      sleep(1)
+      click_link('เงินเดือน')
+      sleep(1)
+      page.fill_in 'ค่าแรง / เงินเดือนปัจจุบัน', :with => '2000000'
+      page.fill_in 'เงินสอนพิเศษ', :with => '500000'
+      page.fill_in 'ค่าตำแหน่ง', :with => '70000'
+      page.fill_in 'ค่ากะ / ค่าเบี้ยเลี้ยง', :with => '5000'
+      page.fill_in 'ขาดงาน', :with => '1000'
+      page.fill_in 'เบี้ยขยัน', :with => '500'
+      page.fill_in 'โบนัส', :with => '90'
+      page.fill_in 'เบิกล่วงหน้า', :with => '30'
+      page.fill_in 'รายได้อื่นๆ', :with => '9'
+      page.fill_in 'หักอื่นๆ', :with => '2'
+      sleep(1)
+      eventually { expect(find_field('ภาษีเงินได้บุคคลธรรมดา', disabled: true).value.to_i).to eq 855763 }
+      eventually { expect(find_field('ประกันสังคม', disabled: true).value.to_i).to eq 750 }
+      eventually { expect(find_field('เงินสะสมเข้ากองทุนสงเคราะห์', disabled: true).value.to_i).to eq 60000 }
     end
 
     it 'should diplay confirmation modal when change detail and click ยกเลิก' do
@@ -514,8 +536,8 @@ describe 'Employee Details', js: true do
         cbx_pvf = find('#pay_pvf')
         cbx_social_insurance = find('#pay_social_insurance')
 
-        eventually { expect(cbx_pvf).to_not be_checked }
-        eventually { expect(cbx_social_insurance).to_not be_checked }
+        eventually { expect(cbx_pvf).to be_checked }
+        eventually { expect(cbx_social_insurance).to be_checked }
 
         cbx_pvf.click
         cbx_social_insurance.click
@@ -528,8 +550,8 @@ describe 'Employee Details', js: true do
         visit "/somsri_payroll#/employees/#{employees[0].id}"
         sleep(1)
 
-        eventually { expect(cbx_pvf).to be_checked }
-        eventually { expect(cbx_social_insurance).to be_checked }
+        eventually { expect(cbx_pvf).to_not be_checked }
+        eventually { expect(cbx_social_insurance).to_not be_checked }
       end
     end
   end
