@@ -272,6 +272,7 @@ describe 'Employee Details', js: true do
       eventually { expect(employee.classroom).to eq "1/1" }
       eventually { expect(employee.grade).to eq grade }
       eventually { expect(payroll.salary).to eq 200 }
+      eventually { expect(payroll.note).to eq nil }
       eventually { expect(page).to have_css('div.employee-details') }
     end
 

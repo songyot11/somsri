@@ -190,6 +190,7 @@ class EmployeesController < ApplicationController
   end
 
   def payroll_params
+    skips = ["id", "note", "employee_id"]
     result = params.require(:payroll).permit([
       :id,
       :employee_id,
@@ -209,7 +210,9 @@ class EmployeesController < ApplicationController
       :note,
       :advance_payment
     ])
-    result.to_h.each { |k,v| result[k] = 0 if k != "id" && v.blank? }
+    result.to_h.each do |k,v|
+      result[k] = 0 if (!(skips.include? k) && v.blank?)
+    end
     return result
   end
 
