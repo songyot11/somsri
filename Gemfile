@@ -99,6 +99,7 @@ group :development do
   gem 'capistrano-bundler'
   gem 'capistrano3-unicorn'
   gem 'capistrano-bower'
+  gem 'meta_request' # for analyze query
 end
 
 group :production do
