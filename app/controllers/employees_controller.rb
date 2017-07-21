@@ -12,7 +12,7 @@ class EmployeesController < ApplicationController
   # GET /employees/:id/slip
   def slip
     authorize! :manage, Employee
-    if Payroll.where({ employee_id: params[:id] }).count > 0
+    if Payroll.where({ employee_id: params[:id], closed: true }).count > 0
       employee = Employee.with_deleted.where(id: params[:id]).first.as_json({ slip: true, payroll_id: params[:payroll_id] })
       employee[:payroll][:fee_orders] = employee[:payroll][:fee_orders]
                                                         .select { |key, value| value[:value] > 0}
@@ -61,6 +61,7 @@ class EmployeesController < ApplicationController
       payroll = @employee.lastest_payroll
     end
     render json: {
+      enable_rollcall: SiteConfig.get_cache.enable_rollcall,
       img_url: @employee.img_url.exists? ? @employee.img_url.url : nil ,
       employee: @employee,
       employee_display_name: @employee.full_name,
@@ -189,6 +190,7 @@ class EmployeesController < ApplicationController
   end
 
   def payroll_params
+    skips = ["id", "note", "employee_id"]
     result = params.require(:payroll).permit([
       :id,
       :employee_id,
@@ -208,7 +210,9 @@ class EmployeesController < ApplicationController
       :note,
       :advance_payment
     ])
-    result.to_h.each { |k,v| result[k] = 0 if k != "id" && v.blank? }
+    result.to_h.each do |k,v|
+      result[k] = 0 if (!(skips.include? k) && v.blank?)
+    end
     return result
   end
 

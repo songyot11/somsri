@@ -35,11 +35,11 @@ describe 'Taxes', js: true do
   )}
 
   let(:payrolls) do
+    Payroll.where(employee_id: employee1.id).first.update({salary: 50_000, closed: false })
+    Payroll.where(employee_id: employee2.id).first.update({salary: 1_000_000, closed: false })
     [
-      pr1 = Payroll.make!({employee_id: employee1.id, salary: 50_000,
-                            effective_date: DateTime.new(2016, 12, 1)}),
-      pr2 = Payroll.make!({employee_id: employee2.id, salary: 1_000_000,
-                            effective_date: DateTime.new(2016, 12, 1)})
+      Payroll.where(employee_id: employee1.id).first,
+      Payroll.where(employee_id: employee2.id).first
     ]
   end
 

@@ -30,13 +30,13 @@ describe 'Student Report', js: true do
       Student.make!(student_number: 2, first_name: 'มั่งมี', last_name: 'ศรีสุข', nickname: 'รวย', classroom_number: 13 ),
       Student.make!(student_number: 3, first_name: 'มั่งมี3', grade_id: grades[0].id ),
       Student.make!(student_number: 4, first_name: 'มั่งมี4', grade_id: grades[1].id ),
-      Student.make!(student_number: 5,first_name: 'มั่งมี5', grade_id: grades[2].id),
-      Student.make!(student_number: 6,first_name: 'มั่งมี6', grade_id: grades[3].id),
-      Student.make!(first_name: 'มั่งมี7'),
-      Student.make!(first_name: 'มั่งมี8'),
-      Student.make!(first_name: 'มั่งมี9'),
-      Student.make!(first_name: 'มั่งมี10'),
-      Student.make!(first_name: 'มั่งมี11')
+      Student.make!(student_number: 5, first_name: 'มั่งมี5', grade_id: grades[2].id),
+      Student.make!(student_number: 6, first_name: 'มั่งมี6', grade_id: grades[3].id),
+      Student.make!(student_number: 7, first_name: 'มั่งมี7'),
+      Student.make!(student_number: 8, first_name: 'มั่งมี8'),
+      Student.make!(student_number: 9, first_name: 'มั่งมี9'),
+      Student.make!(student_number: 10, first_name: 'มั่งมี10'),
+      Student.make!(student_number: 11, first_name: 'มั่งมี11')
     ]
   end
 

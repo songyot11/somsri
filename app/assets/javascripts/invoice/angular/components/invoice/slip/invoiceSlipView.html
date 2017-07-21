@@ -3,8 +3,15 @@
     <div class="col-xs-3">
       <button type="button" class="btn btn-back_to_print" ng-click="slip.goBack()"><i class="fa fa-arrow-left"></i>&nbsp;&nbsp;ย้อนกลับ</button>
     </div>
-    <div class="col-xs-3 col-xs-offset-6" style="text-align:right;">
-      <button type="button" class="btn btn-to-print" onclick="window.print()"><i class="fa fa-print"></i>&nbsp;&nbsp;พิมพ์ใบเสร็จ</button>
+    <div class="col-md-9 text-right">
+      <div class="pull-right" style="margin-left:20px;">
+        <button type="button" class="btn btn-to-print" onclick="window.print()"><i class="fa fa-print"></i>&nbsp;&nbsp;พิมพ์ใบเสร็จ</button>
+      </div>
+      <div class="pull-right">
+        <button ng-show="slip.datas.remark" uib-popover="{{slip.datas.remark}}" popover-trigger="'mouseenter'" popover-class="btn-remark" popover-placement="bottom" type="button" class="btn btn-to-print">
+          <i class="fa fa-bell"></i>&nbsp;&nbsp;หมายเหตุ
+        </button>
+      </div>
     </div>
   </div>
 </div>

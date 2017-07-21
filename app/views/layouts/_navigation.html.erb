@@ -31,13 +31,15 @@
               <i class="fa fa-angle-down"></i>
             </a>
             <div class="dropdown-menu on-nav-bar" aria-labelledby="navbarDropdownMenuLink">
-              <% if Figaro.env.ROLLCALL_APK_URL %>
+              <% if (SiteConfig.get_cache.enable_rollcall) && (Figaro.env.ROLLCALL_APK_URL) %>
               <li><a class="dropdown-item" href="<%= Figaro.env.ROLLCALL_APK_URL %>" target="_blank">
                 <i class="fa fa-download"></i> Download Rollcall</a></li>
               <% end %>
 
               <% if current_page?("/") %>
-              <li class="divider"></li>
+                <% if (SiteConfig.get_cache.enable_rollcall) && (Figaro.env.ROLLCALL_APK_URL) %>
+                  <li class="divider"></li>
+                <% end %>
               <li class="dropdown-submenu">
                 <a tabindex="-1" href="#"><i class="fa fa-commenting-o"></i> Switch language</a>
                 <ul class="dropdown-menu">
@@ -46,8 +48,10 @@
                   <li><a href="/?locale=en#"><img src="./switch_language/flag-united-kingdom.png" alt="flag-thailand">&nbsp;&nbsp; English</a></li>
                 </ul>
               </li>
-              <% else %><% end %>
-              <li class="divider"></li>
+              <% end %>
+              <% if current_page?("/") || ((SiteConfig.get_cache.enable_rollcall) && (Figaro.env.ROLLCALL_APK_URL)) %>
+                <li class="divider"></li>
+              <% end %>
               <li><a class="dropdown-item" href="/main#/setting"><i class="fa fa-cog"></i> Setting</a></li>
 
               <li class="divider"></li>

@@ -19,7 +19,7 @@ describe 'Payroll Slip', js: true do
   )}
   let(:payrolls) do
     [
-      pr1 = Payroll.make!({
+      Payroll.make!({
         employee_id: employee.id,
         salary: 25_000,
         allowance: 2_500,
@@ -27,9 +27,10 @@ describe 'Payroll Slip', js: true do
         social_insurance: 750,
         late: 500,
         pvf: 100,
+        closed: true,
         effective_date: DateTime.new(2015, 2, 11)
       }),
-      pr2 = Payroll.make!({
+      Payroll.make!({
         employee_id: employee.id,
         salary: 25_000,
         allowance: 2_500,
@@ -37,13 +38,15 @@ describe 'Payroll Slip', js: true do
         social_insurance: 750,
         late: 500,
         pvf: 1000,
+        closed: true,
         effective_date: DateTime.new(2016, 2, 16)
       }),
-      pr3 = Payroll.make!({
+      Payroll.make!({
         employee_id: employee.id,
         salary: 50_000,
         tax: 100,
         pvf: 100,
+        closed: true,
         effective_date: DateTime.new(2016, 1, 1)
       }),
     ]

@@ -2,31 +2,34 @@
   'use strict';
   angular.module('somsri.payroll.create_payrolls_modal', [
   ])
-  .controller('createPayrollsModalCtrl', ['$uibModalInstance', '$state', '$log', 'createPayrollsModalService', '$rootScope', function($uibModalInstance, $state, $log, service, $rootScope) {
+  .controller('createPayrollsModalCtrl', ['$uibModalInstance', '$state', '$log', 'createPayrollsModalService', '$rootScope', '$scope', function($uibModalInstance, $state, $log, service, $rootScope, $scope) {
     var ctrl = this;
     $rootScope.loadAndAuthorizeResource("payroll", function(){
-
+      ctrl.isSaving = false
+      function isSameDate(effective_date){
+        for(var i = 0; i < $scope.effectiveDates.length; i++){
+          var end_date = Date.parse($scope.effectiveDates[i]['date_time'])
+          var new_end_date = Date.parse(ctrl.effective_date)
+          if(end_date == new_end_date){
+            return true
+          }
+        }
+        return false
+      }
       ctrl.submit = function(){
         if(Date.parse(ctrl.effective_date)){
-          var params = { create: { effective_date: ctrl.effective_date }, option: {force_create: false} };
-          service.createPayrolls(params).then(function(res) {
-            if(res.data["error"] == "PAYROLLS_EXIST"){
-              var message = "มีรายการ payroll ในวันนี้อยู่แล้ว ท่านต้องการจะสร้างรายการใหม่และลบรายการเดิมหรือไม่"
-              $rootScope.openConfirmationModal(message, function(res) {
-                params["option"]["force_create"] = true;
-                service.createPayrolls(params).then(function(res) {
-                  $uibModalInstance.close(params["create"]["effective_date"]);
-                }, function(res) {
-                })
-              }, function(res) {
-              })
-            }else{
-              $uibModalInstance.close(params["create"]["effective_date"]);
-            }
-          },function(res) {
-          });
-        }else{
-
+          if(isSameDate(ctrl.effective_date)){
+            $rootScope.openWarningModal("ไม่สามารถเลือกวันที่ออกเงินเดือนซ้ำได้");
+          }else{
+            $rootScope.openConfirmationModal("คุณต้องการออกเงินเดือนหรือไม่?", function(){
+              ctrl.isSaving = true
+              var params = { create: { effective_date: ctrl.effective_date }, option: {force_create: false} };
+              service.createPayrolls(params).then(function(resp) {
+                $uibModalInstance.close(params["create"]["effective_date"]);
+                ctrl.isSaving = false
+              });
+            });
+          }
         }
       }
 

@@ -62,6 +62,8 @@ gem "paperclip", "~> 5.0.0"
 gem "bootstrap-table-rails"
 gem 'bootstrap-select-rails'
 
+gem 'detect_timezone_rails'
+
 group :development, :test do
   # Call 'byebug' anywhere in the code to stop execution and get a debugger console
   gem 'byebug', platform: :mri
@@ -97,6 +99,7 @@ group :development do
   gem 'capistrano-bundler'
   gem 'capistrano3-unicorn'
   gem 'capistrano-bower'
+  gem 'meta_request' # for analyze query
 end
 
 group :production do

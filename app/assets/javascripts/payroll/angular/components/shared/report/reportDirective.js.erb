@@ -3,6 +3,7 @@
   angular.module('somsri.payroll.report.directive', [
     ])
   .directive('reportContent', ['$timeout','$filter', function ($timeout, $filter) {
+
     return {
       restrict: 'E',
       scope: {
@@ -14,139 +15,138 @@
     };
 
     function link(scope, element, attrs) {
-      bootstrapTableController($filter,scope.report.employees);
-      //console.log(scope.report.employees)
-      //console.log(JSON.stringify(scope.report.employees));
       angular.extend(scope.report, {
-        bootstrapTableController: function(data){
-          var $table = $('.table');
-          //console.log(data);
-          $table.bootstrapTable('load', data);
-          //bootstrapTableController($filter,data)
+        reportTableInit: reportTableInit,
+        reportTableLoadData: function(data){
+          $('.table').bootstrapTable('load', data);
         }
       });
     }
 
+    function reportTableInit(data) {
+      var $table = $('.table');
+      var angularScopeReport = "angular.element(document.getElementById('angularCtrl')).scope().report";
+
+      function filterCode(value, row, index){
+        if (value) {
+          return '<div class="numberic">'+value+'</div>';
+        }
+        return '<div class="numberic"></div>';
+      }
+
+      function filterAccountNumber(value, row, index){
+        if (value) {
+          return '<div class="numberic">'+value+'</div>';
+        }
+        return '<div class="numberic"></div>';
+      }
+
+      function filterSalary(value, row, index){
+        if (value) {
+          return '<div class="numberic" style="text-align: right;">'+$filter('currency')(value, '')+'</div>';
+        }
+        return '<div class="numberic" style="text-align: right;">'+$filter('currency')(0, '')+'</div>';
+      }
+
+      function filterExtraPay(value, row, index){
+        if (value) {
+          return '<div class="text-green numberic" style="text-align: right;" >'+$filter('currency')(value, '')+'</div>';
+        }
+        return '<div class="text-green numberic" style="text-align: right;">'+$filter('currency')(0, '')+'</div>';
+      }
+
+      function filterExtraFee(value, row, index){
+        if (value) {
+          return '<div class="text-red numberic" style="text-align: right;">'+$filter('currency')(value, '')+'</div>';
+        }
+        return '<div class="text-red numberic" style="text-align: right;">'+$filter('currency')(0, '')+'</div>';
+      }
+
+      function filterNetSalary(value, row, index){
+        if (value) {
+          return '<div class="text-green numberic" style="text-align: right;">'+$filter('currency')(value, '')+'</div>';
+        }
+        return '<div class="text-green numberic" style="text-align: right;">'+$filter('currency')(0, '')+'</div>';
+      }
+
+      function linkName(value, row, index){
+        if(value){
+          if(row.deleted){
+            return '<strong>'+value+'</strong>'
+          }else{
+            return '<a href="somsri_payroll#/employees/'+row.code+'?payroll_id='+row.payroll_id+'"><strong>'+value+'</strong><a>'
+          }
+        }
+        return '-';
+      }
+
+      function printSlip(value, row, index){
+        if(row){
+          return '<a onclick="'+ angularScopeReport +'.printSlip('+row.code+','+ row.payroll_id + ')" href="javascript:void(0)"> <i class="fa fa-print"></i> </a>';
+        }
+        return '-';
+      }
+
+      $table.bootstrapTable({
+        showFooter: true,
+        columns: [{
+          field: 'code',
+          title: 'รหัส ',
+          sortable: true,
+          formatter: filterCode,
+          class: 'report_for_print_hide',
+        },{
+          field: 'name',
+          title: 'ชื่อ',
+          sortable: true,
+          formatter: linkName,
+          class: 'forprint-h_table print_name',
+        },{
+          field: 'account_number',
+          title: 'เลขบัญชี',
+          sortable: true,
+          align: 'right',
+          formatter: filterAccountNumber,
+          class: 'text-center forprint-h_table forprint_table this_account',
+        },{
+          field: 'salary',
+          title: 'เงินเดือน',
+          sortable: true,
+          formatter: filterSalary,
+          align: 'right',
+          class: 'report_for_print_hide',
+        },{
+          field: 'extra_pay',
+          title: 'เงินเพิ่ม',
+          sortable: true,
+          formatter: filterExtraPay,
+          align: 'right',
+          class: 'report_for_print_hide',
+        },{
+          field: 'extra_fee',
+          title: 'เงินหัก',
+          sortable: true,
+          formatter: filterExtraFee,
+          align: 'right',
+          class: 'report_for_print_hide',
+        },{
+          field: 'net_salary',
+          title: 'เงินเดือนสุทธิ ',
+          sortable: true,
+          formatter: filterNetSalary,
+          align: 'right',
+          class: 'text-right forprint-h_table for-print-NetSalary',
+        },{
+          field: '',
+          title: '<a onclick="'+ angularScopeReport +'.printSlips()" href="javascript:void(0)"> <i class="fa fa-print"></i>  </a>',
+          class: 'report_for_print_hide',
+          align: 'center',
+          formatter: printSlip,
+        }],
+        data: data
+      });
+
+    }
+
   }]);
 })();
-
-function bootstrapTableController($filter,data) {
-  var $table = $('.table');
-  var angularScopeReport = "angular.element(document.getElementById('angularCtrl')).scope().report";
-
-  function filterCode(value, row, index){
-    if (value) {
-      return '<div class="numberic">'+value+'</div>';
-    }
-    return '<div class="numberic"></div>';
-  }
-
-  function filterAccountNumber(value, row, index){
-    if (value) {
-      return '<div class="numberic">'+value+'</div>';
-    }
-    return '<div class="numberic"></div>';
-  }
-
-  function filterSalary(value, row, index){
-    if (value) {
-      return '<div class="numberic" style="text-align: right;">'+$filter('currency')(value, '')+'</div>';
-    }
-    return '<div class="numberic" style="text-align: right;">'+$filter('currency')(0, '')+'</div>';
-  }
-
-  function filterExtraPay(value, row, index){
-    if (value) {
-      return '<div class="text-green numberic" style="text-align: right;" >'+$filter('currency')(value, '')+'</div>';
-    }
-    return '<div class="text-green numberic" style="text-align: right;">'+$filter('currency')(0, '')+'</div>';
-  }
-
-  function filterExtraFee(value, row, index){
-    if (value) {
-      return '<div class="text-red numberic" style="text-align: right;">'+$filter('currency')(value, '')+'</div>';
-    }
-    return '<div class="text-red numberic" style="text-align: right;">'+$filter('currency')(0, '')+'</div>';
-  }
-
-  function filterNetSalary(value, row, index){
-    if (value) {
-      return '<div class="text-green numberic" style="text-align: right;">'+$filter('currency')(value, '')+'</div>';
-    }
-    return '<div class="text-green numberic" style="text-align: right;">'+$filter('currency')(0, '')+'</div>';
-  }
-
-  function linkName(value, row, index){
-    if(value){
-      return '<a href="somsri_payroll#/employees/'+row.code+'?payroll_id='+row.payroll_id+'"><strong>'+value+'</strong><a>'
-    }
-    return '-';
-  }
-
-  function printSlip(value, row, index){
-    if(row){
-      return '<a onclick="'+ angularScopeReport +'.printSlip('+row.code+','+ row.payroll_id + ')" href="javascript:void(0)"> <i class="fa fa-print"></i> </a>';
-    }
-    return '-';
-  }
-
-  $table.bootstrapTable({
-    showFooter: true,
-    columns: [{
-      field: 'code',
-      title: 'รหัส ',
-      sortable: true,
-      formatter: filterCode,
-      class: 'report_for_print_hide',
-    },{
-      field: 'name',
-      title: 'ชื่อ',
-      sortable: true,
-      formatter: linkName,
-      class: 'forprint-h_table print_name',
-    },{
-      field: 'account_number',
-      title: 'เลขบัญชี',
-      sortable: true,
-      align: 'right',
-      formatter: filterAccountNumber,
-      class: 'text-center forprint-h_table forprint_table this_account',
-    },{
-      field: 'salary',
-      title: 'เงินเดือน',
-      sortable: true,
-      formatter: filterSalary,
-      align: 'right',
-      class: 'report_for_print_hide',
-    },{
-      field: 'extra_pay',
-      title: 'เงินเพิ่ม',
-      sortable: true,
-      formatter: filterExtraPay,
-      align: 'right',
-      class: 'report_for_print_hide',
-    },{
-      field: 'extra_fee',
-      title: 'เงินหัก',
-      sortable: true,
-      formatter: filterExtraFee,
-      align: 'right',
-      class: 'report_for_print_hide',
-    },{
-      field: 'net_salary',
-      title: 'เงินเดือนสุทธิ ',
-      sortable: true,
-      formatter: filterNetSalary,
-      align: 'right',
-      class: 'text-right forprint-h_table for-print-NetSalary',
-    },{
-      field: '',
-      title: '<a onclick="'+ angularScopeReport +'.printSlips()" href="javascript:void(0)"> <i class="fa fa-print"></i>  </a>',
-      class: 'report_for_print_hide',
-      align: 'center',
-      formatter: printSlip,
-    }],
-    data: data
-  });
-
-}

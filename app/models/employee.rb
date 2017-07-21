@@ -13,8 +13,10 @@ class Employee < ApplicationRecord
 
   has_many :payrolls
   after_create :create_tax_reduction
+  before_create :new_payroll
   after_save :update_rollcall_list
   before_save :assign_pin
+  after_destroy :delete_payroll
 
   acts_as_paranoid
 
@@ -41,6 +43,18 @@ class Employee < ApplicationRecord
     end
   end
 
+  def last_closed_payroll
+    self.payrolls.where(closed: true).order(effective_date: :desc).first
+  end
+
+  def new_payroll
+    self.payrolls << Payroll.new({ employee: self })
+  end
+
+  def delete_payroll
+    Payroll.destroy_all(employee_id: self.id, closed: [false, nil])
+  end
+
   def full_name
     if !self.first_name_thai.blank? && !self.last_name_thai.blank?
       [self.prefix_thai, self.first_name_thai, self.last_name_thai].join(" ")
@@ -57,7 +71,7 @@ class Employee < ApplicationRecord
   def annual_income_outcome(id)
     employee = Employee.with_deleted.find(id)
 
-    year = employee.payrolls.latest.effective_date.year
+    year = employee.last_closed_payroll.effective_date.year
     start_year = Date.new(year, 1, 1)
     end_year = Date.new(year, 12, 31)
 
@@ -92,19 +106,20 @@ class Employee < ApplicationRecord
         result[:extra_pay] = payroll.extra_pay.to_f + payroll.salary.to_f
       else
         # default payroll
-        result[:payroll] = self.payrolls.latest.as_json("slip")
-        result[:extra_fee] = self.payrolls.latest.extra_fee.to_f
-        result[:extra_pay] = self.payrolls.latest.extra_pay.to_f + self.payrolls.latest.salary.to_f
+        result[:payroll] = self.last_closed_payroll.as_json("slip")
+        result[:extra_fee] = self.last_closed_payroll.extra_fee.to_f
+        result[:extra_pay] = self.last_closed_payroll.extra_pay.to_f + self.last_closed_payroll.salary.to_f
       end
       return result
     elsif options[:employee_list]
-       {
+      has_last_closed_payroll = self.payrolls.size > 0 && self.last_closed_payroll
+      {
         id: self.id,
         name: self.full_name,
         position: self.position,
-        salary: self.payrolls.size > 0 ? self.payrolls.latest.salary.to_f : 0,
-        extra_fee: self.payrolls.size > 0 ? self.payrolls.latest.extra_fee.to_f : 0,
-        extra_pay: self.payrolls.size > 0 ? self.payrolls.latest.extra_pay.to_f : 0,
+        salary: has_last_closed_payroll ? self.last_closed_payroll.salary.to_f : 0,
+        extra_fee: has_last_closed_payroll ? self.last_closed_payroll.extra_fee.to_f : 0,
+        extra_pay: has_last_closed_payroll ? self.last_closed_payroll.extra_pay.to_f : 0,
         img: self.img_url.exists? ? self.img_url.url(:medium) : nil,
         deleted_at: self.deleted_at
       }

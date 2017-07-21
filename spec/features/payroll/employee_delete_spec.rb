@@ -36,10 +36,12 @@ describe 'Employee delete', js: true do
   let(:payrolls) do
     [
 
+      Payroll.make!({employee_id: employee1.id, salary: 50_000, tax: 100,
+                            effective_date: DateTime.new(2016, 11, 1), closed: true }),
       Payroll.make!({employee_id: employee2.id, salary: 50_000, tax: 100,
-                            effective_date: DateTime.new(2016, 11, 1)}),
-      Payroll.make!({employee_id: employee2.id, salary: 50_000, tax: 100,
-                            effective_date: DateTime.new(2016, 12, 1)})
+                            effective_date: DateTime.new(2016, 12, 1), closed: true }),
+      Payroll.make!({employee_id: employee1.id, salary: 40_000, tax: 100,
+                            effective_date: DateTime.new(2016, 12, 1), closed: true })
     ]
   end
 
@@ -65,11 +67,8 @@ describe 'Employee delete', js: true do
       sleep(1)
       click_button("ตกลง")
       sleep(1)
-    end
-
-    after do
       eventually { expect(page).to have_content('นาย สมจิตร เป็นนักมวย') }
-      eventually { expect(page).to have_no_content('นาง สมศรี เป็นชื่อแอพ') }
+      eventually { expect(page).to_not have_content('นาง สมศรี เป็นชื่อแอพ') }
     end
 
     it 'should have this employee in database' do
@@ -94,8 +93,9 @@ describe 'Employee delete', js: true do
     it 'should not display on report' do
       visit "/somsri_payroll#/report"
       sleep(1)
-
-      eventually { expect(page).to have_selector('.fixed-table-body tbody tr', count: 1) }
+      eventually { expect(page).to have_selector('.fixed-table-body tbody tr td:nth-child(2) a', text: "นาย สมจิตร เป็นนักมวย") }
+      eventually { expect(page).to_not have_selector('.fixed-table-body tbody tr td:nth-child(2) a', text: "นาง สมศรี เป็นชื่อแอพ") }
+      eventually { expect(page).to have_selector('.fixed-table-body tbody tr td:nth-child(2) strong', text: "นาง สมศรี เป็นชื่อแอพ") }
     end
   end
 
@@ -131,7 +131,8 @@ describe 'Employee delete', js: true do
     it 'should display on report' do
       visit "/somsri_payroll#/report"
       sleep(1)
-      eventually { expect(page).to have_content('สมจิตร') }
+      eventually { expect(page).to have_selector('a', text: 'สมศรี') }
+      eventually { expect(page).to_not have_selector('a', text: 'สมจิตร') }
     end
   end
 

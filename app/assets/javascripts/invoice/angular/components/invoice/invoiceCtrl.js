@@ -167,10 +167,10 @@
           ctrl.datas = JSON.parse(JSON.stringify(DEFAULT_INVOICE))
           ctrl.datas.invoice.semester = resp.data.current_semester;
           ctrl.datas.payment_method = {};
-          ctrl.datas.payment_method.is_cash = true;
-          ctrl.datas.payment_method.is_credit_card = false;
-          ctrl.datas.payment_method.is_transfer = false;
-          ctrl.datas.payment_method.is_cheque = false;
+          ctrl.datas.payment_method.is_cash = resp.data.default_cash_payment_method;
+          ctrl.datas.payment_method.is_credit_card = resp.data.default_credit_card_payment_method;
+          ctrl.datas.payment_method.is_transfer = resp.data.default_transfer_payment_method;
+          ctrl.datas.payment_method.is_cheque = resp.data.default_cheque_payment_method;
           ctrl.datas.invoice.school_year = resp.data.school_year;
           ctrl.datas.invoice.grade_name = resp.data.grades[0];
 

@@ -5,20 +5,24 @@ class PayrollsController < ApplicationController
 
   # GET /payrolls
   def index
-    effective_date = DateTime.parse(params[:effective_date])
     employees = Employee.with_deleted.to_a
-    payrolls = Payroll.where(employee_id: employees, effective_date: effective_date.beginning_of_day..effective_date.end_of_day)
-                      .order('employee_id').to_a
-                      .as_json("report")
+    qry_payrolls = Payroll.where(employee_id: employees)
+    if params[:effective_date] != "lasted"
+      effective_date = DateTime.parse(params[:effective_date])
+      qry_payrolls = qry_payrolls.where(effective_date: effective_date.beginning_of_day..effective_date.end_of_day)
+    else
+      qry_payrolls = qry_payrolls.where(effective_date: nil)
+    end
+    payrolls = qry_payrolls.order('employee_id').to_a.as_json("report")
     render json: payrolls, status: :ok
   end
 
   # GET /payrolls/effective_dates
   def effective_dates
     if params[:employee_id]
-      render json: get_months_by_employee_ids(params[:employee_id]), status: :ok
+      render json: get_months_by_employee_ids(params[:employee_id], params[:time_zone]), status: :ok
     else
-      render json: get_months(), status: :ok
+      render json: get_months(params[:closed], params[:time_zone]), status: :ok
     end
   end
 
@@ -180,45 +184,46 @@ class PayrollsController < ApplicationController
 
   # POST /payrolls/
   def create
-    employees = Employee.all.without_deleted.to_a
-    payrolls = Payroll.joins(:employee)
-                      .where(employee_id: employees, effective_date: DateTime.parse(create_params[:effective_date]))
-    render json: {error: "PAYROLLS_EXIST"}, status: :ok and return if payrolls.count > 0 && !option_params[:force_create]
-    payrolls.destroy_all if payrolls.count > 0
-    employees.each do |employee|
-      if employee.lastest_payroll.nil?
-        payroll = Payroll.new({
-          employee_id: employee.id,
-          salary: employee.salary,
-          effective_date: create_params[:effective_date]
-        })
-      else
-        payroll = Payroll.new({
-          employee_id: employee.id,
-          salary: employee.lastest_payroll.salary,
-          position_allowance: employee.lastest_payroll.position_allowance,
-          allowance: employee.lastest_payroll.allowance,
-          effective_date: create_params[:effective_date]
-        })
+    effective_date = DateTime.parse(create_params[:effective_date])
+    if effective_date
+      render json: [] and return if Payroll.where(effective_date: effective_date).count > 0
+      Payroll.where(closed: [nil, false]).update_all(closed: true, effective_date: DateTime.parse(create_params[:effective_date]))
+      Employee.all.without_deleted.to_a.each do |employee|
+        if employee.lastest_payroll.nil?
+          payroll = Payroll.new({
+            employee_id: employee.id
+          })
+        else
+          payroll = Payroll.new({
+            employee_id: employee.id,
+            salary: employee.lastest_payroll.salary,
+            position_allowance: employee.lastest_payroll.position_allowance,
+            allowance: employee.lastest_payroll.allowance
+          })
+        end
+        payroll.save
       end
-      payroll.save
+      render json: ["PAYROLLS_CREATED"], status: :ok
     end
-
-    render json: ["PAYROLLS_CREATED"], status: :ok
-
   end
 
   private
-    def get_months()
+    def get_months(isClosed, time_zone)
       employee_ids = Employee.with_deleted.all
       payroll_dates = Payroll.where(employee_id: employee_ids)
-                             .order("effective_date DESC")
-                             .distinct.pluck(:effective_date).uniq
+      if isClosed
+        payroll_dates = payroll_dates.where(closed: true)
+      end
+      payroll_dates = payroll_dates.distinct
+                                  .order("effective_date DESC")
+                                  .pluck(:effective_date)
+                                  .uniq
+
       effective_dates = []
       payroll_dates.to_a.each do |payroll_date|
         effective_dates.push({
-          date_time: payroll_date.localtime,
-          date_string: to_thai_date(payroll_date.localtime).join(" ")
+          date_time: payroll_date ? payroll_date.in_time_zone(time_zone) : "lasted",
+          date_string: payroll_date ? to_thai_date(payroll_date.in_time_zone(time_zone)).join(" ") : "เดือนปัจจุบัน",
         })
       end
       return effective_dates
@@ -229,14 +234,13 @@ class PayrollsController < ApplicationController
       return [ d[0].to_i, d[1], d[2].to_i + 543 ]
     end
 
-    def get_months_by_employee_ids(employee_ids)
+    def get_months_by_employee_ids(employee_ids, time_zone)
       payrolls = Payroll.where(employee_id: employee_ids)
                              .order("effective_date DESC")
       effective_dates = []
       payrolls.to_a.each do |payroll|
         effective_dates.push({
-          date_time: payroll.effective_date.localtime,
-          date_string: to_thai_date(payroll.effective_date.localtime).join(" "),
+          date_string: payroll.effective_date ? to_thai_date(payroll.effective_date.in_time_zone(time_zone)).join(" ") : "เดือนปัจจุบัน",
           payroll_id: payroll.id
         })
       end

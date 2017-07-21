@@ -135,6 +135,10 @@
         }],
       }
 
+      $('#exportTable').on('click', function(){
+        main_table.tableExport({type:'excel'});
+      })
+
       print_table.bootstrapTable(bootstrapTableOptions);
       main_table.bootstrapTable($.extend(bootstrapTableOptions, {toolbar: "#date-filter"}));
 

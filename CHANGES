@@ -1,6 +1,54 @@
+Version 1.0.1:
+ - Added VERSION and CHANGES files, Version bump to v0.1.0
+ - Merge branch 'develop' of github.com:BananaCoding/somsri into develop
+ - Added VERSION and CHANGES files, Version bump to v0.1.0
+ - add phone placeholder
+ - change log 0.18.0
+ - fix time zone on employee detail and report payrolls (#414)
+ - hide export button at employee lists (#412)
+ - fix save blank note will generate value "0" (#411)
+ - bootstrap icon to font awesome
+ - Export excel bootstrap table (#408)
+ - fix generate data for payroll bug (#410)
+ - fix time zone bug when translate to thai at server (#409)
+ - fix generate tax pdf social insurance on closed payroll (#406)
+ - change text label button name (#407)
+ - fix bootstrap table bug when print payroll report (#404)
+ - export for student table (#405)
+ - Add card view on employees in bootstrap table (#398)
+ - fix display pin when already disable roll call (#403)
+ - Add Note to Payrolls (#400)
+ - Add remark slip invoice (#402)
+ - fix error that happen when the new employee has been created (#401)
+ - fix link wrong url at grouping report (#399)
+ - Site Config (#396)
+ - Payroll flows (#397)
+
 Version 0.1.0
+ - Merge branch 'develop' of github.com:BananaCoding/somsri into develop
+ - add phone placeholder
+ - change log 0.18.0
+ - fix time zone on employee detail and report payrolls (#414)
+ - hide export button at employee lists (#412)
+ - fix save blank note will generate value "0" (#411)
+ - bootstrap icon to font awesome
+ - Export excel bootstrap table (#408)
+ - fix generate data for payroll bug (#410)
+ - fix time zone bug when translate to thai at server (#409)
+ - fix generate tax pdf social insurance on closed payroll (#406)
+ - change text label button name (#407)
+ - fix bootstrap table bug when print payroll report (#404)
+ - export for student table (#405)
+ - Add card view on employees in bootstrap table (#398)
+ - fix display pin when already disable roll call (#403)
+ - Add Note to Payrolls (#400)
+ - Add remark slip invoice (#402)
+ - fix error that happen when the new employee has been created (#401)
+ - fix link wrong url at grouping report (#399)
  - Merge branch 'fix-link-at-grouping-report'
+ - Site Config (#396)
  - fix link wrong url at grouping report
+ - Payroll flows (#397)
  - Merge branch 'release/0.17.0' into develop
  - Merge branch 'release/0.17.0'
  - release 0.17.0
