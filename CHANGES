@@ -1,0 +1,605 @@
+Version 0.1.0
+ - Merge branch 'develop' of github.com:BananaCoding/somsri into develop
+ - add phone placeholder
+ - change log 0.18.0
+ - fix time zone on employee detail and report payrolls (#414)
+ - hide export button at employee lists (#412)
+ - fix save blank note will generate value "0" (#411)
+ - bootstrap icon to font awesome
+ - Export excel bootstrap table (#408)
+ - fix generate data for payroll bug (#410)
+ - fix time zone bug when translate to thai at server (#409)
+ - fix generate tax pdf social insurance on closed payroll (#406)
+ - change text label button name (#407)
+ - fix bootstrap table bug when print payroll report (#404)
+ - export for student table (#405)
+ - Add card view on employees in bootstrap table (#398)
+ - fix display pin when already disable roll call (#403)
+ - Add Note to Payrolls (#400)
+ - Add remark slip invoice (#402)
+ - fix error that happen when the new employee has been created (#401)
+ - fix link wrong url at grouping report (#399)
+ - Merge branch 'fix-link-at-grouping-report'
+ - Site Config (#396)
+ - fix link wrong url at grouping report
+ - Payroll flows (#397)
+ - Merge branch 'release/0.17.0' into develop
+ - Merge branch 'release/0.17.0'
+ - release 0.17.0
+ - fix print & font payroll report (#395)
+ - fix filter date bug (#394)
+ - employees bootstrap table (#391)
+ - fix can't print student list with filter (#390)
+ - Report bootstrap table (#381)
+ - display parent's phone at student detail (#389)
+ - add confirm password in setting (#383)
+ - Print invoices (#388)
+ - print grouping report (#386)
+ - add date range filter for invoice list (#384)
+ - move column classroom_number in student list (#385)
+ - Add field input school year (#382)
+ - Edit css invoice payment (#379)
+ - fix bug slip invoice method transfer (#378)
+ - UI:Preview an image before submit in edit student&parent (#376)
+ - set img default for edit student&parent (#373)
+ - invoice BsTable and fix rspec (#371)
+ - Change font input invoice items list (#369)
+ - hide archived student's classroom from class room filter dropdown (#368)
+ - remove code not use in employeeView (#367)
+ - remove archive code at employee list (#366)
+ - rake clean duplicated student (#365)
+ - edit text menu invoice and payroll (#364)
+ - fix separate string for grouping report filter (#363)
+ - change font style for number (#361)
+ - Edit UI: datepicker-options "showWeeks:false" (#360)
+ - Bootstrap Table for Students and Fixed some bug on parents (#358)
+ - Fix UI:groping report & other (#352)
+ - Change Table Parents to Bootstrap Table (#349)
+ - Merge branch 'develop'
+ - can't edit payroll after closed (#350)
+ - edit placeholder search invoice (#347)
+ - Note for payroll (#348)
+ - fix invalid date error (#346)
+ - set css width to gropping report (#345)
+ - move menu report invoice (#343)
+ - Report grouping per student (#344)
+ - Report invoice by grouping items (#342)
+ - Login logo (#341)
+ - Student reports testcase (#340)
+ - fix top space student parent &  adjust css employee (#339)
+ - Fix cancel invoice bug (#338)
+ - fix default payment invoice (#337)
+ - fix css wrong (#336)
+ - Merge branch 'release/0.16.0' into develop
+ - Merge branch 'release/0.16.0'
+ - release 0.16.0
+ - Merge pull request #335 from BananaCoding/fix_css_main_menu_for_finance
+ - fix test
+ - edit css margin top main menu
+ - fix css main menu for user finance
+ - Export invoice report to csv (#334)
+ - cleanup code (#333)
+ - fix invoice report (#332)
+ - Modify ui display wrong (#331)
+ - fix scrollbar payroll table (#330)
+ - remove unused invoice path (#329)
+ - restructure invoice slip code, fix css page break bug (#328)
+ - Fix archive system (#327)
+ - Close tax reduction (#326)
+ - change text color table payroll (#325)
+ - set UI setting page (#324)
+ - config rails admin ability (#322)
+ - click on employees name to render edit page (#323)
+ - UI/fix table payroll (#320)
+ - user can change style of employee list view between grid/list styles (#321)
+ - generate pin for all employees (#315)
+ - add navbar menu switch language on menu page (#319)
+ - fix scolling in payroll (#304)
+ - auto gen employee.pin (#317)
+ - hide delete student button that can't be deleted (#318)
+ - remove default gender at invoice process (#316)
+ - fix student report calculation and display bug (#314)
+ - search invoices (#312)
+ - added rake students:cleanup to cleanup all student prefixes (#313)
+ - Merge branch 'release/0.15.0' into develop
+ - Merge branch 'release/0.15.0'
+ - release 0.15.0
+ - improve ui all table (#311)
+ - Fix tax 3percent (#310)
+ - Fix/ui improve ui button filter (#306)
+ - Fix print format (#307)
+ - add payroll slip header (#308)
+ - Feature/print student (#305)
+ - fix version ruby
+ - fix logo display bug
+ - fix add same student in invoice process (#303)
+ - fix css logo school for invoice (#299)
+ - fix color flash message (#302)
+ - fix spec name (#295)
+ - Merge branch 'develop' of github.com:BananaCoding/somsri into develop
+ - deploy nandachart
+ - Update changelog.html.erb
+ - Update changelog.html.erb
+ - add button print report rollcall (#296)
+ - Merge branch 'release/0.14.0' into develop
+ - release 0.14.0
+ - release 0.14.0
+ - Merge branch 'develop' of github.com:BananaCoding/somsri into develop
+ - Merge branch 'master' of github.com:BananaCoding/somsri
+ - fix typo
+ - fix typo
+ - move setting to main/setting (#289)
+ - fix save salary at payroll page bug (#291)
+ - Add logo paperclip (#294)
+ - when start payroll must exclude archive employee (#293)
+ - finance officer can access student and parent page (#292)
+ - fix social insurance calculation bug (#290)
+ - fix error when missing list on roll call report (#287)
+ - fix field transfer on invoice (#288)
+ - fix table report payroll (#285)
+ - fix user missing school error (#286)
+ - release 0.13.0
+ - add page break (#284)
+ - set position photo student & parent (#283)
+ - remove fileutils gem from Gemfile, since fileutils is a build-in gem (#282)
+ - load grade from database
+ - add demo deploy staging
+ - Merge branch 'develop' of github.com:BananaCoding/somsri into develop
+ - add demo
+ - fix seed (#281)
+ - get invoice footer template from db (#277)
+ - fix print slip employees (#280)
+ - hide ยื่นประกันสังคม button if there is no payroll (#279)
+ - daily report using data from database (#272)
+ - display school name using data from database (#271)
+ - remove student.show and parent.show screens (#276)
+ - Fix bug UI employees card (#278)
+ - Ui/add email to setting (#275)
+ - save invoice header in the database (#274)
+ - fix ui (#270)
+ - change text btn to icon for student and parent page (#269)
+ - fix seed file bug
+ - fix seed file bug
+ - rake data:init (#264)
+ - fix bug where admin cannot assign parent to a student (#266)
+ - bug employee restore (#268)
+ - student dulicatate prefix (#267)
+ - Feature/invoice filter (#260)
+ - search student archived (#258)
+ - Feature/filter parent by grade (#257)
+ - fix employee name not display when missing prefix (#265)
+ - fix slip error when go to slip without payroll (#263)
+ - Merge pull request #262 from BananaCoding/feature/fix-print-payroll-report
+ - fix print payroll reports, slips
+ - print rollcall report (#261)
+ - fix css width table (#259)
+ - Feature/change order emp report screen (#256)
+ - fix add same relationship of student and list (#255)
+ - remove navber only one (#254)
+ - Update changelog.html.erb
+ - Update changelog.html.erb
+ - Merge branch 'release/0.13.0' into develop
+ - release 0.13.0
+ - release 0.13.0
+ - edit Refund Condition slips invoice (#253)
+ - edit Refund Condition slips invoice (#253)
+ - bug student archive (#249)
+ - remove gravtastic (#252)
+ - fixed calculate tax (#251)
+ - fixed confirm employee saving dialog (#247)
+ - add dynamic api link at nav bar (#250)
+ - fix error on new employee and edit employee (#244)
+ - add dynamic link roll call apk (#246)
+ - fix dropddown css (#245)
+ - fix load roll call with archive, deleted, change classroom logic (#241)
+ - employee delete dependent (#242)
+ - Feature/fix paperclip configuration (#243)
+ - change icon bootstrap to font awesome (#240)
+ - update paperclip for Singapore S3
+ - deploy to bankad
+ - fix bug setting button (#237)
+ - remove inv status parent (#235)
+ - use id instead of student_number (#238)
+ - Change style image employee details to circle (#239)
+ - Feature/archive employee (#233)
+ - Feature/upload photo (#234)
+ - fix generate list by student side (#230)
+ - add restrict dependent to invoice, hide delete button (#229)
+ - fixed blink [salary button] (#228)
+ - performance tuning (#227)
+ - new employee: hide pin tab (#225)
+ - filter students (#222)
+ - Feature/fix paginate (#224)
+ - filter employees list (#220)
+ - auto generate attendance list (#219)
+ - remove rspec warning (#221)
+ - merge user to employee (#216)
+ - fixed employee detail layout (#218)
+ - fixed calculate payroll (#215)
+ - fixed printing label button (#217)
+ - can assign class to teacher (#213)
+ - display PIN number (#214)
+ - default timezone to Bangkok
+ - fix payroll, report payroll layout (#212)
+ - fixed save payroll (#211)
+ - hilight selected row on payroll page (#210)
+ - Roll call report (#209)
+ - Feature/student archive (#208)
+ - UI/New table (#207)
+ - Add .to_i to student.number to prevent error while sorting (#206)
+ - fixed social insurance (#205)
+ - fixed tax label (#204)
+ - Feature/parent archive (#201)
+ - fix example date
+ - fix validate effective date error
+ - hotfix validate effective date error (#202)
+ - add css: hilight selected row on payroll table (#203)
+ - add employee name to slip as receiver (#199)
+ - add paginate (#198)
+ - student_num_unique (#196)
+ - fixed css tax_reduction page (#195)
+ - fixed payroll menu position (#197)
+ - Merge pull request #194 from BananaCoding/UI/Link_download_apk_rollcall
+ - add download to navbar
+ - add rollcall apk and link
+ - add button link app roll call
+ - Merge pull request #193 from BananaCoding/fix_changelog
+ - add changelog, fixed rspec
+ - release 0.12.0
+ - release 0.12.0
+ - Merge branch 'release/0.12.0' into develop
+ - Merge branch 'release/0.12.0'
+ - release 0.12.0
+ - Merge pull request #192 from BananaCoding/featutre/hide-menu-by-role
+ - fix spec
+ - fix layout nabber button
+ - hide menu by role
+ - Merge pull request #191 from BananaCoding/fix/label_grade_eng
+ - label grade in eng
+ - fix UI payroll view (#190)
+ - Merge pull request #189 from BananaCoding/print_grade_eng
+ - print grade in eng
+ - remove flash (#188)
+ - add role for all user in seed (#185)
+ - save and close create payroll modal (#187)
+ - display_eng grade (#184)
+ - fixed button position on payroll page (#186)
+ - fix navbar menu title (#178)
+ - Custom payroll layout (#183)
+ - fix print report bug, add table header for new page (#179)
+ - fix css employee (#182)
+ - fix employee details menu (#180)
+ - add user role, cancancan, setup ability for angular (#174)
+ - fixed payroll page: refresh local employee data (#175)
+ - set css to print report payroll (#173)
+ - create new employee: hide 2 tabs, have no payroll record: hide payroll tab (#172)
+ - update change log (#170)
+ - Merge pull request #171 from BananaCoding/fix_create_employee
+ - fixed: get employee_id=0 return Employee.new
+ - Merge pull request #168 from BananaCoding/feature/tax_optional
+ - Update tax_reduction.rb
+ - :before_save tax_reduction
+ - display other fee (#169)
+ - feature: validate tax reduction input
+ - Merge pull request #167 from BananaCoding/fixed_param
+ - Merge branch 'develop' into fixed_param
+ - student menu (#166)
+ - fix student name on invoice screen that display blank parentheses (#164)
+ - fixed param, spec
+ - remove dropdown suggestion (#165)
+ - Merge pull request #163 from BananaCoding/feature/fix-space
+ - add space for print all payroll slip
+ - student eng name (#161)
+ - fix button student view
+ - print all payroll slip (#162)
+ - set nav bar left menu (#158)
+ - fixed: new payroll, copy position_allowance and allowance from lastes… (#159)
+ - hide help button (#160)
+ - fix student and parent css (#156)
+ - Emp page move menu (#157)
+ - Feature/payrollpage cal tax (#146)
+ - add authen api for android (#155)
+ - set css somsri roll call (#154)
+ - add rollcall angular template (#152)
+ - fix margin top main (#151)
+ - daily report and student report test (#148)
+ - แก้หน้า student ให้รันได้ (#149)
+ - fix parents page to run normally, rails (#150)
+ - fix css dailyReport (#144)
+ - rollcall seed (#145)
+ - fix all spec error (#147)
+ - flash message (#136)
+ - merge rollcall to payroll (#143)
+ - Merge pull request #137 from BananaCoding/tax_reduction_remove_client_calculate
+ - fix css somsri payroll & remove footer invoice (#140)
+ - Fix slip invoice (#141)
+ - fix view from 4 to 5 column (#142)
+ - clean code
+ - make it single save for invoice object (#139)
+ - fix sign out btn disappear (#138)
+ - fixed: spec, calculate tax when click salary tab
+ - fixed conflict
+ - Merge branch 'develop' of https://github.com/BananaCoding/somsri-payroll into develop
+ - remove calculate tax,pvf,social_insurance from client
+ - fix css main menu (#133)
+ - localize ไม่ทำงานหน้าชำระเงิน (#135)
+ - add invoice default seed data (#132)
+ - fix filter by grade in student report page (#127)
+ - angular check authen (#131)
+ - Tab salary (#130)
+ - fix css somsri invoice home (#128)
+ - fix css sign in (#129)
+ - Merge branch 'develop' of https://github.com/BananaCoding/somsri-payroll into develop
+ - hold
+ - merge somsri invoice to somsri payroll (#126)
+ - Merge branch 'develop' of https://github.com/BananaCoding/somsri-payroll into develop
+ - Migrate db (#124)
+ - Change sub folder (#121)
+ - fix spec
+ - change sub folder
+ - automate tax, social_insurance, pvf on employee_detail page (#118)
+ - merge css invoice (#119)
+ - fix timezone for slip (#117)
+ - Feature/fix glyphicons not found in production (#116)
+ - fix controller ctor wrong format for production
+ - Merge pull request #115 from BananaCoding/feature/release_note
+ - removed blank
+ - add release note
+ - deploy sunshine proxy
+ - button for invoice
+ - Merge pull request #114 from BananaCoding/tax_reduction_input
+ - remove log
+ - fixed a bit calculate
+ - remove logs
+ - fixed calculate tax
+ - fixed calculate
+ - rewrite calculate algorithm
+ - fixed calculate tax, validate input
+ - employee detail page: swap some input box, add automate calculate
+ - update tax reduction input
+ - Merge branch 'develop' of https://github.com/BananaCoding/somsri-payroll into develop
+ - fixed print slip on employeeDetail & report (#112)
+ - Fixed social insurance (#113)
+ - Merge branch 'develop' of https://github.com/BananaCoding/somsri-payroll into develop
+ - Merge pull request #110 from BananaCoding/feature/fix-dropdown-scrollable
+ - Merge pull request #109 from BananaCoding/feature/fix-float-number-calculate
+ - fix dropdown overflow scrollable
+ - fix float calculation bug
+ - Merge branch 'develop' of https://github.com/BananaCoding/somsri-payroll into develop
+ - fix create employee failed (#104)
+ - Merge branch 'develop' of https://github.com/BananaCoding/somsri-payroll into develop
+ - Fixed unrequire fileds
+ - add/edit/delete emergency call (#102)
+ - add payrolls filter tabs (#103)
+ - Merge pull request #107 from BananaCoding/fixed_unrequire_fileds
+ - fixed more
+ - fixed: remove required fields on employee details page (#106)
+ - fixed: remove required fields on employee details page
+ - filter test (#105)
+ - Update README.md
+ - report filter tabs (#98)
+ - Fixed print slip (#97)
+ - fix seed.rb (#95)
+ - https://trello.com/c/Z5rE9tRq (#96)
+ - add default for employee type (#94)
+ - fix effective date, redirect after create payroll (#93)
+ - tax_reduction: fixed fields (#92)
+ - Feature/tax part4 (#89)
+ - DB:tax_reduction, calculate static tax_year=2560 (#88)
+ - create payroll (#90)
+ - fix employee count in pdf (#87)
+ - fix x-editable popup overflow (#85)
+ - add school details (#84)
+ - add how to install pdftk
+ - generate social insurance pdf (#83)
+ - add pay_pvf and pay_social_insurance checkboxes (#82)
+ - private info functionality (#80)
+ - add employee_type field (#81)
+ - Merge branch 'develop' of github.com:BananaCoding/somsri-payroll into develop
+ - fix production error by missing one comma
+ - upgrate tax to income_tax, add withholding_tax (#79)
+ - Merge pull request #78 from BananaCoding/feature/calculate-tax
+ - add test payroll
+ - calculate tax
+ - improve app config (#73)
+ - Private info overview (#75)
+ - Merge pull request #68 from BananaCoding/feature/calculate-social_insurance
+ - Merge pull request #71 from BananaCoding/feature/pdf-generate
+ - close social insurance function
+ - fix bug
+ - missing include module
+ - pdf generator from template
+ - Merge pull request #72 from BananaCoding/feature/implement_exception_notification
+ - integrate exception notification
+ - Merge pull request #70 from BananaCoding/employee_details_tab
+ - add private info tab
+ - fixed: round number
+ - Merge pull request #66 from BananaCoding/feature/fixed-table-header
+ - Merge pull request #65 from BananaCoding/feature/school-detail
+ - calculate social_insurance
+ - newline address input
+ - remove timeout
+ - Merge pull request #67 from BananaCoding/feature/calculate-pvf
+ - pvf generator function
+ - fixed table header when scroll
+ - school detail
+ - fix employee_details_spec
+ - Merge pull request #63 from BananaCoding/feature/alway-display-employee-name
+ - Merge pull request #64 from BananaCoding/feature/change-report-to-payroll
+ - change controller name
+ - fixed top bar menu
+ - Merge pull request #62 from BananaCoding/feature/effective_date
+ - migrate effective_date
+ - fix spec bug
+ - fix spec & bug
+ - effective date
+ - Merge pull request #60 from BananaCoding/feature/add-employee-birthdate
+ - figaro config
+ - fix spec
+ - add new build pack
+ - Merge pull request #61 from BananaCoding/feature/add-build-pack
+ - add pdftk
+ - add employee birthdate
+ - add birthdate
+ - Merge pull request #59 from BananaCoding/feature/highlight-edit-field
+ - remove debug log
+ - click editable field must select all value
+ - Merge pull request #57 from BananaCoding/feature/report-social-insurance
+ - add spec
+ - Merge pull request #58 from BananaCoding/feature/edited-employee
+ - remove unused code
+ - edited employee shouldn't change page
+ - remove account number
+ - fix seed
+ - fix pdf
+ - report social insurance
+ - Merge pull request #55 from BananaCoding/show_current_when_swapping_screen
+ - Merge pull request #56 from BananaCoding/feature/deploy_production
+ - deploy branch
+ - Merge branch 'develop' of github.com:BananaCoding/somsri-payroll into develop
+ - Merge pull request #54 from BananaCoding/can_edit_history
+ - Merge pull request #53 from BananaCoding/handle_bad_response_on_employees_list_screen
+ - Merge pull request #52 from BananaCoding/remove_menu_outline
+ - if the user click employee link on report/payroll screen it should display employee detail with payroll data of the same month as previous screen(report/payroll)
+ - fix rspec
+ - can edit history on employee detail screen
+ - handle bad response on employees list screen
+ - remove outline when click on the main menu
+ - fix rspec
+ - fix issue where the user cannot update name and email
+ - hide non functional button
+ - disable name and email fields on setting screen
+ - Merge pull request #50 from BananaCoding/feature/change-password
+ - fix epec
+ - fix spec
+ - Merge pull request #51 from BananaCoding/readme_multi_build
+ - fix sign in
+ - update readme to explain how to config heroku multiple builds
+ - remove devise generate controller
+ - setting page
+ - setting-page
+ - Merge pull request #49 from BananaCoding/hotfix/separte_on_slip
+ - show separate when print
+ - Merge pull request #48 from BananaCoding/feature/print_slip_on_report
+ - Improve layout when print
+ - uncomment code
+ - can print slip on report
+ - Merge pull request #46 from BananaCoding/hotfix/required_on_safari
+ - Merge pull request #47 from BananaCoding/feature/fix-no-img-profile
+ - fix profile image disappear
+ - fixed requird on safari
+ - Merge pull request #45 from BananaCoding/feature/slip-from-payroll-history
+ - slip for select month
+ - Merge pull request #44 from BananaCoding/hotfix/fixed_print_for_safari
+ - Fixed print on safari and set bf header table to white
+ - Merge pull request #43 from BananaCoding/bird_eye_view_report
+ - Improved History Button
+ - Added Rspec
+ - Table is fix header when scroll
+ - Can get app payroll
+ - setup ui
+ - Merge pull request #42 from BananaCoding/feature/payroll-histories-in-employee-detail
+ - using filters.js
+ - payroll histories in employee details
+ - Merge pull request #40 from BananaCoding/feature/edit_payroll_data
+ - Merge pull request #35 from BananaCoding/improve/dockerize
+ - Change xeditable ison to font-awesome
+ - Change month name when switched and input float number
+ - Merge branch 'develop' of github.com:BananaCoding/somsri-payroll into develop
+ - Merge pull request #41 from BananaCoding/fix_https
+ - fix date-picker config
+ - Changed glyphicon to Fontawesome
+ - Added Rspec
+ - Added rspec
+ - Merge branch 'develop' of github.com:BananaCoding/somsri-payroll into develop
+ - Calculated Net Salary
+ - fix payroll json
+ - Can update inline
+ - Merge branch 'develop' of github.com:BananaCoding/somsri-payroll into develop
+ - Setup Editable data on payroll
+ - Merge pull request #39 from BananaCoding/feature/payroll_page
+ - Refactor code
+ - Fixed bug month dropdown
+ - Hided editor on payrol, use filter for month name
+ - Added payroll rspec
+ - Added rspec on swap page
+ - Improve UI, and Added payroll menu to navbar dropdown menu
+ - Display data on payroll page
+ - Merge pull request #37 from BananaCoding/hotfix/remove_inner_join
+ - Fixed bug follow rspec error
+ - Merge branch 'develop' of github.com:BananaCoding/somsri-payroll into develop
+ - update seed
+ - Improve switching employee (#38)
+ - Added payroll page
+ - fixed rspec
+ - Added rspec
+ - call employee service instead report service
+ - fix spec
+ - Merge remote-tracking branch 'origin/feature/improve-switching-employee' into feature/improve-switching-employee
+ - Improve switching employee
+ - Feature/delete emp (#36)
+ - Improve switching employee
+ - Add Dockerfile and docker-compose config
+ - remove ng-disable (#33)
+ - fix date picker format (#32)
+ - fix warning modal (#30)
+ - disable click create when clicked (#29)
+ - not check prefix and hide memo button (#31)
+ - fix employees and payroll order (#27)
+ - Change OT to After School Class, fixed bugs show en name when th name… (#28)
+ - Create update employee same page (#26)
+ - rake user:create (#25)
+ - Feature/setup devise (#24)
+ - sorted by employee id (#22)
+ - Feature/new employee (#23)
+ - add nickname, start_date to employee (#21)
+ - Feature/switch employee (#20)
+ - Add favicon (#19)
+ - write rakefile create payroll on date and now (#16)
+ - Hotfix/link on report to detail (#18)
+ - employee details (#17)
+ - Feature/duplicate print (#15)
+ - Feature/duplicate print (#14)
+ - can printing to paper (#13)
+ - Feature/swap page on navbar (#12)
+ - Hotfix/slip eng word (#11)
+ - Feature/employee slip (#10)
+ - Merge pull request #9 from BananaCoding/feature/add-prefix-thai
+ - seed
+ - add prefix thai
+ - employees list (#7)
+ - add thai name to employee (#8)
+ - Added DatabaseCleaner (#6)
+ - Feature/report connect db (#5)
+ - Merge pull request #4 from BananaCoding/mainmenu_css
+ - change cursor to pointer
+ - fix text layout
+ - remove unused css
+ - main menu icon and css
+ - Merge pull request #3 from BananaCoding/feature/payroll_report
+ - remove pushed database.yml
+ - Remove useless line
+ - Added Rspec on report
+ - Improved Data from api
+ - Added rpsec on report without swich month
+ - Call service reports
+ - Report page can show data and switch month
+ - Merge pull request #2 from BananaCoding/feature/schema
+ - schema
+ - Merge pull request #1 from BananaCoding/mainmenu
+ - main menu
+ - setup angular code structure
+ - setup node for heroku
+ - setup heroku build pack
+ - update README
+ - setup rspec
+ - setup devise
+ - remove turbo-link
+ - setup figaro
+ - setup postgres
+ - setup bower
+ - update .gitignore
+ - remove test folder
+ - new rails project
+ - Initial commit
+
