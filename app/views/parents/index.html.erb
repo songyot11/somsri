@@ -3,14 +3,16 @@
 <%= render 'layouts/messages' %>
 <div id="parent-index">
   <div class="row head-sp">
-    <div class="col-xs-2">
+    <div class="col-xs-6">
       <h1>ผู้ปกครอง</h1>
     </div>
 
-    <div class="col-xs-2 col-xs-offset-8" style="text-align: right; margin-top: 10px;">
-      <%= link_to t('.addparent', :default => t("helpers.links.addparent")),
-      new_parent_path,
-      :class => 'btn btn-add-ps float-right'%>
+    <div class="col-xs-6" style="text-align: right; margin-top: 10px;">
+
+      <%= link_to ("<i class='fa fa-upload' aria-hidden='true'></i> Export").html_safe, "#", :class => 'btn btn-exportBs float-right', :onclick => 'exportTable("parents")' %> 
+
+      <%= link_to t('.addparent', :default => t("helpers.links.addparent")), new_parent_path, :class => 'btn btn-add-ps float-right'%>
+
     </div>
   </div>
 
@@ -63,3 +65,19 @@
     </table>
   </div>
 </div>
+
+<table id="tableForExport"
+  data-toggle="table"
+  data-side-pagination="server"
+  data-tableexport-display="always"
+  style="display: none;">     
+  <thead>
+    <tr>
+      <th data-field="parents.full_name" style="width: 300px;" >ชื่อ-สกุล</th>
+      <th data-field="mobile" >โทรศัพท์</th>
+      <th data-field="email" >อีเมล์</th>
+      <th data-field="relationships.name" >ความสัมพันธ์</th>
+      <th data-field="students.full_name" >ชื่อ-สกุลนักเรียน</th>
+    </tr>
+  </thead>
+</table>

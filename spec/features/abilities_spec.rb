@@ -19,6 +19,7 @@ describe 'Abilities', js: true do
   describe 'Admin abilities' do
     before do
       login_as(users[0])
+      SiteConfig.make!(enable_rollcall: true)
     end
 
     it 'can goto main menu' do
@@ -50,8 +51,8 @@ describe 'Abilities', js: true do
 
     it 'can goto payroll report' do
       visit "/somsri_payroll#/report"
-      sleep(1)
-      expect(page).to have_content 'รหัส ชื่อ เลขบัญชี เงินเดือน'
+      sleep(2)
+      expect(page).to have_content 'ลูกจ้างประจำลูกจ้างชั่วคราวลูกจ้างทดลองงานลูกจ้างรายวัน'
     end
 
     it 'can goto setting' do

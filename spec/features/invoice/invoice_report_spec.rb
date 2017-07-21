@@ -96,6 +96,7 @@ describe 'invoice report(ใบเสร็จ)', js: true do
     visit 'somsri_invoice#/invoice_report'
     sleep(1)
     find('#start_date').set(yesterday_str)
+    sleep(1)
     find('#end_date').set(yesterday_str)
     sleep(1)
     eventually { expect( all('#invoice-table > tbody > tr').count ).to eq(3) }
@@ -123,6 +124,7 @@ describe 'invoice report(ใบเสร็จ)', js: true do
     eventually { expect( page ).to have_content(invoices[10].student.full_name) }
 
     find('#start_date').set(today_str)
+    sleep(1)
     find('#end_date').set("")
     sleep(1)
 
@@ -158,8 +160,8 @@ describe 'invoice report(ใบเสร็จ)', js: true do
     eventually { expect( page ).to have_content(invoices[9].student.full_name) }
     eventually { expect( page ).to have_content(invoices[10].student.full_name) }
 
-    find('#start_date').set("")
     find('#end_date').set(yesterday_str)
+    find('#start_date').set("")
     sleep(1)
 
     eventually { expect( all('#invoice-table > tbody > tr').count ).to eq(3) }
@@ -195,6 +197,7 @@ describe 'invoice report(ใบเสร็จ)', js: true do
     eventually { expect( page ).to have_content(invoices[10].student.full_name) }
 
     find('#start_date').set("")
+    sleep(1)
     find('#end_date').set("")
     sleep(1)
 

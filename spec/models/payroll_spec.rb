@@ -53,16 +53,25 @@ describe Payroll do
 
   let(:payrolls) do
     [
-      pr1 = Payroll.make!({employee_id: employee1.id, salary: 1_000_000, tax: 100,
-                            effective_date: DateTime.new(2016, 12, 1)}),
-      pr2 = Payroll.make!({employee_id: employee1.id, salary: 50_000, tax: 100,
+      Payroll.update(employee1.payrolls[0].id,
+      {
+        salary: 1_000_000, tax: 100,
+        effective_date: DateTime.new(2016, 12, 1)
+      }),
+      Payroll.make!({employee_id: employee1.id, salary: 50_000, tax: 100,
                             effective_date: DateTime.new(2016, 11, 1)}),
-      pr3 = Payroll.make!({employee_id: employee2.id, salary: 1_000_000, tax: 100,
+      Payroll.make!({employee_id: employee2.id, salary: 1_000_000, tax: 100,
                             effective_date: DateTime.new(2016, 11, 1)}),
-      pr4 = Payroll.make!({employee_id: employee2.id, salary: 50_000, tax: 100,
-                            effective_date: DateTime.new(2016, 12, 1)}),
-      pr5 = Payroll.make!({employee_id: employee3.id, salary: 50_000,
-                            effective_date: DateTime.new(2016, 12, 1)})
+      Payroll.update(employee2.payrolls[0].id,
+      {
+        salary: 50_000, tax: 100,
+        effective_date: DateTime.new(2016, 12, 1)
+      }),
+      Payroll.update(employee3.payrolls[0].id,
+      {
+        salary: 50_000,
+        effective_date: DateTime.new(2016, 12, 1)
+      })
     ]
   end
 

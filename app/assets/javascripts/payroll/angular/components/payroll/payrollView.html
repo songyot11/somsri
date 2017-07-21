@@ -2,6 +2,7 @@
     <div class="container-fluid">
       <div class="row" style="margin-bottom: 15px;">
         <div class="col-md-5">
+          <input type="hidden" id="time_zone">
           <div class="dropdown">
             <h3 id="month-list" data-toggle="dropdown" style="margin-top:10px;">
               <span ng-bind="payroll.currentDateString" role="button"></span>
@@ -9,7 +10,7 @@
             </h3>
             <ul class="dropdown-menu" aria-labelledby="month-list">
               <li ng-repeat="effectiveDate in payroll.effectiveDates">
-                <a ng-click="payroll.switchMonth(effectiveDate)">
+                <a ng-if="payroll.currentDateString != effectiveDate['date_string']" ng-click="payroll.switchMonth(effectiveDate)">
                   <button>{{ effectiveDate["date_string"] }}</button>
                 </a>
               </li>
@@ -20,9 +21,9 @@
           <div class="pull-right">
             <a class="btn employee-print" style="margin-right:10px;"
               href="/payrolls/social_insurance_pdf?effective_date={{payroll.currentEffectiveDate['date_time'] | encodeString }}"
-              target="_blank" ng-show="payroll.currentEffectiveDate">สำหรับประกันสังคม</a>
-            <a class="btn btn-payroll-starts" ng-click="payroll.createPayrolls()" href="javascript:void(0)">
-              เริ่มออกเงินเดือน
+              target="_blank" ng-show="payroll.isClosedPayroll">สำหรับประกันสังคม</a>
+            <a ng-hide="payroll.isClosedPayroll" class="btn btn-payroll-starts" ng-click="payroll.createPayrolls()" href="javascript:void(0)">
+              ออกเงินเดือน
             </a>
           </div>
         </div>
@@ -65,6 +66,9 @@
                               <a href="/somsri_payroll#/employees/{{employee.code}}?payroll_id={{employee.payroll_id}}">
                                 <strong>{{employee.name}}</strong>
                               </a>
+                              <button ng-show="employee.note" uib-popover="{{employee.note}}" popover-title="หมายเหตุ" type="button" class="btn btn-note-bell" popover-class="note-popover">
+                                <i class="fa fa-bell" aria-hidden="true"></i>
+                              </button>
                             </div>
                           </div>
                         </span>
@@ -100,67 +104,76 @@
                 </div>
                 <div class="tbody" id="scrollbar-payroll">
                     <div class="trow" ng-repeat="(index, employee) in payroll.employees" ng-mouseover="hoverIn(employee.code)">
-                        <span ng-class="{'hilight': sel==employee.code, 'salary': true }">
+                        <span ng-class="{'hilight': sel==employee.code, 'salary': true, 'no-click': employee.closed}">
                           <div class="popover-wrapper right-popup" ng-class="{'bottom-popup': index === 0}">
-                            <a id="{{index}}-salary" href="#" e-ng-focus="payroll.selectValue($event)" editable-number="employee.salary" e-step="0.01" class="text-green" onbeforesave="payroll.updatePayroll(index, employee.payroll_id, $data, 'salary')">
+                            <a ng-hide="employee.closed" id="{{index}}-salary" href="#" e-ng-focus="payroll.selectValue($event)" editable-number="employee.salary" e-step="0.01" class="text-green" onbeforesave="payroll.updatePayroll(index, employee.payroll_id, $data, 'salary')">
                                 {{employee.salary || 0 | currency: ""}}
                             </a>
+                            <span ng-show="employee.closed" class="text-green">{{employee.salary || 0 | currency: ""}}</span>
                           </div>
                         </span>
-                        <span ng-class="{'hilight': sel==employee.code}" class="number_table">
+                        <span ng-class="{'hilight': sel==employee.code, 'no-click': employee.closed}" class="number_table">
                           <div class="popover-wrapper" ng-class="{'bottom-popup': index === 0}">
-                            <a id="{{index}}-ot" href="#" e-ng-focus="payroll.selectValue($event)" editable-number="employee.ot" e-step="0.01" class="text-green" onbeforesave="payroll.updatePayroll(index, employee.payroll_id, $data, 'ot')">
+                            <a ng-hide="employee.closed" id="{{index}}-ot" href="#" e-ng-focus="payroll.selectValue($event)" editable-number="employee.ot" e-step="0.01" class="text-green" onbeforesave="payroll.updatePayroll(index, employee.payroll_id, $data, 'ot')">
                               {{employee.ot || 0 | currency: ""}}
                             </a>
+                            <span ng-show="employee.closed" class="text-green">{{employee.ot || 0 | currency: ""}}</span>
                           </div>
                         </span>
-                        <span ng-class="{'hilight': sel==employee.code}" class="number_table">
+                        <span ng-class="{'hilight': sel==employee.code, 'no-click': employee.closed}" class="number_table">
                           <div class="popover-wrapper" ng-class="{'bottom-popup': index === 0}">
-                            <a id="{{index}}-position_allowance" href="#" e-ng-focus="payroll.selectValue($event)" editable-number="employee.position_allowance" e-step="0.01" class="text-green" onbeforesave="payroll.updatePayroll(index, employee.payroll_id, $data, 'position_allowance')">
+                            <a ng-hide="employee.closed" id="{{index}}-position_allowance" href="#" e-ng-focus="payroll.selectValue($event)" editable-number="employee.position_allowance" e-step="0.01" class="text-green" onbeforesave="payroll.updatePayroll(index, employee.payroll_id, $data, 'position_allowance')">
                               {{employee.position_allowance || 0 | currency: ""}}
                             </a>
+                            <span ng-show="employee.closed" class="text-green">{{employee.position_allowance || 0 | currency: ""}}</span>
                           </div>
                         </span>
-                        <span ng-class="{'hilight': sel==employee.code}" class="number_table">
+                        <span ng-class="{'hilight': sel==employee.code, 'no-click': employee.closed}" class="number_table">
                           <div class="popover-wrapper" ng-class="{'bottom-popup': index === 0}">
-                            <a id="{{index}}-allowance" href="#" e-ng-focus="payroll.selectValue($event)" editable-number="employee.allowance" e-step="0.01" class="text-green" onbeforesave="payroll.updatePayroll(index, employee.payroll_id, $data, 'allowance')">
+                            <a ng-hide="employee.closed" id="{{index}}-allowance" href="#" e-ng-focus="payroll.selectValue($event)" editable-number="employee.allowance" e-step="0.01" class="text-green" onbeforesave="payroll.updatePayroll(index, employee.payroll_id, $data, 'allowance')">
                               {{employee.allowance || 0 | currency: ""}}
                             </a>
+                            <span ng-show="employee.closed" class="text-green">{{employee.allowance || 0 | currency: ""}}</span>
                           </div>
                         </span>
-                        <span ng-class="{'hilight': sel==employee.code}" class="number_table">
+                        <span ng-class="{'hilight': sel==employee.code, 'no-click': employee.closed}" class="number_table">
                           <div class="popover-wrapper" ng-class="{'bottom-popup': index === 0}">
-                            <a id="{{index}}-attendance_bonus" href="#" e-ng-focus="payroll.selectValue($event)" editable-number="employee.attendance_bonus" e-step="0.01" class="text-green" onbeforesave="payroll.updatePayroll(index, employee.payroll_id, $data, 'attendance_bonus')">
+                            <a ng-hide="employee.closed" id="{{index}}-attendance_bonus" href="#" e-ng-focus="payroll.selectValue($event)" editable-number="employee.attendance_bonus" e-step="0.01" class="text-green" onbeforesave="payroll.updatePayroll(index, employee.payroll_id, $data, 'attendance_bonus')">
                               {{employee.attendance_bonus || 0 | currency: ""}}
                             </a>
+                            <span ng-show="employee.closed" class="text-green">{{employee.attendance_bonus || 0 | currency: ""}}</span>
                           </div>
                         </span>
-                        <span ng-class="{'hilight': sel==employee.code}" class="number_table">
+                        <span ng-class="{'hilight': sel==employee.code, 'no-click': employee.closed}" class="number_table">
                           <div class="popover-wrapper" ng-class="{'bottom-popup': index === 0}">
-                            <a id="{{index}}-bonus" href="#" e-ng-focus="payroll.selectValue($event)" editable-number="employee.bonus" e-step="0.01" class="text-green" onbeforesave="payroll.updatePayroll(index, employee.payroll_id, $data, 'bonus')">
+                            <a ng-hide="employee.closed" id="{{index}}-bonus" href="#" e-ng-focus="payroll.selectValue($event)" editable-number="employee.bonus" e-step="0.01" class="text-green" onbeforesave="payroll.updatePayroll(index, employee.payroll_id, $data, 'bonus')">
                               {{employee.bonus || 0 | currency: ""}}
                             </a>
+                            <span ng-show="employee.closed" class="text-green">{{employee.bonus || 0 | currency: ""}}</span>
                           </div>
                         </span>
-                        <span ng-class="{'hilight': sel==employee.code}" class="number_table">
+                        <span ng-class="{'hilight': sel==employee.code, 'no-click': employee.closed}" class="number_table">
                           <div class="popover-wrapper" ng-class="{'bottom-popup': index === 0}">
-                            <a id="{{index}}-extra_etc" href="#" e-ng-focus="payroll.selectValue($event)" editable-number="employee.extra_etc" e-step="0.01" class="text-green" onbeforesave="payroll.updatePayroll(index, employee.payroll_id, $data, 'extra_etc')">
+                            <a ng-hide="employee.closed" id="{{index}}-extra_etc" href="#" e-ng-focus="payroll.selectValue($event)" editable-number="employee.extra_etc" e-step="0.01" class="text-green" onbeforesave="payroll.updatePayroll(index, employee.payroll_id, $data, 'extra_etc')">
                               {{employee.extra_etc || 0 | currency: ""}}
                             </a>
+                            <span ng-show="employee.closed" class="text-green">{{employee.extra_etc || 0 | currency: ""}}</span>
                           </div>
                         </span>
-                        <span ng-class="{'hilight': sel==employee.code}" class="number_table">
+                        <span ng-class="{'hilight': sel==employee.code, 'no-click': employee.closed}" class="number_table">
                           <div class="popover-wrapper" ng-class="{'bottom-popup': index === 0}">
-                            <a id="{{index}}-absence" href="#" e-ng-focus="payroll.selectValue($event)" editable-number="employee.absence" e-step="0.01" class="text-red" onbeforesave="payroll.updatePayroll(index, employee.payroll_id, $data, 'absence')">
+                            <a ng-hide="employee.closed" id="{{index}}-absence" href="#" e-ng-focus="payroll.selectValue($event)" editable-number="employee.absence" e-step="0.01" class="text-red" onbeforesave="payroll.updatePayroll(index, employee.payroll_id, $data, 'absence')">
                               {{employee.absence || 0 | currency: ""}}
                             </a>
+                            <span ng-show="employee.closed" class="text-red">{{employee.absence || 0 | currency: ""}}</span>
                           </div>
                         </span>
-                        <span ng-class="{'hilight': sel==employee.code}" class="number_table">
+                        <span ng-class="{'hilight': sel==employee.code, 'no-click': employee.closed}" class="number_table">
                           <div class="popover-wrapper" ng-class="{'bottom-popup' : index === 0}">
-                            <a id="{{index}}-late" href="#" e-ng-focus="payroll.selectValue($event)" editable-number="employee.late" e-step="0.01" class="text-red" onbeforesave="payroll.updatePayroll(index, employee.payroll_id, $data, 'late')">
+                            <a ng-hide="employee.closed" id="{{index}}-late" href="#" e-ng-focus="payroll.selectValue($event)" editable-number="employee.late" e-step="0.01" class="text-red" onbeforesave="payroll.updatePayroll(index, employee.payroll_id, $data, 'late')">
                               {{employee.late || 0 | currency: ""}}
                             </a>
+                            <span ng-show="employee.closed" class="text-red">{{employee.late || 0 | currency: ""}}</span>
                           </div>
                         </span>
                         <span ng-class="{'hilight': sel==employee.code}" class="number_table no-click">
@@ -184,18 +197,20 @@
                             </span>
                           </div>
                         </span>
-                        <span ng-class="{'hilight': sel==employee.code}" class="number_table">
+                        <span ng-class="{'hilight': sel==employee.code, 'no-click': employee.closed}" class="number_table">
                           <div class="popover-wrapper" ng-class="{'bottom-popup': index === 0}">
-                            <a id="{{index}}-advance_payment" e-ng-focus="payroll.selectValue($event)" href="#" editable-number="employee.advance_payment" e-step="0.01" class="text-red" onbeforesave="payroll.updatePayroll(index, employee.payroll_id, $data, 'advance_payment')">
+                            <a ng-hide="employee.closed" id="{{index}}-advance_payment" e-ng-focus="payroll.selectValue($event)" href="#" editable-number="employee.advance_payment" e-step="0.01" class="text-red" onbeforesave="payroll.updatePayroll(index, employee.payroll_id, $data, 'advance_payment')">
                               {{employee.advance_payment || 0 | currency: ""}}
                             </a>
+                            <span ng-show="employee.closed" class="text-red">{{employee.advance_payment || 0 | currency: ""}}</span>
                           </div>
                         </span>
-                        <span ng-class="{'hilight': sel==employee.code}" class="number_table">
+                        <span ng-class="{'hilight': sel==employee.code, 'no-click': employee.closed}" class="number_table">
                           <div class="popover-wrapper" ng-class="{'bottom-popup': index === 0}">
-                            <a id="{{index}}-fee_etc" href="#" e-ng-focus="payroll.selectValue($event)" editable-number="employee.fee_etc" e-step="0.01" class="text-red" onbeforesave="payroll.updatePayroll(index, employee.payroll_id, $data, 'fee_etc')">
+                            <a ng-hide="employee.closed" id="{{index}}-fee_etc" href="#" e-ng-focus="payroll.selectValue($event)" editable-number="employee.fee_etc" e-step="0.01" class="text-red" onbeforesave="payroll.updatePayroll(index, employee.payroll_id, $data, 'fee_etc')">
                               {{employee.fee_etc || 0 | currency: ""}}
                             </a>
+                            <span ng-show="employee.closed" class="text-red">{{employee.fee_etc || 0 | currency: ""}}</span>
                           </div>
                         </span>
                         <span ng-class="{'hilight': sel==employee.code}" id="{{index}}-net_salary" class="net_salary number_table no-click">{{employee.net_salary || 0 | currency: ""}}</span>

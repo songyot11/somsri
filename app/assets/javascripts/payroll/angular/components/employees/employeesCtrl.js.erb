@@ -7,7 +7,9 @@
     var ctrl = this
     var dateNow = new Date();
     var $table = $('#employeesTable')
-    ctrl.displayMode = 'grid';
+    var displayMode = 'grid';
+    var initDisplay = true;
+
     getPayroll(dateNow.getMonth() + 1, dateNow.getFullYear());
     function getPayroll(month, year){
       employeeService.getAllEmployee().then(function(resp) {
@@ -38,23 +40,23 @@
 
     function salary(value, row, index){
       if (value) {
-        return '<div class="text-blue text-right" >'+ value.toLocaleString() +' บาท</div>';
+        return '<div class="text-blue text-right" ><span class="numberic">'+ value.toLocaleString() +'</span> บาท</div>';
       }
-      return '<div class="text-blue text-right" >0 บาท</div>';
+      return '<div class="text-blue text-right" ><span class="numberic">0</span> บาท</div>';
     }
 
     function extra(value, row, index){
       if (value) {
-        return '<div class="text-green text-right" >'+ value.toLocaleString() +' บาท</div>';
+        return '<div class="text-green text-right" ><span class="numberic">'+ value.toLocaleString() +'</span> บาท</div>';
       }
-      return '<div class="text-green text-right" >0 บาท</div>';
+      return '<div class="text-green text-right" ><span class="numberic">0</span> บาท</div>';
     }
 
     function fee(value, row, index){
       if (value) {
-        return '<div class="text-red text-right" >'+ value.toLocaleString() +' บาท</div>';
+        return '<div class="text-red text-right" ><span class="numberic">'+ value.toLocaleString() +'</span> บาท</div>';
       }
-      return '<div class="text-red text-right" >0 บาท</div>';
+      return '<div class="text-red text-right" ><span class="numberic">0</span> บาท</div>';
     }
 
     var angularScopeEmployees = "angular.element(document.getElementById('angularCtrl')).scope().employees";
@@ -72,8 +74,40 @@
       return '-'
     }
 
+    function imgTag(value, row, index){
+      if (value) {
+        return '<div class="img-bg circle" style="background: url('+ value +')"></div>';
+      }
+      return '<div class="img-bg bg-light-gray circle"><i class="fa fa-user icon-default-img" aria-hidden="true"></i></div>'
+      //return '<span class="fa-stack fa-lg"><i class="fa fa-circle fa-stack-2x"></i><i class="fa fa-camera fa-stack-1x fa-inverse"></i></span>'
+    }
+
+    function cardViewToggle(cardView){
+      if(cardView){
+        $('#employeesTable > tbody').addClass('bootstrapCardView');
+        $('#employeesTable > tbody > tr').addClass('col-xs-2 card-employees card cursor-pointer');
+        $('#angularCtrl > div:nth-child(2) > div > div').addClass('cardViewEmployees')
+        $('#employeesTable > tbody > tr > td > div > div').addClass('row')
+        $('#employeesTable > tbody > tr > td > div > div:nth-child(n+4) > span.title').addClass('col-md-4 padding0')
+        $('#employeesTable > tbody > tr > td > div > div:nth-child(n+4) > span.value').addClass('col-md-8')
+        $('#employeesTable > tbody > tr > td > div > div:nth-child(1) > span.value').addClass('col-md-12')
+        $('#employeesTable > tbody').removeClass('bootstrapListView');
+        $('#angularCtrl > div:nth-child(2) > div > div.col-md-12 > div').removeClass('list-view');
+      }else{
+        $('#employeesTable > tbody').addClass('bootstrapListView');
+        $('#angularCtrl > div:nth-child(2) > div > div.col-md-12 > div').addClass('list-view')
+        $('#angularCtrl > div:nth-child(2) > div > div').removeClass('cardViewEmployees')
+        $('#employeesTable > tbody').removeClass('bootstrapCardView');
+      }
+    }
+
     $table.bootstrapTable({
+      onToggle: cardViewToggle,
       columns: [{
+        title: '',
+        field: 'imgUrl',
+        formatter: imgTag,
+      },{
         title: 'ชื่อ-นามสกุล',
         field: 'full_name',
         sortable: true,
@@ -102,9 +136,69 @@
         sortable: true,
       },{
         title: '',
+        field: 'edit',
         formatter: edit,
-      },]
+      }],
+      onPostBody: function(data){
+        if(data && initDisplay){  
+          initDisplayMode()
+        }
+      },
+      onClickRow: function(row, $element, field){
+        angular.element(document.getElementById('angularCtrl')).scope().employees.openEmployeeDetails(row.id);
+      }
     })
+
+    function gridClick() {
+      $table.bootstrapTable('toggleView');
+      $("#grid").addClass('active')
+      $("#list").removeClass('active')
+      displayMode = 'grid'
+    }
+
+    function listClick() {
+      $table.bootstrapTable('toggleView');
+      $("#list").addClass('active')
+      $("#grid").removeClass('active')
+      displayMode = 'list'
+    }
+
+    $("#list").on('click',function(){
+      if(displayMode!='list'){
+        listClick()
+      }
+    });
+
+    $("#grid").on('click',function(){  
+      if(displayMode!='grid' || initDisplay){
+        initDisplay = false;        
+        gridClick()
+      }
+    });
+
+    function initDisplayMode(){
+      if(displayMode=='list'){
+        $("#list").addClass('active')
+        initDisplay = false;        
+      }else{
+        $("#grid").addClass('active')
+        $("#grid").click();
+      }
+    }
+
+    $('#exportTable').on('click',function(){
+      //console.log('sss');
+      if(displayMode!='list'){
+        listClick()
+        $table = $('#employeesTable')
+        $table.bootstrapTable('hideColumn', 'imgUrl');
+        $table.bootstrapTable('hideColumn', 'edit');
+        $table.tableExport({type:'excel'});
+        $table.bootstrapTable('showColumn', 'imgUrl');
+        $table.bootstrapTable('showColumn', 'edit');
+      }
+    })
+
 
   }]);
 })();

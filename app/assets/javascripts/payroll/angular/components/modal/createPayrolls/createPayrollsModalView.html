@@ -2,7 +2,7 @@
   <form name="createPayrollsForm" ng-submit="createPayrolls.submit()" autocomplete="off">
     <div class="row">
       <div class="col-md-12 text-center">
-        <h2 class="modal-title" id="modal-title"><b>เริ่มออกเงินเดือน</b></h2>
+        <h2 class="modal-title" id="modal-title"><b>ออกเงินเดือน</b></h2>
       </div>
     </div>
     <div class="space20"></div>
@@ -23,10 +23,10 @@
     <div class="space20"></div>
     <div class="row">
       <div class="col-md-6 text-center">
-        <button type="submit" class="btn btn-lg btn-block btn-submit">บันทึก</button>
+        <button type="submit" ng-disabled="createPayrolls.isSaving" ng-class="{'btn-submit': !createPayrolls.isSaving, 'btn-cancel': createPayrolls.isSaving}" class="btn btn-lg btn-block">บันทึก <i ng-show="createPayrolls.isSaving" class="fa fa-spinner fa-spin" aria-hidden="true"></i></button>
       </div>
       <div class="col-md-6 text-center">
-        <button type="button" class="btn btn-lg btn-block btn-cancel" ng-click="createPayrolls.cancel()">ยกเลิก</button>
+        <button type="button" ng-disabled="createPayrolls.isSaving" class="btn btn-lg btn-block btn-cancel" ng-click="createPayrolls.cancel()">ยกเลิก</button>
       </div>
     </div>
   </form>

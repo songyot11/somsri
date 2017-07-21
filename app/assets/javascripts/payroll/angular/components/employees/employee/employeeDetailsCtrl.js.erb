@@ -64,10 +64,11 @@
       }
 
       function isPayrollChange(){
+        var skip = ['deleted_at', 'tax', 'social_insurance', 'pvf', 'closed']
         if(ctrl.hasPayroll){
           var keys = Object.keys(ctrl.datas_original.payroll)
           for(var i = 1; i < keys.length; i++){
-            if(ctrl.datas.payroll[keys[i]] != ctrl.datas_original.payroll[keys[i]] && keys[i] != 'deleted_at'){
+            if(ctrl.datas.payroll[keys[i]] != ctrl.datas_original.payroll[keys[i]] && skip.indexOf(keys[i]) < 0){
               return true
             }
           }
@@ -142,7 +143,7 @@
           ctrl.datas = resp.data;
           if(ctrl.datas.payroll){
             ctrl.hasPayroll = true;
-            ctrl.payroll_disabled = ctrl.datas.payroll.closed;
+            ctrl.payroll_closed = ctrl.datas.payroll.closed;
             payrollToFloat();
           }else{
             ctrl.hasPayroll = false;
@@ -217,10 +218,9 @@
           ctrl.currentEffectiveDate = effectiveDate;
           ctrl.datas.employee.salary = ctrl.datas_original.employee.salary;
           ctrl.datas.payroll = $.extend(true, {}, resp.data.payroll);
-          ctrl.payroll_disabled = ctrl.datas.payroll.closed;
+          ctrl.payroll_closed = ctrl.datas.payroll.closed;
           payrollToFloat();
           ctrl.datas_original.payroll = $.extend(true, {}, ctrl.datas.payroll);
-
           ctrl.calTotal();
           displayEffectiveDate(effectiveDate);
         });

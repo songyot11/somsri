@@ -156,4 +156,12 @@ describe PayrollsController do
     get :social_insurance_pdf, params: { effective_date: payrolls[4].effective_date }
     expect(response.body).to have_content "ไม่มีพนักงานที่ต้องเสียค่าประกันสังคม"
   end
+
+  it "should not create payroll with same date" do
+    date_time = payrolls[0].effective_date
+    payroll_count = Payroll.where(effective_date: date_time).count
+    post :create, params: {create: {effective_date: date_time}}
+    expect(payroll_count).to eq Payroll.where(effective_date: date_time).count
+    expect(payrolls[0].updated_at).to eq Payroll.find(payrolls[0].id).updated_at
+  end
 end

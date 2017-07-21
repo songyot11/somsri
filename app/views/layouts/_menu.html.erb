@@ -24,7 +24,7 @@
             <%= content_tag(:p, t('.invoices', :default => t("invoices")) ) %>
         </div>
       <% end %>
-      <% if can? :manage, RollCall %>
+      <% if (SiteConfig.get_cache.enable_rollcall) && (can? :manage, RollCall) %>
         <div class=" <%= is_topbar ? 'col-xs-4' : 'col-xs-4' %> col-centered">
             <div class="<%= is_topbar ? 'dropdown-menu-btn' : 'menu-btn' %> rollcalls">
                 <a href="/somsri_rollcall">

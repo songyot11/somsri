@@ -4,16 +4,35 @@
   angular.module('somsri.payroll.report.service', [
   ])
   .service('reportService', ['$http', function($http) {
+    var time_zone = $('#time_zone').set_timezone().val()
+
     this.getPayroll = function(effectiveDate) {
       return $http.get('/payrolls', { params: { effective_date: encodeURI(effectiveDate) } });
     }
 
     this.getMonths = function(employeeId) {
+      var params = {}
       if(employeeId){
-        return $http.get('/payrolls/effective_dates/', { params: { employee_id: employeeId } });
-      }else{
-        return $http.get('/payrolls/effective_dates/');
+        params["employee_id"] = employeeId
       }
+
+      if(time_zone){
+        params["time_zone"] = time_zone
+      }
+
+      if($.isEmptyObject(params)){
+        return $http.get('/payrolls/effective_dates/');
+      }else{
+        return $http.get('/payrolls/effective_dates/', { params: params });
+      }
+    }
+
+    this.getMonthsOnlyClosed = function() {
+      var params = { closed: true }
+      if(time_zone){
+        params["time_zone"] = time_zone
+      }
+      return $http.get('/payrolls/effective_dates/', { params: params });
     }
 
     this.updatePayroll = function(id, data) {
