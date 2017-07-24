@@ -13,7 +13,7 @@
      :class => 'btn btn-to-print-student float-right',
      :onclick => 'printStudent()' %>
 
-     <%= link_to ("<i class='fa fa-upload' aria-hidden='true'></i> Export").html_safe, "#", :class => 'btn btn-export float-right', :onclick => 'exportTable("students")' %>
+     <%= link_to ('<i class="fa fa-share-square-o" aria-hidden="true"></i> Export').html_safe, "#", :class => 'btn btn-export float-right', :onclick => 'exportTable("students")' %>
 
      <%= link_to t('.addstudent', :default => t("helpers.links.addstudent")),
      new_student_path,
