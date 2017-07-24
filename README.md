@@ -75,9 +75,12 @@ example: rake payroll:generate:on[1,2016]
 ```
 rake user:create[<email>,<password>]
 ```
-Import CMS
+CMS
 -------
-```rake comfortable_mexican_sofa:fixtures:import FROM=default TO=default```
+```
+rake db:cms:seeds # init cms data
+rake comfortable_mexican_sofa:fixtures:import FROM=default TO=default # import cms template
+```
 
 ### on z.com
 PG is need to be
