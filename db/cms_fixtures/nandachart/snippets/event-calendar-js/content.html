@@ -1,0 +1,14 @@
+var events = {
+	//Format date MM-DD-YYYY
+	'07-12-2017' : [{content: 'ล็อคดัทช์อัตคัต', allDay: true}],
+	'07-13-2017' : [{content: 'ล็อคดัทช์อัตคัต', allDay: true}],
+	'07-20-2017' : [{content: 'ล็อคดัทช์อัตคัต', allDay: true}],
+	'07-22-2017' : [{content: 'ล็อคดัทช์อัตคัต', allDay: true}],
+	'07-25-2017' : [{content: 'ล็อคดัทช์อัตคัต', allDay: true}],
+	'07-27-2017' : [{content: 'ล็อคดัทช์อัตคัต', allDay: true}],
+	'07-28-2017' : [{content: 'ล็อคดัทช์อัตคัต', allDay: true}],
+	'07-30-2017' : [{content: 'ล็อคดัทช์อัตคัต', allDay: true}],
+},
+t = new Date(),
+
+today = ((t.getMonth() + 1) < 10 ? '0' + (t.getMonth() + 1) : (t.getMonth() + 1)) + '-' + (t.getDate() < 10 ? '0' + t.getDate() : t.getDate()) + '-' +t.getFullYear();

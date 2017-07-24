@@ -2,14 +2,6 @@ Rails.application.routes.draw do
   mount RailsAdmin::Engine => '/admin', as: 'rails_admin'
   devise_for :users, :skip => [:registrations]
 
-  unauthenticated :user do
-    devise_scope :user do
-      get "/" => "devise/sessions#new"
-    end
-  end
-
-  get "/" => "home#index"
-  root to: 'home#index'
   get 'changelog', to: 'home#changelog'
   get "/menu" => "menu#index"
   get "/somsri_invoice" => "menu#landing_invoice"
@@ -102,4 +94,10 @@ Rails.application.routes.draw do
     end
   end
 
+  devise_scope :user do
+    get "/sign_in" => "devise/sessions#new"
+  end
+  comfy_route :cms, :path => '/homepage', :sitemap => false
+  comfy_route :cms_admin, :path => '/cms_admin'
+  root to: 'home#index'
 end

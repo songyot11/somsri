@@ -39,7 +39,7 @@ RSpec.configure do |config|
       MSG
     end
     DatabaseCleaner.clean_with(:truncation)
-  end  
+  end
 
   config.before(:each) do
     DatabaseCleaner.strategy = :transaction
@@ -70,5 +70,9 @@ end
 Dir[File.dirname(__FILE__) + "/support/**/*.rb"].each { |f| require f }
 # Capybara.javascript_driver = :webkit
 require 'capybara/poltergeist'
+# reqCapybara.raise_server_errors = falseuire 'capybara/poltergeist'
 Capybara.javascript_driver = :poltergeist
-Capybara.raise_server_errors = false
+options = { js_errors: false, timeout: 60 }
+Capybara.register_driver :poltergeist do |app|
+  Capybara::Poltergeist::Driver.new(app, options)
+end

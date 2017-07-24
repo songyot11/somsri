@@ -52,6 +52,12 @@ namespace "init" do
     InvoiceStatus.create([{ name: 'Active' }, { name: 'Canceled' }]) if InvoiceStatus.count == 0
 
     puts "Prepared config data"
+
+    # CMS
+    puts "Create Default CMS Site"
+    if Comfy::Cms::Site.count == 0
+      Comfy::Cms::Site.create!({label: 'Somsri School', identifier: 'default', hostname: 'localhost', locale: 'en', is_mirrored: 'f'})
+    end
     puts "Finished"
   end
 end

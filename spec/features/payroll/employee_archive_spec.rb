@@ -86,27 +86,6 @@ describe 'Employee archive', js: true do
     eventually { expect(employee1.deleted_at).to_not eq(nil) }
   end
 
-  it 'should restore employee' do
-    visit "/somsri_payroll#/employees/#{employee1.id}"
-    sleep(1)
-    click_button('ลบ')
-    sleep(1)
-    click_button("ตกลง")
-    sleep(1)
-    employee1.reload
-    eventually { expect(employee1.deleted_at).to_not eq(nil) }
-
-    visit "/somsri_payroll#/employees/#{employee1.id}"
-    sleep(1)
-    click_button('นำข้อมูลกลับ')
-    sleep(1)
-    click_button("ตกลง")
-    sleep(1)
-    employee1.reload
-
-    eventually { expect(employee1.deleted_at).to eq(nil) }
-  end
-
   it 'should destory employee' do
     visit "/somsri_payroll#/employees/#{employee3.id}"
     eventually {expect(page) .to have_content('กล้าหาญ ชาญชัย')}
