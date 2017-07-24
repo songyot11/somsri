@@ -23,16 +23,18 @@ class ParentsController < ApplicationController
       grade = Grade.where(name: grade_select).first
       parents = Parent.joins(:students).where(students:{grade: grade.id , classroom: class_select})
     end
-    @parents = parents.includes(:students, :relationships, :invoices).search(params[:search]).order("#{params[:sort]} #{params[:order]}").references(:students)
+    @parents = parents.includes(:students, :relationships, :invoices).search("#{params[:search]}").order("#{params[:sort]} #{params[:order]}").as_json({ index: true }).to_a
+    
     @filter_class = class_select
     @filter_grade = grade_select
+
     @menu = "ผู้ปกครอง"  
     respond_to do |f|
       f.html { render "parents/index", layout: "application_invoice" }
       f.json { 
         render json: {
           total: @parents.count,
-          rows: @parents.limit(params[:limit]).offset(params[:offset]).as_json({ index: true })
+          rows: @parents[params[:offset].to_i,params[:limit].to_i]
         }
       }
     end

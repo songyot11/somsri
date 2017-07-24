@@ -19,8 +19,10 @@ class Parent < ApplicationRecord
     self.full_name = self.full_name.strip.gsub(/\s+/,' ') if self.full_name
   end
 
+  #Parent.search('')
+
   def self.search(search)
-    where("parents.full_name LIKE ? OR parents.full_name_english LIKE ? OR parents.email LIKE ? OR parents.mobile LIKE ? OR students.full_name LIKE ? OR students.full_name_english LIKE ?", "%#{search}%", "%#{search}%", "%#{search}%", "%#{search}%", "%#{search}%" , "%#{search}%" )
+    Parent.joins(:students).where("parents.full_name LIKE ? OR parents.full_name_english LIKE ? OR parents.email LIKE ? OR parents.mobile LIKE ? OR students.full_name LIKE ? OR students.full_name_english LIKE ?", "%#{search}%", "%#{search}%", "%#{search}%", "%#{search}%", "%#{search}%" , "%#{search}%" )
   end
 
   def invoice_screen_full_name_display
@@ -39,10 +41,10 @@ class Parent < ApplicationRecord
     if options[:index]
       return {
         parents:{
-          full_name: self.full_name
+          full_name: self.full_name,
+          mobile: self.mobile,
+          email: self.email,
         },
-        mobile: self.mobile,
-        email: self.email,
         relationships: {
           name: self.relationships.first.nil? ? "" : I18n.t(self.relationships.first.name)
         },

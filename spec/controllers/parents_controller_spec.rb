@@ -67,7 +67,7 @@ describe ParentsController do
 
   describe 'parents' do
     it 'should show all parent' do
-      get :index, format: :json, params: { class_select: 'all' ,  grade_select: 'all' }
+      get :index, format: :json , params: { class_select: 'all' ,  grade_select: 'all', offset: 0, limit: 10 }
       
       expect(response.body).to have_content("ฉันเป็น สุภาพบุรุษนะครับ")
       expect(response.body).to have_content("ฉันเป็น ผู้ปกครอง")
@@ -75,19 +75,19 @@ describe ParentsController do
     end
 
     it 'should show only class that selected' do
-      get :index, format: :json, params: { class_select: '1A' , grade_select: 'all' }
+      get :index, format: :json, params: { class_select: '1A' , grade_select: 'all', offset: 0, limit: 10 }
 
       expect(response.body).to have_content("ฉันเป็น สุภาพบุรุษนะครับ")
     end
 
     it 'should show only grade that selected' do
-      get :index, format: :json, params: { class_select: 'all' , grade_select: 'Kindergarten 1' }
+      get :index, format: :json, params: { class_select: 'all' , grade_select: 'Kindergarten 1', offset: 0, limit: 10 }
 
       expect(response.body).to have_content("ฉันเป็น ผู้ปกครอง")
     end
 
     it 'should show both grade and class that selected' do
-      get :index, format: :json, params: { class_select: '3A' , grade_select: 'Kindergarten 2' }
+      get :index, format: :json, params: { class_select: '3A' , grade_select: 'Kindergarten 2', offset: 0, limit: 10 }
 
       expect(response.body).to have_content("ฉันเป็น สุภาพสตรีค๊ะ")
     end
