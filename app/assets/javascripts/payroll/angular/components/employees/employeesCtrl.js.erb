@@ -196,6 +196,13 @@
         $table.tableExport({type:'excel'});
         $table.bootstrapTable('showColumn', 'imgUrl');
         $table.bootstrapTable('showColumn', 'edit');
+      }else{
+        $table = $('#employeesTable')
+        $table.bootstrapTable('hideColumn', 'imgUrl');
+        $table.bootstrapTable('hideColumn', 'edit');
+        $table.tableExport({type:'excel'});
+        $table.bootstrapTable('showColumn', 'imgUrl');
+        $table.bootstrapTable('showColumn', 'edit');
       }
     })
 
