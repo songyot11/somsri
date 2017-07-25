@@ -1743,7 +1743,7 @@ ul.uib-datepicker-popup.dropdown-menu {
   tr > td > div > div:nth-child(n+4) > span.value{
     padding-left: 10px;
   }
-    
+
   tr > td > div > div:nth-child(n+5) .title,
   tr> td > div > div:nth-child(n+5) > span.value > div{
     color: #AAA !important;
@@ -1760,7 +1760,7 @@ ul.uib-datepicker-popup.dropdown-menu {
   tr > td > div > div:nth-child(n+4) > span.value.col-md-8{
     white-space: nowrap !important;
   }
-  
+
   tr > td > div > div:nth-child(n+4) > span.title.col-md-4.padding0{
     text-align: right !important;
   }
@@ -1793,4 +1793,7 @@ ul.uib-datepicker-popup.dropdown-menu {
     background-color: transparent;
     color: #00D2D7;
   }
+}
+.padding-left10{
+  padding-left: 10px;
 }
