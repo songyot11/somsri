@@ -18,9 +18,9 @@
  *= require bootstrap-select/sass/bootstrap-select
  */
 
-@import "application_invoice";
-@import url('https://fonts.googleapis.com/css?family=Roboto');
-body{
+ @import "application_invoice";
+ @import url('https://fonts.googleapis.com/css?family=Roboto');
+ body{
   margin-bottom: 50px;
   // margin-top: 100px;
   background: linear-gradient(90deg, #72cef5, #55b4ed);
@@ -107,159 +107,159 @@ ul.nav.navbar-nav.navbar-right.dropdown{
     max-width: 62%;
     height: 450px;
 
-}
+  }
 
-.disabled {
-  cursor: not-allowed !important;
-}
+  .disabled {
+    cursor: not-allowed !important;
+  }
 
-.hide {
-  display: none;
-}
+  .hide {
+    display: none;
+  }
 
-.row-centered {
+  .row-centered {
     text-align:center;
-}
-.col-centered {
+  }
+  .col-centered {
     display:inline-block;
     float:none;
     text-align:left;
     margin-right:-4px;
-}
-.download_android{
-  text-align: center;
-  margin-top: 30px;
-  letter-spacing: 1px;
-  text-decoration: underline;
-  a{
-    font-size: 16px;
   }
-  .fa-android{
-    font-size: 24px;
-    margin-right: 10px;
+  .download_android{
+    text-align: center;
+    margin-top: 30px;
+    letter-spacing: 1px;
+    text-decoration: underline;
+    a{
+      font-size: 16px;
+    }
+    .fa-android{
+      font-size: 24px;
+      margin-right: 10px;
+    }
   }
-}
-.space10 {
-  height: 10px;
-}
-
-.only-print{
-  display: none;
-}
-
-@print {
-  size: A4;
-}
-
-@media print {
-
-  .only-view{
-    display: none !important;
+  .space10 {
+    height: 10px;
   }
 
   .only-print{
-    display: block;
-  }
-
-  table, th, td {
-    border: 1px solid black;
-  }
-
-  .pagebreak {
-    page-break-before: always;
-  }
-  body{
-    margin-bottom: 0px !important;
-    margin-top: 0px !important;
-  }
-  body > .container-fluid {
-    padding: 0px !important;
-  }
-
-  #student-list-for-print .list-page {
-    padding: 50px;
-  }
-
-  #student-list-for-print th {
-    padding: 10px;
-  }
-
-  #student-list-for-print td {
-    padding: 3px;
-  }
-
-  .list-page {
-    font-size: 18px;
-  }
-
-  #student-list-header {
-    font-size: 18px;
-    font-weight: bold;
-  }
-
-  .alert {
     display: none;
   }
-}
-.btn-to-print-student,
-.btn-to-print-student:focus{
-  margin-bottom: 20px;
-  padding: 16px 32px;
-  font-weight: lighter;
-  background-color: #5b5b5b;
-  border: 2px solid #5b5b5b;
-  color: #fff;
-  font-size: 16px;
-  border-radius: 0px;
-  cursor: pointer;
-  transition: all 0.25s ease;
 
-  &:hover{
-    color: #5b5b5b;
-    background-color: transparent;
+  @print {
+    size: A4;
+  }
+
+  @media print {
+
+    .only-view{
+      display: none !important;
+    }
+
+    .only-print{
+      display: block;
+    }
+
+    table, th, td {
+      border: 1px solid black;
+    }
+
+    .pagebreak {
+      page-break-before: always;
+    }
+    body{
+      margin-bottom: 0px !important;
+      margin-top: 0px !important;
+    }
+    body > .container-fluid {
+      padding: 0px !important;
+    }
+
+    #student-list-for-print .list-page {
+      padding: 50px;
+    }
+
+    #student-list-for-print th {
+      padding: 10px;
+    }
+
+    #student-list-for-print td {
+      padding: 3px;
+    }
+
+    .list-page {
+      font-size: 18px;
+    }
+
+    #student-list-header {
+      font-size: 18px;
+      font-weight: bold;
+    }
+
+    .alert {
+      display: none;
+    }
+  }
+  .btn-to-print-student,
+  .btn-to-print-student:focus{
+    margin-bottom: 20px;
+    padding: 16px 32px;
+    font-weight: lighter;
+    background-color: #5b5b5b;
     border: 2px solid #5b5b5b;
+    color: #fff;
+    font-size: 16px;
+    border-radius: 0px;
+    cursor: pointer;
+    transition: all 0.25s ease;
+
+    &:hover{
+      color: #5b5b5b;
+      background-color: transparent;
+      border: 2px solid #5b5b5b;
+    }
   }
-}
 
-.btn-export,
-.btn-export:focus{
-  margin-bottom: 20px;
-  padding: 16px 32px;
-  font-weight: lighter;
-  background-color: #00D2D7;
-  border: 2px solid #00D2D7;
-  color: #fff;
-  font-size: 16px;
-  border-radius: 0px;
-  cursor: pointer;
-  transition: all 0.25s ease;
-
-  &:hover{
-    color: #00D2D7;
-    background-color: transparent;
+  .btn-export,
+  .btn-export:focus{
+    margin-bottom: 20px;
+    padding: 16px 32px;
+    font-weight: lighter;
+    background-color: #00D2D7;
     border: 2px solid #00D2D7;
+    color: #fff;
+    font-size: 16px;
+    border-radius: 0px;
+    cursor: pointer;
+    transition: all 0.25s ease;
+
+    &:hover{
+      color: #00D2D7;
+      background-color: transparent;
+      border: 2px solid #00D2D7;
+    }
   }
-}
 
 
 // dropdown-submenu
 .dropdown-submenu {
-    position: relative;
+  position: relative;
 }
 
 .dropdown-submenu>.dropdown-menu {
-    top: 0;
-    right: 100%;
-    margin-top: -6px;
-    margin-left: -1px;
-    -webkit-border-radius: 0px;
-    -moz-border-radius: 0px;
-    border-radius: 0px;
-    padding: 10px;
+  top: 0;
+  right: 100%;
+  margin-top: -6px;
+  margin-left: -1px;
+  -webkit-border-radius: 0px;
+  -moz-border-radius: 0px;
+  border-radius: 0px;
+  padding: 10px;
 }
 
 .dropdown-submenu:hover>.dropdown-menu {
-    display: block;
+  display: block;
 }
 
 .dropdown-submenu>.dropdown-menu>li>a>img{
@@ -309,11 +309,11 @@ ul.nav.navbar-nav.navbar-right.dropdown{
   text-align: center;
 }
 #student-index .fixed-table-body {
-    margin-top: 30px;
-    font-size: 1.2em;
+  margin-top: 30px;
+  font-size: 1.2em;
 }
 #student-index .fixed-table-toolbar {
-    font-size: 1.2em;
+  font-size: 1.2em;
 }
 #student-index .bootstrap-select.btn-group .dropdown-toggle .filter-option{
   font-size: 1.2em;
@@ -351,4 +351,26 @@ ul.nav.navbar-nav.navbar-right.dropdown{
 .numberic{
   font-family: 'Roboto', sans-serif;
   font-size: 14px;
+}
+#table > tbody > tr > td:nth-child(2){
+  width: 50px;
+}
+.img-bg {
+  width: 100%;
+  padding-bottom: 100%;
+  background-size: 100% !important;
+  background-repeat: no-repeat !important;
+  background-position: center top !important;
+}
+.bg-light-gray {
+  background-color: #DDD;
+}
+.circle{
+  border-radius: 50%;
+}
+.icon-default-img{
+   position: absolute;
+   margin: auto;
+   transform: translate(90%, 50%);
+   color: #fff;
 }

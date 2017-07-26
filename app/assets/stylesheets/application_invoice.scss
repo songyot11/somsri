@@ -780,16 +780,16 @@ body.somsri-invoice >.container-fluid {
 
 .btn-to-print-report,
 .btn-to-print-report:focus{
-   margin-top: 5px;
-   padding: 12px 32px;
-   font-weight: lighter;
-   background-color: #5b5b5b;
-   border: 2px solid #5b5b5b;
-   color: #fff;
-   font-size: 16px;
-   border-radius: 0px;
-   cursor: pointer;
-   transition: all 0.25s ease;
+ margin-top: 5px;
+ padding: 12px 32px;
+ font-weight: lighter;
+ background-color: #5b5b5b;
+ border: 2px solid #5b5b5b;
+ color: #fff;
+ font-size: 16px;
+ border-radius: 0px;
+ cursor: pointer;
+ transition: all 0.25s ease;
 
  &:hover{
    color: #5b5b5b;
@@ -1365,63 +1365,63 @@ table.table.table-sp-report>tbody{
 
 .save-sp{
   margin-top: 50px;
-  }btn-delete-sp
-  .add-st-pr{
-    margin-top: 25px;
-  }
-  .content-student-parent-show{
-    font-family: 'Maitree', serif;
-    background-color: #fff;
-    box-shadow: 0 5px 13px 0 rgba(0, 0, 0, 0.3);
-    padding: 30px;
-    font-size: 18px;
-  }
-  .btn-remove,.btn-remove:focus{
-    color: #fff;
-    background-color: #d0021b;
-    padding: 5px 32px;
-    line-height: 25px;
-  }
-  .btn-remove:hover{
-    color: black ;
-    background-color: #fff;
-    border-color: #adadad;
-  }
-  .navbar-brand {
-    height: 100%;
-    padding: 0px;
-  }
-  .navbar .dropdown-toggle {
-    height: 60px;
-    line-height: 50px;
-  }
-  .navbar .dropdown-toggle {
-    height: 60px;
-    line-height: 50px;
-  }
-  .input-bank .col-md-3{
-    margin-top: -5px;
-  }
-  .text-currency.bold {
-    font-weight: 900;
-  }
-  .disabled {
-    cursor: not-allowed !important;
-  }
+}btn-delete-sp
+.add-st-pr{
+  margin-top: 25px;
+}
+.content-student-parent-show{
+  font-family: 'Maitree', serif;
+  background-color: #fff;
+  box-shadow: 0 5px 13px 0 rgba(0, 0, 0, 0.3);
+  padding: 30px;
+  font-size: 18px;
+}
+.btn-remove,.btn-remove:focus{
+  color: #fff;
+  background-color: #d0021b;
+  padding: 5px 32px;
+  line-height: 25px;
+}
+.btn-remove:hover{
+  color: black ;
+  background-color: #fff;
+  border-color: #adadad;
+}
+.navbar-brand {
+  height: 100%;
+  padding: 0px;
+}
+.navbar .dropdown-toggle {
+  height: 60px;
+  line-height: 50px;
+}
+.navbar .dropdown-toggle {
+  height: 60px;
+  line-height: 50px;
+}
+.input-bank .col-md-3{
+  margin-top: -5px;
+}
+.text-currency.bold {
+  font-weight: 900;
+}
+.disabled {
+  cursor: not-allowed !important;
+}
 
-  .hide {
-    display: none;
-  }
+.hide {
+  display: none;
+}
 
-  .row-centered {
-    text-align:center;
-  }
-  .col-centered {
-    display:inline-block;
-    float:none;
-    text-align:left;
-    margin-right:-4px;
-  }
+.row-centered {
+  text-align:center;
+}
+.col-centered {
+  display:inline-block;
+  float:none;
+  text-align:left;
+  margin-right:-4px;
+}
 
 
 // student archive
@@ -1549,11 +1549,11 @@ a#student_remove,a#parent_archive  {
   margin-top: 15px;
 }
 #parent-index .fixed-table-body {
-    margin-top: 30px;
-    font-size: 1.2em;
+  margin-top: 30px;
+  font-size: 1.2em;
 }
 #parent-index .fixed-table-toolbar {
-    font-size: 1.2em;
+  font-size: 1.2em;
 }
 #parent-index .bootstrap-select.btn-group .dropdown-toggle .filter-option{
   font-size: 1.2em;
@@ -1587,55 +1587,55 @@ a#student_remove,a#parent_archive  {
 
 button.btn.btn-sm.btn-info.uib-datepicker-current,
 button.btn.btn-sm.btn-info.uib-datepicker-current:focus{
-    border-radius: 0px;
-    color: #fff;
-    background-color: #3fa1e6;
-    border: 1px solid #3fa1e6;
-    transition: all 0.25s ease;
+  border-radius: 0px;
+  color: #fff;
+  background-color: #3fa1e6;
+  border: 1px solid #3fa1e6;
+  transition: all 0.25s ease;
 
-    &:hover{
-      background-color: transparent;
-      border: 1px solid #3fa1e6;
-      color: #3fa1e6;
-    }
+  &:hover{
+    background-color: transparent;
+    border: 1px solid #3fa1e6;
+    color: #3fa1e6;
+  }
 }
 
 button.btn.btn-sm.btn-danger.uib-clear,
 button.btn.btn-sm.btn-danger.uib-clear:focus{
-    border-radius: 0px;
-    color: #fff;
-    background-color: #DD5A2B;
-    border: 1px solid #DD5A2B;
-    transition: all 0.25s ease;
+  border-radius: 0px;
+  color: #fff;
+  background-color: #DD5A2B;
+  border: 1px solid #DD5A2B;
+  transition: all 0.25s ease;
 
-    &:hover{
-      background-color: transparent;
-      border: 1px solid #DD5A2B;
-      color: #DD5A2B;
-    }
+  &:hover{
+    background-color: transparent;
+    border: 1px solid #DD5A2B;
+    color: #DD5A2B;
+  }
 }
 
 button.btn.btn-sm.btn-success.pull-right.uib-close,
 button.btn.btn-sm.btn-success.pull-right.uib-close:focus{
-    border-radius: 0px;
-    color: #fff;
-    background-color: #5BAB67;
-    border: 1px solid #5BAB67;
-    transition: all 0.25s ease;
+  border-radius: 0px;
+  color: #fff;
+  background-color: #5BAB67;
+  border: 1px solid #5BAB67;
+  transition: all 0.25s ease;
 
-    &:hover{
-      background-color: transparent;
-      border: 1px solid #5BAB67;
-      color: #5BAB67;
-    }
+  &:hover{
+    background-color: transparent;
+    border: 1px solid #5BAB67;
+    color: #5BAB67;
+  }
 }
 
 .uib-button-bar {
-    padding: 10px 0px 2px !important;
+  padding: 10px 0px 2px !important;
 }
 
 ul.uib-datepicker-popup.dropdown-menu {
-    padding: 10px;
+  padding: 10px;
 }
 
 .uib-day button, .uib-month button, .uib-year button{
@@ -1803,7 +1803,7 @@ label.img-default{
     margin-right: 0px;
   }
   #student-report.invoice_report {
-      margin-top: 0px !important;
+    margin-top: 0px !important;
   }
   #student-report .report-content{
     padding: 0px !important;
@@ -1882,4 +1882,13 @@ label.img-default{
     background-color: transparent;
     border: 2px solid #00D2D7;
   }
+}
+#table > tbody > tr > td:nth-child(1){
+  width: 50px;
+}
+.icon-default-img{
+ position: absolute;
+ margin: auto;
+ transform: translate(90%, 50%);
+ color: #fff;
 }

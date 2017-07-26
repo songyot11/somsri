@@ -56,3 +56,10 @@ function exportTable(tableName){
     $table.tableExport({type:'excel'});
   });
 }
+
+function imgTag(value, row, index){
+  if (value) {
+    return '<div class="img-bg circle" style="background: url('+ value +')"></div>';
+  }
+  return '<div class="img-bg bg-light-gray circle"><i class="fa fa-user icon-default-img" aria-hidden="true"></i></div>'
+}
