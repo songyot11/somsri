@@ -23,9 +23,6 @@ function filter() {
   });
 }
 
-var sort, order;
-
-
 function queryParams(p) {
   window.paramOder = p.order
   window.paramSort = p.sort
