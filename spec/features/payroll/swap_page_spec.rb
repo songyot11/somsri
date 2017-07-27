@@ -6,11 +6,11 @@ describe 'Payroll Swap Page', js: true do
   before do
     user.add_role :admin
     login_as(user, scope: :user)
+    SiteConfig.stub_chain("get_cache.enable_rollcall").and_return(true)
   end
 
   it 'should not see two menu on homepage' do
     visit "/"
-
     eventually { expect(page).to have_no_selector('#menu') }
   end
 
@@ -28,7 +28,7 @@ describe 'Payroll Swap Page', js: true do
     sleep(1)
     find('#menu').click
     sleep(1)
-    
+
     eventually { expect(page).to have_content 'บุคลากร เงินเดือน ค่าเทอม นับแถว บุคลากร ผู้ปกครอง นักเรียน' }
     eventually { expect(URI.parse(current_url).to_s).to have_content 'employees' }
   end

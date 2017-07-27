@@ -53,7 +53,7 @@
       }
 
       ctrl.printSlip = function(id, payroll_id) {
-        clearForPrint();
+        beforePrintSlip();
         var containerDiv = $('#payroll-report')
         ctrl.employee_slips = []
         slipService.employeeSlip(id, payroll_id).then(function(resp) {
@@ -76,14 +76,13 @@
 
           setTimeout(function() {
             window.print();
-            $("slip-content").remove()
-            $(".separate").remove()
+            afterPrintSlip();
           }, 500);
         })
       }
 
       ctrl.printSlips = function() {
-        clearForPrint();
+        beforePrintSlip();
         var containerDiv = $('#payroll-report')
         ctrl.employee_slips = []
         var payroll_ids = []
@@ -107,17 +106,25 @@
           angular.element(containerDiv).append(slipEmployeeDiv);
           setTimeout(function() {
             window.print();
-            $("slip-content").remove()
-            $(".separate").remove()
+            afterPrintSlip();
           }, 500);
         })
       }
 
-      function clearForPrint(){
+      function beforePrintSlip(){
         $('slip-all-content').remove();
         $('slip-content').remove();
         $('report-content.for_print').remove();
         $('div.fixed-table-footer').remove();
+        $('report-content').removeClass('display-block');
+        $('report-content').addClass('for-display');
+      }
+
+      function afterPrintSlip(){
+        $("slip-content").remove()
+        $(".separate").remove()
+        $('report-content').addClass('display-block');
+        $('report-content').removeClass('for-display');
       }
 
       function getPayrolls() {
@@ -131,7 +138,7 @@
               ctrl.total = getTotalSalary(ctrl.employees);
               getTotalSalary(ctrl.employees)
               ctrl.currentDateString = current['date_string']
-              ctrl.currentEffectiveDates = current
+              ctrl.currentEffectiveDate = current
               $scope.report.employees = ctrl.employees
               $scope.report.reportTableInit(ctrl.employees);
             });

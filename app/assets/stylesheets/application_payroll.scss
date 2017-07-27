@@ -1497,7 +1497,23 @@ ul.uib-datepicker-popup.dropdown-menu {
   }
 }
 
+.display-block {
+  display: block !important;
+}
+
+.for-display {
+  display: block !important;
+}
+
 @media print {
+
+  .for-display {
+    display: none !important;
+  }
+
+  .display-block {
+    display: block !important;
+  }
 
   #payroll-report report-content thead th{
     padding:0px !important;
@@ -1794,6 +1810,7 @@ ul.uib-datepicker-popup.dropdown-menu {
     color: #00D2D7;
   }
 }
+
 .padding-left10{
   padding-left: 10px;
 }

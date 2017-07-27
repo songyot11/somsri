@@ -4,6 +4,7 @@ describe 'RollCall menu', js: true do
   before do
     user.add_role :admin
     login_as(user, scope: :user)
+    SiteConfig.stub_chain("get_cache.enable_rollcall").and_return(true)
   end
 
   it 'should go to rollcall report' do

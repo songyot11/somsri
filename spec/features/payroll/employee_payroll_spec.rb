@@ -144,16 +144,6 @@ describe 'Payroll', js: true do
     eventually { expect(page).to have_content /รวมทั้งหมด.*100,020.00 0.00 0.00 0.00 0.00 0.00 0.00/i }
   end
 
-  it 'should display only social insurance button when select closed payroll' do
-    visit "/somsri_payroll#/payroll"
-    find('#month-list').click
-    sleep(1)
-    click_on("พฤศจิกายน 2559")
-    sleep(1)
-    eventually { expect(page).to have_content 'สำหรับประกันสังคม' }
-    eventually { expect(page).to_not have_content 'ออกเงินเดือน' }
-  end
-
   it 'should display histories tax, pvf and social insurance' do
     visit "/somsri_payroll#/payroll"
     find('#month-list').click
