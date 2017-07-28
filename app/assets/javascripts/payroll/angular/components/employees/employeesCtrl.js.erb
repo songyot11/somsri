@@ -142,7 +142,7 @@
         formatter: edit,
       }],
       onPostBody: function(data){
-        if(data && initDisplay){  
+        if(data && initDisplay){
           initDisplayMode()
         }
       },
@@ -171,9 +171,9 @@
       }
     });
 
-    $("#grid").on('click',function(){  
+    $("#grid").on('click',function(){
       if(displayMode!='grid' || initDisplay){
-        initDisplay = false;        
+        initDisplay = false;
         gridClick()
       }
     });
@@ -181,7 +181,7 @@
     function initDisplayMode(){
       if(displayMode=='list'){
         $("#list").addClass('active')
-        initDisplay = false;        
+        initDisplay = false;
       }else{
         $("#grid").addClass('active')
         $("#grid").click();
@@ -189,7 +189,6 @@
     }
 
     $('#exportTable').on('click',function(){
-      //console.log('sss');
       if(displayMode!='list'){
         listClick()
         $table = $('#employeesTable')

@@ -24,9 +24,4 @@
 //= require angular-input-masks
 //= require selectize.min
 
-//= require invoice/angular/components/mainCtrl.js.erb
-//= require invoice/angular/components/shared/ngKeyEnterDirective
-//= require invoice/angular/app.module
-//= require invoice/angular/app.assets
-
 //= require angular-xeditable/dist/js/xeditable

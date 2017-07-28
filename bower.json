@@ -21,7 +21,8 @@
     "ng-csv": "",
     "ng-file-upload-shim": "",
     "bootstrap-select": "",
-    "angular-ui-bootstrap-fontawesome": ""
+    "angular-ui-bootstrap-fontawesome": "",
+    "animate.css": "^3.5.2"
   },
   "resolutions": {
     "angular": "1.5.9"
