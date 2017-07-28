@@ -99,6 +99,17 @@ describe 'Payroll Report', js: true do
     payrolls
     login_as(user, scope: :user)
   end
+
+  it 'should display social_insurance_pdf button' do
+    visit "/somsri_payroll#/report"
+    sleep(1)
+    find('#print-report-btn').click
+    sleep(1)
+    eventually { expect(page).to have_content /พิมพ์สรุปรายการ/i }
+    eventually { expect(page).to have_content /พิมพ์สลิปเงินเดือนทุกคน/i }
+    eventually { expect(page).to have_content /พิมพ์ประกันสังคม/i }
+  end
+
   it 'should see header table' do
     visit "/somsri_payroll#/report"
     eventually { expect(page).to have_content 'รหัส ชื่อ เลขบัญชี เงินเดือน เงินเพิ่ม เงินหัก เงินเดือนสุทธิ' }

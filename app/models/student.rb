@@ -427,6 +427,7 @@ class Student < ApplicationRecord
   def as_json(options={})
     if options['index']
       return {
+        img_url: self.img_url.exists? ? self.img_url.url(:medium) : '',
         full_name: self.full_name_eng_thai_with_title,
         nickname: self.nickname_eng_thai,
         grade_id: self.grade.nil? ? "" : self.grade.name,

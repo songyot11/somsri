@@ -23,17 +23,16 @@ function filter() {
   });
 }
 
-var sort, order;
-
-
 function queryParams(p) {
-  window.paramOder = p.order
-  window.paramSort = p.sort
+  window.paramOder = p.order || p.sortOrder
+  window.paramSort = p.sort || p.sortName
   return {
+    page: p.pageNumber,
+    per_page: p.pageSize,
     offset: p.offset,
     limit: p.limit,
-    order: p.order,
-    sort: p.sort,
+    order: window.paramOder,
+    sort: window.paramSort,
     search: $("input#search").val(),
     grade_select: $("select#grade_select").val(),
     class_select: $("select#class_select").val()
@@ -55,4 +54,11 @@ function exportTable(tableName){
     $table.bootstrapTable('load', data)
     $table.tableExport({type:'excel'});
   });
+}
+
+function imgTag(value, row, index){
+  if (value) {
+    return '<div class="img-bg circle" style="background: url('+ value +')"></div>';
+  }
+  return '<div class="img-bg bg-light-gray circle"><i class="fa fa-user icon-default-img" aria-hidden="true"></i></div>'
 }

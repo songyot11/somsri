@@ -107,16 +107,6 @@ describe 'Payroll Edit', js: true do
     eventually { expect(page).to_not have_content /สำหรับประกันสังคม/i }
   end
 
-  it 'should display social_insurance_pdf button on closed month' do
-    visit "/somsri_payroll#/payroll"
-    sleep(1)
-    find('#month-list').click
-    sleep(1)
-    find('ul.dropdown-menu li a', text: "1 พฤศจิกายน 2559").click
-    sleep(1)
-    eventually { expect(page).to have_content /สำหรับประกันสังคม/i }
-  end
-
   it 'should edit ot' do
     visit "/somsri_payroll#/payroll"
 

@@ -19,8 +19,10 @@ class Parent < ApplicationRecord
     self.full_name = self.full_name.strip.gsub(/\s+/,' ') if self.full_name
   end
 
+  #Parent.search('')
+
   def self.search(search)
-    where("parents.full_name LIKE ? OR parents.full_name_english LIKE ? OR parents.email LIKE ? OR parents.mobile LIKE ? OR students.full_name LIKE ? OR students.full_name_english LIKE ?", "%#{search}%", "%#{search}%", "%#{search}%", "%#{search}%", "%#{search}%" , "%#{search}%" )
+    Parent.joins(:students).where("parents.full_name LIKE ? OR parents.full_name_english LIKE ? OR parents.email LIKE ? OR parents.mobile LIKE ? OR students.full_name LIKE ? OR students.full_name_english LIKE ?", "%#{search}%", "%#{search}%", "%#{search}%", "%#{search}%", "%#{search}%" , "%#{search}%" )
   end
 
   def invoice_screen_full_name_display
@@ -35,19 +37,37 @@ class Parent < ApplicationRecord
     ActionController::Base.helpers.link_to I18n.t('.edit', :default => '<i class="fa fa-pencil-square-o" aria-hidden="true"></i> แก้ไข'.html_safe), edit_parent_path(self), :class => 'btn-edit-student-parent'
   end
 
+  def relationships
+    if self.respond_to?("name")
+      self.name.nil? ? "" : I18n.t(self.name)
+    else
+      self.relationships.first.nil? ? "" : I18n.t(self.relationships.first.name)
+    end
+  end
+
+  def studentFullname
+    if self.respond_to?("student_name")
+      self.student_name.nil? ? student_link_with_full_name(self.students.first) : student_link_with_full_name_arry(self.student_name) 
+    else
+      student_link_with_full_name(self.students.first)
+    end
+  end
+
+
   def as_json(options={})
     if options[:index]
       return {
         parents:{
-          full_name: self.full_name
+          img_url: self.img_url.exists? ? self.img_url.url(:medium) : '',
+          full_name: self.full_name,
+          mobile: self.mobile,
+          email: self.email,
         },
-        mobile: self.mobile,
-        email: self.email,
         relationships: {
-          name: self.relationships.first.nil? ? "" : I18n.t(self.relationships.first.name)
+          name: relationships
         },
         students: {
-          full_name: student_link_with_full_name(self.students.first) 
+          full_name: studentFullname
         },
         edit: edit
       }
@@ -55,5 +75,4 @@ class Parent < ApplicationRecord
       super()
     end
   end
-  
 end

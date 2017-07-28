@@ -4,7 +4,7 @@ class Payroll < ApplicationRecord
   belongs_to :employee
   validate :already_payroll_on_month, on: :create
   before_validation :set_created_at
-  before_update :set_default_val
+  before_save :set_default_val
   after_save :update_employee_salary
 
   scope :latest, -> { order("effective_date ASC").last }
@@ -161,7 +161,7 @@ class Payroll < ApplicationRecord
         self.pvf = Payroll.generate_pvf(self, e)
       end
     end
-    
+
     def self.assume_year_income(payroll, employee)
       income = (payroll["salary"].to_i + payroll["allowance"].to_i + payroll["attendance_bonus"].to_i + payroll["ot"].to_i + payroll["bonus"].to_i + payroll["position_allowance"].to_i + payroll["extra_etc"].to_i - payroll["absence"].to_i - payroll["late"].to_i - generate_social_insurance(payroll, employee).to_i)*12
     end

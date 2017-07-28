@@ -30,45 +30,49 @@
 
           <button class="btn-to-print-report" ng-click="invoiceReport.getStudentsForPrint()"><i class="fa fa-print"></i></button>
           
-          <button class="btn-exportBs-report" id="exportTable"><i class='fa fa-upload' aria-hidden='true'></i>  Export</button>
+          <button class="btn-exportBs-report" id="exportTable"><i class="fa fa-share-square-o" aria-hidden="true"></i> Export</button>
           
         </div>
       </div>
       <div class="row report-content container-fluid">
-        <div id="date-filter" class="row for-display">
-          <div class="col-xs-6">
-            <div class="form-group">
-              <span class="input-group">
-                <div class="col-xs-2">
-                  <label for="start_date" class="text-status-date">จาก</label>
-                </div>
-                <div class="col-xs-10">
-                  <input id="start_date" type="text" class="form-control" uib-datepicker-popup="dd/MM/yyyy" datepicker-options="{showWeeks:false}" ng-model="invoiceReport.start_date" is-open="invoiceReport.startDatePopup.opened" close-text="Close" ng-change="invoiceReport.optionsChange()"/>
-                  <span class="input-group-btn" style="display: inherit;">
-                    <button type="button" class="btn btn-default" ng-click="invoiceReport.openStartDatePopup()"><i class="fa fa-calendar"></i></button>
-                  </span>
-                </div>
-              </span>
+      <div class="col-xs-12 form-group fix-head-table for-display">
+        <div class="col-xs-6">
+          <input id="searchField" type="text" ng-model="invoiceReport.searchKeyword" ng-change="invoiceReport.search()" placeholder="ค้นหาตามเลขที่ใบเสร็จ,ชื่อนักเรียน,ชื่อผู้ปกครอง" class="search-sp" />
+        </div>
+        <div class="col-xs-6 ">
+          <div id="date-filter" class="row for-display">
+            <div class="col-xs-6">
+              <div class="form-group">
+                <span class="input-group">
+                  <div class="col-xs-2">
+                    <label for="start_date" class="text-status-date">จาก</label>
+                  </div>
+                  <div class="col-xs-10">
+                    <input id="start_date" type="text" class="form-control" uib-datepicker-popup="dd/MM/yyyy" datepicker-options="{showWeeks:false}" ng-model="invoiceReport.start_date" is-open="invoiceReport.startDatePopup.opened" close-text="Close" ng-change="invoiceReport.optionsChange()"/>
+                    <span class="input-group-btn" style="display: inherit;">
+                      <button type="button" class="btn btn-default" ng-click="invoiceReport.openStartDatePopup()"><i class="fa fa-calendar"></i></button>
+                    </span>
+                  </div>
+                </span>
+              </div>
             </div>
-          </div>
-          <div class="col-xs-6">
-            <div class="form-group">
-              <span class="input-group">
-                <div class="col-xs-2">
-                  <label for="end_date" class="text-status-date">ถึง</label>
-                </div>
-                <div class="col-xs-10">
-                  <input id="end_date" type="text" class="form-control" uib-datepicker-popup="dd/MM/yyyy" datepicker-options="{showWeeks:false}" ng-model="invoiceReport.end_date" is-open="invoiceReport.endDatePopup.opened" close-text="Close" ng-change="invoiceReport.optionsChange()"/>
-                  <span class="input-group-btn" style="display: inherit;">
-                    <button type="button" class="btn btn-default" ng-click="invoiceReport.openEndDatePopup()"><i class="fa fa-calendar"></i></button>
-                  </span>
-                </div>
-              </span>
+            <div class="col-xs-6">
+              <div class="form-group">
+                <span class="input-group">
+                  <div class="col-xs-2">
+                    <label for="end_date" class="text-status-date">ถึง</label>
+                  </div>
+                  <div class="col-xs-10">
+                    <input id="end_date" type="text" class="form-control" uib-datepicker-popup="dd/MM/yyyy" datepicker-options="{showWeeks:false}" ng-model="invoiceReport.end_date" is-open="invoiceReport.endDatePopup.opened" close-text="Close" ng-change="invoiceReport.optionsChange()"/>
+                    <span class="input-group-btn" style="display: inherit;">
+                      <button type="button" class="btn btn-default" ng-click="invoiceReport.openEndDatePopup()"><i class="fa fa-calendar"></i></button>
+                    </span>
+                  </div>
+                </span>
+              </div>
             </div>
           </div>
         </div>
-        <div class="col-xs-6 form-group fix-head-table for-display">
-          <input id="searchField" type="text" ng-model="invoiceReport.searchKeyword" ng-change="invoiceReport.search()" placeholder="ค้นหาตามเลขที่ใบเสร็จ,ชื่อนักเรียน,ชื่อผู้ปกครอง" class="search-sp" />
         </div>
         <table id="invoice-table" class="scrollable-header text-table-invoicereport for-display"></table>
         <div class="text-title for-print">รายงานใบเสร็จ</div>
@@ -83,6 +87,11 @@
     </div>
   </div>
 </div>
+
+
+<table  id="tableForExport" data-toolbar="none" data-tableexport-display="always" style="display: none;"><table>
+
+
 
 <!-- Modal -->
 <div class="modal" id="cancelInvoiceModal" tabindex="-1" role="dialog" aria-hidden="true">

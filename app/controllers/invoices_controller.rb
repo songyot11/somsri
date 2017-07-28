@@ -8,10 +8,14 @@ class InvoicesController < ApplicationController
     grade_select = (params[:grade_select] || 'All')
     start_date = DateTime.parse(params[:start_date]).beginning_of_day if isDate(params[:start_date])
     end_date = DateTime.parse(params[:end_date]).end_of_day if isDate(params[:end_date])
-    @invoices = get_invoices(grade_select, params[:search_keyword], start_date, end_date, params[:page], params[:sort], params[:order])
+    
+
+    @invoices = get_invoices(grade_select, params[:search_keyword], start_date, end_date, params[:page], params[:sort], params[:order], params[:export])
     if params[:page] && @invoices.total_pages < @invoices.current_page
-      @invoices = get_invoices(grade_select, params[:search_keyword], start_date, end_date, 1, params[:sort], params[:order])
+      @invoices = get_invoices(grade_select, params[:search_keyword], start_date, end_date, 1, params[:sort], params[:order], params[:export])
     end
+    
+
     @filter_grade = grade_select
     result = {
       invoices: @invoices.as_json({ index: true })
@@ -468,7 +472,7 @@ class InvoicesController < ApplicationController
       return qry_invoices
     end
 
-    def get_invoices(grade_select, search_keyword, start_date, end_date, page, sort, order)
+    def get_invoices(grade_select, search_keyword, start_date, end_date, page, sort, order, export)
       qry_invoices = Invoice.includes(:payment_methods, :parent, :student, :user, :line_items, :invoice_status)
                             .search(search_keyword)
       if grade_select.downcase != 'all'
@@ -480,7 +484,9 @@ class InvoicesController < ApplicationController
 
       qry_invoices = qry_invoices.order("#{sort} #{order}")
 
-      if page
+      if export == 'export'
+        qry_invoices = qry_invoices.paginate(page: page, per_page: Invoice.count)
+      elsif page
         qry_invoices = qry_invoices.paginate(page: page, per_page: 10)
       end
 

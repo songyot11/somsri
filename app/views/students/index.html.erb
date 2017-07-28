@@ -13,7 +13,7 @@
      :class => 'btn btn-to-print-student float-right',
      :onclick => 'printStudent()' %>
 
-     <%= link_to ("<i class='fa fa-upload' aria-hidden='true'></i> Export").html_safe, "#", :class => 'btn btn-export float-right', :onclick => 'exportTable("students")' %>
+     <%= link_to ('<i class="fa fa-share-square-o" aria-hidden="true"></i> Export').html_safe, "#", :class => 'btn btn-export float-right', :onclick => 'exportTable("students")' %>
 
      <%= link_to t('.addstudent', :default => t("helpers.links.addstudent")),
      new_student_path,
@@ -54,12 +54,13 @@
   data-pagination-loop="false"
   data-url="students.json"
   data-side-pagination="server"
-  data-sort-name="full_name"
-  data-sort-order="desc"
+  data-sort-name="classroom, classroom_number" 
+  data-sort-order="asc"
   data-query-params="queryParams">
   <thead>
     <tr>
       <th data-field="classroom_number" data-sortable="true" data-cell-style="cellStyle">เลขที่ในห้อง</th>
+      <th data-field="img_url" data-formatter="imgTag"></th>
       <th data-field="full_name" data-sortable="true">ชื่อ-สกุล</th>
       <th data-field="nickname" data-sortable="true">ชื่อเล่น</th>
       <th data-field="grade_id" data-sortable="true">ระดับชั้น</th>

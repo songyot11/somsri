@@ -15,6 +15,8 @@ describe 'Payroll', js: true do
       sex: 1,
       employee_type: "ลูกจ้างประจำ",
       account_number: "5-234-34532-2342",
+      pay_social_insurance: true,
+      pay_pvf: true,
       salary: 50000
     }
   )}
@@ -81,8 +83,35 @@ describe 'Payroll', js: true do
     ]
   end
 
+  let(:taxrates) do
+    [
+      Taxrate.make!({order_id: "1", income: "5000000", tax: "0.35"}),
+      Taxrate.make!({order_id: "2", income: "2000000", tax: "0.30"}),
+      Taxrate.make!({order_id: "3", income: "1000000", tax: "0.25"}),
+      Taxrate.make!({order_id: "4", income: "750000", tax: "0.20"}),
+      Taxrate.make!({order_id: "5", income: "500000", tax: "0.15"}),
+      Taxrate.make!({order_id: "6", income: "300000", tax: "0.10"}),
+      Taxrate.make!({order_id: "7", income: "150000", tax: "0.05"})
+    ]
+  end
+
+  let(:taxs) do
+    [
+      taxR1 = TaxReduction.make!({ employee_id: employee1.id, pension_insurance: 300000,
+        pension_fund: 0, government_pension_fund: 0, private_teacher_aid_fund: 0, retirement_mutual_fund: 0,
+        national_savings_fund: 0, expenses: 60000, no_income_spouse: 60000, father_alimony: 0, mother_alimony: 0,
+        spouse_father_alimony: 0, spouse_mother_alimony: 0, cripple_alimony: 0, insurance: 0, child: 0,
+        father_insurance: 0, mother_insurance: 0, spouse_father_insurance: 0, spouse_mother_insurance: 0,
+        long_term_equity_fund: 100000, social_insurance: 0, double_donation: 0, donation: 0, other: 0,
+        spouse_insurance: 0, house_loan_interest: 0}).to_json,
+      taxR2 = TaxReduction.make!({ employee_id: employee2.id, expenses: 60000 }).to_json
+    ]
+  end
+
   before do
     user.add_role :admin
+    taxs
+    taxrates
     payrolls
     login_as(user, scope: :user)
   end
@@ -142,16 +171,6 @@ describe 'Payroll', js: true do
     eventually { expect(page).to have_content /นาย คิง ฮาราบาส.*20.00 0.00 0.00 0.00 0.00 0.00 0.00/i }
     eventually { expect(page).not_to have_content 'พี ดี เอ็ม' }
     eventually { expect(page).to have_content /รวมทั้งหมด.*100,020.00 0.00 0.00 0.00 0.00 0.00 0.00/i }
-  end
-
-  it 'should display only social insurance button when select closed payroll' do
-    visit "/somsri_payroll#/payroll"
-    find('#month-list').click
-    sleep(1)
-    click_on("พฤศจิกายน 2559")
-    sleep(1)
-    eventually { expect(page).to have_content 'สำหรับประกันสังคม' }
-    eventually { expect(page).to_not have_content 'ออกเงินเดือน' }
   end
 
   it 'should display histories tax, pvf and social insurance' do
@@ -291,6 +310,7 @@ describe 'Payroll', js: true do
     find('#month-list').click
     sleep(1)
     expect(page).to have_content('เดือนปัจจุบัน')
+    expect(page).to have_content('1,000,000.00 0.00 0.00 0.00 0.00 0.00 0.00 0.00 0.00 304,654.17 750.00 30,000.00 0.00 0.00 664,595.83')
   end
 
 end

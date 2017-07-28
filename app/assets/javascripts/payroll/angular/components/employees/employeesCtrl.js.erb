@@ -103,6 +103,8 @@
 
     $table.bootstrapTable({
       onToggle: cardViewToggle,
+      sortName: 'full_name',
+      sortOrder: 'asc',
       columns: [{
         title: '',
         field: 'imgUrl',
@@ -140,7 +142,7 @@
         formatter: edit,
       }],
       onPostBody: function(data){
-        if(data && initDisplay){  
+        if(data && initDisplay){
           initDisplayMode()
         }
       },
@@ -169,9 +171,9 @@
       }
     });
 
-    $("#grid").on('click',function(){  
+    $("#grid").on('click',function(){
       if(displayMode!='grid' || initDisplay){
-        initDisplay = false;        
+        initDisplay = false;
         gridClick()
       }
     });
@@ -179,7 +181,7 @@
     function initDisplayMode(){
       if(displayMode=='list'){
         $("#list").addClass('active')
-        initDisplay = false;        
+        initDisplay = false;
       }else{
         $("#grid").addClass('active')
         $("#grid").click();
@@ -187,9 +189,15 @@
     }
 
     $('#exportTable').on('click',function(){
-      //console.log('sss');
       if(displayMode!='list'){
         listClick()
+        $table = $('#employeesTable')
+        $table.bootstrapTable('hideColumn', 'imgUrl');
+        $table.bootstrapTable('hideColumn', 'edit');
+        $table.tableExport({type:'excel'});
+        $table.bootstrapTable('showColumn', 'imgUrl');
+        $table.bootstrapTable('showColumn', 'edit');
+      }else{
         $table = $('#employeesTable')
         $table.bootstrapTable('hideColumn', 'imgUrl');
         $table.bootstrapTable('hideColumn', 'edit');

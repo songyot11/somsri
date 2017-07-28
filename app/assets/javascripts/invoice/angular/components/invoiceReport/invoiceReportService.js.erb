@@ -3,7 +3,7 @@
   angular.module('somsri.invoice.invoice_report.service', [
   ])
   .service('invoiceReportService', ['$http', function($http) {
-    this.getInvoices = function(grade_name, searchKeyword, start_date, end_date, page, sort, order) {
+    this.getInvoices = function(grade_name, searchKeyword, start_date, end_date, page, sort, order, exportTable) {
       return $http.get('/invoices', { params: {
         grade_select: grade_name,
         page: page,
@@ -11,7 +11,8 @@
         start_date: start_date,
         end_date: end_date,
         sort: sort,
-        order: order
+        order: order,
+        export: exportTable,
       }})
     }
 

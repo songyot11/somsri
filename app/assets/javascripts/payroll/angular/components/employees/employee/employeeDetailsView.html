@@ -742,7 +742,7 @@
             <div class="col-md-8">
               <div class="form-group">
                 <label for="comment">บันทึกช่วยจำ</label>
-                <textarea id="comment" ng-disabled="employee.payroll_closed" class="form-control" rows="5" ng-model="employee.datas.payroll.note"></textarea>
+                <textarea id="comment" ng-hide="employee.payroll_closed" class="form-control" rows="5" ng-model="employee.datas.payroll.note" contenteditable="false" redactor></textarea>
               </div>
             </div>
           </div>
@@ -764,16 +764,16 @@
         </div>
 
         <div ng-if="employee.datas.employee.deleted_at == nil">
-          <div ng-show="employee.isEdit" class="col-md-2 pull-right">
+          <div ng-show="employee.isEdit" class="pull-right text-right padding-left10">
             <button type="button" class="btn btn-delete" ng-click="employee.archiveEmployee(employee.empId)"><i class="fa fa-trash"></i> ลบ</button>
           </div>
         </div>
 
-        <div class="col-md-2 pull-right">
+        <div class="pull-right text-right padding-left10">
           <button type="button" class="btn btn-cancel" ng-click="employee.cancel()">ยกเลิก</button>
         </div>
 
-        <div class="col-md-2 pull-right">
+        <div class="pull-right text-right padding-left10">
           <button type="submit" class="btn btn-submit" ng-disabled="employee.isSubmit">บันทึก</button>
         </div>
       </div>

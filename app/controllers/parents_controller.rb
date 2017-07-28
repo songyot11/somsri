@@ -12,27 +12,15 @@ class ParentsController < ApplicationController
 
     @classroom_display = Student.order("classroom ASC").select(:classroom).map(&:classroom).uniq.compact
 
-    if class_select.downcase == 'all' && grade_select.downcase == 'all'
-      parents = Parent.all
-    elsif grade_select.downcase == 'all' && class_select.downcase != 'all'
-      parents = Parent.joins(:students).where(students:{classroom: class_select})
-    elsif grade_select != 'all' && class_select.downcase == 'all'
-      grade = Grade.where(name: grade_select).first
-      parents = Parent.joins(:students).where(students:{grade: grade.id})
-    elsif grade_select != 'all' && class_select != 'all'
-      grade = Grade.where(name: grade_select).first
-      parents = Parent.joins(:students).where(students:{grade: grade.id , classroom: class_select})
-    end
-    @parents = parents.includes(:students, :relationships, :invoices).search(params[:search]).order("#{params[:sort]} #{params[:order]}").references(:students)
-    @filter_class = class_select
-    @filter_grade = grade_select
+    @parents = get_parents(class_select, grade_select, params[:search], params[:page], params[:per_page], params[:sort], params[:order])
+
     @menu = "ผู้ปกครอง"  
     respond_to do |f|
       f.html { render "parents/index", layout: "application_invoice" }
       f.json { 
         render json: {
-          total: @parents.count,
-          rows: @parents.limit(params[:limit]).offset(params[:offset]).as_json({ index: true })
+          total: @parents.total_entries,
+          rows: @parents.as_json({ index: true })
         }
       }
     end
@@ -195,6 +183,28 @@ class ParentsController < ApplicationController
 
     def upload_photo_params
       params.require(:parent).permit(:img_url)
+    end
+
+    def get_parents(class_select, grade_select, search, page, per_page, sort, order)
+        if class_select.downcase == 'all' && grade_select.downcase == 'all'
+          qry_parents = Parent.all
+        elsif grade_select.downcase == 'all' && class_select.downcase != 'all'
+          qry_parents = Parent.joins(:students).where(students:{classroom: class_select})
+        elsif grade_select != 'all' && class_select.downcase == 'all'
+          grade = Grade.where(name: grade_select).first
+          qry_parents = Parent.joins(:students).where(students:{grade: grade.id})
+        elsif grade_select != 'all' && class_select != 'all'
+          grade = Grade.where(name: grade_select).first
+          qry_parents = Parent.joins(:students).where(students:{grade: grade.id , classroom: class_select})
+        end
+
+        search = " where parents.full_name LIKE '%#{search}%' OR parents.full_name_english LIKE '%#{search}%' OR parents.email LIKE '%#{search}%' OR parents.mobile LIKE '%#{search}%' OR students.full_name LIKE '%#{search}%' OR students.full_name_english LIKE '%#{search}%'"
+
+        order = " order by #{sort} #{order}"
+
+        arr_parents = qry_parents.find_by_sql("select parents.id, parents.full_name ,parents.mobile,parents.email,relationships.name, students.full_name as student_name from parents join students_parents on students_parents.id = ( select id from students_parents where students_parents.parent_id = parents.id limit 1 ) inner join students on students_parents.student_id = students.id left outer join relationships on relationships.id=students_parents.relationship_id" + search + order).paginate(page: page, per_page: per_page) if sort
+
+        return arr_parents
     end
 
   end
