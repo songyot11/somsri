@@ -63,12 +63,22 @@
         });
       }
 
+      function cleanData(str) {
+        if(str){
+          return str.toString().replace(/[\n\r]+/g, '') //remove newline
+        }else{
+          return ""
+        }
+      }
+
       function isPayrollChange(){
         var skip = ['deleted_at', 'tax', 'social_insurance', 'pvf', 'closed']
         if(ctrl.hasPayroll){
           var keys = Object.keys(ctrl.datas_original.payroll)
           for(var i = 1; i < keys.length; i++){
-            if(ctrl.datas.payroll[keys[i]] != ctrl.datas_original.payroll[keys[i]] && skip.indexOf(keys[i]) < 0){
+            var isMatchData = cleanData(ctrl.datas.payroll[keys[i]]) != cleanData(ctrl.datas_original.payroll[keys[i]])
+            var isSkip = skip.indexOf(keys[i]) < 0
+            if(isMatchData && isSkip ){
               return true
             }
           }
@@ -117,6 +127,14 @@
         }
       }
 
+      function disableRedactorIfNeeded(){
+        if(ctrl.payroll_closed ){
+          $('.redactor-editor').attr('contenteditable', 'false');
+        }else{
+          $('.redactor-editor').attr('contenteditable', 'true');
+        }
+      }
+
       function getEmployee(id){
         var payroll_id = null
         if($location.search().payroll_id) {
@@ -144,6 +162,7 @@
           if(ctrl.datas.payroll){
             ctrl.hasPayroll = true;
             ctrl.payroll_closed = ctrl.datas.payroll.closed;
+            disableRedactorIfNeeded();
             payrollToFloat();
           }else{
             ctrl.hasPayroll = false;
@@ -223,6 +242,7 @@
           ctrl.datas_original.payroll = $.extend(true, {}, ctrl.datas.payroll);
           ctrl.calTotal();
           displayEffectiveDate(effectiveDate);
+          disableRedactorIfNeeded();
         });
       }
 

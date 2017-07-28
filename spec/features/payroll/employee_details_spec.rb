@@ -297,7 +297,7 @@ describe 'Employee Details', js: true do
       sleep(1)
       click_link('เงินเดือน')
       sleep(1)
-      page.fill_in 'บันทึกช่วยจำ', :with => 'จำ จำ จำ'
+      page.execute_script("$('#comment').redactor('code.set', 'จำ จำ จำ')")
       click_button('บันทึก')
       sleep(1)
       click_button('ตกลง')
@@ -306,14 +306,14 @@ describe 'Employee Details', js: true do
       employees[0].reload
       payrolls[0].reload
 
-      eventually { expect(payrolls[0].note).to eq "จำ จำ จำ" }
+      eventually {expect(page).to have_content('จำ จำ จำ')}
 
       visit "/somsri_payroll#/employees/#{employees[0].id}"
       sleep(1)
       click_link('เงินเดือน')
       sleep(1)
 
-      eventually { expect(first('#comment').value).to eq "จำ จำ จำ" }
+      eventually {expect(page).to have_content('จำ จำ จำ')}
     end
 
     describe "generate attendance list" do
@@ -396,7 +396,7 @@ describe 'Employee Details', js: true do
       eventually { expect(page).to have_field('เบิกล่วงหน้า', disabled: true) }
       eventually { expect(page).to have_field('รายได้อื่นๆ', disabled: true) }
       eventually { expect(page).to have_field('หักอื่นๆ', disabled: true) }
-      eventually { expect(page).to have_field('บันทึกช่วยจำ', disabled: true) }
+      eventually { expect(find('.redactor-editor')['contenteditable']).to eq "false" } #note disable
     end
 
     it 'should not diplay warning modal when select histories dropdown after edit employee detail' do

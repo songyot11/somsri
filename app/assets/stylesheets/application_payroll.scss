@@ -12,6 +12,7 @@
  *
  *= require bootstrap/dist/css/bootstrap.min.css
  *= require angular-xeditable/dist/css/xeditable
+ *= require redactor/redactor.min.css
  *= require font-awesome
  *= require_self
  *= require bootstrap-table
@@ -1813,4 +1814,14 @@ ul.uib-datepicker-popup.dropdown-menu {
 
 .padding-left10{
   padding-left: 10px;
+}
+
+.redactor-toolbar {
+  display: none;
+}
+
+.redactor-editor[contenteditable="false"] {
+  background-color: #eee;
+  cursor: not-allowed;
+  border: 1px solid #ccc;
 }
