@@ -212,7 +212,6 @@ describe 'Employee Details', js: true do
       # page.fill_in 'ภาษี', :with => '1000000'
       # page.fill_in 'ประกันสังคม', :with => '300000'
       sleep(1)
-      eventually { expect(page).to have_content('เงินเดือนสุทธิ ') }
     end
 
     it 'should auto calculate tax, pvf and social insurance' do
@@ -397,6 +396,19 @@ describe 'Employee Details', js: true do
       eventually { expect(page).to have_field('รายได้อื่นๆ', disabled: true) }
       eventually { expect(page).to have_field('หักอื่นๆ', disabled: true) }
       eventually { expect(find('.redactor-editor')['contenteditable']).to eq "false" } #note disable
+    end
+
+    it 'should diplay histories with correct calculate total' do
+      sleep(1)
+      click_link('เงินเดือน')
+      sleep(1)
+      eventually { expect(page).to have_content('เงินเดือนสุทธิ 46733.33') }
+
+      find('#month-list').click
+      sleep(1)
+      find('ul.dropdown-menu li a', text: "สิงหาคม 2559").click
+      sleep(1)
+      eventually { expect(page).to have_content('เงินเดือนสุทธิ -10587.00') }
     end
 
     it 'should not diplay warning modal when select histories dropdown after edit employee detail' do

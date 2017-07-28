@@ -239,8 +239,8 @@
           ctrl.datas.payroll = $.extend(true, {}, resp.data.payroll);
           ctrl.payroll_closed = ctrl.datas.payroll.closed;
           payrollToFloat();
-          ctrl.datas_original.payroll = $.extend(true, {}, ctrl.datas.payroll);
           ctrl.calTotal();
+          ctrl.datas_original.payroll = $.extend(true, {}, ctrl.datas.payroll);
           displayEffectiveDate(effectiveDate);
           disableRedactorIfNeeded();
         });

@@ -4,7 +4,7 @@ class Payroll < ApplicationRecord
   belongs_to :employee
   validate :already_payroll_on_month, on: :create
   before_validation :set_created_at
-  before_update :set_default_val
+  before_save :set_default_val
   after_save :update_employee_salary
 
   scope :latest, -> { order("effective_date ASC").last }
