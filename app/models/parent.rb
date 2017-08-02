@@ -37,7 +37,7 @@ class Parent < ApplicationRecord
     ActionController::Base.helpers.link_to I18n.t('.edit', :default => '<i class="fa fa-pencil-square-o" aria-hidden="true"></i> แก้ไข'.html_safe), edit_parent_path(self), :class => 'btn-edit-student-parent'
   end
 
-  def relationships
+  def relationship_names
     if self.respond_to?("name")
       self.name.nil? ? "" : I18n.t(self.name)
     else
@@ -47,7 +47,7 @@ class Parent < ApplicationRecord
 
   def studentFullname
     if self.respond_to?("student_name")
-      self.student_name.nil? ? student_link_with_full_name(self.students.first) : student_link_with_full_name_arry(self.student_name) 
+      self.student_name.nil? ? student_link_with_full_name(self.students.first) : student_link_with_full_name_arry(self.student_name)
     else
       student_link_with_full_name(self.students.first)
     end
@@ -64,7 +64,7 @@ class Parent < ApplicationRecord
           email: self.email,
         },
         relationships: {
-          name: relationships
+          name: relationship_names
         },
         students: {
           full_name: studentFullname
