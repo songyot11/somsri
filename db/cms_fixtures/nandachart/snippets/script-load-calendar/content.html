@@ -54,8 +54,8 @@ $(function() {
             }
 
           $.each(events, function(date, data){
-            dates = new Date(date)
-            $('.custom-content-reveal').append('<div class="col-xs-2">' + 		dates.getDate() + '</div>');
+            var dayEvent = date.split("-");
+            $('.custom-content-reveal').append('<div class="col-xs-2">' + dayEvent[1] + '</div>');
             $.each(data, function(key, value){
               $('.custom-content-reveal').append('<div class="col-xs-10">' +value.content + '</div>');
             })
