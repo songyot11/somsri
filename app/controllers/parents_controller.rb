@@ -14,10 +14,10 @@ class ParentsController < ApplicationController
 
     @parents = get_parents(class_select, grade_select, params[:search], params[:page], params[:per_page], params[:sort], params[:order])
 
-    @menu = "ผู้ปกครอง"  
+    @menu = "ผู้ปกครอง"
     respond_to do |f|
       f.html { render "parents/index", layout: "application_invoice" }
-      f.json { 
+      f.json {
         render json: {
           total: @parents.total_entries,
           rows: @parents.as_json({ index: true })
@@ -202,8 +202,7 @@ class ParentsController < ApplicationController
 
         order = " order by #{sort} #{order}"
 
-        arr_parents = qry_parents.find_by_sql("select parents.id, parents.full_name ,parents.mobile,parents.email,relationships.name, students.full_name as student_name from parents join students_parents on students_parents.id = ( select id from students_parents where students_parents.parent_id = parents.id limit 1 ) inner join students on students_parents.student_id = students.id left outer join relationships on relationships.id=students_parents.relationship_id" + search + order).paginate(page: page, per_page: per_page) if sort
-
+        arr_parents = qry_parents.find_by_sql("select parents.id, parents.full_name ,parents.mobile,parents.email,relationships.name, students.full_name as student_name, students.id as student_id from parents join students_parents on students_parents.id = ( select id from students_parents where students_parents.parent_id = parents.id limit 1 ) inner join students on students_parents.student_id = students.id left outer join relationships on relationships.id=students_parents.relationship_id" + search + order).paginate(page: page, per_page: per_page) if sort
         return arr_parents
     end
 

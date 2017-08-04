@@ -81,6 +81,15 @@ describe 'Invoice-Report', js: true do
     eventually { expect(page).to have_content("ผู้ปกครอง") }
   end
 
+  it 'should goto student edit by click link' do
+    visit '/parents#/'
+    sleep(1)
+    click_link('ลูกศรี ใบเสร็จ')
+    sleep(1)
+    eventually { expect(page).to have_content("แก้ไขนักเรียน") }
+    eventually { expect(find("#student_full_name").value).to eq("ลูกศรี ใบเสร็จ") }
+  end
+
   it 'should archive parent' do
     visit "/parents/#{parent[0].id}/edit#/"
     sleep(1)
