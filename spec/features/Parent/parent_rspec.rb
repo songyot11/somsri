@@ -20,6 +20,14 @@ describe 'Invoice-Report', js: true do
     ]
   end
 
+  let(:parent_only) do
+    [
+      parent2 = Parent.make!({
+        full_name: 'สมชาย ใบกระท่อม'
+      })
+    ]
+  end
+
   let(:grade){grade = Grade.create(
     name: "Kindergarten 1"
   )}
@@ -88,6 +96,14 @@ describe 'Invoice-Report', js: true do
     sleep(1)
     eventually { expect(page).to have_content("แก้ไขนักเรียน") }
     eventually { expect(find("#student_full_name").value).to eq("ลูกศรี ใบเสร็จ") }
+  end
+
+  it 'should see all parent in system' do
+    parent_only
+    visit '/parents#/'
+    sleep(1)
+    eventually { expect(page).to have_content("สมศรี ใบเสร็จ") }
+    eventually { expect(page).to have_content("สมชาย ใบกระท่อม") }
   end
 
   it 'should archive parent' do

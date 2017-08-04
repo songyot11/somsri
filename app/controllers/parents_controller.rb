@@ -201,8 +201,7 @@ class ParentsController < ApplicationController
         search = " where parents.full_name LIKE '%#{search}%' OR parents.full_name_english LIKE '%#{search}%' OR parents.email LIKE '%#{search}%' OR parents.mobile LIKE '%#{search}%' OR students.full_name LIKE '%#{search}%' OR students.full_name_english LIKE '%#{search}%'"
 
         order = " order by #{sort} #{order}"
-
-        arr_parents = qry_parents.find_by_sql("select parents.id, parents.full_name ,parents.mobile,parents.email,relationships.name, students.full_name as student_name, students.id as student_id from parents join students_parents on students_parents.id = ( select id from students_parents where students_parents.parent_id = parents.id limit 1 ) inner join students on students_parents.student_id = students.id left outer join relationships on relationships.id=students_parents.relationship_id" + search + order).paginate(page: page, per_page: per_page) if sort
+        arr_parents = qry_parents.find_by_sql("select parents.id, parents.full_name ,parents.mobile,parents.email,relationships.name, students.full_name as student_name, students.id as student_id from parents left outer join students_parents on students_parents.id = ( select id from students_parents where students_parents.parent_id = parents.id limit 1 ) left join students on students_parents.student_id = students.id left join relationships on relationships.id=students_parents.relationship_id" + search + order).paginate(page: page, per_page: per_page) if sort
         return arr_parents
     end
 
