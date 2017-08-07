@@ -1,7 +1,7 @@
 ---
-label: Home page
+label: Release Notes
 layout: default
-parent: 
+parent: index
 target_page: 
 categories: []
 is_published: true
