@@ -89,7 +89,7 @@ describe 'Login', js: true do
     find('#user_password').set(users[0].password)
     click_button('Sign in')
     expect(page).to have_current_path "/"
-    expect(page).to have_content "#{users[0].email}"
+    expect(page).to have_content "#{users[0].name}"
   end
 
   it 'should logo not empty' do
