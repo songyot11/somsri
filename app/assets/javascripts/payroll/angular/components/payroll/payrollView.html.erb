@@ -1,9 +1,14 @@
+<style type="text/css" media="print">
+  @page { size: landscape; }
+</style>
+
 <div id="payroll">
     <div class="container-fluid">
-      <div class="row" style="margin-bottom: 15px;">
-        <div class="col-md-5">
+      <div class="row tool-top-payroll">
+        <div class="col-md-6">
           <input type="hidden" id="time_zone">
-          <div class="dropdown">
+          <h3 class="text-h-payroll inline">ตารางเงินเดือนประจำเดือน : </h3>
+          <div class="dropdown inline">
             <h3 id="month-list" data-toggle="dropdown" style="margin-top:10px;">
               <span ng-bind="payroll.currentDateString" role="button"></span>
               <span class="fa fa-angle-down"></span>
@@ -17,16 +22,17 @@
             </ul>
           </div>
         </div>
-        <div class="col-md-7">
-          <div class="pull-right">
-            <a ng-hide="payroll.isClosedPayroll" class="btn btn-payroll-starts" ng-click="payroll.createPayrolls()" href="javascript:void(0)">
-              ออกเงินเดือน
-            </a>
-          </div>
+        <div class="col-md-6 text-right for-display">
+          <a class="btn btn-print" href="javascript:window.print()">
+            <i class="fa fa-print" aria-hidden="true"></i>
+          </a>
+          <a ng-hide="payroll.isClosedPayroll" class="btn btn-payroll-starts" ng-click="payroll.createPayrolls()" href="javascript:void(0)">
+            ออกเงินเดือน
+          </a>
         </div>
       </div>
         <div class="total-wrapper payroll-content container-fluid">
-          <div class="row">
+          <div class="row for-display">
             <div class="col-md-12">
               <div class="pull-right">
                 <div class="btn-group filter-btn">
@@ -59,16 +65,16 @@
                                 <strong>{{employee.name}}</strong>
                               </a>
 
-                              <button ng-show="employee.note" uib-popover-html="employee.note" popover-title="หมายเหตุ" type="button" class="btn btn-note-bell" popover-class="note-popover">
+                              <button ng-show="employee.note" uib-popover-html="employee.note" popover-title="หมายเหตุ" type="button" class="btn btn-note-bell for-display" popover-class="note-popover for-display">
                                 <i class="fa fa-bell" aria-hidden="true"></i>
                               </button>
-                              
+
                             </div>
                           </div>
                         </span>
                     </div>
                     <div class="trow tfoot">
-                      <span style="width: 369px;"><strong>รวมทั้งหมด</strong></span>
+                      <span class="text_total_tfoot"><strong>รวมทั้งหมด</strong></span>
                     </div>
                     <div class="trow tfoot">
                       <span class="free-space-table" style="width: 370px;"></span>
@@ -96,6 +102,7 @@
                     <span>อื่นๆ</span>
                     <span>เงินเดือนสุทธิ</span>
                 </div>
+
                 <div class="tbody" id="scrollbar-payroll">
                     <div class="trow" ng-repeat="(index, employee) in payroll.employees" ng-mouseover="hoverIn(employee.code)">
                         <span ng-class="{'hilight': sel==employee.code, 'salary': true, 'no-click': employee.closed}">

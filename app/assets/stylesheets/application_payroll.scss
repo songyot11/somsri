@@ -290,7 +290,7 @@ h2#month-list{
   border: 2px solid #FFAB04;
   border-radius: inherit;
   color: #fff;
-  padding: 12px 32px;
+  padding: 16px 32px;
   font-size: 16px;
   transition: all 0.25s ease;
 
@@ -495,6 +495,23 @@ input.btn-prefix.active:-moz-placeholder { /* Firefox 18- */
   }
 }
 
+.btn-print,
+.btn-print:focus {
+  background-color: #5B5B5B;
+  color: #ffffff;
+  border: 2px solid #5B5B5B;
+  padding: 12px 32px;
+  font-size: 20px;
+  border-radius: 0px;
+  transition: all 0.25s ease;
+
+  &:hover{
+    background-color: transparent;
+    color: #5B5B5B;
+    border: 2px solid #5B5B5B;
+  }
+}
+
 a.text-mane-back,a.text-mane-back:focus{
   color: #5B5B5B;
   text-decoration: none;
@@ -544,8 +561,14 @@ a.text-mane-back,a.text-mane-back:focus{
 }
 
 #payroll-report .for_print,
-#payroll-slip .for_print {
+#payroll-slip .for_print,
+#payroll .for_print,
+.text-h-payroll {
   display: none;
+}
+
+.row.tool-top-payroll {
+  margin-bottom: 15px;
 }
 
 #payroll-report .separate,
@@ -1595,84 +1618,98 @@ ul.uib-datepicker-popup.dropdown-menu {
 
  #payroll-report .for_print{
   display: block;
-}
-#payroll-report .unused_for_print,
-#payroll-slip .unused_for_print {
-  display: none;
-}
-#payroll-slip p,
-#payroll-slip th,
-#payroll-slip td,
-#payroll-report th,
-#payroll-report td,
-#payroll-report p{
-  font-size: 10px;
-}
+  }
+  .text-h-payroll{
+    display: block;
+  }
+  .row.tool-top-payroll {
+    border-bottom: 1px solid #ccc;
+    margin-bottom: 30px;
+  }
+  .fa-angle-down{
+    display: none;
+  }
+  .inline{
+    display: inline-block;
+  }
+  #payroll-report .unused_for_print,
+  #payroll-slip .unused_for_print {
+    display: none;
+  }
+  #payroll-slip p,
+  #payroll-slip th,
+  #payroll-slip td,
+  #payroll-report th,
+  #payroll-report td,
+  #payroll-report p{
+    font-size: 10px;
+  }
 
-#payroll-report #date_table,
-#payroll-slip #date_table {
-  margin-bottom: 70px;
-}
+  #payroll-report #date_table,
+  #payroll-slip #date_table {
+    margin-bottom: 70px;
+  }
 
-#payroll-report td,
-#payroll-report th,
-#payroll-slip td,
-#payroll-slip th {
-  vertical-align: middle;
-  border-color: #000;
-}
+  #payroll-report td,
+  #payroll-report th,
+  #payroll-slip td,
+  #payroll-slip th {
+    vertical-align: middle;
+    border-color: #000;
+  }
 
-#payroll-report thead th,
-#payroll-slip thead th {
-  padding: 5px 10px;
-  background-color: #dadada !important;
-}
+  #payroll-report thead th,
+  #payroll-slip thead th {
+    padding: 5px 10px;
+    background-color: #dadada !important;
+  }
 
-#payroll-report #order tbody td,
-#payroll-slip #order tbody td {
-  border-bottom: 0px;
-  border-top: 0px;
-  height: 170px;
-  vertical-align: top !important;
-}
+  #payroll-report #order tbody td,
+  #payroll-slip #order tbody td {
+    border-bottom: 0px;
+    border-top: 0px;
+    height: 170px;
+    vertical-align: top !important;
+  }
 
-#payroll-report .slip-content,
-#payroll-slip .slip-content {
-  padding: 0px;
-}
+  #payroll-report .slip-content,
+  #payroll-slip .slip-content {
+    padding: 0px;
+  }
 
-#payroll-report .for_print,
-#payroll-slip .for_print {
-  display: block !important;
-}
+  #payroll-report .for_print,
+  #payroll-slip .for_print,
+  #payroll .for_print {
+    display: block !important;
+  }
 
-#payroll-report #slipLogo,
-#payroll-slip #slipLogo {
-  height: 50px;
-}
+  #payroll-report #slipLogo,
+  #payroll-slip #slipLogo {
+    height: 50px;
+  }
 
-.slip-content .school-name {
-  font-size: 16px;
-}
+  .slip-content .school-name {
+    font-size: 16px;
+  }
 
-.slip-content .school-name{
-  padding-top: 10px;
-}
+  .slip-content .school-name{
+    padding-top: 10px;
+  }
 
-#payroll-report td.big,
-#payroll-slip td.big {
-  height: 45px
-}
+  #payroll-report td.big,
+  #payroll-slip td.big {
+    height: 45px
+  }
 
-#payroll-report .signature,
-#payroll-slip .signature {
-  margin-top: 85px;
-}
+  #payroll-report .signature,
+  #payroll-slip .signature {
+    margin-top: 85px;
+  }
 
-#payroll-report p,
-#payroll-slip p {
-  margin: 0px 0 6px;
-}
+  #payroll-report p,
+  #payroll-slip p {
+    margin: 0px 0 6px;
+  }
 
   /* For Safari */
   #payroll-slip .safari td.big {
@@ -1714,8 +1751,84 @@ ul.uib-datepicker-popup.dropdown-menu {
   .text-green {
     color: #000 !important;
   }
-}
+  #payroll{
+    margin: inherit;
+    .container-fluid{
+      padding: 0;
+    }
+  }
+  #payroll .payroll-content,
+  #payroll .tbody#scrollbar-payroll{
+    font-size: 12px !important;
+  }
+  #payroll .payroll-content{
+    padding: 0;
+    margin: 0px;
+  }
+  #payroll .fix-column > .tbody,
+  .rest-columns > .theadtop,
+  .rest-columns > .thead{
+    overflow: inherit;
+  }
+  #payroll .tbody{
+    overflow: inherit;
+    max-height: inherit;
+  }
+  #payroll .thead.top{
+    height: 35px;
+  }
+  #payroll .thead > span{
+    line-height: 35px;
+  }
+  #payroll .trow > span.code,{
+    width: 35px !important;
+    border-left: 1px solid #cccccc;
+  }
+  #payroll .thead > span.code{
+    width: 35px !important;
+  }
+  #payroll .trow > span{
+    height: 35px;
+    width: 89px;
+    line-height: 35px;
+    border-left: none;
+  }
+  #payroll .fix-column > .tbody,
+  #payroll .fix-column > .thead,{
+    width: 264px;
+  }
+  #payroll .trow.tfoot > span.text_total_tfoot{
+    width: 263px;
+    border-left: 1px solid #cccccc;
+  }
+  #payroll .thead > span{
+    width: 88.6px;
+  }
+  #payroll .thead > span.name,
+  #payroll .trow > span.name{
+    width: 230px;
+  }
 
+  #payroll .trow > span.name{
+    border-right: 1px solid #cccccc;
+  }
+  #payroll .theadtop > span.income{
+    width: 610px;
+  }
+  #payroll .trow > span.salary,
+  #payroll .trow > span.number_table, .number_table{
+    padding-right: 5px;
+  }
+  #payroll .hilight{
+    background-color: transparent !important;
+  }
+  #payroll .trow > span.salary {
+    background-color: #fff !important;
+}
+}
+.trow.tfoot > span.text_total_tfoot{
+  width: 369px;
+}
 .table>tbody>tr.card>td{
   border-top: 0px solid #ddd !important;
 }
@@ -1827,4 +1940,7 @@ ul.uib-datepicker-popup.dropdown-menu {
 }
 .note-employees .redactor-editor{
   border: 1px solid #ccc;
+}
+.between-height{
+  margin-top: 50px;
 }
