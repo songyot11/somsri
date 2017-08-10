@@ -39,6 +39,10 @@ class Invoice < ApplicationRecord
     self.student.invoice_screen_full_name_display if self.student
   end
 
+  def student_classroom
+    self.student.classroom_number
+  end
+
   def parent_name
     self.parent.full_name if self.parent
   end
@@ -118,4 +122,3 @@ class Invoice < ApplicationRecord
     end
   end
 end
-

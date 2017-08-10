@@ -71,26 +71,35 @@
               <thead>
                 <tr>
                  <td style="border:none;"></td>
+                 <td style="border:none;" ng-show="groupingReport.isPerStudent"></td>
+                 <td style="border:none;" ng-show="groupingReport.isPerStudent"></td>
                  <th colspan="4">ชำระโดย</th>
                </tr>
                <tr>
+                 <th ng-show="groupingReport.isPerStudent" ng-bind="groupingReport.column_invoice_id"></th>
                  <th ng-bind="groupingReport.first_column" class="first-column-th"></th>
+                 <th ng-show="groupingReport.isPerStudent" ng-bind="groupingReport.column_classroom" class="first-column-classroom"></th>
                  <th ng-repeat="header in groupingReport.datas.header track by $index"class="another-column-th">{{ header }}</th>
                </tr>
               </thead>
               <tbody>
                 <tr ng-repeat="row in groupingReport.datas.rows track by $index">
-                  <td ng-show="row.header_row" class="text-center">
+                  <td ng-show="groupingReport.isPerStudent" class="text-center">
+                    <a href="/somsri_invoice#/invoice/{{row.header_row_invoice_id}}/slip?page=grouping_report">{{row.header_row_invoice_id}}</a>
+                  </td>
+                  <td ng-show="row.header_row">
                     <div ng-show="groupingReport.isPerStudent && row.url == null">{{row.header_row}}</div>
                     <a ng-href="{{row.url}}" ng-show="groupingReport.isPerStudent && row.url != null">{{row.header_row}}</a>
-                    <a href="javascript:void(0)" ng-click="groupingReport.selectDate(row.header_row)" ng-show="groupingReport.isPerDay" class="numberic">{{row.header_row}}</a>
+                    <a href="javascript:void(0)" ng-click="groupingReport.selectDate(row.header_row)" ng-show="groupingReport.isPerDay" class="text-center date_gropping numberic">{{row.header_row}}</a>
                   </td>
+                  <td ng-show="groupingReport.isPerStudent">{{row.header_row_classroom}}</td>
                   <td class="text-right numberic" ng-repeat="data in row.datas track by $index">{{data.toFixed(2) | number:2}}</td>
                 </tr>
               </tbody>
               <tfoot>
                 <tr>
-                  <td class="text-center">รวมทั้งหมด</td>
+                  <td ng-show="groupingReport.isPerStudent" colspan="3" class="text-center">รวมทั้งหมด</td>
+                  <td ng-show="groupingReport.isPerDay" class="text-center">รวมทั้งหมด</td>
                   <td ng-repeat="total in groupingReport.datas.total track by $index" class="text-currency numberic">{{total.toFixed(2) | number:2}}</td>
                 </tr>
               </tfoot>

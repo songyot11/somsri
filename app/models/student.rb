@@ -114,6 +114,14 @@ class Student < ApplicationRecord
     end
   end
 
+  def grade_name_with_title_classroom
+    if self.classroom.blank?
+      return self.grade.name
+    else
+      return self.grade.name + ' (' + self.classroom + ')'
+    end
+  end
+
   def classroom
     if self[:classroom]
       return self[:classroom]

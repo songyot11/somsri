@@ -249,7 +249,9 @@ ul.nav.navbar-nav.navbar-right.dropdown{
 .text-center{
   text-align: center;
 }
-
+.text-left{
+  text-align: left;
+}
 .header.row{
   padding-top: 20px;
   border-bottom: 3px solid #ddd;
@@ -1894,4 +1896,13 @@ label.img-default{
 }
 .between-height{
   margin-top: 50px;
+}
+.date_gropping{
+  display: flow-root;
+}
+#invoice_grouping_report a:hover{
+  text-decoration: none;
+}
+#invoice_grouping_report .first-column-classroom{
+  min-width: 12em;
 }
