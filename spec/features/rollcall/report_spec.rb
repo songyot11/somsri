@@ -75,12 +75,12 @@ describe 'RollCall report', js: true do
   end
 
   before do
+    SiteConfig.make!({ enable_rollcall: true })
     lists
     student_lists
     roll_calls
     user.add_role :admin
     login_as(user, scope: :user)
-    SiteConfig.stub_chain("get_cache.enable_rollcall").and_return(true)
     teacher_attendance_lists
   end
 
