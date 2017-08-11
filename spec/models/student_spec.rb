@@ -57,14 +57,19 @@ describe Student do
 
   let(:student_lists) do
     [
-      StudentList.make!({ student_id: students[0].id, list_id: lists[0].id }),
-      StudentList.make!({ student_id: students[1].id, list_id: lists[0].id })
+      StudentList.make!({ student_id: students[0].id, list_id: lists[0].id}),
+      StudentList.make!({ student_id: students[1].id, list_id: lists[0].id})
     ]
   end
 
   before do
+    SiteConfig.make!({ student_number_leading_zero: 6 })
     student_lists
     teacher_attendance_lists
+  end
+
+  it 'should return student number = 000023' do
+    expect(students[0].student_number).to eq("000023")
   end
 
   it 'generate new list for student' do

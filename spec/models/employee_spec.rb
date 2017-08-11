@@ -63,6 +63,7 @@ describe Employee do
   end
 
   before do
+    SiteConfig.make!({ student_number_leading_zero: 0 })
     employee
     lists
     student_lists
@@ -78,7 +79,7 @@ describe Employee do
 
     expect(employee.lists.size).to eq(1)
     expect(employee.lists[0].name).to eq("1B")
-    expect(employee.lists[0].get_students.collect(&:student_number)).to include(21)
+    expect(employee.lists[0].get_students.collect(&:student_number)).to include("21")
   end
 
   it 'link relationship between exist list and new employee' do
@@ -90,7 +91,7 @@ describe Employee do
     expect(employee.pin).not_to be_nil
     expect(em.lists.size).to eq(1)
     expect(em.lists[0].id).to eq(lists[0].id)
-    expect(em.lists[0].get_students.collect(&:student_number)).to include(22)
+    expect(em.lists[0].get_students.collect(&:student_number)).to include("22")
   end
 
   it 'should use same list if list already exist' do
@@ -100,7 +101,7 @@ describe Employee do
 
     expect(employee.lists.size).to eq(1)
     expect(employee.lists[0].id).to eq(lists[0].id)
-    expect(employee.lists[0].get_students.collect(&:student_number)).to include(22)
+    expect(employee.lists[0].get_students.collect(&:student_number)).to include("22")
   end
 
   it 'should do nothing if employee.classroom not change' do
