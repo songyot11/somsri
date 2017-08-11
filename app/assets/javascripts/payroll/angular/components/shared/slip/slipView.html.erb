@@ -159,11 +159,22 @@
         <p class="signature">ผู้มีอำนาจลงนาม / Signature</p>
       </div>
     </div>
-    <div ng-show="$even">
-      <div class="page-space for_print" ></div>
+
+    <div ng-switch="slipInfo.onePerPage">
+      <div ng-switch-when="true">
+        <div ng-show="!$last">
+          <div class="new-page for_print" ></div>
+        </div>
+      </div>
+      <div ng-switch-default>
+        <div ng-show="$even">
+          <div class="page-space for_print" ></div>
+        </div>
+        <div ng-show="$odd && !$last">
+          <div class="new-page for_print" ></div>
+        </div>
+      </div>
     </div>
-    <div ng-show="$odd && !$last">
-      <div class="new-page for_print" ></div>
-    </div>
+
   </div>
 </div>

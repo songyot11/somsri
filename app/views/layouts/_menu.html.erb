@@ -36,8 +36,13 @@
             <%= content_tag(:p, t('.rollcall', :default => t("rollcall")) ) %>
         </div>
       <% end %>
+
+      <% if (SiteConfig.get_cache.enable_rollcall) && (can? :manage, RollCall) %>
+        <div class="between-height"></div>
+      <% end %>
+
       <% if can? :manage, Employee %>
-        <div class=" <%= is_topbar ? 'col-xs-4' : 'col-xs-4' %> col-centered" style="margin-top:50px;">
+        <div class=" <%= is_topbar ? 'col-xs-4' : 'col-xs-4' %> col-centered">
             <div class="<%= is_topbar ? 'dropdown-menu-btn' : 'menu-btn' %> employees">
                 <a href="/somsri_payroll#/employees">
                   <div class="wraptocenter">
@@ -48,6 +53,11 @@
             <%= content_tag(:p, t('.employee', :default => t("employee")) ) %>
         </div>
       <% end %>
+
+      <% if !(SiteConfig.get_cache.enable_rollcall) && (can? :manage, RollCall) %>
+        <div class="between-height"></div>
+      <% end %>
+
       <% if can? :manage, Parent %>
         <div class="<%= is_topbar ? 'col-xs-4' : 'col-xs-4' %> col-centered">
             <div class="<%= is_topbar ? 'dropdown-menu-btn' : 'menu-btn' %> parents">

@@ -152,6 +152,11 @@ class Payroll < ApplicationRecord
     end
   end
 
+  def generate_tax!
+    self.tax = Payroll.generate_tax(self, self.employee)
+    self.save
+  end
+
   private
     def set_default_val
       if !self.closed
@@ -210,12 +215,16 @@ class Payroll < ApplicationRecord
     end
 
     def self.generate_tax(payroll, employee)
-      payroll_real = Payroll.where(id: payroll["id"]).first
-      return payroll_real.tax if payroll_real && payroll_real.closed
-      if employee["employee_type"]=='ลูกจ้างประจำ'
-        tax = self.generate_income_tax(payroll, employee)
+      if SiteConfig.get_cache.tax
+        payroll_real = Payroll.where(id: payroll["id"]).first
+        return payroll_real.tax if payroll_real && payroll_real.closed
+        if employee["employee_type"]=='ลูกจ้างประจำ'
+          tax = self.generate_income_tax(payroll, employee)
+        else
+          tax = self.generate_withholding_tax(payroll)
+        end
       else
-        tax = self.generate_withholding_tax(payroll)
+        tax = 0
       end
     end
 end

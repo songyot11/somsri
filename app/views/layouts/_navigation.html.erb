@@ -27,7 +27,7 @@
       <ul class="nav navbar-nav navbar-right dropdown" role="menu" aria-labelledby="dLabel">
           <% if user_signed_in? %>
             <a class="nav-user avatar" href="javascript:void(0)" id="navbarDropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-              <%= current_user.full_name.nil? ? current_user.email : current_user.full_name %>
+              <%= current_user.name.blank? ? current_user.email : current_user.name %>
               <i class="fa fa-angle-down"></i>
             </a>
             <div class="dropdown-menu on-nav-bar" aria-labelledby="navbarDropdownMenuLink">

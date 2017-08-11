@@ -20,6 +20,14 @@ describe 'Invoice-Report', js: true do
     ]
   end
 
+  let(:parent_only) do
+    [
+      parent2 = Parent.make!({
+        full_name: 'สมชาย ใบกระท่อม'
+      })
+    ]
+  end
+
   let(:grade){grade = Grade.create(
     name: "Kindergarten 1"
   )}
@@ -39,7 +47,14 @@ describe 'Invoice-Report', js: true do
 
   let(:studentsparent) do
     [
-      StudentsParent.make!({student_id: student[0].id , parent_id: parent[0].id})
+      StudentsParent.make!({student_id: student[0].id , parent_id: parent[0].id, relationship_id: relationships[0].id})
+    ]
+  end
+
+  let(:relationships) do
+    [
+      Relationship.make!({ name: 'Father' }),
+      Relationship.make!({ name: 'Mother' })
     ]
   end
 
@@ -72,6 +87,23 @@ describe 'Invoice-Report', js: true do
     visit '/parents#/'
     sleep(1)
     eventually { expect(page).to have_content("ผู้ปกครอง") }
+  end
+
+  it 'should goto student edit by click link' do
+    visit '/parents#/'
+    sleep(1)
+    click_link('ลูกศรี ใบเสร็จ')
+    sleep(1)
+    eventually { expect(page).to have_content("แก้ไขนักเรียน") }
+    eventually { expect(find("#student_full_name").value).to eq("ลูกศรี ใบเสร็จ") }
+  end
+
+  it 'should see all parent in system' do
+    parent_only
+    visit '/parents#/'
+    sleep(1)
+    eventually { expect(page).to have_content("สมศรี ใบเสร็จ") }
+    eventually { expect(page).to have_content("สมชาย ใบกระท่อม") }
   end
 
   it 'should archive parent' do
@@ -120,6 +152,24 @@ describe 'Invoice-Report', js: true do
     visit '/somsri_invoice#/invoice_report'
     sleep(1)
     eventually { expect(page).to have_content ("สมศรี") }
+  end
+
+  it 'should create parent' do
+    visit "/parents/new#/"
+    sleep(1)
+    page.fill_in 'ชื่อ-นามสกุล', :with => 'มานี มีตา'
+    click_on('บันทึก')
+    sleep(1)
+    eventually { expect(Parent.where(full_name: 'มานี มีตา').count).to eq 1 }
+  end
+
+  it 'should edit parent' do
+    visit "/parents/#{parent[0].id}/edit#/"
+    sleep(1)
+    page.fill_in 'ชื่อ-นามสกุล', :with => 'มานี มีตา'
+    click_on('บันทึก')
+    sleep(1)
+    eventually { expect(Parent.where(full_name: 'มานี มีตา').count).to eq 1 }
   end
 
 end

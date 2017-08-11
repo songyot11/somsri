@@ -114,6 +114,14 @@ class Student < ApplicationRecord
     end
   end
 
+  def grade_name_with_title_classroom
+    if self.classroom.blank?
+      return self.grade.name
+    else
+      return self.grade.name + ' (' + self.classroom + ')'
+    end
+  end
+
   def classroom
     if self[:classroom]
       return self[:classroom]
@@ -416,8 +424,8 @@ class Student < ApplicationRecord
     end
   end
 
-  def student_num
-    self.student_number.nil? ? "-" : self.student_number
+  def student_number
+    self[:student_number].nil? ? "-" : self[:student_number].to_s.rjust(SiteConfig.get_cache.student_number_leading_zero, '0')
   end
 
   def edit
@@ -433,7 +441,7 @@ class Student < ApplicationRecord
         grade_id: self.grade.nil? ? "" : self.grade.name,
         classroom: self.classroom,
         classroom_number: self.classroom_number,
-        student_number: self.student_num,
+        student_number: self.student_number,
         gender_id: self.gender.nil? ? "" : I18n.t(self.gender.name),
         birthdate: self.birthdate.nil? ? '' : self.birthdate.strftime('%d/%m/%Y'),
         edit: edit

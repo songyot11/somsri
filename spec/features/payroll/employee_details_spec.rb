@@ -127,6 +127,7 @@ describe 'Employee Details', js: true do
   end
 
   before do
+    SiteConfig.make!({ student_number_leading_zero: 0 })
     user.add_role :admin
     taxrates
     payrolls
@@ -371,7 +372,7 @@ describe 'Employee Details', js: true do
         expect(employee.lists.size).to eq(1)
         expect(employee.lists[0].name).to eq("1A")
         expect(employee.lists[0].get_students.size).to eq(2)
-        expect(employee.lists[0].get_students.collect(&:student_number)).to include(22)
+        expect(employee.lists[0].get_students.collect(&:student_number)).to include("22")
         eventually { expect(employee.classroom).to eq "1A" }
       end
     end

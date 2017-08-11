@@ -1,4 +1,5 @@
 describe Payroll do
+  let(:site_configs) { SiteConfig.make!({ tax: true }) }
   let(:school) {school = School.make!({ name: "โรงเรียนแห่งหนึ่ง" })}
   let(:school2) {School.make!({ name: "โรงเรียนแห่ง2" })}
   let(:user) { User.make!({ school_id: school.id }) }
@@ -103,6 +104,7 @@ describe Payroll do
 
   before do
     user.add_role :admin
+    site_configs
     payrolls
     taxrates
     taxs
@@ -122,6 +124,11 @@ describe Payroll do
 
   it "should return  tax" do
     expect(Payroll.generate_tax(payrolls[0],employee1)).to be > 0
+  end
+
+  it "should return tax 0 for site config tax = false" do
+    SiteConfig.stub_chain("get_cache.tax").and_return(false)
+    expect(Payroll.generate_tax(payrolls[0],employee1)).to be 0
   end
 
   it 'should update employee.salary if changed lasted payroll.salary' do

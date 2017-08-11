@@ -1,6 +1,15 @@
 class SiteConfig < ApplicationRecord
+  include ActiveModel::Dirty
   before_create :can_only_has_one
-  after_save :clear_config_cache
+  after_save :clear_config_cache, :regenerate_tax
+
+  def regenerate_tax
+    if self.tax_changed?
+      Payroll.where(closed: [nil, false]).each do |payroll|
+        payroll.generate_tax!
+      end
+    end
+  end
 
   def destroy
   end

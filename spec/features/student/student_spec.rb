@@ -174,4 +174,22 @@ describe 'Student', js: true do
     sleep(1)
     eventually { expect(find('#mobile0').value).to eq("080-000000") }
   end
+
+  it 'should create student' do
+    visit "/parents/new#/"
+    sleep(1)
+    page.fill_in 'ชื่อ-นามสกุล', :with => 'มานี มีตา'
+    click_on('บันทึก')
+    sleep(1)
+    eventually { expect(Parent.where(full_name: 'มานี มีตา').count).to eq 1 }
+  end
+
+  it 'should edit student' do
+    visit "/parents/#{parent[0].id}/edit#/"
+    sleep(1)
+    page.fill_in 'ชื่อ-นามสกุล', :with => 'มานี มีตา'
+    click_on('บันทึก')
+    sleep(1)
+    eventually { expect(Parent.where(full_name: 'มานี มีตา').count).to eq 1 }
+  end
 end

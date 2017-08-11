@@ -22,7 +22,7 @@
         </div>
       </div>
       <div class="col-md-6">
-        <button class="btn btn-export pull-right" type="button" ng-csv="studentReport.getExportData()" csv-header="studentReport.exportHeader" filename="{{studentReport.exportFileName}}">
+        <button ng-hide="true" class="btn btn-export pull-right" type="button" ng-csv="studentReport.getExportData()" csv-header="studentReport.exportHeader" filename="{{studentReport.exportFileName}}">
           <i class="fa fa-external-link" aria-hidden="true"></i> Export
         </button>
       </div>

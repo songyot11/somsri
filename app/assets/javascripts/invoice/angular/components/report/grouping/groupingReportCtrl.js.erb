@@ -20,7 +20,9 @@
           ctrl.options = resp.data.options
           var reportMode = getReportMode()
           if(reportMode == "per_student"){
+            ctrl.column_invoice_id = "Invoice"
             ctrl.first_column = "ชื่อ"
+            ctrl.column_classroom = "ชั้น"
             ctrl.isPerStudent = true
             ctrl.isPerDay = false
           }else{

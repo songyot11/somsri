@@ -140,4 +140,5 @@ SiteConfig.blueprint do
   default_transfer_payment_method { false }
   display_username_password_on_login { false }
   display_schools_year_with_invoice_id { false }
+  tax { true }
 end
