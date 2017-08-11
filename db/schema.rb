@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20170809113559) do
+ActiveRecord::Schema.define(version: 20170810092342) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -418,6 +418,8 @@ ActiveRecord::Schema.define(version: 20170809113559) do
     t.boolean "display_schools_year_with_invoice_id", default: true
     t.boolean "web_cms",                              default: false
     t.boolean "tax",                                  default: true
+    t.integer "student_number_leading_zero",          default: 0
+    t.boolean "one_slip_per_page",                    default: false
   end
 
   create_table "student_lists", force: :cascade do |t|

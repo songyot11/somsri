@@ -39,7 +39,10 @@ class EmployeesController < ApplicationController
       employee[:header] = school.payroll_slip_header || ""
       employees << employee
     end
-    render json: employees, status: :ok
+    render json: {
+      employees: employees,
+      one_per_page: SiteConfig.get_cache.one_slip_per_page
+    }, status: :ok
   end
 
   # GET /employees/:id/payrolls

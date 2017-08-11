@@ -91,7 +91,8 @@
           payroll_ids.push(ctrl.employees[i].payroll_id);
         }
         slipService.employeeSlips(payroll_ids).then(function(resp) {
-          ctrl.employee_slips = resp.data
+          ctrl.employee_slips = resp.data.employees
+          ctrl.onePerPage = resp.data.one_per_page
           for(var i = 0; i < ctrl.employee_slips.length; i++){
             ctrl.employee_slips[i].header = $sce.trustAsHtml(ctrl.employee_slips[i].header);
           }
@@ -104,6 +105,7 @@
           }
           var slipEmployeeDiv = slipForEmployee($scope);
           angular.element(containerDiv).append(slipEmployeeDiv);
+
           setTimeout(function() {
             window.print();
             afterPrintSlip();
