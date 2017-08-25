@@ -297,10 +297,12 @@ class PayrollsController < ApplicationController
       payrolls.each do |payroll|
         if payroll.net_salary > 0
           sum_salary += payroll.net_salary
+          account_number = payroll.employee.account_number
+          account_number.gsub!("-", "") if account_number
           sheet1.insert_row (i + 5), [
             i + 1,
             bank_code,
-            payroll.employee.account_number ? payroll.employee.account_number.gsub!("-", "") : nil,
+            account_number,
             number_with_precision(payroll.net_salary, precision: 2, delimiter: ','),
             nil,
             payroll.employee.full_name.strip
