@@ -99,7 +99,7 @@
 
     ctrl.switchMonth = function(effectiveDate) {
       reportService.getPayroll(effectiveDate["date_time"]).then(function(resp) {
-        ctrl.employees = resp.data
+        ctrl.employees = resp.data.payrolls
         ctrl.employees_origin = JSON.parse(JSON.stringify(ctrl.employees));
         getTotalSalary(ctrl.employees)
         ctrl.currentDateString = effectiveDate["date_string"];
@@ -163,7 +163,7 @@
             }
           }
           reportService.getPayroll(current['date_time']).then(function(resp) {
-            ctrl.employees = resp.data
+            ctrl.employees = resp.data.payrolls
             ctrl.employees_origin = JSON.parse(JSON.stringify(ctrl.employees));
 
             getTotalSalary(ctrl.employees)

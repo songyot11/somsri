@@ -37,8 +37,13 @@
                   <button>พิมพ์ประกันสังคม</button>
                 </a>
               </li>
+              <li ng-show="report.export_ktb_payroll">
+                <a ng-href="/payrolls?effective_date={{report.currentEffectiveDate['date_time'] | encodeString }}&ktb_salary_xls=true"
+                  target="_blank">
+                  <button>ไฟล์นำส่งเงินเดือน (KTB)</button> 
+                </a>
+              </li>
             </ul>
-
           </div>
         </div>
       </div>

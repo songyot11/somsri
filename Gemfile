@@ -68,6 +68,8 @@ gem 'bootstrap-select-rails'
 gem 'detect_timezone_rails'
 gem 'listen', '~> 3.0.5'
 
+gem 'spreadsheet'
+
 group :development, :test do
   # Call 'byebug' anywhere in the code to stop execution and get a debugger console
   gem 'byebug', platform: :mri

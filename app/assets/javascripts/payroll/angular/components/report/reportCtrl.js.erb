@@ -43,7 +43,8 @@
 
       ctrl.switchMonth = function(effectiveDate) {
         reportService.getPayroll(effectiveDate['date_time']).then(function(resp) {
-          ctrl.employees = resp.data
+          ctrl.employees = resp.data.payrolls
+          ctrl.export_ktb_payroll = resp.data.export_ktb_payroll
           ctrl.employees_origin = JSON.parse(JSON.stringify(ctrl.employees));
           ctrl.total = getTotalSalary(ctrl.employees);
           ctrl.currentDateString = effectiveDate["date_string"];
@@ -135,7 +136,8 @@
             ctrl.effectiveDates = resp.data
             var current = ctrl.effectiveDates[0]
             reportService.getPayroll(current['date_time']).then(function(resp) {
-              ctrl.employees = resp.data
+              ctrl.employees = resp.data.payrolls
+              ctrl.export_ktb_payroll = resp.data.export_ktb_payroll
               ctrl.employees_origin = JSON.parse(JSON.stringify(ctrl.employees));
               ctrl.total = getTotalSalary(ctrl.employees);
               getTotalSalary(ctrl.employees)

@@ -100,7 +100,7 @@ describe 'Payroll Report', js: true do
     login_as(user, scope: :user)
   end
 
-  it 'should display social_insurance_pdf button' do
+  it 'should display พิมพ์สรุปรายการ, พิมพ์สลิปเงินเดือนทุกคน, พิมพ์ประกันสังคม' do
     visit "/somsri_payroll#/report"
     sleep(1)
     find('#print-report-btn').click
@@ -108,6 +108,23 @@ describe 'Payroll Report', js: true do
     eventually { expect(page).to have_content /พิมพ์สรุปรายการ/i }
     eventually { expect(page).to have_content /พิมพ์สลิปเงินเดือนทุกคน/i }
     eventually { expect(page).to have_content /พิมพ์ประกันสังคม/i }
+  end
+
+  it 'should not display ไฟล์นำส่งเงินเดือน (KTB)' do
+    visit "/somsri_payroll#/report"
+    sleep(1)
+    find('#print-report-btn').click
+    sleep(1)
+    eventually { expect(page).to_not have_content /ไฟล์นำส่งเงินเดือน (KTB)/i }
+  end
+
+  it 'should display ไฟล์นำส่งเงินเดือน (KTB)' do
+    SiteConfig.make!({ export_ktb_payroll: true })
+    visit "/somsri_payroll#/report"
+    sleep(1)
+    find('#print-report-btn').click
+    sleep(1)
+    eventually { expect(page).to have_content /ไฟล์นำส่งเงินเดือน \(KTB\)/i }
   end
 
   it 'should see header table' do

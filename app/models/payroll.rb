@@ -37,6 +37,10 @@ class Payroll < ApplicationRecord
     Employee.with_deleted.where(id: self.employee_id).first
   end
 
+  def net_salary
+    (self.salary + extra_pay - extra_fee).to_f
+  end
+
   def as_json(options={})
     if options["report"]
       {
@@ -69,7 +73,7 @@ class Payroll < ApplicationRecord
         pvf: self.pvf.to_f,
         note: self.note,
         #Result
-        net_salary: (self.salary + extra_pay - extra_fee).to_f
+        net_salary: self.net_salary
       }
     elsif options["history"]
       {
