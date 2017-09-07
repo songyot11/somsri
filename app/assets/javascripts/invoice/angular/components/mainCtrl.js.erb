@@ -53,6 +53,10 @@
       $state.go('grouping_report')
     };
 
+    $rootScope.openGroupingReport2 = function () {
+      $state.go('grouping_report2')
+    };
+
     $rootScope.openSlip = function (id, page) {
       if(page){
         $state.go('invoice_slip',{ id: id, page: page });

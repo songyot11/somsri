@@ -76,11 +76,9 @@ Rails.application.routes.draw do
   resources :students, only: [:index, :show] do
     collection do
       get 'get_roll_calls'
-      # get 'invoice_total_amount'
     end
   end
   get '/student_report' => "students#student_report"
-  # get "/invoice_total_amount" => "students#invoice_total_amount"
   get "/invoice_years" => "invoices#invoice_years"
   get "/invoice_semesters" => "invoices#invoice_semesters"
   get "/invoice_grouping" => "invoices#invoice_grouping"

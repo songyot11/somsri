@@ -321,6 +321,8 @@ class InvoicesController < ApplicationController
   end
 
   def invoice_grouping
+    display_payment_method = params[:display_payment_method].to_s == "true" ? true : false
+    display_etc = params[:display_etc].to_s == "true" ? true : false
     grouping_keyword = GroupingReportOption.all.order(:id).to_a
     options = []
     if params[:options]
@@ -335,8 +337,8 @@ class InvoicesController < ApplicationController
       options = grouping_keyword.collect{|gk| { name: gk[:name], value: true }}
     end
 
-    start_date = DateTime.parse(params[:start_date]).beginning_of_day if isDate(params[:start_date])
-    end_date = DateTime.parse(params[:end_date]).end_of_day if isDate(params[:end_date])
+    start_date = isDate(params[:start_date]) ? DateTime.parse(params[:start_date]).beginning_of_day : nil
+    end_date = isDate(params[:end_date]) ? DateTime.parse(params[:end_date]).end_of_day : nil
 
     summary_mode = select_summary_mode(start_date, end_date)
     invoices = query_invoice_by_date_range(start_date, end_date)
@@ -347,21 +349,33 @@ class InvoicesController < ApplicationController
       invoices = invoices.order("updated_at ASC").to_a
     end
 
-    header = ["เงินสด", "บัตรเครดิต", "เช็คธนาคาร", "เงินโอน"]
-      grouping_keyword.each do |gk|
-        header << gk[:name]
-      end
-    header << "อื่นๆ"
+    type = params[:type]
+    header = []
+    if display_payment_method
+      header = ["เงินสด", "บัตรเครดิต", "เช็คธนาคาร", "เงินโอน"]
+    end
+
+    grouping_keyword.each do |gk|
+      header << gk[:name]
+    end
+
+    if display_etc
+      header << "อื่นๆ"
+    end
     header << "ยอดรวม"
+
+    column_size =  6 + grouping_keyword.size
+    column_size -= 4 if !display_payment_method
+    column_size -= 1 if !display_etc
 
     header_row_tmp = ""
     header_row_invoice_id_tmp = ""
     header_row_classroom_tmp = ""
     student_id_tmp = "";
-    column_size = 6 + grouping_keyword.size
     datas_tmp = Array.new(column_size, 0.0)
     total_tmp = Array.new(column_size, 0.0)
     rows = []
+
     invoices.each do |invoice|
       if summary_mode == "per_student" && student_id_tmp != invoice.student_id
         # collect per student in one day
@@ -395,8 +409,10 @@ class InvoicesController < ApplicationController
         header_row_tmp = invoice.updated_at.strftime("%d/%m/%Y")
         datas_tmp = Array.new(column_size, 0.0)
       end
-      set_payment_method_datas(invoice, datas_tmp, total_tmp)
-      set_grouping_item(invoice, grouping_keyword, column_size, datas_tmp, total_tmp)
+      if display_payment_method
+        set_payment_method_datas(invoice, datas_tmp, total_tmp)
+      end
+      set_grouping_item(invoice, grouping_keyword, column_size, datas_tmp, total_tmp, display_etc, display_payment_method)
     end
 
     # add last date
@@ -408,7 +424,7 @@ class InvoicesController < ApplicationController
     row[:datas] = datas_tmp if invoices.size > 0
     row[:url] = edit_student_path(id: student_id_tmp) if Student.where(id: student_id_tmp).exists?
     rows << row
-    
+
     render json: {
       header: header,
       rows: rows,
@@ -418,10 +434,11 @@ class InvoicesController < ApplicationController
   end
 
   private
-    def set_grouping_item(invoice, grouping_keyword, column_size, datas_tmp, total_tmp)
+    def set_grouping_item(invoice, grouping_keyword, column_size, datas_tmp, total_tmp, display_etc, display_payment_method)
       LineItem.where(invoice_id: invoice.id).to_a.each do |li|
         is_grouped = false
         keyword_index = 4
+        keyword_index -= 4 if !display_payment_method
         grouping_keyword.each do |gk|
           if li.detail.downcase =~ Regexp.union(gk[:keyword].downcase.split('|').collect(&:strip))
             #sum by keyword
@@ -433,15 +450,19 @@ class InvoicesController < ApplicationController
           break if is_grouped
         end
 
-        if !is_grouped
+        if !is_grouped && display_etc
           #sum by other
           datas_tmp[column_size - 2] += li.amount
           total_tmp[column_size - 2] += li.amount
+          #sum all invoice
+          datas_tmp[column_size - 1] += li.amount
+          total_tmp[column_size - 1] += li.amount
+        elsif is_grouped
+          #sum all invoice
+          datas_tmp[column_size - 1] += li.amount
+          total_tmp[column_size - 1] += li.amount
         end
 
-        #sum all invoice
-        datas_tmp[column_size - 1] += li.amount
-        total_tmp[column_size - 1] += li.amount
       end
     end
 
