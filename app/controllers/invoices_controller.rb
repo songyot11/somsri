@@ -110,19 +110,22 @@ class InvoicesController < ApplicationController
     Invoice.transaction do
       parent = Parent.find_or_create_by(parent_params);
       student = nil
+      qry_student = Student.all
       # Clean Up Student's name
       student_name = student_params[:full_name].gsub('ด.ช.', '').gsub('ด.ญ.', '').gsub('เด็กหญิง', '').gsub('เด็กชาย', '').strip.gsub(/\s+/,' ')
 
       # try to search by Student Number
       if student_params[:student_number].present? && student_params[:student_number].size > 0
-        student = Student.where(student_number: student_params[:student_number]).first
+        qry_student = qry_student.where(student_number: student_params[:student_number])
       end
 
       # try to search by Student name
-      if student.nil?
-        student = Student.arel_table
-        student = Student.where(student[:full_name].matches("%#{student_name}%")).first
+      if student_name.present? && student_name.size > 0
+        student_arel_table = Student.arel_table
+        qry_student = qry_student.where(student_arel_table[:full_name].matches("%#{student_name}%"))
       end
+
+      student = qry_student.first
 
       # Stil not found create new Student
       if student.nil?
