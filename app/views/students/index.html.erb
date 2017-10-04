@@ -9,17 +9,24 @@
       <h1>นักเรียน</h1>
     </div>
     <div class="col-xs-6" style="text-align: right; margin-top: 15px;">
-     <%= link_to ("<i class='fa fa-print'></i>").html_safe, "#",
-     :class => 'btn btn-to-print-student float-right',
-     :onclick => 'printStudent()' %>
 
-     <%= link_to ('<i class="fa fa-share-square-o" aria-hidden="true"></i> Export').html_safe, "#", :class => 'btn btn-export float-right', :onclick => 'exportTable("students")' %>
+    <span class="dropdown float-right">
+      <span div data-toggle="dropdown" class="btn btn-to-print-student" id="print-student-list">
+        พิมพ์รายชื่อ <i class='fa fa-chevron-down'></i>
+      </span>
+      <ul style="margin-top: 10px" class="dropdown-menu" aria-labelledby="print-student-list">
+        <li><a target="_blank" id="print-student-list-with-image" href="/students.pdf?for_print=true">แสดงรูป</a></li>
+        <li><a href="#" onclick='printStudent()'>ไม่แสดงรูป</a></li>
+      </ul>
+    </span>
 
-     <%= link_to t('.addstudent', :default => t("helpers.links.addstudent")),
-     new_student_path,
-     :class => 'btn btn-add-ps float-right' %>
-   </div>
- </div>
+      <%= link_to ('<i class="fa fa-share-square-o" aria-hidden="true"></i> Export').html_safe, "#", :class => 'btn btn-export float-right', :onclick => 'exportTable("students")' %>
+
+      <%= link_to t('.addstudent', :default => t("helpers.links.addstudent")),
+      new_student_path,
+      :class => 'btn btn-add-ps float-right' %>
+    </div>
+  </div>
 
  <div class="content-student-parent">
   <div class="row toolbar-student-parent">
@@ -54,7 +61,7 @@
   data-pagination-loop="false"
   data-url="students.json"
   data-side-pagination="server"
-  data-sort-name="classroom, classroom_number" 
+  data-sort-name="classroom, classroom_number"
   data-sort-order="asc"
   data-query-params="queryParams">
   <thead>
@@ -93,5 +100,3 @@
     </tr>
   </thead>
 </table>
-
-

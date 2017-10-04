@@ -1,0 +1,83 @@
+@import "bootstrap-sprockets";
+@import "bootstrap";
+
+.student-list-with-img {
+  font-size: 12px;
+  padding-top: 20px;
+}
+
+.body-list {
+  padding-top: 20px;
+}
+
+.student-list-with-img .img-profile {
+  width: 100%;
+  background-size: 100% !important;
+  background-repeat: no-repeat !important;
+  background-position: center top !important;
+}
+
+.nopadding {
+   padding: 0 !important;
+   margin: 0 !important;
+}
+
+.student-list-with-img .row-list {
+  padding-top: 30px;
+  padding-bottom: 30px;
+}
+
+.student-list-with-img .padding-profile {
+  padding-right: 10px;
+  padding-left: 10px;
+}
+
+.student-list-with-img .img-bg {
+  width: 100%;
+  padding-bottom: 100%;
+  background-size: 100% !important;
+  background-repeat: no-repeat !important;
+  background-position: center top !important;
+}
+
+.student-list-with-img .bg-light-gray {
+  background-color: #DDD;
+}
+.student-list-with-img .circle{
+  border-radius: 50%;
+}
+.student-list-with-img .icon-default-img{
+   position: absolute;
+   margin: auto;
+   margin-left: 27px;
+   margin-top: 20px;
+   font-size: 60px !important;
+   transform: translate(90%, 50%);
+   color: #fff;
+}
+.student-list-with-img .pagebreak {
+  page-break-before: always;
+}
+
+.student-list-with-img .body-list {
+  padding-top: 20px;
+  padding-bottom: 20px;
+  padding-right: 10px;
+  padding-left: 10px;
+}
+
+.student-list-with-img .item-list {
+  padding: 10px;
+}
+
+.student-list-with-img .header-list .title {
+  font-size: 24px;
+}
+
+.student-list-with-img .header-list .school-year {
+  font-size: 20px;
+}
+
+.student-list-with-img .header-list .grade {
+  font-size: 16px;
+}

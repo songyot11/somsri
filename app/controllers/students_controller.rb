@@ -116,6 +116,7 @@ class StudentsController < ApplicationController
 
   # GET /students
   # GET /students.json
+  # GET /students.pdf
   def index
     @menu = "นักเรียน"
     authorize! :read, Student
@@ -149,15 +150,42 @@ class StudentsController < ApplicationController
         school_year: SchoolSetting.school_year_or_default(".........."),
         student_list: []
       }
+
       @students.to_a.each do |student|
+        parents = []
+        student.parent_and_relationship_names.each_with_index do |parent, i|
+          break if i > 1
+          parents << parent
+        end
         results[:student_list] << {
           student_number: student.student_number || "",
+          nickname: student.nickname,
+          img_url: student.img_url.exists? ? student.img_url.url(:medium) : '',
           full_name: student.full_name_with_title || "",
           national_id: student.national_id || "",
-          birthdate: student.birthdate ? (student.birthdate + 543.years).strftime("%d/%m/%Y") : ""
+          birthdate: student.birthdate ? (student.birthdate + 543.years).strftime("%d/%m/%Y") : "",
+          parents: parents
         }
       end
-      render json: results, status: :ok
+
+      respond_to do |format|
+        format.html
+        format.json do
+          render json: results, status: :ok
+        end
+        format.pdf do
+          size = 10
+          @results = {
+            dataPerPages: results[:student_list].each_slice(size).to_a,
+            school_year: results[:school_year]
+          }
+          render pdf: "file_name",
+                  template: "students/student_list_with_image.html.erb",
+                  encoding: "UTF-8",
+                  layout: 'pdf.html',
+                  show_as_html: params[:html_view].present?
+        end
+      end
     else
       respond_to do |f|
         f.html { render "students/index", layout: "application" }

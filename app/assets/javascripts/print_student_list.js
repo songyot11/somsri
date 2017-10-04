@@ -6,7 +6,7 @@ function printStudent(){
   print_params["search"] = $("input#search").val()
   print_params["grade_select"] = $("#grade_select").val()
   print_params["class_select"] = $("#class_select").val()
-  $.get("/students?" + params_string, print_params)
+  $.get("/students.json?" + params_string, print_params)
     .done(function( data ) {
       var html = "";
       var size = 40;

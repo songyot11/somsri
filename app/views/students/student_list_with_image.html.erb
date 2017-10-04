@@ -1,0 +1,55 @@
+<% @results[:dataPerPages].each_with_index do |dataPerPage, page_index| %>
+  <div class="student-list-with-img">
+    <div class="header-list">
+      <div class="row">
+        <div class="col-xs-6">
+          <div class="title"><b>รายชื่อนักเรียน</b></div>
+        </div>
+        <div class="col-xs-6">
+          <div class="pull-right school-year"><b>ปีการศึกษา</b> <%= @results[:school_year] %></div>
+        </div>
+      </div>
+      <hr />
+      <div class="row">
+        <div class="col-xs-12 grade">
+          <div><b>ระดับชั้น</b> <%= @filter_grade %> <b>ห้อง</b> <%= @filter_class %></div>
+        </div>
+      </div>
+    </div>
+    <div class="body-list">
+      <% dataPerPage.each_with_index do |data, i| %>
+        <% if i%2 == 0 %>
+          <div class="row row-list">
+        <% end %>
+            <div class="col-xs-6 nopadding">
+              <div class="row item-list nopadding">
+                <div class="col-xs-4 nopadding">
+                  <div class="padding-profile">
+                    <% if !data[:img_url].blank? %>
+                      <%= wicked_pdf_image_tag data[:img_url], { class: "img-profile circle" } %>
+                    <% else %>
+                      <div class="img-bg bg-light-gray circle"><i class="fa fa-user icon-default-img" aria-hidden="true"></i></div>
+                    <% end %>
+                  </div>
+                </div>
+                <div class="col-xs-8 nopadding">
+                  <div>เลขประจำตัวนักเรียน : <%= data[:student_number].blank? ? "-" : data[:student_number] %></div>
+                  <div>ชื่อ - นามสกุล : <%= data[:full_name].blank? ? "-" : data[:full_name] %></div>
+                  <div>ชื่อเล่น : <%= data[:nickname].blank? ? "-" : data[:nickname] %></div>
+                  <div>วันเดือนปีเกิด : <%= data[:birthdate].blank? ? "-" : data[:birthdate] %></div>
+                  <% data[:parents].each do |parent, i| %>
+                    <div>ชื่อ<%= I18n.t(parent[:relationship_name]) %> : <%= parent[:parent_name] %></div>
+                  <% end %>
+                </div>
+              </div>
+            </div>
+        <% if i%2 == 1 %>
+          </div>
+        <% end %>
+      <% end %>
+    </div>
+    <% if page_index < @results[:dataPerPages].length - 1 %>
+      <div class='pagebreak'></div>
+    <% end %>
+  </div>
+<% end %>

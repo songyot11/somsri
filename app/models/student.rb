@@ -135,6 +135,18 @@ class Student < ApplicationRecord
     Parent.with_deleted.where(id: parent_ids).all.collect(&:full_name).join(', ')
   end
 
+  def parent_and_relationship_names
+    results = []
+    StudentsParent.where(student_id: self.id).to_a.each do |sp|
+      results << {
+        priority: sp.relationship_id,
+        relationship_name: sp.relationship.name,
+        parent_name: Parent.with_deleted.where(id: sp.parent_id).first.full_name
+      }
+    end
+    return results.sort_by{ |obj| obj[:priority] }
+  end
+
   def active_invoice
     if self.all_active_invoices_year.include?(@year)
       current_invoice = self.all_active_invoices.where(school_year: @year, semester: @semester)

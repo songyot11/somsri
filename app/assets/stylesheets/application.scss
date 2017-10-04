@@ -200,6 +200,17 @@ ul.nav.navbar-nav.navbar-right.dropdown{
     .alert {
       display: none;
     }
+
+    .student-list-with-img .body-list {
+      padding-top: 20px;
+      padding-bottom: 20px;
+      padding-right: 10px;
+      padding-left: 10px;
+    }
+
+    .student-list-with-img .item-list {
+      padding: 10px;
+    }
   }
   .btn-to-print-student,
   .btn-to-print-student:focus{

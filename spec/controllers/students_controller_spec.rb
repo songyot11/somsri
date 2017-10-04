@@ -94,7 +94,7 @@ describe StudentsController do
   describe "students" do
     describe '#index' do
       it "should show all student" do
-        get :index, format: :json, params: { grade_select: 'all' , class_select: 'all' }
+        get :index, format: :json, params: { grade_select: 'all' , class_select: 'all' }, format: :json
 
         expect(response.body).to have_content "one"
         expect(response.body).to have_content "two"
@@ -104,7 +104,7 @@ describe StudentsController do
       end
 
       it "should show all student on print list" do
-        get :index, params: { grade_select: 'all' , class_select: 'all', for_print: true }
+        get :index, params: { grade_select: 'all' , class_select: 'all', for_print: true }, format: :json
 
         expect(response.body).to have_content "one"
         expect(response.body).to have_content "two"
@@ -121,7 +121,7 @@ describe StudentsController do
       end
 
       it 'should show only grade that selected on print list' do
-        get :index , params: { grade_select: 'Preschool', for_print: true  }
+        get :index , params: { grade_select: 'Preschool', for_print: true  }, format: :json
 
         expect(response.body).to have_content "one"
         expect(response.body).to have_content "five"
@@ -134,7 +134,7 @@ describe StudentsController do
       end
 
       it 'should show only classroom that selected on print list' do
-        get :index , params: { class_select: '4A', for_print: true }
+        get :index , params: { class_select: '4A', for_print: true }, format: :json
 
         expect(response.body).to have_content "four"
       end
@@ -146,7 +146,7 @@ describe StudentsController do
       end
 
       it 'should show both grade and classroom that selected on print list' do
-        get :index , params: { grade_select: 'Kindergarten 1' , class_select: '2A', for_print: true }
+        get :index , params: { grade_select: 'Kindergarten 1' , class_select: '2A', for_print: true }, format: :json
 
         expect(response.body).to have_content "two"
       end

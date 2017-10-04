@@ -192,4 +192,14 @@ describe 'Student', js: true do
     sleep(1)
     eventually { expect(Parent.where(full_name: 'มานี มีตา').count).to eq 1 }
   end
+
+  it 'should display print student list button' do
+    visit "/students#"
+    sleep(1)
+    eventually { expect(page).to have_content("พิมพ์รายชื่อ") }
+    find("#print-student-list").click()
+    sleep(1)
+    eventually { expect(page).to have_content("แสดงรูป") }
+    eventually { expect(page).to have_content("ไม่แสดงรูป") }
+  end
 end
