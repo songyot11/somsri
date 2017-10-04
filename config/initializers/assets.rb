@@ -27,3 +27,5 @@ Rails.application.config.assets.precompile += %w( application_webSchool.css )
 Rails.application.config.assets.precompile += %w( application_webSchool.js )
 Rails.application.config.assets.precompile += %w( calendario.min.js )
 Rails.application.config.assets.precompile += %w( modernizr.custom.63321.js )
+
+Rails.application.config.assets.precompile += %w( pdf.css )

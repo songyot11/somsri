@@ -98,6 +98,8 @@ Rails.application.configure do
     enable_starttls_auto:   true
   }
   config.action_mailer.asset_host = 'https://www.somsri.io'
+  config.assets.comple = false
+  config.assets.precompile += ['pdf.css']
 
   Rails.application.config.middleware.use ExceptionNotification::Rack,
     :email => {
