@@ -75,6 +75,30 @@ example: rake payroll:generate:on[1,2016]
 ```
 rake user:create[<email>,<password>]
 ```
+
+### install wkhtmltopdf 
+For rendering pdf file. We need to install wkhtmltopdf
+```
+yum install wkhtmltopdf
+```
+fix problem rendering thai font
+```
+wget ftp://linux.thai.net/pub/thailinux/software/fonts-tlwg/fonts-tlwg-0.6.1.tar.xz
+tar -xf fonts-tlwg-0.6.1.tar.xz
+cd fonts-tlwg-0.6.1
+sudo yum install fontforge
+./configure
+make
+make install
+cd ..
+mkdir thai
+find . -name '*.ttf' | cpio -pdm ./thai
+cd thai
+sudo cp -R fonts-tlwg-0.6.1/ /usr/share/fonts/
+fc-cache -frv /usr/share/fonts/
+```
+https://github.com/wkhtmltopdf/wkhtmltopdf/issues/2496
+
 CMS
 -------
 ```
