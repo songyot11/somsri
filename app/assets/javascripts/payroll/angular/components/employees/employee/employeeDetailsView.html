@@ -194,8 +194,9 @@
             </div>
             <div class="col-md-4">
               <div class="form-group">
-                <label for="classroom">ห้อง</label>
-                <input type="text" class="form-control" id="classroom" ng-model="employee.datas.employee.classroom">
+                <label for="classroom_id">ห้อง</label>
+                <select class="form-control somsri-select" ng-options="item.id as item.name for item in employee.classrooms" id="classroom_id" ng-model="employee.datas.employee.classroom_id">
+                </select>
               </div>
             </div>
           </div>

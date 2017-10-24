@@ -45,9 +45,13 @@ describe 'Invoice-Report', js: true do
     password: '123456789'
   })}
 
-  let(:grade){Grade.create(
-    name: "Kindergarten 1"
-  )}
+  let(:grade) do
+    Grade.make!({name: "Kindergarten 1"})
+  end
+
+  let(:classroom) do
+    Classroom.make!({name: "1A", grade_id: grade.id})
+  end
 
   let(:invoiceStatus1){InvoiceStatus.create!(
     name: 'Active'
@@ -61,8 +65,8 @@ describe 'Invoice-Report', js: true do
     full_name: 'มั่งมี ศรีสุข' ,
     nickname: 'รวย' ,
     gender_id: 1 ,
-    grade_id: 2 ,
-    classroom: '1A' ,
+    grade_id: grade.id,
+    classroom: classroom,
     classroom_number: 13 ,
     student_number: 2014 ,
     birthdate: Time.now
@@ -72,8 +76,8 @@ describe 'Invoice-Report', js: true do
     full_name: 'สมศรี ณ บานาน่าโค๊ดดิ้ง' ,
     nickname: 'กล้วย' ,
     gender_id: 2 ,
-    grade_id: 4 ,
-    classroom: '1A' ,
+    grade_id: grade.id,
+    classroom: classroom,
     classroom_number: 14 ,
     student_number: 2015 ,
     birthdate: Time.now

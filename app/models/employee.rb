@@ -7,6 +7,7 @@ class Employee < ApplicationRecord
   has_many :parents, class_name: "Individual", foreign_key: 'parent_id'
   has_many :friends, class_name: "Individual", foreign_key: 'friend_id'
   belongs_to :grade
+  belongs_to :classroom
   has_many :teacher_attendance_lists
 
   has_one :taxReduction
@@ -33,11 +34,11 @@ class Employee < ApplicationRecord
       puts 'WARNING: please remove this function after rollcall list assignment has been implemented'
       @@warned = true
     end
-    if self.classroom && !self.classroom.blank? && self.classroom_changed?
+    if self.classroom_id && self.classroom_id_changed?
       # add or update list
       self.teacher_attendance_lists.destroy_all
       generate_teacher_attendance_lists
-    elsif self.classroom.blank?
+    else
       # remove list
       self.teacher_attendance_lists.destroy_all
     end
@@ -143,14 +144,14 @@ class Employee < ApplicationRecord
   def generate_teacher_attendance_lists
     if self.classroom
       TeacherAttendanceList.transaction do
-        list = List.where(name: self.classroom).first
+        list = List.where(name: self.classroom.name).first
         if !list
-          list = List.create(name: self.classroom, category: "roll_call")
-          Student.where(classroom: self.classroom).pluck(:id).each do |student_id|
+          list = List.create(name: self.classroom.name, category: "roll_call")
+          Student.where(classroom_id: self.classroom.id).pluck(:id).each do |student_id|
             StudentList.create(student_id: student_id, list_id: list.id)
           end
         else
-          student_ids = Student.where(classroom: self.classroom).pluck(:id)
+          student_ids = Student.where(classroom_id: self.classroom.id).pluck(:id)
           exclude_student_ids = StudentList.where(list_id: list.id).pluck(:id)
           (student_ids - exclude_student_ids).each do |student_id|
             StudentList.create(student_id: student_id, list_id: list.id)

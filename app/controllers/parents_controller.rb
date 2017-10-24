@@ -5,13 +5,11 @@ class ParentsController < ApplicationController
   # GET /parents
   # GET /parents.json
   def index
-    students = Student.all.order("classroom ASC")
+    students = Student.all.order("classroom_id ASC")
 
     grade_select = (params[:grade_select] || 'All')
     class_select = (params[:class_select] || 'All')
-
-    @classroom_display = Student.order("classroom ASC").select(:classroom).map(&:classroom).uniq.compact
-
+    @classroom_display = Classroom.order("id ASC").select(:name).map(&:name).uniq.compact
     @parents = get_parents(class_select, grade_select, params[:search], params[:page], params[:per_page], params[:sort], params[:order])
 
     @menu = "ผู้ปกครอง"
@@ -186,23 +184,26 @@ class ParentsController < ApplicationController
     end
 
     def get_parents(class_select, grade_select, search, page, per_page, sort, order)
-        if class_select.downcase == 'all' && grade_select.downcase == 'all'
-          qry_parents = Parent.all
-        elsif grade_select.downcase == 'all' && class_select.downcase != 'all'
-          qry_parents = Parent.joins(:students).where(students:{classroom: class_select})
-        elsif grade_select != 'all' && class_select.downcase == 'all'
-          grade = Grade.where(name: grade_select).first
-          qry_parents = Parent.joins(:students).where(students:{grade: grade.id})
-        elsif grade_select != 'all' && class_select != 'all'
-          grade = Grade.where(name: grade_select).first
-          qry_parents = Parent.joins(:students).where(students:{grade: grade.id , classroom: class_select})
-        end
+      if grade_select.downcase == 'all' && class_select.downcase != 'all'
+        classroom = Classroom.where(name: class_select).first
+        qry_filter = "and classrooms.id = #{classroom.id}"
+        qry_filter2 = "classrooms.id = #{classroom.id} and"
+      elsif grade_select.downcase != 'all' && class_select.downcase == 'all'
+        grade = Grade.where(name: grade_select).first
+        qry_filter = "and grades.id = #{grade.id}"
+        qry_filter2 = "grades.id = #{grade.id} and"
+      elsif grade_select.downcase != 'all' && class_select.downcase != 'all'
+        grade = Grade.where(name: grade_select).first
+        classroom = Classroom.where(name: class_select).first
+        qry_filter = "and (grades.id = #{grade.id} AND classrooms.id = #{classroom.id})"
+        qry_filter2 = "(grades.id = #{grade.id} AND classrooms.id = #{classroom.id}) and"
+      end
 
-        search = " where parents.full_name LIKE '%#{search}%' OR parents.full_name_english LIKE '%#{search}%' OR parents.email LIKE '%#{search}%' OR parents.mobile LIKE '%#{search}%' OR students.full_name LIKE '%#{search}%' OR students.full_name_english LIKE '%#{search}%'"
+      where_sql = " where #{qry_filter2} (parents.full_name LIKE '%#{search}%' OR parents.full_name_english LIKE '%#{search}%' OR parents.email LIKE '%#{search}%' OR parents.mobile LIKE '%#{search}%' OR students.full_name LIKE '%#{search}%' OR students.full_name_english LIKE '%#{search}%')"
+      order_sql = sort || order ? " order by #{sort || ''} #{order || ''}" : ""
+      arr_parents = Parent.find_by_sql("select parents.id, parents.full_name ,parents.mobile,parents.email,relationships.name, students.full_name as student_name, students.id as student_id from parents left outer join students_parents on students_parents.id IN ( select students_parents.id from students_parents left join students on students_parents.student_id = students.id left join grades on students.grade_id = grades.id left join classrooms on students.classroom_id = classrooms.id where students_parents.parent_id = parents.id #{qry_filter} limit 1) left join students on students_parents.student_id = students.id left join relationships on relationships.id=students_parents.relationship_id left join grades on students.grade_id = grades.id left join classrooms on students.classroom_id = classrooms.id" + where_sql + order_sql).paginate(page: page, per_page: per_page)
 
-        order = " order by #{sort} #{order}"
-        arr_parents = qry_parents.find_by_sql("select parents.id, parents.full_name ,parents.mobile,parents.email,relationships.name, students.full_name as student_name, students.id as student_id from parents left outer join students_parents on students_parents.id = ( select id from students_parents where students_parents.parent_id = parents.id limit 1 ) left join students on students_parents.student_id = students.id left join relationships on relationships.id=students_parents.relationship_id" + search + order).paginate(page: page, per_page: per_page) if sort
-        return arr_parents
+      return arr_parents
     end
 
   end

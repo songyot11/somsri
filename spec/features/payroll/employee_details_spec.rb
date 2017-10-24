@@ -14,6 +14,13 @@ describe 'Employee Details', js: true do
 
   let(:grade) { Grade.make!(name: 'K1') }
 
+  let(:classrooms) do
+    [
+      Classroom.make!({name: "1A", grade_id: grade.id}),
+      Classroom.make!({name: "1B", grade_id: grade.id})
+    ]
+  end
+
   let(:school) { school = School.make!({ name: "โรงเรียนแห่งหนึ่ง" }) }
 
   let(:user) { User.make!({ school_id: school.id }) }
@@ -131,7 +138,7 @@ describe 'Employee Details', js: true do
     user.add_role :admin
     taxrates
     payrolls
-    grade
+    classrooms
     login_as(user, scope: :user)
   end
 
@@ -256,7 +263,7 @@ describe 'Employee Details', js: true do
 
       click_link('ข้อมูลทั่วไป')
       page.find("#grade_id").select("K1")
-      page.fill_in 'ห้อง', :with => '1/1'
+      page.find("#classroom_id").select(classrooms[0].name)
       sleep(1)
 
       click_button('บันทึก')
@@ -269,7 +276,7 @@ describe 'Employee Details', js: true do
 
       eventually { expect(employee.last_name_thai).to eq 'โอชา' }
       eventually { expect(employee.salary).to eq 200 }
-      eventually { expect(employee.classroom).to eq "1/1" }
+      eventually { expect(employee.classroom).to eq classrooms[0] }
       eventually { expect(employee.grade).to eq grade }
       eventually { expect(payroll.salary).to eq 200 }
       eventually { expect(payroll.note).to eq nil }
@@ -325,8 +332,8 @@ describe 'Employee Details', js: true do
             last_name: 'ศรีสุข',
             nickname: 'รวย' ,
             gender_id: 1 ,
-            grade_id: 2 ,
-            classroom: '1A' ,
+            grade_id: grade.id,
+            classroom: classrooms[0],
             classroom_number: 13 ,
             student_number: 23 ,
           }),
@@ -335,8 +342,8 @@ describe 'Employee Details', js: true do
             last_name: 'ณ บานาน่าโค๊ดดิ้ง',
             nickname: 'กล้วย' ,
             gender_id: 2 ,
-            grade_id: 4 ,
-            classroom: '1A' ,
+            grade_id: grade.id,
+            classroom: classrooms[0],
             classroom_number: 14 ,
             student_number: 22 ,
             birthdate: Time.now
@@ -346,8 +353,8 @@ describe 'Employee Details', js: true do
             last_name: 'ณ บานาน่าโค๊ดดิ้ง',
             nickname: 'กั้ง' ,
             gender_id: 2 ,
-            grade_id: 4 ,
-            classroom: '1B' ,
+            grade_id: grade.id,
+            classroom: classrooms[1],
             classroom_number: 14 ,
             student_number: 21 ,
             birthdate: Time.now
@@ -359,7 +366,7 @@ describe 'Employee Details', js: true do
         students
         visit "/somsri_payroll#/employees/#{employees[0].id}"
         sleep(1)
-        page.fill_in 'ห้อง', :with => '1A'
+        page.find("#classroom_id").select(classrooms[0].name)
         sleep(1)
 
         click_button('บันทึก')
@@ -373,7 +380,7 @@ describe 'Employee Details', js: true do
         expect(employee.lists[0].name).to eq("1A")
         expect(employee.lists[0].get_students.size).to eq(2)
         expect(employee.lists[0].get_students.collect(&:student_number)).to include("22")
-        eventually { expect(employee.classroom).to eq "1A" }
+        eventually { expect(employee.classroom).to eq classrooms[0] }
       end
     end
 

@@ -16,6 +16,13 @@ describe 'Student', js: true do
     name: "Kindergarten 1"
   )}
 
+  let(:classrooms) do
+    [
+      Classroom.make!({name: "2A", grade_id: grade.id}),
+      Classroom.make!({name: "2B", grade_id: grade.id})
+    ]
+  end
+
   let(:student) do
     [
       student1 = Student.make!({
@@ -68,6 +75,7 @@ describe 'Student', js: true do
     school
     user.add_role :admin
     login_as(user, scope: :user)
+    classrooms
     studentsparent
     invoice_status_1
     invoice_status_2
@@ -138,26 +146,26 @@ describe 'Student', js: true do
     page.fill_in 'ชื่อเล่น', :with => 'ใหม่'
     page.fill_in 'Full Name', :with => 'Nakreanpermmai'
     page.fill_in 'Nick Name', :with => 'Mai'
-    page.fill_in 'ห้อง', :with => '2B'
+    page.find("#student_classroom_id").select(classrooms[0].name)
     sleep(1)
     click_button("บันทึก")
     sleep(1)
     new_student = Student.where(full_name: "นักเรียนเพิ่มใหม่").first
     eventually { expect(new_student.student_lists.size).to eq(1) }
-    eventually { expect(new_student.student_lists[0].list.name).to eq("2B") }
+    eventually { expect(new_student.student_lists[0].list.name).to eq(classrooms[0].name) }
   end
 
   it 'should create list when add classroom to student' do
     visit "/students/#{student[0].id}/edit#/"
     sleep(1)
-    page.fill_in 'ห้อง', :with => '2B'
+    page.find("#student_classroom_id").select(classrooms[0].name)
     sleep(1)
     click_button("บันทึก")
     sleep(1)
 
     new_student = Student.where(id: student[0].id).first
     eventually { expect(new_student.student_lists.length).to eq(1) }
-    eventually { expect(new_student.student_lists[0].list.name).to eq("2B") }
+    eventually { expect(new_student.student_lists[0].list.name).to eq(classrooms[0].name) }
   end
 
   it 'should display parent mobile' do

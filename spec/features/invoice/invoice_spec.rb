@@ -22,6 +22,14 @@ describe 'Invoice', js: true do
   let(:invoice_status_1) { InvoiceStatus.make! name: 'Active' }
   let(:invoice_status_2) { InvoiceStatus.make! name: 'Canceled' }
 
+  let(:grade) do
+    Grade.make!({name: "Kindergarten 1"})
+  end
+
+  let(:classroom) do
+    Classroom.make!({name: "1A", grade_id: grade.id})
+  end
+
   let(:students) do
     [
       Student.make!({
@@ -29,8 +37,8 @@ describe 'Invoice', js: true do
         last_name: 'ศรีสุข',
         nickname: 'รวย' ,
         gender_id: 1 ,
-        grade_id: 2 ,
-        classroom: '1A' ,
+        grade_id: grade.id ,
+        classroom: classroom ,
         classroom_number: 13 ,
         student_number: 23 ,
 
@@ -40,8 +48,8 @@ describe 'Invoice', js: true do
         last_name: 'ณ บานาน่าโค๊ดดิ้ง',
         nickname: 'กล้วย' ,
         gender_id: 2 ,
-        grade_id: 4 ,
-        classroom: '1A' ,
+        grade_id: grade.id ,
+        classroom: classroom ,
         classroom_number: 14 ,
         student_number: 22 ,
         birthdate: Time.now
@@ -52,8 +60,8 @@ describe 'Invoice', js: true do
         last_name: 'ณ บานาน่าโค๊ดดิ้ง',
         nickname: 'กั้ง' ,
         gender_id: 2 ,
-        grade_id: 4 ,
-        classroom: '1A' ,
+        grade_id: grade.id ,
+        classroom: classroom ,
         classroom_number: 14 ,
         student_number: 21 ,
         birthdate: Time.now

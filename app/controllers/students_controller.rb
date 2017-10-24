@@ -18,7 +18,7 @@ class StudentsController < ApplicationController
       @students_all = Student.order("student_number ASC").search(params[:search]).with_deleted.to_a
     else
       grade = Grade.where(name: grade_select).first
-      @students_all = Student.where(grade_id: grade.id).order("classroom ASC, classroom_number ASC").search(params[:search]).with_deleted.to_a
+      @students_all = Student.where(grade_id: grade.id).order("classroom_id ASC, classroom_number ASC").search(params[:search]).with_deleted.to_a
     end
 
     datas = []
@@ -61,7 +61,7 @@ class StudentsController < ApplicationController
         classroom_number: student.classroom_number,
         student_number: student.student_number,
         grade_name: last_tuition_invoice ? last_tuition_invoice.grade_name : student.grade_name,
-        classroom: student.classroom,
+        classroom: student.classroom ? student.classroom.name : "",
         parent_names: student.parent_names,
         active_invoice_status: paid ? "ชำระแล้ว" : "ยังไม่ได้ชำระ",
         active_invoice_payment_method: payment_method,
@@ -124,7 +124,7 @@ class StudentsController < ApplicationController
     grade_select = (params[:grade_select] || 'All')
     class_select = (params[:class_select] || 'All')
 
-    @class_display = Student.order("classroom ASC").select(:classroom).map(&:classroom).uniq.compact
+    @class_display = Classroom.order("id ASC").select(:name).map(&:name).uniq.compact
     year_select = (params[:year_select] || Date.current.year + 543)
     semester_select = params[:semester_select]
     invoice_status = params[:status]
@@ -133,13 +133,15 @@ class StudentsController < ApplicationController
     if grade_select.downcase == 'all' && class_select.downcase == 'all'
       students = Student
     elsif grade_select.downcase == 'all' && class_select.downcase != 'all'
-      students = Student.where(classroom: class_select)
-    elsif grade_select != 'all' && class_select.downcase == 'all'
+      classroom = Classroom.where(name: class_select).first
+      students = Student.where(classroom_id: classroom.id)
+    elsif grade_select.downcase != 'all' && class_select.downcase == 'all'
       grade = Grade.where(name: grade_select).first
       students = Student.where(grade: grade.id)
-    elsif grade_select != 'all' && class_select != 'all'
+    elsif grade_select.downcase != 'all' && class_select.downcase != 'all'
       grade = Grade.where(name: grade_select).first
-      students = Student.where(grade: grade.id , classroom: class_select)
+      classroom = Classroom.where(name: class_select).first
+      students = Student.where(grade: grade.id , classroom_id: classroom.id)
     end
     @students = students.order("#{params[:sort]} #{params[:order]}").search(params[:search])
     @filter_grade = grade_select
@@ -187,6 +189,7 @@ class StudentsController < ApplicationController
         end
       end
     else
+      @students.to_a
       respond_to do |f|
         f.html { render "students/index", layout: "application" }
         f.json {
@@ -422,7 +425,7 @@ class StudentsController < ApplicationController
 
     # Never trust parameters from the scary internet, only allow the white list through.
     def student_params
-      params.require(:student).permit(:full_name, :full_name_english, :nickname, :nickname_english, :gender_id, :birthdate, :grade_id, :classroom, :classroom_number, :student_number, :national_id, :remark , :status, :img_url)
+      params.require(:student).permit(:full_name, :full_name_english, :nickname, :nickname_english, :gender_id, :birthdate, :grade_id, :classroom_id, :classroom_number, :student_number, :national_id, :remark , :status, :img_url)
     end
 
     def relation_assign

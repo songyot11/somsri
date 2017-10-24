@@ -19,13 +19,32 @@ describe StudentsController do
     ]
   end
 
+  let(:grades) do
+    [
+      Grade.make!({name: "Preschool"}),
+      Grade.make!({name: "Kindergarten 1"}),
+      Grade.make!({name: "Kindergarten 2"}),
+      Grade.make!({name: "Kindergarten 3"})
+    ]
+  end
+
+  let(:classrooms) do
+    [
+      Classroom.make!({name: "1A", grade_id: grades[0].id}),
+      Classroom.make!({name: "2A", grade_id: grades[1].id}),
+      Classroom.make!({name: "3A", grade_id: grades[2].id}),
+      Classroom.make!({name: "4A", grade_id: grades[3].id}),
+      Classroom.make!({name: "5A", grade_id: grades[0].id})
+    ]
+  end
+
   let(:students) do
     [
-      Student.make!(first_name: 'one',school_id: school.id, student_number: 101, classroom_number: 1 , classroom: "1A" , grade_id: 1),
-      Student.make!(first_name: 'two' , school_id: school.id, student_number: 102, classroom_number: 2 , classroom: "2A" , grade_id: 2),
-      Student.make!(first_name: 'three' , school_id: school.id, student_number: 103, classroom_number: 3 , classroom: "3A" , grade_id: 3),
-      Student.make!(first_name: 'four' , school_id: school.id, student_number: 104, classroom_number: 1 , classroom: "4A" , grade_id: 4),
-      Student.make!(first_name: 'five' , school_id: school.id, student_number: 105, classroom_number: 2 , classroom: "5A" , grade_id: 1)
+      Student.make!(first_name: 'one',school_id: school.id, student_number: 101, classroom_number: 1 , classroom: classrooms[0], grade_id: grades[0].id),
+      Student.make!(first_name: 'two' , school_id: school.id, student_number: 102, classroom_number: 2 , classroom: classrooms[1], grade_id: grades[1].id),
+      Student.make!(first_name: 'three' , school_id: school.id, student_number: 103, classroom_number: 3 , classroom: classrooms[2], grade_id: grades[2].id),
+      Student.make!(first_name: 'four' , school_id: school.id, student_number: 104, classroom_number: 1 , classroom: classrooms[3], grade_id: grades[3].id),
+      Student.make!(first_name: 'five' , school_id: school.id, student_number: 105, classroom_number: 2 , classroom: classrooms[0], grade_id: grades[0].id)
     ]
   end
 
@@ -52,15 +71,6 @@ describe StudentsController do
     [
       TeacherAttendanceList.make!({ list_id: lists[0].id, employee_id: employees[0].id}),
       TeacherAttendanceList.make!({ list_id: lists[1].id, employee_id: employees[1].id})
-    ]
-  end
-
-  let(:grades) do
-    [
-      Grade.make!({id: '1', name: "Preschool"}),
-      Grade.make!({id: '2', name: "Kindergarten 1"}),
-      Grade.make!({id: '3', name: "Kindergarten 2"}),
-      Grade.make!({id: '4', name: "Kindergarten 3"})
     ]
   end
 

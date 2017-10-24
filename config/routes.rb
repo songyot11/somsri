@@ -57,6 +57,7 @@ Rails.application.routes.draw do
     end
   end
   resources :grades
+  resources :classrooms
   resources :daily_reports
   resources :students do
     delete 'real_destroy'

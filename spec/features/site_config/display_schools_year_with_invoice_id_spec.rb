@@ -14,12 +14,19 @@ describe 'SiteConfig Display Schools Year With Invoice Id', js: true do
     name: 'Active'
   )}
 
+  let(:classrooms) do
+    [
+      Classroom.make!({name: "1A", grade_id: grade.id}),
+      Classroom.make!({name: "1B", grade_id: grade.id})
+    ]
+  end
+
   let(:student1){Student.make!(
     full_name: 'มั่งมี ศรีสุข' ,
     nickname: 'รวย' ,
     gender_id: gender.id ,
     grade_id: grade.id ,
-    classroom: '1A' ,
+    classroom: classrooms[0] ,
     classroom_number: 13 ,
     student_number: 2014 ,
     birthdate: Time.now

@@ -3,6 +3,7 @@ class Student < ApplicationRecord
   include Rails.application.routes.url_helpers
 
   belongs_to :grade
+  belongs_to :classroom
   belongs_to :gender
   belongs_to :school
   has_and_belongs_to_many :parents, join_table: 'students_parents'
@@ -33,13 +34,13 @@ class Student < ApplicationRecord
       puts 'WARNING: please remove this function after rollcall list assignment has been implemented'
       @@warned = true
     end
-    if self.classroom && !self.classroom.blank? && self.classroom_changed?
+    if self.classroom_id && self.classroom_id_changed?
       # add or update list
       StudentList.transaction do
         self.student_lists.destroy_all
-        list = List.where(name: self.classroom).first
+        list = List.where(name: self.classroom.name).first
         if !list
-          list = List.create(name: self.classroom, category: "roll_call")
+          list = List.create(name: self.classroom.name, category: "roll_call")
           Student.where(classroom: self.classroom).pluck(:id).each do |student_id|
             StudentList.create(student_id: student_id, list_id: list.id)
           end
@@ -118,15 +119,7 @@ class Student < ApplicationRecord
     if self.classroom.blank?
       return self.grade.name
     else
-      return self.grade.name + ' (' + self.classroom + ')'
-    end
-  end
-
-  def classroom
-    if self[:classroom]
-      return self[:classroom]
-    else
-      return ''
+      return self.grade.name + ' (' + self.classroom.name + ')'
     end
   end
 
@@ -451,7 +444,7 @@ class Student < ApplicationRecord
         full_name: self.full_name_eng_thai_with_title,
         nickname: self.nickname_eng_thai,
         grade_id: self.grade.nil? ? "" : self.grade.name,
-        classroom: self.classroom,
+        classroom_id: self.classroom ? self.classroom.name : "",
         classroom_number: self.classroom_number,
         student_number: self.student_number,
         gender_id: self.gender.nil? ? "" : I18n.t(self.gender.name),

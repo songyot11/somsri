@@ -37,6 +37,10 @@
         ctrl.grades = grade_resp.data
       });
 
+      studentReportService.getClassrooms().then(function(classroom_resp) {
+        ctrl.classrooms = classroom_resp.data
+      });
+
       function openConfirmationModal(message, success, dismiss) {
         $scope.message = message;
         $uibModal.open({

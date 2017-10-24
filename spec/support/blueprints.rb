@@ -110,6 +110,11 @@ Grade.blueprint do
   name { Faker::Lorem.word }
 end
 
+Classroom.blueprint do
+  name { Faker::Lorem.word }
+  grade_id { object.grade ? object.grade.id : Grade.make!.id }
+end
+
 Gender.blueprint do
   name { Faker::Lorem.word }
 end

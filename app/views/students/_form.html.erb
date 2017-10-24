@@ -108,9 +108,9 @@
     </div>
     <div class="col-md-2">
       <div class="form-group">
-        <%= f.label :classroom, 'ห้อง', :class => 'control-label' %>
+        <%= f.label :classroom_id, 'ห้อง', :class => 'control-label' %>
         <div class="col-md-12">
-          <%= f.text_field :classroom, :class => 'form-control' , autocomplete: "off"%>
+          <%= f.collection_select :classroom_id, Classroom.all, :id, :name, {prompt: "โปรดเลือกห้อง"}, {class: "form-control"} %>
         </div>
       </div>
     </div>

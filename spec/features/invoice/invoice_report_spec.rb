@@ -30,12 +30,20 @@ describe 'invoice report(ใบเสร็จ)', js: true do
     ]
   end
 
+  let(:grade) do
+    Grade.make!({name: "Kindergarten 1"})
+  end
+
+  let(:classroom) do
+    Classroom.make!({name: "1A", grade_id: grade.id})
+  end
+
   let(:student){Student.create!(
     full_name: 'สมพล 1' ,
     nickname: 'กั้ง' ,
     gender_id: 2 ,
-    grade_id: 4 ,
-    classroom: '1A' ,
+    grade_id: grade.id,
+    classroom: classroom,
     classroom_number: 100 ,
     student_number: 9001 ,
     birthdate: Time.now
