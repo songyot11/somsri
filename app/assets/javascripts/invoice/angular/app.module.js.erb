@@ -243,9 +243,20 @@
             ]);
           }]
         }
+      }).
+      state({
+        url: '/classroom',
+        name: 'classroom',
+        templateUrl: "<%= asset_path('invoice/angular/components/classroom/classroomView.html') %>",
+        controller: 'classroomCtrl as classroom',
+        resolve: {
+          resources: ['$ocLazyLoad', function($ocLazyLoad) {
+            return $ocLazyLoad.load([
+              ASSETS.somsri.invoice.classroom
+            ]);
+          }]
+        }
       })
-
-
 
     $urlRouterProvider.when("", "/");
   }]);

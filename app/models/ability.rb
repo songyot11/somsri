@@ -15,6 +15,7 @@ class Ability
       can :manage, Parent
       can :read, School
       can :manage, :setting
+      can :manage, Classroom
     end
   end
 

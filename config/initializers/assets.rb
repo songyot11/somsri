@@ -20,6 +20,7 @@ Rails.application.config.assets.precompile += %w( application_main.js )
 Rails.application.config.assets.precompile += %w( application_main.css )
 Rails.application.config.assets.precompile += %w( print_student_list.js )
 Rails.application.config.assets.precompile += %w( custom_bootstrap_table.js )
+Rails.application.config.assets.precompile += %w( classroom_bootstrap_table.js )
 Rails.application.config.assets.precompile += %w( preview_image.js )
 
 # for web school

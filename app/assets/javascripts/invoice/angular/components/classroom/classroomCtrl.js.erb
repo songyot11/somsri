@@ -1,0 +1,26 @@
+(function() {
+  'use strict';
+  angular.module('somsri.invoice.classroom', [
+    ])
+  .controller('classroomCtrl', ['$rootScope','classroomService','$scope', '$uibModal', function($rootScope, service, $scope, $uibModal) {
+    $rootScope.menu = "ตั้งค่า"
+    var ctrl = this
+    ctrl.grade_select = null
+    $rootScope.loadAndAuthorizeResource("invoice", function(){
+      service.getGrades().then(function(resp) {
+        ctrl.grades = []
+        resp.data.forEach(function(grade) {
+          if(grade.id > -1){ ctrl.grades.push(grade) }
+        });
+      });
+      ctrl.gradeFilter = function(){
+        if(ctrl.grade_select){
+          $('#classroom-list').bootstrapTable('filterBy', {grade: ctrl.grade_select.name});
+        }else{
+          $('#classroom-list').bootstrapTable('filterBy', {});
+        }
+      }
+    });
+
+  }]);
+})();

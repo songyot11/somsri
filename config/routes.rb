@@ -57,7 +57,11 @@ Rails.application.routes.draw do
     end
   end
   resources :grades
-  resources :classrooms
+  resources :classrooms do
+    collection do
+      get 'classroom_list'
+    end
+  end
   resources :daily_reports
   resources :students do
     delete 'real_destroy'
