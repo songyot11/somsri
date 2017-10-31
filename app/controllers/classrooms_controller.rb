@@ -7,7 +7,17 @@ class ClassroomsController < ApplicationController
     render json: @classrooms, status: :ok
   end
 
-  # GET /classroom_list
+  # GET /classrooms/:id
+  def show
+    classroom = Classroom.find(params[:id])
+    classroom_result = {
+      classroom: classroom.name,
+      grade: classroom.grade ? classroom.grade.name : ""
+    }
+    render json: classroom_result, status: :ok
+  end
+
+  # GET /classrooms/classroom_list
   def classroom_list
     classrooms = []
     Classroom.all.to_a.each do |classroom|
@@ -22,5 +32,33 @@ class ClassroomsController < ApplicationController
       }
     end
     render json: classrooms, status: :ok
+  end
+
+  # GET /classrooms/:id/teacher_list
+  def teacher_list
+    teachers = []
+    classroom = Classroom.find(params[:id])
+    Employee.where(classroom: classroom).each do |teacher|
+      teachers << {
+        img: teacher.img_url.exists? ? teacher.img_url.url(:medium) : nil,
+        name: teacher.full_name_with_nickname,
+        id: teacher.id
+      }
+    end
+    render json: teachers, status: :ok
+  end
+
+  # GET /classrooms/:id/student_list
+  def student_list
+    students = []
+    classroom = Classroom.find(params[:id])
+    Student.where(classroom: classroom).each do |student|
+      students << {
+        img: student.img_url.exists? ? student.img_url.url(:medium) : '',
+        name: student.invoice_screen_full_name_display,
+        id: student.id
+      }
+    end
+    render json: students, status: :ok
   end
 end

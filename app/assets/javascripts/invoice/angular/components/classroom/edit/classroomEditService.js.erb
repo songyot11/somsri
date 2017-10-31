@@ -1,0 +1,17 @@
+(function() {
+  'use strict';
+
+  angular.module('somsri.invoice.classroom_edit.service', [
+  ])
+  .service('classroomEditService', ['$http', function($http) {
+    this.getClassroom = function(classroomId) {
+      return $http.get('/classrooms/' + classroomId)
+    }
+    this.getTeachers = function(classroomId) {
+      return $http.get('/classrooms/' + classroomId + '/teacher_list')
+    }
+    this.getStudents = function(classroomId) {
+      return $http.get('/classrooms/' + classroomId + '/student_list')
+    }
+  }]);
+})();

@@ -256,6 +256,19 @@
             ]);
           }]
         }
+      }).
+      state({
+        url: '/classroom/:id',
+        name: 'classroom_edit',
+        templateUrl: "<%= asset_path('invoice/angular/components/classroom/edit/classroomEditView.html') %>",
+        controller: 'classroomEditCtrl as edit',
+        resolve: {
+          resources: ['$ocLazyLoad', function($ocLazyLoad) {
+            return $ocLazyLoad.load([
+              ASSETS.somsri.invoice.classroom_edit
+            ]);
+          }]
+        }
       })
 
     $urlRouterProvider.when("", "/");

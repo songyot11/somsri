@@ -61,6 +61,10 @@ Rails.application.routes.draw do
     collection do
       get 'classroom_list'
     end
+    member do
+      get 'teacher_list'
+      get 'student_list'
+    end
   end
   resources :daily_reports
   resources :students do

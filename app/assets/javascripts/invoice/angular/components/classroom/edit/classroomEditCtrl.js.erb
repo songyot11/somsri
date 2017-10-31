@@ -1,0 +1,70 @@
+(function() {
+  'use strict';
+  angular.module('somsri.invoice.classroom_edit', [
+    ])
+  .controller('classroomEditCtrl', ['$rootScope','classroomEditService','$scope', '$uibModal', '$state', function($rootScope, service, $scope, $uibModal, $state) {
+    $rootScope.menu = "ตั้งค่า"
+    var ctrl = this
+    ctrl.classroomId = $state.params.id
+    ctrl.grade_select = null
+    $rootScope.loadAndAuthorizeResource("invoice", function(){
+
+      function imgFormatter(imgUrl) {
+        if (imgUrl) {
+          return '<div class="img-bg circle fix-img img-34x34" style="background: url('+ imgUrl +')"></div>';
+        }
+        return '<div class="img-bg bg-light-gray circle fix-img img-34x34"><i class="fa fa-user icon-default-img" aria-hidden="true"></i></div>'
+      }
+
+      function nameFormatter(name, url) {
+        if(name){
+          return '<a href="' + url + '" target="_blank" >' + name + '</a>';
+        }else{
+          return '<a href="' + url + '" target="_blank" >-</a>';
+        }
+      }
+
+      var tableColumnSetting = [
+        { field: 'img', class:'font1_2em' },
+        { field: 'name', class:"center-vertical-padding font1_2em" },
+        { field: 'unselect', class: "center-vertical-padding text-right font1_2em" }
+      ]
+
+      service.getClassroom(ctrl.classroomId).then(function(resp) {
+        ctrl.classroom = resp.data
+      });
+
+      service.getTeachers(ctrl.classroomId).then(function(resp) {
+        ctrl.teachers = []
+        resp.data.forEach(function(teacher) {
+          ctrl.teachers.push({
+            img: imgFormatter(teacher.img),
+            name: nameFormatter(teacher.name, '/somsri_payroll#/employees/' + teacher.id),
+            unselect: '<a class="color-red" href="/classroom/' + ctrl.classroomId + '/unselect?teacher_id=' + teacher.id + '"><i class="fa fa-times" aria-hidden="true"></i></a>'
+          })
+        });
+        ctrl.teachersAmount = ctrl.teachers.length
+        $('#teacher-list').bootstrapTable({
+          columns: tableColumnSetting,
+          data: ctrl.teachers
+        })
+      });
+
+      service.getStudents(ctrl.classroomId).then(function(resp) {
+        ctrl.students = []
+        resp.data.forEach(function(student) {
+          ctrl.students.push({
+            img: imgFormatter(student.img),
+            name: nameFormatter(student.name, '/students/' + student.id + '/edit#/'),
+            unselect: '<a class="color-red" href="/classroom/' + ctrl.classroomId + '/unselect?student_id=' + student.id + '"><i class="fa fa-times" aria-hidden="true"></i></a>'
+          })
+        });
+        ctrl.studentsAmount = ctrl.students.length
+        $('#student-list').bootstrapTable({
+          columns: tableColumnSetting,
+          data: ctrl.students
+        })
+      });
+    });
+  }]);
+})();

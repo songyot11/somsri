@@ -1,0 +1,97 @@
+<%= javascript_include_tag 'classroom_edit_bootstrap_table' %>
+<div id="classroom-edit" class="container" style="width: 960px; margin-top: 40px">
+  <div class="content-box">
+    <div class="row">
+      <div class="col-xs-12">
+        <h2><b>แก้ไขห้องเรียน</b></h2>
+      </div>
+    </div>
+    <div class="space30"></div>
+    <div class="row">
+      <div class="col-xs-8">
+        <div class="form-group">
+          <div class="row">
+            <div class="col-xs-12">
+              <label for="grade" class="control-label">ระดับชั้นเรียน</label>
+            </div>
+          </div>
+          <div class="row">
+            <div class="col-xs-12">
+              <input class="form-control" name="grade" ng-model="edit.classroom.grade" disabled>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="col-xs-4">
+        <div class="form-group">
+          <div class="row">
+            <div class="col-xs-12">
+              <label for="classroom" class="control-label">ห้องเรียน</label>
+            </div>
+          </div>
+          <div class="row">
+            <div class="col-xs-12">
+              <input class="form-control" name="classroom" ng-model="edit.classroom.classroom" disabled>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="row">
+      <div class="col-xs-12">
+        <uib-tabset>
+          <uib-tab index="0" heading="คุณครู">
+            <div class="space20"></div>
+            <div class="row">
+              <div class="col-xs-12">
+                <div class="pull-right">
+                  <a class="btn btn-primary" href ng-click="edit.addTeacher()">+ เลือกคุณครู</a>
+                </div>
+              </div>
+            </div>
+            <div class="space20"></div>
+            <div class="row">
+              <div class="col-xs-12">
+                <div class="row">
+                  <div class="col-xs-10">ชื่อ - นามสกุล</div>
+                  <div class="col-xs-2 text-right">จำนวน {{ edit.teachersAmount }} คน</div>
+                </div>
+                <div class="space20"></div>
+                <div class="row table-list">
+                  <div class="col-xs-12">
+                    <table id="teacher-list" data-toggle="table"></table>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </uib-tab>
+          <uib-tab index="1" heading="นักเรียน">
+            <div class="space20"></div>
+            <div class="row">
+              <div class="col-xs-12">
+                <div class="pull-right">
+                  <a class="btn btn-primary" href ng-click="edit.addStudent()">+ เลือกนักเรียน</a>
+                </div>
+              </div>
+            </div>
+            <div class="space20"></div>
+            <div class="row">
+              <div class="col-xs-12">
+                <div class="row">
+                  <div class="col-xs-10">ชื่อ - นามสกุล</div>
+                  <div class="col-xs-2 text-right">จำนวน {{ edit.studentsAmount }} คน</div>
+                </div>
+                <div class="space20"></div>
+                <div class="row table-list">
+                  <div class="col-xs-12">
+                    <table id="student-list" data-toggle="table"></table>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </uib-tab>
+        </uib-tabset>
+      </div>
+    </div>
+  </div>
+</div>

@@ -64,6 +64,14 @@ class Employee < ApplicationRecord
     end
   end
 
+  def full_name_with_nickname
+    if self.nickname
+      return self.full_name + " (#{self.nickname})"
+    else
+      return self.full_name
+    end
+  end
+
   def lists
     list_ids = TeacherAttendanceList.where(employee_id: self.id).pluck(:list_id).to_a
     return List.where(id: list_ids).to_a
