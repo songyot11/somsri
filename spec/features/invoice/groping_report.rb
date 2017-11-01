@@ -38,7 +38,7 @@ describe 'Grouping Report', js: true do
       Invoice.make!(
         student_id: students[0].id,
         invoice_status_id: invoice_status_1.id,
-        updated_at: DateTime.now,
+        created_at: DateTime.now,
         line_items: [
           LineItem.make!(:tuition, amount: 100000),
           LineItem.make!(detail: "ค่าเสื้อนักเรียน", amount: 1000),
@@ -47,7 +47,7 @@ describe 'Grouping Report', js: true do
       Invoice.make!(
         student_id: students[1].id,
         invoice_status_id: invoice_status_1.id,
-        updated_at: DateTime.now,
+        created_at: DateTime.now,
         line_items: [
           LineItem.make!(:tuition, amount: 100000),
           LineItem.make!(detail: "ห้องสมุด", amount: 10000)
@@ -55,7 +55,7 @@ describe 'Grouping Report', js: true do
       Invoice.make!(
         student_id: students[1].id,
         invoice_status_id: invoice_status_1.id,
-        updated_at: DateTime.now.yesterday,
+        created_at: DateTime.now.yesterday,
         line_items: [
           LineItem.make!(detail: "ห้องสมุด", amount: 10000),
           LineItem.make!(detail: "ค่าชุดพื้นเมือง", amount: 1000)
@@ -63,7 +63,7 @@ describe 'Grouping Report', js: true do
       Invoice.make!(
         student_id: students[1].id,
         invoice_status_id: invoice_status_2.id,
-        updated_at: DateTime.now.yesterday,
+        created_at: DateTime.now.yesterday,
         line_items: [
           LineItem.make!(detail: "ห้องสมุด", amount: 10000000000),
           LineItem.make!(detail: "ค่าชุดพื้นเมือง", amount: 10000000000)

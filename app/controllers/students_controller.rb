@@ -38,7 +38,7 @@ class StudentsController < ApplicationController
       else
         qry_invoice = qry_invoice.where(semester: semester_select)
       end
-      invoices = qry_invoice.order("updated_at ASC").to_a
+      invoices = qry_invoice.order("created_at ASC").to_a
 
       #skip student no invoice and deleted
       next if invoices.count == 0 && student.deleted_at
@@ -70,7 +70,7 @@ class StudentsController < ApplicationController
         active_invoice_total_amount: total_fee,
         full_name_with_title: student.invoice_screen_full_name_display,
         nickname_eng_thai: student.nickname_eng_thai,
-        active_invoice_updated_at: last_tuition_invoice ? last_tuition_invoice.updated_at : nil,
+        active_invoice_created_at: last_tuition_invoice ? last_tuition_invoice.created_at : nil,
         deleted_at: student.deleted_at
       }
 

@@ -1,12 +1,12 @@
 (function() {
   'use strict';
-  angular.module('somsri.invoice.classroom', [
+  angular.module('somsri.main.classroom', [
     ])
   .controller('classroomCtrl', ['$rootScope','classroomService','$scope', '$uibModal', function($rootScope, service, $scope, $uibModal) {
     $rootScope.menu = "ตั้งค่า"
     var ctrl = this
     ctrl.grade_select = null
-    $rootScope.loadAndAuthorizeResource("invoice", function(){
+    $rootScope.loadAndAuthorizeResource("school", function(){
       service.getGrades().then(function(resp) {
         ctrl.grades = []
         resp.data.forEach(function(grade) {

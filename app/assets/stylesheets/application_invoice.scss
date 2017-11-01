@@ -761,27 +761,6 @@ body.somsri-invoice >.container-fluid {
   border-radius: 0px
 }
 
-.btn-up-classroom,
-.btn-up-classroom:focus{
-  margin-bottom: 10px;
-  margin-top: 15px;
-  padding: 12px 32px;
-  font-weight: lighter;
-  background-color: #3fa1e6;
-  border: 2px solid #3fa1e6;
-  color: #fff;
-  font-size: 16px;
-  border-radius: 0px;
-  cursor: pointer;
-  transition: all 0.25s ease;
-
-  &:hover{
-    color: #3fa1e6;
-    background-color: transparent;
-    border: 2px solid #3fa1e6;
-  }
-}
-
 .btn-to-print-report,
 .btn-to-print-report:focus{
   margin-top: 5px;
@@ -857,13 +836,6 @@ body.somsri-invoice >.container-fluid {
 }
 
 #student-report .report-content {
-  padding: 30px;
-  font-size: 14px;
-  background-color: #fff;
-  box-shadow: 0 5px 13px 0 rgba(0, 0, 0, 0.3);
-}
-
-.content-box {
   padding: 30px;
   font-size: 14px;
   background-color: #fff;
@@ -1934,34 +1906,4 @@ label.img-default{
 }
 #invoice_grouping_report .first-column-classroom{
   min-width: 12em;
-}
-
-.space30{
-  height: 30px;
-}
-
-#classroom-edit .table-list {
-  max-height: 270px !important;
-  overflow: scroll;
-}
-
-.font1_2em {
-  font-size: 1.2em;
-}
-
-#classroom-edit .center-vertical-padding {
-  padding-top: 14px;
-}
-
-.img-34x34 {
-  width: 34px;
-  height: 34px;
-}
-
-#classroom-edit .fix-img {
-  padding-bottom: 0px !important;
-}
-
-.color-red {
-  color: #d0021b;
 }

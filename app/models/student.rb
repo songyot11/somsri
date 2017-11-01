@@ -258,7 +258,7 @@ class Student < ApplicationRecord
     @active_invoice_tuition_fee = self.all_active_invoices_tuition_fee
     @active_invoice_other_fee = self.all_active_invoices_other_fee
     @active_invoice_total_amount = self.active_invoice_total_amount
-    @active_invoice_updated_at = ""
+    @active_invoice_created_at = ""
   end
 
   def active_invoice_payment_method
@@ -289,11 +289,11 @@ class Student < ApplicationRecord
     self.all_active_invoice_total_amount
   end
 
-  def active_invoice_updated_at
-    if @active_invoice_updated_at == nil
-      self.active_invoice.nil? ? '' : self.active_invoice.updated_at
+  def active_invoice_created_at
+    if @active_invoice_created_at == nil
+      self.active_invoice.nil? ? '' : self.active_invoice.created_at
     else
-      @active_invoice_updated_at
+      @active_invoice_created_at
     end
   end
 

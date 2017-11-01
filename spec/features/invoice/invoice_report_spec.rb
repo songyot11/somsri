@@ -16,11 +16,11 @@ describe 'invoice report(ใบเสร็จ)', js: true do
 
   let(:invoices) do
     [
-      Invoice.make!(student: Student.make!(first_name: 'สมชาย', last_name: 'ผลดี', nickname: 'ชาย'), updated_at: DateTime.now),
-      Invoice.make!(student: Student.make!(first_name: 'สมหมาย', last_name: 'ผลดี'), updated_at: DateTime.now),
-      Invoice.make!(student: Student.make!(full_name: 'นราพร แสงจันทร์'), updated_at: DateTime.now.yesterday),
-      Invoice.make!(student: Student.make!(full_name: 'กันตพงศ์ กุมกัน'), updated_at: DateTime.now.yesterday),
-      Invoice.make!(student: Student.make!(full_name: 'ทุน ลุงช่วย'), updated_at: DateTime.now.yesterday),
+      Invoice.make!(student: Student.make!(first_name: 'สมชาย', last_name: 'ผลดี', nickname: 'ชาย'), created_at: DateTime.now),
+      Invoice.make!(student: Student.make!(first_name: 'สมหมาย', last_name: 'ผลดี'), created_at: DateTime.now),
+      Invoice.make!(student: Student.make!(full_name: 'นราพร แสงจันทร์'), created_at: DateTime.now.yesterday),
+      Invoice.make!(student: Student.make!(full_name: 'กันตพงศ์ กุมกัน'), created_at: DateTime.now.yesterday),
+      Invoice.make!(student: Student.make!(full_name: 'ทุน ลุงช่วย'), created_at: DateTime.now.yesterday),
       Invoice.make!(student: Student.make!(full_name: 'มัญชรี พวกทอง')),
       Invoice.make!(student: Student.make!(full_name: 'ผดุงเดช ชัยแก้ว')),
       Invoice.make!(student: Student.make!(full_name: 'แลง กู่งนะ')),

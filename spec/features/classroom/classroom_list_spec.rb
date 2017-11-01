@@ -65,7 +65,7 @@ describe 'Classroom', js: true do
   end
 
   it 'should access to classroom page' do
-    visit '/somsri_invoice#/classroom'
+    visit '/main#/classroom'
     sleep(1)
     eventually { expect(page).to have_content("1A 0 2") }
     eventually { expect(page).to have_content("1B 0 0") }
@@ -74,7 +74,7 @@ describe 'Classroom', js: true do
   end
 
   it 'should filter by grade id' do
-    visit '/somsri_invoice#/classroom'
+    visit '/main#/classroom'
     sleep(1)
     page.find("#grade-select").select(grades[0].name)
     eventually { expect(page).to have_content("1A 0 2") }

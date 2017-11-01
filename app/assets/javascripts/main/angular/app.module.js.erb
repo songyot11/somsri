@@ -30,6 +30,32 @@
           ]);
         }]
       }
+    }).
+    state({
+      url: '/classroom',
+      name: 'classroom',
+      templateUrl: "<%= asset_path('main/angular/components/classroom/classroomView.html') %>",
+      controller: 'classroomCtrl as classroom',
+      resolve: {
+        resources: ['$ocLazyLoad', function($ocLazyLoad) {
+          return $ocLazyLoad.load([
+            ASSETS.somsri.main.classroom
+          ]);
+        }]
+      }
+    }).
+    state({
+      url: '/classroom/:id',
+      name: 'classroom_edit',
+      templateUrl: "<%= asset_path('main/angular/components/classroom/edit/classroomEditView.html') %>",
+      controller: 'classroomEditCtrl as edit',
+      resolve: {
+        resources: ['$ocLazyLoad', function($ocLazyLoad) {
+          return $ocLazyLoad.load([
+            ASSETS.somsri.main.classroom_edit
+          ]);
+        }]
+      }
     })
     $urlRouterProvider.when("", "/");
   }]);

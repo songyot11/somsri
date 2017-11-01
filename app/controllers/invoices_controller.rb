@@ -9,18 +9,15 @@ class InvoicesController < ApplicationController
     start_date = DateTime.parse(params[:start_date]).beginning_of_day if isDate(params[:start_date])
     end_date = DateTime.parse(params[:end_date]).end_of_day if isDate(params[:end_date])
 
-
     @invoices = get_invoices(grade_select, params[:search_keyword], start_date, end_date, params[:page], params[:sort], params[:order], params[:export])
     if params[:page] && @invoices.total_pages < @invoices.current_page
       @invoices = get_invoices(grade_select, params[:search_keyword], start_date, end_date, 1, params[:sort], params[:order], params[:export])
     end
 
-
     @filter_grade = grade_select
     result = {
       invoices: @invoices.as_json({ index: true })
     }
-
     if params[:page]
       result[:current_page] = @invoices.current_page
       result[:total_records] = @invoices.total_entries
@@ -349,7 +346,7 @@ class InvoicesController < ApplicationController
     if summary_mode == "per_student"
       invoices = invoices.order("student_id ASC").to_a
     else
-      invoices = invoices.order("updated_at ASC").to_a
+      invoices = invoices.order("created_at ASC").to_a
     end
 
     type = params[:type]
@@ -399,7 +396,7 @@ class InvoicesController < ApplicationController
         header_row_classroom_tmp = invoice.student.grade_name_with_title_classroom
         header_row_tmp = invoice.student.invoice_screen_full_name_display
         datas_tmp = Array.new(column_size, 0.0)
-      elsif summary_mode == "per_day" && header_row_tmp != invoice.updated_at.strftime("%d/%m/%Y")
+      elsif summary_mode == "per_day" && header_row_tmp != invoice.created_at.strftime("%d/%m/%Y")
         # collect per day data
         if header_row_tmp != ""
           rows << {
@@ -409,7 +406,7 @@ class InvoicesController < ApplicationController
         end
 
         # reset tmp data
-        header_row_tmp = invoice.updated_at.strftime("%d/%m/%Y")
+        header_row_tmp = invoice.created_at.strftime("%d/%m/%Y")
         datas_tmp = Array.new(column_size, 0.0)
       end
       if display_payment_method

@@ -1,13 +1,13 @@
 (function() {
   'use strict';
-  angular.module('somsri.invoice.classroom_edit', [
+  angular.module('somsri.main.classroom_edit', [
     ])
   .controller('classroomEditCtrl', ['$rootScope','classroomEditService','$scope', '$uibModal', '$state', function($rootScope, service, $scope, $uibModal, $state) {
     $rootScope.menu = "ตั้งค่า"
     var ctrl = this
     ctrl.classroomId = $state.params.id
     ctrl.grade_select = null
-    $rootScope.loadAndAuthorizeResource("invoice", function(){
+    $rootScope.loadAndAuthorizeResource("school", function(){
 
       function imgFormatter(imgUrl) {
         if (imgUrl) {

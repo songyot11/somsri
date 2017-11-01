@@ -26,11 +26,11 @@
 
       function cleanDate(date){
         if(!date || new Date(date) == "Invalid Date"){return;}
-        var cleanedDate = new Date()
-        cleanedDate.setDate(date.getDate())
-        cleanedDate.setMonth(date.getMonth())
-        cleanedDate.setYear(date.getFullYear())
-        return cleanedDate
+        var nowDate = new Date()
+        date.setHours(nowDate.getHours())
+        date.setMinutes(nowDate.getMinutes())
+        date.setSeconds(nowDate.getSeconds())
+        return date
       }
 
       function filterDate(value, row, index) {

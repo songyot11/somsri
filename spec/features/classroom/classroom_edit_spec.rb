@@ -80,13 +80,13 @@ describe 'Classroom Edit', js: true do
   end
 
   it 'should access to edit classroom page' do
-    visit "/somsri_invoice#/classroom/#{classrooms[0].id}"
+    visit "/main#/classroom/#{classrooms[0].id}"
     eventually { expect(page).to have_content("นาง สมศรี เป็นชื่อแอพ") }
     eventually { expect(page).to have_content("จำนวน 1 คน") }
   end
 
   it 'should display all student in classroom' do
-    visit "/somsri_invoice#/classroom/#{classrooms[0].id}"
+    visit "/main#/classroom/#{classrooms[0].id}"
     sleep(1)
     click_link("นักเรียน")
     eventually { expect(page).to have_content("สมศรี3 ใบเสร็จ สมศรี2 ใบเสร็จ สมศรี1 ใบเสร็จ") }

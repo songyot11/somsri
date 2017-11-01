@@ -116,7 +116,7 @@
                 <td class="text-currency numberic">{{student.active_invoice_tuition_fee.toFixed(2) | number:2}}</td>
                 <td class="text-currency numberic">{{student.active_invoice_other_fee.toFixed(2) | number:2}}</td>
                 <td class="text-currency bold numberic">{{student.active_invoice_total_amount.toFixed(2) | number:2}}</td>
-                <td class="numberic">{{student.active_invoice_updated_at | date:'d/MM/yyyy hh:mm'}}</td>
+                <td class="numberic">{{student.active_invoice_created_at | date:'d/MM/yyyy hh:mm'}}</td>
               </tr>
             </tbody>
             <tfoot>
