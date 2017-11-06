@@ -1,0 +1,26 @@
+<div id="select-member-modal" class="modal-body">
+  <div class="row">
+    <div class="col-xs-12">
+      <h3>เลือกคุณครู</h3>
+    </div>
+  </div>
+  <div class="row bt-toolbar">
+    <div class="col-xs-6 col-xs-offset-6">
+      <button ng-click="selectMember.createTeacher()" class="btn btn-blue pull-right">+ สร้างคุณครูใหม่</button>
+    </div>
+  </div>
+  <div class="row">
+    <div class="col-xs-12">
+      <table id="member-list" class="table-with-img-profile" data-toggle="table"></table>
+    </div>
+  </div>
+  <div class="space30"></div>
+  <div class="row">
+    <div class="col-xs-6">
+      <button ng-click="selectMember.submit()" class="btn btn-blue pull-right">ตกลง</button>
+    </div>
+    <div class="col-xs-6">
+      <button ng-click="selectMember.cancel()" class="btn btn-white">ยกเลิก</button>
+    </div>
+  </div>
+</div>

@@ -1,0 +1,77 @@
+(function() {
+  'use strict';
+  angular.module('somsri.main.select_member_modal', [
+    ])
+  .controller('selectMemberModalCtrl', ['$uibModalInstance', '$state', '$log', 'selectMemberModalService', 'options', function($uibModalInstance, $state, $log, service, options) {
+    var ctrl = this;
+    var currentMemberIds = options.currentMemberIds
+    var classroomId = options.classroomId
+    var tableColumnSetting = [
+      { field: 'check-box', title: "เลือกทั้งหมด", checkbox: true },
+      { field: 'img', class:'font1_2em' },
+      { field: 'name', class:"center-vertical-padding font1_2em"}
+    ]
+
+    var angularCheckBox = "angular.element(document.getElementById('angularCtrl')).scope().$root.onCheckBoxChange()"
+
+    function imgFormatter(imgUrl) {
+      if (imgUrl) {
+        return '<div class="img-bg circle fix-img img-34x34" style="background: url('+ imgUrl +')"></div>';
+      }
+      return '<div class="img-bg bg-light-gray circle fix-img img-34x34"><i class="fa fa-user icon-default-img" aria-hidden="true"></i></div>'
+    }
+
+    function nameFormatter(name, url) {
+      if(name){
+        return '<a href="' + url + '" target="_blank">' + name + '</a>';
+      }else{
+        return '<a href="' + url + '" target="_blank">-</a>';
+      }
+    }
+
+    ctrl.selectedNumber = 0
+    ctrl.teachersRawData = []
+
+    service.getTeacherNotAssignClass(classroomId, currentMemberIds).then(function(resp) {
+      ctrl.teachersRawData = resp.data
+      ctrl.teachers = []
+      resp.data.forEach(function(teacher) {
+        ctrl.teachers.push({
+          id: teacher.id,
+          img: imgFormatter(teacher.img),
+          name: nameFormatter(teacher.name, '/somsri_payroll#/employees/' + teacher.id)
+        })
+      });
+      ctrl.teachersAmount = ctrl.teachers.length
+      $('#member-list').bootstrapTable({
+        selectItemName: "teacherId",
+        search: true,
+        toolbar: '.bt-toolbar',
+        toolbarAlign: 'right',
+        searchAlign: 'left',
+        clickToSelect: true,
+        columns: tableColumnSetting,
+        data: ctrl.teachers
+      })
+    });
+
+    ctrl.submit = function(){
+      var result = []
+      var selecteds = $('#member-list').bootstrapTable('getSelections')
+      ctrl.teachersRawData.forEach(function(teacher) {
+        var selectedIds = selecteds.map(function(selected) {
+           return selected.id
+        })
+        if($.inArray(teacher.id, selectedIds) != -1){
+          result.push(teacher)
+        }
+      })
+      $uibModalInstance.close(result)
+    }
+
+    ctrl.cancel = function () {
+      $uibModalInstance.close()
+    }
+
+  }]);
+})();

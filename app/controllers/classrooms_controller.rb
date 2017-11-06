@@ -48,6 +48,22 @@ class ClassroomsController < ApplicationController
     render json: teachers, status: :ok
   end
 
+  # GET /classrooms/:id/teacher_without_classroom
+  def teacher_without_classroom
+    teachers = []
+    classroom_id = params[:id]
+    exclude_ids = JSON.parse params[:exclude_ids]
+    Employee.where(classroom_id: [nil, '', classroom_id])
+            .where.not(id: exclude_ids).each do |teacher|
+      teachers << {
+        img: teacher.img_url.exists? ? teacher.img_url.url(:medium) : nil,
+        name: teacher.full_name_with_nickname,
+        id: teacher.id
+      }
+    end
+    render json: teachers, status: :ok
+  end
+
   # GET /classrooms/:id/student_list
   def student_list
     students = []
@@ -56,6 +72,19 @@ class ClassroomsController < ApplicationController
       students << {
         img: student.img_url.exists? ? student.img_url.url(:medium) : '',
         name: student.invoice_screen_full_name_display,
+        id: student.id
+      }
+    end
+    render json: students, status: :ok
+  end
+
+  # GET /classrooms/:id/student_without_classroom
+  def student_without_classroom
+    students = []
+    Student.where.where(classroom_id: [nil, '']).each do |student|
+      students << {
+        img: student.img_url.exists? ? student.img_url.url(:medium) : nil,
+        name: student.full_name_with_nickname,
         id: student.id
       }
     end

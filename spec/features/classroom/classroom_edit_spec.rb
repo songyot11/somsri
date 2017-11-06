@@ -82,7 +82,24 @@ describe 'Classroom Edit', js: true do
   it 'should access to edit classroom page' do
     visit "/main#/classroom/#{classrooms[0].id}"
     eventually { expect(page).to have_content("นาง สมศรี เป็นชื่อแอพ") }
-    eventually { expect(page).to have_content("จำนวน 1 คน") }
+    # eventually { expect(page).to have_content("จำนวน 1 คน") }
+  end
+
+  it 'should redirect to employee if click on name' do
+    visit "/main#/classroom/#{classrooms[0].id}"
+    sleep(1)
+    new_window = window_opened_by { click_link "นาง สมศรี เป็นชื่อแอพ" }
+    within_window new_window do
+      eventually { expect(current_url).to have_content("/somsri_payroll#/employees/1") }
+    end
+  end
+
+  it 'should remove teacher from list' do
+    visit "/main#/classroom/#{classrooms[0].id}"
+    sleep(1)
+    find('.fa.fa-times.cursor-pointer.color-red').click
+    eventually { expect(page).to_not have_content("นาง สมศรี เป็นชื่อแอพ") }
+    # eventually { expect(page).to have_content("จำนวน 0 คน") }
   end
 
   it 'should display all student in classroom' do
@@ -90,6 +107,6 @@ describe 'Classroom Edit', js: true do
     sleep(1)
     click_link("นักเรียน")
     eventually { expect(page).to have_content("สมศรี3 ใบเสร็จ สมศรี2 ใบเสร็จ สมศรี1 ใบเสร็จ") }
-    eventually { expect(page).to have_content("จำนวน 3 คน") }
+    # eventually { expect(page).to have_content("จำนวน 3 คน") }
   end
 end

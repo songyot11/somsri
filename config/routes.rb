@@ -64,6 +64,8 @@ Rails.application.routes.draw do
     member do
       get 'teacher_list'
       get 'student_list'
+      get 'teacher_without_classroom'
+      get 'student_without_classroom'
     end
   end
   resources :daily_reports
