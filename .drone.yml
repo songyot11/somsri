@@ -1,0 +1,33 @@
+pipeline:
+  build:
+    image: mwallasch/docker-ruby-node
+    environment:
+    commands:
+      - apt-get update
+      - apt-get install --assume-yes pdftk
+      - npm install -g phantomjs --unsafe-perm
+      - cp config/database_sample.yml config/database.yml
+      - export PDFTK_PATH=/
+      - export SENDGRID_USERNAME=un
+      - export SENDGRID_PASSWORD=ps
+      - export ROLLCALL_APK_URL=apk
+      - export DB_HOST=database
+      - export DB_USER=postgres
+      - export DB_PASS=password
+      - export DB_PORT=5432
+      - bundle install
+      - npm i bower -g
+      - bower install --allow-root
+      - export RAILS_ENV=test
+      - bundle exec rake db:create
+      - bundle exec rake db:schema:load
+      - bundle exec rake db:migrate
+      - bundle exec rspec
+
+services:
+  database:
+    image: postgres
+    environment:
+      - POSTGRES_USER=postgres
+      - POSTGRES_PASSWORD=password
+      - POSTGRES_DB=somsri_payroll_test

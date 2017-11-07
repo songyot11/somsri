@@ -28,12 +28,7 @@ class Student < ApplicationRecord
   after_save :update_rollcall_list
   before_save :clean_full_name
 
-  @@warned = false
   def update_rollcall_list
-    unless @@warned
-      puts 'WARNING: please remove this function after rollcall list assignment has been implemented'
-      @@warned = true
-    end
     if self.classroom_id && self.classroom_id_changed?
       # add or update list
       StudentList.transaction do

@@ -28,12 +28,7 @@ class Employee < ApplicationRecord
     self.pin = get_unique_pin if !pin
   end
 
-  @@warned = false
   def update_rollcall_list
-    unless @@warned
-      puts 'WARNING: please remove this function after rollcall list assignment has been implemented'
-      @@warned = true
-    end
     if self.classroom_id && self.classroom_id_changed?
       # add or update list
       self.teacher_attendance_lists.destroy_all
@@ -53,7 +48,7 @@ class Employee < ApplicationRecord
   end
 
   def delete_payroll
-    Payroll.destroy_all(employee_id: self.id, closed: [false, nil])
+    Payroll.where(employee_id: self.id, closed: [false, nil]).destroy_all
   end
 
   def full_name

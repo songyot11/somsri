@@ -68,10 +68,10 @@ describe 'Private Details', js: true do
     sleep(1)
 
     open_testing_screen employee.id
-    expect(find_field('ที่อยู่ปัจจุบัน').value).to eq '233/40'
-    expect(find_field('โทรศัพท์').value).to eq '1234444'
-    expect(find_field('อีเมล').value).to eq 'newemail@email.com'
-    expect(page).to have_select('สถานะ', selected: 'สมรส')
+    eventually { expect(find_field('ที่อยู่ปัจจุบัน').value).to eq '233/40' }
+    eventually { expect(find_field('โทรศัพท์').value).to eq '1234444' }
+    eventually { expect(find_field('อีเมล').value).to eq 'newemail@email.com' }
+    eventually { expect(page).to have_select('สถานะ', selected: 'สมรส') }
   end
 
   describe 'after insertion' do

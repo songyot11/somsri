@@ -300,27 +300,13 @@ describe 'Employee Details', js: true do
       eventually { expect(payrolls[0].salary).to eq 12300 }
     end
 
-    it 'should update employee.salary if changed lasted payroll.salary' do
-      sleep(1)
-      click_link('เงินเดือน')
-      sleep(1)
-      page.execute_script("$('#comment').redactor('code.set', 'จำ จำ จำ')")
-      click_button('บันทึก')
-      sleep(1)
-      click_button('ตกลง')
-      sleep(1)
-
-      employees[0].reload
-      payrolls[0].reload
-
-      eventually {expect(page).to have_content('จำ จำ จำ')}
-
-      visit "/somsri_payroll#/employees/#{employees[0].id}"
-      sleep(1)
-      click_link('เงินเดือน')
-      sleep(1)
-
-      eventually {expect(page).to have_content('จำ จำ จำ')}
+    def fill_in_redactor(options)
+      if options[:in]
+        node = "('#{options[:in]}')"
+      else
+        node = "('.redactor')"
+      end
+      page.execute_script( "$#{node}.redactor('set', '#{options[:with]}')" )
     end
 
     describe "generate attendance list" do
