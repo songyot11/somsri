@@ -2,7 +2,7 @@
   'use strict';
   angular.module('somsri.main.select_member_modal', [
     ])
-  .controller('selectMemberModalCtrl', ['$uibModalInstance', '$state', '$log', 'selectMemberModalService', 'options', function($uibModalInstance, $state, $log, service, options) {
+  .controller('selectMemberModalCtrl', ['$uibModalInstance', '$uibModal', '$state', '$log', 'selectMemberModalService', 'options', function($uibModalInstance, $uibModal, $state, $log, service, options) {
     var ctrl = this;
     var currentMemberIds = options.currentMemberIds
     var classroomId = options.classroomId
@@ -29,21 +29,30 @@
       }
     }
 
+    function formattingMemberData(data) {
+      var result = []
+      if(data){
+        data.forEach(function(member) {
+          var onClick = angularCheckBox + '.removeMember(' + member.id + ')'
+          result.push({
+            id: member.id,
+            img: imgFormatter(member.img),
+            name: nameFormatter(member.name, '/somsri_payroll#/employees/' + member.id)
+          })
+        });
+      }
+      return result
+    }
+
     ctrl.selectedNumber = 0
     ctrl.teachersRawData = []
+    ctrl.membersAmount = 0
 
     service.getTeacherNotAssignClass(classroomId, currentMemberIds).then(function(resp) {
       ctrl.teachersRawData = resp.data
-      ctrl.teachers = []
-      resp.data.forEach(function(teacher) {
-        ctrl.teachers.push({
-          id: teacher.id,
-          img: imgFormatter(teacher.img),
-          name: nameFormatter(teacher.name, '/somsri_payroll#/employees/' + teacher.id)
-        })
-      });
+      ctrl.teachers = formattingMemberData(resp.data)
       ctrl.teachersAmount = ctrl.teachers.length
-      $('#member-list').bootstrapTable({
+      $('#member-select-list').bootstrapTable({
         selectItemName: "teacherId",
         search: true,
         toolbar: '.bt-toolbar',
@@ -57,7 +66,7 @@
 
     ctrl.submit = function(){
       var result = []
-      var selecteds = $('#member-list').bootstrapTable('getSelections')
+      var selecteds = $('#member-select-list').bootstrapTable('getSelections')
       ctrl.teachersRawData.forEach(function(teacher) {
         var selectedIds = selecteds.map(function(selected) {
            return selected.id
@@ -71,6 +80,34 @@
 
     ctrl.cancel = function () {
       $uibModalInstance.close()
+    }
+
+    ctrl.createTeacher = function(){
+      $uibModal.open({
+        animation: true,
+        backdrop: 'static',
+        keyboard: false,
+        templateUrl: "<%= asset_path('main/angular/components/modal/createMember/createMemberModalView.html') %>",
+        controller: 'createMemberModalCtrl as create',
+        size: 'md',
+        resolve: {
+          resources: ['$ocLazyLoad', 'ASSETS', function($ocLazyLoad, ASSETS) {
+            return $ocLazyLoad.load([
+              ASSETS.somsri.main.create_member_modal
+            ]);
+          }],
+          options: function() {
+            return options
+          }
+        }
+      }).result.then(function (createdMember) {
+        if(createdMember){
+          ctrl.teachersRawData.push(createdMember) 
+          var addingMember = formattingMemberData([createdMember])
+          ctrl.membersAmount += addingMember.length
+          $('#member-select-list').bootstrapTable('prepend', addingMember)
+        }
+      })
     }
 
   }]);

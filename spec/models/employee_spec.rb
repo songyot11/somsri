@@ -124,6 +124,90 @@ describe Employee do
     expect(employee.lists.size).to eq(0)
   end
 
+  it 'should split_name thai name with prefix' do
+    employee1 = Employee.split_name("นาง ครูใหม่ ไฟแรง")
+    expect(employee1[:prefix_thai]).to eq "นาง"
+    expect(employee1[:first_name_thai]).to eq "ครูใหม่"
+    expect(employee1[:last_name_thai]).to eq "ไฟแรง"
+
+    employee1 = Employee.split_name("นาย ครูเก่า ไฟอ่อน")
+    expect(employee1[:prefix_thai]).to eq "นาย"
+    expect(employee1[:first_name_thai]).to eq "ครูเก่า"
+    expect(employee1[:last_name_thai]).to eq "ไฟอ่อน"
+
+    employee1 = Employee.split_name("นางสาว ครูใหญ่ ไฟหมดแล้ว")
+    expect(employee1[:prefix_thai]).to eq "นางสาว"
+    expect(employee1[:first_name_thai]).to eq "ครูใหญ่"
+    expect(employee1[:last_name_thai]).to eq "ไฟหมดแล้ว"
+  end
+
+  it 'should split_name thai name' do
+    employee1 = Employee.split_name("ครูใหม่ ไฟแรง")
+    expect(employee1[:first_name_thai]).to eq "ครูใหม่"
+    expect(employee1[:last_name_thai]).to eq "ไฟแรง"
+  end
+
+  it 'should split_name enlish name with prefix' do
+    employee1 = Employee.split_name("Ms. Nanana Aki")
+    expect(employee1[:prefix]).to eq "Ms."
+    expect(employee1[:first_name]).to eq "Nanana"
+    expect(employee1[:last_name]).to eq "Aki"
+
+    employee1 = Employee.split_name("Mrs. Tawawa Aki")
+    expect(employee1[:prefix]).to eq "Mrs."
+    expect(employee1[:first_name]).to eq "Tawawa"
+    expect(employee1[:last_name]).to eq "Aki"
+
+    employee1 = Employee.split_name("Mr. Kami Aki")
+    expect(employee1[:prefix]).to eq "Mr."
+    expect(employee1[:first_name]).to eq "Kami"
+    expect(employee1[:last_name]).to eq "Aki"
+
+    employee1 = Employee.split_name("Miss Hikari Aki")
+    expect(employee1[:prefix]).to eq "Miss"
+    expect(employee1[:first_name]).to eq "Hikari"
+    expect(employee1[:last_name]).to eq "Aki"
+  end
+
+  it 'should split_name enlish name (middle name) with prefix' do
+    employee1 = Employee.split_name("Ms. Nanana Von Aki")
+    expect(employee1[:prefix]).to eq "Ms."
+    expect(employee1[:first_name]).to eq "Nanana"
+    expect(employee1[:middle_name]).to eq "Von"
+    expect(employee1[:last_name]).to eq "Aki"
+
+    employee1 = Employee.split_name("Mrs. Tawawa Wera Aki")
+    expect(employee1[:prefix]).to eq "Mrs."
+    expect(employee1[:first_name]).to eq "Tawawa"
+    expect(employee1[:middle_name]).to eq "Wera"
+    expect(employee1[:last_name]).to eq "Aki"
+
+    employee1 = Employee.split_name("Mr. Kami De Aki")
+    expect(employee1[:prefix]).to eq "Mr."
+    expect(employee1[:first_name]).to eq "Kami"
+    expect(employee1[:middle_name]).to eq "De"
+    expect(employee1[:last_name]).to eq "Aki"
+
+    employee1 = Employee.split_name("Miss Hikari Keen Aki")
+    expect(employee1[:prefix]).to eq "Miss"
+    expect(employee1[:first_name]).to eq "Hikari"
+    expect(employee1[:middle_name]).to eq "Keen"
+    expect(employee1[:last_name]).to eq "Aki"
+  end
+
+  it 'should split_name enlish name (middle name)' do
+    employee1 = Employee.split_name("Hikari Keen Aki")
+    expect(employee1[:first_name]).to eq "Hikari"
+    expect(employee1[:middle_name]).to eq "Keen"
+    expect(employee1[:last_name]).to eq "Aki"
+  end
+
+  it 'should split_name enlish name' do
+    employee1 = Employee.split_name("Hikari Aki")
+    expect(employee1[:first_name]).to eq "Hikari"
+    expect(employee1[:last_name]).to eq "Aki"
+  end
+
   describe '#save' do
     it 'generate pin' do
       # use update_all to skip before_save

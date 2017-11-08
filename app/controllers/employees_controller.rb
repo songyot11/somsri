@@ -157,6 +157,21 @@ class EmployeesController < ApplicationController
     render json: [{ url: @employee.img_url.url }], status: :ok
   end
 
+  def create_by_name
+    fullname = params[:fullname]
+    nickname = params[:nickname]
+
+    name = Employee.split_name(fullname)
+    name[:nickname] = nickname
+    employee = Employee.create(name)
+    result = {
+      img: employee.img_url.exists? ? employee.img_url.url(:medium) : nil,
+      name: employee.full_name_with_nickname,
+      id: employee.id
+    }
+    render json: result, status: :ok
+  end
+
   private
   def employee_params
     result = params.require(:employee).permit([

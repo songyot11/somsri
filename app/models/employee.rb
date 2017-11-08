@@ -176,6 +176,57 @@ class Employee < ApplicationRecord
     self.pin = ([*0..9999] - pins).sample.to_s.rjust(4, '0')
   end
 
+  def self.split_name(name)
+    name_obj = {
+      prefix: '',
+      first_name: '',
+      middle_name: '',
+      last_name: '',
+      prefix_thai: '',
+      first_name_thai: '',
+      last_name_thai: ''
+    }
+    splited = name.split(" ")
+    if (/[a-zA-Z]/ =~ name) != nil
+      # english name
+      if ["mr.", "ms.", "mrs.", "miss"].include?(splited[0].downcase)
+        # has prefix
+        name_obj[:prefix] = splited[0]
+        if splited.length > 3
+          # has middle_name
+          name_obj[:first_name] = splited[1]
+          name_obj[:middle_name] = splited[2]
+          name_obj[:last_name] = splited[3]
+        else
+          name_obj[:first_name] = splited[1] if splited.length > 1
+          name_obj[:last_name] = splited[2] if splited.length > 2
+        end
+      else
+        if splited.length > 2
+          # has middle_name
+          name_obj[:first_name] = splited[0]
+          name_obj[:middle_name] = splited[1]
+          name_obj[:last_name] = splited[2]
+        else
+          name_obj[:first_name] = splited[0] if splited.length > 0
+          name_obj[:last_name] = splited[1] if splited.length > 1
+        end
+      end
+    else
+      # thai name
+      if ["นาย", "นาง", "นางสาว"].include?(splited[0])
+        # has prefix_thai
+        name_obj[:prefix_thai] = splited[0] if splited.length > 0
+        name_obj[:first_name_thai] = splited[1] if splited.length > 1
+        name_obj[:last_name_thai] = splited[2] if splited.length > 2
+      else
+        name_obj[:first_name_thai] = splited[0] if splited.length > 0
+        name_obj[:last_name_thai] = splited[1] if splited.length > 1
+      end
+    end
+    return name_obj
+  end
+
   private
     def create_tax_reduction
       TaxReduction.create(employee_id: self.id)

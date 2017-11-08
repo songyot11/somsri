@@ -26,6 +26,7 @@ Rails.application.routes.draw do
   resources :employees, only: [:index, :create, :show, :update, :destroy]  do
     collection do
       get 'slips'
+      post 'create_by_name'
     end
     member do
       get 'slip'
