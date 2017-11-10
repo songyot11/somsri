@@ -21,22 +21,46 @@ describe 'Classroom Edit', js: true do
     ]
   end
 
-  let(:employee) do
-    Employee.make!({
-      school_id: school.id,
-      first_name: "Somsri",
-      middle_name: "Is",
-      last_name: "Appname",
-      prefix: "Mrs.",
-      first_name_thai: "สมศรี",
-      last_name_thai: "เป็นชื่อแอพ",
-      prefix_thai: "นาง",
-      sex: 1,
-      account_number: "5-234-34532-2342",
-      salary: 50000,
-      classroom: classrooms[0],
-      grade_id: grades[0].id
-    })
+  let(:employees) do
+    [
+      Employee.make!({
+        school_id: school.id,
+        first_name: "Somsri",
+        middle_name: "Is",
+        last_name: "Appname",
+        prefix: "Mrs.",
+        first_name_thai: "สมศรี",
+        last_name_thai: "เป็นชื่อแอพ",
+        prefix_thai: "นาง",
+        sex: 1,
+        account_number: "5-234-34532-2342",
+        salary: 50000,
+        classroom: classrooms[0],
+        grade_id: grades[0].id
+      }),
+      Employee.make!({
+        school_id: school.id,
+        first_name: "Somchit",
+        middle_name: "Is",
+        last_name: "Boxing",
+        prefix: "Mr",
+        first_name_thai: "สมจิตร",
+        last_name_thai: "เป็นนักมวย",
+        prefix_thai: "นาย",
+        salary: 20000
+      }),
+      Employee.make!({
+        school_id: school.id,
+        first_name: "SomJai",
+        middle_name: "Is",
+        last_name: "Human",
+        prefix: "Mrs.",
+        first_name_thai: "สมใจ",
+        last_name_thai: "เป็นคน",
+        prefix_thai: "นาง",
+        salary: 20000
+      })
+    ]
   end
 
   let(:students) do
@@ -76,7 +100,7 @@ describe 'Classroom Edit', js: true do
     user.add_role :admin
     login_as(user, scope: :user)
     students
-    employee
+    employees
   end
 
   it 'should access to edit classroom page' do
@@ -108,5 +132,36 @@ describe 'Classroom Edit', js: true do
     click_link("นักเรียน")
     eventually { expect(page).to have_content("สมศรี3 ใบเสร็จ สมศรี2 ใบเสร็จ สมศรี1 ใบเสร็จ") }
     # eventually { expect(page).to have_content("จำนวน 3 คน") }
+  end
+
+  it 'should save teacher in classroom correctly' do
+    num_employee = Employee.where({ classroom_id: classrooms[0].id }).count
+    eventually { expect(num_employee).to eq 1 }
+
+    visit "/main#/classroom/#{classrooms[0].id}"
+    sleep(1)
+    click_button("+ เลือกคุณครู")
+    eventually { expect(page).to have_content("นาย สมจิตร เป็นนักมวย") }
+    eventually { expect(page).to have_content("นาง สมใจ เป็นคน") }
+    click_button("+ สร้างคุณครูใหม่")
+    sleep(1)
+    within('div#create-member-modal') do
+      eventually { expect(page).to have_content("สร้างคุณครูใหม่") }
+      fill_in "ชื่อ - นามสกุล",  with: "นางสาว ครูใหม่ ไฟแรง"
+      fill_in "ชื่อเล่น",  with: "ไฟแรงๆ"
+      click_button('บันทึก')
+    end
+    eventually { expect(page).to have_content("นางสาว ครูใหม่ ไฟแรง (ไฟแรงๆ)") }
+    sleep(1)
+    within('div#select-member-modal') do
+      find('input[data-index="0"]').click
+      find('input[data-index="1"]').click
+      click_button("ตกลง")
+    end
+    sleep(1)
+    click_button("ตกลง")
+    sleep(1)
+    num_employee = Employee.where({ classroom_id: classrooms[0].id }).count
+    eventually { expect(num_employee).to eq 3 }
   end
 end

@@ -81,7 +81,7 @@ class ClassroomsController < ApplicationController
   # GET /classrooms/:id/student_without_classroom
   def student_without_classroom
     students = []
-    Student.where.where(classroom_id: [nil, '']).each do |student|
+    Student.where(classroom_id: [nil, '']).each do |student|
       students << {
         img: student.img_url.exists? ? student.img_url.url(:medium) : nil,
         name: student.full_name_with_nickname,
@@ -90,4 +90,26 @@ class ClassroomsController < ApplicationController
     end
     render json: students, status: :ok
   end
+
+  # PATCH /classrooms/:id/update_list
+  def update_list
+    classroom = Classroom.where(id: params[:id]).first
+    if classroom
+      teacher_ids = params[:teacher_ids]
+      if teacher_ids
+        Employee.where(classroom_id: classroom.id).update_all(classroom_id: nil)
+        Employee.where(id: teacher_ids).update(classroom_id: classroom.id)
+        render json: ["SUCCESS"], status: :ok and return
+      end
+
+      student_ids = params[:student_ids]
+      if student_ids
+        Student.where(classroom_id: classroom.id).update_all(classroom_id: nil)
+        Student.where(id: student_ids).update(classroom_id: classroom.id)
+        render json: ["SUCCESS"], status: :ok and return
+      end
+    end
+    render json: ["FAIL"], status: :ok
+  end
+
 end

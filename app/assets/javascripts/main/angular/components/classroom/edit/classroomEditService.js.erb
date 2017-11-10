@@ -13,5 +13,9 @@
     this.getStudents = function(classroomId) {
       return $http.get('/classrooms/' + classroomId + '/student_list')
     }
+
+    this.updateClassroomList = function(classroomId, data) {
+      return $http.patch('/classrooms/' + classroomId + '/update_list', data)
+    }
   }]);
 })();

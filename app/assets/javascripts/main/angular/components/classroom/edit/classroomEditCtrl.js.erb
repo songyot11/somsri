@@ -62,6 +62,7 @@
       });
 
       service.getTeachers(ctrl.classroomId).then(function(resp) {
+        ctrl.teachersRawData = resp.data
         ctrl.teachers = formattingTeacherData(resp.data)
         ctrl.teachersAmount = ctrl.teachers.length
         $('#teacher-list').bootstrapTable({
@@ -96,6 +97,22 @@
         $scope.$apply()
       }
 
+      ctrl.cancel = function(){
+        $rootScope.openClassroomList()
+      }
+
+      ctrl.save = function(){
+        var data = { teacher_ids: [] }
+        $('#teacher-list').bootstrapTable('getData').forEach(function(teacher) {
+          data["teacher_ids"].push(teacher.id)
+        })
+        service.updateClassroomList(ctrl.classroomId, data).then(function(resp) {
+          if(resp.data[0] == "SUCCESS"){
+            $rootScope.openClassroomList()
+          }
+        })
+      }
+
       ctrl.selectTeacher = function(){
         $uibModal.open({
           animation: true,
@@ -119,6 +136,9 @@
             }
           }
         }).result.then(function (selectedTeacher) {
+          selectedTeacher.forEach(function(teacher) {
+            ctrl.teachersRawData.push(teacher)
+          })
           var addingTeachers = formattingTeacherData(selectedTeacher)
           ctrl.teachersAmount += addingTeachers.length
           $('#teacher-list').bootstrapTable('append', addingTeachers)
