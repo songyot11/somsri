@@ -5,11 +5,8 @@
   ])
   .service('selectMemberModalService', ['$http', '$log', function($http, $log) {
     return {
-      getStudentNotAssignClass : function() {
-        return $http.get('/classrooms/student_without_classroom');
-      },
-      getTeacherNotAssignClass : function(classroomId, currentMemberIds) {
-        return $http.get('/classrooms/' + classroomId + '/teacher_without_classroom', {
+      getMemberNotAssignClass : function(classroomId, currentMemberIds, type) {
+        return $http.get('/classrooms/' + classroomId + '/' + type + '_without_classroom', {
           params: {
             exclude_ids: JSON.stringify(currentMemberIds)
           }

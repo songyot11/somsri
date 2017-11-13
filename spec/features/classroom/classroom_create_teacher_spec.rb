@@ -71,7 +71,6 @@ describe 'Classroom Create Teacher', js: true do
   end
 
   it 'should create teacher' do
-    num_employee = Employee.count
     visit "/main#/classroom/#{classrooms[0].id}"
     sleep(1)
     click_button("+ เลือกคุณครู")

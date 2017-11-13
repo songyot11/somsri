@@ -3,7 +3,8 @@
   angular.module('somsri.main.select_member_modal', [
     ])
   .controller('selectMemberModalCtrl', ['$uibModalInstance', '$uibModal', '$state', '$log', 'selectMemberModalService', 'options', function($uibModalInstance, $uibModal, $state, $log, service, options) {
-    var ctrl = this;
+    var ctrl = this
+    ctrl.options = options
     var currentMemberIds = options.currentMemberIds
     var classroomId = options.classroomId
     var tableColumnSetting = [
@@ -33,11 +34,15 @@
       var result = []
       if(data){
         data.forEach(function(member) {
+          var memberUrl = '/somsri_payroll#/employees/' + member.id
+          if(ctrl.options.type == "student"){
+            memberUrl = '/students/' + member.id + '/edit#/'
+          }
           var onClick = angularCheckBox + '.removeMember(' + member.id + ')'
           result.push({
             id: member.id,
             img: imgFormatter(member.img),
-            name: nameFormatter(member.name, '/somsri_payroll#/employees/' + member.id)
+            name: nameFormatter(member.name, memberUrl)
           })
         });
       }
@@ -45,44 +50,44 @@
     }
 
     ctrl.selectedNumber = 0
-    ctrl.teachersRawData = []
     ctrl.membersAmount = 0
 
-    service.getTeacherNotAssignClass(classroomId, currentMemberIds).then(function(resp) {
-      ctrl.teachersRawData = resp.data
-      ctrl.teachers = formattingMemberData(resp.data)
-      ctrl.teachersAmount = ctrl.teachers.length
+    ctrl.membersRawData = []
+    service.getMemberNotAssignClass(classroomId, currentMemberIds, ctrl.options.type).then(function(resp) {
+      ctrl.membersRawData = resp.data
+      ctrl.members = formattingMemberData(resp.data)
+      ctrl.membersAmount = ctrl.members.length
       $('#member-select-list').bootstrapTable({
-        selectItemName: "teacherId",
+        selectItemName: ctrl.options.type + "Id",
         search: true,
         toolbar: '.bt-toolbar',
         toolbarAlign: 'right',
         searchAlign: 'left',
         clickToSelect: true,
         columns: tableColumnSetting,
-        data: ctrl.teachers
+        data: ctrl.members
       })
     });
 
     ctrl.submit = function(){
       var result = []
       var selecteds = $('#member-select-list').bootstrapTable('getSelections')
-      ctrl.teachersRawData.forEach(function(teacher) {
+      ctrl.membersRawData.forEach(function(member) {
         var selectedIds = selecteds.map(function(selected) {
            return selected.id
         })
-        if($.inArray(teacher.id, selectedIds) != -1){
-          result.push(teacher)
+        if($.inArray(member.id, selectedIds) != -1){
+          result.push(member)
         }
       })
       $uibModalInstance.close(result)
     }
 
     ctrl.cancel = function () {
-      $uibModalInstance.close()
+      $uibModalInstance.close([])
     }
 
-    ctrl.createTeacher = function(){
+    ctrl.createMember = function(){
       $uibModal.open({
         animation: true,
         backdrop: 'static',
@@ -102,7 +107,7 @@
         }
       }).result.then(function (createdMember) {
         if(createdMember){
-          ctrl.teachersRawData.push(createdMember) 
+          ctrl.membersRawData.push(createdMember)
           var addingMember = formattingMemberData([createdMember])
           ctrl.membersAmount += addingMember.length
           $('#member-select-list').bootstrapTable('prepend', addingMember)

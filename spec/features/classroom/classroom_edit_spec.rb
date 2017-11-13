@@ -91,6 +91,18 @@ describe 'Classroom Edit', js: true do
         classroom_number: 106,
         student_number: 9006,
         birthdate: Time.now
+      }),
+      Student.make!({
+        first_name: 'สมศรี4',
+        last_name: 'ใบเสร็จ',
+        student_number: 9006,
+        birthdate: Time.now
+      }),
+      Student.make!({
+        first_name: 'สมศรี5',
+        last_name: 'ใบเสร็จ',
+        student_number: 9006,
+        birthdate: Time.now
       })
     ]
   end
@@ -114,7 +126,7 @@ describe 'Classroom Edit', js: true do
     sleep(1)
     new_window = window_opened_by { click_link "นาง สมศรี เป็นชื่อแอพ" }
     within_window new_window do
-      eventually { expect(current_url).to have_content("/somsri_payroll#/employees/1") }
+      eventually { expect(current_url).to have_content("/somsri_payroll#/employees/#{employees[0].id}") }
     end
   end
 
@@ -163,5 +175,57 @@ describe 'Classroom Edit', js: true do
     sleep(1)
     num_employee = Employee.where({ classroom_id: classrooms[0].id }).count
     eventually { expect(num_employee).to eq 3 }
+  end
+
+  describe 'students tab' do
+    before do
+      visit "/main#/classroom/#{classrooms[0].id}"
+      sleep(1)
+      click_link("นักเรียน")
+      sleep(1)
+    end
+
+    it 'should redirect to student if click on name' do
+      new_window = window_opened_by { click_link "สมศรี3 ใบเสร็จ" }
+      within_window new_window do
+        eventually { expect(current_url).to have_content("/students/#{students[2].id}/edit#/") }
+      end
+    end
+
+    it 'should remove student from list' do
+      first('.fa.fa-times.cursor-pointer.color-red').click
+      eventually { expect(page).to_not have_content("สมศรี3 ใบเสร็จ") }
+      # eventually { expect(page).to have_content("จำนวน 0 คน") }
+    end
+
+    it 'should save teacher in classroom correctly' do
+      num_employee = Student.where({ classroom_id: classrooms[0].id }).count
+      eventually { expect(num_employee).to eq 3 }
+
+      click_button("+ เลือกนักเรียน")
+      eventually { expect(page).to have_content("สมศรี3 ใบเสร็จ") }
+      eventually { expect(page).to have_content("สมศรี4 ใบเสร็จ") }
+      click_button("+ สร้างนักเรียนใหม่")
+      eventually { expect(page).to have_content("สร้างนักเรียนใหม่") }
+      sleep(1)
+      within('div#create-member-modal') do
+        fill_in "ชื่อ - นามสกุล",  with: "สมเสร็จ ใบศรี"
+        fill_in "ชื่อเล่น",  with: "สม"
+        click_button('บันทึก')
+      end
+      eventually { expect(page).to_not have_content("บันทึก") }
+      sleep(1)
+      within('div#select-member-modal') do
+        eventually { expect(page).to have_content("สมเสร็จ ใบศรี (สม)") }
+        find('input[data-index="0"]').click
+        find('input[data-index="1"]').click
+        click_button("ตกลง")
+      end
+      sleep(1)
+      click_button("ตกลง")
+      sleep(1)
+      num_employee = Student.where({ classroom_id: classrooms[0].id }).count
+      eventually { expect(num_employee).to eq 5 }
+    end
   end
 end

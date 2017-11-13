@@ -79,6 +79,9 @@ Rails.application.routes.draw do
     member do
       patch 'upload_photo'
     end
+    collection do
+      post 'create_by_name'
+    end
   end
   resources :abilities, only: [:index]
   get "/auth_api" => "home#auth_api"

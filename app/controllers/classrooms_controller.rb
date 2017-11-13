@@ -70,7 +70,7 @@ class ClassroomsController < ApplicationController
     classroom = Classroom.find(params[:id])
     Student.where(classroom: classroom).each do |student|
       students << {
-        img: student.img_url.exists? ? student.img_url.url(:medium) : '',
+        img: student.img_url.exists? ? student.img_url.url(:medium) : nil,
         name: student.invoice_screen_full_name_display,
         id: student.id
       }
@@ -81,10 +81,12 @@ class ClassroomsController < ApplicationController
   # GET /classrooms/:id/student_without_classroom
   def student_without_classroom
     students = []
-    Student.where(classroom_id: [nil, '']).each do |student|
+    exclude_ids = JSON.parse params[:exclude_ids]
+    Student.where(classroom_id: [nil, ''])
+           .where.not(id: exclude_ids).each do |student|
       students << {
         img: student.img_url.exists? ? student.img_url.url(:medium) : nil,
-        name: student.full_name_with_nickname,
+        name: student.invoice_screen_full_name_display,
         id: student.id
       }
     end
@@ -99,15 +101,13 @@ class ClassroomsController < ApplicationController
       if teacher_ids
         Employee.where(classroom_id: classroom.id).update_all(classroom_id: nil)
         Employee.where(id: teacher_ids).update(classroom_id: classroom.id)
-        render json: ["SUCCESS"], status: :ok and return
       end
-
       student_ids = params[:student_ids]
       if student_ids
         Student.where(classroom_id: classroom.id).update_all(classroom_id: nil)
         Student.where(id: student_ids).update(classroom_id: classroom.id)
-        render json: ["SUCCESS"], status: :ok and return
       end
+      render json: ["SUCCESS"], status: :ok and return
     end
     render json: ["FAIL"], status: :ok
   end

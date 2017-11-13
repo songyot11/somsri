@@ -417,6 +417,30 @@ class StudentsController < ApplicationController
     @student = Student.where(id: params[:id]).update( upload_photo_params )
   end
 
+  def create_by_name
+    fullname = params[:fullname]
+    nickname = params[:nickname]
+
+    splited = fullname.split(" ")
+
+    gender_id = nil
+    gender_id = Gender.find_by_name("Female").id if ["เด็กหญิง", "ด.ญ.", "miss"].include?(splited[0].downcase)
+    gender_id = Gender.find_by_name("Male").id if ["เด็กชาย", "ด.ช.", "master"].include?(splited[0].downcase)
+
+    student = Student.create({
+      gender_id: gender_id,
+      full_name: fullname,
+      nickname: nickname
+    })
+
+    result = {
+      img: student.img_url.exists? ? student.img_url.url(:medium) : nil,
+      name: student.invoice_screen_full_name_display,
+      id: student.id
+    }
+    render json: result, status: :ok
+  end
+
   private
     # Use callbacks to share common setup or constraints between actions.
     def set_student
