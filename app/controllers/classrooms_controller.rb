@@ -112,4 +112,31 @@ class ClassroomsController < ApplicationController
     render json: ["FAIL"], status: :ok
   end
 
+  # GET /classrooms/is_student_promote_enable
+  def is_student_promote_enable
+    if Classroom.where.not(next_id: nil).or(Classroom.where.not(next_id: '')).first
+      render json: [true], status: :ok
+    else
+      render json: [false], status: :ok
+    end
+  end
+
+  # PATCH /classrooms/student_promote
+  def student_promote
+    _student_promote([nil, ''], true)
+    render json: ["SUCCESS"], status: :ok
+  end
+
+  private
+  def _student_promote(next_id, isFirst)
+    Classroom.where(next_id: next_id).each do |classroom|
+      if isFirst
+        Student.where(classroom_id: classroom.id).update_all(deleted_at: DateTime.now)
+      else
+        Student.where(classroom_id: classroom.id).update_all(classroom_id: next_id)
+      end
+      _student_promote(classroom.id, false)
+    end
+  end
+
 end

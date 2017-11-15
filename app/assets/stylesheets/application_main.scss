@@ -180,6 +180,23 @@
     border:2px solid #9D9D9D;
     color: #9D9D9D;
   }
+} 
+
+.btn-disable{
+  font-family: 'Maitree', serif;
+  padding: 12px 32px;
+  font-size: 16px;
+  letter-spacing: 1px;
+  background-color: transparent;
+  color: #9D9D9D;
+  border:2px solid #9D9D9D;
+  border-radius: 0px;
+  transition: all 0.25s ease;
+  &:hover{
+    background-color: transparent;
+    border:2px solid #9D9D9D;
+    color: #9D9D9D;
+  }
 }
 
 .cursor-pointer {

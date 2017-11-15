@@ -61,6 +61,8 @@ Rails.application.routes.draw do
   resources :classrooms do
     collection do
       get 'classroom_list'
+      patch 'student_promote'
+      get 'is_student_promote_enable'
     end
     member do
       get 'teacher_list'

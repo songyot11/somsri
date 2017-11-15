@@ -8,5 +8,12 @@
       return $http.get('/grades')
     }
 
+    this.getStudentPromote = function() {
+      return $http.patch('/classrooms/student_promote')
+    }
+
+    this.getIsStudentPromoteEnable = function() {
+      return $http.get('/classrooms/is_student_promote_enable')
+    }
   }]);
 })();

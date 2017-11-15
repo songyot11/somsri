@@ -2,10 +2,39 @@
   'use strict';
   angular.module('somsri.main.classroom', [
     ])
-  .controller('classroomCtrl', ['$rootScope','classroomService','$scope', '$uibModal', function($rootScope, service, $scope, $uibModal) {
+  .controller('classroomCtrl', ['$rootScope','classroomService','$scope', '$uibModal', '$window', function($rootScope, service, $scope, $uibModal, $window) {
     $rootScope.menu = "ตั้งค่า"
     var ctrl = this
     ctrl.grade_select = null
+    ctrl.isStudentPromoteEnable = false
+    ctrl.isStudentPromoteReady = false
+
+    function openConfirmationModal(message, success, dismiss) {
+      $scope.message = message;
+      $uibModal.open({
+        animation: true,
+        backdrop: 'static',
+        keyboard: false,
+        scope: $scope,
+        templateUrl: "<%= asset_path('main/angular/components/modal/confirm/confirmModalView.html') %>",
+        controller: 'confirmModalCtrl as confirm',
+        size: 'md',
+        resolve: {
+          resources: ['$ocLazyLoad', 'ASSETS', function($ocLazyLoad, ASSETS) {
+            return $ocLazyLoad.load([
+              ASSETS.somsri.main.confirm_modal
+            ]);
+          }]
+        }
+      }).result.then(function (isConfirm) {
+        if (isConfirm) {
+          if(success){ success() }
+        }else{
+          if(dismiss){ dismiss() }
+        }
+      });
+    }
+
     $rootScope.loadAndAuthorizeResource("school", function(){
       service.getGrades().then(function(resp) {
         ctrl.grades = []
@@ -19,6 +48,17 @@
         }else{
           $('#classroom-list').bootstrapTable('filterBy', {});
         }
+      }
+      service.getIsStudentPromoteEnable().then(function(resp) {
+        ctrl.isStudentPromoteEnable = resp.data[0]
+        ctrl.isStudentPromoteReady = true
+      })
+      ctrl.studentPromote = function(){
+        openConfirmationModal("คุณต้องการเลื่อนชั้นเรียนให้กับนักเรียนทั้งหมดใช่หรือไม่?", function(){
+          service.getStudentPromote().then(function(resp) {
+            $window.location.reload();
+          });
+        })
       }
     });
 
