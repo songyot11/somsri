@@ -85,8 +85,8 @@ describe 'Classroom Select Student', js: true do
       eventually { expect(page).to_not have_content("สมศรี3 ใบเสร็จ") }
       eventually { expect(page).to have_content("สมศรี4 ใบเสร็จ") }
       eventually { expect(page).to have_content("สมศรี5 ใบเสร็จ") }
+      eventually { expect(page).to have_content("จำนวนที่เลือก 0 คน") }
     end
-    # eventually { expect(page).to have_content("จำนวน 1 คน") }
   end
 
   it 'should click student link and goto employee' do
@@ -110,6 +110,7 @@ describe 'Classroom Select Student', js: true do
     eventually { expect(page).to have_content("สมศรี5 ใบเสร็จ") }
     within('div#select-member-modal') do
       find('input[name="btSelectAll"]').click
+      eventually { expect(page).to have_content("จำนวนที่เลือก 2 คน") }
       click_button("ตกลง")
     end
     eventually { expect(page).to have_content("สมศรี1 ใบเสร็จ") }

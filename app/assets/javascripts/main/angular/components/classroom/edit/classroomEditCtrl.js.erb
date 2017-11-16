@@ -26,9 +26,9 @@
       var angularCtrlStr = "angular.element(document.getElementById('angularCtrl')).scope().edit"
 
       var tableColumnSetting = [
-        { field: 'img', class:'font1_2em', title: "ชื่อ - นามสกุล", width: "10%"},
-        { field: 'name', class:"center-vertical-padding font1_2em", width: "80%"},
-        { field: 'unselect', class: "center-vertical-padding text-right font1_2em", width: "10%"}
+        { field: 'img', class:'img-column font1_2em', title: "ชื่อ - นามสกุล", width: "10%"},
+        { field: 'name', class:"name-column center-vertical-padding font1_2em", width: "70%"},
+        { field: 'unselect', class: "unselect-column center-vertical-padding text-right font1_2em", title: "จำนวนคน 0 คน", width: "20%"}
       ]
 
       service.getClassroom(ctrl.classroomId).then(function(resp) {
@@ -59,6 +59,10 @@
         return teacherIds
       }
 
+      function displayTeacherAmount(){
+        $('#teacher-list th[data-field="unselect"] .th-inner').html("จำนวนคน " + ctrl.teachersAmount + " คน")
+      }
+
       var currentTeacher = 0
 
       service.getTeachers(ctrl.classroomId).then(function(resp) {
@@ -69,6 +73,7 @@
           columns: tableColumnSetting,
           data: ctrl.teachers
         })
+        displayTeacherAmount()
       });
 
       ctrl.selectTeacher = function(){
@@ -102,6 +107,7 @@
           var addingTeachers = formattingTeacherData(selectedTeacher)
           ctrl.teachersAmount += addingTeachers.length
           $('#teacher-list').bootstrapTable('append', addingTeachers)
+          displayTeacherAmount()
         })
       }
 
@@ -112,7 +118,7 @@
         })
         $('#teacher-list').bootstrapTable('load', teachers)
         ctrl.teachersAmount -= 1
-        $scope.$apply()
+        displayTeacherAmount()
       }
 
       function formattingStudentData(data) {
@@ -139,6 +145,10 @@
         return studentIds
       }
 
+      function displayStudentAmount(){
+        $('#student-list th[data-field="unselect"] .th-inner').html("จำนวนคน " + ctrl.studentsAmount + " คน")
+      }
+
       var currentStudent = 0
 
       service.getStudents(ctrl.classroomId).then(function(resp) {
@@ -149,6 +159,7 @@
           columns: tableColumnSetting,
           data: ctrl.students
         })
+        displayStudentAmount()
       });
 
       ctrl.selectStudent = function(){
@@ -182,6 +193,7 @@
           var addingStudents = formattingStudentData(selectedStudent)
           ctrl.studentsAmount += addingStudents.length
           $('#student-list').bootstrapTable('append', addingStudents)
+          displayStudentAmount()
         })
       }
 
@@ -192,7 +204,7 @@
         })
         $('#student-list').bootstrapTable('load', students)
         ctrl.studentsAmount -= 1
-        $scope.$apply()
+        displayStudentAmount()
       }
 
       ctrl.cancel = function(){

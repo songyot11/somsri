@@ -79,7 +79,7 @@ describe 'Classroom Select Teacher', js: true do
     within('div#select-member-modal') do
       eventually { expect(page).to_not have_content("นาง สมศรี เป็นชื่อแอพ") }
     end
-    # eventually { expect(page).to have_content("จำนวน 1 คน") }
+    eventually { expect(page).to have_content("จำนวนที่เลือก 0 คน") }
   end
 
   it 'should click teacher link and goto employee' do
@@ -110,6 +110,7 @@ describe 'Classroom Select Teacher', js: true do
     sleep(1)
     within('div#select-member-modal') do
       find('input[data-index="0"]').click
+      eventually { expect(page).to have_content("จำนวนที่เลือก 1 คน") }
       click_button("ตกลง")
     end
 
@@ -129,6 +130,7 @@ describe 'Classroom Select Teacher', js: true do
     sleep(1)
     within('div#select-member-modal') do
       find('input[name="btSelectAll"]').click
+      eventually { expect(page).to have_content("จำนวนที่เลือก 2 คน") }
       click_button("ตกลง")
     end
 
@@ -150,9 +152,11 @@ describe 'Classroom Select Teacher', js: true do
     within('div#select-member-modal') do
       find('input[name="btSelectAll"]').click
       eventually { expect(all('tr.selected').count).to eq 2 }
+      eventually { expect(page).to have_content("จำนวนที่เลือก 2 คน") }
 
       find('input[name="btSelectAll"]').click
       eventually { expect(all('tr.selected').count).to eq 0 }
+      eventually { expect(page).to have_content("จำนวนที่เลือก 0 คน") }
       click_button("ตกลง")
     end
 

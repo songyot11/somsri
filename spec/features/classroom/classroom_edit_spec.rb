@@ -118,7 +118,7 @@ describe 'Classroom Edit', js: true do
   it 'should access to edit classroom page' do
     visit "/main#/classroom/#{classrooms[0].id}"
     eventually { expect(page).to have_content("นาง สมศรี เป็นชื่อแอพ") }
-    # eventually { expect(page).to have_content("จำนวน 1 คน") }
+    eventually { expect(page).to have_content("จำนวนคน 1 คน") }
   end
 
   it 'should redirect to employee if click on name' do
@@ -135,7 +135,7 @@ describe 'Classroom Edit', js: true do
     sleep(1)
     find('.fa.fa-times.cursor-pointer.color-red').click
     eventually { expect(page).to_not have_content("นาง สมศรี เป็นชื่อแอพ") }
-    # eventually { expect(page).to have_content("จำนวน 0 คน") }
+    eventually { expect(page).to have_content("จำนวนคน 0 คน") }
   end
 
   it 'should display all student in classroom' do
@@ -143,7 +143,7 @@ describe 'Classroom Edit', js: true do
     sleep(1)
     click_link("นักเรียน")
     eventually { expect(page).to have_content("สมศรี3 ใบเสร็จ สมศรี2 ใบเสร็จ สมศรี1 ใบเสร็จ") }
-    # eventually { expect(page).to have_content("จำนวน 3 คน") }
+    eventually { expect(page).to have_content("จำนวนคน 3 คน") }
   end
 
   it 'should save teacher in classroom correctly' do
@@ -171,7 +171,7 @@ describe 'Classroom Edit', js: true do
       click_button("ตกลง")
     end
     sleep(1)
-    click_button("ตกลง")
+    click_button("บันทึก")
     sleep(1)
     num_employee = Employee.where({ classroom_id: classrooms[0].id }).count
     eventually { expect(num_employee).to eq 3 }
@@ -195,7 +195,7 @@ describe 'Classroom Edit', js: true do
     it 'should remove student from list' do
       first('.fa.fa-times.cursor-pointer.color-red').click
       eventually { expect(page).to_not have_content("สมศรี3 ใบเสร็จ") }
-      # eventually { expect(page).to have_content("จำนวน 0 คน") }
+      eventually { expect(page).to have_content("จำนวนคน 2 คน") }
     end
 
     it 'should save teacher in classroom correctly' do
@@ -213,7 +213,7 @@ describe 'Classroom Edit', js: true do
         fill_in "ชื่อเล่น",  with: "สม"
         click_button('บันทึก')
       end
-      eventually { expect(page).to_not have_content("บันทึก") }
+      eventually { expect(page).to_not have_content("ชื่อเล่น") }
       sleep(1)
       within('div#select-member-modal') do
         eventually { expect(page).to have_content("สมเสร็จ ใบศรี (สม)") }
@@ -222,7 +222,7 @@ describe 'Classroom Edit', js: true do
         click_button("ตกลง")
       end
       sleep(1)
-      click_button("ตกลง")
+      click_button("บันทึก")
       sleep(1)
       num_employee = Student.where({ classroom_id: classrooms[0].id }).count
       eventually { expect(num_employee).to eq 5 }

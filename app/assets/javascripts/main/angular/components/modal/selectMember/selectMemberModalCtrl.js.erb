@@ -8,9 +8,9 @@
     var currentMemberIds = options.currentMemberIds
     var classroomId = options.classroomId
     var tableColumnSetting = [
-      { field: 'check-box', title: "เลือกทั้งหมด", checkbox: true },
-      { field: 'img', class:'font1_2em' },
-      { field: 'name', class:"center-vertical-padding font1_2em"}
+      { field: 'check-box', checkbox: true, class: "check-box", width: "5%"},
+      { field: 'img', title: "เลือกทั้งหมด", class:'img-column-with-checkbox font1_2em', width: "10%" },
+      { field: 'name', class:"name-column-with-checkbox font1_2em", width: "85%", title: "จำนวนที่เลือก 0 คน"}
     ]
 
     var angularCheckBox = "angular.element(document.getElementById('angularCtrl')).scope().$root.onCheckBoxChange()"
@@ -49,14 +49,16 @@
       return result
     }
 
-    ctrl.selectedNumber = 0
-    ctrl.membersAmount = 0
+    function displaySelectedAmount() {
+      var amoutLabel = $('#member-select-list .name-column-with-checkbox .th-inner')
+      var selectedNumber = $('#member-select-list').bootstrapTable('getAllSelections').length
+      amoutLabel.html("จำนวนที่เลือก " + selectedNumber + " คน")
+    }
 
     ctrl.membersRawData = []
     service.getMemberNotAssignClass(classroomId, currentMemberIds, ctrl.options.type).then(function(resp) {
       ctrl.membersRawData = resp.data
       ctrl.members = formattingMemberData(resp.data)
-      ctrl.membersAmount = ctrl.members.length
       $('#member-select-list').bootstrapTable({
         selectItemName: ctrl.options.type + "Id",
         search: true,
@@ -64,14 +66,19 @@
         toolbarAlign: 'right',
         searchAlign: 'left',
         clickToSelect: true,
+        maintainSelected: true,
         columns: tableColumnSetting,
         data: ctrl.members
       })
+      $('#member-select-list').on('check.bs.table', displaySelectedAmount);
+      $('#member-select-list').on('uncheck.bs.table', displaySelectedAmount);
+      $('#member-select-list').on('check-all.bs.table', displaySelectedAmount);
+      $('#member-select-list').on('uncheck-all.bs.table', displaySelectedAmount);
     });
 
     ctrl.submit = function(){
       var result = []
-      var selecteds = $('#member-select-list').bootstrapTable('getSelections')
+      var selecteds = $('#member-select-list').bootstrapTable('getAllSelections')
       ctrl.membersRawData.forEach(function(member) {
         var selectedIds = selecteds.map(function(selected) {
            return selected.id
@@ -109,7 +116,6 @@
         if(createdMember){
           ctrl.membersRawData.push(createdMember)
           var addingMember = formattingMemberData([createdMember])
-          ctrl.membersAmount += addingMember.length
           $('#member-select-list').bootstrapTable('prepend', addingMember)
         }
       })

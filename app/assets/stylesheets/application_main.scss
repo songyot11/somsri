@@ -49,9 +49,8 @@
 }
 
 .icon-default-img{
- position: absolute;
  margin: auto;
- transform: translate(90%, 50%);
+ transform: translate(90%, 40%);
  color: #fff;
 }
 
@@ -99,26 +98,24 @@
 }
 
 .btn-primary, .btn-primary:focus{
+  font-family: 'Maitree', serif;
   background-color: #5bab67;
-  border-color: inherit;
-  border-radius: inherit;
+  color: #fff;
+  font-size: 16px;
+  padding: 12px 32px;
   letter-spacing: 1px;
-  border: inherit;
-}
-.btn-primary:hover{
-  background-color: #6fc178;
-  border:inherit;
-  transition: 0.3s;
+  border: 2px solid #5bab67;
+  border-radius: 0px;
+  transition: all 0.25s ease;
+  &:hover{
+    background-color: transparent;
+    border:2px solid #6fc178;
+    color: #6fc178;
+  }
 }
 
 .space30{
   height: 30px;
-}
-
-#select-member-modal .table-list,
-#classroom-edit .table-list {
-  max-height: 270px !important;
-  overflow: scroll;
 }
 
 .font1_2em {
@@ -127,6 +124,10 @@
 
 #classroom-edit .center-vertical-padding {
   padding-top: 14px;
+}
+
+#classroom-edit th.center-vertical-padding {
+  padding-top: 0px;
 }
 
 .img-34x34 {
@@ -199,6 +200,95 @@
   }
 }
 
+.btn-disable{
+  font-family: 'Maitree', serif;
+  padding: 12px 32px;
+  font-size: 16px;
+  letter-spacing: 1px;
+  background-color: transparent;
+  color: #9D9D9D;
+  border:2px solid #9D9D9D;
+  border-radius: 0px;
+  transition: all 0.25s ease;
+  &:hover{
+    background-color: transparent;
+    border:2px solid #9D9D9D;
+    color: #9D9D9D;
+  }
+}
+
 .cursor-pointer {
   cursor: pointer;
+}
+
+th.img-column {
+  width: 50% !important;
+}
+
+th.name-column {
+  width: 10% !important;
+}
+
+th.unselect-column {
+  width: 40% !important;
+}
+
+th.img-column-with-checkbox {
+  width: 50% !important;
+  font-size: 16px;
+}
+
+th.name-column-with-checkbox {
+  width: 45% !important;
+  font-size: 16px;
+  text-align: right;
+}
+
+table.classroom-table {
+  width: 100%;
+}
+
+.classroom-table thead,
+.classroom-table tbody,
+.classroom-table tr,
+.classroom-table td,
+.classroom-table th {
+  display: block;
+}
+
+.classroom-table tr:after {
+    content: ' ';
+    display: block;
+    visibility: hidden;
+    clear: both;
+}
+
+.classroom-table thead th {
+    height: 35px !important;
+}
+
+.classroom-table tbody {
+    max-height: 270px;
+    overflow-y: auto;
+}
+
+.classroom-table thead { }
+
+
+.classroom-table tbody td,
+.classroom-table thead th {
+    width: 100%;
+    float: left;
+}
+
+.classroom-table .check-box {
+  width: 5%;
+}
+
+.classroom-table td.check-box input {
+  margin-top: 10px !important;
+}
+
+.fixed-table-container .classroom-table tbody .selected td {
+  background-color: transparent;
 }
