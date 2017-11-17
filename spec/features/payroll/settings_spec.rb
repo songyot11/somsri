@@ -1,4 +1,4 @@
-describe 'Employee Details', js: true do
+describe 'Profile', js: true do
   let(:school) { school = School.make!({ name: "โรงเรียนแห่งหนึ่ง" }) }
   let(:user) { User.make!({ school_id: school.id }) }
   let(:student) do
@@ -19,7 +19,7 @@ describe 'Employee Details', js: true do
   end
 
   it 'should update edit user detail' do
-    visit "/main#/setting"
+    visit "/main#/profile"
     sleep(1)
     page.fill_in 'username', :with => 'Akiyama Eve'
     page.fill_in 'useremail', :with => 'akiyama@eve.com'
@@ -33,7 +33,7 @@ describe 'Employee Details', js: true do
     click_button('บันทึก')
     sleep(1)
 
-    visit "/main#/setting"
+    visit "/main#/profile"
     sleep(1)
     expect(find_field('username').value).to eq 'Akiyama Eve'
     expect(find_field('useremail').value).to eq 'akiyama@eve.com'
@@ -48,7 +48,7 @@ describe 'Employee Details', js: true do
   end
 
   it 'should update password' do
-    visit "/main#/setting"
+    visit "/main#/profile"
     sleep(1)
     click_button('เปลี่ยนรหัสผ่าน')
     sleep(1)
@@ -72,7 +72,7 @@ describe 'Employee Details', js: true do
     sleep(1)
     first('a[class="nav-user avatar"]').trigger('click')
     sleep(1)
-    find('a[href="/main#/setting"]').trigger('click')
+    find('a[href="/main#/profile"]').trigger('click')
     sleep(1)
     expect(page).to have_content('เปลี่ยนรหัสผ่าน')
     expect(page).to have_content('บันทึก')
@@ -82,7 +82,7 @@ describe 'Employee Details', js: true do
     sleep(1)
     first('a[class="nav-user avatar"]').trigger('click')
     sleep(1)
-    find('a[href="/main#/setting"]').trigger('click')
+    find('a[href="/main#/profile"]').trigger('click')
     sleep(1)
     expect(page).to have_content('เปลี่ยนรหัสผ่าน')
     expect(page).to have_content('บันทึก')
@@ -92,7 +92,7 @@ describe 'Employee Details', js: true do
     sleep(1)
     first('a[class="nav-user avatar"]').trigger('click')
     sleep(1)
-    find('a[href="/main#/setting"]').trigger('click')
+    find('a[href="/main#/profile"]').trigger('click')
     sleep(1)
     expect(page).to have_content('เปลี่ยนรหัสผ่าน')
     expect(page).to have_content('บันทึก')
@@ -102,7 +102,7 @@ describe 'Employee Details', js: true do
     sleep(1)
     first('a[class="nav-user avatar"]').trigger('click')
     sleep(1)
-    find('a[href="/main#/setting"]').trigger('click')
+    find('a[href="/main#/profile"]').trigger('click')
     sleep(1)
     expect(page).to have_content('เปลี่ยนรหัสผ่าน')
     expect(page).to have_content('บันทึก')
@@ -112,7 +112,7 @@ describe 'Employee Details', js: true do
     sleep(1)
     first('a[class="nav-user avatar"]').trigger('click')
     sleep(1)
-    find('a[href="/main#/setting"]').trigger('click')
+    find('a[href="/main#/profile"]').trigger('click')
     sleep(1)
     eventually { expect(page).to have_content('เปลี่ยนรหัสผ่าน') }
     eventually { expect(page).to have_content('บันทึก') }
