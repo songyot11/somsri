@@ -61,7 +61,7 @@
           <div class="form-group ">
             <%= f.label :gender_id, 'เพศ', :class => 'control-label' %>
             <div class="col-md-12">
-              <%= f.collection_select :gender_id, Gender.all, :id, :name, {prompt: "โปรดเลือกเพศ"}, {class: "form-control"}%>
+              <%= f.collection_select :gender_id, Gender.all_cached, :id, :name, {prompt: "โปรดเลือกเพศ"}, {class: "form-control"}%>
             </div>
           </div>
         </div>

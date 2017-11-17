@@ -187,7 +187,7 @@ class Payroll < ApplicationRecord
       y_income = self.assume_year_income(payroll, employee)
       cost_of_income = (0.5*y_income) > 100000 ? 100000:(0.5*y_income)
       income = y_income - cost_of_income - 60000
-      taxrates = Taxrate.order(:order_id).map {|tr| [tr.income, tr.tax] }
+      taxrates = Taxrate.all_cached.sort_by(&:order_id).map {|tr| [tr.income, tr.tax] }
       yearTax = 0
       taxrates.each do |taxrate|
         if income>taxrate[0]

@@ -432,6 +432,10 @@ class Student < ApplicationRecord
     ActionController::Base.helpers.link_to I18n.t('.edit', :default => '<i class="fa fa-pencil-square-o" aria-hidden="true"></i> แก้ไข'.html_safe), edit_student_path(self) ,:class => 'btn-edit-student-parent'
   end
 
+  def gender
+    Gender.find_by_id_cached(gender_id)
+  end
+
   def as_json(options={})
     if options['index']
       return {

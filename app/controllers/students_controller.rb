@@ -424,8 +424,8 @@ class StudentsController < ApplicationController
     splited = fullname.split(" ")
 
     gender_id = nil
-    gender_id = Gender.find_by_name("Female").id if ["เด็กหญิง", "ด.ญ.", "miss"].include?(splited[0].downcase)
-    gender_id = Gender.find_by_name("Male").id if ["เด็กชาย", "ด.ช.", "master"].include?(splited[0].downcase)
+    gender_id = Gender.female.id if ["เด็กหญิง", "ด.ญ.", "miss"].include?(splited[0].downcase)
+    gender_id = Gender.male.id if ["เด็กชาย", "ด.ช.", "master"].include?(splited[0].downcase)
 
     student = Student.create({
       gender_id: gender_id,

@@ -86,7 +86,7 @@ describe 'SiteConfig Calculate Tax', js: true do
       visit "/somsri_payroll#/payroll"
       sleep(1)
       expect(page).to have_content("50,000.00 0.00 0.00 0.00 0.00 0.00 0.00 0.00 0.00 1,500.00 0.00 0.00 0.00 0.00 48,500.00")
-      expect(page).to have_content("1,000,000.00 0.00 0.00 0.00 0.00 0.00 0.00 0.00 0.00 0.00 750.00 30,000.00 0.00 0.00 969,250.00")
+      expect(page).to have_content("1,000,000.00 0.00 0.00 0.00 0.00 0.00 0.00 0.00 0.00 304,654.17 750.00 30,000.00 0.00 0.00 664,595.83")
     end
 
     it 'should calculate tax at employee detail' do

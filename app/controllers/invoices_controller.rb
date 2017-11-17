@@ -129,9 +129,9 @@ class InvoicesController < ApplicationController
         student = Student.new(full_name: student_name, student_number: student_params[:student_number])
         # Detect Gender from prefix
         if ['ด.ช.','เด็กชาย','master'].any? { |word| student_params[:full_name].downcase.include?(word) }
-          student.gender_id = Gender.find_by_name("Male").id
+          student.gender_id = Gender.male.id
         elsif ['ด.ญ.','เด็กหญิง','miss'].any? { |word| student_params[:full_name].downcase.include?(word) }
-          student.gender_id = Gender.find_by_name("Female").id
+          student.gender_id = Gender.female.id
         end
       end
 
