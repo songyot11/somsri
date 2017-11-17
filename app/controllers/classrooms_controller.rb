@@ -81,8 +81,9 @@ class ClassroomsController < ApplicationController
   # GET /classrooms/:id/student_without_classroom
   def student_without_classroom
     students = []
+    classroom_id = params[:id]
     exclude_ids = JSON.parse params[:exclude_ids]
-    Student.where(classroom_id: [nil, ''])
+    Student.where(classroom_id: [nil, '', classroom_id])
            .where.not(id: exclude_ids).each do |student|
       students << {
         img: student.img_url.exists? ? student.img_url.url(:medium) : nil,
