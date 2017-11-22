@@ -112,7 +112,7 @@ class InvoicesController < ApplicationController
       student_name = student_params[:full_name].gsub('ด.ช.', '').gsub('ด.ญ.', '').gsub('เด็กหญิง', '').gsub('เด็กชาย', '').strip.gsub(/\s+/,' ')
 
       # try to search by Student Number
-      if student_params[:student_number].present? && student_params[:student_number].size > 0
+      if student_params[:student_number].present? && student_params[:student_number].size > 0 && (student_params[:student_number].is_a? Integer) && student_params[:student_number] > 0
         qry_student = qry_student.where(student_number: student_params[:student_number])
       end
 

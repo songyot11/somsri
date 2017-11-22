@@ -70,6 +70,17 @@ describe 'Invoice', js: true do
     ]
   end
 
+  let(:student_no_number) do
+    Student.make!({
+      first_name: 'มั่งไม่มี',
+      last_name: 'เลขนักเรียน',
+      nickname: 'ไม่' ,
+      gender_id: 1 ,
+      grade_id: grade.id ,
+      classroom: classroom
+    })
+  end
+
   let(:parents) do
     [
       Parent.make!({full_name: 'ฉันเป็น สุภาพบุรุษนะครับ'}),
@@ -84,6 +95,10 @@ describe 'Invoice', js: true do
       StudentsParent.make!({student_id: students[1].id , parent_id: parents[1].id}),
       StudentsParent.make!({student_id: students[2].id , parent_id: parents[2].id})
     ]
+  end
+
+  let(:studentsparent_no_number) do
+    StudentsParent.make!({student_id: student_no_number.id , parent_id: parents[0].id})
   end
 
   before do
@@ -107,6 +122,23 @@ describe 'Invoice', js: true do
     expect(page).to have_content("ใบเสร็จรับเงิน")
     expect(page).to have_content("สมศรี ณ บานาน่าโค๊ดดิ้ง")
     expect(page).to have_content("ค่าธรรมเนียมการศึกษา")
+  end
+
+  it 'should not create invoice when student has not number' do
+    student_no_number
+    studentsparent_no_number
+    student_count = Student.count
+    visit 'somsri_invoice#/invoice'
+    sleep(1)
+    fill_in 'student_name', with: "มั่งไม่มี"
+    click_link('มั่งไม่มี เลขนักเรียน (ไม่)')
+    click_on('ชำระเงิน')
+    sleep(1)
+    expect(page).to have_content("ใบเสร็จรับเงิน")
+    expect(page).to have_content("มั่งไม่มี เลขนักเรียน")
+    expect(page).to have_content("ค่าธรรมเนียมการศึกษา")
+    expect(page).to have_content("1A")
+    expect(Student.count).to eq student_count
   end
 
   it 'should create invoice with student and parent' do
