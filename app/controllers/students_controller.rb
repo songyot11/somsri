@@ -25,37 +25,46 @@ class StudentsController < ApplicationController
     total_tuition = 0.0
     total_other = 0.0
     total_amount = 0.0
+    total_year = 0.0
     @students_all.each_with_index do |student, index|
       paid = false
       tuition_fee = 0.0
       other_fee = 0.0
       total_fee = 0.0
+      year_fee = 0.0
       payment_method = ""
       last_tuition_invoice = nil
       qry_invoice = Invoice.where(student_id: student.id, school_year: year_select, invoice_status_id: InvoiceStatus.status_active_id)
-      if semester_select == "อื่นๆ"
-        qry_invoice = qry_invoice.where.not(semester: SchoolSetting.semesters)
-      else
-        qry_invoice = qry_invoice.where(semester: semester_select)
-      end
       invoices = qry_invoice.order("created_at ASC").to_a
 
       #skip student no invoice and deleted
       next if invoices.count == 0 && student.deleted_at
 
+      semester_exclude = []
+      if semester_select == "อื่นๆ"
+        semester_exclude = SchoolSetting.semesters
+      else
+        semester_exclude = SchoolSetting.semesters - [semester_select.to_s]
+      end
+
       invoices.each do |invoice|
         invoice.line_items.each do |item|
-          if item.detail =~ /Tuition Fee/
-            tuition_fee += item.amount
-            paid = true
-          else
-            other_fee += item.amount
+          if !semester_exclude.include?(invoice.semester)
+            if item.detail =~ /Tuition Fee/
+              tuition_fee += item.amount
+              paid = true
+            else
+              other_fee += item.amount
+            end
+            total_fee += item.amount
           end
-          total_fee += item.amount
+          year_fee += item.amount
         end
         last_tuition_invoice = invoice
-        payment_method = invoice.payment_methods.collect{ |pm| pm.payment_method }.join(',')
+        payment_method = invoice.payment_methods.collect{ |pm| pm.payment_method }.join(',') if !semester_exclude.include?(invoice.semester)
       end
+
+
       data = {
         id: student.id,
         classroom_number: student.classroom_number,
@@ -66,6 +75,7 @@ class StudentsController < ApplicationController
         active_invoice_status: paid ? "ชำระแล้ว" : "ยังไม่ได้ชำระ",
         active_invoice_payment_method: payment_method,
         active_invoice_tuition_fee: tuition_fee,
+        active_invoice_year_fee: year_fee,
         active_invoice_other_fee: other_fee,
         active_invoice_total_amount: total_fee,
         full_name_with_title: student.invoice_screen_full_name_display,
@@ -90,6 +100,7 @@ class StudentsController < ApplicationController
         total_amount += total_fee
         datas << data
       end
+      total_year += year_fee
     end
 
     if !params[:all]
@@ -100,19 +111,19 @@ class StudentsController < ApplicationController
         total_records: datas.total_entries,
         other_fee: total_other,
         tuition_fee: total_tuition,
+        total_year: total_year,
         amount: total_amount
-        }, status: :ok
-      else
-        render json: {
-          datas: datas,
-          other_fee: total_other,
-          tuition_fee: total_tuition,
-          amount: total_amount
-          }, status: :ok
-        end
-
-
-      end
+      }, status: :ok
+    else
+      render json: {
+        datas: datas,
+        other_fee: total_other,
+        tuition_fee: total_tuition,
+        amount: total_amount,
+        total_year: total_year
+      }, status: :ok
+    end
+  end
 
   # GET /students
   # GET /students.json

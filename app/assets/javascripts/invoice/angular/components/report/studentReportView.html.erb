@@ -91,6 +91,7 @@
               <th class='text-currency'>ค่าธรรมเนียมการศึกษา</th>
               <th class='text-currency'>ค่าใช้จ่ายอื่นๆ</th>
               <th class='text-currency bold'>ยอดชำระ</th>
+              <th class='text-currency bold'>ยอดชำระทั้งปี</th>
               <th>วันที่ชำระ</th>
            </tr>
           </thead>
@@ -116,6 +117,7 @@
                 <td class="text-currency numberic">{{student.active_invoice_tuition_fee.toFixed(2) | number:2}}</td>
                 <td class="text-currency numberic">{{student.active_invoice_other_fee.toFixed(2) | number:2}}</td>
                 <td class="text-currency bold numberic">{{student.active_invoice_total_amount.toFixed(2) | number:2}}</td>
+                <td class="text-currency bold numberic">{{student.active_invoice_year_fee.toFixed(2) | number:2}}</td>
                 <td class="numberic">{{student.active_invoice_created_at | date:'d/MM/yyyy hh:mm'}}</td>
               </tr>
             </tbody>
@@ -126,6 +128,7 @@
                 <td class="text-currency numberic">{{studentReport.total.tuition_fee.toFixed(2) | number:2}}</td>
                 <td class="text-currency numberic">{{studentReport.total.other_fee.toFixed(2) | number:2}}</td>
                 <td class="text-currency numberic">{{studentReport.total.amount.toFixed(2) | number:2}}</td>
+                <td class="text-currency numberic">{{studentReport.total.total_year.toFixed(2) | number:2}}</td>
                 <td class=""></td>
               </tr>
             </tfoot>

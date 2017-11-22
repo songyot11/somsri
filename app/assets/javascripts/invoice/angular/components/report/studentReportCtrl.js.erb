@@ -10,7 +10,7 @@
       ctrl.currentPage = 1;
       ctrl.grade_name = "All"
       ctrl.currentInvoiceStatus = null;
-      ctrl.total = { other_fee: 0.0, amount: 0.0, tuition_fee: 0.0 }
+      ctrl.total = { other_fee: 0.0, amount: 0.0, tuition_fee: 0.0, total_year: 0.0 }
       ctrl.invoiceFilter = [
         { text: "ทั้งหมด", value: "all" },
         { text: "ชำระแล้ว", value: "paid" },
@@ -88,6 +88,7 @@
               ctrl.total.other_fee = resp.data.other_fee
               ctrl.total.tuition_fee = resp.data.tuition_fee
               ctrl.total.amount = resp.data.amount
+              ctrl.total.total_year = resp.data.total_year
             }
             ctrl.maxSize = 5;
           });

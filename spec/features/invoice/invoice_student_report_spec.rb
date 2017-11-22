@@ -57,6 +57,14 @@ describe 'Student Report', js: true do
           LineItem.make!(:tuition),
           LineItem.make!(amount: 10000),
         ]),
+      Invoice.make!(
+        student_id: students[1].id,
+        invoice_status_id: invoice_status_1.id,
+        semester: "2",
+        line_items: [
+          LineItem.make!(:tuition),
+          LineItem.make!(amount: 22000),
+        ]),
     ]
   end
 
@@ -252,6 +260,13 @@ describe 'Student Report', js: true do
       visit 'somsri_invoice#/student_report'
       sleep(1)
       expect(page).to have_content("มั่งมี ศรีสุข (รวย) 13 ชำระแล้ว เงินสด 48,000.00 10,000.00 58,000.00")
+    end
+
+    it 'display total per year' do
+      visit 'somsri_invoice#/student_report'
+      sleep(1)
+      expect(page).to have_content("128,000.00")
+      expect(page).to have_content("179,750.00")
     end
   end
 
