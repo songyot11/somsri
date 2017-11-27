@@ -179,11 +179,17 @@ describe 'Invoice', js: true do
     sleep(1)
     fill_in 'student_code', with: "21"
     click_link('21 - สมศรี ณ บานาน่าโค๊ดดิ้ง (กั้ง)')
+    sleep(1)
     click_on('ชำระเงิน')
     sleep(1)
     expect(page).to have_content("ใบเสร็จรับเงิน")
     expect(page).to have_content("สมศรี ณ บานาน่าโค๊ดดิ้ง")
     expect(Student.count).to eq(student_amount)
+
+    visit "/students/#{students[1].id}/edit#/"
+    click_link('ข้อมูลใบเสร็จ')
+    sleep(1)
+    eventually { expect(page).to have_content("Kindergarten 1 (1A) 48,900.00") }
   end
 
 end

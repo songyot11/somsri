@@ -28,58 +28,58 @@
     </div>
   </div>
 
- <div class="content-student-parent">
-  <div class="row toolbar-student-parent">
-    <div class="col-xs-6">
-      <div class="search">
-        <i class="fa fa-search" aria-hidden="true"></i>
-        <input class="form-control" id="search" type="text" placeholder="ค้นหา" onchange="search()" onkeyup="this.onchange()">
+  <div class="content-student-parent">
+    <div class="row toolbar-student-parent">
+      <div class="col-xs-6">
+        <div class="search">
+          <i class="fa fa-search" aria-hidden="true"></i>
+          <input class="form-control" id="search" type="text" placeholder="ค้นหา" onchange="search()" onkeyup="this.onchange()">
+        </div>
+      </div>
+      <div class="col-xs-6 select-filter">
+        <span class="text-label">เลือกระดับชั้น</span>
+        <select name="grade_select" id="grade_select" class="btn-grades selectpicker" onchange="filter()">
+          <option value='all'>ระดับชั้นทั้งหมด</option>
+          <% Grade.all.each do |grade| %>
+          <option name="grade" value="<%= grade.name %>"<%= @filter_grade.to_s == grade.name.to_s ? "selected" : "" %>> <%= grade.name %> </option>
+          <% end %>
+        </select>
+
+        <span class="text-label">เลือกห้อง</span>
+        <select name="class_select" id="class_select" class="btn-grades selectpicker" onchange="filter()">
+          <option value='all'>ห้องทั้งหมด</option>
+          <% @class_display.each do |classroom| %>
+          <option value="<%= classroom %>"<%= @filter_class == classroom ? "selected" : "" %>> <%= classroom %> </option>
+          <% end %>
+        </select>
       </div>
     </div>
-    <div class="col-xs-6 select-filter">
-      <span class="text-label">เลือกระดับชั้น</span>
-      <select name="grade_select" id="grade_select" class="btn-grades selectpicker" onchange="filter()">
-        <option value='all'>ระดับชั้นทั้งหมด</option>
-        <% Grade.all.each do |grade| %>
-        <option name="grade" value="<%= grade.name %>"<%= @filter_grade.to_s == grade.name.to_s ? "selected" : "" %>> <%= grade.name %> </option>
-        <% end %>
-      </select>
 
-      <span class="text-label">เลือกห้อง</span>
-      <select name="class_select" id="class_select" class="btn-grades selectpicker" onchange="filter()">
-        <option value='all'>ห้องทั้งหมด</option>
-        <% @class_display.each do |classroom| %>
-        <option value="<%= classroom %>"<%= @filter_class == classroom ? "selected" : "" %>> <%= classroom %> </option>
-        <% end %>
-      </select>
-    </div>
+    <table id="table"
+    data-toggle="table"
+    data-pagination="true"
+    data-pagination-loop="false"
+    data-url="students.json"
+    data-side-pagination="server"
+    data-sort-name="classroom_id, classroom_number"
+    data-sort-order="asc"
+    data-query-params="queryParams">
+      <thead>
+        <tr>
+          <th data-field="classroom_number" data-sortable="true" data-cell-style="cellStyle">เลขที่ในห้อง</th>
+          <th data-field="img_url" data-formatter="imgTag"></th>
+          <th data-field="full_name" data-sortable="true">ชื่อ-สกุล</th>
+          <th data-field="nickname" data-sortable="true">ชื่อเล่น</th>
+          <th data-field="grade_id" data-sortable="true">ระดับชั้น</th>
+          <th data-field="classroom_id" data-sortable="true">ห้องเรียน</th>
+          <th data-field="student_number" data-sortable="true">รหัสประจำตัวนักเรียน</th>
+          <th data-field="gender_id" data-sortable="true">เพศ</th>
+          <th data-field="birthdate" data-sortable="true">วันเกิด</th>
+          <th data-field="edit" ></th>
+        </tr>
+      </thead>
+    </table>
   </div>
-
-  <table id="table"
-  data-toggle="table"
-  data-pagination="true"
-  data-pagination-loop="false"
-  data-url="students.json"
-  data-side-pagination="server"
-  data-sort-name="classroom_id, classroom_number"
-  data-sort-order="asc"
-  data-query-params="queryParams">
-  <thead>
-    <tr>
-      <th data-field="classroom_number" data-sortable="true" data-cell-style="cellStyle">เลขที่ในห้อง</th>
-      <th data-field="img_url" data-formatter="imgTag"></th>
-      <th data-field="full_name" data-sortable="true">ชื่อ-สกุล</th>
-      <th data-field="nickname" data-sortable="true">ชื่อเล่น</th>
-      <th data-field="grade_id" data-sortable="true">ระดับชั้น</th>
-      <th data-field="classroom_id" data-sortable="true">ห้องเรียน</th>
-      <th data-field="student_number" data-sortable="true">รหัสประจำตัวนักเรียน</th>
-      <th data-field="gender_id" data-sortable="true">เพศ</th>
-      <th data-field="birthdate" data-sortable="true">วันเกิด</th>
-      <th data-field="edit" ></th>
-    </tr>
-  </thead>
-</table>
-</div>
 </div>
 
 <table id="tableForExport"

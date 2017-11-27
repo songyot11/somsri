@@ -9,20 +9,42 @@ class InvoicesController < ApplicationController
     start_date = DateTime.parse(params[:start_date]).beginning_of_day if isDate(params[:start_date])
     end_date = DateTime.parse(params[:end_date]).end_of_day if isDate(params[:end_date])
 
-    @invoices = get_invoices(grade_select, params[:search_keyword], start_date, end_date, params[:page], params[:sort], params[:order], params[:export])
+    invoice_status_id = nil
+    if params[:is_active] == "1"
+      invoice_status_id = InvoiceStatus.status_active_id
+    end
+    if params[:is_active] == "0"
+      invoice_status_id = InvoiceStatus.status_canceled_id
+    end
+
+    @invoices = get_invoices(grade_select, params[:search_keyword], start_date, end_date, params[:page], params[:sort], params[:order], params[:export], invoice_status_id, params[:student_id])
     if params[:page] && @invoices.total_pages < @invoices.current_page
-      @invoices = get_invoices(grade_select, params[:search_keyword], start_date, end_date, 1, params[:sort], params[:order], params[:export])
+      @invoices = get_invoices(grade_select, params[:search_keyword], start_date, end_date, 1, params[:sort], params[:order], params[:export], invoice_status_id, params[:student_id])
     end
 
     @filter_grade = grade_select
-    result = {
-      invoices: @invoices.as_json({ index: true })
-    }
-    if params[:page]
-      result[:current_page] = @invoices.current_page
-      result[:total_records] = @invoices.total_entries
-    end
 
+    result = {}
+
+    if params[:bootstrap_table].to_s == "1"
+      # result = {
+      #   rows: @invoices.as_json({ bootstrap_table: true })
+      # }
+      # if params[:page]
+      #   result[:page] = @invoices.current_page
+      #   result[:total] = @invoices.total_entries
+      # end
+
+      result = @invoices.as_json({ bootstrap_table: true })
+    else
+      result = {
+        invoices: @invoices.as_json({ index: true })
+      }
+      if params[:page]
+        result[:current_page] = @invoices.current_page
+        result[:total_records] = @invoices.total_entries
+      end
+    end
     render json: result
   end
 
@@ -159,9 +181,13 @@ class InvoicesController < ApplicationController
 
       invoice = Invoice.new(invoice_hash)
       invoice.parent_id = parent.id
+      invoice.parent_name = parent.full_name
       invoice.student_id = student.id
+      invoice.student_name = student.invoice_screen_full_name_display
       invoice.user_id = current_user.id
+      invoice.user_name = current_user.name
       invoice.grade_name = grade.name
+      invoice.classroom = student.classroom ? student.classroom.name : nil
       invoice.invoice_status_id = InvoiceStatus.find_by_name("Active").id
 
       line_item_params.to_h[:items].each do |item|
@@ -502,9 +528,13 @@ class InvoicesController < ApplicationController
       return qry_invoices
     end
 
-    def get_invoices(grade_select, search_keyword, start_date, end_date, page, sort, order, export)
+    def get_invoices(grade_select, search_keyword, start_date, end_date, page, sort, order, export, invoice_status_id, student_id)
       qry_invoices = Invoice.includes(:payment_methods, :parent, :student, :user, :line_items, :invoice_status)
                             .search(search_keyword)
+
+      qry_invoices = qry_invoices.where(invoice_status_id: invoice_status_id) if invoice_status_id
+      qry_invoices = qry_invoices.where(student_id: student_id) if student_id
+
       if grade_select.downcase != 'all'
         grade = Grade.where(name: grade_select).first
         qry_invoices = qry_invoices.where(grade_name: grade.name) if grade
