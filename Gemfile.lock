@@ -314,6 +314,8 @@ GEM
       rspec-expectations (~> 3.5.0)
       rspec-mocks (~> 3.5.0)
       rspec-support (~> 3.5.0)
+    rspec-retry (0.5.6)
+      rspec-core (> 3.3, < 3.8)
     rspec-support (3.5.0)
     ruby-ole (1.2.12.1)
     ruby-rc4 (0.1.5)
@@ -425,6 +427,7 @@ DEPENDENCIES
   rmagick
   rolify
   rspec-rails
+  rspec-retry
   sass-rails (~> 5.0)
   slack-notifier
   spreadsheet
@@ -441,4 +444,4 @@ DEPENDENCIES
   wkhtmltopdf-binary
 
 BUNDLED WITH
-   1.15.1
+   1.16.0

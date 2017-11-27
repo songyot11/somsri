@@ -37,7 +37,6 @@ gem 'pdf-forms'
 gem 'rmagick'
 
 gem 'rails_admin'
-gem 'figaro'
 
 # Exception Notification
 gem 'exception_notification'
@@ -93,6 +92,7 @@ group :test do
 
   gem 'database_cleaner'
   gem 'pdf-reader'
+  gem 'rspec-retry'
 end
 
 group :development do

@@ -65,6 +65,9 @@ RSpec.configure do |config|
   config.append_after(:each) do
     DatabaseCleaner.clean
   end
+
+  config.verbose_retry = true
+  config.default_retry_count = 3
 end
 
 Dir[File.dirname(__FILE__) + "/support/**/*.rb"].each { |f| require f }
