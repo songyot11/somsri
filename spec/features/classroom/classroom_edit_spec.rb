@@ -118,7 +118,7 @@ describe 'Classroom Edit', js: true do
   it 'should access to edit classroom page' do
     visit "/main#/classroom/#{classrooms[0].id}"
     eventually { expect(page).to have_content("นาง สมศรี เป็นชื่อแอพ") }
-    eventually { expect(page).to have_content("จำนวนคน 1 คน") }
+    eventually { expect(page).to have_content("จำนวน 1 คน") }
   end
 
   it 'should redirect to employee if click on name' do
@@ -135,7 +135,7 @@ describe 'Classroom Edit', js: true do
     sleep(1)
     find('.fa.fa-times.cursor-pointer.color-red').click
     eventually { expect(page).to_not have_content("นาง สมศรี เป็นชื่อแอพ") }
-    eventually { expect(page).to have_content("จำนวนคน 0 คน") }
+    eventually { expect(page).to have_content("จำนวน 0 คน") }
   end
 
   it 'should display all student in classroom' do
@@ -143,7 +143,7 @@ describe 'Classroom Edit', js: true do
     sleep(1)
     click_link("นักเรียน")
     eventually { expect(page).to have_content("สมศรี3 ใบเสร็จ สมศรี2 ใบเสร็จ สมศรี1 ใบเสร็จ") }
-    eventually { expect(page).to have_content("จำนวนคน 3 คน") }
+    eventually { expect(page).to have_content("จำนวน 3 คน") }
   end
 
   it 'should save teacher in classroom correctly' do
@@ -173,8 +173,11 @@ describe 'Classroom Edit', js: true do
     sleep(1)
     click_button("บันทึก")
     sleep(1)
-    num_employee = Employee.where({ classroom_id: classrooms[0].id }).count
+    edited_employees = Employee.where({ classroom_id: classrooms[0].id }).to_a
+    num_employee = edited_employees.length
     eventually { expect(num_employee).to eq 3 }
+    eventually { expect(edited_employees[1].classroom_id).to eq classrooms[0].id }
+    eventually { expect(edited_employees[1].grade_id).to eq grades[0].id }
   end
 
   describe 'students tab' do
@@ -195,7 +198,7 @@ describe 'Classroom Edit', js: true do
     it 'should remove student from list' do
       first('.fa.fa-times.cursor-pointer.color-red').click
       eventually { expect(page).to_not have_content("สมศรี3 ใบเสร็จ") }
-      eventually { expect(page).to have_content("จำนวนคน 2 คน") }
+      eventually { expect(page).to have_content("จำนวน 2 คน") }
     end
 
     it 'should save teacher in classroom correctly' do
@@ -224,8 +227,11 @@ describe 'Classroom Edit', js: true do
       sleep(1)
       click_button("บันทึก")
       sleep(1)
-      num_employee = Student.where({ classroom_id: classrooms[0].id }).count
+      edited_students = Student.where({ classroom_id: classrooms[0].id })
+      num_employee = edited_students.length
       eventually { expect(num_employee).to eq 5 }
+      eventually { expect(edited_students[1].classroom_id).to eq classrooms[0].id }
+      eventually { expect(edited_students[1].grade_id).to eq grades[0].id }
     end
   end
 end

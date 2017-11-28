@@ -524,7 +524,8 @@ class InvoicesController < ApplicationController
 
     def query_invoice_by_date_range(start_date, end_date)
       qry_invoices = Invoice.where(invoice_status_id: InvoiceStatus.find_by_name('Active').id)
-      qry_invoices = qry_date_range(qry_invoices, start_date, end_date)
+      data_field = Invoice.arel_table[:created_at]
+      qry_invoices = qry_date_range(qry_invoices, data_field, start_date, end_date)
       return qry_invoices
     end
 
@@ -540,7 +541,8 @@ class InvoicesController < ApplicationController
         qry_invoices = qry_invoices.where(grade_name: grade.name) if grade
       end
 
-      qry_invoices = qry_date_range(qry_invoices, start_date, end_date)
+      data_field = Invoice.arel_table[:created_at]
+      qry_invoices = qry_date_range(qry_invoices, data_field, start_date, end_date)
 
       qry_invoices = qry_invoices.order("#{sort} #{order}")
 

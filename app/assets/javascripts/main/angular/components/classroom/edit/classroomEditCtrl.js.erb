@@ -28,7 +28,7 @@
       var tableColumnSetting = [
         { field: 'img', class:'img-column font1_2em', title: "ชื่อ - นามสกุล", width: "10%"},
         { field: 'name', class:"name-column center-vertical-padding font1_2em", width: "70%"},
-        { field: 'unselect', class: "unselect-column center-vertical-padding text-right font1_2em", title: "จำนวนคน 0 คน", width: "20%"}
+        { field: 'unselect', class: "unselect-column center-vertical-padding text-right font1_2em", title: "จำนวน 0 คน", width: "20%"}
       ]
 
       service.getClassroom(ctrl.classroomId).then(function(resp) {
@@ -60,7 +60,7 @@
       }
 
       function displayTeacherAmount(){
-        $('#teacher-list th[data-field="unselect"] .th-inner').html("จำนวนคน " + ctrl.teachersAmount + " คน")
+        $('#teacher-list th[data-field="unselect"] .th-inner').html("จำนวน " + ctrl.teachersAmount + " คน")
       }
 
       var currentTeacher = 0
@@ -146,7 +146,7 @@
       }
 
       function displayStudentAmount(){
-        $('#student-list th[data-field="unselect"] .th-inner').html("จำนวนคน " + ctrl.studentsAmount + " คน")
+        $('#student-list th[data-field="unselect"] .th-inner').html("จำนวน " + ctrl.studentsAmount + " คน")
       }
 
       var currentStudent = 0

@@ -100,13 +100,13 @@ class ClassroomsController < ApplicationController
     if classroom
       teacher_ids = params[:teacher_ids]
       if teacher_ids
-        Employee.where(classroom_id: classroom.id).update_all(classroom_id: nil)
-        Employee.where(id: teacher_ids).update(classroom_id: classroom.id)
+        Employee.where(classroom_id: classroom.id).update_all(classroom_id: nil, grade_id: nil)
+        Employee.where(id: teacher_ids).update(classroom_id: classroom.id, grade_id: classroom.grade_id)
       end
       student_ids = params[:student_ids]
       if student_ids
-        Student.where(classroom_id: classroom.id).update_all(classroom_id: nil)
-        Student.where(id: student_ids).update(classroom_id: classroom.id)
+        Student.where(classroom_id: classroom.id).update_all(classroom_id: nil, grade_id: nil)
+        Student.where(id: student_ids).update(classroom_id: classroom.id, grade_id: classroom.grade_id)
       end
       render json: ["SUCCESS"], status: :ok and return
     end

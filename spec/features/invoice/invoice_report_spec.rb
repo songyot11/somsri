@@ -114,6 +114,22 @@ describe 'invoice report(ใบเสร็จ)', js: true do
     eventually { expect( page ).to have_content(invoices[4].student.full_name) }
   end
 
+  it 'can filter by date range and search' do
+    visit 'somsri_invoice#/invoice_report'
+    sleep(1)
+    find('#start_date').set(yesterday_str)
+    sleep(1)
+    find('#end_date').set(yesterday_str)
+    sleep(1)
+    find('#searchField').set(invoices[3].id)
+
+    eventually { expect( all('#invoice-table > tbody > tr').count ).to eq(3) }
+    eventually { expect( all('li.pagination-page').count ).to eq(1) }
+    eventually { expect( page ).to_not have_content(invoices[2].student.full_name) }
+    eventually { expect( page ).to have_content(invoices[3].student.full_name) }
+    eventually { expect( page ).to_not have_content(invoices[4].student.full_name) }
+  end
+
   it 'should qry from today to present' do
     visit 'somsri_invoice#/invoice_report'
     sleep(1)
