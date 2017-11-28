@@ -14,8 +14,13 @@
               <ul class="dropdown-menu">
                 <li ng-show="employee.employee_lists.length > 0"><input class="employee-filter" id="employeeFilter" type="text" ng-model="employee.filterKeyword" /></li>
                 <li ng-repeat="data in employee.employee_lists | filter:employee.filterKeyword">
-                  <a ng-click="employee.openEmployeeDetails(data.id)" href="javascript:void(0)">
-                    {{data.id}}: {{data.name}}
+                  <a class="py-5" ng-click="employee.openEmployeeDetails(data.id)" href="javascript:void(0)">
+                    <span ng-show="data.img != null" class="bg-img-dropdown mr-10 circle" style="background: url('{{ data.img }}')"></span>
+                    <span class="img-employee-dropdown mr-10" ng-show="data.img == null">
+                      <i class="fa fa-user font-white" aria-hidden="true"></i>
+                      <span class="bg-light-gray circle"></span>
+                    </span>
+                    <span class="dropdown-employee-name">{{data.id}}: {{data.name}}</span>
                   </a>
                 </li>
               </ul>

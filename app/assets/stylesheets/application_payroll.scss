@@ -1944,3 +1944,36 @@ ul.uib-datepicker-popup.dropdown-menu {
 .between-height{
   margin-top: 50px;
 }
+.mr-10{
+  margin-right: 10px;
+}
+.py-5{
+  padding-top: 5px !important;
+  padding-bottom: 5px !important;
+}
+.img-employee-dropdown{
+  display: inline-block;
+  vertical-align: middle;
+
+  .bg-light-gray{
+    display: block;
+    width: 30px;
+    height: 30px;
+  }
+  .fa-user{
+    position: absolute;
+    padding: 8px 10px;
+  }
+}
+.dropdown-employee-name{
+  vertical-align: middle;
+}
+.bg-img-dropdown{
+  vertical-align: middle;
+  display: inline-block;
+  width: 30px;
+  height: 30px;
+  background-size: cover !important;
+  background-repeat: no-repeat !important;
+  background-position: center top !important;
+}
