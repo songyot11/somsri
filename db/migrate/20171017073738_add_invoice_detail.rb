@@ -8,7 +8,7 @@ class AddInvoiceDetail < ActiveRecord::Migration[5.0]
     Invoice.all.each do |invoice|
       if invoice.student
         invoice.student_name = invoice.student.invoice_screen_full_name_display
-        invoice.classroom = invoice.student.classroom.name
+        invoice.classroom = invoice.student.classroom.name if invoice.student.classroom
       end
 
       if invoice.parent
