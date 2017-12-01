@@ -199,7 +199,8 @@ class Payroll < ApplicationRecord
     end
 
     def self.generate_withholding_tax(payroll)
-      ((payroll["salary"].to_i + payroll["allowance"].to_i + payroll["attendance_bonus"].to_i + payroll["ot"].to_i + payroll["bonus"].to_i + payroll["position_allowance"].to_i + payroll["extra_etc"].to_i - payroll["absence"].to_i - payroll["late"].to_i) * 0.03).round(2)
+      withholding_tax = ((payroll["salary"].to_i + payroll["allowance"].to_i + payroll["attendance_bonus"].to_i + payroll["ot"].to_i + payroll["bonus"].to_i + payroll["position_allowance"].to_i + payroll["extra_etc"].to_i - payroll["absence"].to_i - payroll["late"].to_i) * 0.03).round(2)
+      return withholding_tax > 0 ? withholding_tax : 0
     end
 
     def self.generate_pvf(payroll, employee)

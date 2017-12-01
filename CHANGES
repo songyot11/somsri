@@ -1,3 +1,5 @@
+Version 1.2.1:
+
 Version 1.0.1:
  - Added VERSION and CHANGES files, Version bump to v0.1.0
  - Merge branch 'develop' of github.com:BananaCoding/somsri into develop
@@ -628,4 +630,3 @@ Version 0.1.0
  - remove test folder
  - new rails project
  - Initial commit
-
