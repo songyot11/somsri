@@ -55,11 +55,17 @@ describe 'Abilities', js: true do
       expect(page).to have_content 'ลูกจ้างประจำลูกจ้างชั่วคราวลูกจ้างทดลองงานลูกจ้างรายวัน'
     end
 
-    it 'can goto setting' do
-      visit "/main#/setting"
+    it 'can goto profile' do
+      visit "/main#/profile"
       sleep(1)
       expect(page).to have_content 'ชื่อ อีเมล์ รหัสผ่าน เปลี่ยนรหัสผ่าน'
       expect(page).to have_content 'ชื่อโรงเรียน'
+    end
+
+    it 'can goto setting' do
+      visit "/main#/setting"
+      sleep(1)
+      expect(page).to have_content 'จัดการชั้นเรียน'
     end
 
     it 'can goto invoice menu' do
@@ -148,11 +154,17 @@ describe 'Abilities', js: true do
       expect(page).to have_content menu_content
     end
 
-    it 'can goto setting' do
-      visit "/main#/setting"
+    it 'can goto profile' do
+      visit "/main#/profile"
       sleep(1)
       expect(page).to have_content 'ชื่อ อีเมล์ รหัสผ่าน เปลี่ยนรหัสผ่าน'
       expect(page).not_to have_content 'ชื่อโรงเรียน'
+    end
+
+    it 'can goto profile' do
+      visit "/main#/setting"
+      sleep(1)
+      expect(page).to have_content menu_content
     end
 
     it 'can goto invoice menu' do
@@ -247,7 +259,14 @@ describe 'Abilities', js: true do
       expect(page).to have_content 'Keep me signed in'
     end
 
-    it 'cant goto setting' do
+    it 'cant goto profile' do
+      visit "/main#/profile"
+      sleep(1)
+      expect(page).to have_current_path '/users/sign_in'
+      expect(page).to have_content 'Keep me signed in'
+    end
+
+    it 'cant goto profile' do
       visit "/main#/setting"
       sleep(1)
       expect(page).to have_current_path '/users/sign_in'

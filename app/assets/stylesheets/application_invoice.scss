@@ -760,6 +760,7 @@ body.somsri-invoice >.container-fluid {
   color: #ffffff;
   border-radius: 0px
 }
+
 .btn-to-print-report,
 .btn-to-print-report:focus{
   margin-top: 5px;
@@ -1905,4 +1906,20 @@ label.img-default{
 }
 #invoice_grouping_report .first-column-classroom{
   min-width: 12em;
+}
+
+.bootstrap-table .pagination-detail {
+  display: none;
+}
+
+.bootstrap-table .fixed-table-container .fixed-table-pagination {
+  text-align: center;
+}
+
+.bootstrap-table .pagination.pull-right {
+  float: inherit !important;
+}
+
+#edit-student .tab-label {
+  font-size: 20px;
 }

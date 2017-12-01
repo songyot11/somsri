@@ -193,6 +193,19 @@
         }
       }).
       state({
+        url: '/grouping_report2',
+        name: 'grouping_report2',
+        templateUrl: "<%= asset_path('invoice/angular/components/report/grouping2/groupingReport2View.html') %>",
+        controller: 'groupingReport2Ctrl as groupingReport2',
+        resolve: {
+          resources: ['$ocLazyLoad', function($ocLazyLoad) {
+            return $ocLazyLoad.load([
+              ASSETS.somsri.invoice.groupingReport2
+            ]);
+          }]
+        }
+      }).
+      state({
         url: '/daily_report/:id',
         name: 'daily_report_preview',
         templateUrl: "<%= asset_path('invoice/angular/components/dailyReport/preview/previewView.html') %>",
@@ -231,8 +244,6 @@
           }]
         }
       })
-
-
 
     $urlRouterProvider.when("", "/");
   }]);

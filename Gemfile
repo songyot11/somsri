@@ -37,7 +37,6 @@ gem 'pdf-forms'
 gem 'rmagick'
 
 gem 'rails_admin'
-gem 'figaro'
 
 # Exception Notification
 gem 'exception_notification'
@@ -45,6 +44,8 @@ gem 'slack-notifier'
 
 gem 'prawn'
 gem 'pdf-toolkit'
+gem 'wkhtmltopdf-binary'
+gem 'wicked_pdf'
 
 # Pagination
 gem 'will_paginate', '~> 3.1.0'
@@ -68,6 +69,10 @@ gem 'bootstrap-select-rails'
 gem 'detect_timezone_rails'
 gem 'listen', '~> 3.0.5'
 
+gem 'spreadsheet'
+
+gem 'bootstrap-sass', '~> 3.3.7'
+
 group :development, :test do
   # Call 'byebug' anywhere in the code to stop execution and get a debugger console
   gem 'byebug', platform: :mri
@@ -87,6 +92,7 @@ group :test do
 
   gem 'database_cleaner'
   gem 'pdf-reader'
+  gem 'rspec-retry'
 end
 
 group :development do

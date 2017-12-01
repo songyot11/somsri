@@ -52,9 +52,12 @@
               <% if current_page?("/") || ((SiteConfig.get_cache.enable_rollcall) && (Figaro.env.ROLLCALL_APK_URL)) %>
                 <li class="divider"></li>
               <% end %>
-              <li><a class="dropdown-item" href="/main#/setting"><i class="fa fa-cog"></i> Setting</a></li>
-
+              <li><a class="dropdown-item" href="/main#/profile"><i class="fa fa-user" aria-hidden="true"></i></i> Profile</a></li>
               <li class="divider"></li>
+              <% if current_user.has_role?(:admin) %>
+                <li><a class="dropdown-item" href="/main#/setting"><i class="fa fa-cog"></i> Setting</a></li>
+                <li class="divider"></li>
+              <% end %>
               <li><a class="dropdown-item" href="<%= destroy_user_session_path %>" rel="nofollow" data-method="DELETE">
                 <i class="fa fa-sign-out"></i> Sign Out</a></li>
             </div>

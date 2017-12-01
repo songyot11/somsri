@@ -10,6 +10,12 @@ class Invoice < ApplicationRecord
 
   scope :latest, -> { order("created_at DESC").first }
 
+  def helper
+    @helper ||= Class.new do
+      include ActionView::Helpers::NumberHelper
+    end.new
+  end
+
   def parent
      Parent.with_deleted.where(id: self.parent_id).first
   end
@@ -61,6 +67,22 @@ class Invoice < ApplicationRecord
 
   def is_cancel
     self.invoice_status.name == 'Canceled'
+  end
+
+  def grade_classroom
+    if self.grade_name.blank?
+      if self.classroom.blank?
+        return nil
+      else
+        return "#{self.classroom}"
+      end
+    else
+      if self.classroom.blank?
+        return "#{self.grade_name}"
+      else
+        return "#{self.grade_name} (#{self.classroom})"
+      end
+    end
   end
 
   def self.search(keyword)
@@ -116,6 +138,18 @@ class Invoice < ApplicationRecord
           name: self.status_name,
         },
         is_cancel: self.is_cancel
+      }
+    elsif options[:bootstrap_table]
+      return {
+        id: self.id,
+        payment_method_id: self.payment_method_id,
+        invoice_status_id: self.invoice_status_id,
+        school_year: self.school_year,
+        semester: self.semester,
+        amount: helper.number_with_delimiter('%.2f' % self.total_amount, :delimiter => ','),
+        created_at: self.created_at,
+        grade_classroom: self.grade_classroom,
+        payment_methods: self.payment_method_names
       }
     else
       super()

@@ -2,8 +2,20 @@ describe Student do
 
   let(:school) { school = School.make!({ name: "โรงเรียนแห่งหนึ่ง" }) }
 
+  let(:grade){grade = Grade.create(
+    name: "Kindergarten 1"
+  )}
+
+  let(:classrooms) do
+    [
+      Classroom.make!({name: "1A", grade_id: grade.id}),
+      Classroom.make!({name: "2B", grade_id: grade.id}),
+      Classroom.make!({name: "9S", grade_id: grade.id})
+    ]
+  end
+
   let(:employee) do
-    Employee.make!({ school_id: school.id, pin: "1111", classroom: "1A" })
+    Employee.make!({ school_id: school.id, pin: "1111", classroom: classrooms[0] })
   end
 
   let(:students) do
@@ -13,8 +25,8 @@ describe Student do
         last_name: 'ศรีสุข',
         nickname: 'รวย' ,
         gender_id: 1 ,
-        grade_id: 2 ,
-        classroom: '1A' ,
+        grade_id: grade.id,
+        classroom: classrooms[0],
         classroom_number: 13 ,
         student_number: 23 ,
       }),
@@ -23,8 +35,8 @@ describe Student do
         last_name: 'ณ บานาน่าโค๊ดดิ้ง',
         nickname: 'กล้วย' ,
         gender_id: 2 ,
-        grade_id: 4 ,
-        classroom: '1A' ,
+        grade_id: grade.id,
+        classroom: classrooms[0],
         classroom_number: 14 ,
         student_number: 22 ,
         birthdate: Time.now
@@ -34,8 +46,8 @@ describe Student do
         last_name: 'ณ บานาน่าโค๊ดดิ้ง',
         nickname: 'กั้ง' ,
         gender_id: 2 ,
-        grade_id: 4 ,
-        classroom: '2B' ,
+        grade_id: grade.id,
+        classroom: classrooms[1],
         classroom_number: 14 ,
         student_number: 21 ,
         birthdate: Time.now
@@ -64,6 +76,7 @@ describe Student do
 
   before do
     SiteConfig.make!({ student_number_leading_zero: 6 })
+    classrooms
     student_lists
     teacher_attendance_lists
   end
@@ -73,19 +86,19 @@ describe Student do
   end
 
   it 'generate new list for student' do
-    students[0].classroom = "2B"
+    students[0].classroom = classrooms[1]
     students[0].save
     students[0].reload
     expect(students[0].student_lists.length).to eq(1)
-    expect(students[0].student_lists[0].list.name).to eq("2B")
+    expect(students[0].student_lists[0].list.name).to eq(classrooms[1].name)
   end
 
   it 'generate new list for student' do
-    students[0].classroom = "9S"
+    students[0].classroom = classrooms[2]
     students[0].save
-    students[1].classroom = "9S"
+    students[1].classroom = classrooms[2]
     students[1].save
-    students[2].classroom = "9S"
+    students[2].classroom = classrooms[2]
     students[2].save
 
     students[0].reload
@@ -93,13 +106,13 @@ describe Student do
     students[2].reload
 
     expect(students[0].student_lists.length).to eq(1)
-    expect(students[0].student_lists[0].list.name).to eq("9S")
+    expect(students[0].student_lists[0].list.name).to eq(classrooms[2].name)
 
     expect(students[1].student_lists.length).to eq(1)
-    expect(students[1].student_lists[0].list.name).to eq("9S")
+    expect(students[1].student_lists[0].list.name).to eq(classrooms[2].name)
 
     expect(students[2].student_lists.length).to eq(1)
-    expect(students[2].student_lists[0].list.name).to eq("9S")
+    expect(students[2].student_lists[0].list.name).to eq(classrooms[2].name)
   end
 
   describe 'in invoice screen' do

@@ -75,6 +75,7 @@ describe 'Payroll Edit', js: true do
   end
 
   before do
+    SiteConfig.make!({ export_ktb_payroll: false })
     user.add_role :admin
     taxrates
     payrolls

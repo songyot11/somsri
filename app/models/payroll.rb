@@ -37,6 +37,10 @@ class Payroll < ApplicationRecord
     Employee.with_deleted.where(id: self.employee_id).first
   end
 
+  def net_salary
+    (self.salary + extra_pay - extra_fee).to_f
+  end
+
   def as_json(options={})
     if options["report"]
       {
@@ -69,7 +73,7 @@ class Payroll < ApplicationRecord
         pvf: self.pvf.to_f,
         note: self.note,
         #Result
-        net_salary: (self.salary + extra_pay - extra_fee).to_f
+        net_salary: self.net_salary
       }
     elsif options["history"]
       {
@@ -183,7 +187,7 @@ class Payroll < ApplicationRecord
       y_income = self.assume_year_income(payroll, employee)
       cost_of_income = (0.5*y_income) > 100000 ? 100000:(0.5*y_income)
       income = y_income - cost_of_income - 60000
-      taxrates = Taxrate.order(:order_id).map {|tr| [tr.income, tr.tax] }
+      taxrates = Taxrate.all_cached.sort_by(&:order_id).map {|tr| [tr.income, tr.tax] }
       yearTax = 0
       taxrates.each do |taxrate|
         if income>taxrate[0]
@@ -195,7 +199,7 @@ class Payroll < ApplicationRecord
     end
 
     def self.generate_withholding_tax(payroll)
-      ((payroll["salary"].to_i + payroll["allowance"].to_i + payroll["attendance_bonus"].to_i + payroll["ot"].to_i + payroll["bonus"].to_i + payroll["position_allowance"].to_i + payroll["extra_etc"].to_i) * 0.03).round(2)
+      ((payroll["salary"].to_i + payroll["allowance"].to_i + payroll["attendance_bonus"].to_i + payroll["ot"].to_i + payroll["bonus"].to_i + payroll["position_allowance"].to_i + payroll["extra_etc"].to_i - payroll["absence"].to_i - payroll["late"].to_i) * 0.03).round(2)
     end
 
     def self.generate_pvf(payroll, employee)
@@ -209,7 +213,7 @@ class Payroll < ApplicationRecord
       payroll_real = Payroll.where(id: payroll["id"]).first
       return payroll_real.social_insurance if payroll_real && payroll_real.closed
       return 0 unless employee["pay_social_insurance"]
-      income = payroll["salary"].to_i
+      income = payroll["salary"].to_i - payroll["absence"].to_i - payroll["late"].to_i
       income = 15000 if income > 15000
       income >= 1650 ? (income * 0.05).round : 0
     end

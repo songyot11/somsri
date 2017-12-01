@@ -128,7 +128,7 @@ class RollCallsController < ApplicationController
     user = get_current_user(params[:pin])
     if user
       if date
-        render json: RollCall.get_by_month(user, date, format_api: true).to_json(format_api: true)
+        render json: RollCall.get_by_month(user, date, format_api: true).order('check_date DESC').to_json(format_api: true)
       else
         render json: { errors: "Date is required in report_month." }, status: 422 and return
       end

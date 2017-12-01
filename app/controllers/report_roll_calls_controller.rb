@@ -47,7 +47,7 @@ class ReportRollCallsController < ApplicationController
   end
 
   def months
-    check_dates = RollCall.distinct.pluck(:check_date).to_a
+    check_dates = RollCall.order(:check_date).distinct.pluck(:check_date).to_a
     results = check_dates.collect do |x|
       date_thai = to_thai_date(DateTime.parse(x))
       {name: "#{date_thai[1]} #{date_thai[2]}", date: DateTime.parse(x).strftime("%Y-%m-%d")}

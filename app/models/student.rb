@@ -3,6 +3,7 @@ class Student < ApplicationRecord
   include Rails.application.routes.url_helpers
 
   belongs_to :grade
+  belongs_to :classroom
   belongs_to :gender
   belongs_to :school
   has_and_belongs_to_many :parents, join_table: 'students_parents'
@@ -18,7 +19,7 @@ class Student < ApplicationRecord
   self.per_page = 10
 
   validates :full_name , presence: true
-  validates :student_number , uniqueness: true , allow_nil: true
+  # validates :student_number , uniqueness: true , allow_nil: true
 
   acts_as_paranoid
   has_attached_file :img_url
@@ -27,19 +28,14 @@ class Student < ApplicationRecord
   after_save :update_rollcall_list
   before_save :clean_full_name
 
-  @@warned = false
   def update_rollcall_list
-    unless @@warned
-      puts 'WARNING: please remove this function after rollcall list assignment has been implemented'
-      @@warned = true
-    end
-    if self.classroom && !self.classroom.blank? && self.classroom_changed?
+    if self.classroom_id && self.classroom_id_changed?
       # add or update list
       StudentList.transaction do
         self.student_lists.destroy_all
-        list = List.where(name: self.classroom).first
+        list = List.where(name: self.classroom.name).first
         if !list
-          list = List.create(name: self.classroom, category: "roll_call")
+          list = List.create(name: self.classroom.name, category: "roll_call")
           Student.where(classroom: self.classroom).pluck(:id).each do |student_id|
             StudentList.create(student_id: student_id, list_id: list.id)
           end
@@ -118,21 +114,25 @@ class Student < ApplicationRecord
     if self.classroom.blank?
       return self.grade.name
     else
-      return self.grade.name + ' (' + self.classroom + ')'
-    end
-  end
-
-  def classroom
-    if self[:classroom]
-      return self[:classroom]
-    else
-      return ''
+      return self.grade.name + ' (' + self.classroom.name + ')'
     end
   end
 
   def parent_names
     parent_ids = StudentsParent.where(student_id: self.id).to_a.collect(&:parent_id)
     Parent.with_deleted.where(id: parent_ids).all.collect(&:full_name).join(', ')
+  end
+
+  def parent_and_relationship_names
+    results = []
+    StudentsParent.where(student_id: self.id).to_a.each do |sp|
+      results << {
+        priority: sp.relationship_id,
+        relationship_name: sp.relationship.name,
+        parent_name: Parent.with_deleted.where(id: sp.parent_id).first.full_name
+      }
+    end
+    return results.sort_by{ |obj| obj[:priority] }
   end
 
   def active_invoice
@@ -253,7 +253,7 @@ class Student < ApplicationRecord
     @active_invoice_tuition_fee = self.all_active_invoices_tuition_fee
     @active_invoice_other_fee = self.all_active_invoices_other_fee
     @active_invoice_total_amount = self.active_invoice_total_amount
-    @active_invoice_updated_at = ""
+    @active_invoice_created_at = ""
   end
 
   def active_invoice_payment_method
@@ -284,11 +284,11 @@ class Student < ApplicationRecord
     self.all_active_invoice_total_amount
   end
 
-  def active_invoice_updated_at
-    if @active_invoice_updated_at == nil
-      self.active_invoice.nil? ? '' : self.active_invoice.updated_at
+  def active_invoice_created_at
+    if @active_invoice_created_at == nil
+      self.active_invoice.nil? ? '' : self.active_invoice.created_at
     else
-      @active_invoice_updated_at
+      @active_invoice_created_at
     end
   end
 
@@ -432,6 +432,10 @@ class Student < ApplicationRecord
     ActionController::Base.helpers.link_to I18n.t('.edit', :default => '<i class="fa fa-pencil-square-o" aria-hidden="true"></i> แก้ไข'.html_safe), edit_student_path(self) ,:class => 'btn-edit-student-parent'
   end
 
+  def gender
+    Gender.find_by_id_cached(gender_id)
+  end
+
   def as_json(options={})
     if options['index']
       return {
@@ -439,7 +443,7 @@ class Student < ApplicationRecord
         full_name: self.full_name_eng_thai_with_title,
         nickname: self.nickname_eng_thai,
         grade_id: self.grade.nil? ? "" : self.grade.name,
-        classroom: self.classroom,
+        classroom_id: self.classroom ? self.classroom.name : "",
         classroom_number: self.classroom_number,
         student_number: self.student_number,
         gender_id: self.gender.nil? ? "" : I18n.t(self.gender.name),

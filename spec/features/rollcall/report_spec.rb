@@ -6,6 +6,15 @@ describe 'RollCall report', js: true do
     Employee.make!({ school_id: school.id, pin: "1111" })
   end
 
+  let(:grade) { Grade.make!(name: 'K1') }
+
+  let(:classrooms) do
+    [
+      Classroom.make!({name: "1A", grade_id: grade.id}),
+      Classroom.make!({name: "1B", grade_id: grade.id})
+    ]
+  end
+
   let(:students) do
     [
       Student.make!({
@@ -13,8 +22,8 @@ describe 'RollCall report', js: true do
         last_name: 'ศรีสุข',
         nickname: 'รวย' ,
         gender_id: 1 ,
-        grade_id: 2 ,
-        classroom: '1A' ,
+        grade_id: grade.id ,
+        classroom: classrooms[0] ,
         classroom_number: 13 ,
         student_number: 23 ,
       }),
@@ -23,8 +32,8 @@ describe 'RollCall report', js: true do
         last_name: 'ณ บานาน่าโค๊ดดิ้ง',
         nickname: 'กล้วย' ,
         gender_id: 2 ,
-        grade_id: 4 ,
-        classroom: '1A' ,
+        grade_id: grade.id ,
+        classroom: classrooms[0] ,
         classroom_number: 14 ,
         student_number: 22 ,
         birthdate: Time.now
@@ -34,8 +43,8 @@ describe 'RollCall report', js: true do
         last_name: 'ณ บานาน่าโค๊ดดิ้ง',
         nickname: 'กั้ง' ,
         gender_id: 2 ,
-        grade_id: 4 ,
-        classroom: '1B' ,
+        grade_id: grade.id ,
+        classroom: classrooms[1] ,
         classroom_number: 14 ,
         student_number: 21 ,
         birthdate: Time.now

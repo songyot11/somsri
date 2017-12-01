@@ -1,30 +1,5 @@
 describe ParentsController do
   render_views
-  let(:students) do
-    [
-      Student.make!(
-        first_name: 'one',
-        student_number: 101,
-        classroom_number: 1,
-        classroom: "1A",
-        grade_id: grades[0].id
-      ),
-      Student.make!(
-        first_name: 'two',
-        student_number: 102,
-        classroom_number: 2,
-        classroom: "2A",
-        grade_id: grades[1].id
-      ),
-      Student.make!(
-        first_name: 'three',
-        student_number: 103,
-        classroom_number: 3,
-        classroom: "3A",
-        grade_id: grades[2].id
-      ),
-    ]
-  end
 
   let(:grades) do
     [
@@ -32,6 +7,40 @@ describe ParentsController do
       Grade.make!({name: "Kindergarten 1"}),
       Grade.make!({name: "Kindergarten 2"}),
       Grade.make!({name: "Kindergarten 3"})
+    ]
+  end
+
+  let(:classrooms) do
+    [
+      Classroom.make!({name: "1A", grade_id: grades[0].id}),
+      Classroom.make!({name: "2A", grade_id: grades[2].id}),
+      Classroom.make!({name: "3A", grade_id: grades[3].id})
+    ]
+  end
+
+  let(:students) do
+    [
+      Student.make!(
+        first_name: 'one',
+        student_number: 101,
+        classroom_number: 1,
+        classroom_id: classrooms[0].id,
+        grade_id: grades[0].id
+      ),
+      Student.make!(
+        first_name: 'two',
+        student_number: 102,
+        classroom_number: 2,
+        classroom_id: classrooms[1].id,
+        grade_id: grades[1].id
+      ),
+      Student.make!(
+        first_name: 'three',
+        student_number: 103,
+        classroom_number: 3,
+        classroom_id: classrooms[2].id,
+        grade_id: grades[2].id
+      ),
     ]
   end
 
@@ -68,7 +77,7 @@ describe ParentsController do
   describe 'parents' do
     it 'should show all parent' do
       get :index, format: :json , params: { class_select: 'all' ,  grade_select: 'all', search: '', page: 1, per_page: 10, sort: 'parents.full_name', order: 'desc' }
-      
+
       expect(response.body).to have_content("ฉันเป็น สุภาพบุรุษนะครับ")
       expect(response.body).to have_content("ฉันเป็น ผู้ปกครอง")
       expect(response.body).to have_content("ฉันเป็น สุภาพสตรีค๊ะ")

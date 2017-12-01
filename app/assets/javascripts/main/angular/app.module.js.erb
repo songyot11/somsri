@@ -19,7 +19,7 @@
     $httpProvider.defaults.headers.common['Content-Type'] = 'application/json; charset=utf-8';
 
     stateHelperProvider.state({
-      url: '/setting',
+      url: '/profile',
       name: 'setting',
       templateUrl: "<%= asset_path('main/angular/components/setting/settingView.html') %>",
       controller: 'settingCtrl as setting',
@@ -27,6 +27,45 @@
         resources: ['$ocLazyLoad', function($ocLazyLoad) {
           return $ocLazyLoad.load([
             ASSETS.somsri.main.setting
+          ]);
+        }]
+      }
+    }).
+    state({
+      url: '/classroom',
+      name: 'classroom',
+      templateUrl: "<%= asset_path('main/angular/components/classroom/classroomView.html') %>",
+      controller: 'classroomCtrl as classroom',
+      resolve: {
+        resources: ['$ocLazyLoad', function($ocLazyLoad) {
+          return $ocLazyLoad.load([
+            ASSETS.somsri.main.classroom
+          ]);
+        }]
+      }
+    }).
+    state({
+      url: '/classroom/:id',
+      name: 'classroom_edit',
+      templateUrl: "<%= asset_path('main/angular/components/classroom/edit/classroomEditView.html') %>",
+      controller: 'classroomEditCtrl as edit',
+      resolve: {
+        resources: ['$ocLazyLoad', function($ocLazyLoad) {
+          return $ocLazyLoad.load([
+            ASSETS.somsri.main.classroom_edit
+          ]);
+        }]
+      }
+    }).
+    state({
+      url: '/setting',
+      name: 'setting_menu',
+      templateUrl: "<%= asset_path('main/angular/components/menu/menuView.html') %>",
+      controller: 'menuCtrl as menu',
+      resolve: {
+        resources: ['$ocLazyLoad', function($ocLazyLoad) {
+          return $ocLazyLoad.load([
+            ASSETS.somsri.main.setting_menu
           ]);
         }]
       }

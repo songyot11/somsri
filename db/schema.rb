@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20170810092342) do
+ActiveRecord::Schema.define(version: 20171017081104) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -39,6 +39,16 @@ ActiveRecord::Schema.define(version: 20170810092342) do
     t.integer  "user_id"
     t.index ["list_id"], name: "index_class_permisions_on_list_id", using: :btree
     t.index ["user_id"], name: "index_class_permisions_on_user_id", using: :btree
+  end
+
+  create_table "classrooms", force: :cascade do |t|
+    t.integer  "next_id"
+    t.integer  "grade_id"
+    t.string   "name",       default: "", null: false
+    t.datetime "created_at",              null: false
+    t.datetime "updated_at",              null: false
+    t.index ["grade_id"], name: "index_classrooms_on_grade_id", using: :btree
+    t.index ["next_id"], name: "index_classrooms_on_next_id", using: :btree
   end
 
   create_table "comfy_cms_blocks", force: :cascade do |t|
@@ -199,12 +209,14 @@ ActiveRecord::Schema.define(version: 20170810092342) do
     t.boolean  "pay_pvf"
     t.string   "pin"
     t.integer  "grade_id"
-    t.string   "classroom"
+    t.string   "classroom_name"
     t.string   "img_url_file_name"
     t.string   "img_url_content_type"
     t.integer  "img_url_file_size"
     t.datetime "img_url_updated_at"
     t.datetime "deleted_at"
+    t.integer  "classroom_id"
+    t.index ["classroom_id"], name: "index_employees_on_classroom_id", using: :btree
     t.index ["deleted_at"], name: "index_employees_on_deleted_at", using: :btree
     t.index ["school_id"], name: "index_employees_on_school_id", using: :btree
   end
@@ -279,6 +291,10 @@ ActiveRecord::Schema.define(version: 20170810092342) do
     t.datetime "created_at",         null: false
     t.datetime "updated_at",         null: false
     t.string   "grade_name"
+    t.string   "classroom"
+    t.string   "student_name"
+    t.string   "parent_name"
+    t.string   "user_name"
   end
 
   create_table "line_items", force: :cascade do |t|
@@ -420,6 +436,7 @@ ActiveRecord::Schema.define(version: 20170810092342) do
     t.boolean "tax",                                  default: true
     t.integer "student_number_leading_zero",          default: 0
     t.boolean "one_slip_per_page",                    default: false
+    t.boolean "export_ktb_payroll",                   default: false
   end
 
   create_table "student_lists", force: :cascade do |t|
@@ -439,7 +456,7 @@ ActiveRecord::Schema.define(version: 20170810092342) do
     t.integer  "gender_id"
     t.datetime "birthdate"
     t.integer  "grade_id"
-    t.string   "classroom"
+    t.string   "classroom_name"
     t.integer  "classroom_number"
     t.integer  "student_number"
     t.string   "national_id"
@@ -453,6 +470,8 @@ ActiveRecord::Schema.define(version: 20170810092342) do
     t.string   "img_url_content_type"
     t.integer  "img_url_file_size"
     t.datetime "img_url_updated_at"
+    t.integer  "classroom_id"
+    t.index ["classroom_id"], name: "index_students_on_classroom_id", using: :btree
     t.index ["deleted_at"], name: "index_students_on_deleted_at", using: :btree
     t.index ["school_id"], name: "index_students_on_school_id", using: :btree
   end
@@ -538,12 +557,14 @@ ActiveRecord::Schema.define(version: 20170810092342) do
 
   add_foreign_key "class_permisions", "lists"
   add_foreign_key "class_permisions", "users"
+  add_foreign_key "employees", "classrooms"
   add_foreign_key "individuals", "employees", column: "child_id"
   add_foreign_key "individuals", "employees", column: "emergency_call_id"
   add_foreign_key "individuals", "employees", column: "friend_id"
   add_foreign_key "individuals", "employees", column: "parent_id"
   add_foreign_key "individuals", "employees", column: "spouse_id"
   add_foreign_key "roll_calls", "lists"
+  add_foreign_key "students", "classrooms"
   add_foreign_key "students", "schools"
   add_foreign_key "users", "schools"
 end

@@ -1,0 +1,23 @@
+(function() {
+  'use strict';
+  angular.module('somsri.main.create_member_modal', [
+    ])
+  .controller('createMemberModalCtrl', ['$uibModalInstance', '$state', '$log', 'createMemberModalService', 'options', function($uibModalInstance, $state, $log, service, options) {
+    var ctrl = this;
+    ctrl.options = options
+    ctrl.fullname = ''
+    ctrl.nickname = ''
+
+    ctrl.submit = function(){
+      service.createMember({ fullname: ctrl.fullname, nickname: ctrl.nickname }, options.type)
+        .then(function(resp) {
+        $uibModalInstance.close(resp.data);
+      });
+    }
+
+    ctrl.cancel = function () {
+      $uibModalInstance.close();
+    };
+
+  }]);
+})();

@@ -22,6 +22,14 @@ describe 'Invoice', js: true do
   let(:invoice_status_1) { InvoiceStatus.make! name: 'Active' }
   let(:invoice_status_2) { InvoiceStatus.make! name: 'Canceled' }
 
+  let(:grade) do
+    Grade.make!({name: "Kindergarten 1"})
+  end
+
+  let(:classroom) do
+    Classroom.make!({name: "1A", grade_id: grade.id})
+  end
+
   let(:students) do
     [
       Student.make!({
@@ -29,8 +37,8 @@ describe 'Invoice', js: true do
         last_name: 'ศรีสุข',
         nickname: 'รวย' ,
         gender_id: 1 ,
-        grade_id: 2 ,
-        classroom: '1A' ,
+        grade_id: grade.id ,
+        classroom: classroom ,
         classroom_number: 13 ,
         student_number: 23 ,
 
@@ -40,8 +48,8 @@ describe 'Invoice', js: true do
         last_name: 'ณ บานาน่าโค๊ดดิ้ง',
         nickname: 'กล้วย' ,
         gender_id: 2 ,
-        grade_id: 4 ,
-        classroom: '1A' ,
+        grade_id: grade.id ,
+        classroom: classroom ,
         classroom_number: 14 ,
         student_number: 22 ,
         birthdate: Time.now
@@ -52,14 +60,25 @@ describe 'Invoice', js: true do
         last_name: 'ณ บานาน่าโค๊ดดิ้ง',
         nickname: 'กั้ง' ,
         gender_id: 2 ,
-        grade_id: 4 ,
-        classroom: '1A' ,
+        grade_id: grade.id ,
+        classroom: classroom ,
         classroom_number: 14 ,
         student_number: 21 ,
         birthdate: Time.now
 
       })
     ]
+  end
+
+  let(:student_no_number) do
+    Student.make!({
+      first_name: 'มั่งไม่มี',
+      last_name: 'เลขนักเรียน',
+      nickname: 'ไม่' ,
+      gender_id: 1 ,
+      grade_id: grade.id ,
+      classroom: classroom
+    })
   end
 
   let(:parents) do
@@ -76,6 +95,10 @@ describe 'Invoice', js: true do
       StudentsParent.make!({student_id: students[1].id , parent_id: parents[1].id}),
       StudentsParent.make!({student_id: students[2].id , parent_id: parents[2].id})
     ]
+  end
+
+  let(:studentsparent_no_number) do
+    StudentsParent.make!({student_id: student_no_number.id , parent_id: parents[0].id})
   end
 
   before do
@@ -99,6 +122,23 @@ describe 'Invoice', js: true do
     expect(page).to have_content("ใบเสร็จรับเงิน")
     expect(page).to have_content("สมศรี ณ บานาน่าโค๊ดดิ้ง")
     expect(page).to have_content("ค่าธรรมเนียมการศึกษา")
+  end
+
+  it 'should not create invoice when student has not number' do
+    student_no_number
+    studentsparent_no_number
+    student_count = Student.count
+    visit 'somsri_invoice#/invoice'
+    sleep(1)
+    fill_in 'student_name', with: "มั่งไม่มี"
+    click_link('มั่งไม่มี เลขนักเรียน (ไม่)')
+    click_on('ชำระเงิน')
+    sleep(1)
+    expect(page).to have_content("ใบเสร็จรับเงิน")
+    expect(page).to have_content("มั่งไม่มี เลขนักเรียน")
+    expect(page).to have_content("ค่าธรรมเนียมการศึกษา")
+    expect(page).to have_content("1A")
+    expect(Student.count).to eq student_count
   end
 
   it 'should create invoice with student and parent' do
@@ -139,11 +179,17 @@ describe 'Invoice', js: true do
     sleep(1)
     fill_in 'student_code', with: "21"
     click_link('21 - สมศรี ณ บานาน่าโค๊ดดิ้ง (กั้ง)')
+    sleep(1)
     click_on('ชำระเงิน')
     sleep(1)
     expect(page).to have_content("ใบเสร็จรับเงิน")
     expect(page).to have_content("สมศรี ณ บานาน่าโค๊ดดิ้ง")
     expect(Student.count).to eq(student_amount)
+
+    visit "/students/#{students[1].id}/edit#/"
+    click_link('ข้อมูลใบเสร็จ')
+    sleep(1)
+    eventually { expect(page).to have_content("Kindergarten 1 (1A) 48,900.00") }
   end
 
 end

@@ -16,11 +16,11 @@ describe 'invoice report(ใบเสร็จ)', js: true do
 
   let(:invoices) do
     [
-      Invoice.make!(student: Student.make!(first_name: 'สมชาย', last_name: 'ผลดี', nickname: 'ชาย'), updated_at: DateTime.now),
-      Invoice.make!(student: Student.make!(first_name: 'สมหมาย', last_name: 'ผลดี'), updated_at: DateTime.now),
-      Invoice.make!(student: Student.make!(full_name: 'นราพร แสงจันทร์'), updated_at: DateTime.now.yesterday),
-      Invoice.make!(student: Student.make!(full_name: 'กันตพงศ์ กุมกัน'), updated_at: DateTime.now.yesterday),
-      Invoice.make!(student: Student.make!(full_name: 'ทุน ลุงช่วย'), updated_at: DateTime.now.yesterday),
+      Invoice.make!(student: Student.make!(first_name: 'สมชาย', last_name: 'ผลดี', nickname: 'ชาย'), created_at: DateTime.now),
+      Invoice.make!(student: Student.make!(first_name: 'สมหมาย', last_name: 'ผลดี'), created_at: DateTime.now),
+      Invoice.make!(student: Student.make!(full_name: 'นราพร แสงจันทร์'), created_at: DateTime.now.yesterday),
+      Invoice.make!(student: Student.make!(full_name: 'กันตพงศ์ กุมกัน'), created_at: DateTime.now.yesterday),
+      Invoice.make!(student: Student.make!(full_name: 'ทุน ลุงช่วย'), created_at: DateTime.now.yesterday),
       Invoice.make!(student: Student.make!(full_name: 'มัญชรี พวกทอง')),
       Invoice.make!(student: Student.make!(full_name: 'ผดุงเดช ชัยแก้ว')),
       Invoice.make!(student: Student.make!(full_name: 'แลง กู่งนะ')),
@@ -30,12 +30,20 @@ describe 'invoice report(ใบเสร็จ)', js: true do
     ]
   end
 
+  let(:grade) do
+    Grade.make!({name: "Kindergarten 1"})
+  end
+
+  let(:classroom) do
+    Classroom.make!({name: "1A", grade_id: grade.id})
+  end
+
   let(:student){Student.create!(
     full_name: 'สมพล 1' ,
     nickname: 'กั้ง' ,
     gender_id: 2 ,
-    grade_id: 4 ,
-    classroom: '1A' ,
+    grade_id: grade.id,
+    classroom: classroom,
     classroom_number: 100 ,
     student_number: 9001 ,
     birthdate: Time.now
@@ -104,6 +112,22 @@ describe 'invoice report(ใบเสร็จ)', js: true do
     eventually { expect( page ).to have_content(invoices[2].student.full_name) }
     eventually { expect( page ).to have_content(invoices[3].student.full_name) }
     eventually { expect( page ).to have_content(invoices[4].student.full_name) }
+  end
+
+  it 'can filter by date range and search' do
+    visit 'somsri_invoice#/invoice_report'
+    sleep(1)
+    find('#start_date').set(yesterday_str)
+    sleep(1)
+    find('#end_date').set(yesterday_str)
+    sleep(1)
+    find('#searchField').set(invoices[3].id)
+
+    eventually { expect( all('#invoice-table > tbody > tr').count ).to eq(3) }
+    eventually { expect( all('li.pagination-page').count ).to eq(1) }
+    eventually { expect( page ).to_not have_content(invoices[2].student.full_name) }
+    eventually { expect( page ).to have_content(invoices[3].student.full_name) }
+    eventually { expect( page ).to_not have_content(invoices[4].student.full_name) }
   end
 
   it 'should qry from today to present' do

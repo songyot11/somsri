@@ -37,6 +37,10 @@
         ctrl.grades = grade_resp.data
       });
 
+      studentReportService.getClassrooms().then(function(classroom_resp) {
+        ctrl.classrooms = classroom_resp.data
+      });
+
       function openConfirmationModal(message, success, dismiss) {
         $scope.message = message;
         $uibModal.open({
@@ -221,9 +225,12 @@
               ctrl.employee_lists = []; //resp.data
               for(var i = 0; i < resp.data.length; i++){
                 var employee = resp.data[i];
-                if (employee.id + ': ' + employee.name !== ctrl.displayName){
+                if (employee.id + ': ' + employee.name !== ctrl.displayName) {
                   // ctrl.employee_lists.splice(i, 1);
-                  ctrl.employee_lists.push({name: employee.name, id: employee.id});
+                  ctrl.employee_lists.push({
+                    img: employee.img, name: employee.name,
+                    id: employee.id
+                  });
                 }
               }
             }

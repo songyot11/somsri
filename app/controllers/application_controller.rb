@@ -21,13 +21,13 @@ class ApplicationController < ActionController::Base
     end
   end
 
-  def qry_date_range(qry, start_date, end_date)
+  def qry_date_range(qry, data_field, start_date, end_date)
     if start_date && end_date
-      qry = qry.where(updated_at: start_date..end_date)
+      qry = qry.where(created_at: start_date..end_date)
     elsif start_date
-      qry = qry.where("updated_at > ?", start_date)
+      qry = qry.where(data_field.gt(start_date))
     elsif end_date
-      qry = qry.where("updated_at < ?", end_date)
+      qry = qry.where(data_field.lt(end_date))
     end
     return qry
   end

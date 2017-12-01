@@ -18,59 +18,69 @@ class StudentsController < ApplicationController
       @students_all = Student.order("student_number ASC").search(params[:search]).with_deleted.to_a
     else
       grade = Grade.where(name: grade_select).first
-      @students_all = Student.where(grade_id: grade.id).order("classroom ASC, classroom_number ASC").search(params[:search]).with_deleted.to_a
+      @students_all = Student.where(grade_id: grade.id).order("classroom_id ASC, classroom_number ASC").search(params[:search]).with_deleted.to_a
     end
 
     datas = []
     total_tuition = 0.0
     total_other = 0.0
     total_amount = 0.0
+    total_year = 0.0
     @students_all.each_with_index do |student, index|
       paid = false
       tuition_fee = 0.0
       other_fee = 0.0
       total_fee = 0.0
+      year_fee = 0.0
       payment_method = ""
       last_tuition_invoice = nil
       qry_invoice = Invoice.where(student_id: student.id, school_year: year_select, invoice_status_id: InvoiceStatus.status_active_id)
-      if semester_select == "อื่นๆ"
-        qry_invoice = qry_invoice.where.not(semester: SchoolSetting.semesters)
-      else
-        qry_invoice = qry_invoice.where(semester: semester_select)
-      end
-      invoices = qry_invoice.order("updated_at ASC").to_a
+      invoices = qry_invoice.order("created_at ASC").to_a
 
       #skip student no invoice and deleted
       next if invoices.count == 0 && student.deleted_at
 
+      semester_exclude = []
+      if semester_select == "อื่นๆ"
+        semester_exclude = SchoolSetting.semesters
+      else
+        semester_exclude = SchoolSetting.semesters - [semester_select.to_s]
+      end
+
       invoices.each do |invoice|
         invoice.line_items.each do |item|
-          if item.detail =~ /Tuition Fee/
-            tuition_fee += item.amount
-            paid = true
-          else
-            other_fee += item.amount
+          if !semester_exclude.include?(invoice.semester)
+            if item.detail =~ /Tuition Fee/
+              tuition_fee += item.amount
+              paid = true
+            else
+              other_fee += item.amount
+            end
+            total_fee += item.amount
           end
-          total_fee += item.amount
+          year_fee += item.amount
         end
         last_tuition_invoice = invoice
-        payment_method = invoice.payment_methods.collect{ |pm| pm.payment_method }.join(',')
+        payment_method = invoice.payment_methods.collect{ |pm| pm.payment_method }.join(',') if !semester_exclude.include?(invoice.semester)
       end
+
+
       data = {
         id: student.id,
         classroom_number: student.classroom_number,
         student_number: student.student_number,
         grade_name: last_tuition_invoice ? last_tuition_invoice.grade_name : student.grade_name,
-        classroom: student.classroom,
+        classroom: student.classroom ? student.classroom.name : "",
         parent_names: student.parent_names,
         active_invoice_status: paid ? "ชำระแล้ว" : "ยังไม่ได้ชำระ",
         active_invoice_payment_method: payment_method,
         active_invoice_tuition_fee: tuition_fee,
+        active_invoice_year_fee: year_fee,
         active_invoice_other_fee: other_fee,
         active_invoice_total_amount: total_fee,
         full_name_with_title: student.invoice_screen_full_name_display,
         nickname_eng_thai: student.nickname_eng_thai,
-        active_invoice_updated_at: last_tuition_invoice ? last_tuition_invoice.updated_at : nil,
+        active_invoice_created_at: last_tuition_invoice ? last_tuition_invoice.created_at : nil,
         deleted_at: student.deleted_at
       }
 
@@ -90,6 +100,7 @@ class StudentsController < ApplicationController
         total_amount += total_fee
         datas << data
       end
+      total_year += year_fee
     end
 
     if !params[:all]
@@ -100,22 +111,23 @@ class StudentsController < ApplicationController
         total_records: datas.total_entries,
         other_fee: total_other,
         tuition_fee: total_tuition,
+        total_year: total_year,
         amount: total_amount
-        }, status: :ok
-      else
-        render json: {
-          datas: datas,
-          other_fee: total_other,
-          tuition_fee: total_tuition,
-          amount: total_amount
-          }, status: :ok
-        end
-
-
-      end
+      }, status: :ok
+    else
+      render json: {
+        datas: datas,
+        other_fee: total_other,
+        tuition_fee: total_tuition,
+        amount: total_amount,
+        total_year: total_year
+      }, status: :ok
+    end
+  end
 
   # GET /students
   # GET /students.json
+  # GET /students.pdf
   def index
     @menu = "นักเรียน"
     authorize! :read, Student
@@ -123,7 +135,7 @@ class StudentsController < ApplicationController
     grade_select = (params[:grade_select] || 'All')
     class_select = (params[:class_select] || 'All')
 
-    @class_display = Student.order("classroom ASC").select(:classroom).map(&:classroom).uniq.compact
+    @class_display = Classroom.order("id ASC").select(:name).map(&:name).uniq.compact
     year_select = (params[:year_select] || Date.current.year + 543)
     semester_select = params[:semester_select]
     invoice_status = params[:status]
@@ -132,13 +144,15 @@ class StudentsController < ApplicationController
     if grade_select.downcase == 'all' && class_select.downcase == 'all'
       students = Student
     elsif grade_select.downcase == 'all' && class_select.downcase != 'all'
-      students = Student.where(classroom: class_select)
-    elsif grade_select != 'all' && class_select.downcase == 'all'
+      classroom = Classroom.where(name: class_select).first
+      students = Student.where(classroom_id: classroom.id)
+    elsif grade_select.downcase != 'all' && class_select.downcase == 'all'
       grade = Grade.where(name: grade_select).first
       students = Student.where(grade: grade.id)
-    elsif grade_select != 'all' && class_select != 'all'
+    elsif grade_select.downcase != 'all' && class_select.downcase != 'all'
       grade = Grade.where(name: grade_select).first
-      students = Student.where(grade: grade.id , classroom: class_select)
+      classroom = Classroom.where(name: class_select).first
+      students = Student.where(grade: grade.id , classroom_id: classroom.id)
     end
     @students = students.order("#{params[:sort]} #{params[:order]}").search(params[:search])
     @filter_grade = grade_select
@@ -149,16 +163,44 @@ class StudentsController < ApplicationController
         school_year: SchoolSetting.school_year_or_default(".........."),
         student_list: []
       }
+
       @students.to_a.each do |student|
+        parents = []
+        student.parent_and_relationship_names.each_with_index do |parent, i|
+          break if i > 1
+          parents << parent
+        end
         results[:student_list] << {
           student_number: student.student_number || "",
+          nickname: student.nickname,
+          img_url: student.img_url.exists? ? student.img_url.url(:medium) : '',
           full_name: student.full_name_with_title || "",
           national_id: student.national_id || "",
-          birthdate: student.birthdate ? (student.birthdate + 543.years).strftime("%d/%m/%Y") : ""
+          birthdate: student.birthdate ? (student.birthdate + 543.years).strftime("%d/%m/%Y") : "",
+          parents: parents
         }
       end
-      render json: results, status: :ok
+
+      respond_to do |format|
+        format.html
+        format.json do
+          render json: results, status: :ok
+        end
+        format.pdf do
+          size = 10
+          @results = {
+            dataPerPages: results[:student_list].each_slice(size).to_a,
+            school_year: results[:school_year]
+          }
+          render pdf: "file_name",
+                  template: "students/student_list_with_image.html.erb",
+                  encoding: "UTF-8",
+                  layout: 'pdf.html',
+                  show_as_html: params[:html_view].present?
+        end
+      end
     else
+      @students.to_a
       respond_to do |f|
         f.html { render "students/index", layout: "application" }
         f.json {
@@ -386,6 +428,30 @@ class StudentsController < ApplicationController
     @student = Student.where(id: params[:id]).update( upload_photo_params )
   end
 
+  def create_by_name
+    fullname = params[:fullname]
+    nickname = params[:nickname]
+
+    splited = fullname.split(" ")
+
+    gender_id = nil
+    gender_id = Gender.female.id if ["เด็กหญิง", "ด.ญ.", "miss"].include?(splited[0].downcase)
+    gender_id = Gender.male.id if ["เด็กชาย", "ด.ช.", "master"].include?(splited[0].downcase)
+
+    student = Student.create({
+      gender_id: gender_id,
+      full_name: fullname,
+      nickname: nickname
+    })
+
+    result = {
+      img: student.img_url.exists? ? student.img_url.url(:medium) : nil,
+      name: student.invoice_screen_full_name_display,
+      id: student.id
+    }
+    render json: result, status: :ok
+  end
+
   private
     # Use callbacks to share common setup or constraints between actions.
     def set_student
@@ -394,7 +460,7 @@ class StudentsController < ApplicationController
 
     # Never trust parameters from the scary internet, only allow the white list through.
     def student_params
-      params.require(:student).permit(:full_name, :full_name_english, :nickname, :nickname_english, :gender_id, :birthdate, :grade_id, :classroom, :classroom_number, :student_number, :national_id, :remark , :status, :img_url)
+      params.require(:student).permit(:full_name, :full_name_english, :nickname, :nickname_english, :gender_id, :birthdate, :grade_id, :classroom_id, :classroom_number, :student_number, :national_id, :remark , :status, :img_url)
     end
 
     def relation_assign

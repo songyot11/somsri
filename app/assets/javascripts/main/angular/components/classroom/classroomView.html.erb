@@ -1,0 +1,43 @@
+<%= javascript_include_tag 'classroom_bootstrap_table' %>
+<div class="container" style="width: 960px;">
+  <div class="space20"></div>
+  <div class="row">
+    <div class="col-xs-12">
+      <button ng-show="classroom.isStudentPromoteReady" class="btn pull-right" ng-class="classroom.isStudentPromoteEnable ? 'btn-blue' : 'btn-disable'" ng-click="classroom.studentPromote()" ng-disabled="!classroom.isStudentPromoteEnable">เลื่อนชั้นเรียน</button>
+    </div>
+  </div>
+  <div class="space20"></div>
+  <div class="content-box">
+    <div class="row">
+      <div class="col-xs-12">
+        <div class="pull-right">
+          <span>เลือกระดับชั้น</span>
+          <select id="grade-select" class="btn-grades" ng-model="classroom.grade_select" ng-options="obj.name for obj in classroom.grades track by obj.id" ng-change="classroom.gradeFilter()">
+            <option value="">ทั้งหมด</option>
+          </select>
+        </div>
+      </div>
+    </div>
+    <div class="row">
+      <div class="col-xs-12">
+        <div class="row">
+          <table
+          id="classroom-list"
+          data-toggle="table"
+          data-url="/classrooms/classroom_list"
+          data-query-params="queryParams">
+            <thead>
+              <tr>
+                <th data-field="grade" data-sortable="true">ระดับชั้นเรียน</th>
+                <th data-field="classroom" data-sortable="true">ห้องเรียน</th>
+                <th data-field="teacher_count" data-sortable="true">จำนวนครู</th>
+                <th data-field="student_count" data-sortable="true">จำนวนนักเรียน</th>
+                <th data-formatter="editBtnFormatter"></th>
+              </tr>
+            </thead>
+          </table>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

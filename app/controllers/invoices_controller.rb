@@ -9,23 +9,42 @@ class InvoicesController < ApplicationController
     start_date = DateTime.parse(params[:start_date]).beginning_of_day if isDate(params[:start_date])
     end_date = DateTime.parse(params[:end_date]).end_of_day if isDate(params[:end_date])
 
-
-    @invoices = get_invoices(grade_select, params[:search_keyword], start_date, end_date, params[:page], params[:sort], params[:order], params[:export])
-    if params[:page] && @invoices.total_pages < @invoices.current_page
-      @invoices = get_invoices(grade_select, params[:search_keyword], start_date, end_date, 1, params[:sort], params[:order], params[:export])
+    invoice_status_id = nil
+    if params[:is_active] == "1"
+      invoice_status_id = InvoiceStatus.status_active_id
+    end
+    if params[:is_active] == "0"
+      invoice_status_id = InvoiceStatus.status_canceled_id
     end
 
+    @invoices = get_invoices(grade_select, params[:search_keyword], start_date, end_date, params[:page], params[:sort], params[:order], params[:export], invoice_status_id, params[:student_id])
+    if params[:page] && @invoices.total_pages < @invoices.current_page
+      @invoices = get_invoices(grade_select, params[:search_keyword], start_date, end_date, 1, params[:sort], params[:order], params[:export], invoice_status_id, params[:student_id])
+    end
 
     @filter_grade = grade_select
-    result = {
-      invoices: @invoices.as_json({ index: true })
-    }
 
-    if params[:page]
-      result[:current_page] = @invoices.current_page
-      result[:total_records] = @invoices.total_entries
+    result = {}
+
+    if params[:bootstrap_table].to_s == "1"
+      # result = {
+      #   rows: @invoices.as_json({ bootstrap_table: true })
+      # }
+      # if params[:page]
+      #   result[:page] = @invoices.current_page
+      #   result[:total] = @invoices.total_entries
+      # end
+
+      result = @invoices.as_json({ bootstrap_table: true })
+    else
+      result = {
+        invoices: @invoices.as_json({ index: true })
+      }
+      if params[:page]
+        result[:current_page] = @invoices.current_page
+        result[:total_records] = @invoices.total_entries
+      end
     end
-
     render json: result
   end
 
@@ -110,28 +129,31 @@ class InvoicesController < ApplicationController
     Invoice.transaction do
       parent = Parent.find_or_create_by(parent_params);
       student = nil
+      qry_student = Student.all
       # Clean Up Student's name
       student_name = student_params[:full_name].gsub('ด.ช.', '').gsub('ด.ญ.', '').gsub('เด็กหญิง', '').gsub('เด็กชาย', '').strip.gsub(/\s+/,' ')
 
       # try to search by Student Number
-      if student_params[:student_number].present? && student_params[:student_number].size > 0
-        student = Student.where(student_number: student_params[:student_number]).first
+      if student_params[:student_number].present? && student_params[:student_number].size > 0 && (student_params[:student_number].is_a? Integer) && student_params[:student_number] > 0
+        qry_student = qry_student.where(student_number: student_params[:student_number])
       end
 
       # try to search by Student name
-      if student.nil?
-        student = Student.arel_table
-        student = Student.where(student[:full_name].matches("%#{student_name}%")).first
+      if student_name.present? && student_name.size > 0
+        student_arel_table = Student.arel_table
+        qry_student = qry_student.where(student_arel_table[:full_name].matches("%#{student_name}%"))
       end
+
+      student = qry_student.first
 
       # Stil not found create new Student
       if student.nil?
         student = Student.new(full_name: student_name, student_number: student_params[:student_number])
         # Detect Gender from prefix
         if ['ด.ช.','เด็กชาย','master'].any? { |word| student_params[:full_name].downcase.include?(word) }
-          student.gender_id = Gender.find_by_name("Male").id
+          student.gender_id = Gender.male.id
         elsif ['ด.ญ.','เด็กหญิง','miss'].any? { |word| student_params[:full_name].downcase.include?(word) }
-          student.gender_id = Gender.find_by_name("Female").id
+          student.gender_id = Gender.female.id
         end
       end
 
@@ -159,9 +181,13 @@ class InvoicesController < ApplicationController
 
       invoice = Invoice.new(invoice_hash)
       invoice.parent_id = parent.id
+      invoice.parent_name = parent.full_name
       invoice.student_id = student.id
+      invoice.student_name = student.invoice_screen_full_name_display
       invoice.user_id = current_user.id
+      invoice.user_name = current_user.name
       invoice.grade_name = grade.name
+      invoice.classroom = student.classroom ? student.classroom.name : nil
       invoice.invoice_status_id = InvoiceStatus.find_by_name("Active").id
 
       line_item_params.to_h[:items].each do |item|
@@ -232,8 +258,8 @@ class InvoicesController < ApplicationController
     student_nickname = " (#{@invoice.student.nickname})" if @invoice.student && @invoice.student.nickname
     student_display_name = "#{student_prefix} #{@invoice.student.full_name}#{student_nickname}"
     grade_name = @invoice.grade_name ? (@invoice.grade_name) : ""
-    if @invoice.student && @invoice.student.classroom && @invoice.student.classroom.size > 0
-      grade_name << " (#{@invoice.student.classroom})"
+    if @invoice.student && @invoice.student.classroom
+      grade_name << " (#{@invoice.student.classroom.name})"
     end
 
     school = School.first
@@ -321,6 +347,8 @@ class InvoicesController < ApplicationController
   end
 
   def invoice_grouping
+    display_payment_method = params[:display_payment_method].to_s == "true" ? true : false
+    display_etc = params[:display_etc].to_s == "true" ? true : false
     grouping_keyword = GroupingReportOption.all.order(:id).to_a
     options = []
     if params[:options]
@@ -335,8 +363,8 @@ class InvoicesController < ApplicationController
       options = grouping_keyword.collect{|gk| { name: gk[:name], value: true }}
     end
 
-    start_date = DateTime.parse(params[:start_date]).beginning_of_day if isDate(params[:start_date])
-    end_date = DateTime.parse(params[:end_date]).end_of_day if isDate(params[:end_date])
+    start_date = isDate(params[:start_date]) ? DateTime.parse(params[:start_date]).beginning_of_day : nil
+    end_date = isDate(params[:end_date]) ? DateTime.parse(params[:end_date]).end_of_day : nil
 
     summary_mode = select_summary_mode(start_date, end_date)
     invoices = query_invoice_by_date_range(start_date, end_date)
@@ -344,24 +372,36 @@ class InvoicesController < ApplicationController
     if summary_mode == "per_student"
       invoices = invoices.order("student_id ASC").to_a
     else
-      invoices = invoices.order("updated_at ASC").to_a
+      invoices = invoices.order("created_at ASC").to_a
     end
 
-    header = ["เงินสด", "บัตรเครดิต", "เช็คธนาคาร", "เงินโอน"]
-      grouping_keyword.each do |gk|
-        header << gk[:name]
-      end
-    header << "อื่นๆ"
+    type = params[:type]
+    header = []
+    if display_payment_method
+      header = ["เงินสด", "บัตรเครดิต", "เช็คธนาคาร", "เงินโอน"]
+    end
+
+    grouping_keyword.each do |gk|
+      header << gk[:name]
+    end
+
+    if display_etc
+      header << "อื่นๆ"
+    end
     header << "ยอดรวม"
+
+    column_size =  6 + grouping_keyword.size
+    column_size -= 4 if !display_payment_method
+    column_size -= 1 if !display_etc
 
     header_row_tmp = ""
     header_row_invoice_id_tmp = ""
     header_row_classroom_tmp = ""
     student_id_tmp = "";
-    column_size = 6 + grouping_keyword.size
     datas_tmp = Array.new(column_size, 0.0)
     total_tmp = Array.new(column_size, 0.0)
     rows = []
+
     invoices.each do |invoice|
       if summary_mode == "per_student" && student_id_tmp != invoice.student_id
         # collect per student in one day
@@ -382,7 +422,7 @@ class InvoicesController < ApplicationController
         header_row_classroom_tmp = invoice.student.grade_name_with_title_classroom
         header_row_tmp = invoice.student.invoice_screen_full_name_display
         datas_tmp = Array.new(column_size, 0.0)
-      elsif summary_mode == "per_day" && header_row_tmp != invoice.updated_at.strftime("%d/%m/%Y")
+      elsif summary_mode == "per_day" && header_row_tmp != invoice.created_at.strftime("%d/%m/%Y")
         # collect per day data
         if header_row_tmp != ""
           rows << {
@@ -392,11 +432,13 @@ class InvoicesController < ApplicationController
         end
 
         # reset tmp data
-        header_row_tmp = invoice.updated_at.strftime("%d/%m/%Y")
+        header_row_tmp = invoice.created_at.strftime("%d/%m/%Y")
         datas_tmp = Array.new(column_size, 0.0)
       end
-      set_payment_method_datas(invoice, datas_tmp, total_tmp)
-      set_grouping_item(invoice, grouping_keyword, column_size, datas_tmp, total_tmp)
+      if display_payment_method
+        set_payment_method_datas(invoice, datas_tmp, total_tmp)
+      end
+      set_grouping_item(invoice, grouping_keyword, column_size, datas_tmp, total_tmp, display_etc, display_payment_method)
     end
 
     # add last date
@@ -408,7 +450,7 @@ class InvoicesController < ApplicationController
     row[:datas] = datas_tmp if invoices.size > 0
     row[:url] = edit_student_path(id: student_id_tmp) if Student.where(id: student_id_tmp).exists?
     rows << row
-    
+
     render json: {
       header: header,
       rows: rows,
@@ -418,10 +460,11 @@ class InvoicesController < ApplicationController
   end
 
   private
-    def set_grouping_item(invoice, grouping_keyword, column_size, datas_tmp, total_tmp)
+    def set_grouping_item(invoice, grouping_keyword, column_size, datas_tmp, total_tmp, display_etc, display_payment_method)
       LineItem.where(invoice_id: invoice.id).to_a.each do |li|
         is_grouped = false
         keyword_index = 4
+        keyword_index -= 4 if !display_payment_method
         grouping_keyword.each do |gk|
           if li.detail.downcase =~ Regexp.union(gk[:keyword].downcase.split('|').collect(&:strip))
             #sum by keyword
@@ -433,15 +476,19 @@ class InvoicesController < ApplicationController
           break if is_grouped
         end
 
-        if !is_grouped
+        if !is_grouped && display_etc
           #sum by other
           datas_tmp[column_size - 2] += li.amount
           total_tmp[column_size - 2] += li.amount
+          #sum all invoice
+          datas_tmp[column_size - 1] += li.amount
+          total_tmp[column_size - 1] += li.amount
+        elsif is_grouped
+          #sum all invoice
+          datas_tmp[column_size - 1] += li.amount
+          total_tmp[column_size - 1] += li.amount
         end
 
-        #sum all invoice
-        datas_tmp[column_size - 1] += li.amount
-        total_tmp[column_size - 1] += li.amount
       end
     end
 
@@ -477,19 +524,25 @@ class InvoicesController < ApplicationController
 
     def query_invoice_by_date_range(start_date, end_date)
       qry_invoices = Invoice.where(invoice_status_id: InvoiceStatus.find_by_name('Active').id)
-      qry_invoices = qry_date_range(qry_invoices, start_date, end_date)
+      data_field = Invoice.arel_table[:created_at]
+      qry_invoices = qry_date_range(qry_invoices, data_field, start_date, end_date)
       return qry_invoices
     end
 
-    def get_invoices(grade_select, search_keyword, start_date, end_date, page, sort, order, export)
+    def get_invoices(grade_select, search_keyword, start_date, end_date, page, sort, order, export, invoice_status_id, student_id)
       qry_invoices = Invoice.includes(:payment_methods, :parent, :student, :user, :line_items, :invoice_status)
                             .search(search_keyword)
+
+      qry_invoices = qry_invoices.where(invoice_status_id: invoice_status_id) if invoice_status_id
+      qry_invoices = qry_invoices.where(student_id: student_id) if student_id
+
       if grade_select.downcase != 'all'
         grade = Grade.where(name: grade_select).first
         qry_invoices = qry_invoices.where(grade_name: grade.name) if grade
       end
 
-      qry_invoices = qry_date_range(qry_invoices, start_date, end_date)
+      data_field = Invoice.arel_table[:created_at]
+      qry_invoices = qry_date_range(qry_invoices, data_field, start_date, end_date)
 
       qry_invoices = qry_invoices.order("#{sort} #{order}")
 

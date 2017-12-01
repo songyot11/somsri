@@ -1,7 +1,19 @@
 <%- model_class = Student -%>
-<div class="container" style="width: 960px;">
+<div id="edit-student" class="container" style="width: 960px;">
   <div class="row head-sp justify-content-between">
     <h1>แก้ไขนักเรียน</h1>
   </div>
-  <%= render :partial => 'form' %>
+  <div class="space20"></div>
+  <ul class="nav nav-tabs">
+     <li class="active"><a class="tab-label" data-toggle="tab" href="#info">ข้อมูลนักเรียน</a></li>
+     <li><a class="tab-label" data-toggle="tab" href="#invoices">ข้อมูลใบเสร็จ</a></li>
+  </ul>
+  <div class="tab-content">
+    <div id="info" class="tab-pane fade in active">
+      <%= render :partial => 'form' %>
+    </div>
+    <div id="invoices" class="tab-pane fade">
+      <%= render :partial => 'invoices' %>
+    </div>
+  </div>
 </div>

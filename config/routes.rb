@@ -26,6 +26,7 @@ Rails.application.routes.draw do
   resources :employees, only: [:index, :create, :show, :update, :destroy]  do
     collection do
       get 'slips'
+      post 'create_by_name'
     end
     member do
       get 'slip'
@@ -57,6 +58,20 @@ Rails.application.routes.draw do
     end
   end
   resources :grades
+  resources :classrooms do
+    collection do
+      get 'classroom_list'
+      patch 'student_promote'
+      get 'is_student_promote_enable'
+    end
+    member do
+      get 'teacher_list'
+      get 'student_list'
+      patch 'update_list'
+      get 'teacher_without_classroom'
+      get 'student_without_classroom'
+    end
+  end
   resources :daily_reports
   resources :students do
     delete 'real_destroy'
@@ -65,6 +80,9 @@ Rails.application.routes.draw do
     post 'resign'
     member do
       patch 'upload_photo'
+    end
+    collection do
+      post 'create_by_name'
     end
   end
   resources :abilities, only: [:index]
@@ -76,11 +94,9 @@ Rails.application.routes.draw do
   resources :students, only: [:index, :show] do
     collection do
       get 'get_roll_calls'
-      # get 'invoice_total_amount'
     end
   end
   get '/student_report' => "students#student_report"
-  # get "/invoice_total_amount" => "students#invoice_total_amount"
   get "/invoice_years" => "invoices#invoice_years"
   get "/invoice_semesters" => "invoices#invoice_semesters"
   get "/invoice_grouping" => "invoices#invoice_grouping"

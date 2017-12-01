@@ -26,11 +26,11 @@
 
       function cleanDate(date){
         if(!date || new Date(date) == "Invalid Date"){return;}
-        var cleanedDate = new Date()
-        cleanedDate.setDate(date.getDate())
-        cleanedDate.setMonth(date.getMonth())
-        cleanedDate.setYear(date.getFullYear())
-        return cleanedDate
+        var nowDate = new Date()
+        date.setHours(nowDate.getHours())
+        date.setMinutes(nowDate.getMinutes())
+        date.setSeconds(nowDate.getSeconds())
+        return date
       }
 
       function filterDate(value, row, index) {
@@ -50,7 +50,7 @@
       function linkInvoiceID(value, row, index) {
         if (value) {
           var func = angularScopeRoot + '.openSlip(' + value + ', "invoice_report");'
-          var link = "<a herf='javascript:void(0)' onclick='" + func + "'>" + value +"</a>";
+          var link = "<a href='javascript:void(0)' onclick='" + func + "'>" + value +"</a>";
           return link;
         }
         return "-";
@@ -60,7 +60,7 @@
         if(!row.is_cancel && ctrl.thisDay(row.created_at)){
           ctrl.invoice[index] = row;
           var func = angularScopeInvoice + '.cancelInvoiceModal('+ angularScopeInvoice+ '.invoice['+ index +'])';
-          var link = "<a herf='javascript:void(0)' onclick='" + func + "'><i class='fa fa-times-circle'></i>&nbsp;ยกเลิกใบเสร็จ</a>";
+          var link = "<a href='javascript:void(0)' onclick='" + func + "'><i class='fa fa-times-circle'></i>&nbsp;ยกเลิกใบเสร็จ</a>";
           return  link;
         }
         return '';

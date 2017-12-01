@@ -1,5 +1,6 @@
 class PayrollsController < ApplicationController
   include PdfUtils
+  include ActionView::Helpers::NumberHelper
   skip_before_action :verify_authenticity_token, :only => [:update, :create]
   load_and_authorize_resource
 
@@ -7,14 +8,25 @@ class PayrollsController < ApplicationController
   def index
     employees = Employee.with_deleted.to_a
     qry_payrolls = Payroll.where(employee_id: employees)
+    effective_date = nil
     if params[:effective_date] != "lasted"
       effective_date = DateTime.parse(params[:effective_date])
       qry_payrolls = qry_payrolls.where(effective_date: effective_date.beginning_of_day..effective_date.end_of_day)
     else
       qry_payrolls = qry_payrolls.where(effective_date: nil)
     end
-    payrolls = qry_payrolls.order('employee_id').to_a.as_json("report")
-    render json: payrolls, status: :ok
+    payrolls = qry_payrolls.order('employee_id').to_a
+
+    if params[:ktb_salary_xls] && effective_date
+      # generate KTB salary excel
+      (tmp_path, filename) = generate_ktb_salary_xls(effective_date, payrolls)
+      send_file(tmp_path + filename, filename: filename, :disposition => 'inline', :type => 'application/xls')
+    else
+      render json: {
+        payrolls: payrolls.as_json("report"),
+        export_ktb_payroll: SiteConfig.get_cache.export_ktb_payroll
+      }, status: :ok
+    end
   end
 
   # GET /payrolls/effective_dates
@@ -263,5 +275,47 @@ class PayrollsController < ApplicationController
 
     def satang(money)
       ((money - money.to_i) * 100).to_i.to_s.rjust(2, "0")
+    end
+
+    def generate_ktb_salary_xls(effective_date, payrolls)
+      book = Spreadsheet.open 'public/ktb_salary_template.xls'
+      sheet1 = book.worksheet 0
+
+      filename = "ktb_salary_#{effective_date.strftime("%F")}.xls"
+      tmp_path = 'tmp/ktb_salary/'
+
+      #header
+      sheet1.row(2)[1] = School.first.name
+      sheet1.row(1)[3] = filename
+      sheet1.row(1)[1] = nil
+      sheet1.row(0)[4] = nil
+      sheet1.row(3)[1] = nil
+
+      bank_code = "006"
+      sum_salary = 0.0
+      i = 0
+      payrolls.each do |payroll|
+        if payroll.net_salary > 0
+          sum_salary += payroll.net_salary
+          account_number = payroll.employee.account_number
+          account_number.gsub!("-", "") if account_number
+          sheet1.insert_row (i + 5), [
+            i + 1,
+            bank_code,
+            account_number,
+            number_with_precision(payroll.net_salary, precision: 2, delimiter: ','),
+            nil,
+            payroll.employee.full_name.strip
+          ]
+          i += 1
+        end
+      end
+      sheet1.row(i + 5)[0] = "Total"
+      sheet1.row(i + 5)[3] = number_with_precision(sum_salary, precision: 2, delimiter: ',')
+
+      FileUtils.mkdir_p tmp_path unless File.directory?(tmp_path)
+      book.write(tmp_path + filename)
+
+      return [tmp_path, filename]
     end
 end

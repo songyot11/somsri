@@ -11,6 +11,10 @@ function search() {
 }
 
 function filter() {
+  var print_link = "/students.pdf?for_print=true";
+  print_link += "&grade_select=" + $("select#grade_select").val()
+  print_link += "&class_select=" + $("select#class_select").val()
+  $('#print-student-list-with-image').attr('href', print_link);
   $('#table').bootstrapTable('refresh', {
     query: {
       offset: 0,

@@ -4,10 +4,21 @@ describe EmployeesController do
     user.add_role :admin
     user
   end
-
   let(:employee) { Employee.make! }
+  let(:grade) do
+    Grade.make!({
+      name: "มัธยมศึกษาปีที่ 1"
+    })
+  end
+  let(:classroom) do
+    Classroom.make!({
+      name: "1/1",
+      grade_id: grade.id
+    })
+  end
 
   before :each do
+    classroom
     sign_in admin
   end
 
@@ -27,17 +38,16 @@ describe EmployeesController do
 
   describe '#update' do
     it 'can update grade and classroom' do
-      grade = Grade.make!
       patch :update, params: {
         id: employee.id,
         employee: {
-          classroom: '1/1',
+          classroom_id: classroom.id,
           grade_id: grade.id
         }
       }
 
       expect(employee.reload.grade).to eq grade
-      expect(employee.classroom).to eq '1/1'
+      expect(employee.classroom).to eq classroom
     end
   end
 end

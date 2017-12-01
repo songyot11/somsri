@@ -1,0 +1,19 @@
+(function() {
+  'use strict';
+
+  angular.module('somsri.main.classroom.service', [
+  ])
+  .service('classroomService', ['$http', function($http) {
+    this.getGrades = function() {
+      return $http.get('/grades')
+    }
+
+    this.getStudentPromote = function() {
+      return $http.patch('/classrooms/student_promote')
+    }
+
+    this.getIsStudentPromoteEnable = function() {
+      return $http.get('/classrooms/is_student_promote_enable')
+    }
+  }]);
+})();

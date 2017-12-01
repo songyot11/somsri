@@ -1,0 +1,17 @@
+(function() {
+  'use strict';
+
+  angular.module('somsri.main.select_member_modal.service', [
+  ])
+  .service('selectMemberModalService', ['$http', '$log', function($http, $log) {
+    return {
+      getMemberNotAssignClass : function(classroomId, currentMemberIds, type) {
+        return $http.get('/classrooms/' + classroomId + '/' + type + '_without_classroom', {
+          params: {
+            exclude_ids: JSON.stringify(currentMemberIds)
+          }
+        });
+      }
+    };
+  }]);
+})();
