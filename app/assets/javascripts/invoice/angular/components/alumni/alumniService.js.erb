@@ -1,0 +1,23 @@
+(function() {
+  'use strict';
+
+  angular.module('somsri.invoice.alumni.service', [
+  ])
+  .service('alumniService', ['$http', function($http) {
+    this.getAlumni = function() {
+      return $http.get('/alumnis')
+    }
+
+    this.getAlumniYears = function() {
+      return $http.get('/alumnis/years')
+    }
+
+    this.getAlumniStatus = function() {
+      return $http.get('/alumnis/status')
+    }
+
+    this.restore = function(id) {
+      return $http.post('/students/restore', { student_id: id })
+    }
+  }]);
+})();

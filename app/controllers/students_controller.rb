@@ -302,8 +302,13 @@ class StudentsController < ApplicationController
     end
   end
 
+  # /students/:id/graduate
   def graduate
-    if @student = Student.find(params[:student_id]).update(deleted_at: Time.now , status: 'จบการศึกษา')
+    @student = Student.find(params[:id])
+    if @student && @student.update(deleted_at: Time.now)
+      alumni = Alumni.newByStudent(@student)
+      alumni.status = "จบการศึกษา"
+      alumni.save
       respond_to do |format|
         format.html { redirect_to students_url }
         format.json { head :no_content }
@@ -311,8 +316,13 @@ class StudentsController < ApplicationController
     end
   end
 
+  # /students/:id/resign
   def resign
-    if @student = Student.find(params[:student_id]).update(deleted_at: Time.now , status: 'ลาออก')
+    @student = Student.find(params[:id])
+    if @student && @student.update(deleted_at: Time.now)
+      alumni = Alumni.newByStudent(@student)
+      alumni.status = "ลาออก"
+      alumni.save
       respond_to do |format|
         format.html { redirect_to students_url }
         format.json { head :no_content }
@@ -320,13 +330,12 @@ class StudentsController < ApplicationController
     end
   end
 
+  #POST /students/restore
   def restore
-    if @student = Student.restore(params[:student_id])
-      @student = Student.unscoped.find(params[:student_id]).update(status: 'กำลังศึกษา')
-      respond_to do |format|
-        format.html { redirect_to students_url }
-        format.json { head :no_content }
-      end
+    Student.with_deleted.where(id: params[:student_id]).first.restore
+    respond_to do |format|
+      format.html { redirect_to students_url }
+      format.json { head :no_content }
     end
   end
 

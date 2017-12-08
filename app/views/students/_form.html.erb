@@ -178,7 +178,7 @@
 
       <% if controller.controller_name == "students" && controller.action_name == "edit" %>
         <%= link_to "<i class='fa fa-trash'></i> ลบ".html_safe ,
-                student_resign_path(@student) ,
+                resign_student_path(@student) ,
                 :id => 'student_remove' ,
                 :method => :post ,
                 :data => { :confirm => t('.confirm', :default => t("helpers.links.confirm.student_confirm", :default => 'Are you sure?')) } ,

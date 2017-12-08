@@ -436,6 +436,11 @@ class Student < ApplicationRecord
     Gender.find_by_id_cached(gender_id)
   end
 
+  def restore
+    self.update(deleted_at: nil)
+    Alumni.where(student_id: self.id).destroy_all
+  end
+
   def as_json(options={})
     if options['index']
       return {

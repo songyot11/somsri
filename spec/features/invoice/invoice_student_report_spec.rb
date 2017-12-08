@@ -127,7 +127,7 @@ describe 'Student Report', js: true do
       visit 'somsri_invoice#/student_report'
       sleep(2)
       find('#grade-list').click
-      click_on("Preschool")
+      find('a.blue-highlight', text: 'Preschool').click
       sleep(1)
       expect(page).to have_content("Preschool", count: 2)
     end
@@ -137,10 +137,10 @@ describe 'Student Report', js: true do
       visit 'somsri_invoice#/student_report'
       sleep(2)
       find('#grade-list').click
-      click_on("Preschool")
+      find('a.blue-highlight', text: 'Preschool').click
       sleep(1)
       find('div.unused_for_print.col-md-12 > div > div:nth-child(1) > div > div:nth-child(3)').click
-      click_on("ยังไม่ได้ชำระ")
+      find('a.blue-highlight', text: 'ยังไม่ได้ชำระ').click
       sleep(1)
       expect(page).to have_content("ยังไม่ได้ชำระ", count: 2)
     end
@@ -150,7 +150,7 @@ describe 'Student Report', js: true do
       visit 'somsri_invoice#/student_report'
       sleep(2)
       find('#grade-list').click
-      click_on("Kindergarten 1")
+      find('a.blue-highlight', text: 'Kindergarten 1').click
       sleep(1)
       expect(page).to have_content("Kindergarten 1", count: 2)
     end
@@ -160,10 +160,10 @@ describe 'Student Report', js: true do
       visit 'somsri_invoice#/student_report'
       sleep(2)
       find('#grade-list').click
-      click_on("Kindergarten 1")
+      find('a.blue-highlight', text: 'Kindergarten 1').click
       sleep(1)
       find('div.unused_for_print.col-md-12 > div > div:nth-child(1) > div > div:nth-child(3)').click
-      click_on("ยังไม่ได้ชำระ")
+      find('a.blue-highlight', text: 'ยังไม่ได้ชำระ').click
       sleep(1)
       expect(page).to have_content("ยังไม่ได้ชำระ", count: 2)
     end
@@ -173,7 +173,7 @@ describe 'Student Report', js: true do
       visit 'somsri_invoice#/student_report'
       sleep(2)
       find('#grade-list').click
-      click_on("Kindergarten 2")
+      find('a.blue-highlight', text: 'Kindergarten 2').click
       sleep(1)
       expect(page).to have_content("Kindergarten 2", count: 2)
     end
@@ -183,10 +183,10 @@ describe 'Student Report', js: true do
       visit 'somsri_invoice#/student_report'
       sleep(2)
       find('#grade-list').click
-      click_on("Kindergarten 2")
+      find('a.blue-highlight', text: 'Kindergarten 2').click
       sleep(1)
       find('div.unused_for_print.col-md-12 > div > div:nth-child(1) > div > div:nth-child(3)').click
-      click_on("ยังไม่ได้ชำระ")
+      find('a.blue-highlight', text: 'ยังไม่ได้ชำระ').click
       sleep(1)
       expect(page).to have_content("ยังไม่ได้ชำระ", count: 2)
     end
@@ -196,7 +196,7 @@ describe 'Student Report', js: true do
       visit 'somsri_invoice#/student_report'
       sleep(2)
       find('#grade-list').click
-      click_on("Kindergarten 3")
+      find('a.blue-highlight', text: 'Kindergarten 3').click
       sleep(1)
       expect(page).to have_content("Kindergarten 3")
     end
@@ -206,10 +206,10 @@ describe 'Student Report', js: true do
       visit 'somsri_invoice#/student_report'
       sleep(2)
       find('#grade-list').click
-      click_on("Kindergarten 3")
+      find('a.blue-highlight', text: 'Kindergarten 3').click
       sleep(1)
       find('div.unused_for_print.col-md-12 > div > div:nth-child(1) > div > div:nth-child(3)').click
-      click_on("ยังไม่ได้ชำระ")
+      find('a.blue-highlight', text: 'ยังไม่ได้ชำระ').click
       sleep(1)
       expect(page).to have_content("ยังไม่ได้ชำระ", count: 2)
     end
