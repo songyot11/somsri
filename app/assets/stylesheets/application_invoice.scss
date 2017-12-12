@@ -1916,7 +1916,6 @@ label.img-default{
 #edit-student .tab-label {
   font-size: 20px;
 }
-
 .paper-white {
   background-color: #fff;
   box-shadow: 0 5px 13px 0 rgba(0, 0, 0, 0.3);
@@ -1932,4 +1931,33 @@ label.img-default{
 
 .menu-icon {
   margin-bottom: 20px;
+}
+
+.circular-portrait {
+  position: relative;
+  width: 250px;
+  height: 250px;
+  overflow: hidden;
+  border-radius: 50%;
+}
+
+.circular-portrait img {
+  width: 100%;
+  height: auto;
+}
+
+.circular-landscape {
+  display: inline-block;
+  position: relative;
+  width: 250px;
+  height: 250px;
+  overflow: hidden;
+  border-radius: 50%;
+}
+
+.circular-landscape img {
+  max-width: inherit !important;
+  width: auto;
+  height: 100%;
+  margin-left: -50px;
 }

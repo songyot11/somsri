@@ -81,3 +81,23 @@
 .student-list-with-img .header-list .grade {
   font-size: 16px;
 }
+
+.circular-portrait {
+  position: relative;
+  width: 100px;
+  height: 100px;
+  overflow: hidden;
+  border-radius: 50%;
+  background-size: 100px auto;
+  background-repeat: no-repeat;
+}
+
+.circular-landscape {
+  position: relative;
+  width: 100px;
+  height: 100px;
+  overflow: hidden;
+  border-radius: 50%;
+  background-size: auto 100px;
+  background-repeat: no-repeat;
+}

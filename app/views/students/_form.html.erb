@@ -78,12 +78,14 @@
     <div class="col-md-4">
       <% if @student.img_url.blank? %>
         <label for="imageUpload" class="img-default">
-            <i class="fa fa-user icons-default-img" aria-hidden="true"></i>
-            <div class="img-bg bg-light-gray circle" id="img-change"></div>
+          <i class="fa fa-user icons-default-img" aria-hidden="true"></i>
+          <div class="img-bg bg-light-gray circle" id="img-change"></div>
         </label>
       <% else %>
       <label for="imageUpload" class="img-default">
-        <%= image_tag(@student.img_url.url(:medium), class: 'circle', id:'img-change') if @student.img_url.exists? %>
+        <div class="img-upload-display hide">
+          <%= image_tag(@student.img_url.url(:medium), id:'img-change') if @student.img_url.exists? %>
+        </div>
       </label>
       <% end %>
       <div class="space20"></div>
