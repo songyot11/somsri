@@ -26,7 +26,7 @@
                 <div class="col-xs-4 nopadding">
                   <div class="padding-profile">
                     <% if !data[:img_url].blank? %>
-                      <div class="circular-portrait" style="background-image: url('<%= Rails.root.join('public', data[:img_url][1..-1]) %>');"></div>
+                      <div class="circular-portrait" style="background-image: url('<%= data[:img_url]%>');"></div>
                     <% else %>
                       <div class="img-bg bg-light-gray circle"><i class="fa fa-user icon-default-img" aria-hidden="true"></i></div>
                     <% end %>

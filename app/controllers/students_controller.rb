@@ -170,10 +170,19 @@ class StudentsController < ApplicationController
           break if i > 1
           parents << parent
         end
+        student_img_url = ""
+        if student.img_url.exists?
+          if Paperclip::Attachment.default_options[:storage] == :s3
+            student_img_url = student.img_url.url(:medium)
+          elsif Paperclip::Attachment.default_options[:storage] == :filesystem
+            student_img_url = student.img_url.path(:medium)
+          end
+        end
+
         results[:student_list] << {
           student_number: student.student_number || "",
           nickname: student.nickname,
-          img_url: student.img_url.exists? ? student.img_url.url(:medium) : '',
+          img_url:  student_img_url,
           full_name: student.full_name_with_title || "",
           national_id: student.national_id || "",
           birthdate: student.birthdate ? (student.birthdate + 543.years).strftime("%d/%m/%Y") : "",
