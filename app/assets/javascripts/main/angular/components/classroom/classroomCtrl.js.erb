@@ -35,6 +35,35 @@
       });
     }
 
+    ctrl.removeClassroom = function(id){
+      openConfirmationModal("คุณต้องการลบห้องเรียนใช่หรือไม่? (การลบห้องเรียนจะไม่ทำให้นักเรียนและคุณครูที่อยู่ในห้องหายไป)", function(){
+        service.removeClassroom(id).then(function(resp) {
+          $window.location.reload();
+        });
+      })
+    }
+
+    var angularCtrlStr = "angular.element(document.getElementById('angularCtrl')).scope().classroom"
+    function editBtnFormatter(index, row, element){
+      var html = '<a href="/main#/classroom/' + row.classroom_id + '"><i class="fa fa-pencil" aria-hidden="true"></i></a>&nbsp;&nbsp;&nbsp;';
+      html += '<a onclick="' + angularCtrlStr + '.removeClassroom(' + row.classroom_id + ')"><i class="fa fa-times color-red hover hover-pointer" aria-hidden="true"></i></a>';
+      return html;
+    }
+
+    function initBootstrapTable(){
+      var tableColumnSetting = [
+        { field: 'grade', sortable: true, title: "ระดับชั้นเรียน"},
+        { field: 'classroom', sortable: true, title: "ห้องเรียน"},
+        { field: 'teacher_count', sortable: true, title: "จำนวนครู"},
+        { field: 'student_count', sortable: true, title: "จำนวนนักเรียน"},
+        { field: 'link', formatter: editBtnFormatter}
+      ]
+      $('#classroom-list').bootstrapTable({
+        url: "/classrooms/classroom_list",
+        columns: tableColumnSetting
+      })
+    }
+
     $rootScope.loadAndAuthorizeResource("school", function(){
       service.getGrades().then(function(resp) {
         ctrl.grades = []
@@ -60,6 +89,7 @@
           });
         })
       }
+      initBootstrapTable()
     });
 
   }]);

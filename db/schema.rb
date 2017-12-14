@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20171129073354) do
+ActiveRecord::Schema.define(version: 20171213061844) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -572,14 +572,15 @@ ActiveRecord::Schema.define(version: 20171129073354) do
 
   add_foreign_key "class_permisions", "lists"
   add_foreign_key "class_permisions", "users"
-  add_foreign_key "employees", "classrooms"
+  add_foreign_key "classrooms", "classrooms", column: "next_id", on_delete: :nullify
+  add_foreign_key "employees", "classrooms", on_delete: :nullify
   add_foreign_key "individuals", "employees", column: "child_id"
   add_foreign_key "individuals", "employees", column: "emergency_call_id"
   add_foreign_key "individuals", "employees", column: "friend_id"
   add_foreign_key "individuals", "employees", column: "parent_id"
   add_foreign_key "individuals", "employees", column: "spouse_id"
   add_foreign_key "roll_calls", "lists"
-  add_foreign_key "students", "classrooms"
+  add_foreign_key "students", "classrooms", on_delete: :nullify
   add_foreign_key "students", "schools"
   add_foreign_key "users", "schools"
 end

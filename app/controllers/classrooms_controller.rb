@@ -128,6 +128,12 @@ class ClassroomsController < ApplicationController
     render json: ["SUCCESS"], status: :ok
   end
 
+  # DELETE /classrooms/1
+  def destroy
+    @classroom.destroy
+    render json: { head: :no_content }, status: :ok
+  end
+
   private
   def _student_promote(next_id, isFirst)
     Classroom.where(next_id: next_id).each do |classroom|
