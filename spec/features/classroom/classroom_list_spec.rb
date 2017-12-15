@@ -85,10 +85,50 @@ describe 'Classroom', js: true do
     eventually { expect(page).to have_content("2B 0 0") }
   end
 
+  it 'should create classroom' do
+    visit '/main#/classroom'
+    sleep(1)
+    click_button('สร้างห้องเรียน')
+    sleep(1)
+    find('#grade-select').click
+    find("a", text: "Kindergarten 2").click
+    find('input#classroom').set("Mind Room")
+    click_button('บันทึก')
+    sleep(1)
+    eventually { expect(page).to have_content("Kindergarten 2 Mind Room 0 0") }
+  end
+
+  it 'should not create dupplicate classroom' do
+    visit '/main#/classroom'
+    sleep(1)
+    click_button('สร้างห้องเรียน')
+    sleep(1)
+    find('#grade-select').click
+    find("a", text: "Kindergarten 2").click
+    find('input#classroom').set("2A")
+    click_button('บันทึก')
+    sleep(1)
+    eventually { expect(page).to have_content("*มีห้องเรียนนี้ในระบบแล้ว") }
+  end
+
+  it 'should not create dupplicate classroom with case insensitive' do
+    visit '/main#/classroom'
+    sleep(1)
+    click_button('สร้างห้องเรียน')
+    sleep(1)
+    find('#grade-select').click
+    find("a", text: "Kindergarten 2").click
+    find('input#classroom').set("2a")
+    click_button('บันทึก')
+    sleep(1)
+    eventually { expect(page).to have_content("*มีห้องเรียนนี้ในระบบแล้ว") }
+  end
+
   it 'should filter by grade id' do
     visit '/main#/classroom'
     sleep(1)
-    page.find("#grade-select").select(grades[0].name)
+    find("#grade-list").click
+    find("a", text: grades[0].name).click
     eventually { expect(page).to have_content("1A 1 2") }
     eventually { expect(page).to have_content("1B 0 0") }
   end

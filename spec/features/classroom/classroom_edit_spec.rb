@@ -197,7 +197,6 @@ describe 'Classroom Edit', js: true do
 
     it 'should remove student from list' do
       first('.fa.fa-times.cursor-pointer.color-red').click
-      eventually { expect(page).to_not have_content("สมศรี3 ใบเสร็จ") }
       eventually { expect(page).to have_content("จำนวน 2 คน") }
     end
 

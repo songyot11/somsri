@@ -134,6 +134,20 @@ class ClassroomsController < ApplicationController
     render json: { head: :no_content }, status: :ok
   end
 
+  # POST /classrooms
+  def create
+    grade_id = create_classroom_params[:grade_id]
+    classroom = create_classroom_params[:classroom]
+
+    if Classroom.where("lower(name) = ?", classroom.downcase).where(grade_id: grade_id).count > 0
+      render json: { dupplicate: true }, status: :ok
+    else
+      Classroom.create(name: classroom, grade_id: grade_id)
+      render json: { head: :no_content }, status: :ok
+    end
+
+  end
+
   private
   def _student_promote(next_id, isFirst)
     Classroom.where(next_id: next_id).each do |classroom|
@@ -144,6 +158,14 @@ class ClassroomsController < ApplicationController
       end
       _student_promote(classroom.id, false)
     end
+  end
+
+  def create_classroom_params
+    result = params.require(:create_classroom).permit([
+      :grade_id,
+      :classroom
+    ])
+    return result
   end
 
 end

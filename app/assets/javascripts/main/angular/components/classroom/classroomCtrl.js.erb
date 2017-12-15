@@ -65,14 +65,39 @@
     }
 
     $rootScope.loadAndAuthorizeResource("school", function(){
+
+      ctrl.createClassroom = function() {
+        $uibModal.open({
+          animation: true,
+          backdrop: 'static',
+          keyboard: false,
+          scope: $scope,
+          templateUrl: "<%= asset_path('main/angular/components/modal/createClassroom/createClassroomModalView.html') %>",
+          controller: 'createClassroomModalCtrl as create',
+          size: 'md',
+          resolve: {
+            resources: ['$ocLazyLoad', 'ASSETS', function($ocLazyLoad, ASSETS) {
+              return $ocLazyLoad.load([
+                ASSETS.somsri.main.create_classroom_modal
+              ]);
+            }]
+          }
+        }).result.then(function (isConfirm) {
+          if (isConfirm) {
+            $window.location.reload()
+          }
+        });
+      }
+
       service.getGrades().then(function(resp) {
         ctrl.grades = []
         resp.data.forEach(function(grade) {
           if(grade.id > -1){ ctrl.grades.push(grade) }
         });
       });
-      ctrl.gradeFilter = function(){
-        if(ctrl.grade_select){
+      ctrl.gradeFilter = function(grade){
+        ctrl.grade_select = grade
+        if(grade){
           $('#classroom-list').bootstrapTable('filterBy', {grade: ctrl.grade_select.name});
         }else{
           $('#classroom-list').bootstrapTable('filterBy', {});

@@ -1,0 +1,39 @@
+(function() {
+  'use strict';
+  angular.module('somsri.main.create_classroom_modal', [
+    ])
+  .controller('createClassroomModalCtrl', ['$uibModalInstance', '$state', '$log', 'createClassroomModalService', function($uibModalInstance, $state, $log, service) {
+    var ctrl = this;
+    ctrl.fullname = ''
+    ctrl.nickname = ''
+    ctrl.grade_select = {name: ""}
+
+    ctrl.switchGrade = function(grade) {
+      ctrl.grade_select = grade
+    }
+
+    service.getGrades().then(function(resp) {
+      ctrl.grades = []
+      ctrl.grade_select = resp.data[0]
+      resp.data.forEach(function(grade) {
+        if(grade.id > -1){ ctrl.grades.push(grade) }
+      });
+    });
+
+    ctrl.submit = function(){
+      service.createClassroom({ grade_id: ctrl.grade_select.id, classroom: ctrl.classroom_name })
+        .then(function(resp) {
+        if(resp.data.dupplicate){
+          $('#dupplicate-warning').html("*มีห้องเรียนนี้ในระบบแล้ว")
+        }else{
+          $uibModalInstance.close(resp.data);
+        }
+      });
+    }
+
+    ctrl.cancel = function () {
+      $uibModalInstance.close();
+    };
+
+  }]);
+})();

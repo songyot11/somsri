@@ -3,7 +3,10 @@
   <div class="space20"></div>
   <div class="row">
     <div class="col-xs-12">
-      <button ng-show="classroom.isStudentPromoteReady" class="btn pull-right" ng-class="classroom.isStudentPromoteEnable ? 'btn-blue' : 'btn-disable'" ng-click="classroom.studentPromote()" ng-disabled="!classroom.isStudentPromoteEnable">เลื่อนชั้นเรียน</button>
+      <div class="pull-right">
+        <button class="btn btn-blue m-left-10" ng-click="classroom.createClassroom()">สร้างห้องเรียน</button>
+        <button ng-show="classroom.isStudentPromoteReady" class="btn" ng-class="classroom.isStudentPromoteEnable ? 'btn-blue' : 'btn-disable'" ng-click="classroom.studentPromote()" ng-disabled="!classroom.isStudentPromoteEnable">เลื่อนชั้นเรียน</button>
+      </div>
     </div>
   </div>
   <div class="space20"></div>
@@ -12,9 +15,24 @@
       <div class="col-xs-12">
         <div class="pull-right">
           <span>เลือกระดับชั้น</span>
-          <select id="grade-select" class="btn-grades" ng-model="classroom.grade_select" ng-options="obj.name for obj in classroom.grades track by obj.id" ng-change="classroom.gradeFilter()">
-            <option value="">ทั้งหมด</option>
-          </select>
+          <span class="dropdown">
+            <span id="grade-list" class="dropdown-label" data-toggle="dropdown">
+              <span ng-bind="classroom.grade_select.name || 'ทั้งหมด'"></span>
+              <i class="fa fa-angle-down" aria-hidden="true"></i>
+            </span>
+            <ul class="dropdown-menu" aria-labelledby="grade-list">
+              <li>
+                <a class="blue-highlight" ng-click="classroom.gradeFilter()">
+                  ทั้งหมด
+                </a>
+              </li>
+              <li ng-repeat="grade in classroom.grades">
+                <a class="blue-highlight" ng-click="classroom.gradeFilter(grade)">
+                  {{ grade.name }}
+                </a>
+              </li>
+            </ul>
+          </span>
         </div>
       </div>
     </div>
