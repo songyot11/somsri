@@ -75,13 +75,13 @@ Rails.application.routes.draw do
   resources :daily_reports
   resources :students do
     delete 'real_destroy'
-    post 'restore'
-    post 'graduate'
-    post 'resign'
     member do
+      post 'resign'
+      post 'graduate'
       patch 'upload_photo'
     end
     collection do
+      post 'restore'
       post 'create_by_name'
     end
   end
@@ -107,6 +107,13 @@ Rails.application.routes.draw do
       get 'date_in_month'
       get 'lists'
       get 'months'
+    end
+  end
+
+  resources :alumnis do
+    collection do
+      get 'years'
+      get 'status'
     end
   end
 

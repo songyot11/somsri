@@ -26,6 +26,7 @@ th:
   payroll: "เงินเดือน"
   invoices: "ค่าเทอม"
   rollcall: "นับแถว"
+  alumni: "ศิษย์เก่า"
   student: "นักเรียน"
   parent: "ผู้ปกครอง"
   employee: "บุคลากร"

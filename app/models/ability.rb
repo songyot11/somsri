@@ -16,6 +16,7 @@ class Ability
       can :read, School
       can :manage, :setting
       can :manage, Classroom
+      can :manage, Alumni
     end
   end
 

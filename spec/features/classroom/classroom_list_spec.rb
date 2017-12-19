@@ -25,6 +25,17 @@ describe 'Classroom', js: true do
     ]
   end
 
+  let(:teacher) do
+    Employee.make!({
+      school_id: school.id,
+      first_name: "คนใหม่",
+      last_name: "เดือนแรกเลย",
+      prefix_thai: "นาย",
+      classroom: classrooms[0],
+      salary: 20000
+    })
+  end
+
   let(:students) do
     [
       Student.make!({
@@ -62,22 +73,85 @@ describe 'Classroom', js: true do
     user.add_role :admin
     login_as(user, scope: :user)
     students
+    teacher
   end
 
   it 'should access to classroom page' do
     visit '/main#/classroom'
     sleep(1)
-    eventually { expect(page).to have_content("1A 0 2") }
+    eventually { expect(page).to have_content("1A 1 2") }
     eventually { expect(page).to have_content("1B 0 0") }
     eventually { expect(page).to have_content("2A 0 1") }
     eventually { expect(page).to have_content("2B 0 0") }
   end
 
+  it 'should create classroom' do
+    visit '/main#/classroom'
+    sleep(1)
+    click_button('สร้างห้องเรียน')
+    sleep(1)
+    find('#grade-select').click
+    find("a", text: "Kindergarten 2").click
+    find('input#classroom').set("Mind Room")
+    click_button('บันทึก')
+    sleep(1)
+    eventually { expect(page).to have_content("Kindergarten 2 Mind Room 0 0") }
+  end
+
+  it 'should not create dupplicate classroom' do
+    visit '/main#/classroom'
+    sleep(1)
+    click_button('สร้างห้องเรียน')
+    sleep(1)
+    find('#grade-select').click
+    find("a", text: "Kindergarten 2").click
+    find('input#classroom').set("2A")
+    click_button('บันทึก')
+    sleep(1)
+    eventually { expect(page).to have_content("*มีห้องเรียนนี้ในระบบแล้ว") }
+  end
+
+  it 'should not create dupplicate classroom with case insensitive' do
+    visit '/main#/classroom'
+    sleep(1)
+    click_button('สร้างห้องเรียน')
+    sleep(1)
+    find('#grade-select').click
+    find("a", text: "Kindergarten 2").click
+    find('input#classroom').set("2a")
+    click_button('บันทึก')
+    sleep(1)
+    eventually { expect(page).to have_content("*มีห้องเรียนนี้ในระบบแล้ว") }
+  end
+
   it 'should filter by grade id' do
     visit '/main#/classroom'
     sleep(1)
-    page.find("#grade-select").select(grades[0].name)
-    eventually { expect(page).to have_content("1A 0 2") }
+    find("#grade-list").click
+    find("a", text: grades[0].name).click
+    eventually { expect(page).to have_content("1A 1 2") }
     eventually { expect(page).to have_content("1B 0 0") }
+  end
+
+  it 'should delete classroom' do
+    visit '/main#/classroom'
+    sleep(1)
+    onclick = 'onclick="angular.element(document.getElementById(\'angularCtrl\')).scope().classroom.removeClassroom(' + classrooms[0].id.to_s + ')"'
+    find("a[" + onclick + "]").click
+    sleep(1)
+    click_button("ตกลง")
+
+    eventually { expect(page).to_not have_content("1A 1 2") }
+    eventually { expect(page).to have_content("1B 0 0") }
+    eventually { expect(page).to have_content("2A 0 1") }
+    eventually { expect(page).to have_content("2B 0 0") }
+
+    teacher.reload
+    students[0].reload
+    students[1].reload
+
+    eventually { expect(teacher.classroom_id).to eq nil }
+    eventually { expect(students[0].classroom_id).to eq nil }
+    eventually { expect(students[1].classroom_id).to eq nil }
   end
 end

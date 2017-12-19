@@ -143,6 +143,14 @@
   color: #d0021b;
 }
 
+.color-red.hover:hover {
+  color: #a50115;
+}
+
+.hover-pointer:hover {
+  cursor: pointer;
+}
+
 #classroom-edit .tab-content{
   margin-top: 20px;
 }
@@ -181,7 +189,7 @@
     border:2px solid #9D9D9D;
     color: #9D9D9D;
   }
-} 
+}
 
 .btn-disable{
   font-family: 'Maitree', serif;
@@ -291,4 +299,18 @@ table.classroom-table {
 
 .fixed-table-container .classroom-table tbody .selected td {
   background-color: transparent;
+}
+
+.btn-grades{
+  font-family: 'Maitree', serif;
+  background-color: transparent;
+  margin-top: -3px;
+}
+
+.m-left-10{
+  margin-left: 10px;
+}
+
+.m-bottom-15{
+  margin-bottom: 15px;
 }

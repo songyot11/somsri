@@ -857,8 +857,8 @@ body.somsri-invoice >.container-fluid {
 #student-report .dropdown-filter{
   margin-bottom: 20px;
 }
-#student-report .dropdown-menu>li>a:focus,
-#student-report .dropdown-menu>li>a:hover{
+.dropdown-menu>li>a.blue-highlight:focus,
+.dropdown-menu>li>a.blue-highlight:hover{
   color: #fff;
   background-color: #3fa1e6 !important;
 }
@@ -869,15 +869,10 @@ body.somsri-invoice >.container-fluid {
 #student-report h3{
   margin-top: 15px;
 }
-#student-report #year-list, #semester-list {
+.dropdown-label {
   font-size: 16px;
   cursor: pointer;
 }
-#student-report .dropdown-menu button {
-  background-color: transparent;
-  border: 0px;
-}
-
 #student-report .text-currency {
   text-align: right;
 }
@@ -1221,15 +1216,7 @@ a:not([href]):not([tabindex]){
   cursor: pointer;
   color: #5b5b5b;
 }
-#student-report .report-content a:not([href]):not([tabindex]){
-  color: #0275d8 !important;
-  font-weight: bold;
-  cursor: pointer;
-  text-decoration:none;
-  &:hover{
-    text-decoration:none;
-  }
-}
+
 .text-invoice-num,.text-invoice-num:focus{
   color: #0275d8 !important;
   font-weight: bold;
@@ -1272,7 +1259,8 @@ a:not([href]):not([tabindex]){
   margin-right: 0px !important;
   margin-left: 0px;
 }
-#parent-index .row.head-sp {
+
+.row.head-sp {
   padding-top: 0px;
   border: none;
   margin-top: 20px;
@@ -1444,6 +1432,11 @@ table.table.table-sp-report>tbody{
   color:#3fa1b6;
   text-decoration: none;
 }
+.light-blue-color {
+ color: #3fa1b6 !important;
+}
+
+
 .btn-trash {
   color: #ff0000
 }
@@ -1922,4 +1915,49 @@ label.img-default{
 
 #edit-student .tab-label {
   font-size: 20px;
+}
+.paper-white {
+  background-color: #fff;
+  box-shadow: 0 5px 13px 0 rgba(0, 0, 0, 0.3);
+}
+
+.padding30 {
+  padding: 30px;
+}
+
+.mr-20 {
+  margin-right: 20px;
+}
+
+.menu-icon {
+  margin-bottom: 20px;
+}
+
+.circular-portrait {
+  position: relative;
+  width: 250px;
+  height: 250px;
+  overflow: hidden;
+  border-radius: 50%;
+}
+
+.circular-portrait img {
+  width: 100%;
+  height: auto;
+}
+
+.circular-landscape {
+  display: inline-block;
+  position: relative;
+  width: 250px;
+  height: 250px;
+  overflow: hidden;
+  border-radius: 50%;
+}
+
+.circular-landscape img {
+  max-width: inherit !important;
+  width: auto;
+  height: 100%;
+  margin-left: -50px;
 }

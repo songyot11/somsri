@@ -147,3 +147,6 @@ SiteConfig.blueprint do
   display_schools_year_with_invoice_id { false }
   tax { true }
 end
+
+Alumni.blueprint do
+end

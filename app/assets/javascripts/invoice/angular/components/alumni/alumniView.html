@@ -1,0 +1,38 @@
+<div class="container-fluid" id="alumni">
+  <div class="row head-sp">
+    <h1>ศิษย์เก่า</h1>
+  </div>
+  <div class="toolbar">
+    <span class="dropdown mr-20">
+      <span id="graduated-year" class="dropdown-label" data-toggle="dropdown">
+        <b>จบปีการศึกษา: </b>
+        <span ng-bind="alumni.selected_year" ></span>
+        <i class="fa fa-angle-down" aria-hidden="true"></i>
+      </span>
+      <ul class="dropdown-menu" aria-labelledby="graduated-year">
+        <li ng-repeat="graduated_year in alumni.graduated_year">
+          <a class="blue-highlight" ng-click="alumni.switchYear(graduated_year)">
+            {{ graduated_year }}
+          </a>
+        </li>
+      </ul>
+    </span>
+    <span class="dropdown mr-20">
+      <span id="graduated-status" class="dropdown-label" data-toggle="dropdown">
+        <b>สถานะ: </b>
+        <span ng-bind="alumni.selected_status" ></span>
+        <i class="fa fa-angle-down" aria-hidden="true"></i>
+      </span>
+      <ul class="dropdown-menu" aria-labelledby="graduated-status">
+        <li ng-repeat="graduated_status in alumni.graduated_status">
+          <a class="blue-highlight" ng-click="alumni.switchStatus(graduated_status)">
+            {{ graduated_status }}
+          </a>
+        </li>
+      </ul>
+    </span>
+  </div>
+  <div class="row paper-white container-fluid padding30">
+    <table id="alumni-table"><table>
+  </div>
+</div>

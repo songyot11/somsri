@@ -1,0 +1,16 @@
+(function() {
+  'use strict';
+
+  angular.module('somsri.main.create_classroom_modal.service', [
+  ])
+  .service('createClassroomModalService', ['$http', '$log', function($http, $log) {
+    return {
+      createClassroom: function(data) {
+        return $http.post('/classrooms', { create_classroom: data });
+      },
+      getGrades: function() {
+        return $http.get('/grades')
+      }
+    };
+  }]);
+})();

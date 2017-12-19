@@ -18,12 +18,20 @@ describe 'Student Promote', js: true do
   end
 
   let(:classrooms) do
+    Classroom.make!({id: 1, name: "1A", grade_id: grades[0].id})
+    Classroom.make!({id: 2,name: "1B", grade_id: grades[0].id})
+    Classroom.make!({id: 3, name: "2A", grade_id: grades[1].id})
+    Classroom.make!({id: 4, name: "2B", grade_id: grades[1].id})
+    Classroom.make!({id: 5, name: "3A", grade_id: grades[2].id})
+    Classroom.find(1).update(next_id: 3)
+    Classroom.find(2).update(next_id: 4)
+    Classroom.find(3).update(next_id: 5)
     [
-      Classroom.make!({id: 1, name: "1A", grade_id: grades[0].id, next_id: 3}),
-      Classroom.make!({id: 2,name: "1B", grade_id: grades[0].id, next_id: 4}),
-      Classroom.make!({id: 3, name: "2A", grade_id: grades[1].id, next_id: 5}),
-      Classroom.make!({id: 4, name: "2B", grade_id: grades[1].id}),
-      Classroom.make!({id: 5, name: "3A", grade_id: grades[2].id})
+      Classroom.find(1),
+      Classroom.find(2),
+      Classroom.find(3),
+      Classroom.find(4),
+      Classroom.find(5)
     ]
   end
 

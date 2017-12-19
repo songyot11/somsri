@@ -35,15 +35,69 @@
       });
     }
 
+    ctrl.removeClassroom = function(id){
+      openConfirmationModal("คุณต้องการลบห้องเรียนใช่หรือไม่? (การลบห้องเรียนจะไม่ทำให้นักเรียนและคุณครูที่อยู่ในห้องหายไป)", function(){
+        service.removeClassroom(id).then(function(resp) {
+          $window.location.reload();
+        });
+      })
+    }
+
+    var angularCtrlStr = "angular.element(document.getElementById('angularCtrl')).scope().classroom"
+    function editBtnFormatter(index, row, element){
+      var html = '<a href="/main#/classroom/' + row.classroom_id + '"><i class="fa fa-pencil" aria-hidden="true"></i></a>&nbsp;&nbsp;&nbsp;';
+      html += '<a onclick="' + angularCtrlStr + '.removeClassroom(' + row.classroom_id + ')"><i class="fa fa-times color-red hover hover-pointer" aria-hidden="true"></i></a>';
+      return html;
+    }
+
+    function initBootstrapTable(){
+      var tableColumnSetting = [
+        { field: 'grade', sortable: true, title: "ระดับชั้นเรียน"},
+        { field: 'classroom', sortable: true, title: "ห้องเรียน"},
+        { field: 'teacher_count', sortable: true, title: "จำนวนครู"},
+        { field: 'student_count', sortable: true, title: "จำนวนนักเรียน"},
+        { field: 'link', formatter: editBtnFormatter}
+      ]
+      $('#classroom-list').bootstrapTable({
+        url: "/classrooms/classroom_list",
+        columns: tableColumnSetting
+      })
+    }
+
     $rootScope.loadAndAuthorizeResource("school", function(){
+
+      ctrl.createClassroom = function() {
+        $uibModal.open({
+          animation: true,
+          backdrop: 'static',
+          keyboard: false,
+          scope: $scope,
+          templateUrl: "<%= asset_path('main/angular/components/modal/createClassroom/createClassroomModalView.html') %>",
+          controller: 'createClassroomModalCtrl as create',
+          size: 'md',
+          resolve: {
+            resources: ['$ocLazyLoad', 'ASSETS', function($ocLazyLoad, ASSETS) {
+              return $ocLazyLoad.load([
+                ASSETS.somsri.main.create_classroom_modal
+              ]);
+            }]
+          }
+        }).result.then(function (isConfirm) {
+          if (isConfirm) {
+            $window.location.reload()
+          }
+        });
+      }
+
       service.getGrades().then(function(resp) {
         ctrl.grades = []
         resp.data.forEach(function(grade) {
           if(grade.id > -1){ ctrl.grades.push(grade) }
         });
       });
-      ctrl.gradeFilter = function(){
-        if(ctrl.grade_select){
+      ctrl.gradeFilter = function(grade){
+        ctrl.grade_select = grade
+        if(grade){
           $('#classroom-list').bootstrapTable('filterBy', {grade: ctrl.grade_select.name});
         }else{
           $('#classroom-list').bootstrapTable('filterBy', {});
@@ -60,6 +114,7 @@
           });
         })
       }
+      initBootstrapTable()
     });
 
   }]);

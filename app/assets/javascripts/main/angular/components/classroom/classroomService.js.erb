@@ -15,5 +15,9 @@
     this.getIsStudentPromoteEnable = function() {
       return $http.get('/classrooms/is_student_promote_enable')
     }
+
+    this.removeClassroom = function(id) {
+      return $http.delete('/classrooms/' + id)
+    }
   }]);
 })();

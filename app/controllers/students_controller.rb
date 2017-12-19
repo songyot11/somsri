@@ -170,10 +170,19 @@ class StudentsController < ApplicationController
           break if i > 1
           parents << parent
         end
+        student_img_url = ""
+        if student.img_url.exists?
+          if Paperclip::Attachment.default_options[:storage] == :s3
+            student_img_url = student.img_url.url(:medium)
+          elsif Paperclip::Attachment.default_options[:storage] == :filesystem
+            student_img_url = student.img_url.path(:medium)
+          end
+        end
+
         results[:student_list] << {
           student_number: student.student_number || "",
           nickname: student.nickname,
-          img_url: student.img_url.exists? ? student.img_url.url(:medium) : '',
+          img_url:  student_img_url,
           full_name: student.full_name_with_title || "",
           national_id: student.national_id || "",
           birthdate: student.birthdate ? (student.birthdate + 543.years).strftime("%d/%m/%Y") : "",
@@ -302,8 +311,13 @@ class StudentsController < ApplicationController
     end
   end
 
+  # /students/:id/graduate
   def graduate
-    if @student = Student.find(params[:student_id]).update(deleted_at: Time.now , status: 'จบการศึกษา')
+    @student = Student.find(params[:id])
+    if @student && @student.update(deleted_at: Time.now)
+      alumni = Alumni.newByStudent(@student)
+      alumni.status = "จบการศึกษา"
+      alumni.save
       respond_to do |format|
         format.html { redirect_to students_url }
         format.json { head :no_content }
@@ -311,8 +325,13 @@ class StudentsController < ApplicationController
     end
   end
 
+  # /students/:id/resign
   def resign
-    if @student = Student.find(params[:student_id]).update(deleted_at: Time.now , status: 'ลาออก')
+    @student = Student.find(params[:id])
+    if @student && @student.update(deleted_at: Time.now)
+      alumni = Alumni.newByStudent(@student)
+      alumni.status = "ลาออก"
+      alumni.save
       respond_to do |format|
         format.html { redirect_to students_url }
         format.json { head :no_content }
@@ -320,13 +339,12 @@ class StudentsController < ApplicationController
     end
   end
 
+  #POST /students/restore
   def restore
-    if @student = Student.restore(params[:student_id])
-      @student = Student.unscoped.find(params[:student_id]).update(status: 'กำลังศึกษา')
-      respond_to do |format|
-        format.html { redirect_to students_url }
-        format.json { head :no_content }
-      end
+    Student.with_deleted.where(id: params[:student_id]).first.restore
+    respond_to do |format|
+      format.html { redirect_to students_url }
+      format.json { head :no_content }
     end
   end
 

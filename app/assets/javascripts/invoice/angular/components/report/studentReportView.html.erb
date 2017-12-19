@@ -2,19 +2,19 @@
   <div id="student-report" class="row ng-scope">
     <div class="row head-menu">
       <div class="col-md-6">
-        <div class="col-xs-2" style="margin-right:-20px;">
+        <div class="col-xs-2">
           <h3>ระดับชั้น</h3>
         </div>
         <div class="col-xs-9">
           <div class="dropdown">
-            <h4 id="grade-list" data-toggle="dropdown">
+            <h4 id="grade-list" class="dropdown-label" data-toggle="dropdown">
               <span ng-bind="studentReport.currentGradeString"></span>
               <i class="fa fa-angle-down" aria-hidden="true"></i>
             </h4>
             <ul class="dropdown-menu" aria-labelledby="grade-list">
               <li ng-repeat="grade in studentReport.grades">
-                <a ng-click="studentReport.switchGrade(grade.name)">
-                  <button>{{ grade.name }}</button>
+                <a class="blue-highlight" ng-click="studentReport.switchGrade(grade.name)">
+                  {{ grade.name }}
                 </a>
               </li>
             </ul>
@@ -32,45 +32,43 @@
         <div class="row">
           <div class="col-md-12 dropdown-filter">
             <div class="dropdown pull-right">
-              <h4 id="year-list" data-toggle="dropdown">
+              <h4 id="year-list" class="dropdown-label" data-toggle="dropdown">
                 <strong>ปีการศึกษา</strong> <span ng-bind="studentReport.currentYearString" ></span>
                 <i class="fa fa-angle-down" aria-hidden="true"></i>
               </h4>
               <ul class="dropdown-menu" aria-labelledby="year-list">
                 <li ng-repeat="year in studentReport.years">
-                  <a ng-click="studentReport.switchYear(year)">
-                    <button>{{ year }}</button>
-                  </a>
+                  <a class="blue-highlight" ng-click="studentReport.switchYear(year)">{{ year }}</a>
                 </li>
               </ul>
             </div>
-            <div class="dropdown pull-right" style="margin-right: 20px;">
-              <h4 id="semester-list" data-toggle="dropdown">
+            <div class="dropdown pull-right mr-20">
+              <h4 id="semester-list" class="dropdown-label" data-toggle="dropdown">
               <strong>ภาคการเรียน</strong> <span ng-bind="studentReport.currentSemesterString" ></span>
                 <i class="fa fa-angle-down" aria-hidden="true"></i>
               </h4>
               <ul class="dropdown-menu" aria-labelledby="semester-list">
                 <li ng-repeat="semester in studentReport.semesters">
-                  <a ng-click="studentReport.switchSemester(semester)">
-                    <button>{{ semester }}</button>
+                  <a class="blue-highlight" ng-click="studentReport.switchSemester(semester)">
+                    {{ semester }}
                   </a>
                 </li>
                 <li>
-                  <a ng-click="studentReport.switchSemester('อื่นๆ')">
-                    <button>ไม่ระบุภาคการเรียน</button>
+                  <a class="blue-highlight" ng-click="studentReport.switchSemester('อื่นๆ')">
+                    ไม่ระบุภาคการเรียน
                   </a>
                 </li>
               </ul>
             </div>
-            <div class="dropdown pull-right" style="margin-right: 20px;">
-              <h4 id="semester-list" data-toggle="dropdown">
+            <div class="dropdown pull-right mr-20" >
+              <h4 id="semester-list" class="dropdown-label" data-toggle="dropdown">
                 <strong>สถานะการชำระ</strong> <span ng-bind="studentReport.invoiceFilterString" ></span>
                 <i class="fa fa-angle-down" aria-hidden="true"></i>
               </h4>
               <ul class="dropdown-menu" aria-labelledby="semester-list">
                 <li ng-repeat="status in studentReport.invoiceFilter">
-                  <a ng-click="studentReport.invoiceStatusFilter(status)">
-                    <button>{{ status.text }}</button>
+                  <a class="blue-highlight" ng-click="studentReport.invoiceStatusFilter(status)">
+                    {{ status.text }}
                   </a>
                 </li>
               </ul>

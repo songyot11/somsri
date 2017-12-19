@@ -243,6 +243,19 @@
             ]);
           }]
         }
+      }).
+      state({
+        url: '/alumni',
+        name: 'alumni',
+        templateUrl: "<%= asset_path('invoice/angular/components/alumni/alumniView.html') %>",
+        controller: 'alumniCtrl as alumni',
+        resolve: {
+          resources: ['$ocLazyLoad', function($ocLazyLoad) {
+            return $ocLazyLoad.load([
+              ASSETS.somsri.invoice.alumni
+            ]);
+          }]
+        }
       })
 
     $urlRouterProvider.when("", "/");
