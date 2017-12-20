@@ -116,7 +116,7 @@ describe 'Invoice', js: true do
     visit 'somsri_invoice#/invoice'
     sleep(1)
     fill_in 'student_code', with: "21"
-    click_link('21 - สมศรี ณ บานาน่าโค๊ดดิ้ง (กั้ง)')
+    click_link('21 : สมศรี ณ บานาน่าโค๊ดดิ้ง (กั้ง)')
     click_on('ชำระเงิน')
     sleep(1)
     expect(page).to have_content("ใบเสร็จรับเงิน")
@@ -178,7 +178,7 @@ describe 'Invoice', js: true do
     student_amount = Student.count
     sleep(1)
     fill_in 'student_code', with: "21"
-    click_link('21 - สมศรี ณ บานาน่าโค๊ดดิ้ง (กั้ง)')
+    click_link('21 : สมศรี ณ บานาน่าโค๊ดดิ้ง (กั้ง)')
     sleep(1)
     click_on('ชำระเงิน')
     sleep(1)

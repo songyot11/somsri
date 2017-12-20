@@ -36,6 +36,35 @@ describe 'Student', js: true do
     ]
   end
 
+  let(:student_more) do
+    [
+      Student.make!({
+        first_name: 'แกรน',
+        last_name: 'เนตโต้',
+        grade_id: grade.id,
+        classroom_number: 101,
+        student_number: 3001,
+        birthdate: Time.now
+      }),
+      Student.make!({
+        first_name: 'เรน',
+        last_name: 'โบว์',
+        grade_id: grade.id,
+        classroom_number: 102,
+        student_number: 3002,
+        birthdate: Time.now
+      }),
+      Student.make!({
+        first_name: 'แฟรงค์',
+        last_name: 'คลาวด์',
+        grade_id: grade.id,
+        classroom_number: 103,
+        student_number: 3003,
+        birthdate: Time.now
+      })
+    ]
+  end
+
   let(:parent) do
     [
       Parent.make!({full_name: 'ฉันเป็น สุภาพบุรุษนะครับ', mobile: "080-0987654"})
@@ -161,6 +190,63 @@ describe 'Student', js: true do
 
     eventually { expect(page).to_not have_content ("สมศรี") }
     eventually { expect(student[0].deleted_at.blank?).to eq false }
+  end
+
+  it 'should search and change page to other student' do
+    student_more
+    visit "/students/#{student[0].id}/edit#/"
+    sleep(1)
+    first('.fa.fa-search').click
+    sleep(1)
+    first('.search-autocomplete').click
+    sleep(1)
+    eventually { expect(page).to have_content ("สมศรี ใบเสร็จ") }
+  end
+
+  it 'should warning if change page while student data changed and submit' do
+    student_more
+    visit "/students/#{student_more[1].id}/edit#/"
+    sleep(1)
+    fill_in 'ชื่อ-นามสกุล', :with => 'นักเรียนชื่อใหม่'
+    sleep(1)
+    first('.fa.fa-search').click
+    sleep(1)
+    first('.search-autocomplete').click
+    sleep(1)
+    eventually { expect(page).to have_content ("คุณต้องการออกจากหน้านี้โดยไม่บันทึกค่าหรือไม่?") }
+    sleep(1)
+    find("#force-change-page").click
+    sleep(1)
+    eventually { expect(page).to_not have_content ("เรน โบว์") }
+  end
+
+  it 'should warning if change page while student data changed and cancel' do
+    student_more
+    visit "/students/#{student_more[1].id}/edit#/"
+    sleep(1)
+    fill_in 'ชื่อ-นามสกุล', :with => 'นักเรียนชื่อใหม่'
+    sleep(1)
+    first('.fa.fa-search').click
+    sleep(1)
+    first('.search-autocomplete').click
+    sleep(1)
+    eventually { expect(page).to have_content ("คุณต้องการออกจากหน้านี้โดยไม่บันทึกค่าหรือไม่?") }
+    click_button("ยกเลิก")
+    sleep(1)
+    eventually { expect(page).to have_content ("เรน โบว์") }
+  end
+
+  it 'should warning if change page while parent data changed' do
+    student_more
+    visit "/students/#{student[0].id}/edit#/"
+    sleep(1)
+    find('#mobile0').set("080-000000")
+    sleep(1)
+    first('.fa.fa-search').click
+    sleep(1)
+    first('.search-autocomplete').click
+    sleep(1)
+    eventually { expect(page).to have_content ("คุณต้องการออกจากหน้านี้โดยไม่บันทึกค่าหรือไม่?") }
   end
 
   it 'should see student on invoice slip, although student deleted' do

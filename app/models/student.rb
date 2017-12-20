@@ -301,6 +301,7 @@ class Student < ApplicationRecord
   end
 
   def self.search(search)
+    search.sub!(/^[0]+/,'') if search # remove leading by zero
     if search
       where("full_name ILIKE ? OR nickname ILIKE ? OR student_number::text ILIKE ? OR full_name_english ILIKE ? OR nickname_english ILIKE ? ",
        "%#{search}%", "%#{search}%", "%#{search}%" , "%#{search}%" , "%#{search}%" )
@@ -418,7 +419,7 @@ class Student < ApplicationRecord
 
   def invoice_screen_student_number_display
     if(student_number)
-      "#{student_number} - #{invoice_screen_full_name_display}"
+      "#{student_number} : #{invoice_screen_full_name_display}"
     else
       invoice_screen_full_name_display
     end
@@ -441,10 +442,14 @@ class Student < ApplicationRecord
     Alumni.where(student_id: self.id).destroy_all
   end
 
+  def img_medium
+    self.img_url.exists? ? self.img_url.url(:medium) : ''
+  end
+
   def as_json(options={})
     if options['index']
       return {
-        img_url: self.img_url.exists? ? self.img_url.url(:medium) : '',
+        img_url: self.img_medium,
         full_name: self.full_name_eng_thai_with_title,
         nickname: self.nickname_eng_thai,
         grade_id: self.grade.nil? ? "" : self.grade.name,
@@ -454,6 +459,14 @@ class Student < ApplicationRecord
         gender_id: self.gender.nil? ? "" : I18n.t(self.gender.name),
         birthdate: self.birthdate.nil? ? '' : self.birthdate.strftime('%d/%m/%Y'),
         edit: edit
+      }
+
+
+    elsif options['autocomplete']
+      return {
+        id: self.id,
+        img_url: self.img_medium,
+        full_name_label: invoice_screen_student_number_display
       }
     elsif options['roll_call']
       roll_call_json = {

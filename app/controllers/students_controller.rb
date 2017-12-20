@@ -208,6 +208,9 @@ class StudentsController < ApplicationController
                   show_as_html: params[:html_view].present?
         end
       end
+    elsif params[:autocomplete]
+      @students.to_a
+      render json: @students.limit(10).as_json('autocomplete'), status: :ok
     else
       @students.to_a
       respond_to do |f|

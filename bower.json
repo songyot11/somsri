@@ -22,7 +22,8 @@
     "ng-file-upload-shim": "",
     "bootstrap-select": "",
     "angular-ui-bootstrap-fontawesome": "",
-    "animate.css": "^3.5.2"
+    "animate.css": "^3.5.2",
+    "rich-autocomplete": ""
   },
   "resolutions": {
     "angular": "1.5.9"
