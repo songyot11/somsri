@@ -53,6 +53,9 @@ Rails.application.routes.draw do
     post 'restore'
     post 'archive'
     delete 'real_destroy'
+    collection do
+      get 'get_autocomplete'
+    end
     member do
       patch 'upload_photo'
     end

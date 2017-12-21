@@ -20,6 +20,20 @@ describe 'Invoice-Report', js: true do
     ]
   end
 
+  let(:parent_more) do
+    [
+      Parent.make!({
+        full_name: 'แกรน เนตโต้'
+      }),
+      Parent.make!({
+        full_name: 'เรน โบว์'
+      }),
+      Parent.make!({
+        full_name: 'แฟรงค์ คลาวด์'
+      }),
+    ]
+  end
+
   let(:parent_only) do
     [
       parent2 = Parent.make!({
@@ -116,6 +130,51 @@ describe 'Invoice-Report', js: true do
     parent[0].reload
     sleep(1)
     eventually { expect(parent[0].deleted_at.blank?).to eq(false) }
+  end
+
+  it 'should search and change page to other parent' do
+    parent_more
+    visit "/parents/#{parent[0].id}/edit#/"
+    eventually { expect(page).to have_content ("สมศรี ใบเสร็จ") }
+    sleep(1)
+    first('.fa.fa-search').click
+    sleep(1)
+    first('.search-autocomplete').click
+    sleep(1)
+    eventually { expect(page).to have_content ("แฟรงค์ คลาวด์") }
+  end
+
+  it 'should warning if change page while parent data changed and submit' do
+    parent_more
+    visit "/parents/#{parent_more[1].id}/edit#/"
+    sleep(1)
+    fill_in 'ชื่อ-นามสกุล', :with => 'ชื่อใหม่'
+    sleep(1)
+    first('.fa.fa-search').click
+    sleep(1)
+    first('.search-autocomplete').click
+    sleep(1)
+    eventually { expect(page).to have_content ("คุณต้องการออกจากหน้านี้โดยไม่บันทึกค่าหรือไม่?") }
+    sleep(1)
+    find("#force-change-page").click
+    sleep(1)
+    eventually { expect(page).to_not have_content ("เรน โบว์") }
+  end
+
+  it 'should warning if change page while parent data changed and cancel' do
+    parent_more
+    visit "/parents/#{parent_more[1].id}/edit#/"
+    sleep(1)
+    fill_in 'ชื่อ-นามสกุล', :with => 'ชื่อใหม่'
+    sleep(1)
+    first('.fa.fa-search').click
+    sleep(1)
+    first('.search-autocomplete').click
+    sleep(1)
+    eventually { expect(page).to have_content ("คุณต้องการออกจากหน้านี้โดยไม่บันทึกค่าหรือไม่?") }
+    click_button("ยกเลิก")
+    sleep(1)
+    eventually { expect(page).to have_content ("เรน โบว์") }
   end
 
   it 'should see parent on invoice slip, although parent is deleted' do

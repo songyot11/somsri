@@ -25,6 +25,10 @@ class Parent < ApplicationRecord
     Parent.joins(:students).where("parents.full_name LIKE ? OR parents.full_name_english LIKE ? OR parents.email LIKE ? OR parents.mobile LIKE ? OR students.full_name LIKE ? OR students.full_name_english LIKE ?", "%#{search}%", "%#{search}%", "%#{search}%", "%#{search}%", "%#{search}%" , "%#{search}%" )
   end
 
+  def self.search_by_name_and_mobile(search)
+    Parent.where("parents.full_name LIKE ? OR parents.full_name_english LIKE ? OR parents.mobile LIKE ?", "%#{search}%", "%#{search}%", "%#{search}%")
+  end
+
   def invoice_screen_full_name_display
     if(mobile.to_s.strip != '')
       full_name + ' (' + mobile.to_s.strip + ')'
@@ -70,6 +74,12 @@ class Parent < ApplicationRecord
           full_name: studentFullname
         },
         edit: edit
+      }
+    elsif options[:autocomplete]
+      return {
+        full_name_label: self.invoice_screen_full_name_display,
+        img_url: self.img_url.exists? ? self.img_url.url(:medium) : '',
+        id: self.id
       }
     else
       super()
