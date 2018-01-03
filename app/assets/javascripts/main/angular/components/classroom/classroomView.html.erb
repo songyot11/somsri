@@ -4,8 +4,8 @@
   <div class="row">
     <div class="col-xs-12">
       <div class="pull-right">
-        <button class="btn btn-blue m-left-10" ng-click="classroom.createClassroom()">สร้างห้องเรียน</button>
-        <button ng-show="classroom.isStudentPromoteReady" class="btn" ng-class="classroom.isStudentPromoteEnable ? 'btn-blue' : 'btn-disable'" ng-click="classroom.studentPromote()" ng-disabled="!classroom.isStudentPromoteEnable">เลื่อนชั้นเรียน</button>
+        <button class="btn btn-custom btn-blue mr-5" ng-click="classroom.createClassroom()">สร้างห้องเรียน</button>
+        <button ng-show="classroom.isStudentPromoteReady" class="btn btn-custom" ng-class="classroom.isStudentPromoteEnable ? 'btn-blue-sky' : 'btn-disable cursor-not-allowed'" ng-click="classroom.studentPromote()" ng-disabled="!classroom.isStudentPromoteEnable">เลื่อนชั้นเรียน</button>
       </div>
     </div>
   </div>

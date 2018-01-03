@@ -1,0 +1,152 @@
+.cursor-not-allowed {
+  cursor: not-allowed;
+}
+.px-0 {
+  padding-left: 0px;
+  padding-right: 0px;
+}
+
+.pl-10{
+  padding-left: 10px;
+}
+
+.mr-20 {
+  margin-right: 20px;
+}
+
+.mr-5 {
+  margin-right: 5px;
+}
+
+.mb-20 {
+  margin-bottom: 20px;
+}
+
+.mt-10 {
+  margin-top: 10px;
+}
+
+.mt-15 {
+  margin-top: 15px;
+}
+
+.btn-custom {
+  font-family: 'Maitree', serif;
+  font-size: 16px;
+  padding: 12px 32px;
+  letter-spacing: 1px;
+  border-radius: 0px;
+  transition: all 0.25s ease;
+  &:hover{
+    background-color: transparent;
+  }
+}
+
+.btn-custom.sm {
+  padding: 5px 32px;
+  font-size: 14px;
+}
+
+.btn-green {
+  background-color: #5bab67;
+  color: #fff !important;
+  border: 2px solid #5bab67;
+  &:hover{
+    border:2px solid #5bab67;
+    color: #5bab67 !important;
+  }
+  &:focus{
+    color: #fff;
+  }
+}
+
+.btn-gray {
+  background-color: #9D9D9D;
+  color: #fff !important;
+  border: 2px solid #9D9D9D;
+  &:hover{
+    border:2px solid #9D9D9D;
+    color: #9D9D9D !important;
+  }
+  &:focus{
+    color: #fff;
+  }
+}
+
+.btn-blue {
+  background-color: #3fa1e6;
+  color: #fff !important;
+  border: 2px solid #3fa1e6;
+  &:hover{
+    border:2px solid #3fa1e6;
+    color: #3fa1e6 !important;
+  }
+  &:focus{
+    color: #fff;
+  }
+}
+
+.btn-blue {
+  background-color: #3fa1e6;
+  color: #fff !important;
+  border: 2px solid #3fa1e6;
+  &:hover{
+    border:2px solid #3fa1e6;
+    color: #3fa1e6 !important;
+  }
+  &:focus{
+    color: #fff;
+  }
+}
+
+.btn-blue-sky {
+  background-color: #00D2D7;
+  color: #fff !important;
+  border: 2px solid #00D2D7;
+  &:hover{
+    border:2px solid #00D2D7;
+    color: #00D2D7 !important;
+  }
+  &:focus{
+    color: #fff;
+  }
+}
+
+.btn-orange {
+  background-color: #FFAB04;
+  color: #fff !important;
+  border: 2px solid #FFAB04;
+  &:hover{
+    border:2px solid #FFAB04;
+    color: #FFAB04 !important;
+  }
+  &:focus{
+    color: #fff;
+  }
+}
+
+.btn-black {
+  background-color: #5B5B5B;
+  color: #fff !important;
+  border: 2px solid #5B5B5B;
+  &:hover{
+    border:2px solid #5B5B5B;
+    color: #5B5B5B !important;
+  }
+  &:focus{
+    color: #fff;
+  }
+}
+
+.btn-red {
+  background-color: #DD5A2B;
+  color: #fff !important;
+  border: 2px solid #DD5A2B;
+  &:hover{
+    border:2px solid #DD5A2B;
+    color: #DD5A2B !important;
+  }
+  &:focus{
+    color: #fff;
+  }
+}

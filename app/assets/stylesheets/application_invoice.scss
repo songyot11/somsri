@@ -299,29 +299,6 @@ ul.nav.navbar-nav.navbar-right.dropdown{
   }
 }
 
-.btn {
-  font-family: 'Maitree', serif;
-  font-size: 16px;
-  padding: 12px 32px;
-  margin-right: 20px;
-  letter-spacing: 1px;
-  border-radius: 0px;
-  transition: all 0.25s ease;
-  &:hover{
-    background-color: transparent;
-  }
-}
-
-.btn-green {
-  background-color: #5bab67;
-  color: #fff;
-  border: 2px solid #5bab67;
-  &:hover{
-    border:2px solid #5bab67;
-    color: #5bab67;
-  }
-}
-
 .somsri-invoice .btn-cancel,
 .somsri-invoice .btn-cancel:focus{
   font-family: 'Maitree', serif;
@@ -1949,6 +1926,10 @@ label.img-default{
 
 .padding30 {
   padding: 30px;
+}
+
+.pl-10{
+  padding-left: 10px;
 }
 
 .mr-20 {

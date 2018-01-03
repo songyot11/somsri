@@ -108,7 +108,7 @@ describe 'Invoice-Report', js: true do
     sleep(1)
     click_link('ลูกศรี ใบเสร็จ')
     sleep(1)
-    eventually { expect(page).to have_content("แก้ไขนักเรียน") }
+    eventually { expect(page).to have_content("+ เพิ่มชื่อผู้ปกครอง") }
     eventually { expect(find("#student_full_name").value).to eq("ลูกศรี ใบเสร็จ") }
   end
 
@@ -139,7 +139,7 @@ describe 'Invoice-Report', js: true do
     sleep(1)
     first('.fa.fa-search').click
     sleep(1)
-    first('.search-autocomplete').click
+    find('.search-autocomplete', text: "แฟรงค์ คลาวด์").click
     sleep(1)
     eventually { expect(page).to have_content ("แฟรงค์ คลาวด์") }
   end

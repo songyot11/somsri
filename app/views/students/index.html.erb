@@ -5,26 +5,25 @@
 <div id="student-list-for-print" class="container only-print"></div>
 <div id="student-index" class="container-fluid only-view">
   <div class="row head-sp">
-    <div class="col-xs-6">
+    <div class="col-xs-6 mb-20">
       <h1>นักเรียน</h1>
     </div>
-    <div class="col-xs-6" style="text-align: right; margin-top: 15px;">
-
-    <span class="dropdown float-right">
-      <span div data-toggle="dropdown" class="btn btn-to-print-student" id="print-student-list">
-        พิมพ์รายชื่อ <i class='fa fa-chevron-down'></i>
+    <div class="col-xs-6 px-0 mt-15" style="text-align: right;">
+      <span class="dropdown float-right">
+        <span div data-toggle="dropdown" class="btn btn-custom btn-black mr-5" id="print-student-list">
+          พิมพ์รายชื่อ <i class='fa fa-chevron-down'></i>
+        </span>
+        <ul class="dropdown-menu mt-15" aria-labelledby="print-student-list">
+          <li><a target="_blank" id="print-student-list-with-image" href="/students.pdf?for_print=true">แสดงรูป</a></li>
+          <li><a href="#" onclick='printStudent()'>ไม่แสดงรูป</a></li>
+        </ul>
       </span>
-      <ul style="margin-top: 10px" class="dropdown-menu" aria-labelledby="print-student-list">
-        <li><a target="_blank" id="print-student-list-with-image" href="/students.pdf?for_print=true">แสดงรูป</a></li>
-        <li><a href="#" onclick='printStudent()'>ไม่แสดงรูป</a></li>
-      </ul>
-    </span>
 
-      <%= link_to ('<i class="fa fa-share-square-o" aria-hidden="true"></i> Export').html_safe, "#", :class => 'btn btn-export float-right', :onclick => 'exportTable("students")' %>
+      <%= link_to ('<i class="fa fa-share-square-o" aria-hidden="true"></i> Export').html_safe, "#", :class => 'btn btn-custom btn-blue-sky float-right mr-5', :onclick => 'exportTable("students")' %>
 
       <%= link_to t('.addstudent', :default => t("helpers.links.addstudent")),
       new_student_path,
-      :class => 'btn btn-add-ps float-right' %>
+      :class => 'btn btn-custom btn-blue float-right' %>
     </div>
   </div>
 
