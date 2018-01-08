@@ -316,15 +316,10 @@ class StudentsController < ApplicationController
 
   # /students/:id/graduate
   def graduate
-    @student = Student.find(params[:id])
-    if @student && @student.update(deleted_at: Time.now)
-      alumni = Alumni.newByStudent(@student)
-      alumni.status = "จบการศึกษา"
-      alumni.save
-      respond_to do |format|
-        format.html { redirect_to students_url }
-        format.json { head :no_content }
-      end
+    @student = Student.find(params[:id]).graduate
+    respond_to do |format|
+      format.html { redirect_to students_url }
+      format.json { head :no_content }
     end
   end
 

@@ -6,8 +6,6 @@
     $rootScope.menu = "ตั้งค่า"
     var ctrl = this
     ctrl.grade_select = null
-    ctrl.isStudentPromoteEnable = false
-    ctrl.isStudentPromoteReady = false
 
     function openConfirmationModal(message, success, dismiss) {
       $scope.message = message;
@@ -103,16 +101,8 @@
           $('#classroom-list').bootstrapTable('filterBy', {});
         }
       }
-      service.getIsStudentPromoteEnable().then(function(resp) {
-        ctrl.isStudentPromoteEnable = resp.data[0]
-        ctrl.isStudentPromoteReady = true
-      })
       ctrl.studentPromote = function(){
-        openConfirmationModal("คุณต้องการเลื่อนชั้นเรียนให้กับนักเรียนทั้งหมดใช่หรือไม่?", function(){
-          service.getStudentPromote().then(function(resp) {
-            $window.location.reload();
-          });
-        })
+        $rootScope.openNextClassroomList();
       }
       initBootstrapTable()
     });

@@ -4,7 +4,30 @@ class ClassroomsController < ApplicationController
   # GET /classrooms
   def index
     @classrooms = Classroom.all.to_a
-    render json: @classrooms, status: :ok
+    if params[:next]
+      output = []
+      @classrooms.each do |classroom|
+        output_classroom = {
+          classroom: {
+            id: classroom.id,
+            name: classroom.grade_with_name
+          },
+          next_classroom: nil
+        }
+        @classrooms.each do |next_classroom|
+          if next_classroom.id == classroom.next_id
+            output_classroom[:next_classroom] = {
+              id: next_classroom.id,
+              name: next_classroom.grade_with_name
+            }
+          end
+        end
+        output << output_classroom
+      end
+      render json: output, status: :ok
+    else
+      render json: @classrooms, status: :ok
+    end
   end
 
   # GET /classrooms/:id
@@ -113,18 +136,21 @@ class ClassroomsController < ApplicationController
     render json: ["FAIL"], status: :ok
   end
 
-  # GET /classrooms/is_student_promote_enable
-  def is_student_promote_enable
-    if Classroom.where.not(next_id: nil).or(Classroom.where.not(next_id: '')).first
-      render json: [true], status: :ok
-    else
-      render json: [false], status: :ok
-    end
-  end
-
   # PATCH /classrooms/student_promote
   def student_promote
-    _student_promote([nil, ''], true)
+    if params[:classroomOrder]
+      classroomOrder = JSON.parse params[:classroomOrder]
+      classroomOrder.each do |order|
+        Classroom.where(id: order['id']).update(next_id: order['next_id'])
+      end
+    end
+    _student_promote([nil, ''], true) # start with next_id = nil
+    Classroom.find_by_sql(
+      "SELECT * FROM classrooms c1
+      JOIN classrooms c2 ON c1.id = c2.id
+      WHERE c1.id = c2.next_id").each do |classroom|
+      _student_promote(classroom.id, false) # start with next_id = id
+    end
     render json: ["SUCCESS"], status: :ok
   end
 
@@ -142,21 +168,26 @@ class ClassroomsController < ApplicationController
     if Classroom.where("lower(name) = ?", classroom.downcase).where(grade_id: grade_id).count > 0
       render json: { dupplicate: true }, status: :ok
     else
-      Classroom.create(name: classroom, grade_id: grade_id)
+      classroom =  Classroom.create(name: classroom, grade_id: grade_id)
+      classroom.next_id = classroom.id
+      classroom.save
       render json: { head: :no_content }, status: :ok
     end
 
   end
 
   private
-  def _student_promote(next_id, isFirst)
+  def _student_promote(next_id, is_graduated)
     Classroom.where(next_id: next_id).each do |classroom|
-      if isFirst
-        Student.where(classroom_id: classroom.id).update_all(deleted_at: DateTime.now)
-      else
+      if is_graduated
+        Student.where(classroom_id: classroom.id).to_a.each do |student|
+          student.graduate if student
+        end
+        _student_promote(classroom.id, false)
+      elsif classroom.id != next_id
         Student.where(classroom_id: classroom.id).update_all(classroom_id: next_id)
+        _student_promote(classroom.id, false)
       end
-      _student_promote(classroom.id, false)
     end
   end
 

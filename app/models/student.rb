@@ -442,6 +442,14 @@ class Student < ApplicationRecord
     Alumni.where(student_id: self.id).destroy_all
   end
 
+  def graduate
+    if self.deleted_at.blank? && self.update(deleted_at: Time.now)
+      alumni = Alumni.newByStudent(self)
+      alumni.status = "จบการศึกษา"
+      alumni.save
+    end
+  end
+
   def img_medium
     self.img_url.exists? ? self.img_url.url(:medium) : ''
   end

@@ -1,4 +1,5 @@
 class AlumnisController < ApplicationController
+  load_and_authorize_resource
   def index
     alumnis = Alumni.all
     alumnis = alumnis.where(graduated_year: params[:year]) if params[:year] && params[:year] != "ทั้งหมด"

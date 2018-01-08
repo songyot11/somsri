@@ -22,6 +22,10 @@
   margin-bottom: 20px;
 }
 
+.mb-15 {
+  margin-bottom: 15px;
+}
+
 .mt-10 {
   margin-top: 10px;
 }
@@ -149,4 +153,17 @@
   &:focus{
     color: #fff;
   }
+}
+
+#next-classroom .fixed-table-body {
+  overflow: inherit !important;
+}
+
+ul.dropdown-menu.display-top{
+  transform: translateY(-100%);
+  margin-top: -25px;
+}
+
+.color-blue-link {
+  color: #337ab7;
 }

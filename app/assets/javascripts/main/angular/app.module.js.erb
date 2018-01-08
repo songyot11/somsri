@@ -44,6 +44,20 @@
         }]
       }
     }).
+
+    state({
+      url: '/next_classroom',
+      name: 'next_classroom',
+      templateUrl: "<%= asset_path('main/angular/components/classroom/nextClassroom/nextClassroomView.html') %>",
+      controller: 'nextClassroomCtrl as next',
+      resolve: {
+        resources: ['$ocLazyLoad', function($ocLazyLoad) {
+          return $ocLazyLoad.load([
+            ASSETS.somsri.main.next_classroom
+          ]);
+        }]
+      }
+    }).
     state({
       url: '/classroom/:id',
       name: 'classroom_edit',
