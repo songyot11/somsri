@@ -2,18 +2,25 @@
   'use strict';
   angular.module('somsri.invoice.invoice_report.service', [
   ])
-  .service('invoiceReportService', ['$http', function($http) {
+  .service('invoiceReportService', ['$http', '$q', function($http, $q) {
+
+    var getInvoicesCanceler = $q.defer()
     this.getInvoices = function(grade_name, searchKeyword, start_date, end_date, page, sort, order, exportTable) {
-      return $http.get('/invoices', { params: {
-        grade_select: grade_name,
-        page: page,
-        search_keyword: searchKeyword,
-        start_date: start_date,
-        end_date: end_date,
-        sort: sort,
-        order: order,
-        export: exportTable,
-      }})
+      getInvoicesCanceler.resolve()
+      getInvoicesCanceler = $q.defer()
+      return $http.get('/invoices', {
+        timeout: getInvoicesCanceler.promise,
+        params: {
+          grade_select: grade_name,
+          page: page,
+          search_keyword: searchKeyword,
+          start_date: start_date,
+          end_date: end_date,
+          sort: sort,
+          order: order,
+          export: exportTable,
+        }
+      })
     }
 
     this.cancelInvoice = function(id) {

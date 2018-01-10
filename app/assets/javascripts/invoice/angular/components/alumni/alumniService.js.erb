@@ -3,9 +3,12 @@
 
   angular.module('somsri.invoice.alumni.service', [
   ])
-  .service('alumniService', ['$http', function($http) {
+  .service('alumniService', ['$http', '$q', function($http, $q) {
+    var getAlumniCanceler = $q.defer()
     this.getAlumni = function() {
-      return $http.get('/alumnis')
+      getAlumniCanceler.resolve()
+      getAlumniCanceler = $q.defer()
+      return $http.get('/alumnis', { timeout: getAlumniCanceler.promise })
     }
 
     this.getAlumniYears = function() {

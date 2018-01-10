@@ -3,7 +3,7 @@ describe Student do
   let(:school) { school = School.make!({ name: "โรงเรียนแห่งหนึ่ง" }) }
 
   let(:grade){grade = Grade.create(
-    name: "Kindergarten 1"
+    name: "Kindergarten 1" 
   )}
 
   let(:classrooms) do
