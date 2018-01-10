@@ -331,6 +331,17 @@ describe 'Student', js: true do
     eventually { expect(find('#mobile0').value).to eq("080-000000") }
   end
 
+  it 'should disable parent\'s mobile and relationship when not select parent' do
+    visit "/students/#{student_more[0].id}/edit#/"
+    sleep(1)
+    find("#parent-link").click
+    sleep(1)
+    eventually { expect(find('#mobile0')[:disabled]).to eq true }
+    eventually { expect(find('#relationship0')[:disabled]).to eq true }
+    eventually { expect(find('#mobile1')[:disabled]).to eq true }
+    eventually { expect(find('#relationship1')[:disabled]).to eq true }
+  end
+
   it 'should create student' do
     visit "/parents/new#/"
     sleep(1)

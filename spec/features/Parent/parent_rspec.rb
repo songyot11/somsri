@@ -231,4 +231,13 @@ describe 'Invoice-Report', js: true do
     eventually { expect(Parent.where(full_name: 'มานี มีตา').count).to eq 1 }
   end
 
+  it 'should disable parent\'s mobile and relationship when not select parent' do
+    visit "/parents/#{parent_more[0].id}/edit#/"
+    sleep(1)
+    find("#student-link").click
+    sleep(1)
+    eventually { expect(find('#relationship0')[:disabled]).to eq true }
+    eventually { expect(find('#relationship1')[:disabled]).to eq true }
+  end
+
 end

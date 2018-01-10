@@ -96,6 +96,7 @@
         </div>
       </div>
     </div>
+    <label for="student" class="control-label">นักเรียน</label>
     <div class="col-md-12">
       <% if @parent.new_record? || @parent.students.size == 0 %>
         <% 1.times do |index| %>
@@ -141,6 +142,16 @@ function remove_student(i) {
     $('#add-std-'+i+'').remove();
 }
 
+function studentChange(target){
+  var index = $(target).attr("index")
+  // enable relationship
+  if($(target).val()){
+    $("#relationship" + index).prop("disabled", false)
+  }else{
+    $("#relationship" + index).prop("disabled", true)
+  }
+}
+
 function gen_selectize(round) {
   for (i = 0; i <= round; i++) {
     $('#student'+i).selectize({
@@ -158,10 +169,9 @@ function gen_selectize(round) {
       round = round + 1;
       $('#add-student').append(
         '<div class="form-group" id="add-std-'+round+'">\
-          <label for="student" class="control-label">นักเรียน</label>\
           <div class="row">\
             <div class="col-md-5" style="margin-left:15px;">\
-              <select id="student'+round+'" name="student[]" placeholder="เลือกนักเรียน...">\
+              <select id="student'+round+'" name="student[]" index="'+round+'" placeholder="เลือกนักเรียน..." onchange="studentChange(this)">\
                 <option value="" disabled selected></option>\
                 <% @students.each do |s| %>\
                   <option value="<%= s.id %>"><%= s.full_name %></option>\
@@ -169,7 +179,7 @@ function gen_selectize(round) {
               </select>\
             </div>\
             <div class="col-md-5">\
-              <select id="relationship'+round+'" name="relationship[]" class="form-control">\
+              <select id="relationship'+round+'" name="relationship[]" class="form-control" disabled="true">\
                 <% @relations.each do |r| %>\
                   <option value="<%= r.id %>"><%= t(r.name) %></option>\
                 <% end %>\

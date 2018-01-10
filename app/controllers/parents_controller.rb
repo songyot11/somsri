@@ -160,7 +160,7 @@ class ParentsController < ApplicationController
       rel_params = params[:relationship]
 
       std_rel = Hash.new
-      if !std_params.nil?
+      if !std_params.nil? && !rel_params.nil?
         std_params.each_with_index { |value, index| std_rel[value] = rel_params[index] }
       end
       std_params = std_rel.keys
