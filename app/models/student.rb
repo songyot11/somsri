@@ -443,7 +443,8 @@ class Student < ApplicationRecord
   end
 
   def graduate
-    if self.deleted_at.blank? && self.update(deleted_at: Time.now)
+    parent_ids = StudentsParent.where(student_id: self.id).to_a.collect(&:parent_id)
+    if self.deleted_at.blank? && self.update(deleted_at: Time.now) && Parent.where(id: parent_ids).update(deleted_at: Time.now)
       alumni = Alumni.newByStudent(self)
       alumni.status = "จบการศึกษา"
       alumni.save

@@ -74,10 +74,30 @@ describe Student do
     ]
   end
 
+  let(:parent) do
+    [
+      Parent.make!({full_name: 'ฉันเป็น สุภาพบุรุษนะครับ', mobile: "080-0987654"})
+    ]
+  end
+
+  let(:relationships) do
+    [
+      Relationship.make!({ name: 'Father' }),
+      Relationship.make!({ name: 'Mother' })
+    ]
+  end
+
+  let(:studentsparent) do
+    [
+      StudentsParent.make!({student_id: students[0].id , parent_id: parent[0].id, relationship_id: relationships[0].id})
+    ]
+  end
+
   before do
     SiteConfig.make!({ student_number_leading_zero: 6 })
     classrooms
     student_lists
+    studentsparent
     teacher_attendance_lists
   end
 
@@ -127,5 +147,16 @@ describe Student do
       full_name = student.invoice_screen_full_name_display
       expect(full_name).to eq('Xavi Pepe')
     end
+  end
+
+  it 'should soft delete student\'s parent when student are graduate' do
+    expect(Student.where(id: students[0].id).exists?).to be_truthy
+    expect(Parent.where(id: parent[0].id).exists?).to be_truthy
+    students[0].graduate
+    expect(Student.where(id: students[0].id).exists?).to be_falsey
+    expect(Parent.where(id: parent[0].id).exists?).to be_falsey
+
+    expect(Student.with_deleted.where(id: students[0].id).exists?).to be_truthy
+    expect(Parent.with_deleted.where(id: parent[0].id).exists?).to be_truthy
   end
 end
