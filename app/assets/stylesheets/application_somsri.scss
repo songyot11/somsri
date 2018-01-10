@@ -1,9 +1,40 @@
 .cursor-not-allowed {
   cursor: not-allowed;
 }
+
+.min-w-200 {
+  min-width: 200px;
+}
+
+.min-w-80 {
+  min-width: 80px;
+}
+
+.min-w-50 {
+  min-width: 50px;
+}
+
+.min-w-20 {
+  min-width: 20px;
+}
+
 .px-0 {
   padding-left: 0px;
   padding-right: 0px;
+}
+
+.p-5 {
+  padding: 5px;
+}
+
+.px-10 {
+  padding-left: 10px;
+  padding-right: 10px;
+}
+
+.py-5 {
+  padding-top: 5px;
+  padding-bottom: 5px;
 }
 
 .pl-10{
@@ -32,6 +63,26 @@
 
 .mt-15 {
   margin-top: 15px;
+}
+
+.border-1 {
+  border: solid 1px;
+}
+
+.text-right {
+  text-align: right;
+}
+
+.text-center {
+  text-align: center;
+}
+
+.font-12 {
+  font-size: 12px;
+}
+
+.font-roboto {
+  font-family: 'Roboto', sans-serif;
 }
 
 .btn-custom {

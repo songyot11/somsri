@@ -1,0 +1,72 @@
+<h3>ตารางเงินเดือน: <%= @effective_date_str %></h3>
+<hr>
+<table class="font-12">
+  <thead>
+    <tr>
+      <td colspan="2"></td>
+      <td class="border-1 p-5 text-center" colspan="7">รายการได้</td>
+      <td class="border-1 p-5 text-center" colspan="7">รายการหัก</td>
+      <td></td>
+    </tr>
+    <tr>
+      <td class="border-1 p-5 min-w-20 text-center">รหัส</td>
+      <td class="border-1 p-5 min-w-200 text-center">ชื่อ</td>
+      <td class="border-1 p-5 min-w-80 text-center">เงินเดือน</td>
+      <td class="border-1 p-5 min-w-80 text-center">เงินสอนพิเศษ</td>
+      <td class="border-1 p-5 min-w-80 text-center">ค่าตำแหน่ง</td>
+      <td class="border-1 p-5 min-w-80 text-center">เบี้ยเลี้ยง</td>
+      <td class="border-1 p-5 min-w-80 text-center">เบี้ยขยัน</td>
+      <td class="border-1 p-5 min-w-80 text-center">โบนัส</td>
+      <td class="border-1 p-5 min-w-80 text-center">อื่นๆ</td>
+      <td class="border-1 p-5 min-w-80 text-center">ขาดงาน</td>
+      <td class="border-1 p-5 min-w-80 text-center">สาย</td>
+      <td class="border-1 p-5 min-w-80 text-center">ภาษี</td>
+      <td class="border-1 p-5 min-w-50 text-center">ประกันสังคม</td>
+      <td class="border-1 p-5 min-w-50 text-center">เงินสะสม</td>
+      <td class="border-1 p-5 min-w-80 text-center">เบิกล่วงหน้า</td>
+      <td class="border-1 p-5 min-w-80 text-center">อื่นๆ</td>
+      <td class="border-1 p-5 min-w-80 text-center">เงินเดือนสุทธิ</td>
+    </tr>
+  </thead>
+  <tbody>
+    <% @results.each do |result| %>
+    <tr>
+      <td class="border-1 text-center p-5"><%= result[:code] %></td>
+      <td class="border-1 p-5"><%= result[:name] %></td>
+      <td class="border-1 text-right p-5 font-roboto"><%= number_with_precision(result[:salary], precision: 2, delimiter: ',') %></td>
+      <td class="border-1 text-right p-5 font-roboto"><%= number_with_precision(result[:ot], precision: 2, delimiter: ',') %></td>
+      <td class="border-1 text-right p-5 font-roboto"><%= number_with_precision(result[:position_allowance], precision: 2, delimiter: ',') %></td>
+      <td class="border-1 text-right p-5 font-roboto"><%= number_with_precision(result[:allowance], precision: 2, delimiter: ',') %></td>
+      <td class="border-1 text-right p-5 font-roboto"><%= number_with_precision(result[:attendance_bonus], precision: 2, delimiter: ',') %></td>
+      <td class="border-1 text-right p-5 font-roboto"><%= number_with_precision(result[:bonus], precision: 2, delimiter: ',') %></td>
+      <td class="border-1 text-right p-5 font-roboto"><%= number_with_precision(result[:extra_etc], precision: 2, delimiter: ',') %></td>
+      <td class="border-1 text-right p-5 font-roboto"><%= number_with_precision(result[:absence], precision: 2, delimiter: ',') %></td>
+      <td class="border-1 text-right p-5 font-roboto"><%= number_with_precision(result[:late], precision: 2, delimiter: ',') %></td>
+      <td class="border-1 text-right p-5 font-roboto"><%= number_with_precision(result[:tax], precision: 2, delimiter: ',') %></td>
+      <td class="border-1 text-right p-5 font-roboto"><%= number_with_precision(result[:social_insurance], precision: 2, delimiter: ',') %></td>
+      <td class="border-1 text-right p-5 font-roboto"><%= number_with_precision(result[:pvf], precision: 2, delimiter: ',') %></td>
+      <td class="border-1 text-right p-5 font-roboto"><%= number_with_precision(result[:advance_payment], precision: 2, delimiter: ',') %></td>
+      <td class="border-1 text-right p-5 font-roboto"><%= number_with_precision(result[:fee_etc], precision: 2, delimiter: ',') %></td>
+      <td class="border-1 text-right p-5 font-roboto"><%= number_with_precision(result[:net_salary], precision: 2, delimiter: ',') %></td>
+    </tr>
+    <% end %>
+    <tr>
+      <td class="border-1 text-right p-5" colspan="2">รวมทั้งหมด</td>
+      <td class="border-1 text-right p-5 font-roboto"><%= number_with_precision(@total[:salary], precision: 2, delimiter: ',') %></td>
+      <td class="border-1 text-right p-5 font-roboto"><%= number_with_precision(@total[:ot], precision: 2, delimiter: ',') %></td>
+      <td class="border-1 text-right p-5 font-roboto"><%= number_with_precision(@total[:position_allowance], precision: 2, delimiter: ',') %></td>
+      <td class="border-1 text-right p-5 font-roboto"><%= number_with_precision(@total[:allowance], precision: 2, delimiter: ',') %></td>
+      <td class="border-1 text-right p-5 font-roboto"><%= number_with_precision(@total[:attendance_bonus], precision: 2, delimiter: ',') %></td>
+      <td class="border-1 text-right p-5 font-roboto"><%= number_with_precision(@total[:bonus], precision: 2, delimiter: ',') %></td>
+      <td class="border-1 text-right p-5 font-roboto"><%= number_with_precision(@total[:extra_etc], precision: 2, delimiter: ',') %></td>
+      <td class="border-1 text-right p-5 font-roboto"><%= number_with_precision(@total[:absence], precision: 2, delimiter: ',') %></td>
+      <td class="border-1 text-right p-5 font-roboto"><%= number_with_precision(@total[:late], precision: 2, delimiter: ',') %></td>
+      <td class="border-1 text-right p-5 font-roboto"><%= number_with_precision(@total[:tax], precision: 2, delimiter: ',') %></td>
+      <td class="border-1 text-right p-5 font-roboto"><%= number_with_precision(@total[:social_insurance], precision: 2, delimiter: ',') %></td>
+      <td class="border-1 text-right p-5 font-roboto"><%= number_with_precision(@total[:pvf], precision: 2, delimiter: ',') %></td>
+      <td class="border-1 text-right p-5 font-roboto"><%= number_with_precision(@total[:advance_payment], precision: 2, delimiter: ',') %></td>
+      <td class="border-1 text-right p-5 font-roboto"><%= number_with_precision(@total[:fee_etc], precision: 2, delimiter: ',') %></td>
+      <td class="border-1 text-right p-5 font-roboto"><%= number_with_precision(@total[:net_salary], precision: 2, delimiter: ',') %></td>
+    </tr>
+  </tbody>
+</table>

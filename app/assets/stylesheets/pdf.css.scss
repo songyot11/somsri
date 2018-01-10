@@ -101,3 +101,7 @@
   background-size: auto 100px;
   background-repeat: no-repeat;
 }
+
+table, tr, td, th, tbody, thead, tfoot {
+    page-break-inside: avoid !important;
+}
