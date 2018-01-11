@@ -57,6 +57,14 @@ class Parent < ApplicationRecord
     end
   end
 
+  def self.restore_by_student_id(student_id)
+    parent_ids = StudentsParent.where(student_id: student_id).to_a.collect(&:parent_id)
+    Parent.with_deleted.where(id: parent_ids).update(deleted_at: nil)
+  end
+
+  def restore
+    self.update(deleted_at: nil)
+  end
 
   def as_json(options={})
     if options[:index]

@@ -93,6 +93,28 @@ describe Student do
     ]
   end
 
+  let(:studentsparent_deleted) do
+    StudentsParent.make!({student_id: student_deleted.id , parent_id: parent_deleted.id, relationship_id: relationships[1].id})
+  end
+
+  let(:parent_deleted) do
+    Parent.make!({full_name: 'แม่โดนลบ แล้วจร้า', mobile: "080-0987654", deleted_at: Time.now})
+  end
+
+  let(:student_deleted) do
+    Student.make!({
+      first_name: 'เด็กโดนลบ',
+      last_name: 'แล้วจร้า',
+      nickname: 'ดลบ' ,
+      gender_id: 1 ,
+      grade_id: grade.id,
+      classroom: classrooms[0],
+      classroom_number: 13 ,
+      student_number: 23 ,
+      deleted_at: Time.now
+    })
+  end
+
   before do
     SiteConfig.make!({ student_number_leading_zero: 6 })
     classrooms
@@ -158,5 +180,12 @@ describe Student do
 
     expect(Student.with_deleted.where(id: students[0].id).exists?).to be_truthy
     expect(Parent.with_deleted.where(id: parent[0].id).exists?).to be_truthy
+  end
+
+  it 'should restore student\'s parent when restoring student' do
+    studentsparent_deleted
+    student_deleted.restore
+    expect(Student.where(id: student_deleted.id).exists?).to be_truthy
+    expect(Parent.where(id: parent_deleted.id).exists?).to be_truthy
   end
 end

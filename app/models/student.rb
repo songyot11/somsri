@@ -439,6 +439,7 @@ class Student < ApplicationRecord
 
   def restore
     self.update(deleted_at: nil)
+    Parent.restore_by_student_id(self.id)
     Alumni.where(student_id: self.id).destroy_all
   end
 
