@@ -32,12 +32,19 @@
         <%= javascript_include_tag 'application' %>
         <script src="//rawgit.com/hhurz/tableExport.jquery.plugin/master/tableExport.js"></script>
     </head>
-    <% if !user_signed_in? %><body ng-controller="mainCtrl as main"><% else %><body ng-controller="mainCtrl as main" style="background:#fff !important;"><%end%>
-    <body ng-controller="mainCtrl as main">
-      <% if !user_signed_in? %><header style="display:none;"><% else %><header><% end %>
-        <%= render 'layouts/navigation' %>
-      </header>
-      <div class="top-bar-space"></div>
-        <%= yield %>
+    <% if !user_signed_in? %>
+      <body ng-controller="mainCtrl as main">
+    <% else %>
+      <body ng-controller="mainCtrl as main" style="background:#fff !important;">
+    <%end%>
+    <% if !user_signed_in? %>
+      <header style="display:none;">
+    <% else %>
+      <header>
+    <% end %>
+    <%= render 'layouts/navigation' %>
+    </header>
+    <div class="top-bar-space"></div>
+      <%= yield %>
     </body>
 </html>

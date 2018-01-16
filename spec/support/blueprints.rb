@@ -146,6 +146,7 @@ SiteConfig.blueprint do
   display_username_password_on_login { false }
   display_schools_year_with_invoice_id { false }
   tax { true }
+  outstanding_notification { false }
 end
 
 Alumni.blueprint do
