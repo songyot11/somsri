@@ -102,7 +102,7 @@ class ParentsController < ApplicationController
   end
 
   def restore
-    Parent.restore(params[:parent_id])
+    Parent.with_deleted.find(params[:parent_id]).restore_recursively
     respond_to do |format|
       format.html { redirect_to parents_url}
       format.json { head :no_content }

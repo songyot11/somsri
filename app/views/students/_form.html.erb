@@ -179,15 +179,6 @@
 
       <%= link_to t('.cancel', :default => t("helpers.links.cancel")),
       students_path, :class => 'btn btn-cancel' %>
-
-      <% if controller.controller_name == "students" && controller.action_name == "edit" %>
-        <%= link_to "<i class='fa fa-trash'></i> ลบ".html_safe ,
-                resign_student_path(@student) ,
-                :id => 'student_remove' ,
-                :method => :post ,
-                :data => { :confirm => t('.confirm', :default => t("helpers.links.confirm.student_confirm", :default => 'Are you sure?')) } ,
-                :class => 'btn btn-remove-sp'%>
-      <% end %>
   </div>
 </div>
 <% end %>

@@ -293,7 +293,7 @@ class StudentsController < ApplicationController
   def destroy
     @student.destroy
     respond_to do |format|
-      format.html { redirect_to students_url }
+      format.html { redirect_to students_path }
       format.json { head :no_content }
     end
   end
@@ -318,28 +318,23 @@ class StudentsController < ApplicationController
   def graduate
     @student = Student.find(params[:id]).graduate
     respond_to do |format|
-      format.html { redirect_to students_url }
+      format.html { redirect_to students_path }
       format.json { head :no_content }
     end
   end
 
   # /students/:id/resign
   def resign
-    @student = Student.find(params[:id])
-    if @student && @student.update(deleted_at: Time.now)
-      alumni = Alumni.newByStudent(@student)
-      alumni.status = "ลาออก"
-      alumni.save
-      respond_to do |format|
-        format.html { redirect_to students_url }
-        format.json { head :no_content }
-      end
+    @student = Student.find(params[:id]).resign
+    respond_to do |format|
+      format.html { redirect_to students_path }
+      format.json { head :no_content }
     end
   end
 
   #POST /students/restore
   def restore
-    Student.with_deleted.where(id: params[:student_id]).first.restore
+    Student.with_deleted.where(id: params[:student_id]).first.restore_recursively
     respond_to do |format|
       format.html { redirect_to students_url }
       format.json { head :no_content }

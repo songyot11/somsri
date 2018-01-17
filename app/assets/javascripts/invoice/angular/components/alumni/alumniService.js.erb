@@ -20,7 +20,7 @@
     }
 
     this.restore = function(id) {
-      return $http.post('/students/restore', { student_id: id })
+      return $http.post('/students/restore.json', { student_id: id })
     }
   }]);
 })();

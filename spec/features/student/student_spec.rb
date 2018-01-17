@@ -180,16 +180,58 @@ describe 'Student', js: true do
   end
 
   it 'should remove student' do
-    visit "/students/#{student[0].id}/edit#/"
+    visit "/students"
     sleep(1)
-    first('#student_remove').click
+    find("#options#{student[0].id}").click
+    first("a[onclick=\"openDeletedStudentModal(#{student[0].id})\"]").click
     sleep(1)
-    page.accept_alert
+    eventually { expect(page).to have_content ("คุณต้องการลบนักเรียนคนนี้ใช่หรือไม่?") }
+    find("a", text: "ตกลง").click
     sleep(1)
-    student[0].reload
 
+    student[0].reload
     eventually { expect(page).to_not have_content ("สมศรี") }
-    eventually { expect(student[0].deleted_at.blank?).to eq false }
+    eventually { expect(student[0].deleted_at.blank?).to be_falsey }
+  end
+
+  it 'should resign student' do
+    visit "/students"
+    sleep(1)
+    find("#options#{student[0].id}").click
+    first("a[onclick=\"openResignStudentModal(#{student[0].id})\"]").click
+    sleep(1)
+    eventually { expect(page).to have_content ('คุณต้องการเปลี่ยนสถานะนักเรียนคนนี้เป็น "ลาออก" ใช่หรือไม่?') }
+    find("a", text: "ตกลง").click
+    sleep(1)
+
+    student[0].reload
+    eventually { expect(page).to_not have_content ("สมศรี") }
+    eventually { expect(student[0].deleted_at.blank?).to be_falsey }
+
+    qry_alumni = Alumni.where(student_id: student[0].id)
+    alumni = qry_alumni.first
+    eventually { expect(qry_alumni.count).to eq 1 }
+    eventually { expect(alumni.status).to eq "ลาออก" }
+  end
+
+  it 'should graduate student' do
+    visit "/students"
+    sleep(1)
+    find("#options#{student[0].id}").click
+    first("a[onclick=\"openGraduateStudentModal(#{student[0].id})\"]").click
+    sleep(1)
+    eventually { expect(page).to have_content ('คุณต้องการเปลี่ยนสถานะนักเรียนคนนี้เป็น "จบการศึกษา" ใช่หรือไม่?') }
+    find("a", text: "ตกลง").click
+    sleep(1)
+
+    student[0].reload
+    eventually { expect(page).to_not have_content ("สมศรี") }
+    eventually { expect(student[0].deleted_at.blank?).to be_falsey }
+
+    qry_alumni = Alumni.where(student_id: student[0].id)
+    alumni = qry_alumni.first
+    eventually { expect(qry_alumni.count).to eq 1 }
+    eventually { expect(alumni.status).to eq "จบการศึกษา" }
   end
 
   it 'should search and change page to other student' do
@@ -250,11 +292,43 @@ describe 'Student', js: true do
   end
 
   it 'should see student on invoice slip, although student deleted' do
-    visit "/students/#{student[0].id}/edit#/"
+    visit "/students"
     sleep(1)
-    first('#student_remove').click
+    find("#options#{student[0].id}").click
+    first("a[onclick=\"openDeletedStudentModal(#{student[0].id})\"]").click
     sleep(1)
-    page.accept_alert
+    eventually { expect(page).to have_content ("คุณต้องการลบนักเรียนคนนี้ใช่หรือไม่?") }
+    find("a", text: "ตกลง").click
+    sleep(1)
+
+    visit "/somsri_invoice#/invoice/#{invoice.id}/slip"
+    sleep(1)
+    eventually { expect(page).to have_content ("สมศรี") }
+  end
+
+  it 'should see student on invoice slip, although student resigned' do
+    visit "/students"
+    sleep(1)
+    find("#options#{student[0].id}").click
+    first("a[onclick=\"openResignStudentModal(#{student[0].id})\"]").click
+    sleep(1)
+    eventually { expect(page).to have_content ('คุณต้องการเปลี่ยนสถานะนักเรียนคนนี้เป็น "ลาออก" ใช่หรือไม่?') }
+    find("a", text: "ตกลง").click
+    sleep(1)
+
+    visit "/somsri_invoice#/invoice/#{invoice.id}/slip"
+    sleep(1)
+    eventually { expect(page).to have_content ("สมศรี") }
+  end
+
+  it 'should see student on invoice slip, although student graduated' do
+    visit "/students"
+    sleep(1)
+    find("#options#{student[0].id}").click
+    first("a[onclick=\"openGraduateStudentModal(#{student[0].id})\"]").click
+    sleep(1)
+    eventually { expect(page).to have_content ('คุณต้องการเปลี่ยนสถานะนักเรียนคนนี้เป็น "จบการศึกษา" ใช่หรือไม่?') }
+    find("a", text: "ตกลง").click
     sleep(1)
 
     visit "/somsri_invoice#/invoice/#{invoice.id}/slip"
@@ -263,11 +337,43 @@ describe 'Student', js: true do
   end
 
   it 'should see student on invoice_report, although student deleted' do
-    visit "/students/#{student[0].id}/edit#/"
+    visit "/students"
     sleep(1)
-    first('#student_remove').click
+    find("#options#{student[0].id}").click
+    first("a[onclick=\"openDeletedStudentModal(#{student[0].id})\"]").click
     sleep(1)
-    page.accept_alert
+    eventually { expect(page).to have_content ("คุณต้องการลบนักเรียนคนนี้ใช่หรือไม่?") }
+    find("a", text: "ตกลง").click
+    sleep(1)
+
+    visit '/somsri_invoice#/invoice_report'
+    sleep(1)
+    eventually { expect(page).to have_content ("สมศรี") }
+  end
+
+  it 'should see student on invoice_report, although student resigned' do
+    visit "/students"
+    sleep(1)
+    find("#options#{student[0].id}").click
+    first("a[onclick=\"openResignStudentModal(#{student[0].id})\"]").click
+    sleep(1)
+    eventually { expect(page).to have_content ('คุณต้องการเปลี่ยนสถานะนักเรียนคนนี้เป็น "ลาออก" ใช่หรือไม่?') }
+    find("a", text: "ตกลง").click
+    sleep(1)
+
+    visit '/somsri_invoice#/invoice_report'
+    sleep(1)
+    eventually { expect(page).to have_content ("สมศรี") }
+  end
+
+  it 'should see student on invoice_report, although student graduated' do
+    visit "/students"
+    sleep(1)
+    find("#options#{student[0].id}").click
+    first("a[onclick=\"openGraduateStudentModal(#{student[0].id})\"]").click
+    sleep(1)
+    eventually { expect(page).to have_content ('คุณต้องการเปลี่ยนสถานะนักเรียนคนนี้เป็น "จบการศึกษา" ใช่หรือไม่?') }
+    find("a", text: "ตกลง").click
     sleep(1)
 
     visit '/somsri_invoice#/invoice_report'
@@ -276,11 +382,41 @@ describe 'Student', js: true do
   end
 
   it 'should see student on student_report, although student deleted' do
-    visit "/students/#{student[0].id}/edit#/"
+    visit "/students"
     sleep(1)
-    first('#student_remove').click
+    find("#options#{student[0].id}").click
+    first("a[onclick=\"openDeletedStudentModal(#{student[0].id})\"]").click
     sleep(1)
-    page.accept_alert
+    eventually { expect(page).to have_content ("คุณต้องการลบนักเรียนคนนี้ใช่หรือไม่?") }
+    find("a", text: "ตกลง").click
+    sleep(1)
+    visit "/somsri_invoice#/student_report"
+    sleep(1)
+    eventually { expect(page).to have_content ("สมศรี") }
+  end
+
+  it 'should see student on student_report, although student resigned' do
+    visit "/students"
+    sleep(1)
+    find("#options#{student[0].id}").click
+    first("a[onclick=\"openResignStudentModal(#{student[0].id})\"]").click
+    sleep(1)
+    eventually { expect(page).to have_content ('คุณต้องการเปลี่ยนสถานะนักเรียนคนนี้เป็น "ลาออก" ใช่หรือไม่?') }
+    find("a", text: "ตกลง").click
+    sleep(1)
+    visit "/somsri_invoice#/student_report"
+    sleep(1)
+    eventually { expect(page).to have_content ("สมศรี") }
+  end
+
+  it 'should see student on student_report, although student graduated' do
+    visit "/students"
+    sleep(1)
+    find("#options#{student[0].id}").click
+    first("a[onclick=\"openGraduateStudentModal(#{student[0].id})\"]").click
+    sleep(1)
+    eventually { expect(page).to have_content ('คุณต้องการเปลี่ยนสถานะนักเรียนคนนี้เป็น "จบการศึกษา" ใช่หรือไม่?') }
+    find("a", text: "ตกลง").click
     sleep(1)
     visit "/somsri_invoice#/student_report"
     sleep(1)

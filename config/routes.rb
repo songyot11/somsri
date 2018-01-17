@@ -77,6 +77,7 @@ Rails.application.routes.draw do
   resources :daily_reports
   resources :students do
     delete 'real_destroy'
+    delete 'destroy'
     member do
       post 'resign'
       post 'graduate'

@@ -1,6 +1,4 @@
 <%- model_class = Student -%>
-<%= javascript_include_tag 'print_student_list' %>
-<%= javascript_include_tag 'custom_bootstrap_table' %>
 <%= render 'layouts/messages' %>
 <div id="student-list-for-print" class="container only-print"></div>
 <div id="student-index" class="container-fluid only-view">
@@ -53,7 +51,6 @@
         </select>
       </div>
     </div>
-
     <table id="table"
     data-toggle="table"
     data-pagination="true"
@@ -74,7 +71,7 @@
           <th data-field="student_number" data-sortable="true">รหัสประจำตัวนักเรียน</th>
           <th data-field="gender_id" data-sortable="true">เพศ</th>
           <th data-field="birthdate" data-sortable="true">วันเกิด</th>
-          <th data-field="edit" ></th>
+          <th data-field="student_options" data-formatter="selectionFormatter"></th>
         </tr>
       </thead>
     </table>
@@ -99,3 +96,34 @@
     </tr>
   </thead>
 </table>
+
+<!-- Modal -->
+<div id="warningModal" class="modal fade" role="dialog">
+  <div class="modal-dialog">
+    <!-- Modal content-->
+    <div class="modal-content">
+      <div class="modal-body" id="modal-body">
+        <div class="row">
+          <div class="col-md-12">
+            <h4 class="modal-title" id="modal-title"></h4>
+          </div>
+        </div>
+        <div class="space20"></div>
+        <div class="space20"></div>
+        <div class="space20"></div>
+        <div class="row">
+          <div class="col-md-3 pull-right">
+            <button class="btn btn-custom btn-gray" data-dismiss="modal">ยกเลิก</button>
+          </div>
+          <div class="col-md-3 pull-right">
+            <%= form_tag("", id:"actionModalForm") do %>
+              <a class="btn btn-custom btn-red submit" onclick="document.getElementById('actionModalForm').submit();">ตกลง</a>
+            <% end %>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+<%= javascript_include_tag 'print_student_list' %>
+<%= javascript_include_tag 'custom_bootstrap_table' %>
