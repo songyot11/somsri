@@ -74,6 +74,7 @@ class Parent < ApplicationRecord
     if options[:index]
       return {
         parents:{
+          id: self.id,
           img_url: self.img_url.exists? ? self.img_url.url(:medium) : '',
           full_name: self.full_name,
           mobile: self.mobile,

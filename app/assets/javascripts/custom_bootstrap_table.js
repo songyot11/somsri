@@ -66,7 +66,7 @@ function imgTag(value, row, index){
   return '<div class="img-bg bg-light-gray circle"><i class="fa fa-user icon-default-img" aria-hidden="true"></i></div>'
 }
 
-function selectionFormatter(value, row, index){
+function selectionStudentFormatter(value, row, index){
   var html =
   '<span class="dropdown float-right">' +
     '<span div data-toggle="dropdown" id="options' + row.id + '">' +
@@ -116,6 +116,41 @@ function openResignStudentModal(id){
 function openGraduateStudentModal(id){
   $('#warningModal #modal-title').html("คุณต้องการเปลี่ยนสถานะนักเรียนคนนี้เป็น \"จบการศึกษา\" ใช่หรือไม่?")
   $('#warningModal #actionModalForm').prop("action", "/students/" + id + "/graduate")
+  $('#warningModal #actionModalForm').prop("method", "post")
+  $('#warningModal').modal()
+}
+
+function selectionParentFormatter(value, row, index){
+  if(row.parents && row.parents.id){
+    var id = row.parents.id
+    var html =
+    '<span class="dropdown float-right">' +
+      '<span div data-toggle="dropdown" id="options' + id + '">' +
+        "<span>ตัวเลือก <i class='fa fa-chevron-down'></i></span>" +
+      '</span>' +
+      '<ul class="dropdown-menu" aria-labelledby="options' + id + '">' +
+        '<li>' +
+          "<a href='/parents/" + id + "/edit'>" +
+            "<i class='fa fa-pencil-square-o' aria-hidden='true'></i> แก้ไข" +
+          '</a>' +
+        '</li>' +
+        '<li>' +
+          "<a onclick='openDeletedParentModal(" + id + ")'>" +
+            "<i class='fa fa-trash color-red' aria-hidden='true'></i> ลบข้อมูล" +
+          '</a>' +
+        '</li>' +
+      '</ul>' +
+    '</span>';
+    return html
+  }else{
+    return ""
+  }
+}
+
+function openDeletedParentModal(id){
+  $('#warningModal #modal-title').html("คุณต้องการลบผู้ปกครองคนนี้ใช่หรือไม่?")
+  $('#warningModal #actionModalForm').prop("action", "/parents/" + id)
+  $('#warningModal #actionModalForm').append('<input type="hidden" name="_method" value="delete">')
   $('#warningModal #actionModalForm').prop("method", "post")
   $('#warningModal').modal()
 }

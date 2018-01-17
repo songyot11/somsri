@@ -113,7 +113,7 @@ describe 'Invoice-Report', js: true do
   end
 
   it 'should not display soft deleted parent' do
-    parent_only.destroy
+    parent_only[0].destroy
     visit '/parents#/'
     sleep(1)
     eventually { expect(page).to have_content("สมศรี ใบเสร็จ") }
@@ -128,16 +128,33 @@ describe 'Invoice-Report', js: true do
     eventually { expect(page).to have_content("สมชาย ใบกระท่อม") }
   end
 
+  it 'should go to edit parent page' do
+    visit "/parents"
+    sleep(1)
+    first("#options#{parent[0].id}").click
+    first("a[href=\"/parents/#{parent[0].id}/edit\"]").click
+    sleep(1)
+    eventually { expect(page).to have_content("สมศรี ใบเสร็จ") }
+    eventually { expect(page).to have_content("ชื่อ-นามสกุล ชื่อเล่น") }
+    eventually { expect(page).to have_content("เพิ่มชื่อนักเรียน") }
+  end
+
   it 'should archive parent' do
-    visit "/parents/#{parent[0].id}/edit#/"
+    visit "/parents"
     sleep(1)
-    first('#parent_archive').click
+    first("#options#{parent[0].id}").click
+    first("a[onclick=\"openDeletedParentModal(#{parent[0].id})\"]").click
     sleep(1)
-    page.accept_alert
+    eventually { expect(page).to have_content ("คุณต้องการลบผู้ปกครองคนนี้ใช่หรือไม่?") }
+    find("a", text: "ตกลง").click
     sleep(1)
+
     parent[0].reload
+    eventually { expect(parent[0].deleted_at.blank?).to be_falsey }
+
+    visit "/parents"
     sleep(1)
-    eventually { expect(parent[0].deleted_at.blank?).to eq(false) }
+    eventually { expect(page).to_not have_content("สมศรี ใบเสร็จ") }
   end
 
   it 'should search and change page to other parent' do
@@ -186,35 +203,53 @@ describe 'Invoice-Report', js: true do
   end
 
   it 'should see parent on invoice slip, although parent is deleted' do
-    visit "/parents/#{parent[0].id}/edit#/"
+    visit "/parents"
     sleep(1)
-    first('#parent_archive').click
+    first("#options#{parent[0].id}").click
+    first("a[onclick=\"openDeletedParentModal(#{parent[0].id})\"]").click
     sleep(1)
-    page.accept_alert
+    eventually { expect(page).to have_content ("คุณต้องการลบผู้ปกครองคนนี้ใช่หรือไม่?") }
+    find("a", text: "ตกลง").click
     sleep(1)
+
+    parent[0].reload
+    eventually { expect(parent[0].deleted_at.blank?).to be_falsey }
+
     visit "/somsri_invoice#/invoice/#{invoice.id}/slip"
     sleep(1)
-    eventually { expect(page).to have_content ("สมศรี") }
+    eventually { expect(page).to have_content ("สมศรี ใบเสร็จ") }
   end
 
   it 'should see parent on student_report, although parent is deleted' do
-    visit "/parents/#{parent[0].id}/edit#/"
+    visit "/parents"
     sleep(1)
-    first('#parent_archive').click
+    first("#options#{parent[0].id}").click
+    first("a[onclick=\"openDeletedParentModal(#{parent[0].id})\"]").click
     sleep(1)
-    page.accept_alert
+    eventually { expect(page).to have_content ("คุณต้องการลบผู้ปกครองคนนี้ใช่หรือไม่?") }
+    find("a", text: "ตกลง").click
+    sleep(1)
+
+    parent[0].reload
+    eventually { expect(parent[0].deleted_at.blank?).to be_falsey }
     sleep(1)
     visit "/somsri_invoice#/student_report"
     sleep(1)
-    eventually { expect(page).to have_content ("สมศรี") }
+    eventually { expect(page).to have_content ("ลูกศรี ใบเสร็จ") }
   end
 
   it 'should see parent on invoice_report, although parent is deleted' do
-    visit "/parents/#{parent[0].id}/edit#/"
+    visit "/parents"
     sleep(1)
-    first('#parent_archive').click
+    first("#options#{parent[0].id}").click
+    first("a[onclick=\"openDeletedParentModal(#{parent[0].id})\"]").click
     sleep(1)
-    page.accept_alert
+    eventually { expect(page).to have_content ("คุณต้องการลบผู้ปกครองคนนี้ใช่หรือไม่?") }
+    find("a", text: "ตกลง").click
+    sleep(1)
+
+    parent[0].reload
+    eventually { expect(parent[0].deleted_at.blank?).to be_falsey }
     sleep(1)
     visit '/somsri_invoice#/invoice_report'
     sleep(1)

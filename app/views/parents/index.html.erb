@@ -56,7 +56,7 @@
           <th data-field="parents.email" data-sortable="true">อีเมล์</th>
           <th data-field="relationships.name" data-sortable="true">ความสัมพันธ์</th>
           <th data-field="students.full_name" data-sortable="true">ชื่อ-สกุลนักเรียน</th>
-          <th data-field="edit" ></th>
+          <th data-field="parent_options" data-formatter="selectionParentFormatter" ></th>
         </tr>
       </thead>
     </table>
@@ -78,3 +78,32 @@
     </tr>
   </thead>
 </table>
+
+<!-- Modal -->
+<div id="warningModal" class="modal fade" role="dialog">
+  <div class="modal-dialog">
+    <!-- Modal content-->
+    <div class="modal-content">
+      <div class="modal-body" id="modal-body">
+        <div class="row">
+          <div class="col-md-12">
+            <h4 class="modal-title" id="modal-title"></h4>
+          </div>
+        </div>
+        <div class="space20"></div>
+        <div class="space20"></div>
+        <div class="space20"></div>
+        <div class="row">
+          <div class="col-md-3 pull-right">
+            <button class="btn btn-custom btn-gray" data-dismiss="modal">ยกเลิก</button>
+          </div>
+          <div class="col-md-3 pull-right">
+            <%= form_tag("", id:"actionModalForm") do %>
+              <a class="btn btn-custom btn-red submit" onclick="document.getElementById('actionModalForm').submit();">ตกลง</a>
+            <% end %>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
