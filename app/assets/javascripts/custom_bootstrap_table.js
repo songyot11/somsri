@@ -68,9 +68,9 @@ function imgTag(value, row, index){
 
 function selectionStudentFormatter(value, row, index){
   var html =
-  '<span class="dropdown float-right">' +
+  '<span class="dropdown float-right cursor-pointer color-blue-link">' +
     '<span div data-toggle="dropdown" id="options' + row.id + '">' +
-      "<span>ตัวเลือก <i class='fa fa-chevron-down'></i></span>" +
+      "<span>ตัวเลือก <i class='fa fa-angle-down'></i></span>" +
     '</span>' +
     '<ul class="dropdown-menu dropdown-menu-right" aria-labelledby="options' + row.id + '">' +
       '<li>' +
@@ -124,9 +124,9 @@ function selectionParentFormatter(value, row, index){
   if(row.parents && row.parents.id){
     var id = row.parents.id
     var html =
-    '<span class="dropdown float-right">' +
+    '<span class="dropdown float-right cursor-pointer color-blue-link">' +
       '<span div data-toggle="dropdown" id="options' + id + '">' +
-        "<span>ตัวเลือก <i class='fa fa-chevron-down'></i></span>" +
+        "<span>ตัวเลือก <i class='fa fa-angle-down'></i></span>" +
       '</span>' +
       '<ul class="dropdown-menu dropdown-menu-right" aria-labelledby="options' + id + '">' +
         '<li>' +
