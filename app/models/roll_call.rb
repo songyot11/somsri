@@ -2,8 +2,6 @@ class RollCall < ApplicationRecord
   belongs_to :list
   belongs_to :student
 
-  acts_as_paranoid
-
   def self.get_by_date(employee, date)
     result = []
     lists = []
