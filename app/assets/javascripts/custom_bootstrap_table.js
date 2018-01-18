@@ -72,7 +72,7 @@ function selectionStudentFormatter(value, row, index){
     '<span div data-toggle="dropdown" id="options' + row.id + '">' +
       "<span>ตัวเลือก <i class='fa fa-chevron-down'></i></span>" +
     '</span>' +
-    '<ul class="dropdown-menu" aria-labelledby="options' + row.id + '">' +
+    '<ul class="dropdown-menu dropdown-menu-right" aria-labelledby="options' + row.id + '">' +
       '<li>' +
         "<a href='/students/" + row.id + "/edit'>" +
           "<i class='fa fa-pencil-square-o' aria-hidden='true'></i> แก้ไข" +
@@ -128,7 +128,7 @@ function selectionParentFormatter(value, row, index){
       '<span div data-toggle="dropdown" id="options' + id + '">' +
         "<span>ตัวเลือก <i class='fa fa-chevron-down'></i></span>" +
       '</span>' +
-      '<ul class="dropdown-menu" aria-labelledby="options' + id + '">' +
+      '<ul class="dropdown-menu dropdown-menu-right" aria-labelledby="options' + id + '">' +
         '<li>' +
           "<a href='/parents/" + id + "/edit'>" +
             "<i class='fa fa-pencil-square-o' aria-hidden='true'></i> แก้ไข" +

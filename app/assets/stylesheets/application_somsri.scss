@@ -292,6 +292,10 @@ hr {
   overflow: inherit !important;
 }
 
+.overflow-table .fixed-table-body {
+  overflow: inherit !important;
+}
+
 ul.dropdown-menu.display-top{
   transform: translateY(-100%);
   margin-top: -25px;

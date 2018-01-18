@@ -51,30 +51,32 @@
         </select>
       </div>
     </div>
-    <table id="table"
-    data-toggle="table"
-    data-pagination="true"
-    data-pagination-loop="false"
-    data-url="students.json"
-    data-side-pagination="server"
-    data-sort-name="classroom_id, classroom_number"
-    data-sort-order="asc"
-    data-query-params="queryParams">
-      <thead>
-        <tr>
-          <th data-field="classroom_number" data-sortable="true" data-cell-style="cellStyle">เลขที่ในห้อง</th>
-          <th data-field="img_url" data-formatter="imgTag"></th>
-          <th data-field="full_name" data-sortable="true">ชื่อ-สกุล</th>
-          <th data-field="nickname" data-sortable="true">ชื่อเล่น</th>
-          <th data-field="grade_id" data-sortable="true">ระดับชั้น</th>
-          <th data-field="classroom_id" data-sortable="true">ห้องเรียน</th>
-          <th data-field="student_number" data-sortable="true">รหัสประจำตัวนักเรียน</th>
-          <th data-field="gender_id" data-sortable="true">เพศ</th>
-          <th data-field="birthdate" data-sortable="true">วันเกิด</th>
-          <th data-field="student_options" data-formatter="selectionStudentFormatter"></th>
-        </tr>
-      </thead>
-    </table>
+    <div class="overflow-table">
+      <table id="table"
+      data-toggle="table"
+      data-pagination="true"
+      data-pagination-loop="false"
+      data-url="students.json"
+      data-side-pagination="server"
+      data-sort-name="classroom_id, classroom_number"
+      data-sort-order="asc"
+      data-query-params="queryParams">
+        <thead>
+          <tr>
+            <th data-field="classroom_number" data-sortable="true" data-cell-style="cellStyle">เลขที่ในห้อง</th>
+            <th data-field="img_url" data-formatter="imgTag"></th>
+            <th data-field="full_name" data-sortable="true">ชื่อ-สกุล</th>
+            <th data-field="nickname" data-sortable="true">ชื่อเล่น</th>
+            <th data-field="grade_id" data-sortable="true">ระดับชั้น</th>
+            <th data-field="classroom_id" data-sortable="true">ห้องเรียน</th>
+            <th data-field="student_number" data-sortable="true">รหัสประจำตัวนักเรียน</th>
+            <th data-field="gender_id" data-sortable="true">เพศ</th>
+            <th data-field="birthdate" data-sortable="true">วันเกิด</th>
+            <th data-field="student_options" data-formatter="selectionStudentFormatter"></th>
+          </tr>
+        </thead>
+      </table>
+    </div>
   </div>
 </div>
 
