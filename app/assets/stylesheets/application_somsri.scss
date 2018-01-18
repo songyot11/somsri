@@ -1,9 +1,9 @@
 .cursor-not-allowed {
-  cursor: not-allowed;
+  cursor: not-allowed !important;
 }
 
 .cursor-pointer {
-  cursor: pointer;
+  cursor: pointer !important;
 }
 
 .min-w-50 {
@@ -24,6 +24,26 @@
 
 .max-w-md {
   max-width: 960px !important;
+}
+
+.min-w-50 {
+  min-width: 50px !important;
+}
+
+.w-50 {
+  width: 50px !important;
+}
+
+.w-80 {
+  width: 80px !important;
+}
+
+.w-100 {
+  width: 100px !important;
+}
+
+.w-150 {
+  width: 150px !important;
 }
 
 .w-md {
@@ -169,7 +189,11 @@
 }
 
 .color-red {
-  color: #DD5A2B;
+  color: #DD5A2B !important;
+}
+
+.color-red.hover:hover{
+  color: #a50115 !important;
 }
 
 .color-orange {
@@ -306,5 +330,5 @@ ul.dropdown-menu.display-top{
 }
 
 .color-blue-link {
-  color: #337ab7;
+  color: #337ab7 !important;
 }

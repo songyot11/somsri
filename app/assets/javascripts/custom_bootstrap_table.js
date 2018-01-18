@@ -68,9 +68,9 @@ function imgTag(value, row, index){
 
 function selectionStudentFormatter(value, row, index){
   var html =
-  '<span class="dropdown float-right cursor-pointer color-blue-link">' +
+  '<span class="dropdown float-right cursor-pointer">' +
     '<span div data-toggle="dropdown" id="options' + row.id + '">' +
-      "<span>ตัวเลือก <i class='fa fa-angle-down'></i></span>" +
+      "<a class='color-blue-link'>ตัวเลือก <i class='fa fa-angle-down'></i></a>" +
     '</span>' +
     '<ul class="dropdown-menu dropdown-menu-right" aria-labelledby="options' + row.id + '">' +
       '<li>' +
@@ -96,6 +96,10 @@ function selectionStudentFormatter(value, row, index){
     '</ul>' +
   '</span>';
   return html
+}
+
+function linkToStudentEditFormatter(value, row, index){
+  return "<a class='color-blue-link' href='/students/"+ row.id + "/edit'>" + row.full_name + "</a>"
 }
 
 function openDeletedStudentModal(id){
@@ -124,9 +128,9 @@ function selectionParentFormatter(value, row, index){
   if(row.parents && row.parents.id){
     var id = row.parents.id
     var html =
-    '<span class="dropdown float-right cursor-pointer color-blue-link">' +
+    '<span class="dropdown float-right cursor-pointer cursor-pointer">' +
       '<span div data-toggle="dropdown" id="options' + id + '">' +
-        "<span>ตัวเลือก <i class='fa fa-angle-down'></i></span>" +
+        "<a class='color-blue-link'>ตัวเลือก <i class='fa fa-angle-down'></i></a>" +
       '</span>' +
       '<ul class="dropdown-menu dropdown-menu-right" aria-labelledby="options' + id + '">' +
         '<li>' +
@@ -145,6 +149,15 @@ function selectionParentFormatter(value, row, index){
   }else{
     return ""
   }
+}
+
+function linkToParentEditFormatter(value, row, index){
+  if(row.parents){
+    return "<a class='color-blue-link' href='/parents/"+ row.parents.id + "/edit'>" + row.parents.full_name + "</a>"
+  }else{
+    return ""
+  }
+
 }
 
 function openDeletedParentModal(id){

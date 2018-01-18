@@ -52,11 +52,11 @@
           display_top = " display-top "
         }
         if(row.id){
-          var html = '<span class="dropdown">' +
+          var html = '<span class="dropdown cursor-pointer">' +
             '<span id="classroom-list' + row.id + '" class="dropdown-label" data-toggle="dropdown">' +
-            '<span id="next-classroom-lable' + row.id + '" class="color-blue-link">' + getClassroomNameById(row.next_id) + ' </span>'+
+            '<a id="next-classroom-lable' + row.id + '" class="color-blue-link">' + getClassroomNameById(row.next_id) + ' </span>'+
               '<i class="fa fa-angle-down" aria-hidden="true"></i>' +
-            '</span>' +
+            '</a>' +
             '<ul class="dropdown-menu' + display_top + '" aria-labelledby="classroom-list">' +
               '<li>' +
                 '<a class="blue-highlight" onclick="' + angularCtrlStr + '.selectClassroom(' + row.id + ', null)">' +
