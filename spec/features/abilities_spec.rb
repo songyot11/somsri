@@ -11,6 +11,10 @@ describe 'Abilities', js: true do
     ]
   end
 
+  let(:enable_rollcall) do
+    SiteConfig.make!({ enable_rollcall: true })
+  end
+
   before do
     users[0].add_role :admin
     users[1].add_role :finance_officer
@@ -19,11 +23,12 @@ describe 'Abilities', js: true do
   describe 'Admin abilities' do
     before do
       login_as(users[0])
-      SiteConfig.stub_chain("get_cache.enable_rollcall").and_return(true)
+      enable_rollcall
     end
 
     it 'can goto main menu english' do
       visit "/?locale=en#"
+      save_screenshot("/Users/akiyama/Desktop/test1.jpg")
       sleep(1)
       expect(page).to have_current_path '/?locale=en#'
       expect(page).to have_content 'Payrolls Invoices Rollcalls Employees Parents Students'

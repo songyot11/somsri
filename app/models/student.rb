@@ -8,9 +8,9 @@ class Student < ApplicationRecord
   belongs_to :school
   has_and_belongs_to_many :parents, join_table: 'students_parents'
   has_and_belongs_to_many :relationships, join_table: "students_parents"
-  has_many :invoices, dependent: :restrict_with_exception
+  has_many :invoices
 
-  has_many :roll_calls, dependent: :destroy
+  has_many :roll_calls
   has_many :student_lists, dependent: :destroy
   alias_attribute :code, :id
   alias_attribute :number, :classroom_number
@@ -27,6 +27,7 @@ class Student < ApplicationRecord
 
   after_save :update_rollcall_list
   before_save :clean_full_name
+  after_destroy :manual_destroy_recursively
 
   def update_rollcall_list
     if self.classroom_id && self.classroom_id_changed?
@@ -301,6 +302,7 @@ class Student < ApplicationRecord
   end
 
   def self.search(search)
+    search.sub!(/^[0]+/,'') if search # remove leading by zero
     if search
       where("full_name ILIKE ? OR nickname ILIKE ? OR student_number::text ILIKE ? OR full_name_english ILIKE ? OR nickname_english ILIKE ? ",
        "%#{search}%", "%#{search}%", "%#{search}%" , "%#{search}%" , "%#{search}%" )
@@ -418,7 +420,7 @@ class Student < ApplicationRecord
 
   def invoice_screen_student_number_display
     if(student_number)
-      "#{student_number} - #{invoice_screen_full_name_display}"
+      "#{student_number} : #{invoice_screen_full_name_display}"
     else
       invoice_screen_full_name_display
     end
@@ -432,19 +434,71 @@ class Student < ApplicationRecord
     ActionController::Base.helpers.link_to I18n.t('.edit', :default => '<i class="fa fa-pencil-square-o" aria-hidden="true"></i> แก้ไข'.html_safe), edit_student_path(self) ,:class => 'btn-edit-student-parent'
   end
 
-  def gender
+  def gender 
     Gender.find_by_id_cached(gender_id)
   end
 
-  def restore
-    self.update(deleted_at: nil)
-    Alumni.where(student_id: self.id).destroy_all
+  def restore_recursively
+    Student.transaction do
+      deleted_min = self.deleted_at - 2.minutes
+      deleted_max = self.deleted_at + 2.minutes
+      # restore all destroy by dependent: :destroy
+      self.restore(recursive: true, recovery_window: 2.minutes)
+      # restore all manual destroy
+      student_parent = StudentsParent.with_deleted.where(student_id: self.id).first
+      student_parent.restore if student_parent
+      _parent_ids = self.parent_ids
+      Parent.with_deleted.where(id: _parent_ids, deleted_at: deleted_min..deleted_max).each do |parent|
+        parent.restore(recursive: true, recovery_window: 2.minutes)
+      end
+      # remove alumni
+      Alumni.where(student_id: self.id).destroy_all
+    end
+  end
+
+  def graduate
+    move_to_alumni("จบการศึกษา")
+  end
+
+  def resign
+    move_to_alumni("ลาออก")
+  end
+
+  def move_to_alumni(status)
+    Student.transaction do
+      if self.deleted_at.blank? && self.destroy
+        alumni = Alumni.newByStudent(self)
+        alumni.status = status
+        alumni.save
+      end
+    end
+  end
+
+  def manual_destroy_recursively
+    Student.transaction do
+      _parent_ids = self.parent_ids
+      Parent.where(id: _parent_ids).each do |parent|
+        if parent.students.length == 0
+          StudentsParent.where(parent_id: parent.id).first.destroy
+          parent.destroy
+        end
+      end
+      StudentsParent.where(student_id: self.id).destroy_all
+    end
+  end
+
+  def parent_ids
+    return StudentsParent.where(student_id: self.id).to_a.collect(&:parent_id)
+  end
+
+  def img_medium
+    self.img_url.exists? ? self.img_url.url(:medium) : ''
   end
 
   def as_json(options={})
     if options['index']
       return {
-        img_url: self.img_url.exists? ? self.img_url.url(:medium) : '',
+        img_url: self.img_medium,
         full_name: self.full_name_eng_thai_with_title,
         nickname: self.nickname_eng_thai,
         grade_id: self.grade.nil? ? "" : self.grade.name,
@@ -453,7 +507,15 @@ class Student < ApplicationRecord
         student_number: self.student_number,
         gender_id: self.gender.nil? ? "" : I18n.t(self.gender.name),
         birthdate: self.birthdate.nil? ? '' : self.birthdate.strftime('%d/%m/%Y'),
-        edit: edit
+        id: self.id
+      }
+
+
+    elsif options['autocomplete']
+      return {
+        id: self.id,
+        img_url: self.img_medium,
+        full_name_label: invoice_screen_student_number_display
       }
     elsif options['roll_call']
       roll_call_json = {

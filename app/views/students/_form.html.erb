@@ -145,7 +145,9 @@
       </div>
     </div>
   </div>
-
+  <div class="row add-st-pr">
+    <label for="parent" class="control-label">ผู้ปกครอง</label>
+  </div>
   <% if @student.new_record? || @student.parents.size == 0 %>
     <% 1.times do |index| %>
       <%= render :partial => 'add_parent', :locals => {:index => index, :ps => nil} %>
@@ -159,7 +161,7 @@
   <% end %>
 
   <div id="add-parent"></div>
-  <a id="parent-link" class="btn-add-st">+ เพิ่มชื่อผู้ปกครอง</a>
+  <a id="parent-link" class="btn btn-custom sm btn-green">+ เพิ่มชื่อผู้ปกครอง</a>
 
   <div class="row add-st-pr">
     <div class="col-md-12">
@@ -177,15 +179,6 @@
 
       <%= link_to t('.cancel', :default => t("helpers.links.cancel")),
       students_path, :class => 'btn btn-cancel' %>
-
-      <% if controller.controller_name == "students" && controller.action_name == "edit" %>
-        <%= link_to "<i class='fa fa-trash'></i> ลบ".html_safe ,
-                resign_student_path(@student) ,
-                :id => 'student_remove' ,
-                :method => :post ,
-                :data => { :confirm => t('.confirm', :default => t("helpers.links.confirm.student_confirm", :default => 'Are you sure?')) } ,
-                :class => 'btn btn-remove-sp'%>
-      <% end %>
   </div>
 </div>
 <% end %>
@@ -203,8 +196,19 @@ function gen_selectize(round) {
   }
 }
 
-function autocompleteMobile(target){
+function parentChanged(target){
   var index = $(target).attr("index")
+
+  // enable relationship and mobile
+  if($(target).val()){
+    $("#relationship" + index).prop("disabled", false)
+    $("#mobile" + index).prop("disabled", false)
+  }else{
+    $("#relationship" + index).prop("disabled", true)
+    $("#mobile" + index).prop("disabled", true)
+  }
+
+  // autocomplete mobile
   var parentMobile = []
   <% @parents.each do |ps| %>
     parentMobile.push({id: '<%= ps.id %>', mobile: '<%= ps.mobile %>'})
@@ -223,10 +227,9 @@ $(function() {
     round = round + 1;
     $('#add-parent').append(
       '<div class="form-group" id="add-prn-'+round+'">\
-        <label for="parent" class="control-label">ผู้ปกครอง</label>\
         <div class="row add-st-pr">\
           <div class="col-md-5" style="margin-left:15px;">\
-            <select id="parent'+round+'" name="parent[]" index="'+round+'" onchange="autocompleteMobile(this)"  placeholder="Select parent...">\
+            <select id="parent'+round+'" name="parent[]" index="'+round+'" onchange="parentChanged(this)"  placeholder="Select parent...">\
               <option value="" disabled selected></option>\
               <% @parents.each do |p| %>\
                 <option value="<%= p.id %>"><%= p.full_name %></option>\
@@ -234,14 +237,14 @@ $(function() {
             </select>\
           </div>\
           <div class="col-md-2">\
-            <select id="relationship'+round+'" name="relationship[]" class="form-control">\
+            <select id="relationship'+round+'" name="relationship[]" class="form-control" disabled="true">\
               <% @relations.each do |r| %>\
                 <option value="<%= r.id %>"><%= t(r.name) %></option>\
               <% end %>\
             </select>\
           </div>\
           <div class="col-md-3">\
-            <input type="text" id="mobile'+round+'" placeholder="โทรศัพท์" name="mobile[]" class="form-control">\
+            <input type="text" id="mobile'+round+'" placeholder="โทรศัพท์" name="mobile[]" class="form-control" disabled="true">\
           </div>\
           <div class="col-md-1">\
             <button type="button" class="btn btn-delete-sp" onclick="remove_parent('+round+')"><i class="fa fa-times"></i></button>\

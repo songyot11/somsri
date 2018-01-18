@@ -6,8 +6,6 @@
     $rootScope.menu = "ตั้งค่า"
     var ctrl = this
     ctrl.grade_select = null
-    ctrl.isStudentPromoteEnable = false
-    ctrl.isStudentPromoteReady = false
 
     function openConfirmationModal(message, success, dismiss) {
       $scope.message = message;
@@ -45,8 +43,8 @@
 
     var angularCtrlStr = "angular.element(document.getElementById('angularCtrl')).scope().classroom"
     function editBtnFormatter(index, row, element){
-      var html = '<a href="/main#/classroom/' + row.classroom_id + '"><i class="fa fa-pencil" aria-hidden="true"></i></a>&nbsp;&nbsp;&nbsp;';
-      html += '<a onclick="' + angularCtrlStr + '.removeClassroom(' + row.classroom_id + ')"><i class="fa fa-times color-red hover hover-pointer" aria-hidden="true"></i></a>';
+      var html = '<a href="/main#/classroom/' + row.classroom_id + '"><i class="fa fa-pencil" aria-hidden="true"></i> แก้ไข</a>&nbsp;&nbsp;&nbsp;';
+      html += '<a class="color-red hover" onclick="' + angularCtrlStr + '.removeClassroom(' + row.classroom_id + ')"><i class="fa fa-times" aria-hidden="true"></i> ลบ</a>';
       return html;
     }
 
@@ -56,7 +54,7 @@
         { field: 'classroom', sortable: true, title: "ห้องเรียน"},
         { field: 'teacher_count', sortable: true, title: "จำนวนครู"},
         { field: 'student_count', sortable: true, title: "จำนวนนักเรียน"},
-        { field: 'link', formatter: editBtnFormatter}
+        { field: 'link', class: "text-right", formatter: editBtnFormatter}
       ]
       $('#classroom-list').bootstrapTable({
         url: "/classrooms/classroom_list",
@@ -103,16 +101,8 @@
           $('#classroom-list').bootstrapTable('filterBy', {});
         }
       }
-      service.getIsStudentPromoteEnable().then(function(resp) {
-        ctrl.isStudentPromoteEnable = resp.data[0]
-        ctrl.isStudentPromoteReady = true
-      })
       ctrl.studentPromote = function(){
-        openConfirmationModal("คุณต้องการเลื่อนชั้นเรียนให้กับนักเรียนทั้งหมดใช่หรือไม่?", function(){
-          service.getStudentPromote().then(function(resp) {
-            $window.location.reload();
-          });
-        })
+        $rootScope.openNextClassroomList();
       }
       initBootstrapTable()
     });

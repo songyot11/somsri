@@ -28,9 +28,9 @@
         </div>
         <div class="col-md-6 col-btn-print-report">
 
-          <button class="btn-to-print-report" ng-click="invoiceReport.getStudentsForPrint()"><i class="fa fa-print"></i></button>
+          <button class="btn btn-custom btn-black mr-5" ng-click="invoiceReport.getStudentsForPrint()"><i class="fa fa-print"></i></button>
 
-          <button class="btn-exportBs-report" id="exportTable"><i class="fa fa-share-square-o" aria-hidden="true"></i> Export</button>
+          <button class="btn btn-custom btn-blue-sky" id="exportTable"><i class="fa fa-share-square-o" aria-hidden="true"></i> Export</button>
 
         </div>
       </div>
@@ -101,8 +101,12 @@
         คุณต้องการยกเลิกใบเสร็จนี้หรือไม่
       </div>
       <div class="modal-footer">
-        <button type="button" class="btn btn-submit" ng-click="invoiceReport.cancelInvoice()">ใช่</button>
-        <button type="button" class="btn btn-cancel" data-dismiss="modal">ไม่ใช่</button>
+        <div class="col-md-offset-6 col-md-3">
+          <button type="button" class="btn btn-custom btn-blue" ng-click="invoiceReport.cancelInvoice()">ใช่</button>
+        </div>
+        <div class="col-md-3">
+          <button type="button" class="btn  btn-custom btn-gray" data-dismiss="modal">ไม่ใช่</button>
+        </div>
       </div>
     </div>
   </div>

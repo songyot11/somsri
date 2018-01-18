@@ -2,13 +2,20 @@
   'use strict';
   angular.module('somsri.invoice.studentReport.service', [
   ])
-  .service('studentReportService', ['$http', function($http) {
+  .service('studentReportService', ['$http', '$q', function($http, $q) {
+
+    var getStudentsCanceler = $q.defer()
     this.getStudents = function(grade_name, page, year, semester, status) {
-      return $http.get('/student_report', { params: { grade_select: grade_name, page: page, year_select: year, semester_select: semester, status: status } })
+      getStudentsCanceler.resolve()
+      getStudentsCanceler = $q.defer()
+      return $http.get('/student_report', { timeout: getStudentsCanceler.promise, params: { grade_select: grade_name, page: page, year_select: year, semester_select: semester, status: status } })
     }
 
+    var getStudentsWithoutPaginationCanceler = $q.defer()
     this.getStudentsWithoutPagination = function(grade_name, year, semester, status) {
-      return $http.get('/student_report', { params: { grade_select: grade_name, all: true, year_select: year, semester_select: semester, status: status } })
+      getStudentsWithoutPaginationCanceler.resolve()
+      getStudentsWithoutPaginationCanceler = $q.defer()
+      return $http.get('/student_report', {  timeout: getStudentsWithoutPaginationCanceler.promise, params: { grade_select: grade_name, all: true, year_select: year, semester_select: semester, status: status } })
     }
 
     this.getGrades = function() {

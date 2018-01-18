@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20171213061844) do
+ActiveRecord::Schema.define(version: 20180115112004) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -408,6 +408,8 @@ ActiveRecord::Schema.define(version: 20171213061844) do
     t.string   "round"
     t.string   "check_date"
     t.integer  "list_id"
+    t.datetime "deleted_at"
+    t.index ["deleted_at"], name: "index_roll_calls_on_deleted_at", using: :btree
     t.index ["list_id"], name: "index_roll_calls_on_list_id", using: :btree
     t.index ["student_id", "list_id", "check_date", "round"], name: "index_roll_calls_uniq_roll", unique: true, using: :btree
     t.index ["student_id"], name: "index_roll_calls_on_student_id", using: :btree
@@ -452,6 +454,7 @@ ActiveRecord::Schema.define(version: 20171213061844) do
     t.integer "student_number_leading_zero",          default: 0
     t.boolean "one_slip_per_page",                    default: false
     t.boolean "export_ktb_payroll",                   default: false
+    t.boolean "outstanding_notification",             default: false
   end
 
   create_table "student_lists", force: :cascade do |t|
@@ -459,6 +462,8 @@ ActiveRecord::Schema.define(version: 20171213061844) do
     t.integer  "list_id"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.datetime "deleted_at"
+    t.index ["deleted_at"], name: "index_student_lists_on_deleted_at", using: :btree
     t.index ["list_id"], name: "index_student_lists_on_list_id", using: :btree
     t.index ["student_id"], name: "index_student_lists_on_student_id", using: :btree
   end
@@ -497,6 +502,8 @@ ActiveRecord::Schema.define(version: 20171213061844) do
     t.integer  "relationship_id"
     t.datetime "created_at",      null: false
     t.datetime "updated_at",      null: false
+    t.datetime "deleted_at"
+    t.index ["deleted_at"], name: "index_students_parents_on_deleted_at", using: :btree
   end
 
   create_table "tax_reductions", force: :cascade do |t|

@@ -3,11 +3,19 @@
 
   angular.module('somsri.payroll.report.service', [
   ])
-  .service('reportService', ['$http', function($http) {
+  .service('reportService', ['$http', '$q', function($http, $q) {
     var time_zone = $('#time_zone').set_timezone().val()
 
+    var getPayrollCanceler = $q.defer()
     this.getPayroll = function(effectiveDate) {
-      return $http.get('/payrolls', { params: { effective_date: encodeURI(effectiveDate) } });
+      getPayrollCanceler.resolve()
+      getPayrollCanceler = $q.defer()
+      return $http.get('/payrolls', {
+        timeout: getPayrollCanceler.promise,
+        params: {
+          effective_date: encodeURI(effectiveDate)
+        }
+      });
     }
 
     this.getMonths = function(employeeId) {

@@ -102,7 +102,7 @@ class ParentsController < ApplicationController
   end
 
   def restore
-    Parent.restore(params[:parent_id])
+    Parent.with_deleted.find(params[:parent_id]).restore_recursively
     respond_to do |format|
       format.html { redirect_to parents_url}
       format.json { head :no_content }
@@ -127,6 +127,11 @@ class ParentsController < ApplicationController
 
   def upload_photo
     @parent = Parent.where(id: params[:id]).update( upload_photo_params )
+  end
+
+  def get_autocomplete
+    @parents = Parent.search_by_name_and_mobile(params[:search])
+    render json: @parents.limit(10).as_json({ autocomplete: true }), status: :ok
   end
 
   private
@@ -155,7 +160,7 @@ class ParentsController < ApplicationController
       rel_params = params[:relationship]
 
       std_rel = Hash.new
-      if !std_params.nil?
+      if !std_params.nil? && !rel_params.nil?
         std_params.each_with_index { |value, index| std_rel[value] = rel_params[index] }
       end
       std_params = std_rel.keys
@@ -199,7 +204,7 @@ class ParentsController < ApplicationController
         qry_filter2 = "(grades.id = #{grade.id} AND classrooms.id = #{classroom.id}) and"
       end
 
-      where_sql = " where #{qry_filter2} (parents.full_name LIKE '%#{search}%' OR parents.full_name_english LIKE '%#{search}%' OR parents.email LIKE '%#{search}%' OR parents.mobile LIKE '%#{search}%' OR students.full_name LIKE '%#{search}%' OR students.full_name_english LIKE '%#{search}%')"
+      where_sql = " where parents.deleted_at IS NULL AND ( #{qry_filter2} (parents.full_name LIKE '%#{search}%' OR parents.full_name_english LIKE '%#{search}%' OR parents.email LIKE '%#{search}%' OR parents.mobile LIKE '%#{search}%' OR students.full_name LIKE '%#{search}%' OR students.full_name_english LIKE '%#{search}%') )"
       order_sql = sort || order ? " order by #{sort || ''} #{order || ''}" : ""
       arr_parents = Parent.find_by_sql("select parents.id, parents.full_name ,parents.mobile,parents.email,relationships.name, students.full_name as student_name, students.id as student_id from parents left outer join students_parents on students_parents.id IN ( select students_parents.id from students_parents left join students on students_parents.student_id = students.id left join grades on students.grade_id = grades.id left join classrooms on students.classroom_id = classrooms.id where students_parents.parent_id = parents.id #{qry_filter} limit 1) left join students on students_parents.student_id = students.id left join relationships on relationships.id=students_parents.relationship_id left join grades on students.grade_id = grades.id left join classrooms on students.classroom_id = classrooms.id" + where_sql + order_sql).paginate(page: page, per_page: per_page)
 

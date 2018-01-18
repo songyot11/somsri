@@ -6,6 +6,8 @@ class HomeController < ApplicationController
       else
         redirect_to new_user_session_path
       end
+    else
+      @is_outstanding = SiteConfig.get_cache.outstanding_notification
     end
   end
 

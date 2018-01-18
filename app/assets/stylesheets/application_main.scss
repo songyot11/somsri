@@ -140,7 +140,7 @@
 }
 
 .color-red {
-  color: #d0021b;
+  color: #DD5A2B;
 }
 
 .color-red.hover:hover {
@@ -153,24 +153,6 @@
 
 #classroom-edit .tab-content{
   margin-top: 20px;
-}
-
-.btn-blue{
-  font-family: 'Maitree', serif;
-  background-color: #3fa1e6;
-  color: #fff;
-  font-size: 16px;
-  padding: 12px 32px;
-  letter-spacing: 1px;
-  border: 2px solid #3fa1e6;
-  border-radius: 0px;
-  transition: all 0.25s ease;
-
-  &:hover{
-    background-color: transparent;
-    border:2px solid #3fa1e6;
-    color: #3fa1e6;
-  }
 }
 
 .btn-white{

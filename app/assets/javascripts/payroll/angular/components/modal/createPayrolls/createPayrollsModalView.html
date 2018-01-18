@@ -23,10 +23,10 @@
     <div class="space20"></div>
     <div class="row">
       <div class="col-md-6 text-center">
-        <button type="submit" ng-disabled="createPayrolls.isSaving" ng-class="{'btn-submit': !createPayrolls.isSaving, 'btn-cancel': createPayrolls.isSaving}" class="btn btn-lg btn-block">บันทึก <i ng-show="createPayrolls.isSaving" class="fa fa-spinner fa-spin" aria-hidden="true"></i></button>
+        <button type="submit" ng-disabled="createPayrolls.isSaving" ng-class="{'btn-green': !createPayrolls.isSaving, 'btn-gray': createPayrolls.isSaving}" class="btn btn-custom btn-block">บันทึก <i ng-show="createPayrolls.isSaving" class="fa fa-spinner fa-spin" aria-hidden="true"></i></button>
       </div>
       <div class="col-md-6 text-center">
-        <button type="button" ng-disabled="createPayrolls.isSaving" class="btn btn-lg btn-block btn-cancel" ng-click="createPayrolls.cancel()">ยกเลิก</button>
+        <button type="button" ng-disabled="createPayrolls.isSaving" class="btn btn-custom btn-gray btn-block" ng-click="createPayrolls.cancel()">ยกเลิก</button>
       </div>
     </div>
   </form>

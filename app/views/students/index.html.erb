@@ -1,30 +1,27 @@
 <%- model_class = Student -%>
-<%= javascript_include_tag 'print_student_list' %>
-<%= javascript_include_tag 'custom_bootstrap_table' %>
 <%= render 'layouts/messages' %>
 <div id="student-list-for-print" class="container only-print"></div>
 <div id="student-index" class="container-fluid only-view">
   <div class="row head-sp">
-    <div class="col-xs-6">
+    <div class="col-xs-6 mb-20">
       <h1>นักเรียน</h1>
     </div>
-    <div class="col-xs-6" style="text-align: right; margin-top: 15px;">
-
-    <span class="dropdown float-right">
-      <span div data-toggle="dropdown" class="btn btn-to-print-student" id="print-student-list">
-        พิมพ์รายชื่อ <i class='fa fa-chevron-down'></i>
+    <div class="col-xs-6 px-0 mt-15" style="text-align: right;">
+      <span class="dropdown float-right">
+        <span div data-toggle="dropdown" class="btn btn-custom btn-black mr-5" id="print-student-list">
+          พิมพ์รายชื่อ <i class='fa fa-chevron-down'></i>
+        </span>
+        <ul class="dropdown-menu mt-15" aria-labelledby="print-student-list">
+          <li><a target="_blank" id="print-student-list-with-image" href="/students.pdf?for_print=true">แสดงรูป</a></li>
+          <li><a href="#" onclick='printStudent()'>ไม่แสดงรูป</a></li>
+        </ul>
       </span>
-      <ul style="margin-top: 10px" class="dropdown-menu" aria-labelledby="print-student-list">
-        <li><a target="_blank" id="print-student-list-with-image" href="/students.pdf?for_print=true">แสดงรูป</a></li>
-        <li><a href="#" onclick='printStudent()'>ไม่แสดงรูป</a></li>
-      </ul>
-    </span>
 
-      <%= link_to ('<i class="fa fa-share-square-o" aria-hidden="true"></i> Export').html_safe, "#", :class => 'btn btn-export float-right', :onclick => 'exportTable("students")' %>
+      <%= link_to ('<i class="fa fa-share-square-o" aria-hidden="true"></i> Export').html_safe, "#", :class => 'btn btn-custom btn-blue-sky float-right mr-5', :onclick => 'exportTable("students")' %>
 
       <%= link_to t('.addstudent', :default => t("helpers.links.addstudent")),
       new_student_path,
-      :class => 'btn btn-add-ps float-right' %>
+      :class => 'btn btn-custom btn-blue float-right' %>
     </div>
   </div>
 
@@ -54,31 +51,32 @@
         </select>
       </div>
     </div>
-
-    <table id="table"
-    data-toggle="table"
-    data-pagination="true"
-    data-pagination-loop="false"
-    data-url="students.json"
-    data-side-pagination="server"
-    data-sort-name="classroom_id, classroom_number"
-    data-sort-order="asc"
-    data-query-params="queryParams">
-      <thead>
-        <tr>
-          <th data-field="classroom_number" data-sortable="true" data-cell-style="cellStyle">เลขที่ในห้อง</th>
-          <th data-field="img_url" data-formatter="imgTag"></th>
-          <th data-field="full_name" data-sortable="true">ชื่อ-สกุล</th>
-          <th data-field="nickname" data-sortable="true">ชื่อเล่น</th>
-          <th data-field="grade_id" data-sortable="true">ระดับชั้น</th>
-          <th data-field="classroom_id" data-sortable="true">ห้องเรียน</th>
-          <th data-field="student_number" data-sortable="true">รหัสประจำตัวนักเรียน</th>
-          <th data-field="gender_id" data-sortable="true">เพศ</th>
-          <th data-field="birthdate" data-sortable="true">วันเกิด</th>
-          <th data-field="edit" ></th>
-        </tr>
-      </thead>
-    </table>
+    <div class="overflow-table">
+      <table id="table"
+      data-toggle="table"
+      data-pagination="true"
+      data-pagination-loop="false"
+      data-url="students.json"
+      data-side-pagination="server"
+      data-sort-name="classroom_id, classroom_number"
+      data-sort-order="asc"
+      data-query-params="queryParams">
+        <thead>
+          <tr>
+            <th data-field="classroom_number" data-sortable="true" data-cell-style="cellStyle">เลขที่ในห้อง</th>
+            <th data-field="img_url" data-formatter="imgTag"></th>
+            <th data-field="full_name" data-formatter="linkToStudentEditFormatter" data-sortable="true">ชื่อ-สกุล</th>
+            <th data-field="nickname" data-sortable="true">ชื่อเล่น</th>
+            <th data-field="grade_id" data-sortable="true">ระดับชั้น</th>
+            <th data-field="classroom_id" data-sortable="true">ห้องเรียน</th>
+            <th data-field="student_number" data-sortable="true">รหัสประจำตัวนักเรียน</th>
+            <th data-field="gender_id" data-sortable="true">เพศ</th>
+            <th data-field="birthdate" data-sortable="true">วันเกิด</th>
+            <th data-field="student_options" data-formatter="selectionStudentFormatter"></th>
+          </tr>
+        </thead>
+      </table>
+    </div>
   </div>
 </div>
 
@@ -100,3 +98,34 @@
     </tr>
   </thead>
 </table>
+
+<!-- Modal -->
+<div id="warningModal" class="modal fade" role="dialog">
+  <div class="modal-dialog">
+    <!-- Modal content-->
+    <div class="modal-content">
+      <div class="modal-body" id="modal-body">
+        <div class="row">
+          <div class="col-md-12">
+            <h4 class="modal-title" id="modal-title"></h4>
+          </div>
+        </div>
+        <div class="space20"></div>
+        <div class="space20"></div>
+        <div class="space20"></div>
+        <div class="row">
+          <div class="col-md-3 pull-right">
+            <button class="btn btn-custom btn-gray" data-dismiss="modal">ยกเลิก</button>
+          </div>
+          <div class="col-md-3 pull-right">
+            <%= form_tag("", id:"actionModalForm") do %>
+              <a class="btn btn-custom btn-red submit" onclick="document.getElementById('actionModalForm').submit();">ตกลง</a>
+            <% end %>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+<%= javascript_include_tag 'print_student_list' %>
+<%= javascript_include_tag 'custom_bootstrap_table' %>

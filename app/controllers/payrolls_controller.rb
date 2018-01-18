@@ -22,10 +22,63 @@ class PayrollsController < ApplicationController
       (tmp_path, filename) = generate_ktb_salary_xls(effective_date, payrolls)
       send_file(tmp_path + filename, filename: filename, :disposition => 'inline', :type => 'application/xls')
     else
-      render json: {
-        payrolls: payrolls.as_json("report"),
-        export_ktb_payroll: SiteConfig.get_cache.export_ktb_payroll
-      }, status: :ok
+      respond_to do |format|
+        format.html do
+          render json: {
+            payrolls: payrolls.as_json("report"),
+            export_ktb_payroll: SiteConfig.get_cache.export_ktb_payroll
+          }, status: :ok
+        end
+        format.pdf do
+          @results = payrolls.as_json("report")
+          @effective_date_str = "เดือนปัจจุบัน"
+          filename = "เงินเดือน-เดือนปัจจุบัน"
+          if effective_date
+            filename = "เงินเดือน-#{effective_date.strftime("%d-%m-%Y")}"
+            @effective_date_str = to_thai_date(effective_date).join(" ")
+          end
+          @total = {
+            salary: 0,
+            ot: 0,
+            position_allowance: 0,
+            allowance: 0,
+            attendance_bonus: 0,
+            bonus: 0,
+            extra_etc: 0,
+            absence: 0,
+            late: 0,
+            tax: 0,
+            social_insurance: 0,
+            pvf: 0,
+            advance_payment: 0,
+            fee_etc: 0,
+            net_salary: 0
+          }
+          @results.each do |result|
+            @total[:salary] += result[:salary]
+            @total[:ot] += result[:ot]
+            @total[:position_allowance] += result[:position_allowance]
+            @total[:allowance] += result[:allowance]
+            @total[:attendance_bonus] += result[:attendance_bonus]
+            @total[:bonus] += result[:bonus]
+            @total[:extra_etc] += result[:extra_etc]
+            @total[:absence] += result[:absence]
+            @total[:late] += result[:late]
+            @total[:tax] += result[:tax]
+            @total[:social_insurance] += result[:social_insurance]
+            @total[:pvf] += result[:pvf]
+            @total[:advance_payment] += result[:advance_payment]
+            @total[:fee_etc] += result[:fee_etc]
+            @total[:net_salary] += result[:net_salary]
+          end
+          render pdf: filename,
+                  template: "pdf/payroll.html.erb",
+                  orientation: "Landscape",
+                  encoding: "UTF-8",
+                  layout: 'pdf.html',
+                  show_as_html: params[:html_view].present?
+        end
+      end
     end
   end
 

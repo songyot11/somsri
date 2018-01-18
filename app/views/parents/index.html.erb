@@ -3,19 +3,14 @@
 <%= render 'layouts/messages' %>
 <div id="parent-index">
   <div class="row head-sp">
-    <div class="col-xs-6">
+    <div class="col-xs-6 mb-20">
       <h1>ผู้ปกครอง</h1>
     </div>
-
-    <div class="col-xs-6" style="text-align: right; margin-top: 10px;">
-
-      <%= link_to ('<i class="fa fa-share-square-o" aria-hidden="true"></i> Export').html_safe, "#", :class => 'btn btn-exportBs float-right', :onclick => 'exportTable("parents")' %> 
-
-      <%= link_to t('.addparent', :default => t("helpers.links.addparent")), new_parent_path, :class => 'btn btn-add-ps float-right'%>
-
+    <div class="col-xs-6 mt-10 px-0" style="text-align: right;">
+      <%= link_to ('<i class="fa fa-share-square-o" aria-hidden="true"></i> Export').html_safe, "#", :class => 'btn btn-custom btn-blue-sky float-right mr-5', :onclick => 'exportTable("parents")' %>
+      <%= link_to t('.addparent', :default => t("helpers.links.addparent")), new_parent_path, :class => 'btn btn-custom btn-blue float-right'%>
     </div>
   </div>
-
   <div class="content-student-parent">
     <div class="row toolbar-student-parent">
       <div class="col-xs-6">
@@ -24,7 +19,7 @@
           <input class="form-control" id="search" type="text" placeholder="ค้นหา" onchange="search()" onkeyup="this.onchange()">
         </div>
       </div>
-      <div class="col-xs-6 select-filter">  
+      <div class="col-xs-6 select-filter">
         <span>เลือกระดับชั้น</span>
         <select name="grade_select" id="grade_select" class="btn-grades selectpicker" onchange="filter()">
           <option value='all'>ทั้งหมด</option>
@@ -32,7 +27,7 @@
           <option value="<%= grade.name %>"<%= @filter_grade.to_s == grade.name.to_s ? "selected" : "" %>> <%= grade.name %> </option>
           <% end %>
         </select>
-        
+
         <span>เลือกตามห้อง</span>
         <select name="class_select" id="class_select"  onchange="filter()" class="btn-grades selectpicker">
           <option value='all'>ทั้งหมด</option>
@@ -42,29 +37,30 @@
         </select>
       </div>
     </div>
-
-    <table id="table"
-    data-toggle="table"
-    data-pagination="true"
-    data-pagination-loop="false"
-    data-url="parents.json"
-    data-side-pagination="server"
-    data-sort-name="parents.full_name"
-    data-sort-order="asc"
-    data-query-params-type="page"
-    data-query-params="queryParams"  >
-      <thead>
-        <tr>
-          <th data-field="parents.img_url" data-formatter="imgTag"></th>
-          <th data-field="parents.full_name" data-sortable="true" style="width: 300px;" >ชื่อ-สกุล</th>
-          <th data-field="parents.mobile" data-sortable="true">โทรศัพท์</th>
-          <th data-field="parents.email" data-sortable="true">อีเมล์</th>
-          <th data-field="relationships.name" data-sortable="true">ความสัมพันธ์</th>
-          <th data-field="students.full_name" data-sortable="true">ชื่อ-สกุลนักเรียน</th>
-          <th data-field="edit" ></th>
-        </tr>
-      </thead>
-    </table>
+    <div class="overflow-table">
+      <table id="table"
+      data-toggle="table"
+      data-pagination="true"
+      data-pagination-loop="false"
+      data-url="parents.json"
+      data-side-pagination="server"
+      data-sort-name="parents.full_name"
+      data-sort-order="asc"
+      data-query-params-type="page"
+      data-query-params="queryParams"  >
+        <thead>
+          <tr>
+            <th data-field="parents.img_url" data-formatter="imgTag"></th>
+            <th data-field="parents.full_name" data-formatter="linkToParentEditFormatter" data-sortable="true" style="width: 300px;" >ชื่อ-สกุล</th>
+            <th data-field="parents.mobile" data-sortable="true">โทรศัพท์</th>
+            <th data-field="parents.email" data-sortable="true">อีเมล์</th>
+            <th data-field="relationships.name" data-sortable="true">ความสัมพันธ์</th>
+            <th data-field="students.full_name" data-sortable="true">ชื่อ-สกุลนักเรียน</th>
+            <th data-field="parent_options" data-formatter="selectionParentFormatter" ></th>
+          </tr>
+        </thead>
+      </table>
+    </div>
   </div>
 </div>
 
@@ -72,7 +68,7 @@
   data-toggle="table"
   data-side-pagination="server"
   data-tableexport-display="always"
-  style="display: none;">     
+  style="display: none;">
   <thead>
     <tr>
       <th data-field="parents.full_name" style="width: 300px;" >ชื่อ-สกุล</th>
@@ -83,3 +79,32 @@
     </tr>
   </thead>
 </table>
+
+<!-- Modal -->
+<div id="warningModal" class="modal fade" role="dialog">
+  <div class="modal-dialog">
+    <!-- Modal content-->
+    <div class="modal-content">
+      <div class="modal-body" id="modal-body">
+        <div class="row">
+          <div class="col-md-12">
+            <h4 class="modal-title" id="modal-title"></h4>
+          </div>
+        </div>
+        <div class="space20"></div>
+        <div class="space20"></div>
+        <div class="space20"></div>
+        <div class="row">
+          <div class="col-md-3 pull-right">
+            <button class="btn btn-custom btn-gray" data-dismiss="modal">ยกเลิก</button>
+          </div>
+          <div class="col-md-3 pull-right">
+            <%= form_tag("", id:"actionModalForm") do %>
+              <a class="btn btn-custom btn-red submit" onclick="document.getElementById('actionModalForm').submit();">ตกลง</a>
+            <% end %>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

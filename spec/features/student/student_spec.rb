@@ -36,6 +36,35 @@ describe 'Student', js: true do
     ]
   end
 
+  let(:student_more) do
+    [
+      Student.make!({
+        first_name: 'แกรน',
+        last_name: 'เนตโต้',
+        grade_id: grade.id,
+        classroom_number: 101,
+        student_number: 3001,
+        birthdate: Time.now
+      }),
+      Student.make!({
+        first_name: 'เรน',
+        last_name: 'โบว์',
+        grade_id: grade.id,
+        classroom_number: 102,
+        student_number: 3002,
+        birthdate: Time.now
+      }),
+      Student.make!({
+        first_name: 'แฟรงค์',
+        last_name: 'คลาวด์',
+        grade_id: grade.id,
+        classroom_number: 103,
+        student_number: 3003,
+        birthdate: Time.now
+      })
+    ]
+  end
+
   let(:parent) do
     [
       Parent.make!({full_name: 'ฉันเป็น สุภาพบุรุษนะครับ', mobile: "080-0987654"})
@@ -61,7 +90,7 @@ describe 'Student', js: true do
       user_id: user.id,
       parent_id: parent[0].id,
       invoice_status_id:  invoice_status_1.id,
-      school_year: "2560",
+      school_year: Time.current.year + 543,
       semester: "1",
       line_items: [
         LineItem.make!(:tuition, amount: 48000),
@@ -78,7 +107,7 @@ describe 'Student', js: true do
         user_id: user.id,
         parent_id: parent[0].id,
         invoice_status_id:  invoice_status_1.id,
-        school_year: "2560",
+        school_year: Time.current.year + 543,
         semester: "1",
         grade_name: "Kindergarten 1",
         classroom: "1A",
@@ -91,7 +120,7 @@ describe 'Student', js: true do
         user_id: user.id,
         parent_id: parent[0].id,
         invoice_status_id:  invoice_status_1.id,
-        school_year: "2560",
+        school_year: Time.current.year + 543,
         semester: "2",
         grade_name: "Kindergarten 1",
         classroom: "1B",
@@ -105,7 +134,7 @@ describe 'Student', js: true do
         user_id: user.id,
         parent_id: parent[0].id,
         invoice_status_id:  invoice_status_1.id,
-        school_year: "2561",
+        school_year: Time.current.year + 543 + 1,
         semester: "1",
         grade_name: "Kindergarten 2",
         classroom: "2A",
@@ -119,7 +148,7 @@ describe 'Student', js: true do
         user_id: user.id,
         parent_id: parent[0].id,
         invoice_status_id:  invoice_status_2.id,
-        school_year: "2561",
+        school_year: Time.current.year + 543 + 1,
         semester: "2",
         grade_name: "Kindergarten 2",
         classroom: "2B",
@@ -151,24 +180,155 @@ describe 'Student', js: true do
   end
 
   it 'should remove student' do
+    visit "/students"
+    sleep(1)
+    find("#options#{student[0].id}").click
+    first("a[onclick=\"openDeletedStudentModal(#{student[0].id})\"]").click
+    sleep(1)
+    eventually { expect(page).to have_content ("คุณต้องการลบนักเรียนคนนี้ใช่หรือไม่?") }
+    find("a", text: "ตกลง").click
+    sleep(1)
+
+    student[0].reload
+    eventually { expect(page).to_not have_content ("สมศรี") }
+    eventually { expect(student[0].deleted_at.blank?).to be_falsey }
+  end
+
+  it 'should resign student' do
+    visit "/students"
+    sleep(1)
+    find("#options#{student[0].id}").click
+    first("a[onclick=\"openResignStudentModal(#{student[0].id})\"]").click
+    sleep(1)
+    eventually { expect(page).to have_content ('คุณต้องการเปลี่ยนสถานะนักเรียนคนนี้เป็น "ลาออก" ใช่หรือไม่?') }
+    find("a", text: "ตกลง").click
+    sleep(1)
+
+    student[0].reload
+    eventually { expect(page).to_not have_content ("สมศรี") }
+    eventually { expect(student[0].deleted_at.blank?).to be_falsey }
+
+    qry_alumni = Alumni.where(student_id: student[0].id)
+    alumni = qry_alumni.first
+    eventually { expect(qry_alumni.count).to eq 1 }
+    eventually { expect(alumni.status).to eq "ลาออก" }
+  end
+
+  it 'should graduate student' do
+    visit "/students"
+    sleep(1)
+    find("#options#{student[0].id}").click
+    first("a[onclick=\"openGraduateStudentModal(#{student[0].id})\"]").click
+    sleep(1)
+    eventually { expect(page).to have_content ('คุณต้องการเปลี่ยนสถานะนักเรียนคนนี้เป็น "จบการศึกษา" ใช่หรือไม่?') }
+    find("a", text: "ตกลง").click
+    sleep(1)
+
+    student[0].reload
+    eventually { expect(page).to_not have_content ("สมศรี") }
+    eventually { expect(student[0].deleted_at.blank?).to be_falsey }
+
+    qry_alumni = Alumni.where(student_id: student[0].id)
+    alumni = qry_alumni.first
+    eventually { expect(qry_alumni.count).to eq 1 }
+    eventually { expect(alumni.status).to eq "จบการศึกษา" }
+  end
+
+  it 'should search and change page to other student' do
+    student_more
     visit "/students/#{student[0].id}/edit#/"
     sleep(1)
-    first('#student_remove').click
+    first('.fa.fa-search').click
     sleep(1)
-    page.accept_alert
+    first('.search-autocomplete').click
     sleep(1)
-    student[0].reload
+    eventually { expect(page).to have_content ("สมศรี ใบเสร็จ") }
+  end
 
-    eventually { expect(page).to_not have_content ("สมศรี") }
-    eventually { expect(student[0].deleted_at.blank?).to eq false }
+  it 'should warning if change page while student data changed and submit' do
+    student_more
+    visit "/students/#{student_more[1].id}/edit#/"
+    sleep(1)
+    fill_in 'ชื่อ-นามสกุล', :with => 'นักเรียนชื่อใหม่'
+    sleep(1)
+    first('.fa.fa-search').click
+    sleep(1)
+    first('.search-autocomplete').click
+    sleep(1)
+    eventually { expect(page).to have_content ("คุณต้องการออกจากหน้านี้โดยไม่บันทึกค่าหรือไม่?") }
+    sleep(1)
+    find("#force-change-page").click
+    sleep(1)
+    eventually { expect(page).to_not have_content ("เรน โบว์") }
+  end
+
+  it 'should warning if change page while student data changed and cancel' do
+    student_more
+    visit "/students/#{student_more[1].id}/edit#/"
+    sleep(1)
+    fill_in 'ชื่อ-นามสกุล', :with => 'นักเรียนชื่อใหม่'
+    sleep(1)
+    first('.fa.fa-search').click
+    sleep(1)
+    first('.search-autocomplete').click
+    sleep(1)
+    eventually { expect(page).to have_content ("คุณต้องการออกจากหน้านี้โดยไม่บันทึกค่าหรือไม่?") }
+    click_button("ยกเลิก")
+    sleep(1)
+    eventually { expect(page).to have_content ("เรน โบว์") }
+  end
+
+  it 'should warning if change page while parent data changed' do
+    student_more
+    visit "/students/#{student[0].id}/edit#/"
+    sleep(1)
+    find('#mobile0').set("080-000000")
+    sleep(1)
+    first('.fa.fa-search').click
+    sleep(1)
+    first('.search-autocomplete').click
+    sleep(1)
+    eventually { expect(page).to have_content ("คุณต้องการออกจากหน้านี้โดยไม่บันทึกค่าหรือไม่?") }
   end
 
   it 'should see student on invoice slip, although student deleted' do
-    visit "/students/#{student[0].id}/edit#/"
+    visit "/students"
     sleep(1)
-    first('#student_remove').click
+    find("#options#{student[0].id}").click
+    first("a[onclick=\"openDeletedStudentModal(#{student[0].id})\"]").click
     sleep(1)
-    page.accept_alert
+    eventually { expect(page).to have_content ("คุณต้องการลบนักเรียนคนนี้ใช่หรือไม่?") }
+    find("a", text: "ตกลง").click
+    sleep(1)
+
+    visit "/somsri_invoice#/invoice/#{invoice.id}/slip"
+    sleep(1)
+    eventually { expect(page).to have_content ("สมศรี") }
+  end
+
+  it 'should see student on invoice slip, although student resigned' do
+    visit "/students"
+    sleep(1)
+    find("#options#{student[0].id}").click
+    first("a[onclick=\"openResignStudentModal(#{student[0].id})\"]").click
+    sleep(1)
+    eventually { expect(page).to have_content ('คุณต้องการเปลี่ยนสถานะนักเรียนคนนี้เป็น "ลาออก" ใช่หรือไม่?') }
+    find("a", text: "ตกลง").click
+    sleep(1)
+
+    visit "/somsri_invoice#/invoice/#{invoice.id}/slip"
+    sleep(1)
+    eventually { expect(page).to have_content ("สมศรี") }
+  end
+
+  it 'should see student on invoice slip, although student graduated' do
+    visit "/students"
+    sleep(1)
+    find("#options#{student[0].id}").click
+    first("a[onclick=\"openGraduateStudentModal(#{student[0].id})\"]").click
+    sleep(1)
+    eventually { expect(page).to have_content ('คุณต้องการเปลี่ยนสถานะนักเรียนคนนี้เป็น "จบการศึกษา" ใช่หรือไม่?') }
+    find("a", text: "ตกลง").click
     sleep(1)
 
     visit "/somsri_invoice#/invoice/#{invoice.id}/slip"
@@ -177,11 +337,43 @@ describe 'Student', js: true do
   end
 
   it 'should see student on invoice_report, although student deleted' do
-    visit "/students/#{student[0].id}/edit#/"
+    visit "/students"
     sleep(1)
-    first('#student_remove').click
+    find("#options#{student[0].id}").click
+    first("a[onclick=\"openDeletedStudentModal(#{student[0].id})\"]").click
     sleep(1)
-    page.accept_alert
+    eventually { expect(page).to have_content ("คุณต้องการลบนักเรียนคนนี้ใช่หรือไม่?") }
+    find("a", text: "ตกลง").click
+    sleep(1)
+
+    visit '/somsri_invoice#/invoice_report'
+    sleep(1)
+    eventually { expect(page).to have_content ("สมศรี") }
+  end
+
+  it 'should see student on invoice_report, although student resigned' do
+    visit "/students"
+    sleep(1)
+    find("#options#{student[0].id}").click
+    first("a[onclick=\"openResignStudentModal(#{student[0].id})\"]").click
+    sleep(1)
+    eventually { expect(page).to have_content ('คุณต้องการเปลี่ยนสถานะนักเรียนคนนี้เป็น "ลาออก" ใช่หรือไม่?') }
+    find("a", text: "ตกลง").click
+    sleep(1)
+
+    visit '/somsri_invoice#/invoice_report'
+    sleep(1)
+    eventually { expect(page).to have_content ("สมศรี") }
+  end
+
+  it 'should see student on invoice_report, although student graduated' do
+    visit "/students"
+    sleep(1)
+    find("#options#{student[0].id}").click
+    first("a[onclick=\"openGraduateStudentModal(#{student[0].id})\"]").click
+    sleep(1)
+    eventually { expect(page).to have_content ('คุณต้องการเปลี่ยนสถานะนักเรียนคนนี้เป็น "จบการศึกษา" ใช่หรือไม่?') }
+    find("a", text: "ตกลง").click
     sleep(1)
 
     visit '/somsri_invoice#/invoice_report'
@@ -190,11 +382,41 @@ describe 'Student', js: true do
   end
 
   it 'should see student on student_report, although student deleted' do
-    visit "/students/#{student[0].id}/edit#/"
+    visit "/students"
     sleep(1)
-    first('#student_remove').click
+    find("#options#{student[0].id}").click
+    first("a[onclick=\"openDeletedStudentModal(#{student[0].id})\"]").click
     sleep(1)
-    page.accept_alert
+    eventually { expect(page).to have_content ("คุณต้องการลบนักเรียนคนนี้ใช่หรือไม่?") }
+    find("a", text: "ตกลง").click
+    sleep(1)
+    visit "/somsri_invoice#/student_report"
+    sleep(1)
+    eventually { expect(page).to have_content ("สมศรี") }
+  end
+
+  it 'should see student on student_report, although student resigned' do
+    visit "/students"
+    sleep(1)
+    find("#options#{student[0].id}").click
+    first("a[onclick=\"openResignStudentModal(#{student[0].id})\"]").click
+    sleep(1)
+    eventually { expect(page).to have_content ('คุณต้องการเปลี่ยนสถานะนักเรียนคนนี้เป็น "ลาออก" ใช่หรือไม่?') }
+    find("a", text: "ตกลง").click
+    sleep(1)
+    visit "/somsri_invoice#/student_report"
+    sleep(1)
+    eventually { expect(page).to have_content ("สมศรี") }
+  end
+
+  it 'should see student on student_report, although student graduated' do
+    visit "/students"
+    sleep(1)
+    find("#options#{student[0].id}").click
+    first("a[onclick=\"openGraduateStudentModal(#{student[0].id})\"]").click
+    sleep(1)
+    eventually { expect(page).to have_content ('คุณต้องการเปลี่ยนสถานะนักเรียนคนนี้เป็น "จบการศึกษา" ใช่หรือไม่?') }
+    find("a", text: "ตกลง").click
     sleep(1)
     visit "/somsri_invoice#/student_report"
     sleep(1)
@@ -243,6 +465,17 @@ describe 'Student', js: true do
     visit "/students/#{student[0].id}/edit#/"
     sleep(1)
     eventually { expect(find('#mobile0').value).to eq("080-000000") }
+  end
+
+  it 'should disable parent\'s mobile and relationship when not select parent' do
+    visit "/students/#{student_more[0].id}/edit#/"
+    sleep(1)
+    find("#parent-link").click
+    sleep(1)
+    eventually { expect(find('#mobile0')[:disabled]).to eq true }
+    eventually { expect(find('#relationship0')[:disabled]).to eq true }
+    eventually { expect(find('#mobile1')[:disabled]).to eq true }
+    eventually { expect(find('#relationship1')[:disabled]).to eq true }
   end
 
   it 'should create student' do

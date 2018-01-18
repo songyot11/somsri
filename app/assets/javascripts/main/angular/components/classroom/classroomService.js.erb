@@ -8,16 +8,25 @@
       return $http.get('/grades')
     }
 
-    this.getStudentPromote = function() {
-      return $http.patch('/classrooms/student_promote')
-    }
-
-    this.getIsStudentPromoteEnable = function() {
-      return $http.get('/classrooms/is_student_promote_enable')
+    this.studentPromote = function(classroomOrder) {
+      var url = '/classrooms/student_promote';
+      if(classroomOrder){
+        return $http.patch(url, {
+          classroomOrder: JSON.stringify(classroomOrder)
+        })
+      }else{
+        return $http.patch(url)
+      }
     }
 
     this.removeClassroom = function(id) {
       return $http.delete('/classrooms/' + id)
+    }
+
+    this.getClassroomWithNextClassroom = function(id) {
+      return $http.get('/classrooms/',{
+        params: { next: true }
+      })
     }
   }]);
 })();

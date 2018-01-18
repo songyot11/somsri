@@ -19,7 +19,7 @@ describe 'Student Promote', js: true do
 
   let(:classrooms) do
     Classroom.make!({id: 1, name: "1A", grade_id: grades[0].id})
-    Classroom.make!({id: 2,name: "1B", grade_id: grades[0].id})
+    Classroom.make!({id: 2, name: "1B", grade_id: grades[0].id})
     Classroom.make!({id: 3, name: "2A", grade_id: grades[1].id})
     Classroom.make!({id: 4, name: "2B", grade_id: grades[1].id})
     Classroom.make!({id: 5, name: "3A", grade_id: grades[2].id})
@@ -32,14 +32,6 @@ describe 'Student Promote', js: true do
       Classroom.find(3),
       Classroom.find(4),
       Classroom.find(5)
-    ]
-  end
-
-  let(:classrooms_no_next_id) do
-    [
-      Classroom.make!({ name: "1A", grade_id: grades[0].id}),
-      Classroom.make!({ name: "1B", grade_id: grades[0].id}),
-      Classroom.make!({ name: "2A", grade_id: grades[1].id})
     ]
   end
 
@@ -63,38 +55,6 @@ describe 'Student Promote', js: true do
     ]
   end
 
-  let(:students_no_next_id) do
-    [
-      Student.make!({
-        first_name: 'สมศรี1',
-        last_name: 'ใบเสร็จ',
-        grade_id: grades[0].id,
-        classroom: classrooms_no_next_id[0],
-        classroom_number: 106,
-        student_number: 9006,
-        birthdate: Time.now
-      }),
-      Student.make!({
-        first_name: 'สมศรี2',
-        last_name: 'ใบเสร็จ',
-        grade_id: grades[0].id,
-        classroom: classrooms_no_next_id[0],
-        classroom_number: 106,
-        student_number: 9006,
-        birthdate: Time.now
-      }),
-      Student.make!({
-        first_name: 'สมศรี3',
-        last_name: 'ใบเสร็จ',
-        classroom: classrooms_no_next_id[2],
-        grade_id: grades[1].id,
-        classroom_number: 106,
-        student_number: 9006,
-        birthdate: Time.now
-      })
-    ]
-  end
-
   describe 'Classroom with next_id' do
     before do
       school
@@ -113,8 +73,27 @@ describe 'Student Promote', js: true do
       eventually { expect(page).to have_button('เลื่อนชั้นเรียน', disabled: false) }
     end
 
-    it 'should promote students' do
+    it 'should go to next classroom management' do
       click_button("เลื่อนชั้นเรียน")
+      sleep(1)
+      eventually { expect(page).to have_content("ระดับชั้นเรียน เดิม") }
+      eventually { expect(page).to have_content("ระดับชั้นเรียน ใหม่") }
+    end
+  end
+
+  describe 'Next classroom' do
+    before do
+      school
+      user.add_role :admin
+      login_as(user, scope: :user)
+      students
+      classrooms
+      visit '/main#/next_classroom'
+    end
+
+    it 'should promote students and move graduated student to alumni' do
+      sleep(1)
+      find('button[ng-click="next.studentPromote()"]').click
       sleep(1)
       click_button("ตกลง")
       eventually { expect(page).to have_content("1A 0 0") }
@@ -122,23 +101,68 @@ describe 'Student Promote', js: true do
       eventually { expect(page).to have_content("2A 0 1") }
       eventually { expect(page).to have_content("2B 0 2") }
       eventually { expect(page).to have_content("3A 0 3") }
-    end
-  end
 
-  describe 'Classroom without next_id' do
-    before do
-      school
-      user.add_role :admin
-      login_as(user, scope: :user)
-      students_no_next_id
-      visit '/main#/classroom'
+      eventually { expect(Alumni.all.count).to eq 9 }
+      eventually { expect(Alumni.where(student_id: students[14].id).exists?).to eq true }
     end
 
-    it 'should display disable promote button' do
-      eventually { expect(page).to have_content("1A 0 2") }
-      eventually { expect(page).to have_content("1B 0 0") }
-      eventually { expect(page).to have_content("2A 0 1") }
-      eventually { expect(page).to have_button('เลื่อนชั้นเรียน', disabled: true) }
+    it 'should change page to classroom list' do
+      sleep(1)
+      find('button', text: 'ยกเลิก').click
+      sleep(1)
+      eventually { expect(page).to have_content("1A 0 1") }
+      eventually { expect(page).to have_content("1B 0 2") }
+      eventually { expect(page).to have_content("2A 0 3") }
+      eventually { expect(page).to have_content("2B 0 4") }
+      eventually { expect(page).to have_content("3A 0 5") }
+    end
+
+    it 'should change next classroom order and promote student' do
+      sleep(1)
+      find("#classroom-list#{classrooms[0].id}").click
+      find('a', text: classrooms[1].grade_with_name).click
+      find('button[ng-click="next.studentPromote()"]').click
+      click_button("ตกลง")
+      sleep(1)
+      eventually { expect(page).to have_content("1A 0 0") }
+      eventually { expect(page).to have_content("1B 0 1") }
+      eventually { expect(page).to have_content("2A 0 0") }
+      eventually { expect(page).to have_content("2B 0 2") }
+      eventually { expect(page).to have_content("3A 0 3") }
+
+      eventually { expect(Alumni.all.count).to eq 9 }
+      eventually { expect(Alumni.where(student_id: students[14].id).exists?).to eq true }
+      eventually { expect(Classroom.find(classrooms[0].id).next_id).to eq classrooms[1].id }
+    end
+
+    it 'should not promote student when set next classroom to be the same' do
+      sleep(1)
+      find("#classroom-list#{classrooms[0].id}").click
+      find('a', text: classrooms[0].grade_with_name).click
+      find("#classroom-list#{classrooms[1].id}").click
+      find('a', text: classrooms[1].grade_with_name).click
+      find("#classroom-list#{classrooms[2].id}").click
+      find('a', text: classrooms[2].grade_with_name).click
+      find("#classroom-list#{classrooms[3].id}").click
+      find('a', text: classrooms[3].grade_with_name).click
+      find("#classroom-list#{classrooms[4].id}").click
+      find('a', text: classrooms[4].grade_with_name).click
+
+      find('button[ng-click="next.studentPromote()"]').click
+      click_button("ตกลง")
+      sleep(1)
+      eventually { expect(page).to have_content("1A 0 1") }
+      eventually { expect(page).to have_content("1B 0 2") }
+      eventually { expect(page).to have_content("2A 0 3") }
+      eventually { expect(page).to have_content("2B 0 4") }
+      eventually { expect(page).to have_content("3A 0 5") }
+
+      eventually { expect(Alumni.all.count).to eq 0 }
+      students.each do |student|
+        # student should not change classroom
+        eventually { expect(student.classroom_id).to eq Student.find(student.id).classroom_id }
+      end
+
     end
   end
 end

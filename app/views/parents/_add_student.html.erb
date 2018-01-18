@@ -1,8 +1,7 @@
     <div class="form-group" id="add-std-<%= index %>">
-      <label for="student" class="control-label">นักเรียน</label>
       <div class="row">
         <div class="col-xs-5" style="margin-left:15px;">
-          <select id="student<%= index %>" name="student[]" placeholder="Select student...">
+          <select id="student<%= index %>" name="student[]" index="<%= index %>" onchange="studentChange(this)" placeholder="Select student...">
             <option value="" disabled selected></option>
             <% @students.each do |s| %>
               <option value="<%= s.id %>" <%= set_option_selected(s, ps) %>><%= s.full_name %></option>
@@ -10,7 +9,7 @@
           </select>
         </div>
         <div class="col-xs-5">
-          <select id="relationship<%= index %>" name="relationship[]" class="form-control">
+          <select id="relationship<%= index %>" name="relationship[]" class="form-control" <%= "disabled='true'" if !ps %>>
             <% @relations.each do |r| %>
               <option value="<%= r.id %>" <%= set_option_selected(r, @parent.relationships[index]) %>><%= t(r.name) %></option>
             <% end %>

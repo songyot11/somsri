@@ -2,8 +2,11 @@
   'use strict';
   angular.module('somsri.invoice.groupingReport2.service', [
   ])
-  .service('groupingReport2Service', ['$http', function($http) {
+  .service('groupingReport2Service', ['$http', '$q', function($http, $q) {
+    var getGroupingReportCanceler = $q.defer()
     this.getGroupingReport = function(start_date, end_date, options, display_etc) {
+      getGroupingReportCanceler.resolve()
+      getGroupingReportCanceler = $q.defer()
       var params = {
         start_date: start_date,
         end_date: end_date
@@ -14,11 +17,28 @@
       }else{
         params["display_etc"] = true
       }
-      return $http.get('/invoice_grouping', { params: params })
+      return $http.get('/invoice_grouping', {
+        timeout: getGroupingReportCanceler.promise,
+        params: params
+      })
     }
 
+    var getStudentsWithoutPaginationCanceler = $q.defer()
     this.getStudentsWithoutPagination = function(grade_name, year, semester, status) {
-      return $http.get('/student_report', { params: { grade_select: grade_name, all: true, year_select: year, semester_select: semester, status: status } })
+      getStudentsWithoutPaginationCanceler.resolve()
+      getStudentsWithoutPaginationCanceler = $q.defer()
+      return $http.get('/student_report', {
+        timeout: getStudentsWithoutPaginationCanceler.promise,
+        params: {
+          grade_select: grade_name,
+          all: true,
+          year_select:
+          year,
+          semester_select:
+          semester,
+          status: status
+        }
+      })
     }
 
     this.getGrades = function() {

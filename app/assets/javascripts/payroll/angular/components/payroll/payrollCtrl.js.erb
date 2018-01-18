@@ -105,6 +105,7 @@
         ctrl.currentDateString = effectiveDate["date_string"];
         ctrl.currentEffectiveDate = effectiveDate;
         checkIfLastedPayroll();
+        setPrintPayrollUrl()
       });
     }
 
@@ -150,6 +151,10 @@
       })
     }
 
+    function setPrintPayrollUrl() {
+      $('#print-payroll').attr("href", "/payrolls.pdf?effective_date=" + encodeURIComponent(ctrl.currentEffectiveDate['date_time']));
+    }
+
     function getAll() {
       reportService.getMonths().then(function(resp) {
         if (resp.data.length > 0) {
@@ -170,6 +175,7 @@
             ctrl.currentDateString = current['date_string'];
             ctrl.currentEffectiveDate = current;
             checkIfLastedPayroll()
+            setPrintPayrollUrl()
           });
         }
       });

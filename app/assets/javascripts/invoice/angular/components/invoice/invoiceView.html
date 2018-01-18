@@ -68,7 +68,7 @@
 
           <div class="row invoice-item" ng-repeat="item in invoice.datas.invoice.items" ng-animate="'slide-down'">
             <div class="col-md-1 remove-item-container">
-              <a href ng-hide="printMode" ng-click="invoice.removeItem(item)" class="btn"><span class="fa fa-times-circle"></span></a>
+              <a href ng-hide="printMode" ng-click="invoice.removeItem(item)" class="btn pl-10"><span class="fa fa-times-circle"></span></a>
             </div>
             <div class="col-md-1">
               {{ $index + 1 }}
@@ -87,7 +87,7 @@
 
           <div class="row invoice-item add-invoice-item">
             <div class="col-md-12 add-item-container">
-              <a class="btn btn-primary" href ng-click="invoice.addItem()">+ เพิ่มรายการ</a>
+              <a class="btn btn-custom sm btn-green" href ng-click="invoice.addItem()">+ เพิ่มรายการ</a>
             </div>
           </div>
           <div class="row col-total-1">
@@ -143,8 +143,8 @@
 
         <div class="row noPrint actions">
           <div class="col-md-12 text-right-htable">
-            <button type="submit" class="btn btn-submit">ชำระเงิน</button>
-            <a href="#" class="btn btn-cancel" ng-click="invoice.cancel()">ยกเลิก</a>
+            <button type="submit" class="btn btn-custom btn-blue mr-5">ชำระเงิน</button>
+            <a href="#" class="btn btn-custom btn-gray" ng-click="invoice.cancel()">ยกเลิก</a>
           </div>
         </div>
       </div>

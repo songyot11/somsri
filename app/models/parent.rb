@@ -2,9 +2,10 @@ class Parent < ApplicationRecord
   include StudentsHelper
   include Rails.application.routes.url_helpers
 
+  has_many :students_parents, dependent: :destroy
   has_and_belongs_to_many :students, join_table: "students_parents"
   has_and_belongs_to_many :relationships, join_table: "students_parents"
-  has_many :invoices, dependent: :restrict_with_exception
+  has_many :invoices
   belongs_to :school
 
   acts_as_paranoid
@@ -19,10 +20,12 @@ class Parent < ApplicationRecord
     self.full_name = self.full_name.strip.gsub(/\s+/,' ') if self.full_name
   end
 
-  #Parent.search('')
-
   def self.search(search)
     Parent.joins(:students).where("parents.full_name LIKE ? OR parents.full_name_english LIKE ? OR parents.email LIKE ? OR parents.mobile LIKE ? OR students.full_name LIKE ? OR students.full_name_english LIKE ?", "%#{search}%", "%#{search}%", "%#{search}%", "%#{search}%", "%#{search}%" , "%#{search}%" )
+  end
+
+  def self.search_by_name_and_mobile(search)
+    Parent.where("parents.full_name LIKE ? OR parents.full_name_english LIKE ? OR parents.mobile LIKE ?", "%#{search}%", "%#{search}%", "%#{search}%")
   end
 
   def invoice_screen_full_name_display
@@ -53,11 +56,25 @@ class Parent < ApplicationRecord
     end
   end
 
+  def self.restore_by_student_id(student_id)
+    parent_ids = StudentsParent.where(student_id: student_id).to_a.collect(&:parent_id)
+    Parent.with_deleted.where(id: parent_ids).all.each do |parent|
+      parent.restore_recursively
+    end
+  end
+
+  def restore_recursively
+    Parent.transaction do
+      # restore all destroy by dependent: :destroy
+      self.restore(recursive: true, recovery_window: 2.minutes)
+    end
+  end
 
   def as_json(options={})
     if options[:index]
       return {
         parents:{
+          id: self.id,
           img_url: self.img_url.exists? ? self.img_url.url(:medium) : '',
           full_name: self.full_name,
           mobile: self.mobile,
@@ -70,6 +87,12 @@ class Parent < ApplicationRecord
           full_name: studentFullname
         },
         edit: edit
+      }
+    elsif options[:autocomplete]
+      return {
+        full_name_label: self.invoice_screen_full_name_display,
+        img_url: self.img_url.exists? ? self.img_url.url(:medium) : '',
+        id: self.id
       }
     else
       super()

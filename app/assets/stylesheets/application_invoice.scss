@@ -15,6 +15,7 @@
  *= require_self
  *= require bootstrap-table
  *= require bootstrap-select/sass/bootstrap-select
+ *= require rich-autocomplete/dist/richAutocomplete.min.css
  */
 
  @import "selectize";
@@ -297,6 +298,7 @@ ul.nav.navbar-nav.navbar-right.dropdown{
     color: #3fa1e6;
   }
 }
+
 .somsri-invoice .btn-cancel,
 .somsri-invoice .btn-cancel:focus{
   font-family: 'Maitree', serif;
@@ -1883,10 +1885,11 @@ label.img-default{
   width: 50px;
 }
 .icon-default-img{
- position: absolute;
- margin: auto;
- transform: translate(90%, 50%);
- color: #fff;
+  font-size: 16px;
+  position: absolute;
+  margin: auto;
+  transform: translate(90%, 50%);
+  color: #fff;
 }
 .between-height{
   margin-top: 50px;
@@ -1925,6 +1928,10 @@ label.img-default{
   padding: 30px;
 }
 
+.pl-10{
+  padding-left: 10px;
+}
+
 .mr-20 {
   margin-right: 20px;
 }
@@ -1960,4 +1967,80 @@ label.img-default{
   width: auto;
   height: 100%;
   margin-left: -50px;
+}
+
+.rich-autocomplete .circle {
+  width: 34px !important;
+  height: 34px !important;
+  padding: 0px !important;
+  display: inline-block !important;
+}
+
+.rich-autocomplete-list-item .text-label {
+  margin-top: 10px;
+}
+
+.rich-autocomplete {
+  position: inherit !important;
+  border: inherit !important;
+  height: inherit !important;
+  display: inline;
+}
+
+.rich-autocomplete .rich-autocomplete-list {
+  position: absolute !important;
+  width: inherit !important;
+}
+
+.rich-autocomplete input {
+  width: inherit !important;
+  padding: 0px !important;
+  margin: 0px !important;
+  font-size: 36px !important;
+  height: inherit !important;
+}
+
+.search-autocomplete {
+  font-size: 14px;
+  font-weight: 400 !important;
+  text-decoration:none !important;
+}
+
+.highlighted .search-autocomplete {
+  color: #fff !important;
+}
+
+.rich-autocomplete-list-item.highlighted {
+  background-color: #3fa1e6 !important;
+}
+
+ul.rich-autocomplete-list{
+  position: absolute;
+  z-index: 1000;
+  float: left;
+  min-width: 250px;
+  max-height: inherit !important;
+  padding: 5px 0 !important;
+  margin: 2px 0 0 !important;
+  font-size: 14px;
+  text-align: left;
+  list-style: none;
+  background-color: #fff;
+  -webkit-background-clip: padding-box;
+  background-clip: padding-box;
+  border: 1px solid #ccc;
+  border: 1px solid rgba(0,0,0,.15);
+  border-radius: 4px;
+  -webkit-box-shadow: 0 6px 12px rgba(0,0,0,.175);
+  box-shadow: 0 6px 12px rgba(0,0,0,.175);
+  overflow-x: hidden;
+}
+
+.modal-content {
+  background-color: white;
+  padding: 20px;
+  margin-top: 30px;
+  margin-bottom: 30px;
+  border: 0px solid;
+  border-radius: 0px;
 }

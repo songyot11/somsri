@@ -1,7 +1,40 @@
 <%- model_class = Parent -%>
 <div class="container" style="width: 960px;">
   <div class="row head-sp justify-content-between">
-    <h1>แก้ไขผู้ปกครอง</h1>
+    <h1>
+      <span id="full-name-label"><%= @parent.full_name %></span>
+      <input id="search-by-name" class="typeahead" type="text" placeholder="ค้นหาชื่อผู้ปกครอง">
+      <a onclick="toggleSearchInput()"><i class="fa fa-search" aria-hidden="true"></i></a>
+    </h1>
   </div>
   <%= render :partial => 'form' %>
 </div>
+
+<!-- Modal -->
+<div id="warningModal" class="modal fade" role="dialog">
+  <div class="modal-dialog">
+
+    <!-- Modal content-->
+    <div class="modal-content">
+      <div class="modal-body" id="modal-body">
+        <div class="row">
+          <div class="col-md-12">
+            <h4 class="modal-title" id="modal-title">คุณต้องการออกจากหน้านี้โดยไม่บันทึกค่าหรือไม่?</h4>
+          </div>
+        </div>
+        <div class="space20"></div>
+        <div class="space20"></div>
+        <div class="space20"></div>
+        <div class="row">
+          <div class="col-md-3 pull-right">
+            <button class="btn btn-custom btn-gray" data-dismiss="modal">ยกเลิก</button>
+          </div>
+          <div class="col-md-3 pull-right">
+            <button id="force-change-page" class="btn btn-custom btn-green" data-dismiss="modal">ตกลง</button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+<%= javascript_include_tag 'search_parent_button' %>

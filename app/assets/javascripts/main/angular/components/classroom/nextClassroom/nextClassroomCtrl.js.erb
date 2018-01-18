@@ -1,0 +1,169 @@
+(function() {
+  'use strict';
+  angular.module('somsri.main.next_classroom', [
+    ])
+  .controller('nextClassroomCtrl', ['$rootScope','classroomService','$scope', '$uibModal', '$state', function($rootScope, service, $scope, $uibModal, $state) {
+    $rootScope.menu = "ตั้งค่า"
+    var ctrl = this
+    ctrl.classroomId = $state.params.id
+    $rootScope.loadAndAuthorizeResource("school", function(){
+      var classrooms = []
+      var classroomOriginals = []
+      var classroomOptions = []
+      var angularCtrlStr = "angular.element(document.getElementById('angularCtrl')).scope().next"
+
+      function openConfirmationModal(message, success, dismiss) {
+        $scope.message = message;
+        $uibModal.open({
+          animation: true,
+          backdrop: 'static',
+          keyboard: false,
+          scope: $scope,
+          templateUrl: "<%= asset_path('main/angular/components/modal/confirm/confirmModalView.html') %>",
+          controller: 'confirmModalCtrl as confirm',
+          size: 'md',
+          resolve: {
+            resources: ['$ocLazyLoad', 'ASSETS', function($ocLazyLoad, ASSETS) {
+              return $ocLazyLoad.load([
+                ASSETS.somsri.main.confirm_modal
+              ]);
+            }]
+          }
+        }).result.then(function (isConfirm) {
+          if (isConfirm) {
+            if(success){ success() }
+          }else{
+            if(dismiss){ dismiss() }
+          }
+        });
+      }
+
+      function arrowFormatter(index, row, element){
+        return '<i class="fa fa-arrow-right" aria-hidden="true"></i>';
+      }
+
+      function classroomFormatter(index, row, element){
+        return getClassroomNameById(row.id);
+      }
+
+      function nextClassroomFormatter(value, row, index, field){
+        var display_top = ""
+        if(index > ( classroomOptions.length / 2 )){
+          display_top = " display-top "
+        }
+        if(row.id){
+          var html = '<span class="dropdown cursor-pointer">' +
+            '<span id="classroom-list' + row.id + '" class="dropdown-label" data-toggle="dropdown">' +
+            '<a id="next-classroom-lable' + row.id + '" class="color-blue-link">' + getClassroomNameById(row.next_id) + ' </span>'+
+              '<i class="fa fa-angle-down" aria-hidden="true"></i>' +
+            '</a>' +
+            '<ul class="dropdown-menu' + display_top + '" aria-labelledby="classroom-list">' +
+              '<li>' +
+                '<a class="blue-highlight" onclick="' + angularCtrlStr + '.selectClassroom(' + row.id + ', null)">' +
+                  'จบการศึกษา' +
+                '</a>' +
+              '</li>';
+          for(var i = 0; i < classroomOptions.length; i++){
+            if(classroomOptions[i]){
+              html += '<li>' +
+                  '<a class="blue-highlight" onclick="' + angularCtrlStr + '.selectClassroom(' + row.id + ', ' + classroomOptions[i].id + ')">' +
+                  classroomOptions[i].name +
+                  '</a>' +
+                '</li>';
+            }
+          }
+          html += '</ul>';
+          '</span>'
+          return html;
+        }
+      }
+
+      function initBootstrapTable(){
+        var tableColumnSetting = [
+          { field: 'classroom', formatter: classroomFormatter, title: "ระดับชั้นเรียน เดิม", class: "col-xs-5"},
+          { field: 'arrow', formatter: arrowFormatter, class: "col-xs-2 text-center"},
+          { field: 'next_classroom', formatter: nextClassroomFormatter, title: "ระดับชั้นเรียน <span class='color-blue-link'>ใหม่</span>", class: "col-xs-5"}
+        ]
+        $('#next-classroom-list').bootstrapTable({
+          data: classrooms,
+          columns: tableColumnSetting
+        })
+      }
+
+      function getClassroomNameById(id){
+        if(!id){
+          return "จบการศึกษา"
+        }
+        for(var i = 0; i < classroomOptions.length; i++) {
+          if(classroomOptions[i].id == id){
+            return classroomOptions[i].name
+          }
+        }
+      }
+
+      function isChange(){
+        for(var i = 0; i < classroomOriginals.length; i++) {
+          for(var j = 0; j < classrooms.length; j++) {
+            if(classroomOriginals[i].id == classrooms[j].id) {
+              if(classroomOriginals[i].next_id != classrooms[j].next_id){
+                return true
+              }
+            }
+          }
+        }
+        return false
+      }
+
+      ctrl.selectClassroom = function(id, nextId){
+        for(var i = 0; i < classrooms.length; i++) {
+          if(classrooms[i].id == id){
+            classrooms[i].next_id = nextId;
+          }
+        }
+        $("#next-classroom-lable" + id).html(getClassroomNameById(nextId))
+      }
+
+      ctrl.studentPromote = function(){
+        openConfirmationModal("คุณต้องการเลื่อนชั้นเรียนให้กับนักเรียนทั้งหมดใช่หรือไม่?", function(){
+          var classroomOrder = classrooms;
+          if(!isChange()){ classroomOrder = null; }
+          service.studentPromote(classroomOrder).then(function(resp) {
+            $rootScope.openClassroomList();
+          });
+        })
+      }
+
+      ctrl.cancel = function(){
+        if(isChange()){
+          openConfirmationModal("คุณต้องการออกจากหน้านี้โดยไม่บันทึกค่าหรือไม่?", function(){
+            $rootScope.openClassroomList();
+          })
+        }else{
+          $rootScope.openClassroomList();
+        }
+      }
+
+      service.getClassroomWithNextClassroom().then(function(resp) {
+        for(var i = 0; i < resp.data.length; i++) {
+          if(resp.data[i].classroom) {
+            classroomOptions.push({
+              id: resp.data[i].classroom.id,
+              name: resp.data[i].classroom.name
+            })
+            var next_id = null;
+            if(resp.data[i].next_classroom) {
+              next_id = resp.data[i].next_classroom.id
+            }
+            classrooms.push({
+              id: resp.data[i].classroom.id,
+              next_id: next_id,
+            })
+          }
+        }
+        classroomOriginals = JSON.parse(JSON.stringify(classrooms));
+        initBootstrapTable()
+      });
+
+    });
+  }]);
+})();

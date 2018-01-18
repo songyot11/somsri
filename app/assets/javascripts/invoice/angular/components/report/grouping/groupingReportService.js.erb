@@ -2,17 +2,24 @@
   'use strict';
   angular.module('somsri.invoice.groupingReport.service', [
   ])
-  .service('groupingReportService', ['$http', function($http) {
+  .service('groupingReportService', ['$http', '$q', function($http, $q) {
+
+    var getGroupingReportCanceler = $q.defer()
     this.getGroupingReport = function(start_date, end_date, options) {
+      getGroupingReportCanceler.resolve()
+      getGroupingReportCanceler = $q.defer()
       if(options){
-        return $http.get('/invoice_grouping', { params: { start_date: start_date, end_date: end_date, options: JSON.stringify(options), display_payment_method: true, display_etc: true } })
+        return $http.get('/invoice_grouping', { timeout: getGroupingReportCanceler.promise, params: { start_date: start_date, end_date: end_date, options: JSON.stringify(options), display_payment_method: true, display_etc: true } })
       }else{
-        return $http.get('/invoice_grouping', { params: { start_date: start_date, end_date: end_date, display_payment_method: true, display_etc: true } })
+        return $http.get('/invoice_grouping', { timeout: getGroupingReportCanceler.promise, params: { start_date: start_date, end_date: end_date, display_payment_method: true, display_etc: true } })
       }
     }
 
+    var getStudentsWithoutPaginationCanceler = $q.defer()
     this.getStudentsWithoutPagination = function(grade_name, year, semester, status) {
-      return $http.get('/student_report', { params: { grade_select: grade_name, all: true, year_select: year, semester_select: semester, status: status } })
+      getStudentsWithoutPaginationCanceler.resolve()
+      getStudentsWithoutPaginationCanceler = $q.defer()
+      return $http.get('/student_report', { timeout: getStudentsWithoutPaginationCanceler.promise, params: { grade_select: grade_name, all: true, year_select: year, semester_select: semester, status: status } })
     }
 
     this.getGrades = function() {

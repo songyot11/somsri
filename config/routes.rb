@@ -53,6 +53,9 @@ Rails.application.routes.draw do
     post 'restore'
     post 'archive'
     delete 'real_destroy'
+    collection do
+      get 'get_autocomplete'
+    end
     member do
       patch 'upload_photo'
     end
@@ -62,7 +65,6 @@ Rails.application.routes.draw do
     collection do
       get 'classroom_list'
       patch 'student_promote'
-      get 'is_student_promote_enable'
     end
     member do
       get 'teacher_list'
@@ -75,6 +77,7 @@ Rails.application.routes.draw do
   resources :daily_reports
   resources :students do
     delete 'real_destroy'
+    delete 'destroy'
     member do
       post 'resign'
       post 'graduate'

@@ -85,7 +85,7 @@ RollCall.blueprint do
 end
 
 Invoice.blueprint do
-  school_year       { 2560 }
+  school_year       { Time.current.year + 543 }
   semester          { 1 }
   parent_id         { object.parent ? object.parent.id : Parent.make!.id }
   student_id        { object.student ? object.student.id : Student.make!.id }
@@ -146,6 +146,7 @@ SiteConfig.blueprint do
   display_username_password_on_login { false }
   display_schools_year_with_invoice_id { false }
   tax { true }
+  outstanding_notification { false }
 end
 
 Alumni.blueprint do
