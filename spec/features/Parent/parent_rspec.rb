@@ -202,6 +202,36 @@ describe 'Invoice-Report', js: true do
     eventually { expect(page).to have_content ("เรน โบว์") }
   end
 
+  it 'should warning if click cancel button while parent data changed and go' do
+    parent_more
+    visit "/parents/#{parent_more[1].id}/edit#/"
+    sleep(1)
+    fill_in 'ชื่อ-นามสกุล', :with => 'ชื่อใหม่'
+    sleep(1)
+    first('a', text: "ยกเลิก").click
+    sleep(1)
+    eventually { expect(page).to have_content ("คุณต้องการออกจากหน้านี้โดยไม่บันทึกค่าหรือไม่?") }
+    sleep(1)
+    find("#force-change-page").click
+    sleep(1)
+    eventually { expect(page).to have_content ("ผู้ปกครอง") }
+    eventually { expect(page).to have_content ("Export") }
+  end
+
+  it 'should warning if click cancel button while parent data changed and cancel' do
+    parent_more
+    visit "/parents/#{parent_more[1].id}/edit#/"
+    sleep(1)
+    fill_in 'ชื่อ-นามสกุล', :with => 'ชื่อใหม่'
+    sleep(1)
+    first('a', text: "ยกเลิก").click
+    sleep(1)
+    eventually { expect(page).to have_content ("คุณต้องการออกจากหน้านี้โดยไม่บันทึกค่าหรือไม่?") }
+    click_button("ยกเลิก")
+    sleep(1)
+    eventually { expect(page).to have_content ("เรน โบว์") }
+  end
+
   it 'should see parent on invoice slip, although parent is deleted' do
     visit "/parents"
     sleep(1)
