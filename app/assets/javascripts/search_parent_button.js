@@ -96,17 +96,20 @@ var isChange = function(){
   // check student change?
   if(students.length == studentsNew.length){
     for(var i = 0; i < students.length; i++) {
+      var found_matching = false
       for(var j = 0; j < studentsNew.length; j++) {
-        if( students[i]["student_id"] != studentsNew[j]["student_id"] ||
-            students[i]["relationship_id"] != studentsNew[j]["relationship_id"] )
+        if( students[i]["student_id"] == studentsNew[j]["student_id"] &&
+            students[i]["relationship_id"] == studentsNew[j]["relationship_id"] )
         {
           // student property are change
-          return true
+          found_matching = true
         }
+      }
+      if(!found_matching){
+        return true
       }
     }
   }else{
-    console.log("bobo")
     // number of valid student not same
     return true
   }
@@ -114,13 +117,17 @@ var isChange = function(){
 }
 var selected = function(item){
   searchInput.val("")
+  goToUrl("/parents/" + item.id + "/edit#/")
+}
+
+function goToUrl(url){
   if(isChange()){
-    $("#warningModal").modal()
     $("#force-change-page").click(function(){
-      window.location = "/parents/" + item.id + "/edit#/"
+      window.location = url
     })
+    $("#warningModal").modal()
   }else{
-    window.location = "/parents/" + item.id + "/edit#/"
+    window.location = url
   }
 }
 

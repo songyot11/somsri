@@ -112,14 +112,18 @@ var isChange = function(){
   // check parent change?
   if(parents.length == parentsNew.length){
     for(var i = 0; i < parents.length; i++) {
+      var found_matching = false
       for(var j = 0; j < parentsNew.length; j++) {
-        if( parents[i]["parent_id"] != parentsNew[j]["parent_id"] ||
-            parents[i]["relationship_id"] != parentsNew[j]["relationship_id"] ||
-            parents[i]["mobile"] != parentsNew[j]["mobile"])
+        if( parents[i]["parent_id"] == parentsNew[j]["parent_id"] &&
+            parents[i]["relationship_id"] == parentsNew[j]["relationship_id"] &&
+            parents[i]["mobile"] == parentsNew[j]["mobile"])
         {
           // parent property are change
-          return true
+          found_matching = true
         }
+      }
+      if(!found_matching){
+        return true
       }
     }
   }else{
@@ -130,13 +134,17 @@ var isChange = function(){
 }
 var selected = function(item){
   searchInput.val("")
+  goToUrl("/students/" + item.id + "/edit#/")
+}
+
+function goToUrl(url){
   if(isChange()){
     $("#warningModal").modal()
     $("#force-change-page").click(function(){
-      window.location = "/students/" + item.id + "/edit#/"
+      window.location = url
     })
   }else{
-    window.location = "/students/" + item.id + "/edit#/"
+    window.location = url
   }
 }
 

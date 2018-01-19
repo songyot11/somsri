@@ -56,6 +56,86 @@ describe 'Alumni', js: true do
         student_number: 9008,
         birthdate: Time.now,
         deleted_at: DateTime.now
+      }),
+      Student.make!({
+        first_name: 'สมศรี4',
+        last_name: 'ใบเสร็จ',
+        classroom: classrooms[2],
+        grade_id: grades[1].id,
+        classroom_number: 108,
+        student_number: 8004,
+        birthdate: Time.now,
+        deleted_at: DateTime.now
+      }),
+      Student.make!({
+        first_name: 'สมศรี5',
+        last_name: 'ใบเสร็จ',
+        classroom: classrooms[2],
+        grade_id: grades[1].id,
+        classroom_number: 108,
+        student_number: 8005,
+        birthdate: Time.now,
+        deleted_at: DateTime.now
+      }),
+      Student.make!({
+        first_name: 'สมศรี6',
+        last_name: 'ใบเสร็จ',
+        classroom: classrooms[2],
+        grade_id: grades[1].id,
+        classroom_number: 108,
+        student_number: 8006,
+        birthdate: Time.now,
+        deleted_at: DateTime.now
+      }),
+      Student.make!({
+        first_name: 'สมศรี7',
+        last_name: 'ใบเสร็จ',
+        classroom: classrooms[2],
+        grade_id: grades[1].id,
+        classroom_number: 108,
+        student_number: 8007,
+        birthdate: Time.now,
+        deleted_at: DateTime.now
+      }),
+      Student.make!({
+        first_name: 'สมศรี8',
+        last_name: 'ใบเสร็จ',
+        classroom: classrooms[2],
+        grade_id: grades[1].id,
+        classroom_number: 108,
+        student_number: 8008,
+        birthdate: Time.now,
+        deleted_at: DateTime.now
+      }),
+      Student.make!({
+        first_name: 'สมศรี9',
+        last_name: 'ใบเสร็จ',
+        classroom: classrooms[2],
+        grade_id: grades[1].id,
+        classroom_number: 108,
+        student_number: 8009,
+        birthdate: Time.now,
+        deleted_at: DateTime.now
+      }),
+      Student.make!({
+        first_name: 'สมศรี10',
+        last_name: 'ใบเสร็จ',
+        classroom: classrooms[2],
+        grade_id: grades[1].id,
+        classroom_number: 108,
+        student_number: 8010,
+        birthdate: Time.now,
+        deleted_at: DateTime.now
+      }),
+      Student.make!({
+        first_name: 'สมศรี11',
+        last_name: 'ใบเสร็จ',
+        classroom: classrooms[2],
+        grade_id: grades[1].id,
+        classroom_number: 108,
+        student_number: 8011,
+        birthdate: Time.now,
+        deleted_at: DateTime.now
       })
     ]
   end
@@ -90,6 +170,94 @@ describe 'Alumni', js: true do
         grade: grades[1].name,
         classroom: classrooms[2].name,
         student_number: 9008,
+        nickname: "สาม",
+        graduated_year: "2560",
+        graduated_semester: "2",
+        status: "จบการศึกษา"
+      }),
+      Alumni.make!({
+        student_id: students[3].id,
+        name: 'สมศรี4 ใบเสร็จ',
+        grade: grades[1].name,
+        classroom: classrooms[2].name,
+        student_number: 8004,
+        nickname: "สาม",
+        graduated_year: "2560",
+        graduated_semester: "2",
+        status: "จบการศึกษา"
+      }),
+      Alumni.make!({
+        student_id: students[4].id,
+        name: 'สมศรี5 ใบเสร็จ',
+        grade: grades[1].name,
+        classroom: classrooms[2].name,
+        student_number: 8005,
+        nickname: "สาม",
+        graduated_year: "2560",
+        graduated_semester: "2",
+        status: "จบการศึกษา"
+      }),
+      Alumni.make!({
+        student_id: students[5].id,
+        name: 'สมศรี6 ใบเสร็จ',
+        grade: grades[1].name,
+        classroom: classrooms[2].name,
+        student_number: 8006,
+        nickname: "สาม",
+        graduated_year: "2560",
+        graduated_semester: "2",
+        status: "จบการศึกษา"
+      }),
+      Alumni.make!({
+        student_id: students[6].id,
+        name: 'สมศรี7 ใบเสร็จ',
+        grade: grades[1].name,
+        classroom: classrooms[2].name,
+        student_number: 8007,
+        nickname: "สาม",
+        graduated_year: "2560",
+        graduated_semester: "2",
+        status: "จบการศึกษา"
+      }),
+      Alumni.make!({
+        student_id: students[7].id,
+        name: 'สมศรี8 ใบเสร็จ',
+        grade: grades[1].name,
+        classroom: classrooms[2].name,
+        student_number: 8008,
+        nickname: "สาม",
+        graduated_year: "2560",
+        graduated_semester: "2",
+        status: "จบการศึกษา"
+      }),
+      Alumni.make!({
+        student_id: students[8].id,
+        name: 'สมศรี9 ใบเสร็จ',
+        grade: grades[1].name,
+        classroom: classrooms[2].name,
+        student_number: 8009,
+        nickname: "สาม",
+        graduated_year: "2560",
+        graduated_semester: "2",
+        status: "จบการศึกษา"
+      }),
+      Alumni.make!({
+        student_id: students[9].id,
+        name: 'สมศรี10 ใบเสร็จ',
+        grade: grades[1].name,
+        classroom: classrooms[2].name,
+        student_number: 8010,
+        nickname: "สาม",
+        graduated_year: "2560",
+        graduated_semester: "2",
+        status: "จบการศึกษา"
+      }),
+      Alumni.make!({
+        student_id: students[10].id,
+        name: 'สมศรี11 ใบเสร็จ',
+        grade: grades[1].name,
+        classroom: classrooms[2].name,
+        student_number: 8011,
         nickname: "สาม",
         graduated_year: "2560",
         graduated_semester: "2",
@@ -152,6 +320,7 @@ describe 'Alumni', js: true do
     eventually { expect(page).to_not have_content("สมศรี1 ใบเสร็จ หนึ่ง 9006 2560 1 Kindergarten 1 (1A) ลาออก") }
     eventually { expect(page).to have_content("สมศรี2 ใบเสร็จ สอง 9007 2561 1 Kindergarten 1 (1A) ลาออก") }
     eventually { expect(page).to have_content("สมศรี3 ใบเสร็จ สาม 9008 2560 2 Kindergarten 2 (2A) จบการศึกษา") }
+    eventually { expect(page).to have_css("table#alumni-table tbody tr", count: 10) }
     eventually { expect(Student.where(id: students[0].id).count).to eq 1 }
     eventually { expect(Alumni.where(student_id: students[0].id).count).to eq 0 }
   end

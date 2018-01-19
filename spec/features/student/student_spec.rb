@@ -278,6 +278,36 @@ describe 'Student', js: true do
     eventually { expect(page).to have_content ("เรน โบว์") }
   end
 
+  it 'should warning if click cancel while student data changed and go' do
+    student_more
+    visit "/students/#{student_more[1].id}/edit#/"
+    sleep(1)
+    fill_in 'ชื่อ-นามสกุล', :with => 'นักเรียนชื่อใหม่'
+    sleep(1)
+    first('a', text: "ยกเลิก").click
+    sleep(1)
+    eventually { expect(page).to have_content ("คุณต้องการออกจากหน้านี้โดยไม่บันทึกค่าหรือไม่?") }
+    sleep(1)
+    find("#force-change-page").click
+    sleep(1)
+    eventually { expect(page).to have_content ("นักเรียน") }
+    eventually { expect(page).to have_content ("พิมพ์รายชื่อ") }
+  end
+
+  it 'should warning if click cancel while student data changed and cancel' do
+    student_more
+    visit "/students/#{student_more[1].id}/edit#/"
+    sleep(1)
+    fill_in 'ชื่อ-นามสกุล', :with => 'นักเรียนชื่อใหม่'
+    sleep(1)
+    first('a', text: "ยกเลิก").click
+    sleep(1)
+    eventually { expect(page).to have_content ("คุณต้องการออกจากหน้านี้โดยไม่บันทึกค่าหรือไม่?") }
+    click_button("ยกเลิก")
+    sleep(1)
+    eventually { expect(page).to have_content ("เรน โบว์") }
+  end
+
   it 'should warning if change page while parent data changed' do
     student_more
     visit "/students/#{student[0].id}/edit#/"

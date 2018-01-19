@@ -13,7 +13,7 @@
     $rootScope.loadAndAuthorizeResource("invoice", function(){
       ctrl.bringBack = function(id){
         service.restore(id).then(function(resp) {
-          alumniTable.bootstrapTable("removeByUniqueId", id)
+          alumniTable.bootstrapTable("refresh")
         });
       }
 
