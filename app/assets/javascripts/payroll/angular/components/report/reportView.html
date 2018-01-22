@@ -22,7 +22,8 @@
             <label id="print-report-btn" class="btn btn-custom btn-black" style="border-radius: 0px; margin-left:30px;" data-toggle="dropdown">พิมพ์รายงาน&nbsp;&nbsp;<span class="fa fa-angle-down"></span></label>
             <ul class="dropdown-menu" aria-labelledby="print-report-btn">
               <li>
-                <a onclick="window.print()">
+                <a ng-href="/payrolls.pdf?effective_date={{report.currentEffectiveDate['date_time'] | encodeString }}&payroll_report=true"
+                  target="_blank">
                   <button>พิมพ์สรุปรายการ</button>
                 </a>
               </li>

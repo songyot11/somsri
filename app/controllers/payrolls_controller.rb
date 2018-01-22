@@ -31,12 +31,6 @@ class PayrollsController < ApplicationController
         end
         format.pdf do
           @results = payrolls.as_json("report")
-          @effective_date_str = "เดือนปัจจุบัน"
-          filename = "เงินเดือน-เดือนปัจจุบัน"
-          if effective_date
-            filename = "เงินเดือน-#{effective_date.strftime("%d-%m-%Y")}"
-            @effective_date_str = to_thai_date(effective_date).join(" ")
-          end
           @total = {
             salary: 0,
             ot: 0,
@@ -71,12 +65,32 @@ class PayrollsController < ApplicationController
             @total[:fee_etc] += result[:fee_etc]
             @total[:net_salary] += result[:net_salary]
           end
+
+          if params[:payroll_report]
+            template = "pdf/payroll_report.html.erb"
+            orientation = "Portrait"
+            if effective_date
+              filename = "ใบสรุปรายการ-#{effective_date.strftime("%d-%m-%Y")}"
+            else
+              filename = "ใบสรุปรายการ-เดือนปัจจุบัน"
+            end
+          else
+            template = "pdf/payroll.html.erb"
+            orientation = "Landscape"
+            if effective_date
+              filename = "เงินเดือน-#{effective_date.strftime("%d-%m-%Y")}"
+              @effective_date_str = to_thai_date(effective_date).join(" ")
+            else
+              filename = "เงินเดือน-เดือนปัจจุบัน"
+              @effective_date_str = "เดือนปัจจุบัน"
+            end
+          end
           render pdf: filename,
-                  template: "pdf/payroll.html.erb",
-                  orientation: "Landscape",
+                  template: template,
+                  orientation: orientation,
                   encoding: "UTF-8",
                   layout: 'pdf.html',
-                  show_as_html: params[:html_view].present?
+                  show_as_html: params[:show_as_html].present?
         end
       end
     end

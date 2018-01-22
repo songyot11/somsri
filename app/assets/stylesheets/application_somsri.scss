@@ -18,8 +18,20 @@
   min-width: 80px !important;
 }
 
+.min-w-150 {
+  min-width: 150px !important;
+}
+
 .min-w-200 {
   min-width: 200px !important;
+}
+
+.min-w-250 {
+  min-width: 250px !important;
+}
+
+.min-w-300 {
+  min-width: 300px !important;
 }
 
 .max-w-md {
@@ -138,6 +150,9 @@
 .border-1 {
   border: solid 1px;
 }
+.border-bottom-1 {
+  border-bottom: solid 1px;
+}
 
 .text-right {
   text-align: right;
@@ -149,6 +164,10 @@
 
 .bg-white {
   background-color: #fff !important;
+}
+
+.bg-light-gray {
+  background-color: #ddd !important;
 }
 
 .font-12 {
@@ -165,6 +184,10 @@
 
 .letter-spacing-3 {
   letter-spacing: 3px !important;
+}
+
+.page-break {
+  page-break-after: always !important;
 }
 
 .btn-custom {
