@@ -755,9 +755,9 @@
     </div>
     <div class="footer-menu row">
       <div class="col-md-4">
-        <button ng-show="employee.isEdit && employee.hasPayroll && employee.payroll_closed" type="button" class="btn btn-custom btn-orange" ng-click="openSlip(employee.datas.employee.id, employee.currentEffectiveDate['payroll_id'])">
+        <a target="_blank" ng-show="employee.isEdit && employee.hasPayroll && employee.payroll_closed" class="btn btn-custom btn-orange" ng-href="/employees/slips.pdf?payroll_ids%5B%5D={{ employee.datas.payroll.id }}">
           <i class="fa fa-print"></i> พิมพ์ใบจ่ายเงินเดือน
-        </button>
+        </a>
       </div>
 
       <div class="col-md-8">

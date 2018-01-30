@@ -1,0 +1,186 @@
+<% @results[:employees].each_with_index do |employee, i| %>
+  <div class="font-10">
+    <div class="row">
+      <div class="col-xs-12 text-slip1-school">
+        <%= employee[:header].html_safe %>
+      </div>
+    </div>
+
+    <!-- line 1 -->
+    <div class="row">
+      <div class="col-xs-5 col-xs-offset-7">
+        <p>
+          <strong>ตำแหน่ง/Title</strong>
+          <%= employee[:position] %>
+        </p>
+      </div>
+    </div>
+
+    <!-- line 2 -->
+    <div class="row">
+      <div class="col-xs-3">
+        <p>
+          <strong>รหัส/Code</strong>
+          <span class="font-roboto"><%= employee[:code] %></span>
+        </p>
+      </div>
+      <div class="col-xs-4">
+        <p>
+          <strong>ชื่อ/Name</strong>
+          <%= employee[:name] %>
+        </p>
+      </div>
+      <div class="col-xs-5 ">
+        <p>
+          <strong>เลขที่บัญชี/Bank acct.</strong>
+          <span class="font-roboto"><%= employee[:account_number] %></span>
+        </p>
+      </div>
+    </div>
+
+    <!-- Table -->
+    <div class="row">
+      <div class="col-xs-9">
+        <!-- Left Table -->
+        <table class="table table-bordered">
+          <thead>
+            <tr>
+              <th class="text-center align-middle py-5 bg-light-gray" width="30%">รายการได้ / Income</th>
+              <th class="text-center align-middle py-5 bg-light-gray" width="20%">จำนวนเงิน / Amount</th>
+              <th class="text-center align-middle py-5 bg-light-gray" width="30%">รายการเงินหัก / Deduction</th>
+              <th class="text-center align-middle py-5 bg-light-gray" width="20%">จำนวนเงิน / Amount</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr class="h-150">
+              <td>
+                <% employee[:payroll][:pay_orders].each_with_index do |pay_order, i| %>
+                  <div><%= pay_order[1][:name] %></div>
+                <% end %>
+              </td>
+
+              <td class="text-right font-roboto">
+                <% employee[:payroll][:pay_orders].each_with_index do |pay_order, i| %>
+                  <div><%= number_with_precision(pay_order[1][:value], precision: 2, delimiter: ',') %></div>
+                  <% if pay_order[1][:name].include? "เงินสอนพิเศษ" %>
+                    <div>&nbsp;</div>
+                  <% end %>
+                <% end %>
+              </td>
+
+              <td>
+                <% employee[:payroll][:fee_orders].each do |fee_order| %>
+                  <div><%= fee_order[1][:name] %></div>
+                <% end %>
+              </td>
+              <td class="text-right font-roboto">
+                <% employee[:payroll][:fee_orders].each do |fee_order| %>
+                  <div><%= number_with_precision(fee_order[1][:value], precision: 2, delimiter: ',') %></div>
+                  <% if fee_order[1][:name].include? "เงินสะสมกองทุนสงเคราะห์" %>
+                    <div>&nbsp;</div>
+                  <% end %>
+                <% end %>
+              </td>
+            </tr>
+          </tbody>
+          <tfoot>
+            <th class="text-right bg-light-gray py-5">
+              รวมรายได้<br>
+              Total Income
+            </th>
+            <td class="text-right align-middle py-15 font-roboto"><%= number_with_precision(employee[:extra_pay], precision: 2, delimiter: ',') %></td>
+            <th class="text-right bg-light-gray py-5">
+              รวมรายการหัก<br>
+              Total Deduction
+            </th>
+            <td class="text-right align-middle py-15 font-roboto"><%= number_with_precision(employee[:extra_fee], precision: 2, delimiter: ',') %></td>
+          </tfoot>
+        </table>
+      </div>
+      <div class="col-xs-3">
+        <!-- Right Table -->
+        <table class="table table-bordered text-center mb-50">
+          <thead>
+            <tr>
+              <th class="text-center py-5 bg-light-gray">
+                วัน / เดือน / ปี<br>
+                Day / Month / Year
+              </th>
+            </tr>
+          </thead>
+          <tr>
+            <td class="min-h-45 py-15 font-roboto"><%= I18n.l(employee[:payroll][:date], format: "%d/%m/#{employee[:payroll][:date].year + 543}") %></td>
+          </tr>
+        </table>
+        <table class="table table-bordered text-center">
+          <thead>
+            <tr>
+              <th class="text-center py-5 bg-light-gray">
+                เงินรับสุทธิ<br>
+                Net Income
+              </th>
+            </tr>
+          </thead>
+          <tr>
+            <td class="min-h-45 py-15 font-roboto">
+              <%= number_with_precision(employee[:extra_pay] - employee[:extra_fee], precision: 2, delimiter: ',') %>
+            </td>
+          </tr>
+        </table>
+      </div>
+    </div>
+
+    <!-- Result Table -->
+    <div class="row">
+      <div class="col-xs-9 ">
+        <table class="table table-bordered text-center">
+          <thead>
+            <tr>
+              <th class="text-center py-5 bg-light-gray">
+                รายได้สะสมต่อปี<br>
+                Acc. Income
+              </th>
+              <th class="text-center py-5 bg-light-gray">
+                ภาษีสะสมต่อปี<br>
+                Acc. Tax
+              </th>
+              <th class="text-center py-5 bg-light-gray">
+                เงินประกันสังคมสะสมต่อปี<br>
+                Acc. Social fund
+              </th>
+              <th class="text-center py-5 bg-light-gray">
+                เงินสะสมกองทุนสงเคราะห์<br>
+                Private Teacher Aid fund
+              </th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td class="min-h-45 py-15 font-roboto" width="20%">
+                <%= number_with_precision(employee[:annual_income_outcome][:total_salary], precision: 2, delimiter: ',') %>
+              </td>
+              <td class="min-h-45 py-15 font-roboto" width="20%">
+                <%= number_with_precision(employee[:annual_income_outcome][:total_tax], precision: 2, delimiter: ',') %>
+              </td>
+              <td class="min-h-45 py-15 font-roboto" width="30%">
+                <%= number_with_precision(employee[:annual_income_outcome][:total_social_insurance], precision: 2, delimiter: ',') %>
+              </td>
+              <td class="min-h-45 py-15 font-roboto" width="30%">
+                <%= number_with_precision(employee[:annual_income_outcome][:total_aid_fund], precision: 2, delimiter: ',') %>
+              </td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+      <div class="col-xs-3">
+        <p class="border-top-1 text-center mt-85">ผู้มีอำนาจลงนาม / Signature</p>
+      </div>
+    </div>
+  </div>
+  <% if i%2 == 0 && !@results[:one_per_page] %>
+    <div class="h-20"></div>
+  <% else %>
+    <div style='page-break-after:always;'></div>
+  <% end %>
+
+<% end %>

@@ -110,15 +110,6 @@
       $state.go('employee_details',{ id: id });
     };
 
-    $rootScope.openSlip = function (id, payroll_id) {
-      if(payroll_id){
-        $state.go('slip',{ id: id, payroll_id: payroll_id });
-      }else{
-        $state.go('slip',{ id: id });
-      }
-
-    };
-
     $rootScope.openConfirmationModal = function (message, success, dismiss) {
       $scope.message = message;
       $uibModal.open({

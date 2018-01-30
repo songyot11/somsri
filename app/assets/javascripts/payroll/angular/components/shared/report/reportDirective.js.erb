@@ -82,7 +82,7 @@
 
       function printSlip(value, row, index){
         if(row){
-          return '<a onclick="'+ angularScopeReport +'.printSlip('+row.code+','+ row.payroll_id + ')" href="javascript:void(0)"> <i class="fa fa-print"></i> </a>';
+          return '<a target="_blank" href="/employees/slips.pdf?payroll_ids%5B%5D=' + row.payroll_id + '" > <i class="fa fa-print"></i> </a>';
         }
         return '-';
       }

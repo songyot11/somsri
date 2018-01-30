@@ -10,6 +10,7 @@
       ctrl.employees
       ctrl.effectiveDates = []
       ctrl.currentDateString = ""
+      ctrl.slipsUrl = "?"
 
       ctrl.employeeTypeMode = {
         normal: true,
@@ -145,6 +146,11 @@
               ctrl.currentEffectiveDate = current
               $scope.report.employees = ctrl.employees
               $scope.report.reportTableInit(ctrl.employees);
+
+              // prepare data for print all slips
+              for(var i = 0; i < ctrl.employees.length; i++ ){
+                ctrl.slipsUrl += "payroll_ids%5B%5D=" + ctrl.employees[i].payroll_id + "&";
+              }
             });
           }
         });

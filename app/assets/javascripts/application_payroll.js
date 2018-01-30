@@ -36,7 +36,6 @@
 //= require payroll/angular/app.module
 //= require payroll/angular/app.assets
 //= require payroll/angular/shared/filters
-//= require payroll/angular/components/shared/slip/slipDirective
 
 //= require angular-xeditable/dist/js/xeditable
 //= require bootstrap-table
