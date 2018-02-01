@@ -32,6 +32,11 @@
                   <button>พิมพ์สลิปเงินเดือนทุกคน</button>
                 </a>
               </li>
+              <li ng-show="report.slip_carbon">
+                <a ng-click="report.printSlips()" href="javascript:void(0)">
+                  <button>พิมพ์สลิปเงินเดือนทุกคนแบบคาร์บอน</button>
+                </a>
+              </li>
               <li>
                 <a ng-href="/payrolls/social_insurance_pdf?effective_date={{report.currentEffectiveDate['date_time'] | encodeString }}"
                   target="_blank">

@@ -242,7 +242,7 @@ describe 'Student', js: true do
     sleep(1)
     first('.search-autocomplete').click
     sleep(1)
-    eventually { expect(page).to have_content ("สมศรี ใบเสร็จ") }
+    eventually { expect(page).to have_content ("แฟรงค์ คลาวด์") }
   end
 
   it 'should warning if change page while student data changed and submit' do

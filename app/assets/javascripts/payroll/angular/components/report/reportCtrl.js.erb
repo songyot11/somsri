@@ -12,6 +12,11 @@
       ctrl.currentDateString = ""
       ctrl.slipsUrl = "?"
 
+      ctrl.slip_carbon = false
+      $rootScope.getSiteConfig("slip_carbon").then(function(resp) {
+        ctrl.slip_carbon = resp.data
+      });
+
       ctrl.employeeTypeMode = {
         normal: true,
         temporary: true,
@@ -93,7 +98,15 @@
           payroll_ids.push(ctrl.employees[i].payroll_id);
         }
         slipService.employeeSlips(payroll_ids).then(function(resp) {
-          ctrl.employee_slips = resp.data.employees
+          ctrl.employee_slips = []
+          for(var i = 0; i < resp.data.employees.length; i+=2 ){
+            var pair = []
+            pair.push(resp.data.employees[i]);
+            if(i + 1 < resp.data.employees.length){
+              pair.push(resp.data.employees[i+1]);
+            }
+            ctrl.employee_slips.push(pair);
+          }
           ctrl.onePerPage = resp.data.one_per_page
           for(var i = 0; i < ctrl.employee_slips.length; i++){
             ctrl.employee_slips[i].header = $sce.trustAsHtml(ctrl.employee_slips[i].header);

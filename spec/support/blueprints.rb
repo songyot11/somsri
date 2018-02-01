@@ -147,6 +147,7 @@ SiteConfig.blueprint do
   display_schools_year_with_invoice_id { false }
   tax { true }
   outstanding_notification { false }
+  slip_carbon { false }
 end
 
 Alumni.blueprint do

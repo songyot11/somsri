@@ -2,7 +2,7 @@
   'use strict';
   angular.module('somsri.payroll.main', [
   ])
-  .controller('mainCtrl', ['$rootScope', '$state', '$scope', '$uibModal', '$filter', '$http', '$window', function($rootScope, $state, $scope, $uibModal, $filter, $http, $window) {
+  .controller('mainCtrl', ['$rootScope', '$state', '$scope', '$uibModal', '$filter', '$http', '$window', '$q', function($rootScope, $state, $scope, $uibModal, $filter, $http, $window, $q) {
 
     function checkAbility(model, callback){
       if($rootScope.abilities.manage && $rootScope.abilities.manage.all){
@@ -56,6 +56,18 @@
               ASSETS.somsri.payroll.warning_modal
             ]);
           }]
+        }
+      });
+    }
+
+    var getSiteConfigCanceler = $q.defer()
+    $rootScope.getSiteConfig = function(name) {
+      getSiteConfigCanceler.resolve()
+      getSiteConfigCanceler = $q.defer()
+      return $http.get('/site_configs', {
+        timeout: getSiteConfigCanceler.promise,
+        params: {
+          name: name
         }
       });
     }

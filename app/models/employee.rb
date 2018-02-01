@@ -99,6 +99,7 @@ class Employee < ApplicationRecord
         name: self.full_name,
         position: self.position,
         account_number: self.account_number,
+        personal_id: self.personal_id,
         annual_income_outcome: self.annual_income_outcome(self.id)
       }
 
