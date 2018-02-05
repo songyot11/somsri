@@ -39,8 +39,8 @@ Rails.application.routes.draw do
     delete 'real_destroy'
   end
 
+  resources :site_configs, only: [:index]
   resources :individuals, only: [:create, :update, :destroy, :index]
-
 
   resources :invoices do
     member do

@@ -1,0 +1,23 @@
+<% @results.each_slice(34) do |results| %>
+  <table class="font-12"> 
+    <tbody>
+      <tr class="bg-light-gray">
+        <td class="border-bottom-1 p-5 min-w-300 text-left"><b>ชื่อ</b></td>
+        <td class="border-bottom-1 p-5 min-w-150 text-right"><b>เลขบัญชี</b></td>
+        <td class="border-bottom-1 p-5 min-w-250 text-right"><b>เงินเดือนสุทธิ</b></td>
+      </tr>
+      <% results.each do |result| %>
+        <tr class="page-break">
+          <td class="border-bottom-1 text-left p-5"><%= result[:name] %></td>
+          <td class="border-bottom-1 text-right p-5 font-roboto"><%= result[:account_number] %></td>
+          <td class="border-bottom-1 text-right p-5 font-roboto"><%= number_with_precision(result[:net_salary], precision: 2, delimiter: ',') %></td>
+        </tr>
+      <% end %>
+      <tr>
+        <td class="border-bottom-1 p-5"></td>
+        <td class="border-bottom-1 text-right p-5"><b>รวมทั้งหมด</b></td>
+        <td class="border-bottom-1 text-right p-5 font-roboto"><b><%= number_with_precision(@total[:net_salary], precision: 2, delimiter: ',') %></b></td>
+      </tr>
+    </tbody>
+  </table>
+<% end %>

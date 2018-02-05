@@ -6,6 +6,7 @@ class Ability
       can :access, :rails_admin
       can :dashboard
       can :manage, :all
+      can :manage, SiteConfig
     elsif  user && user.finance_officer?
       can :manage, :menu
       can :manage, Invoice
@@ -17,6 +18,7 @@ class Ability
       can :manage, :setting
       can :manage, Classroom
       can :manage, Alumni
+      can :read, SiteConfig
     end
   end
 

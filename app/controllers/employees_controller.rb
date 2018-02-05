@@ -39,10 +39,27 @@ class EmployeesController < ApplicationController
       employee[:header] = school.payroll_slip_header || ""
       employees << employee
     end
-    render json: {
-      employees: employees,
-      one_per_page: SiteConfig.get_cache.one_slip_per_page
-    }, status: :ok
+
+    respond_to do |format|
+      format.html do
+        render json: {
+          employees: employees,
+          one_per_page: SiteConfig.get_cache.one_slip_per_page
+        }, status: :ok
+      end
+      format.pdf do
+        @results = {
+          employees: employees,
+          one_per_page: SiteConfig.get_cache.one_slip_per_page
+        }
+        date = I18n.l(employees[0][:payroll][:date], format: "%d-%m-#{employees[0][:payroll][:date].year + 543}")
+        render pdf: "ใบเสร็จเงินเดือน_#{date}",
+                template: "pdf/slip.html.erb",
+                encoding: "UTF-8",
+                layout: 'pdf.html',
+                show_as_html: params[:show_as_html].present?
+      end
+    end
   end
 
   # GET /employees/:id/payrolls

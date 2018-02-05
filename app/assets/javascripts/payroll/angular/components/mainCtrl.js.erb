@@ -2,7 +2,7 @@
   'use strict';
   angular.module('somsri.payroll.main', [
   ])
-  .controller('mainCtrl', ['$rootScope', '$state', '$scope', '$uibModal', '$filter', '$http', '$window', function($rootScope, $state, $scope, $uibModal, $filter, $http, $window) {
+  .controller('mainCtrl', ['$rootScope', '$state', '$scope', '$uibModal', '$filter', '$http', '$window', '$q', function($rootScope, $state, $scope, $uibModal, $filter, $http, $window, $q) {
 
     function checkAbility(model, callback){
       if($rootScope.abilities.manage && $rootScope.abilities.manage.all){
@@ -60,6 +60,18 @@
       });
     }
 
+    var getSiteConfigCanceler = $q.defer()
+    $rootScope.getSiteConfig = function(name) {
+      getSiteConfigCanceler.resolve()
+      getSiteConfigCanceler = $q.defer()
+      return $http.get('/site_configs', {
+        timeout: getSiteConfigCanceler.promise,
+        params: {
+          name: name
+        }
+      });
+    }
+
     $rootScope.loadAndAuthorizeResource = function(model, callback) {
       if($rootScope.abilities && $rootScope.abilities.length > 0){
         checkAbility(model, callback);
@@ -108,15 +120,6 @@
 
     $rootScope.openEmployeeDetails = function (id) {
       $state.go('employee_details',{ id: id });
-    };
-
-    $rootScope.openSlip = function (id, payroll_id) {
-      if(payroll_id){
-        $state.go('slip',{ id: id, payroll_id: payroll_id });
-      }else{
-        $state.go('slip',{ id: id });
-      }
-
     };
 
     $rootScope.openConfirmationModal = function (message, success, dismiss) {

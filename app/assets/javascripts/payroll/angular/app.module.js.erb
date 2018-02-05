@@ -9,7 +9,6 @@
     'angularMoment',
     'somsri.payroll.filters',
     'xeditable',
-    'somsri.payroll.slip.directive',
     'angularMoment',
     'angular-redactor',
     'ngSanitize',
@@ -67,19 +66,6 @@
           resources: ['$ocLazyLoad', function($ocLazyLoad) {
             return $ocLazyLoad.load([
               ASSETS.somsri.payroll.report
-            ]);
-          }]
-        }
-      }).
-      state({
-        url: '/employees/:id/slip?payroll_id',
-        name: 'slip',
-        templateUrl: "<%= asset_path('payroll/angular/components/slip/slipView.html') %>",
-        controller: 'slipCtrl as slip',
-        resolve: {
-          resources: ['$ocLazyLoad', function($ocLazyLoad) {
-            return $ocLazyLoad.load([
-              ASSETS.somsri.payroll.slip
             ]);
           }]
         }

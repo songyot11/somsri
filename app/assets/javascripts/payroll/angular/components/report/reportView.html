@@ -22,13 +22,19 @@
             <label id="print-report-btn" class="btn btn-custom btn-black" style="border-radius: 0px; margin-left:30px;" data-toggle="dropdown">พิมพ์รายงาน&nbsp;&nbsp;<span class="fa fa-angle-down"></span></label>
             <ul class="dropdown-menu" aria-labelledby="print-report-btn">
               <li>
-                <a onclick="window.print()">
+                <a ng-href="/payrolls.pdf?effective_date={{report.currentEffectiveDate['date_time'] | encodeString }}&payroll_report=true"
+                  target="_blank">
                   <button>พิมพ์สรุปรายการ</button>
                 </a>
               </li>
               <li>
-                <a ng-click="report.printSlips()" href="javascript:void(0)">
+                <a target="_blank" ng-href="/employees/slips.pdf{{report.slipsUrl}}">
                   <button>พิมพ์สลิปเงินเดือนทุกคน</button>
+                </a>
+              </li>
+              <li ng-show="report.slip_carbon">
+                <a ng-click="report.printSlips()" href="javascript:void(0)">
+                  <button>พิมพ์สลิปเงินเดือนทุกคนแบบคาร์บอน</button>
                 </a>
               </li>
               <li>
