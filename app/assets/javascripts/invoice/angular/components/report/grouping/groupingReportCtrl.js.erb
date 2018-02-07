@@ -11,33 +11,36 @@
       ctrl.end_date = new Date();
       ctrl.start_date = new Date(new Date().setMonth(new Date().getMonth() - 1));
       ctrl.options = null
+      ctrl.forcePerInvoice = false
 
-      function loadData(){
+      ctrl.loadData = function (){
         ctrl.start_date = cleanDate(ctrl.start_date)
         ctrl.end_date = cleanDate(ctrl.end_date)
-        service.getGroupingReport(ctrl.start_date, ctrl.end_date, ctrl.options).then(function(resp) {
+        service.getGroupingReport(ctrl.start_date, ctrl.end_date, ctrl.options, ctrl.forcePerInvoice).then(function(resp) {
           ctrl.datas = resp.data
           ctrl.options = resp.data.options
-          var reportMode = getReportMode()
-          if(reportMode == "per_student"){
-            ctrl.column_invoice_id = "Invoice"
-            ctrl.first_column = "ชื่อ"
-            ctrl.column_classroom = "ชั้น"
-            ctrl.isPerStudent = true
-            ctrl.isPerDay = false
-          }else{
-            ctrl.first_column = "วันที่"
-            ctrl.isPerStudent = false
-            ctrl.isPerDay = true
-          }
         });
       }
 
-      function getReportMode(){
-        if(ctrl.end_date && ctrl.start_date && ctrl.end_date.toDateString() == ctrl.start_date.toDateString()){
-          return "per_student"
+      ctrl.isDisplay = function(column_name){
+        if(ctrl.datas && ctrl.datas.rows && ctrl.datas.rows[0]){
+          if(ctrl.datas.rows[0][column_name]){
+            return true
+          }else{
+            return false
+          }
+        }
+      }
+
+      ctrl.getReportMode = function (){
+        if(ctrl.forcePerInvoice){
+            return "per_invoice"
         }else{
-          return "per_day"
+          if(ctrl.end_date && ctrl.start_date && ctrl.end_date.toDateString() == ctrl.start_date.toDateString()){
+            return "per_student"
+          }else{
+            return "per_day"
+          }
         }
       }
 
@@ -60,7 +63,7 @@
       ctrl.optionsChange = function() {
         // check date incorrect input
         if(ctrl.start_date === undefined || ctrl.end_date === undefined){return}
-        loadData()
+        ctrl.loadData()
       }
 
       ctrl.openStartDatePopup = function() {
@@ -79,7 +82,84 @@
         opened: false
       };
 
-      loadData()
+      ctrl.exportExcel = function(){
+        $('#export-excel').html('<table id="export-table" data-tableexport-display="always"></table>')
+        var tableColumn = []
+        if(ctrl.getReportMode() == "per_student"){
+          tableColumn = [
+            { title: "Invoice"},
+            { title: "ชื่อ"},
+            { title: "ชั้น"}
+          ]
+        }else if(ctrl.getReportMode() == "per_invoice"){
+          tableColumn = [
+            { title: "Invoice"},
+            { title: "วันที่"},
+            { title: "ชื่อ"},
+            { title: "ชั้น"}
+          ]
+        }else{
+          tableColumn = [
+            { title: "วันที่"}
+          ]
+        }
+
+        ctrl.datas.header.forEach(function(header) {
+          tableColumn.push({ title: header })
+        });
+
+        var table = $('#export-table')
+        table.bootstrapTable({
+          columns: tableColumn
+        })
+
+        var exportData = []
+        ctrl.datas.rows.forEach(function(row) {
+          if(row){
+            if(ctrl.getReportMode() == "per_student"){
+              var tmpArr = row.datas.slice(0)
+              tmpArr.unshift(row.header_row_classroom)
+              tmpArr.unshift(row.header_row_name)
+              tmpArr.unshift(row.header_row_invoice_id)
+              exportData.push(tmpArr)
+            }else if(ctrl.getReportMode() == "per_invoice"){
+              var tmpArr = row.datas.slice(0)
+              tmpArr.unshift(row.header_row_classroom)
+              tmpArr.unshift(row.header_row_name)
+              tmpArr.unshift(row.header_row_date)
+              tmpArr.unshift(row.header_row_invoice_id)
+              exportData.push(tmpArr)
+            }else{
+              var tmpArr = row.datas.slice(0)
+              tmpArr.unshift(row.header_row_date)
+              exportData.push(tmpArr)
+            }
+          }
+        })
+        // footer
+        if(ctrl.getReportMode() == "per_student"){
+          var footer = ctrl.datas.total.slice(0)
+          footer.unshift("รวมทั้งหมด")
+          footer.unshift("")
+          footer.unshift("")
+          exportData.push(footer)
+        }else if(ctrl.getReportMode() == "per_invoice"){
+          var footer = ctrl.datas.total.slice(0)
+          footer.unshift("รวมทั้งหมด")
+          footer.unshift("")
+          footer.unshift("")
+          footer.unshift("")
+          exportData.push(footer)
+        }else{
+          var footer = ctrl.datas.total.slice(0)
+          footer.unshift("รวมทั้งหมด")
+          exportData.push(footer)
+        }
+        table.bootstrapTable('load', exportData)
+        table.tableExport({ type: 'excel' })
+      }
+
+      ctrl.loadData()
 
     });
   }]);

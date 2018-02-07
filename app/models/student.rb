@@ -113,7 +113,11 @@ class Student < ApplicationRecord
 
   def grade_name_with_title_classroom
     if self.classroom.blank?
-      return self.grade.name
+      if self.grade
+        return self.grade.name
+      else
+        return ""
+      end
     else
       return self.grade.name + ' (' + self.classroom.name + ')'
     end
@@ -434,7 +438,7 @@ class Student < ApplicationRecord
     ActionController::Base.helpers.link_to I18n.t('.edit', :default => '<i class="fa fa-pencil-square-o" aria-hidden="true"></i> แก้ไข'.html_safe), edit_student_path(self) ,:class => 'btn-edit-student-parent'
   end
 
-  def gender 
+  def gender
     Gender.find_by_id_cached(gender_id)
   end
 

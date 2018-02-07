@@ -12,6 +12,7 @@
       </div>
       <div class="col-xs-6 text-right">
         <a href="#/grouping_report" class="btn btn-custom btn-black" onclick="window.print()"><i class='fa fa-print'></i> พิมพ์รายงาน</a>
+        <button class="btn btn-custom btn-blue-sky" ng-click="groupingReport.exportExcel()"><i class="fa fa-share-square-o" aria-hidden="true"></i> Export</button>
       </div>
      </div>
     <div class="unused_for_print col-xs-12">
@@ -19,7 +20,13 @@
         <div class="row">
           <div class="dropdown-filter">
             <div class="row">
-              <div class="col-xs-3 col-xs-offset-4 col-lg-2 col-lg-offset-6 date-for-print">
+              <div class="col-xs-4 col-lg-6 for-display">
+                <div class="form-check pt-10 pl-30">
+                  <input type="checkbox" class="form-check-input" id="per-student-mode" ng-model="groupingReport.forcePerInvoice" ng-change="groupingReport.loadData()">
+                  <label class="form-check-label font-16" for="per-student-mode">แสดงรายการใบเสร็จ</label>
+                </div>
+              </div>
+              <div class="col-xs-3 col-lg-2 date-for-print">
                 <div class="form-group">
                   <span class="input-group">
                     <div class="col-xs-2">
@@ -57,7 +64,7 @@
                   </h4>
                   <ul class="dropdown-menu">
                     <li ng-repeat="option in groupingReport.options track by $index">
-                      <label class="text-select-invoice"><input type="checkbox" class="select-item-invoice" ng-model="option.value" ng-checked="option.value" ng-change="groupingReport.optionsChange()">{{option.name}}</label>
+                      <label class="text-select-invoice"><input type="checkbox" class="select-item-invoice" ng-model="option.value" ng-checked="option.value" ng-change="groupingReport.loadData()">{{option.name}}</label>
                     </li>
                   </ul>
                 </div>
@@ -70,36 +77,41 @@
             <table id="tableHeader" class="table scrollable-header grop-items-invoice">
               <thead>
                 <tr>
-                 <td style="border:none;"></td>
-                 <td style="border:none;" ng-show="groupingReport.isPerStudent"></td>
-                 <td style="border:none;" ng-show="groupingReport.isPerStudent"></td>
+                 <th style="border:none;" ng-show="groupingReport.isDisplay('header_row_invoice_id')"></th>
+                 <th style="border:none;" ng-show="groupingReport.isDisplay('header_row_date')"></th>
+                 <th style="border:none;" ng-show="groupingReport.isDisplay('header_row_name')"></th>
+                 <th style="border:none;" ng-show="groupingReport.isDisplay('header_row_classroom')"></th>
                  <th colspan="4">ชำระโดย</th>
                </tr>
                <tr>
-                 <th ng-show="groupingReport.isPerStudent" ng-bind="groupingReport.column_invoice_id"></th>
-                 <th ng-bind="groupingReport.first_column" class="first-column-th"></th>
-                 <th ng-show="groupingReport.isPerStudent" ng-bind="groupingReport.column_classroom" class="first-column-classroom"></th>
+                 <th ng-show="groupingReport.isDisplay('header_row_invoice_id')">Invoice</th>
+                 <th ng-show="groupingReport.isDisplay('header_row_date')">วันที่</th>
+                 <th ng-show="groupingReport.isDisplay('header_row_name')" class="first-column-th">ชื่อ</th>
+                 <th ng-show="groupingReport.isDisplay('header_row_classroom')" class="first-column-classroom">ชั้น</th>
                  <th ng-repeat="header in groupingReport.datas.header track by $index"class="another-column-th">{{ header }}</th>
                </tr>
               </thead>
               <tbody>
                 <tr ng-repeat="row in groupingReport.datas.rows track by $index">
-                  <td ng-show="groupingReport.isPerStudent" class="text-center">
+                  <td ng-show="groupingReport.isDisplay('header_row_invoice_id')" class="text-center">
                     <a href="/somsri_invoice#/invoice/{{row.header_row_invoice_id}}/slip?page=grouping_report">{{row.header_row_invoice_id}}</a>
                   </td>
-                  <td ng-show="row.header_row">
-                    <div ng-show="groupingReport.isPerStudent && row.url == null">{{row.header_row}}</div>
-                    <a ng-href="{{row.url}}" ng-show="groupingReport.isPerStudent && row.url != null">{{row.header_row}}</a>
-                    <a href="javascript:void(0)" ng-click="groupingReport.selectDate(row.header_row)" ng-show="groupingReport.isPerDay" class="text-center date_gropping numberic">{{row.header_row}}</a>
+                  <td ng-show="groupingReport.isDisplay('header_row_date')">
+                    <a href="javascript:void(0)" ng-click="groupingReport.selectDate(row.header_row_date)" class="text-center date_gropping numberic">{{row.header_row_date}}</a>
                   </td>
-                  <td ng-show="groupingReport.isPerStudent">{{row.header_row_classroom}}</td>
+                  <td ng-show="groupingReport.isDisplay('header_row_name')">
+                    <div ng-show="row.url == null">{{row.header_row_name}}</div>
+                    <a ng-href="{{row.url}}" ng-show="row.url != null">{{row.header_row_name}}</a>
+                  </td>
+                  <td ng-show="groupingReport.isDisplay('header_row_classroom')">{{row.header_row_classroom}}</td>
                   <td class="text-right numberic" ng-repeat="data in row.datas track by $index">{{data.toFixed(2) | number:2}}</td>
                 </tr>
               </tbody>
               <tfoot>
                 <tr>
-                  <td ng-show="groupingReport.isPerStudent" colspan="3" class="text-center">รวมทั้งหมด</td>
-                  <td ng-show="groupingReport.isPerDay" class="text-center">รวมทั้งหมด</td>
+                  <td ng-show="groupingReport.getReportMode() == 'per_student'" colspan="3" class="text-center">รวมทั้งหมด</td>
+                  <td ng-show="groupingReport.getReportMode() == 'per_invoice'" colspan="4" class="text-center">รวมทั้งหมด</td>
+                  <td ng-show="groupingReport.getReportMode() == 'per_day'" class="text-center">รวมทั้งหมด</td>
                   <td ng-repeat="total in groupingReport.datas.total track by $index" class="text-currency numberic">{{total.toFixed(2) | number:2}}</td>
                 </tr>
               </tfoot>
@@ -110,3 +122,4 @@
     </div>
   </div>
 </div>
+<div id="export-excel" style="display: none"></div>

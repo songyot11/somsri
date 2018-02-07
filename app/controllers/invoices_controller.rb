@@ -367,11 +367,12 @@ class InvoicesController < ApplicationController
     end_date = isDate(params[:end_date]) ? DateTime.parse(params[:end_date]).end_of_day : nil
 
     summary_mode = select_summary_mode(start_date, end_date)
+    summary_mode = params[:summary_mode] if params[:summary_mode] # force summary_mode
     invoices = query_invoice_by_date_range(start_date, end_date)
 
     if summary_mode == "per_student"
       invoices = invoices.order("student_id ASC").to_a
-    else
+    elsif summary_mode == "per_day" || summary_mode == "per_invoice"
       invoices = invoices.order("created_at ASC").to_a
     end
 
@@ -394,7 +395,8 @@ class InvoicesController < ApplicationController
     column_size -= 4 if !display_payment_method
     column_size -= 1 if !display_etc
 
-    header_row_tmp = ""
+    header_row_name_tmp = ""
+    header_row_date_tmp = ""
     header_row_invoice_id_tmp = ""
     header_row_classroom_tmp = ""
     student_id_tmp = "";
@@ -407,7 +409,7 @@ class InvoicesController < ApplicationController
         # collect per student in one day
         if student_id_tmp != ""
           row = {
-            header_row: header_row_tmp,
+            header_row_name: header_row_name_tmp,
             header_row_invoice_id: header_row_invoice_id_tmp,
             header_row_classroom: header_row_classroom_tmp,
             datas: datas_tmp
@@ -420,20 +422,30 @@ class InvoicesController < ApplicationController
         student_id_tmp = invoice.student_id
         header_row_invoice_id_tmp = invoice.id
         header_row_classroom_tmp = invoice.student.grade_name_with_title_classroom
-        header_row_tmp = invoice.student.invoice_screen_full_name_display
+        header_row_name_tmp = invoice.student.invoice_screen_full_name_display
         datas_tmp = Array.new(column_size, 0.0)
-      elsif summary_mode == "per_day" && header_row_tmp != invoice.created_at.strftime("%d/%m/%Y")
+      elsif summary_mode == "per_day" && header_row_date_tmp != invoice.created_at.strftime("%d/%m/%Y")
         # collect per day data
-        if header_row_tmp != ""
+        if header_row_date_tmp != ""
           rows << {
-            header_row: header_row_tmp,
+            header_row_date: header_row_date_tmp,
             datas: datas_tmp
           }
         end
 
         # reset tmp data
-        header_row_tmp = invoice.created_at.strftime("%d/%m/%Y")
+        header_row_date_tmp = invoice.created_at.strftime("%d/%m/%Y")
         datas_tmp = Array.new(column_size, 0.0)
+      elsif summary_mode == "per_invoice"
+        row = {
+          header_row_name: invoice.student.invoice_screen_full_name_display,
+          header_row_invoice_id: invoice.id,
+          header_row_classroom: invoice.student.grade_name_with_title_classroom,
+          header_row_date: invoice.created_at.strftime("%d/%m/%Y"),
+          datas: datas_tmp = Array.new(column_size, 0.0)
+        }
+        row[:url] = edit_student_path(id: student_id_tmp) if Student.where(id: student_id_tmp).exists?
+        rows << row
       end
       if display_payment_method
         set_payment_method_datas(invoice, datas_tmp, total_tmp)
@@ -442,14 +454,17 @@ class InvoicesController < ApplicationController
     end
 
     # add last date
-    row = {
-      header_row: header_row_tmp,
-      header_row_invoice_id: header_row_invoice_id_tmp,
-      header_row_classroom: header_row_classroom_tmp
-    }
-    row[:datas] = datas_tmp if invoices.size > 0
-    row[:url] = edit_student_path(id: student_id_tmp) if Student.where(id: student_id_tmp).exists?
-    rows << row
+    if summary_mode != "per_invoice"
+      row = {
+        header_row_name: header_row_name_tmp,
+        header_row_date: header_row_date_tmp,
+        header_row_invoice_id: header_row_invoice_id_tmp,
+        header_row_classroom: header_row_classroom_tmp
+      }
+      row[:datas] = datas_tmp if invoices.size > 0
+      row[:url] = edit_student_path(id: student_id_tmp) if Student.where(id: student_id_tmp).exists?
+      rows << row
+    end
 
     render json: {
       header: header,
