@@ -5,14 +5,25 @@
   .service('groupingReportService', ['$http', '$q', function($http, $q) {
 
     var getGroupingReportCanceler = $q.defer()
-    this.getGroupingReport = function(start_date, end_date, options) {
+    this.getGroupingReport = function(start_date, end_date, options, forcePerInvoice) {
+      var params = {
+        start_date: start_date,
+        end_date: end_date,
+        display_payment_method: true,
+        display_etc: true
+      }
+
+      if(options){
+        params["options"] = JSON.stringify(options)
+      }
+
+      if(forcePerInvoice){
+        params["summary_mode"] = "per_invoice"
+      }
+
       getGroupingReportCanceler.resolve()
       getGroupingReportCanceler = $q.defer()
-      if(options){
-        return $http.get('/invoice_grouping', { timeout: getGroupingReportCanceler.promise, params: { start_date: start_date, end_date: end_date, options: JSON.stringify(options), display_payment_method: true, display_etc: true } })
-      }else{
-        return $http.get('/invoice_grouping', { timeout: getGroupingReportCanceler.promise, params: { start_date: start_date, end_date: end_date, display_payment_method: true, display_etc: true } })
-      }
+      return $http.get('/invoice_grouping', { timeout: getGroupingReportCanceler.promise, params: params })
     }
 
     var getStudentsWithoutPaginationCanceler = $q.defer()
