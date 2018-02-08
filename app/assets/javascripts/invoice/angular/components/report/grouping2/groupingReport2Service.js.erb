@@ -4,12 +4,15 @@
   ])
   .service('groupingReport2Service', ['$http', '$q', function($http, $q) {
     var getGroupingReportCanceler = $q.defer()
-    this.getGroupingReport = function(start_date, end_date, options, display_etc) {
+    this.getGroupingReport = function(start_date, end_date, options, display_etc, forcePerInvoice) {
       getGroupingReportCanceler.resolve()
       getGroupingReportCanceler = $q.defer()
       var params = {
         start_date: start_date,
         end_date: end_date
+      }
+      if(forcePerInvoice){
+        params["summary_mode"] = "per_invoice"
       }
       if(options){
         params["options"] = JSON.stringify(options)
