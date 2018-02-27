@@ -408,8 +408,6 @@ ActiveRecord::Schema.define(version: 20180131053527) do
     t.string   "round"
     t.string   "check_date"
     t.integer  "list_id"
-    t.datetime "deleted_at"
-    t.index ["deleted_at"], name: "index_roll_calls_on_deleted_at", using: :btree
     t.index ["list_id"], name: "index_roll_calls_on_list_id", using: :btree
     t.index ["student_id", "list_id", "check_date", "round"], name: "index_roll_calls_uniq_roll", unique: true, using: :btree
     t.index ["student_id"], name: "index_roll_calls_on_student_id", using: :btree
