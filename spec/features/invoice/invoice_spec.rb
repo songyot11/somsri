@@ -127,7 +127,7 @@ describe 'Invoice', js: true do
     expect(Invoice.all.count).to eq(invoice_count + 1)
   end
 
-  it 'should not create invoice when student has not number' do
+  it 'should create invoice when student has not number' do
     student_no_number
     studentsparent_no_number
     student_count = Student.count
@@ -144,7 +144,7 @@ describe 'Invoice', js: true do
     expect(page).to have_content("ค่าธรรมเนียมการศึกษา")
     expect(page).to have_content("1A")
     expect(Student.count).to eq student_count
-    expect(Invoice.all.count).to eq(invoice_count)
+    expect(Invoice.all.count).to eq(invoice_count + 1)
   end
 
   it 'should create invoice with student and parent' do

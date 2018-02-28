@@ -240,7 +240,7 @@ describe 'Student', js: true do
     sleep(1)
     first('.fa.fa-search').click
     sleep(1)
-    first('.search-autocomplete').click
+    all('.search-autocomplete')[3].click
     sleep(1)
     eventually { expect(page).to have_content ("แฟรงค์ คลาวด์") }
   end
