@@ -328,7 +328,19 @@ class InvoicesController < ApplicationController
     slip_info["total_amount"] = total
     slip_info["total_amount_thai"] = ""
 
-    render json: slip_info, status: :ok
+    respond_to do |format|
+      format.html do
+        render json: slip_info, status: :ok
+      end
+      format.pdf do
+        @results = slip_info
+        render pdf: "file_name",
+                template: "pdf/invoice.html.erb",
+                encoding: "UTF-8",
+                layout: 'pdf.html',
+                show_as_html: params[:show_as_html].present?
+      end
+    end
   end
 
   def invoice_years

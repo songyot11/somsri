@@ -36,13 +36,7 @@ describe 'invoice', js: true do
   end
 
   def view_slip
-    visit '/'
-    find('.menu-btn.invoices').click()
-    sleep(1)
-    find('.menu-btn.slip').click()
-    sleep(1)
-    find('#invoice-table > tbody > tr:nth-child(1) > td:nth-child(1) > a').click()
-    sleep(1)
+    visit "/invoices/#{invoice.id}/slip.pdf?show_as_html=true"
   end
 
   describe 'header & footer' do

@@ -1679,12 +1679,14 @@ label.img-default{
 
 
 // For print
-@print {
+@page {
   size: A4;
 }
+
 @media print {
   body{
     margin-bottom: 0px !important;
+    zoom: 71%;
   }
   .form-slip-forslip-copy,
   .for-print{

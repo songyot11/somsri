@@ -1,0 +1,175 @@
+<% ["( ต้นฉบับ / Original )", "( สําเนา / Copy )"].each do |title| %>
+<div class="container font-10">
+  <div class="row">
+    <div class="col-xs-10 text-slip1-school p-0">
+      <%= @results[:header].html_safe if @results[:header] %>
+    </div>
+    <div class="col-xs-2 font-9">
+      <div class="row">
+        <span>เลขที่ใบเสร็จ &nbsp;<%= @results[:slip_id] %>/<%= @results[:school_year] %></span>
+        <br>
+        receipt No.
+      </div>
+      <div class="row mt-10">
+        วันที่&nbsp;&nbsp;<%= @results[:thai_now_date] %>
+      </div>
+      <div class="row">
+        <%= @results[:eng_now_date] %>
+      </div>
+    </div>
+  </div>
+  <div class="row mt-10">
+    <div class="col-xs-4">
+      <div class="row"><span class="font-24">ใบเสร็จรับเงิน </span>&nbsp;&nbsp;/ Receipt</div>
+      <div class="row"><%= title %></div>
+    </div>
+    <div class="col-xs-3 col-xs-offset-5">
+      <div class="row">ภาคเรียนที่ <%= @results[:semester] %> ปีการศึกษา <%= @results[:school_year] %></div>
+      <div class="row">Semester <%= @results[:semester] %> year <%= @results[:school_year_thai] %></div>
+    </div>
+  </div>
+  <div class="row mt-10">
+    <div class="col-xs-4">
+      <div class="row"><b>ผู้ปกครอง / Parents</b></div>
+      <div class="row"><%= @results[:parent][:display_name] %></div>
+    </div>
+    <div class="col-xs-3 col-xs-offset-5">
+      <div class="row"><b>นักเรียน / Student</b></div>
+      <div class="row"><%= @results[:student][:display_name] %></div>
+      <div class="row">เลขประจำตัว <%= @results[:student][:student_number] %></div>
+      <div class="row"> <b>ชั้น </b> &nbsp;<%= @results[:grade_name] %></div>
+    </div>
+  </div>
+  <div class="row mt-10">ตามรายละเอียดดังต่อไปนี้</div>
+  <div class="row">
+    <table class="w-100p">
+      <thead>
+        <tr>
+          <th class="border-1 w-10p p-10 text-center">ลำดับที่<br/> No.</th>
+          <th class="border-1 w-70p p-10 text-center">รายการ <br/> Description</th>
+          <th class="border-1 w-20p p-10 text-right">จำนวนเงิน<br/> Amount</th>
+        </tr>
+      </thead>
+      <tbody class="">
+        <% if @results["line_items"] && @results["line_items"].length > 0 %>
+          <% @results["line_items"].each_with_index do |line_item, i| %>
+            <tr>
+              <td class="border-left-1 border-right-1 p-10 text-center"><%= i + 1 %></th>
+              <td class="border-left-1 border-right-1 p-10"><%= line_item[:detail] %></td>
+              <td class="border-left-1 border-right-1 p-10 text-right">
+                <%= number_with_precision(line_item[:amount], precision: 2, delimiter: ',') %>
+              </td>
+            </tr>
+          <% end %>
+        <% end %>
+        <% if @results["line_items"] && @results["line_items"].length < 10 %>
+          <% (1..(10 - @results["line_items"].length)).each do |i| %>
+            <tr>
+              <td class="border-left-1 border-right-1 p-10">&nbsp;</td>
+              <td class="border-left-1 border-right-1 p-10">&nbsp;</td>
+              <td class="border-left-1 border-right-1 p-10">&nbsp;</td>
+            </tr>
+          <% end %>
+        <% end %>
+      </tbody>
+      <tfoot>
+        <tr>
+          <td class="border-1 p-10"></td>
+          <td class="border-1 p-10">จำนวนเงินรวมทั้งสิ้น (บาท)/Total (Baht)</td>
+          <td class="border-1 p-10 text-right"><%= number_with_precision(@results["total_amount"], precision: 2, delimiter: ',') %></td>
+        </tr>
+        <tr>
+          <td class="border-1 p-10"></td>
+          <td class="border-1 p-10" colspan="3"><span>จำนวนเงินรวมทั้งสิ้น <b class="total_text"><% @results["total_amount"] %></b></span></td>
+        </tr>
+      </tfoot>
+    </table>
+  </div>
+  <div id="min-height-pay">
+    <% if @results[:remark] %>
+      <div class="sec-remart">
+        <div class="row">
+          <b>หมายเหตุ / Remart</b> : <%= @results[:remark] %>
+        </div>
+      </div>
+    <% end %>
+    <div class="sec-payment">
+      <div class="row text-slip3-payment mt-10"><b>การชำระเงิน / Payment</b></div>
+      <div class="row text-slip2-payment mt-10 ml-20">
+        <% if @results[:is_cash] %>
+          <div class="row">
+            <div class="col-xs-9">
+              <span>เงินสด / Cash</span>
+            </div>
+            <div class="col-xs-3">
+              <span class="pull-right">
+               <%= @results[:cash_amount] %> บาท / Baht
+              </span>
+            </div>
+          </div>
+        <% end %>
+        <% if @results[:is_credit_card] %>
+          <div class="row">
+            <div class="col-xs-9">
+              <span>
+                บัตรเครดิต / Credit card
+              </span>
+            </div>
+            <div class="col-xs-3">
+              <span class="pull-right">
+               <%= @results[:credit_card_amount] %> บาท / Baht
+              </span>
+            </div>
+          </div>
+        <% end %>
+        <% if @results[:is_cheque] %>
+          <div class="row">
+            <div class="col-xs-9">
+              <span>
+                เช็คธนาคาร / Cheque :&nbsp; <U><%= @results[:cheque_bank_name] || '.................' %></U>&nbsp;
+                ลงวันที่ / Date : &nbsp;<U><%= @results[:cheque_date] || '.......' %></U>&nbsp;
+              </span>
+            </div>
+            <div class="col-xs-3">
+              <span class="pull-right">
+                <%= @results[:cheque_amount] %> บาท / Baht
+              </span>
+            </div>
+          </div>
+        <% end %>
+        <% if @results[:is_transfer] %>
+          <div class="row">
+            <div class="col-xs-9">
+              <span>
+                เงินโอน / Transfer Payment :&nbsp; <U><%= @results[:transfer_bank_name] || '.................' %></U>&nbsp;
+                ลงวันที่ / Date:&nbsp; <U><%= @results[:transfer_date] || '.......' %></U>
+              </span>
+            </div>
+            <div class="col-xs-3">
+              <span class="pull-right">
+                <%= @results[:transfer_amount] %> บาท / Baht
+              </span>
+            </div>
+          </div>
+        <% end %>
+      </div>
+    </div>
+    <div class="mt-10">
+      <%= @results[:footer].html_safe if @results[:footer] %>
+    </div>
+  </div>
+  <div class="col-xs-4 mt-80 ml-60p">
+    <div class="row">
+      <div class="col-xs-2">ลงชื่อ</div>
+      <div class="col-xs-8 center-sign">....................................</div>
+      <div class="col-xs-2 right-sign">Receiver</div>
+    </div>
+    <div class="row">
+      <div class="col-xs-2">(</div>
+      <div class="col-xs-8 center-sign"><%= @results[:receiver_name] %></div>
+      <div class="col-xs-2 right-sign">)</div>
+    </div>
+  </div>
+</div>
+<div class="page-break"></div>
+<% end %>

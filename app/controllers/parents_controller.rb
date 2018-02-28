@@ -131,7 +131,7 @@ class ParentsController < ApplicationController
 
   def get_autocomplete
     @parents = Parent.search_by_name_and_mobile(params[:search])
-    render json: @parents.limit(10).as_json({ autocomplete: true }), status: :ok
+    render json: @parents.order(:id).limit(10).as_json({ autocomplete: true }), status: :ok
   end
 
   private

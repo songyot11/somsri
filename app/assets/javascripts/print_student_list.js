@@ -9,7 +9,7 @@ function printStudent(){
   $.get("/students.json?" + params_string, print_params)
     .done(function( data ) {
       var html = "";
-      var size = 40;
+      var size = 39;
       var order = 1;
       for (var i=0; i<data.student_list.length; i+=size) {
         var dataPerPage = data.student_list.slice(i,i+size);
