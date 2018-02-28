@@ -14,6 +14,11 @@
       }
     }
 
+    function openInNewTab(url) {
+      var win = window.open(url, '_blank');
+      win.focus();
+    }
+
     $rootScope.loadAndAuthorizeResource = function(model, callback) {
       if($rootScope.abilities && $rootScope.abilities.length > 0){
         checkAbility(model, callback);
@@ -58,11 +63,7 @@
     };
 
     $rootScope.openSlip = function (id, page) {
-      if(page){
-        $state.go('invoice_slip',{ id: id, page: page });
-      }else{
-        $state.go('invoice_slip',{ id: id });
-      }
+      openInNewTab("/invoices/" + id + "/slip.pdf")
     };
 
     $rootScope.openDailyReportPreview = function (id) {

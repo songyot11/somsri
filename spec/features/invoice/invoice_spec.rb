@@ -113,78 +113,93 @@ describe 'Invoice', js: true do
   end
 
   it 'should create invoice' do
+    invoice_count = Invoice.all.count
     visit 'somsri_invoice#/invoice'
     sleep(1)
     fill_in 'student_code', with: "21"
     click_link('21 : สมศรี ณ บานาน่าโค๊ดดิ้ง (กั้ง)')
     click_on('ชำระเงิน')
     sleep(1)
+    visit "/invoices/#{Invoice.first.id}/slip.pdf?show_as_html=true"
     expect(page).to have_content("ใบเสร็จรับเงิน")
     expect(page).to have_content("สมศรี ณ บานาน่าโค๊ดดิ้ง")
     expect(page).to have_content("ค่าธรรมเนียมการศึกษา")
+    expect(Invoice.all.count).to eq(invoice_count + 1)
   end
 
   it 'should not create invoice when student has not number' do
     student_no_number
     studentsparent_no_number
     student_count = Student.count
+    invoice_count = Invoice.all.count
     visit 'somsri_invoice#/invoice'
     sleep(1)
     fill_in 'student_name', with: "มั่งไม่มี"
     click_link('มั่งไม่มี เลขนักเรียน (ไม่)')
     click_on('ชำระเงิน')
     sleep(1)
+    visit "/invoices/#{Invoice.first.id}/slip.pdf?show_as_html=true"
     expect(page).to have_content("ใบเสร็จรับเงิน")
     expect(page).to have_content("มั่งไม่มี เลขนักเรียน")
     expect(page).to have_content("ค่าธรรมเนียมการศึกษา")
     expect(page).to have_content("1A")
     expect(Student.count).to eq student_count
+    expect(Invoice.all.count).to eq(invoice_count)
   end
 
   it 'should create invoice with student and parent' do
     visit 'somsri_invoice#/invoice'
     student_amount = Student.count
     parent_amount = Parent.count
+    invoice_count = Invoice.all.count
     sleep(1)
     fill_in 'student_name', with: "9S"
     fill_in 'parent_name', with: "2B"
     click_on('ชำระเงิน')
     sleep(1)
+    visit "/invoices/#{Invoice.first.id}/slip.pdf?show_as_html=true"
     expect(page).to have_content("ใบเสร็จรับเงิน")
     expect(page).to have_content("9S")
     expect(page).to have_content("2B")
     expect(Student.count).to eq(student_amount + 1)
     expect(Parent.count).to eq(parent_amount + 1)
+    expect(Invoice.all.count).to eq(invoice_count + 1)
   end
 
   it 'should create invoice with only student if parent exist' do
     visit 'somsri_invoice#/invoice'
     student_amount = Student.count
     parent_amount = Parent.count
+    invoice_count = Invoice.all.count
     sleep(1)
     fill_in 'student_name', with: "9S"
     fill_in 'parent_name', with: "ฉันเป็น สุภาพบุรุษนะครับ"
     click_on('ชำระเงิน')
     sleep(1)
+    visit "/invoices/#{Invoice.first.id}/slip.pdf?show_as_html=true"
     expect(page).to have_content("ใบเสร็จรับเงิน")
     expect(page).to have_content("9S")
     expect(page).to have_content("ฉันเป็น สุภาพบุรุษนะครับ")
     expect(Student.count).to eq(student_amount + 1)
     expect(Parent.count).to eq(parent_amount)
+    expect(Invoice.all.count).to eq(invoice_count + 1)
   end
 
   it 'should create only invoice if student exist' do
     visit 'somsri_invoice#/invoice'
     student_amount = Student.count
+    invoice_count = Invoice.all.count
     sleep(1)
     fill_in 'student_code', with: "21"
     click_link('21 : สมศรี ณ บานาน่าโค๊ดดิ้ง (กั้ง)')
     sleep(1)
     click_on('ชำระเงิน')
     sleep(1)
+    visit "/invoices/#{Invoice.first.id}/slip.pdf?show_as_html=true"
     expect(page).to have_content("ใบเสร็จรับเงิน")
     expect(page).to have_content("สมศรี ณ บานาน่าโค๊ดดิ้ง")
     expect(Student.count).to eq(student_amount)
+    expect(Invoice.all.count).to eq(invoice_count + 1)
 
     visit "/students/#{students[1].id}/edit#/"
     click_link('ข้อมูลใบเสร็จ')

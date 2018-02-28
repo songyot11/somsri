@@ -74,6 +74,22 @@ body {
   width: 150px !important;
 }
 
+.w-10p {
+  width: 10% !important;
+}
+
+.w-20p {
+  width: 20% !important;
+}
+
+.w-70p {
+  width: 70% !important;
+}
+
+.w-100p {
+  width: 100% !important;
+}
+
 .w-md {
   width: 960px !important;
 }
@@ -108,6 +124,10 @@ body {
 }
 
 .p-5 {
+  padding: 5px;
+}
+
+.p-10 {
   padding: 5px;
 }
 
@@ -177,6 +197,14 @@ body {
   padding-bottom: 20px !important;
 }
 
+.ml-20 {
+  margin-left: 20px !important;
+}
+
+.ml-60p {
+  margin-left: 60% !important;
+}
+
 .mr-5 {
   margin-right: 5px !important;
 }
@@ -229,6 +257,10 @@ body {
   margin-top: 50px !important;
 }
 
+.mt-80 {
+  margin-top: 80px !important;
+}
+
 .mt-85 {
   margin-top: 85px !important;
 }
@@ -253,6 +285,14 @@ body {
   border-bottom: solid 1px !important;
 }
 
+.border-left-1 {
+  border-left: solid 1px !important;
+}
+
+.border-right-1 {
+  border-right: solid 1px !important;
+}
+
 .text-right {
   text-align: right !important;
 }
@@ -273,6 +313,10 @@ body {
   background-color: #ddd !important;
 }
 
+.font-9 {
+  font-size: 9px !important;
+}
+
 .font-10 {
   font-size: 10px !important;
 }
@@ -291,6 +335,14 @@ body {
 
 .font-18 {
   font-size: 18px !important;
+}
+
+.font-24 {
+  font-size: 24px !important;
+}
+
+.font-36 {
+  font-size: 36px !important;
 }
 
 .font-roboto {

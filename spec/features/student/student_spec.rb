@@ -331,7 +331,7 @@ describe 'Student', js: true do
     find("a", text: "ตกลง").click
     sleep(1)
 
-    visit "/somsri_invoice#/invoice/#{invoice.id}/slip"
+    visit "/invoices/#{invoice.id}/slip.pdf?show_as_html=true"
     sleep(1)
     eventually { expect(page).to have_content ("สมศรี") }
   end
@@ -346,7 +346,7 @@ describe 'Student', js: true do
     find("a", text: "ตกลง").click
     sleep(1)
 
-    visit "/somsri_invoice#/invoice/#{invoice.id}/slip"
+    visit "/invoices/#{invoice.id}/slip.pdf?show_as_html=true"
     sleep(1)
     eventually { expect(page).to have_content ("สมศรี") }
   end
@@ -361,7 +361,7 @@ describe 'Student', js: true do
     find("a", text: "ตกลง").click
     sleep(1)
 
-    visit "/somsri_invoice#/invoice/#{invoice.id}/slip"
+    visit "/invoices/#{invoice.id}/slip.pdf?show_as_html=true"
     sleep(1)
     eventually { expect(page).to have_content ("สมศรี") }
   end

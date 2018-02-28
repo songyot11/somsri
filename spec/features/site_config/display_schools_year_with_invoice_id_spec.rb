@@ -62,14 +62,14 @@ describe 'SiteConfig Display Schools Year With Invoice Id', js: true do
 
   it 'should display schools year with invoice id' do
     display_schools_year_with_invoice_id
-    visit "/somsri_invoice#/invoice/#{invoice.id}/slip"
+    visit "/invoices/#{invoice.id}/slip.pdf?show_as_html=true"
     sleep(1)
     expect(page).to have_content("เลขที่ใบเสร็จ #{invoice.id}/2777")
   end
 
   it 'should not display schools year with invoice id' do
     not_display_schools_year_with_invoice_id
-    visit "/somsri_invoice#/invoice/#{invoice.id}/slip"
+    visit "/invoices/#{invoice.id}/slip.pdf?show_as_html=true"
     sleep(1)
     expect(page).to have_content("เลขที่ใบเสร็จ #{invoice.id}")
   end
