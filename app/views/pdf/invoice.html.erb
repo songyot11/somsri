@@ -75,12 +75,21 @@
       <tfoot>
         <tr>
           <td class="border-1 p-10"></td>
-          <td class="border-1 p-10">จำนวนเงินรวมทั้งสิ้น (บาท)/Total (Baht)</td>
+          <td class="border-1 p-10">จำนวนเงินรวมทั้งสิ้น (บาท) / Total (Baht)</td>
           <td class="border-1 p-10 text-right"><%= number_with_precision(@results["total_amount"], precision: 2, delimiter: ',') %></td>
         </tr>
         <tr>
           <td class="border-1 p-10"></td>
-          <td class="border-1 p-10" colspan="3"><span>จำนวนเงินรวมทั้งสิ้น <b class="total_text"><% @results["total_amount"] %></b></span></td>
+          <td class="border-1 p-10" colspan="2">
+            <div class="row">
+              <div class="col-xs-3">
+                <span>จำนวนเงินรวมทั้งสิ้น</span>
+              </div>
+              <div class="col-xs-9 text-right">
+                <b class="total_text"><%= thaiBaht(@results["total_amount"]) %></b>
+              </div>
+            </div>
+          </td>
         </tr>
       </tfoot>
     </table>
@@ -103,7 +112,7 @@
             </div>
             <div class="col-xs-3">
               <span class="pull-right">
-               <%= @results[:cash_amount] %> บาท / Baht
+               <%= number_with_precision(@results[:cash_amount], precision: 2, delimiter: ',') %> บาท / Baht
               </span>
             </div>
           </div>
@@ -117,7 +126,7 @@
             </div>
             <div class="col-xs-3">
               <span class="pull-right">
-               <%= @results[:credit_card_amount] %> บาท / Baht
+               <%= number_with_precision(@results[:credit_card_amount], precision: 2, delimiter: ',') %> บาท / Baht
               </span>
             </div>
           </div>
@@ -132,7 +141,7 @@
             </div>
             <div class="col-xs-3">
               <span class="pull-right">
-                <%= @results[:cheque_amount] %> บาท / Baht
+                <%= number_with_precision(@results[:cheque_amount], precision: 2, delimiter: ',') %> บาท / Baht
               </span>
             </div>
           </div>
@@ -147,7 +156,7 @@
             </div>
             <div class="col-xs-3">
               <span class="pull-right">
-                <%= @results[:transfer_amount] %> บาท / Baht
+                <%= number_with_precision(@results[:transfer_amount], precision: 2, delimiter: ',') %> บาท / Baht
               </span>
             </div>
           </div>

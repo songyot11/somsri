@@ -326,7 +326,6 @@ class InvoicesController < ApplicationController
 
     slip_info["line_items"] = line_items if line_items.length > 0
     slip_info["total_amount"] = total
-    slip_info["total_amount_thai"] = ""
 
     respond_to do |format|
       format.html do
