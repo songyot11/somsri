@@ -42,7 +42,7 @@
   </div>
   <div class="row mt-10">ตามรายละเอียดดังต่อไปนี้</div>
   <div class="row">
-    <table class="w-100p">
+    <table class="w-100p col-xs-12">
       <thead>
         <tr>
           <th class="border-1 w-10p p-10 text-center">ลำดับที่<br/> No.</th>
@@ -158,16 +158,14 @@
       <%= @results[:footer].html_safe if @results[:footer] %>
     </div>
   </div>
-  <div class="col-xs-4 mt-80 ml-60p">
+  <div class="col-xs-6 mt-80 ml-60p">
     <div class="row">
-      <div class="col-xs-2">ลงชื่อ</div>
-      <div class="col-xs-8 center-sign">....................................</div>
-      <div class="col-xs-2 right-sign">Receiver</div>
+      <div class="col-xs-12">ลงชื่อ........................................................................Receiver</div>
     </div>
     <div class="row">
-      <div class="col-xs-2">(</div>
-      <div class="col-xs-8 center-sign"><%= @results[:receiver_name] %></div>
-      <div class="col-xs-2 right-sign">)</div>
+      <div class="col-xs-1">( </div>
+      <div class="col-xs-7 text-center"><%= @results[:receiver_name] %></div>
+      <div class="col-xs-1"> )</div>
     </div>
   </div>
 </div>
