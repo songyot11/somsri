@@ -33,6 +33,26 @@ th:
 
   activerecord:
     attributes:
+      parent:
+        full_name: "ชื่อ-นามสกุล"
+        nickname: "ชื่อเล่น"
+        id_card_no: "เลขบัตรประชาชน"
+        mobile: "โทรศัพท์"
+        email: "อีเมล์"
+        line_id: "Line ID"
+      student:
+        full_name: "ชื่อ-นามสกุล"
+        nickname: "ชื่อเล่น"
+        full_name_english: "ชื่อภาษาอังกฤษ"
+        nickname_english: "ชื่อเล่นภาษาอังกฤษ"
+        gender_id: "เพศ"
+        birthdate: "วันเกิด"
+        grade_id: "ระดับชั้น"
+        classroom_id: "ห้อง"
+        classroom_number: "เลขที่"
+        student_number: "เลขประจำตัวนักเรียน"
+        national_id: "รหัสประจำตัวประชาชน"
+        remark: "หมายเหตุ / remark"
       payroll:
         salary: "เงินเดือน / Salary"
         allowance: "เบี้ยเลี้ยง / Shift"
@@ -116,7 +136,6 @@ th:
   ok: "ตกลง"
   exit_without_save: "คุณต้องการออกจากหน้านี้โดยไม่บันทึกค่าหรือไม่?"
   new_parent: "เพิ่มผู้ปกครองใหม่"
-  student: "นักเรียน"
   new_student: "+ เพิ่มชื่อนักเรียน"
 
   #Students
@@ -149,3 +168,9 @@ th:
   student_number: "เลขประจำตัวนักเรียน"
   full_name_1: "ชื่อ - นามสกุล"
   birthday_1: "วันเดือนปีเกิด"
+
+  #Alumni
+  year_of_graduation: "จบปีการศึกษา"
+  status: "สถานะ"
+  graduated_semester: "ภาคเรียนที่"
+  grade_classroom: "ระดับชั้นเรียน"

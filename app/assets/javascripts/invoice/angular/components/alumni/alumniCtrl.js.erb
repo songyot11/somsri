@@ -5,11 +5,11 @@
   .controller('alumniCtrl', ['$scope', '$http', 'DEFAULT_INVOICE', 'DEFAULT_LOGO', 'LocalStorage', 'Currency', 'alumniService', '$rootScope', function($scope, $http, DEFAULT_INVOICE, DEFAULT_LOGO, LocalStorage, Currency, service, $rootScope) {
     var ctrl = this;
     ctrl.alumnis = []
-    ctrl.graduated_year = ["ทั้งหมด"]
-    ctrl.graduated_status = ["ทั้งหมด"]
+    ctrl.graduated_year = ["<%= I18n.t('all') %>"]
+    ctrl.graduated_status = ["<%= I18n.t('all') %>"]
     ctrl.year = ""
     ctrl.status = ""
-    $rootScope.menu = "ศิษย์เก่า"
+    $rootScope.menu = "<%= I18n.t('alumni') %>"
     $rootScope.loadAndAuthorizeResource("invoice", function(){
       ctrl.bringBack = function(id){
         service.restore(id).then(function(resp) {
@@ -51,31 +51,31 @@
         queryParams: alumniQueryParams,
         columns: [{
           field: 'name',
-          title: 'ชื่อ - นามสกุล',
+          title: '<%= I18n.t("full_name_1") %>',
           sortable: true
         },{
           field: 'nickname',
-          title: 'ชื่อเล่น',
+          title: '<%= I18n.t("nick_name") %>',
           sortable: true
         },{
           field: 'student_number',
-          title: 'เลขประจำตัวนักเรียน',
+          title: '<%= I18n.t("student_number") %>',
           sortable: true
         },{
           field: 'graduated_year',
-          title: 'จบปีการศึกษา',
+          title: '<%= I18n.t("year_of_graduation") %>',
           sortable: true
         },{
           field: 'graduated_semester',
-          title: 'ภาคเรียนที่',
+          title: '<%= I18n.t("graduated_semester") %>',
           sortable: true
         },{
           field: 'grade_classroom',
-          title: 'ระดับชั้นเรียน',
+          title: '<%= I18n.t("grade_classroom") %>',
           sortable: true
         },{
           field: 'status',
-          title: 'สถานะ',
+          title: '<%= I18n.t("status") %>',
           sortable: true
         },{
           field: 'bring_back',
@@ -86,12 +86,12 @@
 
       service.getAlumniYears().then(function(resp) {
         ctrl.graduated_year = ctrl.graduated_year.concat(resp.data)
-        ctrl.selected_year = "ทั้งหมด"
+        ctrl.selected_year = "<%= I18n.t('all') %>"
       });
 
       service.getAlumniStatus().then(function(resp) {
         ctrl.graduated_status = ctrl.graduated_status.concat(resp.data)
-        ctrl.selected_status = "ทั้งหมด"
+        ctrl.selected_status = "<%= I18n.t('all') %>"
       });
     })
   }]);
