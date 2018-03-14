@@ -15,13 +15,13 @@
       >
       <thead>
         <tr>
-          <th data-field="id" data-formatter="idFormatter" data-sortable="true">Invoice #</th>
-          <th data-field="school_year" data-sortable="true">ปีการศึกษา</th>
-          <th data-field="semester" data-sortable="true">ภาคเรียนที่</th>
-          <th data-field="grade_classroom" data-sortable="true">ระดับชั้น</th>
-          <th data-field="amount" >จำนวนเงิน</th>
-          <th data-field="created_at" data-formatter="createdAtFormatter" data-sortable="true">วันที่ชำระ</th>
-          <th data-field="payment_methods" >ชำระโดย</th>
+          <th data-field="id" data-formatter="idFormatter" data-sortable="true"><%= t('invoice') %></th>
+          <th data-field="school_year" data-sortable="true"><%= t('school_year') %></th>
+          <th data-field="semester" data-sortable="true"><%= t('term') %></th>
+          <th data-field="grade_classroom" data-sortable="true"><%= t('level') %></th>
+          <th data-field="amount" ><%= t('amount') %></th>
+          <th data-field="created_at" data-formatter="createdAtFormatter" data-sortable="true"><%= t('payment_date') %></th>
+          <th data-field="payment_methods" ><%= t('paid_by') %></th>
         </tr>
       </thead>
     </table>

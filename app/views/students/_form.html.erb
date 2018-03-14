@@ -4,7 +4,7 @@
 <% if @student.errors.any? %>
 <div id="error_expl" class="panel panel-danger">
   <div class="panel-heading">
-    <h3 class="panel-title">ข้อมูลของนักเรียนไม่สามารถบันทึกได้ : </h3>
+    <h3 class="panel-title"><%= t('student_info_cannot_save') %></h3>
   </div>
   <div class="panel-body">
     <ul>
@@ -146,7 +146,7 @@
     </div>
   </div>
   <div class="row add-st-pr">
-    <label for="parent" class="control-label">ผู้ปกครอง</label>
+    <label for="parent" class="control-label"><%= t('parent') %></label>
   </div>
   <% if @student.new_record? || @student.parents.size == 0 %>
     <% 1.times do |index| %>
@@ -161,7 +161,7 @@
   <% end %>
 
   <div id="add-parent"></div>
-  <a id="parent-link" class="btn btn-custom sm btn-green">+ เพิ่มชื่อผู้ปกครอง</a>
+  <a id="parent-link" class="btn btn-custom sm btn-green"><%= t('add_parent') %></a>
 
   <div class="row add-st-pr">
     <div class="col-md-12">

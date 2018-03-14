@@ -103,7 +103,7 @@ th:
     manage:
       all: "บัญชีของคุณไม่สามารถใช้งานฟังก์ชันนี้ได้"
 
-  #Parent
+  #Parents
   select_classroom: "เลือกระดับชั้น"
   all: "ทั้งหมด"
   select_room: "เลือกตามห้อง"
@@ -118,3 +118,34 @@ th:
   new_parent: "เพิ่มผู้ปกครองใหม่"
   student: "นักเรียน"
   new_student: "+ เพิ่มชื่อนักเรียน"
+
+  #Students
+  add_parent: "+ เพิ่มชื่อผู้ปกครอง"
+  student_info_cannot_save: "ข้อมูลของนักเรียนไม่สามารถบันทึกได้ : "
+  invoice: "Invoice #"
+  school_year: "ปีการศึกษา"
+  term: "ภาคเรียนที่"
+  level: "ระดับชั้น"
+  amount: "จำนวนเงิน"
+  payment_date: "วันที่ชำระ"
+  paid_by: "ชำระโดย"
+  student_info: "ข้อมูลนักเรียน"
+  receipts_info: "ข้อมูลใบเสร็จ"
+  print_list: "พิมพ์รายชื่อ"
+  show_photo: "แสดงรูป"
+  disable_photo: "ไม่แสดงรูป"
+  all_class: "ระดับชั้นทั้งหมด"
+  select_rooms: "เลือกห้อง"
+  all_room: "ห้องทั้งหมด"
+  number: "เลขที่ในห้อง"
+  nick_name: "ชื่อเล่น"
+  classroom: "ห้องเรียน"
+  student_id: "รหัสประจำตัวนักเรียน"
+  sex: "เพศ"
+  birthday: "วันเกิด"
+  add_student: "เพิ่มนักเรียน"
+  student_list: "รายชื่อนักเรียน"
+  room: "ห้อง"
+  student_number: "เลขประจำตัวนักเรียน"
+  full_name_1: "ชื่อ - นามสกุล"
+  birthday_1: "วันเดือนปีเกิด"
