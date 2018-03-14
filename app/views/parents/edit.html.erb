@@ -19,7 +19,7 @@
       <div class="modal-body" id="modal-body">
         <div class="row">
           <div class="col-md-12">
-            <h4 class="modal-title" id="modal-title">คุณต้องการออกจากหน้านี้โดยไม่บันทึกค่าหรือไม่?</h4>
+            <h4 class="modal-title" id="modal-title"><%= t('exit_without_save') %></h4>
           </div>
         </div>
         <div class="space20"></div>
@@ -27,10 +27,10 @@
         <div class="space20"></div>
         <div class="row">
           <div class="col-md-3 pull-right">
-            <button class="btn btn-custom btn-gray" data-dismiss="modal">ยกเลิก</button>
+            <button class="btn btn-custom btn-gray" data-dismiss="modal"><%= t('cancel') %></button>
           </div>
           <div class="col-md-3 pull-right">
-            <button id="force-change-page" class="btn btn-custom btn-green" data-dismiss="modal">ตกลง</button>
+            <button id="force-change-page" class="btn btn-custom btn-green" data-dismiss="modal"><%= t('ok') %></button>
           </div>
         </div>
       </div>

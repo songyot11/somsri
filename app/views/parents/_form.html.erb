@@ -96,7 +96,7 @@
         </div>
       </div>
     </div>
-    <label for="student" class="control-label">นักเรียน</label>
+    <label for="student" class="control-label"><%= t('student') %></label>
     <div class="col-md-12">
       <% if @parent.new_record? || @parent.students.size == 0 %>
         <% 1.times do |index| %>
@@ -111,7 +111,7 @@
       <% end %>
 
       <div id="add-student"></div>
-      <a id="student-link" class="btn-add-st">+ เพิ่มชื่อนักเรียน</a>
+      <a id="student-link" class="btn-add-st"><%= t('new_student') %></a>
     </div>
  </div>
  <div class="row">
