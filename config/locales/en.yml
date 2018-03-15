@@ -35,17 +35,17 @@ en:
   activerecord:
     attributes:
       parent:
-        full_name: "Full Name"
+        full_name: "ชื่อ-นามสกุล"
         nickname: "ชื่อเล่น"
         id_card_no: "เลขบัตรประชาชน"
         mobile: "โทรศัพท์"
         email: "อีเมล์"
         line_id: "Line ID"
       student:
-        full_name: "Full Name"
+        full_name: "ชื่อ-นามสกุล"
         nickname: "ชื่อเล่น"
-        full_name_english: "ชื่อภาษาอังกฤษ"
-        nickname_english: "ชื่อเล่นภาษาอังกฤษ"
+        full_name_english: "Full Name"
+        nickname_english: "Nick Name"
         gender_id: "เพศ"
         birthdate: "วันเกิด"
         grade_id: "ระดับชั้น"
