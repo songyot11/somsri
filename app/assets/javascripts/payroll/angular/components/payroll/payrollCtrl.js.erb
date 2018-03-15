@@ -3,7 +3,7 @@
   angular.module('somsri.payroll.payroll', [
   ])
   .controller('payrollCtrl', ['$filter', 'reportService', 'payrollService', 'employeesService', '$rootScope', '$state', '$uibModal', '$scope', function($filter, reportService, payrollService, employeesService, $rootScope, $state, $uibModal, $scope) {
-    $rootScope.menu = "เงินเดือน"
+    $rootScope.menu = '<%= I18n.t("payroll") %>'
     var ctrl = this
     ctrl.total = 0
     ctrl.employees = []
@@ -216,16 +216,16 @@
     ctrl.employeeTypeFilter = function (){
       var mode = [];
       if(ctrl.employeeTypeMode.normal){
-        mode.push("ลูกจ้างประจำ");
+        mode.push('<%= I18n.t("employee_full_time") %>');
       }
       if(ctrl.employeeTypeMode.temporary){
-        mode.push("ลูกจ้างชั่วคราว");
+        mode.push('<%= I18n.t("employee_part_time") %>');
       }
       if(ctrl.employeeTypeMode.probationary){
-        mode.push("ลูกจ้างทดลองงาน");
+        mode.push('<%= I18n.t("employee_probation") %>');
       }
       if(ctrl.employeeTypeMode.daily){
-        mode.push("ลูกจ้างรายวัน");
+        mode.push('<%= I18n.t("employee_daily") %>');
       }
       var employees = JSON.parse(JSON.stringify(ctrl.employees_origin));
       for(var i = 0; i < employees.length; i++){
