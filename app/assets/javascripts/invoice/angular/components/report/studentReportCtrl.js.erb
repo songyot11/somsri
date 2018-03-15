@@ -3,7 +3,7 @@
   angular.module('somsri.invoice.studentReport', [
   ])
   .controller('studentReportCtrl', ['$compile', '$scope', '$window', '$filter', '$rootScope', 'studentReportService', '$timeout', 'CSV', function($compile, $scope, $window, $filter, $rootScope, studentReportService, $timeout, CSV) {
-    $rootScope.menu = "รายงานการชำระ"
+    $rootScope.menu = "<%= I18n.t('chose_type') %>รายงานการชำระ"
     var ctrl = this
 
     $rootScope.loadAndAuthorizeResource("invoice", function(){
@@ -12,11 +12,11 @@
       ctrl.currentInvoiceStatus = null;
       ctrl.total = { other_fee: 0.0, amount: 0.0, tuition_fee: 0.0, total_year: 0.0 }
       ctrl.invoiceFilter = [
-        { text: "ทั้งหมด", value: "all" },
-        { text: "ชำระแล้ว", value: "paid" },
-        { text: "ยังไม่ได้ชำระ", value: "unpaid" }
+        { text: "<%= I18n.t('all') %>", value: "all" },
+        { text: "<%= I18n.t('paid') %>", value: "paid" },
+        { text: "<%= I18n.t('unpaid') %>", value: "unpaid" }
       ]
-      ctrl.invoiceFilterString = "ทั้งหมด"
+      ctrl.invoiceFilterString = "<%= I18n.t('total') %>"
       ctrl.pageChanged = function() {
         getStudents()
       };
@@ -45,9 +45,9 @@
         getStudents();
         ctrl.currentPage = 1;
       }
-      ctrl.exportHeader = ['รหัส', 'ชื่อ', 'ชั้น', 'ห้อง', 'เลขที่', 'ผู้ปกครอง', 'สถานะ', 'ชำระโดย', 'ค่าธรรมเนียมการศึกษา', 'ค่าใช้จ่ายอื่นๆ', 'ยอดชำระ', 'วันที่ชำระ']
+      ctrl.exportHeader = ['<%= I18n.t("unpaid") %>', '<%= I18n.t("name") %>', '<%= I18n.t("level") %>', '<%= I18n.t("room") %>', '<%= I18n.t("classroom_number") %>', '<%= I18n.t("parent") %>', '<%= I18n.t("status") %>', '<%= I18n.t("paid_by") %>', '<%= I18n.t("tuition_fee") %>', '<%= I18n.t("other_cost") %>', '<%= I18n.t("total") %>', '<%= I18n.t("paid_date") %>']
       ctrl.getExportData = function() {
-        ctrl.exportFileName = "รายงานการชำระเงินนักเรียน_" + $filter('date')(new Date(),'d-MM-yyyy') + ".csv"
+        ctrl.exportFileName = "<%= I18n.t('student_report_filename') %>" + $filter('date')(new Date(),'d-MM-yyyy') + ".csv"
         return studentReportService.getStudentsWithoutPagination(ctrl.grade_name, ctrl.currentYearString, ctrl.currentSemesterString, ctrl.currentInvoiceStatus).then(function(resp) {
           var exportResults = []
           if (resp.data && resp.data.datas){

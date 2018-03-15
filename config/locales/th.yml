@@ -132,6 +132,13 @@ th:
   total_paid: "รวมยอดชำระทั้งหมด"
   paid_date: "วันที่ชำระ"
 
+
+  show_invoices: "แสดงรายการใบเสร็จ"
+  chose_type: "เลือกประเภท"
+  student_report_filename: "รายงานการชำระเงินนักเรียน_"
+  paid: "ชำระแล้ว"
+  unpad: "ยังไม่ได้ชำระ"
+
   hello: "สวัสดีครับ"
 
   #Menu
