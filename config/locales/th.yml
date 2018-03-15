@@ -72,6 +72,9 @@ th:
   back: "ย้อนกลับ"
   order: "ลำดับที่"
   today: "วันที่"
+  other: "อื่นๆ"
+  code: "รหัส"
+  name: "ชื่อ"
 
   credit_card: "บัตรเครดิต"
   bank_check: "เช็คธนาคาร"
@@ -118,6 +121,16 @@ th:
   excess: "ขาด/เกิน"
   sender: "ผู้นำส่งเงิน"
   sign: "ลงชื่อ"
+
+  semester: "ภาคการศึกษา"
+  semester_nofix: "ไม่ระบุภาคการเรียน"
+  payment_status: "สถานะการชำระ"
+  number1: "เลขที่"
+  tuition_fee: "ค่าธรรมเนียมการศึกษา"
+  other_cost: "ค่าใช้จ่ายอื่นๆ"
+  year_paid_amount: "ยอดชำระทั้งปี"
+  total_paid: "รวมยอดชำระทั้งหมด"
+  paid_date: "วันที่ชำระ"
 
   hello: "สวัสดีครับ"
 
