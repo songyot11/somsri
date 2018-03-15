@@ -69,6 +69,9 @@ th:
   no: "ไม่ใช่"
   from: "จาก"
   to: "ถึง"
+  back: "ย้อนกลับ"
+  order: "ลำดับที่"
+  today: "วันที่"
 
   credit_card: "บัตรเครดิต"
   bank_check: "เช็คธนาคาร"
@@ -104,6 +107,17 @@ th:
   receiver: "ผู้รับเงิน"
   paid_amount: "ยอดชำระ"
   cancel_receipt: "ยกเลิกใบเสร็จ"
+
+  transfer_money_slip: "ใบนำส่งเงิน"
+  transfer_money: "นำส่งเงิน"
+  init_cash: "เงินสดเริ่มต้น"
+  input_amount: "ระบุจำนวน"
+  transfer_amount: "ยอดเงินที่จัดส่ง"
+  at_date: "ประจำวันที่"
+  this_detail: "ตามรายละเอียดดังต่อไปนี้"
+  excess: "ขาด/เกิน"
+  sender: "ผู้นำส่งเงิน"
+  sign: "ลงชื่อ"
 
   hello: "สวัสดีครับ"
 
