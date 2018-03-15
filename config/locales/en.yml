@@ -35,14 +35,14 @@ en:
   activerecord:
     attributes:
       parent:
-        full_name: "ชื่อ-นามสกุล"
+        full_name: "Full Name"
         nickname: "ชื่อเล่น"
         id_card_no: "เลขบัตรประชาชน"
         mobile: "โทรศัพท์"
         email: "อีเมล์"
         line_id: "Line ID"
       student:
-        full_name: "ชื่อ-นามสกุล"
+        full_name: "Full Name"
         nickname: "ชื่อเล่น"
         full_name_english: "ชื่อภาษาอังกฤษ"
         nickname_english: "ชื่อเล่นภาษาอังกฤษ"
@@ -128,7 +128,7 @@ en:
   select_classroom: "เลือกระดับชั้น"
   all: "ทั้งหมด"
   select_room: "เลือกตามห้อง"
-  full_name: "ชื่อ-สกุล"
+  full_name: "Full Name"
   phone: "โทรศัพท์"
   email: "อีเมล์"
   relationship: "ความสัมพันธ์"
@@ -167,7 +167,7 @@ en:
   student_list: "รายชื่อนักเรียน"
   room: "ห้อง"
   student_number: "เลขประจำตัวนักเรียน"
-  full_name_1: "ชื่อ - นามสกุล"
+  full_name_1: "Full Name"
   birthday_1: "วันเดือนปีเกิด"
 
   #Alumni
