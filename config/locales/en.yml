@@ -30,3 +30,148 @@ en:
   alumni: "Alumnus"
   parent: "Parents"
   employee: "Employees"
+
+
+  activerecord:
+    attributes:
+      parent:
+        full_name: "ชื่อ-นามสกุล"
+        nickname: "ชื่อเล่น"
+        id_card_no: "เลขบัตรประชาชน"
+        mobile: "โทรศัพท์"
+        email: "อีเมล์"
+        line_id: "Line ID"
+      student:
+        full_name: "ชื่อ-นามสกุล"
+        nickname: "ชื่อเล่น"
+        full_name_english: "ชื่อภาษาอังกฤษ"
+        nickname_english: "ชื่อเล่นภาษาอังกฤษ"
+        gender_id: "เพศ"
+        birthdate: "วันเกิด"
+        grade_id: "ระดับชั้น"
+        classroom_id: "ห้อง"
+        classroom_number: "เลขที่"
+        student_number: "เลขประจำตัวนักเรียน"
+        national_id: "รหัสประจำตัวประชาชน"
+        remark: "หมายเหตุ / remark"
+      payroll:
+        salary: "เงินเดือน / Salary"
+        allowance: "เบี้ยเลี้ยง / Shift"
+        attendance_bonus: "เบี้ยขยัน / Attendance Bonus"
+        ot: "เงินสอนพิเศษ / After School Class"
+        bonus: "โบนัส / Bonus"
+        position_allowance: "ค่าตำแหน่ง / Posticion"
+        extra_etc: "รายได้อื่นๆ / Etc."
+        absence: "ขาดงาน / Absence"
+        late: "สาย / Late"
+        tax: "ภาษี / Tax"
+        social_insurance: "ประกันสังคม / Social Sec."
+        fee_etc: "หักอื่นๆ / Etc."
+        pvf: "เงินสะสมกองทุนสงเคราะห์ / Private Teacher Aid fund"
+        advance_payment: "เบิกล่วงหน้า / Adv. Payment"
+
+  date:
+    month_names: [~, มกราคม, กุมภาพันธ์, มีนาคม, เมษายน, พฤษภาคม, มิถุนายน, กรกฎาคม, สิงหาคม, กันยายน, ตุลาคม, พฤศจิกายน, ธันวาคม]
+    abbr_month_names: [~, ม.ค., ก.พ., มี.ค., เม.ย., พ.ค., มิ.ย., ก.ค., ส.ค., ก.ย., ต.ค., พ.ย., ธ.ค.]
+
+  #Grade
+  Preschool: "เตรียมอนุบาล"
+  Kindergarten1: "อ.1"
+  Kindergarten2: "อ.2"
+  Kindergarten3: "อ.3"
+  Kindergarten 1: "อ.1"
+  Kindergarten 2: "อ.2"
+  Kindergarten 3: "อ.3"
+
+  #Gender
+  Male: "ชาย"
+  Female: "หญิง"
+
+  #Paystatus
+  Unpaid: "ยังไม่ได้ชำระเงิน"
+  Active: "ชำระเงินแล้ว"
+  Canceled: "ยกเลิก"
+  #relationships
+  Father: "คุณพ่อ"
+  Mother: "คุณแม่"
+  Grandfather: "คุณปู่/คุณตา"
+  Grandmother: "คุณยาย/คุณย่า"
+  Uncle: "คุณลุง"
+  Aunt: "คุณป้า"
+  Cousin: "ลูกพี่ลูกน้อง"
+
+#helpers_links
+  helpers:
+    links:
+      addstudent: "✚ เพิ่มนักเรียน"
+      addparent: "✚ เพิ่มผู้ปกครอง"
+      show: "แสดง"
+      edit: "แก้ไข"
+      cancel: "ยกเลิก"
+      confirm:
+        student_confirm: "คุณแน่ใจหรือไม่ที่จะลบข้อมูลนักเรียน?"
+        parent_confirm: "คุณแน่ใจหรือไม่ที่จะลบข้อมูลผู้ปกครอง?"
+        #student archive
+        student_graduated: "คุณแน่ใจหรือไม่ที่จะให้นักเรียนคนนี้จบการศึกษา(สามารถนำข้อมูลกลับมาได้)"
+        student_resign: "คุณแน่ใจหรือไม่ที่จะให้นักเรียนคนนี้ลาออกจากโรงเรียน(สามารถนำข้อมูลกลับมาได้)"
+        student_delete: "คุณแน่ใจหรือไม่ที่จะลบนักเรียนคนนี้ออกจากระบบแบบถาวร(ไม่สามารถนำกลับมาได้)"
+
+        parent_delete: "คุณแน่ใจหรือไม่ที่จะลบข้อมูลผู้ปกครอง?(ไม่สามารถนำกลับมาได้)"
+        parent_archive: "คุณแน่ใจหรือไม่ว่าจะเก็บข้อมูลผู้ปกครอง?(สามารถนำกลับมาได้)"
+
+  #cancancan
+  unauthorized:
+    manage:
+      all: "บัญชีของคุณไม่สามารถใช้งานฟังก์ชันนี้ได้"
+
+  #Parents
+  select_classroom: "เลือกระดับชั้น"
+  all: "ทั้งหมด"
+  select_room: "เลือกตามห้อง"
+  full_name: "ชื่อ-สกุล"
+  phone: "โทรศัพท์"
+  email: "อีเมล์"
+  relationship: "ความสัมพันธ์"
+  student_name: "ชื่อ-สกุลนักเรียน"
+  cancel: "ยกเลิก"
+  ok: "ตกลง"
+  exit_without_save: "คุณต้องการออกจากหน้านี้โดยไม่บันทึกค่าหรือไม่?"
+  new_parent: "เพิ่มผู้ปกครองใหม่"
+  new_student: "+ เพิ่มชื่อนักเรียน"
+
+  #Students
+  add_parent: "+ เพิ่มชื่อผู้ปกครอง"
+  student_info_cannot_save: "ข้อมูลของนักเรียนไม่สามารถบันทึกได้ : "
+  invoice: "Invoice #"
+  school_year: "ปีการศึกษา"
+  term: "ภาคเรียนที่"
+  level: "ระดับชั้น"
+  amount: "จำนวนเงิน"
+  payment_date: "วันที่ชำระ"
+  paid_by: "ชำระโดย"
+  student_info: "ข้อมูลนักเรียน"
+  receipts_info: "ข้อมูลใบเสร็จ"
+  print_list: "พิมพ์รายชื่อ"
+  show_photo: "แสดงรูป"
+  disable_photo: "ไม่แสดงรูป"
+  all_class: "ระดับชั้นทั้งหมด"
+  select_rooms: "เลือกห้อง"
+  all_room: "ห้องทั้งหมด"
+  number: "เลขที่ในห้อง"
+  nick_name: "ชื่อเล่น"
+  classroom: "ห้องเรียน"
+  student_id: "รหัสประจำตัวนักเรียน"
+  sex: "เพศ"
+  birthday: "วันเกิด"
+  add_student: "เพิ่มนักเรียน"
+  student_list: "รายชื่อนักเรียน"
+  room: "ห้อง"
+  student_number: "เลขประจำตัวนักเรียน"
+  full_name_1: "ชื่อ - นามสกุล"
+  birthday_1: "วันเดือนปีเกิด"
+
+  #Alumni
+  year_of_graduation: "จบปีการศึกษา"
+  status: "สถานะ"
+  graduated_semester: "ภาคเรียนที่"
+  grade_classroom: "ระดับชั้นเรียน"
