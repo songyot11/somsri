@@ -6,7 +6,7 @@
                   <%= image_tag 'payment.png', class: "" %>
               </div>
           </div>
-          <p>ชำระเงิน</p>
+          <p><%= I18n.t('pay') %></p>
       </div>
 
       <div class="col-xs-4">
@@ -15,7 +15,7 @@
                   <%= image_tag 'invoice-icon.png', class: "" %>
               </div>
           </div>
-          <p>ใบเสร็จ</p>
+          <p><%= I18n.t('receipt') %></p>
       </div>
 
       <div class="col-xs-4">
@@ -24,7 +24,7 @@
                   <%= image_tag 'send_money.png', class: "" %>
               </div>
           </div>
-          <p>นำส่งเงิน</p>
+          <p><%= I18n.t('delivery_note') %></p>
       </div>
 
       <div class="col-xs-12 free-space"></div>
@@ -35,7 +35,7 @@
                   <%= image_tag 'report-invoice.png', class: "" %>
               </div>
           </div>
-          <p>รายงานการชำระ</p>
+          <p><%= I18n.t('payment_report') %></p>
       </div>
 
       <div class="col-xs-4">
@@ -44,7 +44,7 @@
                   <%= image_tag 'report-invoice.png', class: "" %>
               </div>
           </div>
-          <p>รายงานแยกตามประเภทแบบที่ 1</p>
+          <p><%= I18n.t('classification_report') %> 1</p>
       </div>
       <div class="col-xs-4">
           <div class="menu-btn" ng-click="openGroupingReport2()">
@@ -52,6 +52,6 @@
                   <%= image_tag 'report-invoice.png', class: "" %>
               </div>
           </div>
-          <p>รายงานแยกตามประเภทแบบที่ 2</p>
+          <p><%= I18n.t('classification_report') %> 2</p>
       </div>
 </div>

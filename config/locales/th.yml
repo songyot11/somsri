@@ -66,6 +66,34 @@ th:
   save: "บันทึก"
   cancel: "ยกเลิก"
 
+  credit_card: "บัตรเครดิต"
+  bank_check: "เช็คธนาคาร"
+  bank_name: "ชื่อธนาคาร"
+  bank_check_id: "เช็คเลขที"
+  bank_check_date: "ลงวันที่"
+  bank_transfer: "เงินโอน"
+
+  # invoice
+  pay: "ชำระเงิน"
+  price: "ราคา"
+  receipt: "ใบเสร็จ"
+  delivery_note: "นำส่งเงิน"
+  payment_report: "รายงานการชำระ"
+  classification_report: "รายงานแยกตามประเภท"
+
+  invoice_form: "แบบชำระเงิน"
+  date1: "วันที่"
+  student_id1: "รหัสนักรียน"
+  student_name: "ชื่อนักเรียน"
+  parent_name: "ชื่อผู้ปกครอง"
+  invoice_list: "รายการทั้งหมด"
+  item: "รายการ"
+  add_item: "เพิ่มรายการ"
+  net: "ยอดรวมสุทธิ"
+  payment_channel: "ชำระเงินโดย"
+  cash: "เงินสด"
+  pay_error: "ผลรวมของจำนวนเงินแต่ละประเภทไม่ตรงกับจำนวนเงินสุทธิ"
+
   hello: "สวัสดีครับ"
 
   #Menu

@@ -1,0 +1,214 @@
+  <div class="container" id="invoice" style="width: 960px;">
+    <form name="createProjectForm" ng-submit="invoice.save()">
+      <div class="row">
+        <div class="col-md-6 heading">
+          <%= I18n.t('invoice_form') %>
+        </div>
+        <div class="col-md-6 branding">
+          <div class="invoice-number-container">
+            <label><%= I18n.t('date1') %>&nbsp;{{ invoice.date_display }}&nbsp;&nbsp;</label>
+          </div>
+        </div>
+      </div>
+      <div class="form_1">
+        <div class="row">
+          <div class="col-md-2">
+            <div class="form-group">
+              <input type="text" class="form-control" id="student_code" placeholder="<%= I18n.t('student_id1') %>" ng-model="invoice.datas.student.student_number" typeahead-on-select="invoice.onSelectStudentNumber($item)" uib-typeahead="student.student_number as student.student_number_display for student in invoice.student_info | filter:{student_number:$viewValue} | limitTo:8"  autocomplete="off">
+            </div>
+          </div>
+          <div class="col-md-4">
+            <div class="form-group">
+              <input type="text" class="form-control" id="student_name" placeholder="<%= I18n.t('student_name') %>" ng-model="invoice.datas.student.full_name" typeahead-on-select="invoice.onSelectStudentFullName($item)" uib-typeahead="student.full_name as student.full_name_display for student in invoice.student_info | filter:{full_name_display:$viewValue} | limitTo:8" required , autocomplete="off">
+            </div>
+          </div>
+          <div class="col-md-6">
+            <div class="form-group">
+              <input type="text" class="form-control" id="parent_name" placeholder="<%= I18n.t('parent_name') %>" ng-model="invoice.datas.parent.full_name" typeahead-on-select="invoice.onSelectParent($item)" uib-typeahead="parent.full_name as parent.full_name_display for parent in invoice.parent_info | filter:{full_name_display:$viewValue} | limitTo:8" required , autocomplete="off">
+            </div>
+          </div>
+        </div>
+
+        <div class="row form-1_2">
+          <div class="col-md-3">
+            <div class="form-group">
+              <!-- <select class="btn btn-grades" ng-model="invoice.datas.invoice.grade_name" ng-init="invoice.datas.invoice.grade_name = invoice.grades[0]" ng-options=" obj.value for obj in invoice.grades">
+              </select> -->
+              <select id="grade" class="btn btn-grades" ng-model="invoice.datas.invoice.grade_name" ng-init="invoice.datas.invoice.grade_name = invoice.grades[0]" ng-options=" obj.value for obj in invoice.grades">
+              </select>
+            </div>
+          </div>
+          <div class="col-md-2">
+            <div class="form-group inline-block">
+              <%= I18n.t('term') %> <input type="text" class="form-control" id="semester" placeholder="<%= I18n.t('term') %>" ng-model="invoice.datas.invoice.semester">
+            </div>
+          </div>
+          <div class="col-md-2">
+            <div class="form-group inline-block">
+              <%= I18n.t('school_year') %> <input type="text" class="form-control" id="school_year" placeholder="<%= I18n.t('school_year') %>" ng-model="invoice.datas.invoice.school_year">
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="form_2">
+        <div class="row">
+          <div class="col-md-6">
+            <div class="title-htable"><%= I18n.t('invoice_list') %></div>
+          </div>
+        </div>
+
+        <div class="items-table">
+          <div class="row header">
+            <div class="col-md-1">&nbsp;</div>
+            <div class="col-md-1 text-center">#</div>
+            <div class="col-md-8"><%= I18n.t('item') %></div>
+            <div class="col-md-2 text-right-htable"><%= I18n.t('price') %></div>
+          </div>
+
+          <div class="row invoice-item" ng-repeat="item in invoice.datas.invoice.items" ng-animate="'slide-down'">
+            <div class="col-md-1 remove-item-container">
+              <a href ng-hide="printMode" ng-click="invoice.removeItem(item)" class="btn pl-10"><span class="fa fa-times-circle"></span></a>
+            </div>
+            <div class="col-md-1">
+              {{ $index + 1 }}
+            </div>
+            <div class="col-md-8">
+              <div class="form-group form-list">
+                <input type="text" placeholder="<%= I18n.t('item') %>" class="form-control grop-table" ng-model="item.detail" typeahead-on-select="invoice.onSelectLineItem($item, item)" uib-typeahead="item.detail as item.line_item_display for item in invoice.line_items_info | filter:{detail:$viewValue} | limitTo:8">
+              </div>
+            </div>
+            <div class="col-md-2">
+              <div class="form-group form-price">
+                <input type="text" value="0.00" ng-required min="-100000" step="1000" ng-validate="number" placeholder="<%= I18n.t('price') %>" class="form-control table-price" ng-model="item.amount" ng-change="invoice.invoiceTotal()" ui-number-mask="2" ui-negative-number>
+              </div>
+            </div>
+          </div>
+
+          <div class="row invoice-item add-invoice-item">
+            <div class="col-md-12 add-item-container">
+              <a class="btn btn-custom sm btn-green" href ng-click="invoice.addItem()">+ <%= I18n.t('add_item') %></a>
+            </div>
+          </div>
+          <div class="row col-total-1">
+            <div class="col-md-8 text-note">
+              <div class="col-md-2"> <%= I18n.t('note') %></div>
+              <div class="col-md-6"><textarea type="textarea" rows="3" class="form-control textarea-note" ng-model="invoice.datas.invoice.remark"></textarea></div>
+            </div>
+            <div class="col-md-2 text-right-total-invoice"><%= I18n.t('net') %>: </div>
+            <div class="col-md-2 text-right-total-invoice">{{ invoice.total.toFixed(2) | number:2 }}</div>
+          </div>
+        </div>
+
+        <div class="row col-total-2">
+          <div class="col-md-12">
+          <p class="text-hradio"><%= I18n.t('payment_channel') %></p>
+            <div class="checkbox">
+              <label><input type="checkbox" ng-true-value="true" ng-false-value="false" ng-required="!invoice.validatePaymentMethod()" ng-model="invoice.datas.payment_method.is_cash">&nbsp;&nbsp;<%= I18n.t('cash') %></label>
+            </div>
+            <div class="checkbox">
+              <label><input type="checkbox" ng-true-value="true" ng-false-value="false" ng-required="!invoice.validatePaymentMethod()" ng-model="invoice.datas.payment_method.is_credit_card">&nbsp;&nbsp;<%= I18n.t('credit_card') %></label>
+            </div>
+            <div class="checkbox row">
+              <div class="col-md-2" style="margin-right:20px;">
+                <label><input type="checkbox" ng-true-value="true" ng-false-value="false" ng-model="invoice.datas.payment_method.is_cheque">&nbsp;&nbsp;<%= I18n.t('bank_check') %></label>
+              </div>
+              <div class="input-bank">
+                <div class="col-md-3 col-payment">
+                  <input type="text" placeholder="<%= I18n.t('bank_name') %>" class="form-control" ng-model="invoice.datas.payment_method.cheque_bank_name">
+                </div>
+                <div class="col-md-3">
+                  <input type="text" placeholder="<%= I18n.t('bank_check_id') %>" class="form-control" ng-model="invoice.datas.payment_method.cheque_number">
+                </div>
+                <div class="col-md-3">
+                  <input type="text" placeholder="<%= I18n.t('bank_check_date') %>" class="form-control" ng-model="invoice.datas.payment_method.cheque_date">
+                </div>
+              </div>
+            </div>
+            <div class="checkbox row">
+              <div class="col-md-2">
+                <label><input type="checkbox" ng-true-value="true" ng-false-value="false" ng-model="invoice.datas.payment_method.is_transfer">&nbsp;&nbsp;<%= I18n.t('bank_transfer') %></label>
+              </div>
+              <div class="input-bank">
+                <div class="col-md-3 col-payment">
+                  <input type="text" placeholder="<%= I18n.t('bank_name') %>" class="form-control" ng-model="invoice.datas.payment_method.transfer_bank_name">
+                </div>
+                <div class="col-md-3">
+                  <input type="text" placeholder="<%= I18n.t('bank_check_date') %>" class="form-control" ng-model="invoice.datas.payment_method.transfer_date">
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="row noPrint actions">
+          <div class="col-md-12 text-right-htable">
+            <button type="submit" class="btn btn-custom btn-blue mr-5"><%= I18n.t('pay') %></button>
+            <a href="#" class="btn btn-custom btn-gray" ng-click="invoice.cancel()"><%= I18n.t('cancel') %></a>
+          </div>
+        </div>
+      </div>
+    </form>
+  </div>
+
+<!-- Modal -->
+<div class="modal" id="amount-modal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content content-amount">
+      <div class="modal-body">
+        <div class="row" ng-show="invoice.datas.payment_method.is_cash">
+          <div class="col-md-3 titel-modal-pay">
+            <label class="pull-right"><%= I18n.t('cash') %> : </label>
+          </div>
+          <div class="col-md-9">
+            <input type="text" value="0.00" ng-required min="-100000" step="1000" ng-validate="number" placeholder="<%= I18n.t('amount') %>" class="form-control table-price price-pay" ng-model="invoice.datas.payment_method.cash_amount" ui-number-mask="2" ui-negative-number>
+          </div>
+        </div>
+        <div class="row" ng-show="invoice.datas.payment_method.is_credit_card">
+          <div class="col-md-3 titel-modal-pay">
+            <label class="pull-right"><%= I18n.t('credit_card') %> : </label>
+          </div>
+          <div class="col-md-9">
+            <input type="text" value="0.00" ng-required min="-100000" step="1000" ng-validate="number" placeholder="<%= I18n.t('amount') %>" class="form-control table-price price-pay" ng-model="invoice.datas.payment_method.credit_card_amount" ui-number-mask="2" ui-negative-number>
+          </div>
+        </div>
+        <div class="row" ng-show="invoice.datas.payment_method.is_cheque">
+          <div class="col-md-3 titel-modal-pay">
+            <label class="pull-right"><%= I18n.t('bank_check') %> : </label>
+          </div>
+          <div class="col-md-9">
+            <input type="text" value="0.00" ng-required min="-100000" step="1000" ng-validate="number" placeholder="<%= I18n.t('amount') %>" class="form-control table-price price-pay" ng-model="invoice.datas.payment_method.cheque_amount" ui-number-mask="2" ui-negative-number>
+          </div>
+        </div>
+        <div class="row" ng-show="invoice.datas.payment_method.is_transfer">
+          <div class="col-md-3 titel-modal-pay">
+            <label class="pull-right"><%= I18n.t('bank_transfer') %> : </label>
+          </div>
+          <div class="col-md-9">
+            <input type="text" value="0.00" ng-required min="-100000" step="1000" ng-validate="number" placeholder="<%= I18n.t('amount') %>" class="form-control table-price price-pay" ng-model="invoice.datas.payment_method.transfer_amount" ui-number-mask="2" ui-negative-number>
+          </div>
+        </div>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-submit" ng-click="invoice.submitAmountModal();"><%= I18n.t('save') %></button>
+        <button type="button" class="btn btn-cancel" data-dismiss="modal"><%= I18n.t('cancel') %></button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- Modal -->
+<div class="modal" id="confirm-amount-modal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content content-no-amount">
+      <div class="modal-body">
+        <div class="row">
+          <div class="col-md-12">
+            <p>*** <%= I18n.t('pay_error') %> ***</p>
+          </div>
+        </div>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-cancel" data-dismiss="modal"><%= I18n.t('cancel') %></button>
+      </div>
+  </div>
+</div>
