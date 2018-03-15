@@ -32,14 +32,11 @@
             </a>
             <div class="dropdown-menu on-nav-bar" aria-labelledby="navbarDropdownMenuLink">
               <% if (SiteConfig.get_cache.enable_rollcall) && (Figaro.env.ROLLCALL_APK_URL) %>
-              <li><a class="dropdown-item" href="<%= Figaro.env.ROLLCALL_APK_URL %>" target="_blank">
+                <li><a class="dropdown-item" href="<%= Figaro.env.ROLLCALL_APK_URL %>" target="_blank">
                 <i class="fa fa-download"></i> Download Rollcall</a></li>
+                <li class="divider"></li>
               <% end %>
 
-              <% if current_page?("/") %>
-                <% if (SiteConfig.get_cache.enable_rollcall) && (Figaro.env.ROLLCALL_APK_URL) %>
-                  <li class="divider"></li>
-                <% end %>
               <li class="dropdown-submenu">
                 <a tabindex="-1" href="#"><i class="fa fa-commenting-o"></i> Switch language</a>
                 <ul class="dropdown-menu">
@@ -48,7 +45,6 @@
                   <li><a href="/?locale=en#"><img src="./switch_language/flag-united-kingdom.png" alt="flag-thailand">&nbsp;&nbsp; English</a></li>
                 </ul>
               </li>
-              <% end %>
               <% if current_page?("/") || ((SiteConfig.get_cache.enable_rollcall) && (Figaro.env.ROLLCALL_APK_URL)) %>
                 <li class="divider"></li>
               <% end %>
