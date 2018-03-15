@@ -3,7 +3,7 @@
   angular.module('somsri.invoice.invoice_report', [
     ])
   .controller('invoiceReportCtrl', ['$compile', '$scope', '$window', '$filter', '$rootScope', 'invoiceReportService', '$timeout', function($compile, $scope, $window, $filter, $rootScope, service, $timeout) {
-    $rootScope.menu = "ใบเสร็จ"
+    $rootScope.menu = '<%= I18n.t("receipt") %>'
     var ctrl = this
     var angularScopeRoot = 'angular.element(document.getElementById("angularCtrl")).scope().$root'
     var angularScopeInvoice = 'angular.element(document.getElementById("angularCtrl")).scope().invoiceReport'
@@ -60,7 +60,7 @@
         if(!row.is_cancel && ctrl.thisDay(row.created_at)){
           ctrl.invoice[index] = row;
           var func = angularScopeInvoice + '.cancelInvoiceModal('+ angularScopeInvoice+ '.invoice['+ index +'])';
-          var link = "<a href='javascript:void(0)' onclick='" + func + "'><i class='fa fa-times-circle'></i>&nbsp;ยกเลิกใบเสร็จ</a>";
+          var link = "<a href='javascript:void(0)' onclick='" + func + "'><i class='fa fa-times-circle'></i>&nbsp;<%= I18n.t('cancel_receipt') %></a>";
           return  link;
         }
         return '';
@@ -94,38 +94,38 @@
           formatter: linkInvoiceID
         },{
           field: 'students.full_name',
-          title: 'ชื่อนักเรียน',
+          title: '<%= I18n.t("student_name") %>',
           sortable: true,
         },{
           field: 'grade_name',
-          title: 'ชั้น',
+          title: '<%= I18n.t("level") %>',
           sortable: true,
         },{
           field: 'parents.full_name',
-          title: 'ผู้ปกครอง',
+          title: '<%= I18n.t("parent_name") %>',
           sortable: true,
         },{
           field: 'users.full_name',
-          title: 'ผู้รับเงิน',
+          title: '<%= I18n.t("receiver") %>',
           sortable: true,
         },{
           field: 'created_at',
-          title: 'วันที่ชำระ',
+          title: '<%= I18n.t("payment_date") %>',
           sortable: true,
           formatter: filterDate
         },{
           field: 'payment_methods.payment_method',
-          title: 'ชำระโดย',
+          title: '<%= I18n.t("paid_by") %>',
           class: 'payment-width',
           sortable: true,
         },{
           field: 'line_items.amount',
-          title: 'ยอดชำระ',
+          title: '<%= I18n.t("paid_amount") %>',
           class: 'text-currency',
           formatter: filterCurrency,
         },{
           field: 'invoice_statuses.name',
-          title: 'สถานะ',
+          title: '<%= I18n.t("status") %>',
           class: 'for-display',
           sortable: true,
         },{
@@ -209,7 +209,7 @@
         service.cancelInvoice(ctrl.selectedInvoice.id).then(function(resp) {
           if(resp.data[0] == "SUCCESS"){
             ctrl.selectedInvoice.is_cancel = true;
-            ctrl.selectedInvoice.status_name = "ยกเลิก";
+            ctrl.selectedInvoice.status_name = "<%= I18n.t('cancel') %>";
             $('#cancelInvoiceModal').modal('hide');
             getStudents()
           }

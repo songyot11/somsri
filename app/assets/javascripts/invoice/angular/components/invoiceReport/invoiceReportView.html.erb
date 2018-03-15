@@ -8,7 +8,7 @@
       <div class="row for-display">
         <div class="col-md-6" style="padding-left: 0px;">
           <div class="col-xs-2" style="margin-right:-20px;">
-            <h3>ระดับชั้น</h3>
+            <h3><%= I18n.t('level') %></h3>
           </div>
           <div class="col-xs-9">
             <div class="dropdown">
@@ -37,7 +37,7 @@
       <div class="row report-content container-fluid">
       <div class="col-xs-12 form-group fix-head-table for-display">
         <div class="col-xs-6">
-          <input id="searchField" type="text" ng-model="invoiceReport.searchKeyword" ng-change="invoiceReport.search()" placeholder="ค้นหาตามเลขที่ใบเสร็จ,ชื่อนักเรียน,ชื่อผู้ปกครอง" class="search-sp" />
+          <input id="searchField" type="text" ng-model="invoiceReport.searchKeyword" ng-change="invoiceReport.search()" placeholder="<%= I18n.t('receipt_search') %>" class="search-sp" />
         </div>
         <div class="col-xs-6 ">
           <div id="date-filter" class="row for-display">
@@ -45,7 +45,7 @@
               <div class="form-group">
                 <span class="input-group">
                   <div class="col-xs-2">
-                    <label for="start_date" class="text-status-date">จาก</label>
+                    <label for="start_date" class="text-status-date"><%= I18n.t('from') %></label>
                   </div>
                   <div class="col-xs-10">
                     <input id="start_date" type="text" class="form-control" uib-datepicker-popup="dd/MM/yyyy" datepicker-options="{showWeeks:false}" ng-model="invoiceReport.start_date" is-open="invoiceReport.startDatePopup.opened" close-text="Close" ng-change="invoiceReport.optionsChange()"/>
@@ -60,7 +60,7 @@
               <div class="form-group">
                 <span class="input-group">
                   <div class="col-xs-2">
-                    <label for="end_date" class="text-status-date">ถึง</label>
+                    <label for="end_date" class="text-status-date"><%= I18n.t('to') %></label>
                   </div>
                   <div class="col-xs-10">
                     <input id="end_date" type="text" class="form-control" uib-datepicker-popup="dd/MM/yyyy" datepicker-options="{showWeeks:false}" ng-model="invoiceReport.end_date" is-open="invoiceReport.endDatePopup.opened" close-text="Close" ng-change="invoiceReport.optionsChange()"/>
@@ -75,8 +75,8 @@
         </div>
         </div>
         <table id="invoice-table" class="scrollable-header text-table-invoicereport for-display"></table>
-        <div class="text-title for-print">รายงานใบเสร็จ</div>
-        <div class="text-title-date for-print"><b>จาก</b> {{ invoiceReport.start_date | dateFormat }} <b>ถึง</b> {{ invoiceReport.end_date | dateFormat }}</div>
+        <div class="text-title for-print"><%= I18n.t('level') %></div>
+        <div class="text-title-date for-print"><b><%= I18n.t('from') %></b> {{ invoiceReport.start_date | dateFormat }} <b><%= I18n.t('to') %></b> {{ invoiceReport.end_date | dateFormat }}</div>
         <table id="for-print-table" class="scrollable-header text-table-invoicereport for-print"></table>
         <div class="row row-centered for-display">
           <div class="col-centered">
@@ -98,14 +98,14 @@
   <div class="modal-dialog" role="document">
     <div class="modal-content">
       <div class="modal-body">
-        คุณต้องการยกเลิกใบเสร็จนี้หรือไม่
+        <%= I18n.t('cancel_receipt_msg') %>
       </div>
       <div class="modal-footer">
         <div class="col-md-offset-6 col-md-3">
-          <button type="button" class="btn btn-custom btn-blue" ng-click="invoiceReport.cancelInvoice()">ใช่</button>
+          <button type="button" class="btn btn-custom btn-blue" ng-click="invoiceReport.cancelInvoice()"><%= I18n.t('yes') %></button>
         </div>
         <div class="col-md-3">
-          <button type="button" class="btn  btn-custom btn-gray" data-dismiss="modal">ไม่ใช่</button>
+          <button type="button" class="btn  btn-custom btn-gray" data-dismiss="modal"><%= I18n.t('no') %></button>
         </div>
       </div>
     </div>
