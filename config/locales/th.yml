@@ -60,6 +60,8 @@ th:
   pay_date: "วันที่ออกเงินเดือน"
   cannot_pay_out: "ไม่สามารถออกเงินเดือนซ้ำได้"
   confirm_pay_out: "คุณต้องการออกเงินเดือนหรือไม่?"
+  original: "ต้นฉบับ"
+  copy: "สำเนา"
 
   add_new_employee: "เพิ่มพนักงานใหม่"
   full_name: "ชื่อ-นามสกุล"
@@ -102,7 +104,7 @@ th:
   confirm_recovery_employee: "คุณต้องการนำข้อมูลพนักงานกลับมาหรือไม่"
   confirm_delete_employee: "คุณต้องการลบข้อมูลพนักงานออกถาวรหรือไม่?"
   confirm_delete_record: "คุณต้องการลบราการนี้หรือไม่?"
-  
+
   # tax
   other_deduction: "ค่าลดหย่อนอื่นๆ"
   personal_deduction: "ค่าลดหย่อนส่วนตัว"
@@ -147,6 +149,7 @@ th:
   pay: "ชำระเงิน"
   price: "ราคา"
   receipt: "ใบเสร็จ"
+  print_receipt: "พิมพ์ใบเสร็จ"
   delivery_note: "นำส่งเงิน"
   payment_report: "รายงานการชำระ"
   classification_report: "รายงานแยกตามประเภท"

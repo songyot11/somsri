@@ -3,7 +3,7 @@
   angular.module('somsri.invoice.daily_report', [
   ])
   .controller('dailyReportCtrl', ['$scope', '$http', '$rootScope', 'dailyReportService', function($scope, $http, $rootScope, service) {
-      $rootScope.menu = "นำส่งเงิน"
+      $rootScope.menu = "<%= I18n.t('delivery_note') %>"
     var ctrl = this;
     $rootScope.loadAndAuthorizeResource("daily_report", function(){
       ctrl.title = 'Daily Report';

@@ -4,7 +4,7 @@
   ])
   .controller('invoiceCtrl', ['$scope', '$http', 'DEFAULT_INVOICE', 'DEFAULT_LOGO', 'LocalStorage', 'Currency', 'invoiceService', '$rootScope', function($scope, $http, DEFAULT_INVOICE, DEFAULT_LOGO, LocalStorage, Currency, service, $rootScope) {
     var ctrl = this;
-    $rootScope.menu = "แบบชำระเงิน"
+    $rootScope.menu = "<%= I18n.t('invoice_form') %>"
     $rootScope.loadAndAuthorizeResource("invoice", function(){
       ctrl.title = 'Invoice';
        function isPaymentMethodMoreThanOne(){
