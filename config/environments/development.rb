@@ -63,4 +63,6 @@ Rails.application.configure do
   config.action_mailer.asset_host = 'http://localhost:3000'
 
   Paperclip.options[:command_path] = "/usr/local/bin/"
+
+  I18n.default_locale = :en
 end

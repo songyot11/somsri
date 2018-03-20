@@ -4,6 +4,11 @@ class ApplicationController < ActionController::Base
   before_action :set_cache_buster, :set_locale
   after_action :set_csrf_cookie_for_ng
 
+  def set_locale
+    I18n.locale = params[:locale] || session['locale'] || I18n.default_locale
+    STDOUT.puts I18n.locale
+  end
+
   rescue_from CanCan::AccessDenied do |exception|
     redirect_to '/', :alert => exception.message
   end
@@ -36,10 +41,6 @@ class ApplicationController < ActionController::Base
     response.headers["Cache-Control"] = "no-cache, no-store, max-age=0, must-revalidate"
     response.headers["Pragma"] = "no-cache"
     response.headers["Expires"] = "Fri, 01 Jan 1990 00:00:00 GMT"
-  end
-
-  def set_locale
-    I18n.locale = params[:locale] || I18n.default_locale
   end
 
   protected

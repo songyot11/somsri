@@ -14,6 +14,12 @@ class HomeController < ApplicationController
   def changelog
   end
 
+  def language
+    session['locale'] = params[:locale] || I18n.default_locale
+    I18n.locale = session['locale']
+    redirect_to request.referer
+  end
+
   # /auth_api?id_token=STRING
   def auth_api
     pin = params['pin']

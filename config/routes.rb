@@ -8,6 +8,7 @@ Rails.application.routes.draw do
   get "/somsri_payroll" => "menu#landing_payroll"
   get "/somsri_rollcall" => "menu#landing_rollcall"
   get "/main" => "menu#landing_main"
+  get "/language" => "home#language"
 
   resources :payrolls, only: [:index, :update, :create] do
     collection do
