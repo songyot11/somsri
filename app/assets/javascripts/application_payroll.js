@@ -31,6 +31,10 @@
 //= require jquery.detect_timezone
 //= require redactor/redactor.min.js
 //= require redactor/angular-redactor-2.js
+//= require angular-translate/angular-translate
+
+//= require translate/app.module
+//= require_tree ./translate
 
 //= require payroll/angular/components/mainCtrl.js.erb
 //= require payroll/angular/app.module

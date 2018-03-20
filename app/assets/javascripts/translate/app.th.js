@@ -1,0 +1,16 @@
+(function() {
+    'use strict';
+
+    angular
+      .module('somsri.translate')
+      .constant('languageTh', {
+        // Menu
+        payroll: "เงินเดือน",
+        invoices: "ค่าเทอม",
+        rollcall: "นับแถว",
+        alumni: "ศิษย์เก่า",
+        student: "นักเรียน",
+        parent: "ผู้ปกครอง",
+        employee: "บุคลากร"
+      });
+})();
