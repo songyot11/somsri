@@ -1,16 +1,14 @@
-(function() {
+(function () {
   'use strict';
 
   angular
     .module('somsri.payroll.home', [])
     .controller('homeCtrl', homeCtrl);
 
-  homeCtrl.$inject = ['$rootScope', '$translate']
+  homeCtrl.$inject = ['$rootScope', 'translateFilter']
 
 
-  function homeCtrl ($rootScope, $translate) {
-    $translate('payroll').then(function (payroll) {
-      $rootScope.menu = payroll;
-    });
+  function homeCtrl ($rootScope, translateFilter) {
+    $rootScope.menu = translateFilter('payroll');
   }
 })();

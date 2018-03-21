@@ -7,12 +7,14 @@
 
   config.$inject = ['$translateProvider', 'languageTh', 'languageEn']
 
-  function config($translateProvider, languageTh, languageEn) {
+  function config ($translateProvider,languageTh, languageEn) {
     $translateProvider
       .translations('th', languageTh)
       .translations('en', languageEn);
 
-    $translateProvider.preferredLanguage('th');
+    var language = $('html').attr('lang');
+
+    $translateProvider.preferredLanguage(language);
     $translateProvider.useSanitizeValueStrategy('escape');
   }
 })();
