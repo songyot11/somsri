@@ -32,6 +32,7 @@
 //= require redactor/redactor.min.js
 //= require redactor/angular-redactor-2.js
 //= require angular-translate/angular-translate
+//= require angular-translate-loader-url/angular-translate-loader-url
 
 //= require translate/app.module
 //= require_tree ./translate

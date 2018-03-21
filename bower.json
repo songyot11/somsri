@@ -24,7 +24,8 @@
     "angular-ui-bootstrap-fontawesome": "",
     "animate.css": "^3.5.2",
     "rich-autocomplete": "",
-    "angular-translate": ""
+    "angular-translate": "",
+    "angular-translate-loader-url": ""
   },
   "resolutions": {
     "angular": "1.5.9"
