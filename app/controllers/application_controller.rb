@@ -5,8 +5,9 @@ class ApplicationController < ActionController::Base
   after_action :set_csrf_cookie_for_ng
 
   def set_locale
-    @locale = params[:locale] || session['locale']
-              || SiteConfig.get_cache.default_locale || I18n.default_locale
+    @locale = params[:locale] || session['locale'] ||
+              SiteConfig.get_cache.default_locale || I18n.default_locale
+
     I18n.locale = @locale
     STDOUT.puts I18n.locale
   end
