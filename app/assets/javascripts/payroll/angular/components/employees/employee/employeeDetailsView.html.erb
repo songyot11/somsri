@@ -683,7 +683,7 @@
             </div>
             <div class="col-md-4">
               <div class="form-group">
-                <label for="tax">{{employee.datas.employee.employee_type=='{{ "employee_full_time" | translate }}' ? '{{ "income_tax" | translate }}': '{{ "withholding_tax" | translate }}'}}</label>
+                <label for="tax">{{employee.datas.employee.employee_type=='ลูกจ้างประจำ' ?  "income_tax": "withholding_tax" | translate }}</label>
                 <input class="form-control text-red numberic" id="tax" ng-model="employee.datas.payroll.tax" disabled>
               </div>
             </div>

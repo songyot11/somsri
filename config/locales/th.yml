@@ -21,6 +21,8 @@
 
 th:
   #Payroll
+  export: Export
+  salary: เงินเดือน
   edit: "แก้ไข"
   report: "รายงาน"
   this_month: "เดือนปัจจุบัน"
@@ -87,6 +89,7 @@ th:
   bank: "ธนาคาร"
   branch: "สาขา"
   bank_account: "เลขบัญชีธนาคาร"
+  bank_account2: "เลขบัญชี"
   pay_social_insurance: "จ่ายประกันสังคม"
   pay_pvf: "จ่ายกองทุนสงเคราะห์ครูเอกชน"
   contact_geeneral_data: "ข้อมูลติดต่อและข้อมูลพื้นฐาน"
@@ -104,6 +107,16 @@ th:
   confirm_recovery_employee: "คุณต้องการนำข้อมูลพนักงานกลับมาหรือไม่"
   confirm_delete_employee: "คุณต้องการลบข้อมูลพนักงานออกถาวรหรือไม่?"
   confirm_delete_record: "คุณต้องการลบราการนี้หรือไม่?"
+  first_name_thai: ชื่อจริง
+  last_name_thai: นามสกุล
+  first_name_en: Name
+  middle_name_en: Middle Name
+  last_name_en: Surname
+
+  mr: นาย
+  ms: นาง
+  miss: นางสาว
+  other: อื่นๆ
 
   # tax
   other_deduction: "ค่าลดหย่อนอื่นๆ"
@@ -330,6 +343,7 @@ th:
   select_room: "เลือกตามห้อง"
   full_name: "ชื่อ-สกุล"
   phone: "โทรศัพท์"
+  phone_number: "หมายเลขโทรศัพท์"
   email: "อีเมล์"
   relationship: "ความสัมพันธ์"
   student_name: "ชื่อ-สกุลนักเรียน"

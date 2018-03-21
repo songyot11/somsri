@@ -62,6 +62,11 @@ en:
   cannot_pay_out: "Cannot issue payroll twince"
   confirm_pay_out: "Do you want to continue?"
 
+  mr: Mr.
+  ms: Ms.
+  miss: Miss.
+  other: Other.
+
   example: "example"
   save: "Save"
   cancel: "Cancel"

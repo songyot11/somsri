@@ -2,7 +2,7 @@
   'use strict';
   angular.module('somsri.payroll.create_payrolls_modal', [
   ])
-  .controller('createPayrollsModalCtrl', ['$uibModalInstance', '$state', '$log', 'createPayrollsModalService', '$rootScope', '$scope', function($uibModalInstance, $state, $log, service, $rootScope, $scope) {
+  .controller('createPayrollsModalCtrl', ['$uibModalInstance', '$state', '$log', 'createPayrollsModalService', '$rootScope', '$scope', 'translateFilter', function($uibModalInstance, $state, $log, service, $rootScope, $scope, translateFilter) {
     var ctrl = this;
     $rootScope.loadAndAuthorizeResource("payroll", function(){
       ctrl.isSaving = false

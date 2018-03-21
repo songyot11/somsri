@@ -2,16 +2,16 @@
   <form name="emergencyCallForm" ng-submit="emergencyCall.submit()" autocomplete="off">
     <div class="row">
       <div class="col-md-12">
-        <h2 class="modal-title" id="modal-title">บุคคลติดต่อฉุกเฉิน</h2>
+        <h2 class="modal-title" id="modal-title">{{ 'emergency_contact' | translate }}</h2>
       </div>
     </div>
     <div class="space20"></div>
     <div class="row">
       <div class="col-md-12">
         <div class="btn-group">
-          <label class="btn btn-prefix" ng-model="emergencyCall.datas.prefix" uib-btn-radio="'Mr.'" ng-click="emergencyCall.requireOtherPrefix(false)">นาย / Mr.</label>
-          <label class="btn btn-prefix" ng-model="emergencyCall.datas.prefix" uib-btn-radio="'Ms.'" ng-click="emergencyCall.requireOtherPrefix(false)">นาง / Ms.</label>
-          <label class="btn btn-prefix" ng-model="emergencyCall.datas.prefix" uib-btn-radio="'Miss.'" ng-click="emergencyCall.requireOtherPrefix(false)">นางสาว / Miss.</label>
+          <label class="btn btn-prefix" ng-model="emergencyCall.datas.prefix" uib-btn-radio="'Mr.'" ng-click="emergencyCall.requireOtherPrefix(false)">{{ 'mr' | translate }}</label>
+          <label class="btn btn-prefix" ng-model="emergencyCall.datas.prefix" uib-btn-radio="'Ms.'" ng-click="emergencyCall.requireOtherPrefix(false)">{{ 'ms' | translate }}</label>
+          <label class="btn btn-prefix" ng-model="emergencyCall.datas.prefix" uib-btn-radio="'Miss.'" ng-click="emergencyCall.requireOtherPrefix(false)">{{ 'miss' | translate }}</label>
           <div style="display: inline-block !important;">
             <input
               id="otherPrefix"
@@ -20,7 +20,7 @@
               type="text"
               uib-btn-radio="emergencyCall.otherPrefix"
               class="form-control btn btn-prefix"
-              placeholder="อื่น / Other."
+              placeholder="{{ 'other' | translate }}"
               ng-click="emergencyCall.requireOtherPrefix(true)">
           </div>
         </div>
@@ -30,19 +30,19 @@
     <div class="row">
       <div class="col-md-4">
         <div class="form-group">
-          <label for="first_name_thai">ชื่อจริง</label>
+          <label for="first_name_thai">{{ 'first_name_thai' | translate }}</label>
           <input type="text" class="form-control" id="first_name_thai" ng-model="emergencyCall.datas.first_name_thai">
         </div>
       </div>
       <div class="col-md-4">
         <div class="form-group">
-          <label for="last_name_thai">นามสกุล</label>
+          <label for="last_name_thai">{{ 'last_name_thai' | translate }}</label>
           <input type="text" class="form-control" id="last_name_thai" ng-model="emergencyCall.datas.last_name_thai">
         </div>
       </div>
       <div class="col-md-4">
         <div class="form-group">
-          <label for="relationship">ความสัมพันธ์</label>
+          <label for="relationship">{{ 'relationship' | translate }}</label>
           <input type="text" class="form-control" id="relationship" ng-model="emergencyCall.datas.relationship">
         </div>
       </div>
@@ -51,19 +51,19 @@
     <div class="row">
       <div class="col-md-3">
         <div class="form-group">
-          <label for="first_name">Name</label>
+          <label for="first_name">{{ 'first_name_en' | translate }}</label>
           <input type="text" class="form-control" id="first_name" ng-model="emergencyCall.datas.first_name">
         </div>
       </div>
       <div class="col-md-2">
         <div class="form-group">
-          <label for="middle_name">Middle Name</label>
+          <label for="middle_name">{{ 'middle_name_en' | translate }}</label>
           <input type="text" class="form-control" id="middle_name" ng-model="emergencyCall.datas.middle_name">
         </div>
       </div>
       <div class="col-md-3">
         <div class="form-group">
-          <label for="last_name">Surname</label>
+          <label for="last_name">{{ 'last_name_en' | translate }}</label>
           <input type="text" class="form-control" id="last_name" ng-model="emergencyCall.datas.last_name">
         </div>
       </div>
@@ -72,13 +72,13 @@
     <div class="row">
       <div class="col-md-4">
         <div class="form-group">
-          <label for="phone">หมายเลขโทรศัพท์</label>
+          <label for="phone">{{ 'phone_number' | translate }}</label>
           <input type="text" class="form-control" id="phone" ng-model="emergencyCall.datas.phone">
         </div>
       </div>
       <div class="col-md-4">
         <div class="form-group">
-          <label for="email">อีเมล</label>
+          <label for="email">{{ 'email' | translate }}</label>
           <input type="text" class="form-control" id="email" ng-model="emergencyCall.datas.email">
         </div>
       </div>
@@ -87,10 +87,10 @@
     <div class="space20"></div>
     <div class="row">
       <div class="col-md-6 text-center">
-        <button type="submit" class="btn btn-custom btn-green btn-block">บันทึก</button>
+        <button type="submit" class="btn btn-custom btn-green btn-block">{{ 'save' | translate }}</button>
       </div>
       <div class="col-md-6 text-center">
-        <button id="submit" type="button" class="btn btn-custom btn-gray btn-block" ng-click="emergencyCall.cancel()">ยกเลิก</button>
+        <button id="submit" type="button" class="btn btn-custom btn-gray btn-block" ng-click="emergencyCall.cancel()">{{ 'cancel' | translate }}</button>
       </div>
     </div>
   </form>
