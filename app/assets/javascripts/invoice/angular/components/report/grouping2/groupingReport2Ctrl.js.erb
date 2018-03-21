@@ -2,8 +2,8 @@
   'use strict';
   angular.module('somsri.invoice.groupingReport2', [
   ])
-  .controller('groupingReport2Ctrl', ['$compile', '$scope', '$window', '$filter', '$rootScope', 'groupingReport2Service', '$timeout', 'CSV', '$uibModal', 'moment', function($compile, $scope, $window, $filter, $rootScope, service, $timeout, CSV, $uibModal, moment) {
-    $rootScope.menu = "<%= I18n.t('classification_report') %>"
+  .controller('groupingReport2Ctrl', ['$compile', '$scope', '$window', '$filter', '$rootScope', 'groupingReport2Service', '$timeout', 'CSV', '$uibModal', 'moment', 'translateFilter', function($compile, $scope, $window, $filter, $rootScope, service, $timeout, CSV, $uibModal, moment, translateFilter) {
+    $rootScope.menu = translateFilter('classification_report')
     var ctrl = this
 
     $rootScope.loadAndAuthorizeResource("invoice", function(){
@@ -89,19 +89,19 @@
         if(ctrl.getReportMode() == "per_student"){
           tableColumn = [
             { title: "Invoice"},
-            { title: "<%= I18n.t('name') %>"},
-            { title: "<%= I18n.t('level') %>"}
+            { title: translateFilter('name')},
+            { title: translateFilter('level')}
           ]
         }else if(ctrl.getReportMode() == "per_invoice"){
           tableColumn = [
             { title: "Invoice"},
-            { title: "<%= I18n.t('date1') %>"},
-            { title: "<%= I18n.t('name') %>"},
-            { title: "<%= I18n.t('level') %>"}
+            { title: translateFilter('date1')},
+            { title: translateFilter('name')},
+            { title: translateFilter('level')}
           ]
         }else{
           tableColumn = [
-            { title: "<%= I18n.t('date1') %>"}
+            { title: translateFilter('date1')}
           ]
         }
 
@@ -140,20 +140,20 @@
         // footer
         if(ctrl.getReportMode() == "per_student"){
           var footer = ctrl.datas.total.slice(0)
-          footer.unshift("<%= I18n.t('total') %>")
+          footer.unshift(translateFilter('total'))
           footer.unshift("")
           footer.unshift("")
           exportData.push(footer)
         }else if(ctrl.getReportMode() == "per_invoice"){
           var footer = ctrl.datas.total.slice(0)
-          footer.unshift("<%= I18n.t('total') %>")
+          footer.unshift(translateFilter('total'))
           footer.unshift("")
           footer.unshift("")
           footer.unshift("")
           exportData.push(footer)
         }else{
           var footer = ctrl.datas.total.slice(0)
-          footer.unshift("<%= I18n.t('total') %>")
+          footer.unshift(translateFilter('total'))
           exportData.push(footer)
         }
         table.bootstrapTable('load', exportData)

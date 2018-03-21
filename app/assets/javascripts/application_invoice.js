@@ -26,6 +26,10 @@
 //= require angular-sanitize
 //= require ng-csv
 //= require angular-ui-bootstrap-fontawesome
+//= require angular-translate/angular-translate
+
+//= require translate/app.module
+//= require_tree ./translate
 
 //= require invoice/angular/components/mainCtrl.js.erb
 //= require invoice/angular/components/shared/ngKeyEnterDirective

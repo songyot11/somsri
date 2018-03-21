@@ -7,7 +7,7 @@
       <div class="row tool-top-payroll">
         <div class="col-md-6">
           <input type="hidden" id="time_zone">
-          <h3 class="text-h-payroll inline"><%= I18n.t("payroll_table") %> : </h3>
+          <h3 class="text-h-payroll inline">{{ "payroll_table" | translate }} : </h3>
           <div class="dropdown inline">
             <h3 id="month-list" data-toggle="dropdown" style="margin-top:10px;">
               <span ng-bind="payroll.currentDateString" role="button"></span>
@@ -27,7 +27,7 @@
             <i class="fa fa-print" aria-hidden="true"></i>
           </a>
           <a ng-hide="payroll.isClosedPayroll" class="btn btn-custom btn-orange" ng-click="payroll.createPayrolls()" href="javascript:void(0)">
-            <%= I18n.t("pay_out") %>
+            {{ "pay_out" | translate }}
           </a>
         </div>
       </div>
@@ -36,10 +36,10 @@
             <div class="col-md-12">
               <div class="pull-right">
                 <div class="btn-group filter-btn">
-                    <label class="btn btn-md employee-type" ng-click="payroll.employeeTypeFilter()" ng-model="payroll.employeeTypeMode.normal" style="border-radius: 50px;" uib-btn-checkbox><%= I18n.t("employee_full_time") %></label>
-                    <label class="btn btn-md employee-type" ng-click="payroll.employeeTypeFilter()" ng-model="payroll.employeeTypeMode.temporary" style="border-radius: 50px;" uib-btn-checkbox><%= I18n.t("employee_part_time") %></label>
-                    <label class="btn btn-md employee-type" ng-click="payroll.employeeTypeFilter()" ng-model="payroll.employeeTypeMode.probationary" style="border-radius: 50px;" uib-btn-checkbox><%= I18n.t("employee_probation") %></label>
-                    <label class="btn btn-md employee-type" ng-click="payroll.employeeTypeFilter()" ng-model="payroll.employeeTypeMode.daily" style="border-radius: 50px;" uib-btn-checkbox><%= I18n.t("employee_daily") %></label>
+                    <label class="btn btn-md employee-type" ng-click="payroll.employeeTypeFilter()" ng-model="payroll.employeeTypeMode.normal" style="border-radius: 50px;" uib-btn-checkbox>{{ "employee_full_time" | translate }}</label>
+                    <label class="btn btn-md employee-type" ng-click="payroll.employeeTypeFilter()" ng-model="payroll.employeeTypeMode.temporary" style="border-radius: 50px;" uib-btn-checkbox>{{ "employee_part_time" | translate }}</label>
+                    <label class="btn btn-md employee-type" ng-click="payroll.employeeTypeFilter()" ng-model="payroll.employeeTypeMode.probationary" style="border-radius: 50px;" uib-btn-checkbox>{{ "employee_probation" | translate }}</label>
+                    <label class="btn btn-md employee-type" ng-click="payroll.employeeTypeFilter()" ng-model="payroll.employeeTypeMode.daily" style="border-radius: 50px;" uib-btn-checkbox>{{ "employee_daily" | translate }}</label>
                 </div>
               </div>
             </div>
@@ -49,8 +49,8 @@
                     <span class="gap"></span>
                 </div>
                 <div class="thead top">
-                    <span class="code"><%= I18n.t("employee_code") %></span>
-                    <span class="name"><%= I18n.t("employee_name") %></span>
+                    <span class="code">{{ "employee_code" | translate }}</span>
+                    <span class="name">{{ "employee_name" | translate }}</span>
                 </div>
                 <div class="tbody">
                     <div class="trow" ng-repeat="(index, employee) in payroll.employees" ng-mouseover="hoverIn(employee.code)" ng-class="{'hilight': sel==employee.code}">
@@ -65,7 +65,7 @@
                                 <strong>{{employee.name}}</strong>
                               </a>
 
-                              <button ng-show="employee.note" uib-popover-html="employee.note" popover-title='<%= I18n.t("note") %>' type="button" class="btn btn-note-bell for-display" popover-class="note-popover for-display">
+                              <button ng-show="employee.note" uib-popover-html="employee.note" popover-title='{{ "note" | translate }}' type="button" class="btn btn-note-bell for-display" popover-class="note-popover for-display">
                                 <i class="fa fa-bell" aria-hidden="true"></i>
                               </button>
 
@@ -74,7 +74,7 @@
                         </span>
                     </div>
                     <div class="trow tfoot">
-                      <span class="text_total_tfoot"><strong><%= I18n.t("total") %></strong></span>
+                      <span class="text_total_tfoot"><strong>{{ "total" | translate }}</strong></span>
                     </div>
                     <div class="trow tfoot">
                       <span class="free-space-table" style="width: 370px;"></span>
@@ -83,24 +83,24 @@
             </div>
             <div class="rest-columns">
                 <div class="theadtop">
-                    <span class="income"><%= I18n.t("income_list") %></span><span class="expenses"><%= I18n.t("outcome_list") %></span><span class="total"></span>
+                    <span class="income">{{ "income_list" | translate }}</span><span class="expenses">{{ "outcome_list" | translate }}</span><span class="total"></span>
                 </div>
                 <div class="thead top">
-                    <span><%= I18n.t("employee_payroll") %></span>
-                    <span><%= I18n.t("employee_ot") %></span>
-                    <span><%= I18n.t("employee_position_allowance") %></span>
-                    <span><%= I18n.t("employee_allowance") %></span>
-                    <span><%= I18n.t("employee_attendance_bonus") %></span>
-                    <span><%= I18n.t("employee_bonus") %></span>
-                    <span><%= I18n.t("employee_extra_etc") %></span>
-                    <span><%= I18n.t("employee_absence") %></span>
-                    <span><%= I18n.t("employee_late") %></span>
-                    <span><%= I18n.t("employee_tax") %></span>
-                    <span><%= I18n.t("employee_social_insurance") %></span>
-                    <span><%= I18n.t("employee_pvf") %></span>
-                    <span><%= I18n.t("employee_advance_payment") %></span>
-                    <span><%= I18n.t("employee_fee_etc") %></span>
-                    <span><%= I18n.t("employee_net_salary") %></span>
+                    <span>{{ "employee_payroll" | translate }}</span>
+                    <span>{{ "employee_ot" | translate }}</span>
+                    <span>{{ "employee_position_allowance" | translate }}</span>
+                    <span>{{ "employee_allowance" | translate }}</span>
+                    <span>{{ "employee_attendance_bonus" | translate }}</span>
+                    <span>{{ "employee_bonus" | translate }}</span>
+                    <span>{{ "employee_extra_etc" | translate }}</span>
+                    <span>{{ "employee_absence" | translate }}</span>
+                    <span>{{ "employee_late" | translate }}</span>
+                    <span>{{ "employee_tax" | translate }}</span>
+                    <span>{{ "employee_social_insurance" | translate }}</span>
+                    <span>{{ "employee_pvf" | translate }}</span>
+                    <span>{{ "employee_advance_payment" | translate }}</span>
+                    <span>{{ "employee_fee_etc" | translate }}</span>
+                    <span>{{ "employee_net_salary" | translate }}</span>
                 </div>
 
                 <div class="tbody" id="scrollbar-payroll">

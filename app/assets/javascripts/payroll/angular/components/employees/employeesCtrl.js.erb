@@ -2,8 +2,8 @@
   'use strict';
   angular.module('somsri.payroll.employees', [
     ])
-  .controller('employeesCtrl', ['employeesService','$log', '$rootScope', function(employeeService, $log, $rootScope) {
-    $rootScope.menu = "<%= I18n.t('employee') %>"
+  .controller('employeesCtrl', ['employeesService','$log', '$rootScope', 'translateFilter', function(employeeService, $log, $rootScope, translateFilter) {
+    $rootScope.menu = translateFilter('employee')
     var ctrl = this
     var dateNow = new Date();
     var $table = $('#employeesTable')
@@ -40,30 +40,30 @@
 
     function salary(value, row, index){
       if (value) {
-        return '<div class="text-blue text-right" ><span class="numberic">'+ value.toLocaleString() +'</span> <%= I18n.t("baht") %></div>';
+        return '<div class="text-blue text-right" ><span class="numberic">'+ value.toLocaleString() +'</span>' + translateFilter("baht") + '</div>';
       }
-      return '<div class="text-blue text-right" ><span class="numberic">0</span> <%= I18n.t("baht") %></div>';
+      return '<div class="text-blue text-right" ><span class="numberic">0</span>' + translateFilter("baht") + '</div>';
     }
 
     function extra(value, row, index){
       if (value) {
-        return '<div class="text-green text-right" ><span class="numberic">'+ value.toLocaleString() +'</span> <%= I18n.t("baht") %></div>';
+        return '<div class="text-green text-right" ><span class="numberic">'+ value.toLocaleString() +'</span>' + translateFilter("baht") + '</div>';
       }
-      return '<div class="text-green text-right" ><span class="numberic">0</span> <%= I18n.t("baht") %></div>';
+      return '<div class="text-green text-right" ><span class="numberic">0</span>' + translateFilter("baht") + '</div>';
     }
 
     function fee(value, row, index){
       if (value) {
-        return '<div class="text-red text-right" ><span class="numberic">'+ value.toLocaleString() +'</span> <%= I18n.t("baht") %></div>';
+        return '<div class="text-red text-right" ><span class="numberic">'+ value.toLocaleString() +'</span>' + translateFilter("baht") + '</div>';
       }
-      return '<div class="text-red text-right" ><span class="numberic">0</span> <%= I18n.t("baht") %></div>';
+      return '<div class="text-red text-right" ><span class="numberic">0</span>' + translateFilter("baht") + '</div>';
     }
 
     var angularScopeEmployees = "angular.element(document.getElementById('angularCtrl')).scope().employees";
 
     function edit(value, row, index){
       if (row) {
-        return '<a href="javascript:void(0)" class="td-edit-employee-link text-center" onclick="'+ angularScopeEmployees +'.openEmployeeDetails('+row.id+')"><i class="fa fa-pencil-square-o"></i> <%= I18n.t("edit") %></a>';
+        return '<a href="javascript:void(0)" class="td-edit-employee-link text-center" onclick="'+ angularScopeEmployees +'.openEmployeeDetails('+row.id+')"><i class="fa fa-pencil-square-o"></i>' + translateFilter("edit") + '</a>';
       }
     }
 
@@ -110,28 +110,28 @@
         field: 'imgUrl',
         formatter: imgTag,
       },{
-        title: '<%= I18n.t("full_name") %>',
+        title: translateFilter("full_name"),
         field: 'full_name',
         sortable: true,
         formatter: linkName,
       },{
-        title: '<%= I18n.t("position") %>',
+        title: translateFilter("position"),
         field: 'position',
         sortable: true,
       },{
-        title: '<%= I18n.t("payroll") %>',
+        title: translateFilter("payroll"),
         field: 'salary',
         align: 'right',
         formatter: salary,
         sortable: true,
       },{
-        title: '<%= I18n.t("extra_money") %>',
+        title: translateFilter("extra_money"),
         field: 'extra',
         align: 'right',
         formatter: extra,
         sortable: true,
       },{
-        title: '<%= I18n.t("deduct_money") %>',
+        title: translateFilter("deduct_money"),
         field: 'fee',
         align: 'right',
         formatter: fee,

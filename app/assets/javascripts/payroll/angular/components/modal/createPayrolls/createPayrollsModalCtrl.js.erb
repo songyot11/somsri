@@ -19,9 +19,9 @@
       ctrl.submit = function(){
         if(Date.parse(ctrl.effective_date)){
           if(isSameDate(ctrl.effective_date)){
-            $rootScope.openWarningModal('<%= I18n.t("cannot_pay_out") %>');
+            $rootScope.openWarningModal(translateFilter("cannot_pay_out"));
           }else{
-            $rootScope.openConfirmationModal('<%= I18n.t("confirm_pay_out") %>', function(){
+            $rootScope.openConfirmationModal(translateFilter("confirm_pay_out"), function(){
               ctrl.isSaving = true
               var params = { create: { effective_date: ctrl.effective_date }, option: {force_create: false} };
               service.createPayrolls(params).then(function(resp) {

@@ -2,9 +2,9 @@
   'use strict';
   angular.module('somsri.invoice.invoice', [
   ])
-  .controller('invoiceCtrl', ['$scope', '$http', 'DEFAULT_INVOICE', 'DEFAULT_LOGO', 'LocalStorage', 'Currency', 'invoiceService', '$rootScope', function($scope, $http, DEFAULT_INVOICE, DEFAULT_LOGO, LocalStorage, Currency, service, $rootScope) {
+  .controller('invoiceCtrl', ['$scope', '$http', 'DEFAULT_INVOICE', 'DEFAULT_LOGO', 'LocalStorage', 'Currency', 'invoiceService', '$rootScope', 'translateFilter', function($scope, $http, DEFAULT_INVOICE, DEFAULT_LOGO, LocalStorage, Currency, service, $rootScope, translateFilter) {
     var ctrl = this;
-    $rootScope.menu = "<%= I18n.t('invoice_form') %>"
+    $rootScope.menu = translateFilter('invoice_form');
     $rootScope.loadAndAuthorizeResource("invoice", function(){
       ctrl.title = 'Invoice';
        function isPaymentMethodMoreThanOne(){

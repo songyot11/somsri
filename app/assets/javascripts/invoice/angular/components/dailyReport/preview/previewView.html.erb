@@ -1,10 +1,10 @@
 <div class="container-fluid nav-for-print-report">
   <div class="row row-print">
     <div class="col-xs-3">
-      <button type="button" class="btn btn-back_to_print" ng-click="dailyReportPreview.goBack()"><i class="fa fa-arrow-left"></i>&nbsp;&nbsp;<%= I18n.t('back') %></button>
+      <button type="button" class="btn btn-back_to_print" ng-click="dailyReportPreview.goBack()"><i class="fa fa-arrow-left"></i>&nbsp;&nbsp;{{ 'back' | translate }}</button>
     </div>
     <div class="col-xs-3 col-xs-offset-6" style="text-align:right;">
-      <button type="button" class="btn btn-to-print" onclick="window.print()"><i class="fa fa-print"></i>&nbsp;&nbsp;<%= I18n.t('print_report') %></button>
+      <button type="button" class="btn btn-to-print" onclick="window.print()"><i class="fa fa-print"></i>&nbsp;&nbsp;{{ 'print_report' | translate }}</button>
     </div>
   </div>
 </div>
@@ -18,44 +18,44 @@
     </div>
     <div class="col-xs-4 text-date-report text-head-report">
       <div class="row">
-        <%= I18n.t('today') %>&nbsp;&nbsp;{{ dailyReportPreview.datas.thai_now_date }}
+        {{ 'today' | translate }}&nbsp;&nbsp;{{ dailyReportPreview.datas.thai_now_date }}
       </div>
     </div>
   </div>
   <div class="row">
     <div class="col--xs-8 text-date-report2" style="margin-top:75px; margin-bottom:75px;">
-      <div class="row" style="margin-left: 0px;"><span class="large-receipt-report"><%= I18n.t('transfer_money_slip') %></span>&nbsp;&nbsp;<%= I18n.t('at_date') %> {{ dailyReportPreview.datas.thai_now_date }}</div>
+      <div class="row" style="margin-left: 0px;"><span class="large-receipt-report">{{ 'transfer_money_slip' | translate }}</span>&nbsp;&nbsp;{{ 'at_date' | translate }} {{ dailyReportPreview.datas.thai_now_date }}</div>
     </div>
   </div>
-  <div class="row text-title-table"><%= I18n.t('this_detail') %></div>
+  <div class="row text-title-table">{{ 'this_detail' | translate }}</div>
   <div class="table-dailyReport">
     <table class="table table-sm">
       <thead class="for-print-report">
         <tr>
-          <th class="col-num"><%= I18n.t('order') %></th>
-          <th class="table-center"><%= I18n.t('item') %></th>
-          <th class="col-report-table-right"><%= I18n.t('amount') %></th>
+          <th class="col-num">{{ 'order' | translate }}</th>
+          <th class="table-center">{{ 'item' | translate }}</th>
+          <th class="col-report-table-right">{{ 'amount' | translate }}</th>
         </tr>
       </thead>
       <tbody class="dialyreport-view-tbody">
         <tr>
           <td scope="row">1</td>
-          <td class="table-center"><%= I18n.t('cash') %></td>
+          <td class="table-center">{{ 'cash' | translate }}</td>
           <td class="price-pay numberic">{{ dailyReportPreview.datas.cash.toFixed(2) | number:2  }}</td>
         </tr>
         <tr>
           <td scope="row">2</td>
-          <td class="table-center"><%= I18n.t('credit_card') %></td>
+          <td class="table-center">{{ 'credit_card' | translate }}</td>
           <td class="price-pay numberic">{{ dailyReportPreview.datas.credit_card.toFixed(2) | number:2  }}</td>
         </tr>
         <tr>
           <td scope="row">3</td>
-          <td class="table-center"><%= I18n.t('bank_check') %></td>
+          <td class="table-center">{{ 'bank_check' | translate }}</td>
           <td class="price-pay numberic">{{ dailyReportPreview.datas.cheque.toFixed(2) | number:2  }}</td>
         </tr>
         <tr>
           <td scope="row">4</td>
-          <td class="table-center"><%= I18n.t('bank_transfer') %></td>
+          <td class="table-center">{{ 'bank_transfer' | translate }}</td>
           <td class="price-pay numberic">{{ dailyReportPreview.datas.tranfers.toFixed(2) | number:2  }}</td>
         </tr>
         <tr>
@@ -67,37 +67,37 @@
       <tfoot class="dialyreport-view-tfoot">
         <tr>
           <td class="table-foot-top"></td>
-          <td class="table-foot-center table-foot-top"><%= I18n.t('init_cash') %></td>
+          <td class="table-foot-center table-foot-top">{{ 'init_cash' | translate }}</td>
           <td class="table-foot-top numberic">{{ dailyReportPreview.datas.real_start_cash.toFixed(2) | number:2  }}</td>
         </tr>
         <tr>
           <td class="table-foot-top"></td>
-          <td class="table-foot-center"><%= I18n.t('cash') %></td>
+          <td class="table-foot-center">{{ 'cash' | translate }}</td>
           <td class="numberic">{{ dailyReportPreview.datas.real_cash.toFixed(2) | number:2 }}</td>
         </tr>
         <tr>
           <td class="table-foot-top"></td>
-          <td class="table-foot-center"><%= I18n.t('credit_card') %></td>
+          <td class="table-foot-center">{{ 'credit_card' | translate }}</td>
           <td class="numberic">{{ dailyReportPreview.datas.real_credit_card.toFixed(2) | number:2 }}</td>
         </tr>
         <tr>
           <td class="table-foot-top"></td>
-          <td class="table-foot-center"><%= I18n.t('bank_check') %></td>
+          <td class="table-foot-center">{{ 'bank_check' | translate }}</td>
           <td class="numberic">{{ dailyReportPreview.datas.real_cheque.toFixed(2) | number:2 }}</td>
         </tr>
         <tr>
           <td class="table-foot-top"></td>
-          <td class="table-foot-center"><%= I18n.t('bank_transfer') %></td>
+          <td class="table-foot-center">{{ 'bank_transfer' | translate }}</td>
           <td class="numberic">{{ dailyReportPreview.datas.real_tranfers.toFixed(2) | number:2 }}</td>
         </tr>
         <tr>
           <td class="table-foot-top"></td>
-          <th class="table-foot-center table-foot-top"><%= I18n.t('total') %></th>
+          <th class="table-foot-center table-foot-top">{{ 'total' | translate }}</th>
           <th class="table-foot-top numberic">{{ dailyReportPreview.datas.real_total.toFixed(2) | number:2 }}</th>
         </tr>
         <tr>
           <td class="table-foot-top"></td>
-          <th class="table-foot-center table-foot-top"><%= I18n.t('excess') %></th>
+          <th class="table-foot-center table-foot-top">{{ 'excess' | translate }}</th>
           <th class="table-foot-top numberic">{{ dailyReportPreview.total.toFixed(2) | number:2 }}</th>
         </tr>
       </tfoot>
@@ -106,11 +106,11 @@
 
   <div class="row">
       <div class="col-xs-4 report-receiver">
-        <%= I18n.t('sign') %> .................................... <%= I18n.t('sender') %> </br>
+        {{ 'sign' | translate }} .................................... {{ 'sender' | translate }} </br>
         (&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;)
       </div>
       <div class="col-xs-4 col-xs-offset-4 report-receiver">
-        <%= I18n.t('sign') %> .................................... <%= I18n.t('receiver') %> </br>
+        {{ 'sign' | translate }} .................................... {{ 'receiver' | translate }} </br>
         (&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;)
       </div>
     </div>

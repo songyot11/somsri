@@ -3,7 +3,7 @@
     <div class="row head-menu">
       <div class="col-md-6">
         <div class="col-xs-2">
-          <h3><%= I18n.t('level') %></h3>
+          <h3>{{ 'level' | translate }}</h3>
         </div>
         <div class="col-xs-9">
           <div class="dropdown">
@@ -33,7 +33,7 @@
           <div class="col-md-12 dropdown-filter">
             <div class="dropdown pull-right">
               <h4 id="year-list" class="dropdown-label" data-toggle="dropdown">
-                <strong><%= I18n.t('school_year') %></strong> <span ng-bind="studentReport.currentYearString" ></span>
+                <strong>{{ 'school_year' | translate }}</strong> <span ng-bind="studentReport.currentYearString" ></span>
                 <i class="fa fa-angle-down" aria-hidden="true"></i>
               </h4>
               <ul class="dropdown-menu" aria-labelledby="year-list">
@@ -44,7 +44,7 @@
             </div>
             <div class="dropdown pull-right mr-20">
               <h4 id="semester-list" class="dropdown-label" data-toggle="dropdown">
-              <strong><%= I18n.t('semester') %></strong> <span ng-bind="studentReport.currentSemesterString" ></span>
+              <strong>{{ 'semester' | translate }}</strong> <span ng-bind="studentReport.currentSemesterString" ></span>
                 <i class="fa fa-angle-down" aria-hidden="true"></i>
               </h4>
               <ul class="dropdown-menu" aria-labelledby="semester-list">
@@ -54,15 +54,15 @@
                   </a>
                 </li>
                 <li>
-                  <a class="blue-highlight" ng-click="studentReport.switchSemester('<%= I18n.t('other') %>')">
-                    <%= I18n.t('semester_nofix') %>
+                  <a class="blue-highlight" ng-click="studentReport.switchSemester('{{ 'other' | translate }}')">
+                    {{ 'semester_nofix' | translate }}
                   </a>
                 </li>
               </ul>
             </div>
             <div class="dropdown pull-right mr-20" >
               <h4 id="semester-list" class="dropdown-label" data-toggle="dropdown">
-                <strong><%= I18n.t('payment_status') %></strong> <span ng-bind="studentReport.invoiceFilterString" ></span>
+                <strong>{{ 'payment_status' | translate }}</strong> <span ng-bind="studentReport.invoiceFilterString" ></span>
                 <i class="fa fa-angle-down" aria-hidden="true"></i>
               </h4>
               <ul class="dropdown-menu" aria-labelledby="semester-list">
@@ -78,19 +78,19 @@
         <table id="tableHeader" class="table scrollable-header">
           <thead>
            <tr>
-              <th><%= I18n.t('code') %></th>
-              <th><%= I18n.t('name') %></th>
-              <th><%= I18n.t('level') %></th>
-              <th><%= I18n.t('room') %></th>
-              <th><%= I18n.t('number1') %></th>
-              <th><%= I18n.t('parent') %></th>
-              <th><%= I18n.t('status') %></th>
-              <th><%= I18n.t('paid_by') %></th>
-              <th class='text-currency'><%= I18n.t('tuition_fee') %></th>
-              <th class='text-currency'><%= I18n.t('other_cost') %></th>
-              <th class='text-currency bold'><%= I18n.t('paid_amount') %></th>
-              <th class='text-currency bold'><%= I18n.t('year_paid_amount') %></th>
-              <th><%= I18n.t('paid_date') %></th>
+              <th>{{ 'code' | translate }}</th>
+              <th>{{ 'name' | translate }}</th>
+              <th>{{ 'level' | translate }}</th>
+              <th>{{ 'room' | translate }}</th>
+              <th>{{ 'number1' | translate }}</th>
+              <th>{{ 'parent' | translate }}</th>
+              <th>{{ 'status' | translate }}</th>
+              <th>{{ 'paid_by' | translate }}</th>
+              <th class='text-currency'>{{ 'tuition_fee' | translate }}</th>
+              <th class='text-currency'>{{ 'other_cost' | translate }}</th>
+              <th class='text-currency bold'>{{ 'paid_amount' | translate }}</th>
+              <th class='text-currency bold'>{{ 'year_paid_amount' | translate }}</th>
+              <th>{{ 'paid_date' | translate }}</th>
            </tr>
           </thead>
             <tbody>
@@ -122,7 +122,7 @@
             <tfoot>
               <tr>
                 <td colspan="5"></td>
-                <td colspan="3"><%= I18n.t('total_paid') %> :</td>
+                <td colspan="3">{{ 'total_paid' | translate }} :</td>
                 <td class="text-currency numberic">{{studentReport.total.tuition_fee.toFixed(2) | number:2}}</td>
                 <td class="text-currency numberic">{{studentReport.total.other_fee.toFixed(2) | number:2}}</td>
                 <td class="text-currency numberic">{{studentReport.total.amount.toFixed(2) | number:2}}</td>

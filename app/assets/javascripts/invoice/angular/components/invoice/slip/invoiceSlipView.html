@@ -1,20 +1,20 @@
 <div class="container-fluid nav-for-print">
   <div class="row row-print">
     <div class="col-xs-3">
-      <button type="button" class="btn btn-back_to_print" ng-click="slip.goBack()"><i class="fa fa-arrow-left"></i>&nbsp;&nbsp;<%= I18n.t('back') %></button>
+      <button type="button" class="btn btn-back_to_print" ng-click="slip.goBack()"><i class="fa fa-arrow-left"></i>&nbsp;&nbsp;{{ 'back' | translate }}</button>
     </div>
     <div class="col-md-9 text-right">
       <div class="pull-right" style="margin-left:20px;">
-        <button type="button" class="btn btn-to-print" onclick="window.print()"><i class="fa fa-print"></i>&nbsp;&nbsp;<%= I18n.t('print_receipt') %></button>
+        <button type="button" class="btn btn-to-print" onclick="window.print()"><i class="fa fa-print"></i>&nbsp;&nbsp;{{ 'print_receipt' | translate }}</button>
       </div>
       <div class="pull-right">
         <button ng-show="slip.datas.remark" uib-popover="{{slip.datas.remark}}" popover-trigger="'mouseenter'" popover-class="btn-remark" popover-placement="bottom" type="button" class="btn btn-to-print">
-          <i class="fa fa-bell"></i>&nbsp;&nbsp;<%= I18n.t('note') %>
+          <i class="fa fa-bell"></i>&nbsp;&nbsp;{{ 'note' | translate }}
         </button>
       </div>
     </div>
   </div>
 </div>
-<slip-content info=slip title="( <%= I18n.t('original') %> )" />
+<slip-content info=slip title="( {{ 'original' | translate }} )" />
 <div class="pagebreak"></div>
-<slip-content class="form-slip-forslip-copy" info=slip title="( <%= I18n.t('copy') %> )" />
+<slip-content class="form-slip-forslip-copy" info=slip title="( {{ 'copy' | translate }} )" />

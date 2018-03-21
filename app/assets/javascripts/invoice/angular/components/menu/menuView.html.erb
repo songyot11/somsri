@@ -6,7 +6,7 @@
                   <%= image_tag 'payment.png', class: "" %>
               </div>
           </div>
-          <p><%= I18n.t('pay') %></p>
+          <p>{{ 'pay' | translate }}</p>
       </div>
 
       <div class="col-xs-4">
@@ -15,7 +15,7 @@
                   <%= image_tag 'invoice-icon.png', class: "" %>
               </div>
           </div>
-          <p><%= I18n.t('receipt') %></p>
+          <p>{{ 'receipt' | translate }}</p>
       </div>
 
       <div class="col-xs-4">
@@ -24,7 +24,7 @@
                   <%= image_tag 'send_money.png', class: "" %>
               </div>
           </div>
-          <p><%= I18n.t('delivery_note') %></p>
+          <p>{{ 'delivery_note' | translate }}</p>
       </div>
 
       <div class="col-xs-12 free-space"></div>
@@ -35,7 +35,7 @@
                   <%= image_tag 'report-invoice.png', class: "" %>
               </div>
           </div>
-          <p><%= I18n.t('payment_report') %></p>
+          <p>{{ 'payment_report' | translate }}</p>
       </div>
 
       <div class="col-xs-4">
@@ -44,7 +44,7 @@
                   <%= image_tag 'report-invoice.png', class: "" %>
               </div>
           </div>
-          <p><%= I18n.t('classification_report') %> 1</p>
+          <p>{{ 'classification_report' | translate }} 1</p>
       </div>
       <div class="col-xs-4">
           <div class="menu-btn" ng-click="openGroupingReport2()">
@@ -52,6 +52,6 @@
                   <%= image_tag 'report-invoice.png', class: "" %>
               </div>
           </div>
-          <p><%= I18n.t('classification_report') %> 2</p>
+          <p>{{ 'classification_report' | translate }} 2</p>
       </div>
 </div>

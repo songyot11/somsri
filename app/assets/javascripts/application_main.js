@@ -27,6 +27,11 @@
 //= require angular-sanitize
 //= require ng-csv
 //= require angular-ui-bootstrap-fontawesome
+//= require angular-translate/angular-translate
+
+//= require translate/app.module
+//= require_tree ./translate
+
 
 //= require main/angular/components/mainCtrl.js.erb
 //= require main/angular/app.module

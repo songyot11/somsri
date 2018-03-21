@@ -24,6 +24,10 @@
 //= require ocLazyLoad/dist/ocLazyLoad.min
 //= require angular-input-masks
 //= require angular-ui-bootstrap-fontawesome
+//= require angular-translate/angular-translate
+
+//= require translate/app.module
+//= require_tree ./translate
 
 //= require rollcall/angular/components/mainCtrl.js.erb
 //= require rollcall/angular/app.module

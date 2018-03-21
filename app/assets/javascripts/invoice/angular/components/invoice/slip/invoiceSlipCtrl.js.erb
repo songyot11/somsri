@@ -2,9 +2,9 @@
   'use strict';
   angular.module('somsri.invoice.invoice_slip', [
   ])
-  .controller('invoiceSlipCtrl', ['$scope', '$sce', '$http', '$state', 'DEFAULT_LOGO', 'invoiceSlipService', '$rootScope', function($scope, $sce, $http, $state, DEFAULT_LOGO, service, $rootScope) {
+  .controller('invoiceSlipCtrl', ['$scope', '$sce', '$http', '$state', 'DEFAULT_LOGO', 'invoiceSlipService', '$rootScope', 'translateFilter', function($scope, $sce, $http, $state, DEFAULT_LOGO, service, $rootScope, translateFilter) {
     var ctrl = this;
-    $rootScope.menu = "<%= I18n.t('receipt') %>"
+    $rootScope.menu = translateFilter('receipt');
     $rootScope.loadAndAuthorizeResource("invoice", function(){
       ctrl.title = 'Invoice Slip';
       var invoiceId = $state.params.id;
