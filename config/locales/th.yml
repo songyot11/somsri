@@ -97,6 +97,7 @@ th:
   work_education: "การทำงานและการศึกษา"
   tax_deduction: "ลดหย่อนภาษี"
   address: "ที่อยู่"
+  zipcode: รหัสไปรษณีย์
   single: "โสด"
   marry: "สมรส"
   widow: "หม้าย"
@@ -405,4 +406,17 @@ th:
   evening: เย็น
   total_class_number: รวมจำนวนคาบ
 
+  # Profile
+  password: รหัสผ่าน
+  change_password: เปลี่ยนรหัสผ่าน
+  school_name: ชื่อโรงเรียน
+  school_email: อีเมล์โรงเรียน
+  tax_number: เลขประจำตัวผู้เสียภาษี
+  fax: โทรสาร
 
+  # Change Password
+  old_password: รหัสผ่านเก่า
+  new_password: รหัสผ่านใหม่
+  new_password_confirmation: ยืนยันรหัสผ่านใหม่
+  wrong_old_password: รหัสผ่านเก่าไม่ถูกต้อง
+  password_not_match: รหัสผ่านใหม่ไม่ตรงกัน
