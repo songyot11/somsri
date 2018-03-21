@@ -27,6 +27,7 @@
 //= require ng-csv
 //= require angular-ui-bootstrap-fontawesome
 //= require angular-translate/angular-translate
+//= require angular-translate-loader-url/angular-translate-loader-url
 
 //= require translate/app.module
 //= require_tree ./translate

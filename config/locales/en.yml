@@ -221,3 +221,18 @@ en:
   status: "สถานะ"
   graduated_semester: "ภาคเรียนที่"
   grade_classroom: "ระดับชั้นเรียน"
+
+  # Rollcall
+  monthly: ประจำเดือน
+  student_record: แบบบันทึกเวลาเรียนชั้นมัธยมศึกษาปีที่
+  study_year: ประจำปีการศึกษา
+  school: โรงเรียน
+  level_short: ชั้น
+  checked: มา
+  late: สาย
+  sick: ลาป่วย
+  private: ลากิจ
+  missing: ขาด
+  morning: เช้า
+  evening: เย็น
+  total_class_number: รวมจำนวนคาบ
