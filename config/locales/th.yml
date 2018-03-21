@@ -245,6 +245,8 @@ th:
   student: "นักเรียน"
   parent: "ผู้ปกครอง"
   employee: "บุคลากร"
+  setting: 'การตั้งค่า'
+  class_management: จัดการชั้นเรียน
 
   activerecord:
     attributes:
