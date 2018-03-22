@@ -145,6 +145,6 @@ describe 'Employee Lists', js: true do
     expect(page).to have_content 'เงินเดือน'
     click_link('เงินเดือน')
     sleep(1)
-    eventually { expect(find_field('ค่าแรง / เงินเดือนปัจจุบัน').value).to eq '0' }
+    eventually { expect(find_field('เงินเดือน').value).to eq '0' }
   end
 end

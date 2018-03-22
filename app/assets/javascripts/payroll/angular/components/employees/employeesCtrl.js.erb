@@ -40,23 +40,23 @@
 
     function salary(value, row, index){
       if (value) {
-        return '<div class="text-blue text-right" ><span class="numberic">'+ value.toLocaleString() +'</span>' + translateFilter("baht") + '</div>';
+        return '<div class="text-blue text-right" ><span class="numberic">'+ value.toLocaleString() +'</span> ' + translateFilter("baht") + '</div>';
       }
-      return '<div class="text-blue text-right" ><span class="numberic">0</span>' + translateFilter("baht") + '</div>';
+      return '<div class="text-blue text-right" ><span class="numberic">0</span> ' + translateFilter("baht") + '</div>';
     }
 
     function extra(value, row, index){
       if (value) {
-        return '<div class="text-green text-right" ><span class="numberic">'+ value.toLocaleString() +'</span>' + translateFilter("baht") + '</div>';
+        return '<div class="text-green text-right" ><span class="numberic">'+ value.toLocaleString() +'</span> ' + translateFilter("baht") + '</div>';
       }
-      return '<div class="text-green text-right" ><span class="numberic">0</span>' + translateFilter("baht") + '</div>';
+      return '<div class="text-green text-right" ><span class="numberic">0</span> ' + translateFilter("baht") + '</div>';
     }
 
     function fee(value, row, index){
       if (value) {
-        return '<div class="text-red text-right" ><span class="numberic">'+ value.toLocaleString() +'</span>' + translateFilter("baht") + '</div>';
+        return '<div class="text-red text-right" ><span class="numberic">'+ value.toLocaleString() +'</span> ' + translateFilter("baht") + '</div>';
       }
-      return '<div class="text-red text-right" ><span class="numberic">0</span>' + translateFilter("baht") + '</div>';
+      return '<div class="text-red text-right" ><span class="numberic">0</span> ' + translateFilter("baht") + '</div>';
     }
 
     var angularScopeEmployees = "angular.element(document.getElementById('angularCtrl')).scope().employees";
