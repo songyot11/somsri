@@ -68,7 +68,6 @@ en:
   mr: Mr.
   ms: Ms.
   miss: Miss.
-  other: Other.
 
   add_new_employee: "เพิ่มพนักงานใหม่"
   full_name: "ชื่อ-นามสกุล"
@@ -229,10 +228,11 @@ en:
   today: "วันที่"
   other: "อื่นๆ"
   code: "รหัส"
-  name: "ชื่อ"
-  baht: "บาท"
-  delete: "ลบ"
-  close: "ปิด"
+  name: "Name"
+  baht: "Baht"
+  delete: "Delete"
+  close: "Close"
+  new: ใหม่
   close_without_save: "คุณต้องการออกจากหน้านี้โดยไม่บันทึกค่าหรือไม่?"
 
   hello: "Hello world"
@@ -364,6 +364,7 @@ en:
   term: "ภาคเรียนที่"
   level: "ระดับชั้น"
   amount: "จำนวนเงิน"
+  amount2: "จำนวน"
   payment_date: "วันที่ชำระ"
   paid_by: "ชำระโดย"
   student_info: "ข้อมูลนักเรียน"
@@ -421,3 +422,18 @@ en:
   new_password_confirmation: Password confirmation
   wrong_old_password: current password is wrong
   password_not_match: Password not match
+
+  # Setting > Classroom
+  create_classroom: Create Classroom
+  edit_classroom: Edit Classroom
+  up_grade_classroom: เลื่อนชั้นเรียน
+  up_grade_classroom2: เลื่อนชั้น
+  no_of_teacher: "#Teacher"
+  no_of_student: "#Student"
+  gradulated: Gradulated
+  up_grade_classroom_all: "คุณต้องการเลื่อนชั้นเรียนให้กับนักเรียนทั้งหมดใช่หรือไม่?"
+  current_grade_classroom: "ระดับชั้นเรียน เดิม"
+  select_student: "+ เลือกนักเรียน"
+  select_teacher: "+ เลือกคุณครู"
+  teacher: Teacher
+  student: Student

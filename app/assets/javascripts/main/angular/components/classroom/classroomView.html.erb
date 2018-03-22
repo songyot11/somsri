@@ -4,8 +4,8 @@
   <div class="row">
     <div class="col-xs-12">
       <div class="pull-right">
-        <button class="btn btn-custom btn-blue mr-5" ng-click="classroom.createClassroom()">สร้างห้องเรียน</button>
-        <button class="btn btn-custom btn-blue-sky" ng-click="classroom.studentPromote()">เลื่อนชั้นเรียน</button>
+        <button class="btn btn-custom btn-blue mr-5" ng-click="classroom.createClassroom()">{{ 'create_class_room' | translate }}</button>
+        <button class="btn btn-custom btn-blue-sky" ng-click="classroom.studentPromote()">{{ 'up_grade_classroom' | translate }}</button>
       </div>
     </div>
   </div>
@@ -14,7 +14,7 @@
     <div class="row">
       <div class="col-xs-12">
         <div class="pull-right">
-          <span>เลือกระดับชั้น</span>
+          <span>{{ 'select_classroom' | translate }}</span>
           <span class="dropdown">
             <span id="grade-list" class="dropdown-label" data-toggle="dropdown">
               <span ng-bind="classroom.grade_select.name || 'ทั้งหมด'"></span>
@@ -23,7 +23,7 @@
             <ul class="dropdown-menu" aria-labelledby="grade-list">
               <li>
                 <a class="blue-highlight" ng-click="classroom.gradeFilter()">
-                  ทั้งหมด
+                  {{ 'all' | translate }}
                 </a>
               </li>
               <li ng-repeat="grade in classroom.grades">

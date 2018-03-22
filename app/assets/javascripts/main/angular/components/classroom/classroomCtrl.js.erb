@@ -2,7 +2,7 @@
   'use strict';
   angular.module('somsri.main.classroom', [
     ])
-  .controller('classroomCtrl', ['$rootScope','classroomService','$scope', '$uibModal', '$window', function($rootScope, service, $scope, $uibModal, $window) {
+  .controller('classroomCtrl', ['$rootScope','classroomService','$scope', '$uibModal', '$window', 'translateFilter', function($rootScope, service, $scope, $uibModal, $window, translateFilter) {
     $rootScope.menu = "ตั้งค่า"
     var ctrl = this
     ctrl.grade_select = null
@@ -43,17 +43,17 @@
 
     var angularCtrlStr = "angular.element(document.getElementById('angularCtrl')).scope().classroom"
     function editBtnFormatter(index, row, element){
-      var html = '<a href="/main#/classroom/' + row.classroom_id + '"><i class="fa fa-pencil" aria-hidden="true"></i> แก้ไข</a>&nbsp;&nbsp;&nbsp;';
-      html += '<a class="color-red hover" onclick="' + angularCtrlStr + '.removeClassroom(' + row.classroom_id + ')"><i class="fa fa-times" aria-hidden="true"></i> ลบ</a>';
+      var html = '<a href="/main#/classroom/' + row.classroom_id + '"><i class="fa fa-pencil" aria-hidden="true"></i>' + translateFilter('edit') + '</a>&nbsp;&nbsp;&nbsp;';
+      html += '<a class="color-red hover" onclick="' + angularCtrlStr + '.removeClassroom(' + row.classroom_id + ')"><i class="fa fa-times" aria-hidden="true"></i>' + translateFilter('delete') + '</a>';
       return html;
     }
 
     function initBootstrapTable(){
       var tableColumnSetting = [
-        { field: 'grade', sortable: true, title: "ระดับชั้นเรียน"},
-        { field: 'classroom', sortable: true, title: "ห้องเรียน"},
-        { field: 'teacher_count', sortable: true, title: "จำนวนครู"},
-        { field: 'student_count', sortable: true, title: "จำนวนนักเรียน"},
+        { field: 'grade', sortable: true, title: translateFilter('grade_classroom') },
+        { field: 'classroom', sortable: true, title: translateFilter('classroom')},
+        { field: 'teacher_count', sortable: true, title: translateFilter('no_of_teacher')},
+        { field: 'student_count', sortable: true, title: translateFilter('no_of_student')},
         { field: 'link', class: "text-right", formatter: editBtnFormatter}
       ]
       $('#classroom-list').bootstrapTable({
