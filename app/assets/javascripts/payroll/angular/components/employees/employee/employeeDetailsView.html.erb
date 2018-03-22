@@ -44,7 +44,7 @@
               <a data-toggle="tab" ng-click="employee.activeTab = 'general'" href="javascript:void(0)">{{ "general_data" | translate }}</a>
             </li>
             <li class="cyan" ng-class="{ 'active' : employee.activeTab === 'salary' }" ng-show="employee.hasPayroll && employee.isEdit">
-              <a data-toggle="tab" ng-click="employee.activeTab = 'salary'; employee.calTotal();" href="javascript:void(0)">{{ "payroll" | translate }}</a>
+              <a data-toggle="tab" ng-click="employee.activeTab = 'salary'; employee.calTotal();" href="javascript:void(0)">{{ "salary" | translate }}</a>
             </li>
             <li class="orange" ng-class="{ 'active' : employee.activeTab === 'private' }" ng-show="employee.isEdit">
               <a data-toggle="tab" ng-click="employee.activeTab = 'private'" href="javascript:void(0)">{{ "personal_data" | translate }}</a>
@@ -290,7 +290,7 @@
                 <div class="row">
                   <div class="col-md-12">
                     <div class="form-group">
-                      <label for="address">{{ "address" | translate }}</label>
+                      <label for="address">{{ "current_address" | translate }}</label>
                       <input type="text" class="form-control" id="address" ng-model="employee.datas.employee.address">
                     </div>
                   </div>
@@ -634,7 +634,7 @@
           <div class="row">
             <div class="col-md-4">
               <div class="form-group">
-                <label for="salary">{{ "payroll" | translate }}</label>
+                <label for="salary">{{ "current_payroll" | translate }}</label>
                 <input step="0.01" ng-disabled="employee.payroll_closed" type="number" class="form-control text-green numberic" id="salary" ng-model="employee.datas.payroll.salary" ng-blur="employee.calTotal(); employee.changeSalary()">
               </div>
             </div>
@@ -796,7 +796,7 @@
         <table id="payroll-history-table" class="table text-right">
           <thead>
             <th width="40%">{{ "month" | translate }}</th>
-            <th class="text-center" width="20%">{{ "payroll" | translate }}</th>
+            <th class="text-center" width="20%">{{ "salary" | translate }}</th>
             <th class="text-center" width="20%">{{ "income_list" | translate }}</th>
             <th class="text-center" width="20%">{{ "outcome_list" | translate }}</th>
           </thead>

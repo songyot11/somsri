@@ -23,6 +23,7 @@ en:
   #Payroll
   export: Export
   salary: Salary
+  current_payroll: "ค่าแรง / เงินเดือนปัจจุบัน"
   edit: "Edit"
   report: "Report"
   this_month: "Month"
@@ -101,11 +102,12 @@ en:
   work_education: "การทำงานและการศึกษา"
   tax_deduction: "ลดหย่อนภาษี"
   address: "ที่อยู่"
+  current_address: "ที่อยู่ปัจจุบัน"
   zipcode: รหัสไปรษณีย์
   single: "โสด"
   marry: "สมรส"
   widow: "หม้าย"
-  divorce: หย่าร้าง"
+  divorce: หย่าร้าง
   emergency_contact: "บุคคลติดต่อฉุกเฉิน"
   add_data: "เพิ่มข้อมูล"
   confirm_remove_employee: "คุณต้องการนำข้อมูลพนักงานออกหรือไม่?"
