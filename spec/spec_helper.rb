@@ -67,7 +67,7 @@ RSpec.configure do |config|
   end
 
   config.verbose_retry = true
-  config.default_retry_count = 0
+  config.default_retry_count = 3
 end
 
 Dir[File.dirname(__FILE__) + "/support/**/*.rb"].each { |f| require f }
