@@ -3,7 +3,7 @@
   angular.module('somsri.main.classroom_edit', [
     ])
   .controller('classroomEditCtrl', ['$rootScope','classroomEditService','$scope', '$uibModal', '$state', 'translateFilter', function($rootScope, service, $scope, $uibModal, $state, translateFilter) {
-    $rootScope.menu = "ตั้งค่า"
+    $rootScope.menu = translateFilter('setting')
     var ctrl = this
     ctrl.classroomId = $state.params.id
     $rootScope.loadAndAuthorizeResource("school", function(){

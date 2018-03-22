@@ -233,6 +233,9 @@ th:
   delete: "ลบ"
   close: "ปิด"
   new: ใหม่
+  create: สร้าง
+  select: เลือก
+  select_all: เลือกทั้งหมด
   close_without_save: "คุณต้องการออกจากหน้านี้โดยไม่บันทึกค่าหรือไม่?"
 
   hello: "สวัสดีครับ"
@@ -365,6 +368,7 @@ th:
   level: "ระดับชั้น"
   amount: "จำนวนเงิน"
   amount2: "จำนวน"
+  selected_amount: "จำนวนที่เลือก"
   payment_date: "วันที่ชำระ"
   paid_by: "ชำระโดย"
   student_info: "ข้อมูลนักเรียน"
@@ -425,6 +429,7 @@ th:
 
   # Setting > Classroom
   create_classroom: สร้างห้องเรียน
+  create_new_classroom: สร้างห้องเรียนใหม่
   edit_classroom: แก้ไขห้องเรียน
   up_grade_classroom: เลื่อนชั้นเรียน
   up_grade_classroom2: เลื่อนชั้น
@@ -437,3 +442,4 @@ th:
   select_teacher: "+ เลือกคุณครู"
   teacher: คุณครู
   student: นักเรียน
+  classroom_is_exist: "*มีห้องเรียนนี้ในระบบแล้ว"

@@ -3,7 +3,7 @@
   angular.module('somsri.main.classroom', [
     ])
   .controller('classroomCtrl', ['$rootScope','classroomService','$scope', '$uibModal', '$window', 'translateFilter', function($rootScope, service, $scope, $uibModal, $window, translateFilter) {
-    $rootScope.menu = "ตั้งค่า"
+    $rootScope.menu = translateFilter('setting')
     var ctrl = this
     ctrl.grade_select = null
 

@@ -2,15 +2,15 @@
   'use strict';
   angular.module('somsri.main.select_member_modal', [
     ])
-  .controller('selectMemberModalCtrl', ['$uibModalInstance', '$uibModal', '$state', '$log', 'selectMemberModalService', 'options', function($uibModalInstance, $uibModal, $state, $log, service, options) {
+  .controller('selectMemberModalCtrl', ['$uibModalInstance', '$uibModal', '$state', '$log', 'selectMemberModalService', 'options', 'translateFilter', function($uibModalInstance, $uibModal, $state, $log, service, options, translateFilter) {
     var ctrl = this
     ctrl.options = options
     var currentMemberIds = options.currentMemberIds
     var classroomId = options.classroomId
     var tableColumnSetting = [
       { field: 'check-box', checkbox: true, class: "check-box", width: "5%"},
-      { field: 'img', title: "เลือกทั้งหมด", class:'img-column-with-checkbox font1_2em', width: "10%" },
-      { field: 'name', class:"name-column-with-checkbox font1_2em", width: "85%", title: "จำนวนที่เลือก 0 คน"}
+      { field: 'img', title: translateFilter('select_all'), class:'img-column-with-checkbox font1_2em', width: "10%" },
+      { field: 'name', class:"name-column-with-checkbox font1_2em", width: "85%", title: translateFilter('selected_amount') + " 0 " + translateFilter('person_unit') }
     ]
 
     var angularCheckBox = "angular.element(document.getElementById('angularCtrl')).scope().$root.onCheckBoxChange()"
@@ -52,7 +52,7 @@
     function displaySelectedAmount() {
       var amoutLabel = $('#member-select-list .name-column-with-checkbox .th-inner')
       var selectedNumber = $('#member-select-list').bootstrapTable('getAllSelections').length
-      amoutLabel.html("จำนวนที่เลือก " + selectedNumber + " คน")
+      amoutLabel.html(translateFilter('selected_amount') + " " + selectedNumber + " " + translateFilter('person_unit'))
     }
 
     ctrl.membersRawData = []

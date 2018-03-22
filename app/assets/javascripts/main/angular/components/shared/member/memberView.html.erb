@@ -1,7 +1,7 @@
 <div class="row">
 	<div class="col-xs-12">
 		<div class="pull-right">
-			<button class="btn btn-primary" ng-click="member.selectTeacher()">+ เลือกคุณครู</button>
+			<button class="btn btn-primary" ng-click="member.selectTeacher()">{{ 'select_teacher' | translate }}</button>
 		</div>
 	</div>
 </div>
@@ -19,9 +19,9 @@
 <div class="space30"></div>
 <div class="row">
 	<div class="col-xs-6">
-		<button class="btn btn-custom btn-blue pull-right" ng-click="member.save()">ตกลง</button>
+		<button class="btn btn-custom btn-blue pull-right" ng-click="member.save()">{{ 'ok' | translate }}</button>
 	</div>
 	<div class="col-xs-6">
-		<button class="btn btn-white" ng-click="member.cancel()">ยกเลิก</button>
+		<button class="btn btn-white" ng-click="member.cancel()">{{ 'cancel' | translate }}</button>
 	</div>
 </div>

@@ -232,7 +232,10 @@ en:
   baht: "Baht"
   delete: "Delete"
   close: "Close"
-  new: ใหม่
+  new: New
+  create: Create
+  select: Select
+  select_all: Select All
   close_without_save: "คุณต้องการออกจากหน้านี้โดยไม่บันทึกค่าหรือไม่?"
 
   hello: "Hello world"
@@ -365,6 +368,7 @@ en:
   level: "ระดับชั้น"
   amount: "จำนวนเงิน"
   amount2: "จำนวน"
+  selected_amount: "จำนวนที่เลือก"
   payment_date: "วันที่ชำระ"
   paid_by: "ชำระโดย"
   student_info: "ข้อมูลนักเรียน"
@@ -425,6 +429,7 @@ en:
 
   # Setting > Classroom
   create_classroom: Create Classroom
+  create_new_classroom: Create New Classroom
   edit_classroom: Edit Classroom
   up_grade_classroom: เลื่อนชั้นเรียน
   up_grade_classroom2: เลื่อนชั้น
@@ -437,3 +442,4 @@ en:
   select_teacher: "+ เลือกคุณครู"
   teacher: Teacher
   student: Student
+  classroom_is_exist: "*This classroom is exist."
