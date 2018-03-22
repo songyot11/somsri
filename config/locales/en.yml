@@ -38,6 +38,10 @@ en:
   outcome_list: "Outcome"
   employee_code: "Employee Id"
   employee_name: "Fullname"
+  employee_allowance: "Allowance"
+  employee_pvf: "PVF"
+  employee_extra_etc: Extra etc.
+  employee_fee_etc: Fee etc.
   ot: "OverTime"
   position_allowance: "Position Allowance"
   allowance: "Allowance"

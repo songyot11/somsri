@@ -38,6 +38,10 @@ th:
   outcome_list: "รายการหัก"
   employee_code: "รหัส"
   employee_name: "ชื่อ"
+  employee_allowance: "ค่ากะ / ค่าเบี้ยเลี้ยง"
+  employee_pvf: "เงินสะสมเข้ากองทุนสงเคราะห์"
+  employee_extra_etc: รายได้อื่นๆ
+  employee_fee_etc: รายหักอื่นๆ
   ot: "เงินสอนพิเศษ"
   position_allowance: "ค่าตำแหน่ง"
   allowance: "เบี้ยเลี้ยง"

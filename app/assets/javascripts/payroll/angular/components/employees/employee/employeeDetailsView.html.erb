@@ -677,7 +677,7 @@
           <div class="row">
             <div class="col-md-4">
               <div class="form-group">
-                <label for="position_allowance">{{ "position" | translate }}</label>
+                <label for="position_allowance">{{ "position_allowance" | translate }}</label>
                 <input step="0.01" ng-disabled="employee.payroll_closed" type="number" class="form-control text-green numberic" id="position_allowance" ng-model="employee.datas.payroll.position_allowance" ng-blur="employee.calTotal()">
               </div>
             </div>
@@ -691,7 +691,7 @@
           <div class="row">
             <div class="col-md-4">
               <div class="form-group">
-                <label for="allowance">{{ "allowance" | translate }}</label>
+                <label for="allowance">{{ "employee_allowance" | translate }}</label>
                 <input step="0.01" ng-disabled="employee.payroll_closed" type="number" class="form-control text-green numberic" id="allowance" ng-model="employee.datas.payroll.allowance" ng-blur="employee.calTotal()">
               </div>
             </div>
@@ -711,7 +711,7 @@
             </div>
             <div class="col-md-4">
               <div class="form-group">
-                <label for="pvf">{{ "pvf" | translate }}</label>
+                <label for="pvf">{{ "employee_pvf" | translate }}</label>
                 <input class="form-control text-red numberic" id="pvf" ng-model="employee.datas.payroll.pvf" disabled>
               </div>
             </div>
@@ -733,13 +733,13 @@
           <div class="row">
             <div class="col-md-4">
               <div class="form-group">
-                <label for="extra_etc">{{ "extra_etc" | translate }}</label>
+                <label for="extra_etc">{{ "employee_extra_etc" | translate }}</label>
                 <input step="0.01" ng-disabled="employee.payroll_closed" type="number" class="form-control text-green numberic" id="extra_etc" ng-model="employee.datas.payroll.extra_etc" ng-blur="employee.calTotal()">
               </div>
             </div>
             <div class="col-md-4">
               <div class="form-group">
-                <label for="fee_etc">{{ "fee_etc" | translate }}</label>
+                <label for="fee_etc">{{ "employee_fee_etc" | translate }}</label>
                 <input step="0.01" ng-disabled="employee.payroll_closed" type="number" class="form-control text-red numberic" id="fee_etc" ng-model="employee.datas.payroll.fee_etc" ng-blur="employee.calTotal()">
               </div>
             </div>
