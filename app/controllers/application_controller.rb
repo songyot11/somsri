@@ -9,7 +9,6 @@ class ApplicationController < ActionController::Base
               SiteConfig.get_cache.default_locale || I18n.default_locale
 
     I18n.locale = @locale
-    STDOUT.puts I18n.locale
   end
 
   rescue_from CanCan::AccessDenied do |exception|

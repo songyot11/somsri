@@ -456,10 +456,15 @@ describe 'Student', js: true do
   it 'should create student with list' do
     visit '/students/new#/'
     sleep(1)
-    page.fill_in 'ชื่อ-นามสกุล', :with => 'นักเรียนเพิ่มใหม่'
-    page.fill_in 'ชื่อเล่น', :with => 'ใหม่'
-    page.fill_in 'Full Name', :with => 'Nakreanpermmai'
-    page.fill_in 'Nick Name', :with => 'Mai'
+    full_name = I18n.t('activerecord.attributes.student.full_name')
+    nick_name = I18n.t('activerecord.attributes.student.nickname')
+    full_name_english = I18n.t('activerecord.attributes.student.full_name_english')
+    nickname_english = I18n.t('activerecord.attributes.student.nickname_english')
+
+    page.fill_in full_name, :with => 'นักเรียนเพิ่มใหม่'
+    page.fill_in nick_name, :with => 'ใหม่'
+    page.fill_in full_name_english, :with => 'Nakreanpermmai'
+    page.fill_in nickname_english, :with => 'Mai'
     page.find("#student_classroom_id").select(classrooms[0].name)
     sleep(1)
     click_button("บันทึก")

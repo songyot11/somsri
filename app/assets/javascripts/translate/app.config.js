@@ -10,7 +10,7 @@
   function config ($translateProvider) {
     var language = $('html').attr('lang');
 
-    $translateProvider.useUrlLoader('locale');
+    $translateProvider.useUrlLoader('/locale');
     $translateProvider.preferredLanguage(language);
     $translateProvider.useSanitizeValueStrategy('escape');
   }
