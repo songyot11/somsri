@@ -181,6 +181,7 @@ en:
   payment_channel: "ชำระเงินโดย"
   cash: "เงินสด"
   pay_error: "ผลรวมของจำนวนเงินแต่ละประเภทไม่ตรงกับจำนวนเงินสุทธิ"
+  sum: "sum"
 
   receipt_search: "ค้นหาตามเลขที่ใบเสร็จ, ชื่อนักเรียน, ชื่อผู้ปกครอง"
   receipt_report: "รายงานใบเสร็จ"
@@ -347,6 +348,7 @@ en:
   #Parents
   select_classroom: "เลือกระดับชั้น"
   all: "ทั้งหมด"
+  All: "ทั้งหมด"
   select_room: "เลือกตามห้อง"
   full_name: "Full Name"
   phone: "โทรศัพท์"

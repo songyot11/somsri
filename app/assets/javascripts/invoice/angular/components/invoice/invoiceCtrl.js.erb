@@ -2,8 +2,16 @@
   'use strict';
   angular.module('somsri.invoice.invoice', [
   ])
-  .controller('invoiceCtrl', ['$scope', '$http', 'DEFAULT_INVOICE', 'DEFAULT_LOGO', 'LocalStorage', 'Currency', 'invoiceService', '$rootScope', 'translateFilter', function($scope, $http, DEFAULT_INVOICE, DEFAULT_LOGO, LocalStorage, Currency, service, $rootScope, translateFilter) {
+  .controller('invoiceCtrl', ['$scope', '$http', 'DEFAULT_LOGO', 'LocalStorage', 'Currency', 'invoiceService', '$rootScope', 'translateFilter', function($scope, $http, DEFAULT_LOGO, LocalStorage, Currency, service, $rootScope, translateFilter) {
     var ctrl = this;
+    var defaultInvoice = {
+      invoice: {
+        items: [
+          { detail: translateFilter('tuition_fee'), amount: 48900.0 }
+        ]
+      }
+    }
+
     $rootScope.menu = translateFilter('invoice_form');
     $rootScope.loadAndAuthorizeResource("invoice", function(){
       ctrl.title = 'Invoice';
@@ -74,7 +82,7 @@
       ctrl.createInvoice = function(){
         service.createInvoice(ctrl.datas).then(function(resp) {
           // Reset Value
-          ctrl.datas = JSON.parse(JSON.stringify(DEFAULT_INVOICE))
+          ctrl.datas = defaultInvoice
           $rootScope.openSlip(resp.data.id);
         },function(resp) {
 
@@ -164,7 +172,7 @@
 
           var nowDate = new Date();
           // Clone to prevent the reset value
-          ctrl.datas = JSON.parse(JSON.stringify(DEFAULT_INVOICE))
+          ctrl.datas = defaultInvoice
           ctrl.datas.invoice.semester = resp.data.current_semester;
           ctrl.datas.payment_method = {};
           ctrl.datas.payment_method.is_cash = resp.data.default_cash_payment_method;

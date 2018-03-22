@@ -14,7 +14,7 @@
             <ul class="dropdown-menu" aria-labelledby="grade-list">
               <li ng-repeat="grade in studentReport.grades">
                 <a class="blue-highlight" ng-click="studentReport.switchGrade(grade.name)">
-                  {{ grade.name }}
+                  {{ grade.name | translate }}
                 </a>
               </li>
             </ul>
@@ -54,7 +54,7 @@
                   </a>
                 </li>
                 <li>
-                  <a class="blue-highlight" ng-click="studentReport.switchSemester('{{ 'other' | translate }}')">
+                  <a class="blue-highlight" ng-click="studentReport.switchSemester('other')">
                     {{ 'semester_nofix' | translate }}
                   </a>
                 </li>

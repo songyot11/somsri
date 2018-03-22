@@ -19,7 +19,7 @@
               <ul class="dropdown-menu" aria-labelledby="grade-list">
                 <li ng-repeat="grade in invoiceReport.grades">
                   <a class="blue-highlight" ng-click="invoiceReport.switchGrade(grade.name)">
-                    {{ grade.name }}
+                    {{ grade.name | translate }}
                   </a>
                 </li>
               </ul>

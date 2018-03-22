@@ -60,7 +60,7 @@
         if(!row.is_cancel && ctrl.thisDay(row.created_at)){
           ctrl.invoice[index] = row;
           var func = angularScopeInvoice + '.cancelInvoiceModal('+ angularScopeInvoice+ '.invoice['+ index +'])';
-          var link = "<a href='javascript:void(0)' onclick='" + func + "'><i class='fa fa-times-circle'></i>&nbsptranslateFilter('cancel_receipt')/a>";
+          var link = "<a href='javascript:void(0)' onclick='" + func + "'><i class='fa fa-times-circle'></i>&nbsp" + translateFilter('cancel_receipt') + "</a>";
           return  link;
         }
         return '';
@@ -176,7 +176,7 @@
         ctrl.end_date = cleanDate(ctrl.end_date)
         if(!ctrl.currentPage){ ctrl.currentPage = 1 }
           service.getGrades().then(function(grade_resp) {
-            ctrl.currentGradeString = ctrl.grade_name
+            ctrl.currentGradeString = translateFilter(ctrl.grade_name)
             ctrl.grades = grade_resp.data
             service.getInvoices(ctrl.grade_name, ctrl.searchKeyword, ctrl.start_date, ctrl.end_date, ctrl.currentPage, ctrl.sort, ctrl.order, '').then(function(resp) {
               ctrl.datas = [];

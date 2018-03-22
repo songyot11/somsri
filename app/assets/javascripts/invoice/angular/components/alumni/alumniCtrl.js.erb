@@ -2,7 +2,7 @@
   'use strict';
   angular.module('somsri.invoice.alumni', [
   ])
-  .controller('alumniCtrl', ['$scope', '$http', 'DEFAULT_INVOICE', 'DEFAULT_LOGO', 'LocalStorage', 'Currency', 'alumniService', '$rootScope', 'translateFilter', function($scope, $http, DEFAULT_INVOICE, DEFAULT_LOGO, LocalStorage, Currency, service, $rootScope, translateFilter) {
+  .controller('alumniCtrl', ['$scope', '$http', 'DEFAULT_LOGO', 'LocalStorage', 'Currency', 'alumniService', '$rootScope', 'translateFilter', function($scope, $http, DEFAULT_LOGO, LocalStorage, Currency, service, $rootScope, translateFilter) {
     var ctrl = this;
     ctrl.alumnis = []
     ctrl.graduated_year = [translateFilter('all')]

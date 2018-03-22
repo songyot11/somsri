@@ -390,7 +390,12 @@ class InvoicesController < ApplicationController
     type = params[:type]
     header = []
     if display_payment_method
-      header = ["เงินสด", "บัตรเครดิต", "เช็คธนาคาร", "เงินโอน"]
+      header = [
+        I18n.t('cash'),
+        I18n.t('credit_card'),
+        I18n.t('bank_check'),
+        I18n.t('bank_transfer')
+      ]
     end
 
     grouping_keyword.each do |gk|
@@ -398,9 +403,9 @@ class InvoicesController < ApplicationController
     end
 
     if display_etc
-      header << "อื่นๆ"
+      header << I18n.t('extra_etc')
     end
-    header << "ยอดรวม"
+    header << I18n.t('sum')
 
     column_size =  6 + grouping_keyword.size
     column_size -= 4 if !display_payment_method
