@@ -65,6 +65,11 @@ th:
   original: "ต้นฉบับ"
   copy: "สำเนา"
 
+  mr: นาย
+  ms: นาง
+  miss: นางสาว
+  other: อื่นๆ
+
   add_new_employee: "เพิ่มพนักงานใหม่"
   full_name: "ชื่อ-นามสกุล"
   position: "ตำแหน่ง"
@@ -113,11 +118,6 @@ th:
   first_name_en: Name
   middle_name_en: Middle Name
   last_name_en: Surname
-
-  mr: นาย
-  ms: นาง
-  miss: นางสาว
-  other: อื่นๆ
 
   # tax
   other_deduction: "ค่าลดหย่อนอื่นๆ"
@@ -400,7 +400,6 @@ th:
   school: โรงเรียน
   level_short: ชั้น
   checked: มา
-  late: สาย
   sick: ลาป่วย
   private: ลากิจ
   missing: ขาด

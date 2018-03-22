@@ -21,6 +21,8 @@
 
 en:
   #Payroll
+  export: Export
+  salary: Salary
   edit: "Edit"
   report: "Report"
   this_month: "Month"
@@ -35,21 +37,20 @@ en:
   outcome_list: "Outcome"
   employee_code: "Employee Id"
   employee_name: "Fullname"
-  employee_payroll: "Salary"
-  employee_ot: "OverTime"
-  employee_position_allowance: "Position Allowance"
-  employee_allowance: "Allowance"
-  employee_attendance_bonus: "Attendance Bonus"
-  employee_bonus: "Bonus"
-  employee_extra_etc: "Extra Bonus"
-  employee_absence: "Absence"
-  employee_late: "Late"
-  employee_tax: "TAX"
-  employee_social_insurance: "Social Security"
-  employee_pvf: "PVF"
-  employee_advance_payment: "Advance Payment"
-  employee_fee_etc: "Other Fee"
-  employee_net_salary: "Net Salary"
+  ot: "OverTime"
+  position_allowance: "Position Allowance"
+  allowance: "Allowance"
+  attendance_bonus: "Attendance Bonus"
+  bonus: "Bonus"
+  extra_etc: "Extra Bonus"
+  absence: "Absence"
+  late: "Late"
+  tax: "TAX"
+  social_insurance: "Social Security"
+  pvf: "PVF"
+  advance_payment: "Advance Payment"
+  fee_etc: "Other Fee"
+  net_salary: "Net Salary"
   total: "Total"
   note: "Note"
   print_report: "Print"
@@ -61,15 +62,178 @@ en:
   pay_date: "Payment effective date"
   cannot_pay_out: "Cannot issue payroll twince"
   confirm_pay_out: "Do you want to continue?"
+  original: "ต้นฉบับ"
+  copy: "สำเนา"
 
   mr: Mr.
   ms: Ms.
   miss: Miss.
   other: Other.
 
+  add_new_employee: "เพิ่มพนักงานใหม่"
+  full_name: "ชื่อ-นามสกุล"
+  position: "ตำแหน่ง"
+  extra_money: "เงินเพิ่ม"
+  deduct_money: "เงินหัก"
+  general_data: "ข้อมูลทั่วไป"
+  personal_data: "ข้อมูลส่วนตัว"
+  pre_name: "คำนำหน้า"
+  passport: "Passport No."
+  last_name: "นามสกุล"
+  personal_id: "เลขประจำตัวประชาชน"
+  month: "เดือน"
+  payroll_history: "ประวัติเงินเดือน"
+  rollback: "นำข้อมูลกลับ"
+  print_payroll_slip: "พิมพ์ใบจ่ายเงินเดือน"
+  remind_note: "บันทึกช่วยจำ"
+  income_tax: "ภาษีเงินได้บุคคลธรรมดา"
+  withholding_tax: "ภาษีหัก ณ ที่จ่าย"
+  satrt_job: "วันที่เริ่มทำงาน"
+  race: "เชื้อชาติ"
+  nation: "สัญชาติ"
+  bank: "ธนาคาร"
+  branch: "สาขา"
+  bank_account: "เลขบัญชีธนาคาร"
+  bank_account2: "เลขบัญชี"
+  pay_social_insurance: "จ่ายประกันสังคม"
+  pay_pvf: "จ่ายกองทุนสงเคราะห์ครูเอกชน"
+  contact_geeneral_data: "ข้อมูลติดต่อและข้อมูลพื้นฐาน"
+  family: "ครอบครัว"
+  work_education: "การทำงานและการศึกษา"
+  tax_deduction: "ลดหย่อนภาษี"
+  address: "ที่อยู่"
+  zipcode: รหัสไปรษณีย์
+  single: "โสด"
+  marry: "สมรส"
+  widow: "หม้าย"
+  divorce: หย่าร้าง"
+  emergency_contact: "บุคคลติดต่อฉุกเฉิน"
+  add_data: "เพิ่มข้อมูล"
+  confirm_remove_employee: "คุณต้องการนำข้อมูลพนักงานออกหรือไม่?"
+  confirm_recovery_employee: "คุณต้องการนำข้อมูลพนักงานกลับมาหรือไม่"
+  confirm_delete_employee: "คุณต้องการลบข้อมูลพนักงานออกถาวรหรือไม่?"
+  confirm_delete_record: "คุณต้องการลบราการนี้หรือไม่?"
+  first_name_thai: ชื่อจริง
+  last_name_thai: นามสกุล
+  first_name_en: Name
+  middle_name_en: Middle Name
+  last_name_en: Surname
+
+  # tax
+  other_deduction: "ค่าลดหย่อนอื่นๆ"
+  personal_deduction: "ค่าลดหย่อนส่วนตัว"
+  personal_payment: "ค่าใช้จ่ายส่วนตัว"
+  no_income_spouse: "คู่สมรส (ไม่มีรายได้)"
+  parent_deduction: "ค่าลดหย่อนบิดามารดา บุตร ผู้พิการ"
+  father_alimony: "บิดา"
+  mother_alimony: "มารดา"
+  child: "บุตร"
+  person_unit: "คน"
+  spouse_father_alimony: "บิดาของคู่สมรส"
+  spouse_mother_alimony: "มารดาของคู่สมรส"
+  cripple_alimony: "คนพิการ และหรือคนทุพพลภาพ"
+  fund_insurance: "กองทุนรวมและประกันชีวิต"
+  insurance: "เบี้ยประกันชีวิต"
+  rmf: "ค่าซื้อหน่วยลงทุนในกองทุนรวมเพื่อการเลี้ยงชีพ (RMF)"
+  pension_insurance: "เบี้ยประกันชีวิตแบบบำนาญ"
+  ltf: "ค่าซื้อหน่วยลงทุนในกองทุนรวมหุ้นระยะยาว (LTF)"
+  nsf: "กองทุนการออมแห่งชาติ"
+  year_social_insurance: "เงินสมทบกองทุนประกันสังคมทั้งปี"
+  other_fund: "กองทุนสำรองเลี้ยงชีพ/กบข./กองทุนสงเคราะห์ครูโรงเรียนเอกชน"
+  pension_fund: "กองทุนสำรองเลี้ยงชีพ"
+  gpf: "เงินสะสม กบข"
+  ptaf: "เงินสะสมกองทุนสงเคราะห์ครูโรงเรียนเอกชน"
+  house_loan_interest: "ดอกเบี้ยเงินกู้ยืมเพื่อที่อยู่อาศัย"
+  other_benefit: "สิทธิประโยชน์อื่นๆ"
+  father_insurance: "เบี้ยประกันสุขภาพบิดา"
+  mother_insurance: "เบี้ยประกันสุขภาพมารดา"
+  spouse_father_insurance: "เบี้ยประกันสุขภาพบิดาของคู่สมรส"
+  spouse_mother_insurance: "เบี้ยประกันสุขภาพมารดาของคู่สมรส"
+  double_donation: "เงินบริจาคที่ได้รับสิทธิลดหย่อน 2 เท่า"
+  donation: "เงินบริจาคทั่วไป"
+
+  credit_card: "บัตรเครดิต"
+  bank_check: "เช็คธนาคาร"
+  bank_name: "ชื่อธนาคาร"
+  bank_check_id: "เช็คเลขที"
+  bank_check_date: "ลงวันที่"
+  bank_transfer: "เงินโอน"
+
+  # invoice
+  pay: "ชำระเงิน"
+  price: "ราคา"
+  receipt: "ใบเสร็จ"
+  receipt_no: "เลขใบเสร็จ"
+  payment_receipt: "ใบเสร็จรับเงิน"
+  print_receipt: "พิมพ์ใบเสร็จ"
+  delivery_note: "นำส่งเงิน"
+  payment_report: "รายงานการชำระ"
+  classification_report: "รายงานแยกตามประเภท"
+
+  invoice_form: "แบบชำระเงิน"
+  date1: "วันที่"
+  student_id1: "รหัสนักรียน"
+  student_name: "ชื่อนักเรียน"
+  parent_name: "ชื่อผู้ปกครอง"
+  invoice_list: "รายการทั้งหมด"
+  item: "รายการ"
+  add_item: "เพิ่มรายการ"
+  net: "ยอดรวมสุทธิ"
+  payment_channel: "ชำระเงินโดย"
+  cash: "เงินสด"
+  pay_error: "ผลรวมของจำนวนเงินแต่ละประเภทไม่ตรงกับจำนวนเงินสุทธิ"
+
+  receipt_search: "ค้นหาตามเลขที่ใบเสร็จ, ชื่อนักเรียน, ชื่อผู้ปกครอง"
+  receipt_report: "รายงานใบเสร็จ"
+  cancel_receipt_msg: "คุณต้องการยกเลิกใบเสร็จนี้หรือไม่"
+  receiver: "ผู้รับเงิน"
+  paid_amount: "ยอดชำระ"
+  cancel_receipt: "ยกเลิกใบเสร็จ"
+
+  transfer_money_slip: "ใบนำส่งเงิน"
+  transfer_money: "นำส่งเงิน"
+  init_cash: "เงินสดเริ่มต้น"
+  input_amount: "ระบุจำนวน"
+  transfer_amount: "ยอดเงินที่จัดส่ง"
+  at_date: "ประจำวันที่"
+  this_detail: "ตามรายละเอียดดังต่อไปนี้"
+  excess: "ขาด/เกิน"
+  sender: "ผู้นำส่งเงิน"
+  sign: "ลงชื่อ"
+
+  semester: "ภาคการศึกษา"
+  semester_nofix: "ไม่ระบุภาคการเรียน"
+  payment_status: "สถานะการชำระ"
+  number1: "เลขที่"
+  tuition_fee: "ค่าธรรมเนียมการศึกษา"
+  other_cost: "ค่าใช้จ่ายอื่นๆ"
+  year_paid_amount: "ยอดชำระทั้งปี"
+  total_paid: "รวมยอดชำระทั้งหมด"
+  paid_date: "วันที่ชำระ"
+
+  show_invoices: "แสดงรายการใบเสร็จ"
+  chose_type: "เลือกประเภท"
+  student_report_filename: "รายงานการชำระเงินนักเรียน_"
+  paid: "ชำระแล้ว"
+  unpad: "ยังไม่ได้ชำระ"
+
   example: "example"
   save: "Save"
   cancel: "Cancel"
+  yes: "Yes"
+  no: "No"
+  from: "from"
+  to: "to"
+  back: "back"
+  order: "Order"
+  today: "วันที่"
+  other: "อื่นๆ"
+  code: "รหัส"
+  name: "ชื่อ"
+  baht: "บาท"
+  delete: "ลบ"
+  close: "ปิด"
+  close_without_save: "คุณต้องการออกจากหน้านี้โดยไม่บันทึกค่าหรือไม่?"
 
   hello: "Hello world"
 
@@ -81,6 +245,8 @@ en:
   alumni: "Alumnus"
   parent: "Parents"
   employee: "Employees"
+  setting: 'Setting'
+  class_management: จัดการชั้นเรียน
 
 
   activerecord:
@@ -234,10 +400,24 @@ en:
   school: โรงเรียน
   level_short: ชั้น
   checked: มา
-  late: สาย
   sick: ลาป่วย
   private: ลากิจ
   missing: ขาด
   morning: เช้า
   evening: เย็น
   total_class_number: รวมจำนวนคาบ
+
+  # Profile
+  password: Password
+  change_password: Change Password
+  school_name: School name
+  school_email: School email
+  tax_number: เลขประจำตัวผู้เสียภาษี
+  fax: Fax
+
+  # Change Password
+  old_password: Current Password
+  new_password: New Password
+  new_password_confirmation: Password confirmation
+  wrong_old_password: current password is wrong
+  password_not_match: Password not match
