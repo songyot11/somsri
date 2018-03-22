@@ -77,7 +77,7 @@ describe 'Student Promote', js: true do
       click_button("เลื่อนชั้นเรียน")
       sleep(1)
       eventually { expect(page).to have_content("ระดับชั้นเรียน เดิม") }
-      eventually { expect(page).to have_content("ระดับชั้นเรียน ใหม่") }
+      eventually { expect(page).to have_content("ระดับชั้นเรียนใหม่") }
     end
   end
 
