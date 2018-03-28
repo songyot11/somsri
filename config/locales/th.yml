@@ -69,6 +69,10 @@ th:
   confirm_pay_out: "คุณต้องการออกเงินเดือนหรือไม่?"
   original: "ต้นฉบับ"
   copy: "สำเนา"
+  settings: "ตั้งค่าระบบ"
+  log_in: "เข้าสู่ระบบ"
+  sign_out: "ออกระบบ"
+  profile: "ข้อมูลส่วนตัว"
 
   mr: นาย
   ms: นาง
@@ -92,7 +96,7 @@ th:
   remind_note: "บันทึกช่วยจำ"
   income_tax: "ภาษีเงินได้บุคคลธรรมดา"
   withholding_tax: "ภาษีหัก ณ ที่จ่าย"
-  satrt_job: "วันที่เริ่มทำงาน"
+  start_date: "วันที่เริ่มทำงาน"
   race: "เชื้อชาติ"
   nation: "สัญชาติ"
   bank: "ธนาคาร"
