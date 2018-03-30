@@ -2,8 +2,8 @@
   'use strict';
   angular.module('somsri.main.next_classroom', [
     ])
-  .controller('nextClassroomCtrl', ['$rootScope','classroomService','$scope', '$uibModal', '$state', function($rootScope, service, $scope, $uibModal, $state) {
-    $rootScope.menu = "ตั้งค่า"
+  .controller('nextClassroomCtrl', ['$rootScope','classroomService','$scope', '$uibModal', '$state', 'translateFilter', function($rootScope, service, $scope, $uibModal, $state, translateFilter) {
+    $rootScope.menu = translateFilter('setting')
     var ctrl = this
     ctrl.classroomId = $state.params.id
     $rootScope.loadAndAuthorizeResource("school", function(){
@@ -60,7 +60,7 @@
             '<ul class="dropdown-menu' + display_top + '" aria-labelledby="classroom-list">' +
               '<li>' +
                 '<a class="blue-highlight" onclick="' + angularCtrlStr + '.selectClassroom(' + row.id + ', null)">' +
-                  'จบการศึกษา' +
+                  translateFilter('gradulated') +
                 '</a>' +
               '</li>';
           for(var i = 0; i < classroomOptions.length; i++){
@@ -80,9 +80,9 @@
 
       function initBootstrapTable(){
         var tableColumnSetting = [
-          { field: 'classroom', formatter: classroomFormatter, title: "ระดับชั้นเรียน เดิม", class: "col-xs-5"},
+          { field: 'classroom', formatter: classroomFormatter, title: translateFilter('current_grade_classroom'), class: "col-xs-5"},
           { field: 'arrow', formatter: arrowFormatter, class: "col-xs-2 text-center"},
-          { field: 'next_classroom', formatter: nextClassroomFormatter, title: "ระดับชั้นเรียน <span class='color-blue-link'>ใหม่</span>", class: "col-xs-5"}
+          { field: 'next_classroom', formatter: nextClassroomFormatter, title: translateFilter('grade_classroom') + "<span class='color-blue-link'>" + translateFilter('new') + "</span>", class: "col-xs-5"}
         ]
         $('#next-classroom-list').bootstrapTable({
           data: classrooms,
@@ -92,7 +92,7 @@
 
       function getClassroomNameById(id){
         if(!id){
-          return "จบการศึกษา"
+          return translateFilter('gradulated')
         }
         for(var i = 0; i < classroomOptions.length; i++) {
           if(classroomOptions[i].id == id){
@@ -124,7 +124,7 @@
       }
 
       ctrl.studentPromote = function(){
-        openConfirmationModal("คุณต้องการเลื่อนชั้นเรียนให้กับนักเรียนทั้งหมดใช่หรือไม่?", function(){
+        openConfirmationModal(translateFilter('up_grade_classroom_all'), function(){
           var classroomOrder = classrooms;
           if(!isChange()){ classroomOrder = null; }
           service.studentPromote(classroomOrder).then(function(resp) {
@@ -135,7 +135,7 @@
 
       ctrl.cancel = function(){
         if(isChange()){
-          openConfirmationModal("คุณต้องการออกจากหน้านี้โดยไม่บันทึกค่าหรือไม่?", function(){
+          openConfirmationModal(translateFilter('close_without_save'), function(){
             $rootScope.openClassroomList();
           })
         }else{

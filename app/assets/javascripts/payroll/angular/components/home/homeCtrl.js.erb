@@ -1,8 +1,14 @@
-(function() {
+(function () {
   'use strict';
-  angular.module('somsri.payroll.home', [
-  ])
-  .controller('homeCtrl', ['$rootScope', function($rootScope) {
-    $rootScope.menu = "เงินเดือน"
-  }]);
+
+  angular
+    .module('somsri.payroll.home', [])
+    .controller('homeCtrl', homeCtrl);
+
+  homeCtrl.$inject = ['$rootScope', 'translateFilter']
+
+
+  function homeCtrl ($rootScope, translateFilter) {
+    $rootScope.menu = translateFilter('payroll');
+  }
 })();

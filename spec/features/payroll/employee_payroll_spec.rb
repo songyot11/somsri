@@ -283,7 +283,7 @@ describe 'Payroll', js: true do
     find('#effective_date').set('13/12/2010')
     click_button('บันทึก')
     sleep(1)
-    expect(page).to have_content('ไม่สามารถเลือกวันที่ออกเงินเดือนซ้ำได้')
+    expect(page).to have_content('ไม่สามารถออกเงินเดือนซ้ำได้')
     sleep(1)
     click_button('ตกลง')
     sleep(1)

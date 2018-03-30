@@ -2,8 +2,8 @@
   'use strict';
   angular.module('somsri.main.setting_menu', [
   ])
-  .controller('menuCtrl', ['$rootScope', function($rootScope) {
-    $rootScope.menu = "การตั้งค่า"
+  .controller('menuCtrl', ['$rootScope', 'translateFilter', function($rootScope, translateFilter) {
+    $rootScope.menu = translateFilter('setting')
     $rootScope.loadAndAuthorizeResource("school", function(){});
   }]);
 })();

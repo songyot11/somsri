@@ -3,19 +3,19 @@
   <div class="row">
     <div class="col-md-12">
       <button type="button" class="btn btn-custom btn-black pull-right" onclick="window.print()">
-        <i class="fa fa-print"></i>&nbsp;&nbsp;พิมพ์รายงาน</button>
+        <i class="fa fa-print"></i>&nbsp;&nbsp;{{ 'print_report' | translate }}</button>
     </div>
   </div>
 
   <div id="rollcall-report" class="form_1">
-    <h2 class="text-center only-print">แบบบันทึกเวลาเรียนชั้นมัธยมศึกษาปีที่ <span ng-bind="report.displayListName"></span> ภาคเรียนที่ 1 ประจำปีการศึกษา 2560</h2>
-    <h2 class="text-center only-print">โรงเรียน <span ng-bind="report.info.name"></span> <span ng-bind="report.info.address"></span></h2>
+    <h2 class="text-center only-print">{{ 'student_record' | translate }} <span ng-bind="report.displayListName"></span> {{ 'term' | translate }} 1 {{ 'study_year' | translate }} 2560</h2>
+    <h2 class="text-center only-print">{{ 'school' | translate }} <span ng-bind="report.info.name"></span> <span ng-bind="report.info.address"></span></h2>
     <div class="space5 only-print"></div>
     <div class="row head_title_rollcall only-view">
       <div class="col-xs-4">
         <span class="dropdown">
           <div class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="true">
-            <span>ประจำเดือน</span>
+            <span>{{ 'monthly' | translate}}</span>
             <span ng-bind="report.displayMonth"></span>
             <span class="fa fa-angle-down"></span>
           </div>
@@ -31,7 +31,7 @@
       <div class="col-xs-2 col-xs-offset-6">
         <span class="dropdown pull-right">
           <div class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="true">
-            <span>ชั้น</span>
+            <span>{{ 'level_short' | translate }}</span>
             <span ng-bind="report.displayListName" style="color:#337ab7;"></span>
             <span class="fa fa-angle-down" style="color:#337ab7 !important;"></span>
           </div>
@@ -50,32 +50,32 @@
         <table class="table">
           <thead class="only-print-table">
             <tr>
-              <th class="classroom-number-th" rowspan="2">เลขที่</th>
-              <th class="name-th" rowspan="2">ชื่อ - สกุล</th>
-              <th class="classroom-number-th" colspan="{{report.dates.length}}">เดือน {{ report.displayMonth.split(" ")[0] }}</th>
-              <th class="name-th" colspan="5">รวมจำนวนคาบ</th>
+              <th class="classroom-number-th" rowspan="2">{{ 'number1' | translate }}</th>
+              <th class="name-th" rowspan="2">{{ 'full_name_1' | translate }}</th>
+              <th class="classroom-number-th" colspan="{{report.dates.length}}">{{ 'month' | translate }} {{ report.displayMonth.split(" ")[0] }}</th>
+              <th class="name-th" colspan="5">{{ 'total_class_number' | translate }}</th>
             </tr>
             <tr>
-              <th class="round-th only-view">วันที่</th>
+              <th class="round-th only-view">{{ 'date1' | translate }}</th>
               <th class="date-th" ng-repeat="date in report.dates">{{date}}</th>
-              <th class="checked-th">มา</th>
-              <th class="late-th">สาย</th>
-              <th class="sick-th">ลาป่วย</th>
-              <th class="private-th">ลากิจ</th>
-              <th class="missing-th">ขาด</th>
+              <th class="checked-th">{{ 'checked' | translate }}</th>
+              <th class="late-th">{{ 'late' | translate }}</th>
+              <th class="sick-th">{{ 'sick' | translate }}</th>
+              <th class="private-th">{{ 'private' | translate }}</th>
+              <th class="missing-th">{{ 'missing' | translate }}</th>
             </tr>
           </thead>
           <thead class="only-view-table">
             <tr>
-              <th class="classroom-number-th">เลขที่</th>
-              <th class="name-th">ชื่อ - สกุล</th>
-              <th class="round-th only-view">วันที่</th>
+              <th class="classroom-number-th">{{ 'number1' | translate }}</th>
+              <th class="name-th">{{ 'full_name_1' | translate }}</th>
+              <th class="round-th only-view">{{ 'date1' | translate }}</th>
               <th class="date-th" ng-repeat="date in report.dates">{{date}}</th>
-              <th class="checked-th">มา</th>
-              <th class="late-th">สาย</th>
-              <th class="sick-th">ป่วย</th>
-              <th class="private-th">ลา</th>
-              <th class="missing-th">ขาด</th>
+              <th class="checked-th">{{ 'checked' | translate }}</th>
+              <th class="late-th">{{ 'late' | translate }}</th>
+              <th class="sick-th">{{ 'sick' | translate }}</th>
+              <th class="private-th">{{ 'private' | translate }}</th>
+              <th class="missing-th">{{ 'missing' | translate }}</th>
             </tr>
           </thead>
           <tbody>
@@ -85,10 +85,10 @@
               <td class="time_half only-view">
                 <table class="time_rollcall">
                   <tr>
-                    <td>เช้า</td>
+                    <td>{{ 'morning' | translate }}</td>
                   </tr>
                   <tr class="only-view">
-                    <td>เย็น</td>
+                    <td>{{ 'evening' | translate }}</td>
                   </tr>
                 </table>
               </td>

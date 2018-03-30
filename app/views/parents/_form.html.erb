@@ -23,7 +23,7 @@
       <div class="row">
         <div class="col-md-6">
           <div class="form-group">
-            <%= f.label :full_name, 'ชื่อ-นามสกุล', :class => 'control-label' %>
+            <%= f.label :full_name, :class => 'control-label' %>
             <div class="col-md-12">
               <%= f.text_field :full_name, :class => 'form-control', required: true %>
             </div>
@@ -31,7 +31,7 @@
         </div>
         <div class="col-md-6">
           <div class="form-group">
-            <%= f.label :nickname, 'ชื่อเล่น', :class => 'control-label' %>
+            <%= f.label :nickname,  :class => 'control-label' %>
             <div class="col-md-12">
               <%= f.text_field :nickname, :class => 'form-control' %>
             </div>
@@ -41,7 +41,7 @@
       <div class="row">
         <div class="col-md-6">
           <div class="form-group">
-            <%= f.label :id_card_no, 'เลขบัตรประชาชน', :class => 'control-label' %>
+            <%= f.label :id_card_no,  :class => 'control-label' %>
             <div class="col-md-12">
               <%= f.text_field :id_card_no, :class => 'form-control' %>
             </div>
@@ -49,7 +49,7 @@
         </div>
         <div class="col-md-6">
           <div class="form-group">
-            <%= f.label :mobile, 'โทรศัพท์', :class => 'control-label' %>
+            <%= f.label :mobile,  :class => 'control-label' %>
             <div class="col-md-12">
               <%= f.text_field :mobile, :class => 'form-control' %>
             </div>
@@ -59,7 +59,7 @@
       <div class="row">
         <div class="col-md-6">
           <div class="form-group">
-            <%= f.label :email, 'อีเมล์', :class => 'control-label' %>
+            <%= f.label :email,  :class => 'control-label' %>
             <div class="col-md-12">
               <%= f.text_field :email, :class => 'form-control' %>
             </div>
@@ -67,7 +67,7 @@
         </div>
         <div class="col-md-6">
           <div class="form-group">
-            <%= f.label :line_id, 'Line ID', :class => 'control-label col-6' %>
+            <%= f.label :line_id, :class => 'control-label col-6' %>
             <div class="col-md-12">
               <%= f.text_field :line_id, :class => 'form-control' %>
             </div>
@@ -96,7 +96,7 @@
         </div>
       </div>
     </div>
-    <label for="student" class="control-label">นักเรียน</label>
+    <label for="student" class="control-label"><%= t('student') %></label>
     <div class="col-md-12">
       <% if @parent.new_record? || @parent.students.size == 0 %>
         <% 1.times do |index| %>
@@ -111,7 +111,7 @@
       <% end %>
 
       <div id="add-student"></div>
-      <a id="student-link" class="btn-add-st">+ เพิ่มชื่อนักเรียน</a>
+      <a id="student-link" class="btn-add-st"><%= t('new_student') %></a>
     </div>
  </div>
  <div class="row">

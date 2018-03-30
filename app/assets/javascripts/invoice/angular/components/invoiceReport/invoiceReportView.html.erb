@@ -8,7 +8,7 @@
       <div class="row for-display">
         <div class="col-md-6" style="padding-left: 0px;">
           <div class="col-xs-2" style="margin-right:-20px;">
-            <h3>ระดับชั้น</h3>
+            <h3>{{ 'level' | translate }}</h3>
           </div>
           <div class="col-xs-9">
             <div class="dropdown">
@@ -19,7 +19,7 @@
               <ul class="dropdown-menu" aria-labelledby="grade-list">
                 <li ng-repeat="grade in invoiceReport.grades">
                   <a class="blue-highlight" ng-click="invoiceReport.switchGrade(grade.name)">
-                    {{ grade.name }}
+                    {{ grade.name | translate }}
                   </a>
                 </li>
               </ul>
@@ -37,7 +37,7 @@
       <div class="row report-content container-fluid">
       <div class="col-xs-12 form-group fix-head-table for-display">
         <div class="col-xs-6">
-          <input id="searchField" type="text" ng-model="invoiceReport.searchKeyword" ng-change="invoiceReport.search()" placeholder="ค้นหาตามเลขที่ใบเสร็จ,ชื่อนักเรียน,ชื่อผู้ปกครอง" class="search-sp" />
+          <input id="searchField" type="text" ng-model="invoiceReport.searchKeyword" ng-change="invoiceReport.search()" placeholder="{{ 'receipt_search' | translate }}" class="search-sp" />
         </div>
         <div class="col-xs-6 ">
           <div id="date-filter" class="row for-display">
@@ -45,7 +45,7 @@
               <div class="form-group">
                 <span class="input-group">
                   <div class="col-xs-2">
-                    <label for="start_date" class="text-status-date">จาก</label>
+                    <label for="start_date" class="text-status-date">{{ 'from' | translate }}</label>
                   </div>
                   <div class="col-xs-10">
                     <input id="start_date" type="text" class="form-control" uib-datepicker-popup="dd/MM/yyyy" datepicker-options="{showWeeks:false}" ng-model="invoiceReport.start_date" is-open="invoiceReport.startDatePopup.opened" close-text="Close" ng-change="invoiceReport.optionsChange()"/>
@@ -60,7 +60,7 @@
               <div class="form-group">
                 <span class="input-group">
                   <div class="col-xs-2">
-                    <label for="end_date" class="text-status-date">ถึง</label>
+                    <label for="end_date" class="text-status-date">{{ 'to' | translate }}</label>
                   </div>
                   <div class="col-xs-10">
                     <input id="end_date" type="text" class="form-control" uib-datepicker-popup="dd/MM/yyyy" datepicker-options="{showWeeks:false}" ng-model="invoiceReport.end_date" is-open="invoiceReport.endDatePopup.opened" close-text="Close" ng-change="invoiceReport.optionsChange()"/>
@@ -75,8 +75,8 @@
         </div>
         </div>
         <table id="invoice-table" class="scrollable-header text-table-invoicereport for-display"></table>
-        <div class="text-title for-print">รายงานใบเสร็จ</div>
-        <div class="text-title-date for-print"><b>จาก</b> {{ invoiceReport.start_date | dateFormat }} <b>ถึง</b> {{ invoiceReport.end_date | dateFormat }}</div>
+        <div class="text-title for-print">{{ 'level' | translate }}</div>
+        <div class="text-title-date for-print"><b>{{ 'from' | translate }}</b> {{ invoiceReport.start_date | dateFormat }} <b>{{ 'to' | translate }}</b> {{ invoiceReport.end_date | dateFormat }}</div>
         <table id="for-print-table" class="scrollable-header text-table-invoicereport for-print"></table>
         <div class="row row-centered for-display">
           <div class="col-centered">
@@ -98,14 +98,14 @@
   <div class="modal-dialog" role="document">
     <div class="modal-content">
       <div class="modal-body">
-        คุณต้องการยกเลิกใบเสร็จนี้หรือไม่
+        {{ 'cancel_receipt_msg' | translate }}
       </div>
       <div class="modal-footer">
         <div class="col-md-offset-6 col-md-3">
-          <button type="button" class="btn btn-custom btn-blue" ng-click="invoiceReport.cancelInvoice()">ใช่</button>
+          <button type="button" class="btn btn-custom btn-blue" ng-click="invoiceReport.cancelInvoice()">{{ 'yes' | translate }}</button>
         </div>
         <div class="col-md-3">
-          <button type="button" class="btn  btn-custom btn-gray" data-dismiss="modal">ไม่ใช่</button>
+          <button type="button" class="btn  btn-custom btn-gray" data-dismiss="modal">{{ 'no' | translate }}</button>
         </div>
       </div>
     </div>

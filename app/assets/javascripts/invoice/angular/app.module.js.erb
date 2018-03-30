@@ -12,18 +12,11 @@
     'ui.utils.masks',
     'ui.bootstrap.fontawesome',
     'ngSanitize',
-    'ngCsv'
+    'ngCsv',
+    'somsri.translate'
   ]);
 
-
   appInvoice.constant('DEFAULT_LOGO', 'images/metaware_logo.png');
-  appInvoice.constant('DEFAULT_INVOICE',{
-    invoice: {
-      items:[
-        { detail: 'ค่าธรรมเนียมการศึกษา / Tuition Fee', amount: 48900.0 }
-      ]
-    }
-  });
 
   // Service for accessing local storage
   appInvoice.service('LocalStorage', [function() {

@@ -121,6 +121,7 @@ describe 'Invoice', js: true do
     click_on('ชำระเงิน')
     sleep(1)
     visit "/invoices/#{Invoice.first.id}/slip.pdf?show_as_html=true"
+    sleep(1)
     expect(page).to have_content("ใบเสร็จรับเงิน")
     expect(page).to have_content("สมศรี ณ บานาน่าโค๊ดดิ้ง")
     expect(page).to have_content("ค่าธรรมเนียมการศึกษา")
@@ -139,6 +140,7 @@ describe 'Invoice', js: true do
     click_on('ชำระเงิน')
     sleep(1)
     visit "/invoices/#{Invoice.first.id}/slip.pdf?show_as_html=true"
+    sleep(1.5)
     expect(page).to have_content("ใบเสร็จรับเงิน")
     expect(page).to have_content("มั่งไม่มี เลขนักเรียน")
     expect(page).to have_content("ค่าธรรมเนียมการศึกษา")

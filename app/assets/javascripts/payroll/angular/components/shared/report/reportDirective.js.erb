@@ -1,8 +1,9 @@
 (function() {
   'use strict';
   angular.module('somsri.payroll.report.directive', [
+    'somsri.translate'
     ])
-  .directive('reportContent', ['$timeout','$filter', function ($timeout, $filter) {
+  .directive('reportContent', ['$timeout','$filter', 'translateFilter', function ($timeout, $filter, translateFilter) {
 
     return {
       restrict: 'E',
@@ -17,7 +18,7 @@
     function link(scope, element, attrs) {
       angular.extend(scope.report, {
         reportTableInit: reportTableInit,
-        reportTableLoadData: function(data){
+        reportTableLoadData: function(data) {
           $('.table').bootstrapTable('load', data);
         }
       });
@@ -91,47 +92,47 @@
         showFooter: true,
         columns: [{
           field: 'code',
-          title: 'รหัส ',
+          title: translateFilter('employee_code'),
           sortable: true,
           formatter: filterCode,
           class: 'report_for_print_hide',
         },{
           field: 'name',
-          title: 'ชื่อ',
+          title: translateFilter('employee_name'),
           sortable: true,
           formatter: linkName,
           class: 'forprint-h_table print_name',
         },{
           field: 'account_number',
-          title: 'เลขบัญชี',
+          title: translateFilter('bank_account2'),
           sortable: true,
           align: 'right',
           formatter: filterAccountNumber,
           class: 'text-center forprint-h_table forprint_table this_account',
         },{
           field: 'salary',
-          title: 'เงินเดือน',
+          title: translateFilter('salary'),
           sortable: true,
           formatter: filterSalary,
           align: 'right',
           class: 'report_for_print_hide',
         },{
           field: 'extra_pay',
-          title: 'เงินเพิ่ม',
+          title: translateFilter('extra_money'),
           sortable: true,
           formatter: filterExtraPay,
           align: 'right',
           class: 'report_for_print_hide',
         },{
           field: 'extra_fee',
-          title: 'เงินหัก',
+          title: translateFilter('deduct_money'),
           sortable: true,
           formatter: filterExtraFee,
           align: 'right',
           class: 'report_for_print_hide',
         },{
           field: 'net_salary',
-          title: 'เงินเดือนสุทธิ ',
+          title: translateFilter('net_salary'),
           sortable: true,
           formatter: filterNetSalary,
           align: 'right',

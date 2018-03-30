@@ -3,8 +3,8 @@
   angular.module('somsri.rollcall.report', [
 
   ])
-  .controller('reportCtrl', ['$scope', '$rootScope','reportService', function($scope , $rootScope, service) {
-    $rootScope.menu = "รายงาน"
+  .controller('reportCtrl', ['$scope', '$rootScope','reportService', 'translateFilter', function($scope , $rootScope, service, translateFilter) {
+    $rootScope.menu = translateFilter('report')
     var ctrl = this
     $rootScope.loadAndAuthorizeResource("report_roll_call", function(){
       var MISSING = ['0'];

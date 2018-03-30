@@ -12,7 +12,7 @@ class ParentsController < ApplicationController
     @classroom_display = Classroom.order("id ASC").select(:name).map(&:name).uniq.compact
     @parents = get_parents(class_select, grade_select, params[:search], params[:page], params[:per_page], params[:sort], params[:order])
 
-    @menu = "ผู้ปกครอง"
+    @menu = t('parent')
     respond_to do |f|
       f.html { render "parents/index", layout: "application_invoice" }
       f.json {
@@ -27,7 +27,7 @@ class ParentsController < ApplicationController
 
   # GET /parents/new
   def new
-    @menu = "ผู้ปกครอง"
+    @menu = t('parent')
     @parent = Parent.new
     @students = Student.all
     @relations = Relationship.all
@@ -37,7 +37,7 @@ class ParentsController < ApplicationController
 
   # GET /parents/1/edit
   def edit
-    @menu = "ผู้ปกครอง"
+    @menu = t('parent')
     @students = Student.all
     @relations = Relationship.all
 

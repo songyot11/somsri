@@ -7,11 +7,11 @@
     <div class="row head-menu">
       <div class="col-xs-6">
         <h1 class="text-h-print">
-          รายงานแยกตามประเภท
+          {{ 'classification_report' | translate }}
         </h1>
       </div>
       <div class="col-xs-6 text-right">
-        <a href="#/grouping_report" class="btn btn-custom btn-black" onclick="window.print()"><i class='fa fa-print'></i> พิมพ์รายงาน</a>
+        <a href="#/grouping_report" class="btn btn-custom btn-black" onclick="window.print()"><i class='fa fa-print'></i> {{ 'print_report' | translate }}</a>
         <button class="btn btn-custom btn-blue-sky" ng-click="groupingReport2.exportExcel()"><i class="fa fa-share-square-o" aria-hidden="true"></i> Export</button>
       </div>
      </div>
@@ -23,14 +23,14 @@
               <div class="col-xs-4 col-lg-6 for-display">
                 <div class="form-check pt-10 pl-30">
                   <input type="checkbox" class="form-check-input" id="per-student-mode" ng-model="groupingReport2.forcePerInvoice" ng-change="groupingReport2.loadData()">
-                  <label class="form-check-label font-16" for="per-student-mode">แสดงรายการใบเสร็จ</label>
+                  <label class="form-check-label font-16" for="per-student-mode">{{ 'show_invoices' | translate }}</label>
                 </div>
               </div>
               <div class="col-xs-3 col-lg-2 date-for-print">
                 <div class="form-group">
                   <span class="input-group">
                     <div class="col-xs-2">
-                      <label for="start_date" class="text-status-date">จาก</label>
+                      <label for="start_date" class="text-status-date">{{ 'from' | translate }}</label>
                     </div>
                     <div class="col-xs-10">
                       <input id="start_date" type="text" class="form-control" uib-datepicker-popup="dd/MM/yyyy" datepicker-options="{showWeeks:false}" ng-model="groupingReport2.start_date" is-open="groupingReport2.startDatePopup.opened" close-text="Close" ng-change="groupingReport2.optionsChange()"/>
@@ -45,7 +45,7 @@
                 <div class="form-group">
                   <span class="input-group">
                     <div class="col-xs-2">
-                      <label for="end_date" class="text-status-date">ถึง</label>
+                      <label for="end_date" class="text-status-date">{{ 'to' | translate }}</label>
                     </div>
                     <div class="col-xs-10">
                       <input id="end_date" type="text" class="form-control" uib-datepicker-popup="dd/MM/yyyy" datepicker-options="{showWeeks:false}" ng-model="groupingReport2.end_date" is-open="groupingReport2.endDatePopup.opened" close-text="Close" ng-change="groupingReport2.optionsChange()"/>
@@ -59,7 +59,7 @@
               <div class="col-xs-2 col-lg-2" style="text-align:center;">
                 <div class="dropdown invoice-items-list">
                   <h4 id="groupingReport-list" data-toggle="dropdown">
-                    <span>เลือกประเภท</span>
+                    <span>{{ 'chose_type' | translate }}</span>
                     <i class="fa fa-angle-down" aria-hidden="true"></i>
                   </h4>
                   <ul class="dropdown-menu">
@@ -67,7 +67,7 @@
                       <label class="text-select-invoice"><input type="checkbox" class="select-item-invoice" ng-model="option.value" ng-checked="option.value" ng-change="groupingReport2.loadData()">{{option.name}}</label>
                     </li>
                     <li>
-                      <label class="text-select-invoice"><input type="checkbox" class="select-item-invoice" ng-model="groupingReport2.etc_checked" ng-checked="groupingReport2.etc_checked" ng-change="groupingReport2.loadData()">อื่นๆ</label>
+                      <label class="text-select-invoice"><input type="checkbox" class="select-item-invoice" ng-model="groupingReport2.etc_checked" ng-checked="groupingReport2.etc_checked" ng-change="groupingReport2.loadData()">{{ 'other' | translate }}</label>
                     </li>
                   </ul>
                 </div>
@@ -81,9 +81,9 @@
               <thead>
                <tr>
                  <th ng-show="groupingReport2.isDisplay('header_row_invoice_id')">Invoice</th>
-                 <th ng-show="groupingReport2.isDisplay('header_row_date')">วันที่</th>
-                 <th ng-show="groupingReport2.isDisplay('header_row_name')" class="first-column-th">ชื่อ</th>
-                 <th ng-show="groupingReport2.isDisplay('header_row_classroom')" class="first-column-classroom">ชั้น</th>
+                 <th ng-show="groupingReport2.isDisplay('header_row_date')">{{ 'date1' | translate }}</th>
+                 <th ng-show="groupingReport2.isDisplay('header_row_name')" class="first-column-th">{{ 'name' | translate }}</th>
+                 <th ng-show="groupingReport2.isDisplay('header_row_classroom')" class="first-column-classroom">{{ 'level' | translate }}</th>
                  <th ng-repeat="header in groupingReport2.datas.header track by $index"class="another-column-th">{{ header }}</th>
                </tr>
               </thead>
@@ -105,9 +105,9 @@
               </tbody>
               <tfoot>
                 <tr>
-                  <td ng-show="groupingReport2.getReportMode() == 'per_student'" colspan="3" class="text-center">รวมทั้งหมด</td>
-                  <td ng-show="groupingReport2.getReportMode() == 'per_invoice'" colspan="4" class="text-center">รวมทั้งหมด</td>
-                  <td ng-show="groupingReport2.getReportMode() == 'per_day'" class="text-center">รวมทั้งหมด</td>
+                  <td ng-show="groupingReport2.getReportMode() == 'per_student'" colspan="3" class="text-center">{{ 'total' | translate }}</td>
+                  <td ng-show="groupingReport2.getReportMode() == 'per_invoice'" colspan="4" class="text-center">{{ 'total' | translate }}</td>
+                  <td ng-show="groupingReport2.getReportMode() == 'per_day'" class="text-center">{{ 'total' | translate }}</td>
                   <td ng-repeat="total in groupingReport2.datas.total track by $index" class="text-currency numberic">{{total.toFixed(2) | number:2}}</td>
                 </tr>
               </tfoot>

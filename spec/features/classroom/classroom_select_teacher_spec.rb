@@ -109,11 +109,12 @@ describe 'Classroom Select Teacher', js: true do
     end
     sleep(1)
     within('div#select-member-modal') do
+      find('.search input[type=text]').set('สมใจ')
+      sleep(0.5)
       find('input[data-index="0"]').click
       eventually { expect(page).to have_content("จำนวนที่เลือก 1 คน") }
       click_button("ตกลง")
     end
-
     eventually { expect(page).to have_content("นาง สมใจ เป็นคน") }
     eventually { expect(page).to have_content("นาง สมศรี เป็นชื่อแอพ") }
   end

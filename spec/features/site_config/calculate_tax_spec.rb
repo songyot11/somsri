@@ -73,13 +73,13 @@ describe 'SiteConfig Calculate Tax', js: true do
   describe 'enable tax' do
     before do
       enable_tax
+      taxrates
       user.add_role :admin
       employee1
       employee2
-      payrolls
       taxs
+      payrolls
       login_as(user, scope: :user)
-      taxrates
     end
 
     it 'should calculate tax at payroll' do
@@ -102,12 +102,12 @@ describe 'SiteConfig Calculate Tax', js: true do
     before do
       disable_tax
       user.add_role :admin
+      taxrates
       employee1
       employee2
-      payrolls
       taxs
+      payrolls
       login_as(user, scope: :user)
-      taxrates
     end
 
     it 'should display 0 tax at payroll' do

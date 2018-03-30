@@ -4,7 +4,7 @@
 <div id="parent-index">
   <div class="row head-sp">
     <div class="col-xs-6 mb-20">
-      <h1>ผู้ปกครอง</h1>
+      <h1><%= t('parent') %></h1>
     </div>
     <div class="col-xs-6 mt-10 px-0" style="text-align: right;">
       <%= link_to ('<i class="fa fa-share-square-o" aria-hidden="true"></i> Export').html_safe, "#", :class => 'btn btn-custom btn-blue-sky float-right mr-5', :onclick => 'exportTable("parents")' %>
@@ -20,17 +20,17 @@
         </div>
       </div>
       <div class="col-xs-6 select-filter">
-        <span>เลือกระดับชั้น</span>
+        <span><%= t('select_classroom') %></span>
         <select name="grade_select" id="grade_select" class="btn-grades selectpicker" onchange="filter()">
-          <option value='all'>ทั้งหมด</option>
+          <option value='all'><%= t('all') %></option>
           <% Grade.all.each do |grade| %>
           <option value="<%= grade.name %>"<%= @filter_grade.to_s == grade.name.to_s ? "selected" : "" %>> <%= grade.name %> </option>
           <% end %>
         </select>
 
-        <span>เลือกตามห้อง</span>
+        <span><%= t('select_room') %></span>
         <select name="class_select" id="class_select"  onchange="filter()" class="btn-grades selectpicker">
-          <option value='all'>ทั้งหมด</option>
+          <option value='all'><%= t('all') %></option>
           <% @classroom_display.each do |classroom| %>
           <option value="<%= classroom %>"<%= @filter_class.to_s == classroom.to_s ? "selected" : "" %>> <%= classroom %> </option>
           <% end %>
@@ -51,11 +51,11 @@
         <thead>
           <tr>
             <th data-field="parents.img_url" data-formatter="imgTag"></th>
-            <th data-field="parents.full_name" data-formatter="linkToParentEditFormatter" data-sortable="true" style="width: 300px;" >ชื่อ-สกุล</th>
-            <th data-field="parents.mobile" data-sortable="true">โทรศัพท์</th>
-            <th data-field="parents.email" data-sortable="true">อีเมล์</th>
-            <th data-field="relationships.name" data-sortable="true">ความสัมพันธ์</th>
-            <th data-field="students.full_name" data-sortable="true">ชื่อ-สกุลนักเรียน</th>
+            <th data-field="parents.full_name" data-formatter="linkToParentEditFormatter" data-sortable="true" style="width: 300px;" ><%= t('full_name') %></th>
+            <th data-field="parents.mobile" data-sortable="true"><%= t('phone') %></th>
+            <th data-field="parents.email" data-sortable="true"><%= t('email') %></th>
+            <th data-field="relationships.name" data-sortable="true"><%= t('relationship') %></th>
+            <th data-field="students.full_name" data-sortable="true"><%= t('student_name') %></th>
             <th data-field="parent_options" data-formatter="selectionParentFormatter" ></th>
           </tr>
         </thead>
@@ -71,11 +71,11 @@
   style="display: none;">
   <thead>
     <tr>
-      <th data-field="parents.full_name" style="width: 300px;" >ชื่อ-สกุล</th>
-      <th data-field="parents.mobile" >โทรศัพท์</th>
-      <th data-field="parents.email" >อีเมล์</th>
-      <th data-field="relationships.name" >ความสัมพันธ์</th>
-      <th data-field="students.full_name" >ชื่อ-สกุลนักเรียน</th>
+      <th data-field="parents.full_name" style="width: 300px;" ><%= t('full_name') %></th>
+      <th data-field="parents.mobile" ><%= t('phone') %></th>
+      <th data-field="parents.email" ><%= t('email') %></th>
+      <th data-field="relationships.name" ><%= t('relationship') %></th>
+      <th data-field="students.full_name" ><%= t('student_name') %></th>
     </tr>
   </thead>
 </table>
@@ -96,11 +96,11 @@
         <div class="space20"></div>
         <div class="row">
           <div class="col-md-3 pull-right">
-            <button class="btn btn-custom btn-gray" data-dismiss="modal">ยกเลิก</button>
+            <button class="btn btn-custom btn-gray" data-dismiss="modal"><%= t('cancel') %></button>
           </div>
           <div class="col-md-3 pull-right">
             <%= form_tag("", id:"actionModalForm") do %>
-              <a class="btn btn-custom btn-red submit" onclick="document.getElementById('actionModalForm').submit();">ตกลง</a>
+              <a class="btn btn-custom btn-red submit" onclick="document.getElementById('actionModalForm').submit();"><%= t('ok') %></a>
             <% end %>
           </div>
         </div>

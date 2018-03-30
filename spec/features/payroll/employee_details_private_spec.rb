@@ -124,7 +124,7 @@ describe 'Private Details', js: true do
     it 'can create new emergency call individual' do
       click_link('+ เพิ่มข้อมูล')
       sleep(1)
-      find("label", text: 'นางสาว / Miss.').click()
+      find("label", text: 'นางสาว').click()
       fill_in 'ชื่อจริง', with: 'กาไก่'
       fill_in 'นามสกุล', with: 'ขาไข่'
       fill_in 'ความสัมพันธ์', with: 'โศก'
@@ -144,7 +144,7 @@ describe 'Private Details', js: true do
       expect(page).to have_content(individual_name)
       click_link(individual_name)
       sleep(1)
-      find("label", text: 'นางสาว / Miss.').click()
+      find("label", text: 'นางสาว').click()
       fill_in 'ชื่อจริง', with: 'กาไก่'
       fill_in 'นามสกุล', with: 'ขาไข่'
       fill_in 'ความสัมพันธ์', with: 'โศก'

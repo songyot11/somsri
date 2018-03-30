@@ -2046,3 +2046,28 @@ ul.rich-autocomplete-list{
   border: 0px solid;
   border-radius: 0px;
 }
+
+// dropdown-submenu
+.dropdown-submenu {
+  position: relative;
+}
+
+.dropdown-submenu>.dropdown-menu {
+  top: 0;
+  right: 100%;
+  margin-top: -6px;
+  margin-left: -1px;
+  -webkit-border-radius: 0px;
+  -moz-border-radius: 0px;
+  border-radius: 0px;
+  padding: 10px;
+}
+
+.dropdown-submenu:hover>.dropdown-menu {
+  display: block;
+}
+
+.dropdown-submenu>.dropdown-menu>li>a>img{
+  width: 20%;
+  margin-left: -10px;
+}

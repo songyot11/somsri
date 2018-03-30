@@ -32,4 +32,5 @@
 *.orig
 
 public/system/*
+public/assets
 node_modules/*
