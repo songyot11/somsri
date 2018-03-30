@@ -28,10 +28,9 @@ describe 'Abilities', js: true do
 
     it 'can goto main menu english' do
       visit "/?locale=en#"
-      save_screenshot("/Users/akiyama/Desktop/test1.jpg")
       sleep(1)
       expect(page).to have_current_path '/?locale=en#'
-      expect(page).to have_content 'Payrolls Invoices Rollcalls Employees Parents Students'
+      expect(page).to have_content 'Payrolls Invoices Rollcalls Employees Parents Student'
     end
 
     it 'can goto payroll menu' do
@@ -100,7 +99,7 @@ describe 'Abilities', js: true do
     it 'can goto invoice report' do
       visit "/somsri_invoice#/invoice_report"
       sleep(1)
-      expect(page).to have_content 'Invoice # ชื่อนักเรียน ชั้น'
+      expect(page).to have_content 'Invoice # ชื่อ-สกุลนักเรียน ระดับชั้น'
     end
 
     it 'can goto employees' do
@@ -200,12 +199,6 @@ describe 'Abilities', js: true do
       visit "/somsri_invoice#/daily_report"
       sleep(1)
       expect(page).to have_content 'นำส่งเงิน'
-    end
-
-    it 'can goto invoice report' do
-      visit "/somsri_invoice#/invoice_report"
-      sleep(1)
-      expect(page).to have_content 'Invoice # ชื่อนักเรียน ชั้น'
     end
 
     it 'cant goto employees' do

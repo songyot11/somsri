@@ -1,12 +1,12 @@
 <div id="select-member-modal" class="modal-body">
   <div class="row">
     <div class="col-xs-12">
-      <h3>เลือก{{ selectMember.options.label }}</h3>
+      <h3>{{ 'select' | translate }}{{ selectMember.options.label }}</h3>
     </div>
   </div>
   <div class="row bt-toolbar">
     <div class="col-xs-6 col-xs-offset-6">
-      <button ng-click="selectMember.createMember()" class="btn btn-custom btn-blue pull-right">+ สร้าง{{ selectMember.options.label }}ใหม่</button>
+      <button ng-click="selectMember.createMember()" class="btn btn-custom btn-blue pull-right">+ {{ 'create' | translate }}{{ selectMember.options.label }}{{ 'new' | translate }}</button>
     </div>
   </div>
   <div class="row">
@@ -17,10 +17,10 @@
   <div class="space30"></div>
   <div class="row">
     <div class="col-xs-6">
-      <button ng-click="selectMember.submit()" class="btn btn-custom btn-blue pull-right">ตกลง</button>
+      <button ng-click="selectMember.submit()" class="btn btn-custom btn-blue pull-right">{{ 'ok' | translate }}</button>
     </div>
     <div class="col-xs-6">
-      <button ng-click="selectMember.cancel()" class="btn btn-white">ยกเลิก</button>
+      <button ng-click="selectMember.cancel()" class="btn btn-white">{{ 'cancel' | translate }}</button>
     </div>
   </div>
 </div>

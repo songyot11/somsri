@@ -2,7 +2,7 @@
   <div class="content-box">
     <div class="row">
       <div class="col-xs-12">
-        <h2><b>แก้ไขห้องเรียน</b></h2>
+        <h2><b>{{ 'edit_classroom' | translate }}</b></h2>
       </div>
     </div>
     <div class="space30"></div>
@@ -11,7 +11,7 @@
         <div class="form-group">
           <div class="row">
             <div class="col-xs-12">
-              <label for="grade" class="control-label">ระดับชั้นเรียน</label>
+              <label for="grade" class="control-label">{{ 'grade_classroom' | translate }}</label>
             </div>
           </div>
           <div class="row">
@@ -25,7 +25,7 @@
         <div class="form-group">
           <div class="row">
             <div class="col-xs-12">
-              <label for="classroom" class="control-label">ห้องเรียน</label>
+              <label for="classroom" class="control-label">{{ 'classroom' | translate }}</label>
             </div>
           </div>
           <div class="row">
@@ -39,11 +39,11 @@
     <div class="row">
       <div class="col-xs-12">
         <uib-tabset>
-          <uib-tab index="0" heading="คุณครู">
+          <uib-tab index="0" heading="{{ 'teacher' | translate }}">
             <div class="row">
               <div class="col-xs-12">
                 <div class="pull-right">
-                  <button class="btn btn-primary" ng-click="edit.selectTeacher()">+ เลือกคุณครู</button>
+                  <button class="btn btn-primary" ng-click="edit.selectTeacher()">{{ 'select_teacher' | translate }}</button>
                 </div>
               </div>
             </div>
@@ -60,18 +60,18 @@
             <div class="space30"></div>
             <div class="row">
               <div class="col-xs-6">
-                <button class="btn btn-custom btn-blue pull-right" ng-click="edit.save()">บันทึก</button>
+                <button class="btn btn-custom btn-blue pull-right" ng-click="edit.save()">{{'save' | translate }}</button>
               </div>
               <div class="col-xs-6">
-                <button class="btn btn-white" ng-click="edit.cancel()">ยกเลิก</button>
+                <button class="btn btn-white" ng-click="edit.cancel()">{{ 'cancel' | translate }}</button>
               </div>
             </div>
           </uib-tab>
-          <uib-tab index="1" heading="นักเรียน">
+          <uib-tab index="1" heading="{{ 'student' | translate }}">
             <div class="row">
               <div class="col-xs-12">
                 <div class="pull-right">
-                  <button class="btn btn-primary" ng-click="edit.selectStudent()">+ เลือกนักเรียน</button>
+                  <button class="btn btn-primary" ng-click="edit.selectStudent()">{{ 'select_student' | translate }}</button>
                 </div>
               </div>
             </div>
@@ -88,10 +88,10 @@
             <div class="space30"></div>
             <div class="row">
               <div class="col-xs-6">
-                <button class="btn btn-custom btn-blue pull-right" ng-click="edit.save()">บันทึก</button>
+                <button class="btn btn-custom btn-blue pull-right" ng-click="edit.save()">{{ 'save' | translate }}</button>
               </div>
               <div class="col-xs-6">
-                <button class="btn btn-white" ng-click="edit.cancel()">ยกเลิก</button>
+                <button class="btn btn-white" ng-click="edit.cancel()">{{ 'cancel' | translate }}</button>
               </div>
             </div>
           </uib-tab>

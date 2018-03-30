@@ -125,19 +125,21 @@ describe 'Student Report', js: true do
     it 'can sort by grade Preschool' do
       #สามารถเลือกดูตามระดับชั้นเรียนได้
       visit 'somsri_invoice#/student_report'
+      preschool = I18n.t('Preschool')
       sleep(2)
       find('#grade-list').click
-      find('a.blue-highlight', text: 'Preschool').click
+      find('a.blue-highlight', text: preschool).click
       sleep(1)
-      expect(page).to have_content("Preschool", count: 2)
+      expect(page).to have_content(preschool, count: 2)
     end
 
     it 'can sort by grade Preschool and sort by unpaid' do
       #สามารถเลือกดูตามระดับชั้นเรียนได้
       visit 'somsri_invoice#/student_report'
+      preschool = I18n.t('Preschool')
       sleep(2)
       find('#grade-list').click
-      find('a.blue-highlight', text: 'Preschool').click
+      find('a.blue-highlight', text: preschool).click
       sleep(1)
       find('div.unused_for_print.col-md-12 > div > div:nth-child(1) > div > div:nth-child(3)').click
       find('a.blue-highlight', text: 'ยังไม่ได้ชำระ').click
@@ -148,19 +150,21 @@ describe 'Student Report', js: true do
     it 'can sort by grade Kindergarten 1' do
       #สามารถเลือกดูตามระดับชั้นเรียนได้
       visit 'somsri_invoice#/student_report'
+      kindergarten_1 = I18n.t('Kindergarten 1')
       sleep(2)
       find('#grade-list').click
-      find('a.blue-highlight', text: 'Kindergarten 1').click
+      find('a.blue-highlight', text: kindergarten_1).click
       sleep(1)
-      expect(page).to have_content("Kindergarten 1", count: 2)
+      expect(page).to have_content(kindergarten_1, count: 2)
     end
 
     it 'can sort by grade Kindergarten 1 and unpaid' do
       #สามารถเลือกดูตามระดับชั้นเรียนได้
       visit 'somsri_invoice#/student_report'
+      kindergarten_1 = I18n.t('Kindergarten 1')
       sleep(2)
       find('#grade-list').click
-      find('a.blue-highlight', text: 'Kindergarten 1').click
+      find('a.blue-highlight', text: kindergarten_1).click
       sleep(1)
       find('div.unused_for_print.col-md-12 > div > div:nth-child(1) > div > div:nth-child(3)').click
       find('a.blue-highlight', text: 'ยังไม่ได้ชำระ').click
@@ -171,22 +175,24 @@ describe 'Student Report', js: true do
     it 'can sort by grade Kindergarten 2' do
       #สามารถเลือกดูตามระดับชั้นเรียนได้
       visit 'somsri_invoice#/student_report'
+      kindergarten_2 = I18n.t('Kindergarten 2')
       sleep(2)
       find('#grade-list').click
-      find('a.blue-highlight', text: 'Kindergarten 2').click
+      find('a.blue-highlight', text: kindergarten_2).click
       sleep(1)
-      expect(page).to have_content("Kindergarten 2", count: 2)
+      expect(page).to have_content(kindergarten_2, count: 2)
     end
 
     it 'can sort by grade Kindergarten 2 and unpaid' do
       #สามารถเลือกดูตามระดับชั้นเรียนได้
       visit 'somsri_invoice#/student_report'
+      kindergarten_2 = I18n.t('Kindergarten 2')
       sleep(2)
       find('#grade-list').click
-      find('a.blue-highlight', text: 'Kindergarten 2').click
+      find('a.blue-highlight', text: kindergarten_2).click
       sleep(1)
       find('div.unused_for_print.col-md-12 > div > div:nth-child(1) > div > div:nth-child(3)').click
-      find('a.blue-highlight', text: 'ยังไม่ได้ชำระ').click
+     find('a.blue-highlight', text: 'ยังไม่ได้ชำระ').click
       sleep(1)
       expect(page).to have_content("ยังไม่ได้ชำระ", count: 2)
     end
@@ -194,19 +200,21 @@ describe 'Student Report', js: true do
     it 'can sort by grade Kindergarten 3' do
       #สามารถเลือกดูตามระดับชั้นเรียนได้
       visit 'somsri_invoice#/student_report'
+      kindergarten_3 = I18n.t('Kindergarten 3')
       sleep(2)
       find('#grade-list').click
-      find('a.blue-highlight', text: 'Kindergarten 3').click
+      find('a.blue-highlight', text: kindergarten_3).click
       sleep(1)
-      expect(page).to have_content("Kindergarten 3")
+      expect(page).to have_content(kindergarten_3)
     end
 
     it 'can sort by grade Kindergarten 3 and unpaid' do
       #สามารถเลือกดูตามระดับชั้นเรียนได้
       visit 'somsri_invoice#/student_report'
+      kindergarten_3 = I18n.t('Kindergarten 3')
       sleep(2)
       find('#grade-list').click
-      find('a.blue-highlight', text: 'Kindergarten 3').click
+      find('a.blue-highlight', text: kindergarten_3).click
       sleep(1)
       find('div.unused_for_print.col-md-12 > div > div:nth-child(1) > div > div:nth-child(3)').click
       find('a.blue-highlight', text: 'ยังไม่ได้ชำระ').click

@@ -1,11 +1,11 @@
 <div class="container-fluid" id="alumni">
   <div class="row head-sp">
-    <h1>ศิษย์เก่า</h1>
+    <h1>{{ 'alumni' | translate }}</h1>
   </div>
   <div class="toolbar">
     <span class="dropdown mr-20">
       <span id="graduated-year" class="dropdown-label" data-toggle="dropdown">
-        <b>จบปีการศึกษา: </b>
+        <b>{{ 'year_of_graduation' | translate }}: </b>
         <span ng-bind="alumni.selected_year" ></span>
         <i class="fa fa-angle-down" aria-hidden="true"></i>
       </span>
@@ -19,7 +19,7 @@
     </span>
     <span class="dropdown mr-20">
       <span id="graduated-status" class="dropdown-label" data-toggle="dropdown">
-        <b>สถานะ: </b>
+        <b>{{ 'status' | translate }}: </b>
         <span ng-bind="alumni.selected_status" ></span>
         <i class="fa fa-angle-down" aria-hidden="true"></i>
       </span>

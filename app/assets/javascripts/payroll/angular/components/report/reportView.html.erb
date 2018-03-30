@@ -19,34 +19,34 @@
         <div class="col-md-6 dropdown" style="padding-right: 0px;margin-top: 10px;">
           <div class="btn-group pull-right">
 
-            <label id="print-report-btn" class="btn btn-custom btn-black" style="border-radius: 0px; margin-left:30px;" data-toggle="dropdown">พิมพ์รายงาน&nbsp;&nbsp;<span class="fa fa-angle-down"></span></label>
+            <label id="print-report-btn" class="btn btn-custom btn-black" style="border-radius: 0px; margin-left:30px;" data-toggle="dropdown">{{ "print_report" | translate }}&nbsp;&nbsp;<span class="fa fa-angle-down"></span></label>
             <ul class="dropdown-menu" aria-labelledby="print-report-btn">
               <li>
                 <a ng-href="/payrolls.pdf?effective_date={{report.currentEffectiveDate['date_time'] | encodeString }}&payroll_report=true"
                   target="_blank">
-                  <button>พิมพ์สรุปรายการ</button>
+                  <button>{{ "print_summary" | translate }}</button>
                 </a>
               </li>
               <li>
                 <a target="_blank" ng-href="/employees/slips.pdf{{report.slipsUrl}}">
-                  <button>พิมพ์สลิปเงินเดือนทุกคน</button>
+                  <button>{{ "print_slip_all" | translate }}</button>
                 </a>
               </li>
               <li ng-show="report.slip_carbon">
                 <a ng-click="report.printSlips()" href="javascript:void(0)">
-                  <button>พิมพ์สลิปเงินเดือนทุกคนแบบคาร์บอน</button>
+                  <button>{{ "print_slip_carbon" | translate }}</button>
                 </a>
               </li>
               <li>
                 <a ng-href="/payrolls/social_insurance_pdf?effective_date={{report.currentEffectiveDate['date_time'] | encodeString }}"
                   target="_blank">
-                  <button>พิมพ์ประกันสังคม</button>
+                  <button>{{ "print_social_insurance" | translate }}</button>
                 </a>
               </li>
               <li ng-show="report.export_ktb_payroll">
                 <a ng-href="/payrolls?effective_date={{report.currentEffectiveDate['date_time'] | encodeString }}&ktb_salary_xls=true"
                   target="_blank">
-                  <button>ไฟล์นำส่งเงินเดือน (KTB)</button>
+                  <button>{{ "export_ktb_payroll" | translate }}</button>
                 </a>
               </li>
             </ul>
@@ -55,10 +55,10 @@
       </div>
       <div class="row report-content">
         <div class="btn-group pull-right no_display_print">
-          <label class="btn btn-info btn-md employee-type" ng-click="report.employeeTypeFilter()" ng-model="report.employeeTypeMode.normal" style="border-radius: 50px;" uib-btn-checkbox>ลูกจ้างประจำ</label>
-          <label class="btn btn-info btn-md employee-type" ng-click="report.employeeTypeFilter()" ng-model="report.employeeTypeMode.temporary" style="border-radius: 50px;" uib-btn-checkbox>ลูกจ้างชั่วคราว</label>
-          <label class="btn btn-info btn-md employee-type" ng-click="report.employeeTypeFilter()" ng-model="report.employeeTypeMode.probationary" style="border-radius: 50px;" uib-btn-checkbox>ลูกจ้างทดลองงาน</label>
-          <label class="btn btn-info btn-md employee-type" ng-click="report.employeeTypeFilter()" ng-model="report.employeeTypeMode.daily" style="border-radius: 50px;" uib-btn-checkbox>ลูกจ้างรายวัน</label>
+          <label class="btn btn-info btn-md employee-type" ng-click="report.employeeTypeFilter()" ng-model="report.employeeTypeMode.normal" style="border-radius: 50px;" uib-btn-checkbox>{{ "employee_full_time" | translate }}</label>
+          <label class="btn btn-info btn-md employee-type" ng-click="report.employeeTypeFilter()" ng-model="report.employeeTypeMode.temporary" style="border-radius: 50px;" uib-btn-checkbox>{{ "employee_part_time" | translate }}</label>
+          <label class="btn btn-info btn-md employee-type" ng-click="report.employeeTypeFilter()" ng-model="report.employeeTypeMode.probationary" style="border-radius: 50px;" uib-btn-checkbox>{{ "employee_probation" | translate }}</label>
+          <label class="btn btn-info btn-md employee-type" ng-click="report.employeeTypeFilter()" ng-model="report.employeeTypeMode.daily" style="border-radius: 50px;" uib-btn-checkbox>{{ "employee_daily" | translate }}</label>
         </div>
         <report-content model=report style="display-block"/>
       </div>

@@ -129,7 +129,7 @@ class StudentsController < ApplicationController
   # GET /students.json
   # GET /students.pdf
   def index
-    @menu = "นักเรียน"
+    @menu = t('student')
     authorize! :read, Student
 
     grade_select = (params[:grade_select] || 'All')
@@ -228,7 +228,7 @@ class StudentsController < ApplicationController
 
   # GET /students/new
   def new
-    @menu = "นักเรียน"
+    @menu = t('student')
     @student = Student.new
     @parents = Parent.all
     @relations = Relationship.all
@@ -237,7 +237,7 @@ class StudentsController < ApplicationController
 
   # GET /students/1/edit
   def edit
-    @menu = "นักเรียน"
+    @menu = t('student')
     @parents = Parent.all
     @relations = Relationship.all
 

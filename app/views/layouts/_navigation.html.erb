@@ -40,27 +40,25 @@
               <li class="dropdown-submenu">
                 <a tabindex="-1" href="#"><i class="fa fa-commenting-o"></i> Switch language</a>
                 <ul class="dropdown-menu">
-                  <li><a href="/?locale=th#"><img src="./switch_language/flag-thailand.png" alt="flag-thailand">&nbsp;&nbsp; ภาษาไทย</a></li>
+                  <li><a href="/language?locale=th"><img src="/switch_language/flag-thailand.png" alt="flag-thailand">&nbsp;&nbsp; ภาษาไทย</a></li>
                   <li class="divider"></li>
-                  <li><a href="/?locale=en#"><img src="./switch_language/flag-united-kingdom.png" alt="flag-thailand">&nbsp;&nbsp; English</a></li>
+                  <li><a href="/language?locale=en"><img src="/switch_language/flag-united-kingdom.png" alt="flag-thailand">&nbsp;&nbsp; English</a></li>
                 </ul>
               </li>
-              <% if current_page?("/") || ((SiteConfig.get_cache.enable_rollcall) && (Figaro.env.ROLLCALL_APK_URL)) %>
-                <li class="divider"></li>
-              <% end %>
-              <li><a class="dropdown-item" href="/main#/profile"><i class="fa fa-user" aria-hidden="true"></i></i> Profile</a></li>
+              <li class="divider"></li>
+              <li><a class="dropdown-item" href="/main#/profile"><i class="fa fa-user" aria-hidden="true"></i></i> <%= t("profile")%></a></li>
               <li class="divider"></li>
               <% if current_user.has_role?(:admin) %>
-                <li><a class="dropdown-item" href="/main#/setting"><i class="fa fa-cog"></i> Setting</a></li>
+                <li><a class="dropdown-item" href="/main#/setting"><i class="fa fa-cog"></i> <%= t("settings")%></a></li>
                 <li class="divider"></li>
               <% end %>
               <li><a class="dropdown-item" href="<%= destroy_user_session_path %>" rel="nofollow" data-method="DELETE">
-                <i class="fa fa-sign-out"></i> Sign Out</a></li>
+                <i class="fa fa-sign-out"></i> <%= t("sign_out")%></a></li>
             </div>
           <% else %>
 
             <li class="divider"></li>
-            <li><a class="nav-link" href="/"><i class="fa fa-sign-in"></i> Log In</a></li>
+            <li><a class="nav-link" href="/"><i class="fa fa-sign-in"></i> <%= t("log_in")%></a></li>
           <% end %>
         </ul>
     </div>

@@ -10,7 +10,7 @@
         ctrl.datas = resp.data;
         ctrl.datas.password = "password";
       });
-      
+
       $rootScope.loadAndAuthorizeResource("school", function(){
         ctrl.canUpdateSchool = true;
       },function(){});

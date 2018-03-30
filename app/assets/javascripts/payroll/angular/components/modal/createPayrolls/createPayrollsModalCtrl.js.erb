@@ -2,7 +2,7 @@
   'use strict';
   angular.module('somsri.payroll.create_payrolls_modal', [
   ])
-  .controller('createPayrollsModalCtrl', ['$uibModalInstance', '$state', '$log', 'createPayrollsModalService', '$rootScope', '$scope', function($uibModalInstance, $state, $log, service, $rootScope, $scope) {
+  .controller('createPayrollsModalCtrl', ['$uibModalInstance', '$state', '$log', 'createPayrollsModalService', '$rootScope', '$scope', 'translateFilter', function($uibModalInstance, $state, $log, service, $rootScope, $scope, translateFilter) {
     var ctrl = this;
     $rootScope.loadAndAuthorizeResource("payroll", function(){
       ctrl.isSaving = false
@@ -19,9 +19,9 @@
       ctrl.submit = function(){
         if(Date.parse(ctrl.effective_date)){
           if(isSameDate(ctrl.effective_date)){
-            $rootScope.openWarningModal("ไม่สามารถเลือกวันที่ออกเงินเดือนซ้ำได้");
+            $rootScope.openWarningModal(translateFilter("cannot_pay_out"));
           }else{
-            $rootScope.openConfirmationModal("คุณต้องการออกเงินเดือนหรือไม่?", function(){
+            $rootScope.openConfirmationModal(translateFilter("confirm_pay_out"), function(){
               ctrl.isSaving = true
               var params = { create: { effective_date: ctrl.effective_date }, option: {force_create: false} };
               service.createPayrolls(params).then(function(resp) {

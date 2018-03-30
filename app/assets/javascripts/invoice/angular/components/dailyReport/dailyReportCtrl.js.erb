@@ -2,8 +2,8 @@
   'use strict';
   angular.module('somsri.invoice.daily_report', [
   ])
-  .controller('dailyReportCtrl', ['$scope', '$http', '$rootScope', 'dailyReportService', function($scope, $http, $rootScope, service) {
-      $rootScope.menu = "นำส่งเงิน"
+    .controller('dailyReportCtrl', ['$scope', '$http', '$rootScope', 'dailyReportService', 'translateFilter', function($scope, $http, $rootScope, service, translateFilter) {
+    $rootScope.menu = translateFilter('delivery_note')
     var ctrl = this;
     $rootScope.loadAndAuthorizeResource("daily_report", function(){
       ctrl.title = 'Daily Report';

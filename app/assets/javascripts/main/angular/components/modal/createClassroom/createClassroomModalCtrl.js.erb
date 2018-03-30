@@ -2,7 +2,7 @@
   'use strict';
   angular.module('somsri.main.create_classroom_modal', [
     ])
-  .controller('createClassroomModalCtrl', ['$uibModalInstance', '$state', '$log', 'createClassroomModalService', function($uibModalInstance, $state, $log, service) {
+  .controller('createClassroomModalCtrl', ['$uibModalInstance', '$state', '$log', 'createClassroomModalService', 'translateFilter', function($uibModalInstance, $state, $log, service, translateFilter) {
     var ctrl = this;
     ctrl.fullname = ''
     ctrl.nickname = ''
@@ -24,7 +24,7 @@
       service.createClassroom({ grade_id: ctrl.grade_select.id, classroom: ctrl.classroom_name })
         .then(function(resp) {
         if(resp.data.dupplicate){
-          $('#dupplicate-warning').html("*มีห้องเรียนนี้ในระบบแล้ว")
+          $('#dupplicate-warning').html(translateFilter('classroom_is_exist'))
         }else{
           $uibModalInstance.close(resp.data);
         }

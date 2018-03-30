@@ -7,7 +7,7 @@
       <div class="row tool-top-payroll">
         <div class="col-md-6">
           <input type="hidden" id="time_zone">
-          <h3 class="text-h-payroll inline">ตารางเงินเดือน : </h3>
+          <h3 class="text-h-payroll inline">{{ "payroll_table" | translate }} : </h3>
           <div class="dropdown inline">
             <h3 id="month-list" data-toggle="dropdown" style="margin-top:10px;">
               <span ng-bind="payroll.currentDateString" role="button"></span>
@@ -27,7 +27,7 @@
             <i class="fa fa-print" aria-hidden="true"></i>
           </a>
           <a ng-hide="payroll.isClosedPayroll" class="btn btn-custom btn-orange" ng-click="payroll.createPayrolls()" href="javascript:void(0)">
-            ออกเงินเดือน
+            {{ "pay_out" | translate }}
           </a>
         </div>
       </div>
@@ -36,10 +36,10 @@
             <div class="col-md-12">
               <div class="pull-right">
                 <div class="btn-group filter-btn">
-                    <label class="btn btn-md employee-type" ng-click="payroll.employeeTypeFilter()" ng-model="payroll.employeeTypeMode.normal" style="border-radius: 50px;" uib-btn-checkbox>ลูกจ้างประจำ</label>
-                    <label class="btn btn-md employee-type" ng-click="payroll.employeeTypeFilter()" ng-model="payroll.employeeTypeMode.temporary" style="border-radius: 50px;" uib-btn-checkbox>ลูกจ้างชั่วคราว</label>
-                    <label class="btn btn-md employee-type" ng-click="payroll.employeeTypeFilter()" ng-model="payroll.employeeTypeMode.probationary" style="border-radius: 50px;" uib-btn-checkbox>ลูกจ้างทดลองงาน</label>
-                    <label class="btn btn-md employee-type" ng-click="payroll.employeeTypeFilter()" ng-model="payroll.employeeTypeMode.daily" style="border-radius: 50px;" uib-btn-checkbox>ลูกจ้างรายวัน</label>
+                    <label class="btn btn-md employee-type" ng-click="payroll.employeeTypeFilter()" ng-model="payroll.employeeTypeMode.normal" style="border-radius: 50px;" uib-btn-checkbox>{{ "employee_full_time" | translate }}</label>
+                    <label class="btn btn-md employee-type" ng-click="payroll.employeeTypeFilter()" ng-model="payroll.employeeTypeMode.temporary" style="border-radius: 50px;" uib-btn-checkbox>{{ "employee_part_time" | translate }}</label>
+                    <label class="btn btn-md employee-type" ng-click="payroll.employeeTypeFilter()" ng-model="payroll.employeeTypeMode.probationary" style="border-radius: 50px;" uib-btn-checkbox>{{ "employee_probation" | translate }}</label>
+                    <label class="btn btn-md employee-type" ng-click="payroll.employeeTypeFilter()" ng-model="payroll.employeeTypeMode.daily" style="border-radius: 50px;" uib-btn-checkbox>{{ "employee_daily" | translate }}</label>
                 </div>
               </div>
             </div>
@@ -49,8 +49,8 @@
                     <span class="gap"></span>
                 </div>
                 <div class="thead top">
-                    <span class="code">รหัส</span>
-                    <span class="name">ชื่อ</span>
+                    <span class="code">{{ "employee_code" | translate }}</span>
+                    <span class="name">{{ "employee_name" | translate }}</span>
                 </div>
                 <div class="tbody">
                     <div class="trow" ng-repeat="(index, employee) in payroll.employees" ng-mouseover="hoverIn(employee.code)" ng-class="{'hilight': sel==employee.code}">
@@ -65,7 +65,7 @@
                                 <strong>{{employee.name}}</strong>
                               </a>
 
-                              <button ng-show="employee.note" uib-popover-html="employee.note" popover-title="หมายเหตุ" type="button" class="btn btn-note-bell for-display" popover-class="note-popover for-display">
+                              <button ng-show="employee.note" uib-popover-html="employee.note" popover-title='{{ "note" | translate }}' type="button" class="btn btn-note-bell for-display" popover-class="note-popover for-display">
                                 <i class="fa fa-bell" aria-hidden="true"></i>
                               </button>
 
@@ -74,7 +74,7 @@
                         </span>
                     </div>
                     <div class="trow tfoot">
-                      <span class="text_total_tfoot"><strong>รวมทั้งหมด</strong></span>
+                      <span class="text_total_tfoot"><strong>{{ "total" | translate }}</strong></span>
                     </div>
                     <div class="trow tfoot">
                       <span class="free-space-table" style="width: 370px;"></span>
@@ -83,24 +83,24 @@
             </div>
             <div class="rest-columns">
                 <div class="theadtop">
-                    <span class="income">รายการได้</span><span class="expenses">รายการหัก</span><span class="total"></span>
+                    <span class="income">{{ "income_list" | translate }}</span><span class="expenses">{{ "outcome_list" | translate }}</span><span class="total"></span>
                 </div>
                 <div class="thead top">
-                    <span>เงินเดือน</span>
-                    <span>เงินสอนพิเศษ</span>
-                    <span>ค่าตำแหน่ง</span>
-                    <span>เบี้ยเลี้ยง</span>
-                    <span>เบี้ยขยัน</span>
-                    <span>โบนัส</span>
-                    <span>อื่นๆ</span>
-                    <span>ขาดงาน</span>
-                    <span>สาย</span>
-                    <span>ภาษี</span>
-                    <span>ประกันสังคม</span>
-                    <span>เงินสะสม</span>
-                    <span>เบิกล่วงหน้า</span>
-                    <span>อื่นๆ</span>
-                    <span>เงินเดือนสุทธิ</span>
+                    <span>{{ "salary" | translate }}</span>
+                    <span>{{ "ot" | translate }}</span>
+                    <span>{{ "position_allowance" | translate }}</span>
+                    <span>{{ "allowance" | translate }}</span>
+                    <span>{{ "attendance_bonus" | translate }}</span>
+                    <span>{{ "bonus" | translate }}</span>
+                    <span>{{ "extra_etc" | translate }}</span>
+                    <span>{{ "absence" | translate }}</span>
+                    <span>{{ "late" | translate }}</span>
+                    <span>{{ "tax" | translate }}</span>
+                    <span>{{ "social_insurance" | translate }}</span>
+                    <span>{{ "pvf" | translate }}</span>
+                    <span>{{ "advance_payment" | translate }}</span>
+                    <span>{{ "fee_etc" | translate }}</span>
+                    <span>{{ "net_salary" | translate }}</span>
                 </div>
 
                 <div class="tbody" id="scrollbar-payroll">

@@ -14,6 +14,28 @@ class HomeController < ApplicationController
   def changelog
   end
 
+  def language
+    session['locale'] = params[:locale] || I18n.default_locale
+    I18n.locale = session['locale']
+    redirect_to request.referer
+  end
+
+  def locale
+    default_lang = I18n.locale.to_s
+    lang = params[:lang] || default_lang
+    yml_path = Rails.root.join('config/locales', "#{lang}.yml")
+
+    unless File.exist?(yml_path)
+      lang = default_lang
+      yml_path = Rails.root.join('config/locales', "#{lang}.yml")
+    end
+
+    lang_file = File.read(yml_path)
+    lang_json = JSON.pretty_generate(YAML.load(lang_file)[lang])
+
+    render json: lang_json
+  end
+
   # /auth_api?id_token=STRING
   def auth_api
     pin = params['pin']

@@ -140,7 +140,7 @@ describe 'Classroom', js: true do
     find("a[" + onclick + "]").click
     sleep(1)
     click_button("ตกลง")
-
+    sleep(1)
     eventually { expect(page).to_not have_content("1A 1 2") }
     eventually { expect(page).to have_content("1B 0 0") }
     eventually { expect(page).to have_content("2A 0 1") }

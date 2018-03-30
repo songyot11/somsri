@@ -3,7 +3,7 @@
     <div class="row head-menu">
       <div class="col-md-6">
         <div class="col-xs-2">
-          <h3>ระดับชั้น</h3>
+          <h3>{{ 'level' | translate }}</h3>
         </div>
         <div class="col-xs-9">
           <div class="dropdown">
@@ -14,7 +14,7 @@
             <ul class="dropdown-menu" aria-labelledby="grade-list">
               <li ng-repeat="grade in studentReport.grades">
                 <a class="blue-highlight" ng-click="studentReport.switchGrade(grade.name)">
-                  {{ grade.name }}
+                  {{ grade.name | translate }}
                 </a>
               </li>
             </ul>
@@ -33,7 +33,7 @@
           <div class="col-md-12 dropdown-filter">
             <div class="dropdown pull-right">
               <h4 id="year-list" class="dropdown-label" data-toggle="dropdown">
-                <strong>ปีการศึกษา</strong> <span ng-bind="studentReport.currentYearString" ></span>
+                <strong>{{ 'school_year' | translate }}</strong> <span ng-bind="studentReport.currentYearString" ></span>
                 <i class="fa fa-angle-down" aria-hidden="true"></i>
               </h4>
               <ul class="dropdown-menu" aria-labelledby="year-list">
@@ -44,7 +44,7 @@
             </div>
             <div class="dropdown pull-right mr-20">
               <h4 id="semester-list" class="dropdown-label" data-toggle="dropdown">
-              <strong>ภาคการเรียน</strong> <span ng-bind="studentReport.currentSemesterString" ></span>
+              <strong>{{ 'semester' | translate }}</strong> <span ng-bind="studentReport.currentSemesterString" ></span>
                 <i class="fa fa-angle-down" aria-hidden="true"></i>
               </h4>
               <ul class="dropdown-menu" aria-labelledby="semester-list">
@@ -54,15 +54,15 @@
                   </a>
                 </li>
                 <li>
-                  <a class="blue-highlight" ng-click="studentReport.switchSemester('อื่นๆ')">
-                    ไม่ระบุภาคการเรียน
+                  <a class="blue-highlight" ng-click="studentReport.switchSemester('other')">
+                    {{ 'semester_nofix' | translate }}
                   </a>
                 </li>
               </ul>
             </div>
             <div class="dropdown pull-right mr-20" >
               <h4 id="semester-list" class="dropdown-label" data-toggle="dropdown">
-                <strong>สถานะการชำระ</strong> <span ng-bind="studentReport.invoiceFilterString" ></span>
+                <strong>{{ 'payment_status' | translate }}</strong> <span ng-bind="studentReport.invoiceFilterString" ></span>
                 <i class="fa fa-angle-down" aria-hidden="true"></i>
               </h4>
               <ul class="dropdown-menu" aria-labelledby="semester-list">
@@ -78,19 +78,19 @@
         <table id="tableHeader" class="table scrollable-header">
           <thead>
            <tr>
-              <th>รหัส</th>
-              <th>ชื่อ</th>
-              <th>ชั้น</th>
-              <th>ห้อง</th>
-              <th>เลขที่</th>
-              <th>ผู้ปกครอง</th>
-              <th>สถานะ</th>
-              <th>ชำระโดย</th>
-              <th class='text-currency'>ค่าธรรมเนียมการศึกษา</th>
-              <th class='text-currency'>ค่าใช้จ่ายอื่นๆ</th>
-              <th class='text-currency bold'>ยอดชำระ</th>
-              <th class='text-currency bold'>ยอดชำระทั้งปี</th>
-              <th>วันที่ชำระ</th>
+              <th>{{ 'code' | translate }}</th>
+              <th>{{ 'name' | translate }}</th>
+              <th>{{ 'level' | translate }}</th>
+              <th>{{ 'room' | translate }}</th>
+              <th>{{ 'number1' | translate }}</th>
+              <th>{{ 'parent' | translate }}</th>
+              <th>{{ 'status' | translate }}</th>
+              <th>{{ 'paid_by' | translate }}</th>
+              <th class='text-currency'>{{ 'tuition_fee' | translate }}</th>
+              <th class='text-currency'>{{ 'other_cost' | translate }}</th>
+              <th class='text-currency bold'>{{ 'paid_amount' | translate }}</th>
+              <th class='text-currency bold'>{{ 'year_paid_amount' | translate }}</th>
+              <th>{{ 'paid_date' | translate }}</th>
            </tr>
           </thead>
             <tbody>
@@ -106,7 +106,7 @@
                     </a>
                   </div>
                 </td>
-                <td>{{student.grade_name}}</td>
+                <td>{{student.grade_name | translate}}</td>
                 <td>{{student.classroom}}</td>
                 <td class="numberic">{{student.classroom_number}}</td>
                 <td>{{student.parent_names}}</td>
@@ -122,7 +122,7 @@
             <tfoot>
               <tr>
                 <td colspan="5"></td>
-                <td colspan="3">รวมยอดชำระทั้งหมด(บาท) :</td>
+                <td colspan="3">{{ 'total_paid' | translate }} :</td>
                 <td class="text-currency numberic">{{studentReport.total.tuition_fee.toFixed(2) | number:2}}</td>
                 <td class="text-currency numberic">{{studentReport.total.other_fee.toFixed(2) | number:2}}</td>
                 <td class="text-currency numberic">{{studentReport.total.amount.toFixed(2) | number:2}}</td>

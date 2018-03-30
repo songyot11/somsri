@@ -77,7 +77,7 @@ describe 'Classroom Create Teacher', js: true do
     eventually { expect(page).to have_content("นาย สมจิตร เป็นนักมวย") }
     eventually { expect(page).to have_content("นาง สมใจ เป็นคน") }
     click_button("+ สร้างคุณครูใหม่")
-    sleep(1)
+    sleep(1.5)
     within('div#create-member-modal') do
       eventually { expect(page).to have_content("สร้างคุณครูใหม่") }
       fill_in "ชื่อ - นามสกุล",  with: "นางสาว ครูใหม่ ไฟแรง"
