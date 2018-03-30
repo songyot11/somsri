@@ -178,6 +178,9 @@ th:
   delivery_note: "นำส่งเงิน"
   payment_report: "รายงานการชำระ"
   classification_report: "รายงานแยกตามประเภท"
+  grade: "ชั้น"
+  item_no: "ลำดับที่"
+  item_desc: "รายการ"
 
   invoice_form: "แบบชำระเงิน"
   date1: "วันที่"

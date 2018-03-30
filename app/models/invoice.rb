@@ -62,7 +62,7 @@ class Invoice < ApplicationRecord
   end
 
   def status_name
-    self.invoice_status.name == 'Active' ? 'ชำระแล้ว' : 'ยกเลิก'
+    self.invoice_status.name == 'Active' ? I18n.t('paid') : I18n.t('cancel')
   end
 
   def is_cancel

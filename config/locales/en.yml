@@ -178,7 +178,10 @@ en:
   delivery_note: "Daily Report"
   payment_report: "Payment Report"
   classification_report: "Detailed Payment Report"
-
+  grade: "Grade"
+  item_no: "No."
+  item_desc: "Description"
+  
   invoice_form: "Invoice"
   date1: "Date"
   student_id1: "Student ID"

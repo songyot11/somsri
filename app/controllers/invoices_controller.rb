@@ -272,7 +272,7 @@ class InvoicesController < ApplicationController
       eng_now_date: @invoice.created_at.strftime("%d %B %Y"),
       semester: @invoice.semester,
       school_year: @invoice.school_year,
-      school_year_thai: (@invoice.school_year.to_i - 543).to_s,
+      school_year_en: (@invoice.school_year.to_i - 543).to_s,
       payment_methods: [],
       remark: @invoice.remark,
       grade_name: grade_name,
