@@ -30,3 +30,4 @@
     target: '#mainNav',
     offset: 54
   });
+});
