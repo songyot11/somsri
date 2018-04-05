@@ -82,7 +82,7 @@ class PayrollsController < ApplicationController
               @effective_date_str = to_thai_date(effective_date).join(" ")
             else
               filename = "เงินเดือน-เดือนปัจจุบัน"
-              @effective_date_str = "เดือนปัจจุบัน"
+              @effective_date_str = "t('outcome_list') "
             end
           end
           render pdf: filename,

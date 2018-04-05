@@ -21,6 +21,7 @@
 
 en:
   #Payroll
+  emp_name : Name
   find : Search
   current_month : Current Month
   title : Somsri - Management system for school
