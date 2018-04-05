@@ -21,6 +21,7 @@
 
 th:
   #Payroll
+  find : ค้นหา
   current_month : เดือนปัจจุบัน
   title : สมศรี - ระบบบริหารโรงเรียน 4.0
   export: Export

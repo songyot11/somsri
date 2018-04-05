@@ -21,6 +21,7 @@
 
 en:
   #Payroll
+  find : Search
   current_month : Current Month
   title : Somsri - Management system for school
   export: Export
