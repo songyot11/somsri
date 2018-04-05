@@ -21,6 +21,7 @@
 
 en:
   #Payroll
+  current_month : CurrentMonth
   title : Somsri - Management system for school
   export: Export
   salary: Salary
