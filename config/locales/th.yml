@@ -21,6 +21,7 @@
 
 th:
   #Payroll
+  title : สมศรี - ระบบบริหารโรงเรียน 4.0
   export: Export
   salary: เงินเดือน
   current_payroll: "ค่าแรง / เงินเดือนปัจจุบัน"

@@ -21,6 +21,7 @@
 
 en:
   #Payroll
+  title : Somsri - Management system for school
   export: Export
   salary: Salary
   current_payroll: "Wage / Salary"
