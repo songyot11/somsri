@@ -30,7 +30,7 @@ describe 'Abilities', js: true do
       visit "/?locale=en#"
       sleep(1)
       expect(page).to have_current_path '/?locale=en#'
-      expect(page).to have_content 'Payrolls Invoices Rollcalls Employees Parents Student'
+      expect(page).to have_content 'Payroll Invoice Attendance Employee Parent Student Alumnu'
     end
 
     it 'can goto payroll menu' do

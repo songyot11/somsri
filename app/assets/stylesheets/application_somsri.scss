@@ -22,6 +22,10 @@ body {
   min-width: 80px !important;
 }
 
+.min-w-100 {
+  min-width: 80px !important;
+}
+
 .min-w-150 {
   min-width: 150px !important;
 }
@@ -44,6 +48,10 @@ body {
 
 .min-w-50 {
   min-width: 50px !important;
+}
+
+.min-w-100 {
+  min-width: 100px !important;
 }
 
 .min-h-45 {
@@ -273,6 +281,10 @@ body {
   margin-top: 100px !important;
 }
 
+.top-45p {
+  top: 45% !important;
+}
+
 .border-1 {
   border: solid 1px !important;
 }
@@ -357,6 +369,10 @@ body {
   page-break-after: always !important;
 }
 
+.overflow-hidden {
+  overflow: hidden !important;
+}
+
 .btn-custom {
   font-family: 'Maitree', serif;
   font-size: 16px;
@@ -375,7 +391,7 @@ body {
 }
 
 .color-green {
-  color: #5bab67;
+  color: #5bab67 !important;
 }
 
 .color-red {
@@ -387,7 +403,11 @@ body {
 }
 
 .color-orange {
-  color: #FFAB04;
+  color: #FFAB04 !important;
+}
+
+.color-gray {
+  color: #9D9D9D !important;
 }
 
 .btn-green {

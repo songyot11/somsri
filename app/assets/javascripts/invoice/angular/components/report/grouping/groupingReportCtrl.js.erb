@@ -23,12 +23,20 @@
       }
 
       ctrl.isDisplay = function(column_name){
-        if(ctrl.datas && ctrl.datas.rows && ctrl.datas.rows[0]){
+        if(!ctrl.isNoData()){
           if(ctrl.datas.rows[0][column_name]){
             return true
           }else{
             return false
           }
+        }
+      }
+
+      ctrl.isNoData = function(){
+        if(ctrl.datas && ctrl.datas.rows && ctrl.datas.rows[0] && ctrl.datas.rows[0]["datas"]){
+          return false
+        }else{
+          return true
         }
       }
 

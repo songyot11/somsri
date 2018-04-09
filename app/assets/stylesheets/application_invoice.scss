@@ -2071,3 +2071,15 @@ ul.rich-autocomplete-list{
   width: 20%;
   margin-left: -10px;
 }
+
+#invoice_grouping_report #nodata-table tbody td{
+  height: calc(100vh - 500px);
+  padding: 40px;
+}
+
+#invoice_grouping_report #nodata-table tbody td div {
+  position: absolute;
+  left: 45%;
+  top: 50%;
+  font-size: 30px;
+}

@@ -75,7 +75,7 @@
             </div>
           </div>
         </div>
-        <div class="table-responsive">
+        <div class="table-responsive" ng-hide="groupingReport2.isNoData()">
           <div class="col-xs-12 dropdown-filter">
             <table id="tableHeader" class="table scrollable-header grop-items-invoice">
               <thead>
@@ -108,6 +108,50 @@
                   <td ng-show="groupingReport2.getReportMode() == 'per_student'" colspan="3" class="text-center">{{ 'total' | translate }}</td>
                   <td ng-show="groupingReport2.getReportMode() == 'per_invoice'" colspan="4" class="text-center">{{ 'total' | translate }}</td>
                   <td ng-show="groupingReport2.getReportMode() == 'per_day'" class="text-center">{{ 'total' | translate }}</td>
+                  <td ng-repeat="total in groupingReport2.datas.total track by $index" class="text-currency numberic">{{total.toFixed(2) | number:2}}</td>
+                </tr>
+              </tfoot>
+            </table>
+          </div>
+        </div>
+        <div class="table-responsive overflow-hidden" ng-show="groupingReport2.isNoData()">
+          <div class="col-xs-12 dropdown-filter">
+            <table id="nodata-table" class="table scrollable-header grop-items-invoice">
+              <thead ng-if="groupingReport2.getReportMode() == 'per_student'">
+               <tr>
+                 <th>Invoice</th>
+                 <th class="first-column-th">ชื่อ</th>
+                 <th class="first-column-classroom">ชั้น</th>
+                 <th ng-repeat="header in groupingReport2.datas.header track by $index"class="another-column-th">{{ header }}</th>
+               </tr>
+              </thead>
+              <thead ng-if="groupingReport2.getReportMode() == 'per_invoice'">
+               <tr>
+                 <th>Invoice</th>
+                 <th class="min-w-50">วันที่</th>
+                 <th class="first-column-th">ชื่อ</th>
+                 <th class="first-column-classroom">ชั้น</th>
+                 <th ng-repeat="header in groupingReport2.datas.header track by $index"class="another-column-th">{{ header }}</th>
+               </tr>
+              </thead>
+              <thead ng-if="groupingReport2.getReportMode() == 'per_day'">
+               <tr>
+                 <th class="min-w-50">วันที่</th>
+                 <th ng-repeat="header in groupingReport2.datas.header track by $index"class="another-column-th">{{ header }}</th>
+               </tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td class="border-1" colspan="99">
+                    <div class="color-gray top-45p">ไม่พบข้อมูล</div>
+                  </td>
+                </tr>
+              </tbody>
+              <tfoot>
+                <tr>
+                  <td ng-show="groupingReport2.getReportMode() == 'per_student'" colspan="3" class="text-center">รวมทั้งหมด</td>
+                  <td ng-show="groupingReport2.getReportMode() == 'per_invoice'" colspan="4" class="text-center">รวมทั้งหมด</td>
+                  <td ng-show="groupingReport2.getReportMode() == 'per_day'" class="text-center">รวมทั้งหมด</td>
                   <td ng-repeat="total in groupingReport2.datas.total track by $index" class="text-currency numberic">{{total.toFixed(2) | number:2}}</td>
                 </tr>
               </tfoot>
