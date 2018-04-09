@@ -33,12 +33,12 @@
             <div class="dropdown-menu on-nav-bar" aria-labelledby="navbarDropdownMenuLink">
               <% if (SiteConfig.get_cache.enable_rollcall) && (Figaro.env.ROLLCALL_APK_URL) %>
                 <li><a class="dropdown-item" href="<%= Figaro.env.ROLLCALL_APK_URL %>" target="_blank">
-                <i class="fa fa-download"></i> Download Rollcall</a></li>
+                <i class="fa fa-download"></i> <%= t("roll_download")%> </a></li>
                 <li class="divider"></li>
               <% end %>
 
               <li class="dropdown-submenu">
-                <a tabindex="-1" href="#"><i class="fa fa-commenting-o"></i> Switch language</a>
+                <a tabindex="-1" href="#"><i class="fa fa-commenting-o"></i> <%= t("switch_language")%></a>
                 <ul class="dropdown-menu">
                   <li><a href="/language?locale=th"><img src="/switch_language/flag-thailand.png" alt="flag-thailand">&nbsp;&nbsp; ภาษาไทย</a></li>
                   <li class="divider"></li>

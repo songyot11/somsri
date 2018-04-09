@@ -21,6 +21,8 @@
 
 th:
   #Payroll
+  roll_download : ดาวน์โหลดโปรแกรมเช็คชื่อ
+  switch_language : เปลี่ยนภาษา
   emp_name : ชื่อ
   find : ค้นหา
   current_month : เดือนปัจจุบัน

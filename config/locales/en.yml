@@ -21,6 +21,8 @@
 
 en:
   #Payroll
+  roll_download : Download Rollcall
+  switch_language : Switch language 
   emp_name : Name
   find : Search
   current_month : Current Month
