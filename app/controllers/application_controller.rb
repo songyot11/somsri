@@ -45,6 +45,11 @@ class ApplicationController < ActionController::Base
     response.headers["Expires"] = "Fri, 01 Jan 1990 00:00:00 GMT"
   end
 
+  def flash_message_list(message_list)
+    html = message_list.collect { |obj| "<li>#{obj}</li>" }.join('')
+    return "<u>#{html}</u>"
+  end
+
   protected
     def verified_request?
       super || valid_authenticity_token?(session, request.headers['X-XSRF-TOKEN'])

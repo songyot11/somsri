@@ -1253,14 +1253,6 @@ a:not([href]):not([tabindex]){
   box-shadow: 0 5px 13px 0 rgba(0, 0, 0, 0.3);
   padding: 30px;
 }
-#student-index .row.head-sp {
-  padding-top: 0px;
-  border: none;
-  margin-top: 100px;
-  color: #5b5b5b;
-  margin-right: 0px !important;
-  margin-left: 0px;
-}
 
 .row.head-sp {
   padding-top: 0px;
@@ -1520,12 +1512,17 @@ a#student_remove,a#parent_archive  {
 .bootstrap-select:not([class*="col-"]):not([class*="form-control"]):not(.input-group-btn) {
   width: 160px !important;
 }
-#parent-index .btn-default,
-#parent-index .btn-default:hover,
-#parent-index .btn-default:focus{
-  border: inherit !important;
-  background-color: transparent;
+
+#parent-index,
+#student-index{
+  .btn-default,
+  .btn-default:hover,
+  .btn-default:focus {
+    border: inherit !important;
+    background-color: transparent;
+  }
 }
+
 .bootstrap-select.btn-group .dropdown-menu li a{
   &:hover{
     color: #fff;
@@ -1536,28 +1533,51 @@ a#student_remove,a#parent_archive  {
     background-color: #3fa1e6;
   }
 }
-#parent-index .pull-left.pagination-detail {
-  display: none;
+
+#parent-index,
+#student-index{
+  .pull-left.pagination-detail {
+    display: none;
+  }
 }
-#parent-index .pull-right.pagination{
-  float: inherit !important;
+
+#parent-index,
+#student-index{
+  .pull-right.pagination {
+    float: inherit !important;
+  }
 }
-#parent-index  .fixed-table-pagination{
-  text-align: center;
-  margin-top: 15px;
+#parent-index,
+#student-index{
+  .fixed-table-pagination {
+    text-align: center;
+    margin-top: 15px;
+  }
 }
-#parent-index .fixed-table-body {
-  margin-top: 30px;
-  font-size: 1.2em;
+#parent-index,
+#student-index{
+  .fixed-table-body {
+    margin-top: 30px;
+    font-size: 1.2em;
+  }
 }
-#parent-index .fixed-table-toolbar {
-  font-size: 1.2em;
+#parent-index,
+#student-index{
+  .fixed-table-toolbar {
+    font-size: 1.2em;
+  }
 }
-#parent-index .bootstrap-select.btn-group .dropdown-toggle .filter-option{
-  font-size: 1.2em;
+#parent-index,
+#student-index{
+  .bootstrap-select.btn-group .dropdown-toggle .filter-option {
+    font-size: 1.2em;
+  }
 }
-#parent-index .pagination>li .disabled>a{
-  cursor: not-allowed;
+#parent-index ,
+#student-index {
+  .pagination>li .disabled>a {
+    cursor: not-allowed;
+  }
 }
 
 .search{
@@ -1676,7 +1696,9 @@ label.img-default{
     font-size: 16px;
   }
 }
-
+.only-print {
+  display: none;
+}
 
 // For print
 @page {
@@ -1842,7 +1864,76 @@ label.img-default{
   .text-table-invoicereport{
     font-size: 11px !important;
   }
+  @media print {
+    .only-view {
+      display: none !important;
+    }
+    .only-print {
+      display: block;
+    }
+    table,
+    th,
+    td {
+      border: 1px solid black;
+    }
+    .pagebreak {
+      page-break-before: always;
+    }
+    body {
+      margin-bottom: 0px !important;
+      margin-top: 0px !important;
+    }
+    body>.container-fluid {
+      padding: 0px !important;
+    }
+    #student-list-for-print .list-page {
+      padding: 50px;
+    }
+    #student-list-for-print th {
+      padding: 10px;
+    }
+    #student-list-for-print td {
+      padding: 3px;
+    }
+    .list-page {
+      font-size: 18px;
+    }
+    #student-list-header {
+      font-size: 18px;
+      font-weight: bold;
+    }
+    .alert {
+      display: none;
+    }
+    .student-list-with-img .body-list {
+      padding-top: 20px;
+      padding-bottom: 20px;
+      padding-right: 10px;
+      padding-left: 10px;
+    }
+    .student-list-with-img .item-list {
+      padding: 10px;
+    }
+  }
 
+  .btn-to-print-student,
+  .btn-to-print-student:focus {
+    margin-bottom: 20px;
+    padding: 16px 32px;
+    font-weight: lighter;
+    background-color: #5b5b5b;
+    border: 2px solid #5b5b5b;
+    color: #fff;
+    font-size: 16px;
+    border-radius: 0px;
+    cursor: pointer;
+    transition: all 0.25s ease;
+    &:hover {
+      color: #5b5b5b;
+      background-color: transparent;
+      border: 2px solid #5b5b5b;
+    }
+  }
 }
 .btn-exportBs,
 .btn-exportBs:focus{
@@ -1883,7 +1974,8 @@ label.img-default{
     border: 2px solid #00D2D7;
   }
 }
-#table > tbody > tr > td:nth-child(1){
+#parent-index #table>tbody>tr>td:nth-child(1),
+#student-index #table>tbody>tr>td:nth-child(2) {
   width: 50px;
 }
 .icon-default-img{

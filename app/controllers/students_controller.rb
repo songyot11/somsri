@@ -214,7 +214,7 @@ class StudentsController < ApplicationController
     else
       @students.to_a
       respond_to do |f|
-        f.html { render "students/index", layout: "application" }
+        f.html { render "students/index", layout: "application_invoice" }
         f.json {
           render json: {
             total: @students.count,
@@ -254,15 +254,23 @@ class StudentsController < ApplicationController
       relation_assign
       respond_to do |format|
         format.html do
-          flash[:success] = "เพิ่มนักเรียนเรียบร้อยแล้ว"
+          flash[:notice] = {
+            type: "alert",
+            message: I18n.t('student_info_success_save')
+          }
           redirect_to students_url
         end
         format.json { render :show, status: :created, location: @student }
       end
     else
       @relations = Relationship.all
+      flash[:error] = {
+        type: "panel",
+        message: flash_message_list(@student.errors.full_messages.uniq),
+        title: I18n.t('student_info_cannot_save')
+      }
       respond_to do |format|
-        format.html { render :new }
+        format.html { redirect_to new_student_path }
         format.json { render json: @student.errors, status: :unprocessable_entity }
       end
     end
@@ -276,13 +284,21 @@ class StudentsController < ApplicationController
       if @student.update(student_params)
         relation_assign
         format.html do
-          flash[:success] = "แก้ไขข้อมูลนักเรียนเรียบร้อยแล้ว"
+          flash[:notice] = {
+            type: "alert",
+            message: I18n.t('student_info_success_save')
+          }
           redirect_to students_url
         end
         format.json { render :show, status: :ok, location: @student }
       else
         @relations = Relationship.all
-        format.html { render :edit }
+        flash[:error] = {
+          type: "panel",
+          message: flash_message_list(@student.errors.full_messages.uniq),
+          title: I18n.t('student_info_cannot_save')
+        }
+        format.html { redirect_to edit_student_path }
         format.json { render json: @student.errors, status: :unprocessable_entity }
       end
     end
@@ -292,6 +308,10 @@ class StudentsController < ApplicationController
   # DELETE /students/1.json
   def destroy
     @student.destroy
+    flash[:notice] = {
+      type: "alert",
+      message: I18n.t('student_delete_success')
+    }
     respond_to do |format|
       format.html { redirect_to students_path }
       format.json { head :no_content }
@@ -317,6 +337,10 @@ class StudentsController < ApplicationController
   # /students/:id/graduate
   def graduate
     @student = Student.find(params[:id]).graduate
+    flash[:notice] = {
+      type: "alert",
+      message: I18n.t('student_graduated_success')
+    }
     respond_to do |format|
       format.html { redirect_to students_path }
       format.json { head :no_content }
@@ -326,6 +350,10 @@ class StudentsController < ApplicationController
   # /students/:id/resign
   def resign
     @student = Student.find(params[:id]).resign
+    flash[:notice] = {
+      type: "alert",
+      message: I18n.t('student_resigned_success')
+    }
     respond_to do |format|
       format.html { redirect_to students_path }
       format.json { head :no_content }

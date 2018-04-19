@@ -49,16 +49,27 @@ class ParentsController < ApplicationController
   def create
     @parent = Parent.new(parent_params)
     student_assign
-    respond_to do |format|
-      if @parent.save
-        relation_assign
+    if @parent.save
+      relation_assign
+      respond_to do |format|
         format.html do
-          flash[:success] = "เพิ่มผู้ปกครองเรียบร้อยแล้ว"
+          flash[:notice] = {
+            type: "alert",
+            message: I18n.t('parent_info_success_save')
+          }
           redirect_to parents_url
         end
         format.json { render :show, status: :created, location: @parent }
-      else
-        format.html { render :new }
+      end
+    else
+      @relations = Relationship.all
+      flash[:error] = {
+        type: "panel",
+        message: flash_message_list(@parent.errors.full_messages.uniq),
+        title: I18n.t('parent_info_cannot_save')
+      }
+      respond_to do |format|
+        format.html { redirect_to new_parent_path }
         format.json { render json: @parent.errors, status: :unprocessable_entity }
       end
     end
@@ -72,12 +83,21 @@ class ParentsController < ApplicationController
       if @parent.update(parent_params)
         relation_assign
         format.html do
-          flash[:success] = "แก้ไขข้อมูลผู้ปกครองเรียบร้อยแล้ว"
+          flash[:notice] = {
+            type: "alert",
+            message: I18n.t('parent_info_success_save')
+          }
           redirect_to parents_url
         end
         format.json { render :show, status: :ok, location: @parent }
       else
-        format.html { render :edit }
+        @relations = Relationship.all
+        flash[:error] = {
+          type: "panel",
+          message: flash_message_list(@parent.errors.full_messages.uniq),
+          title: I18n.t('parent_info_cannot_save')
+        }
+        format.html { redirect_to edit_parent_path }
         format.json { render json: @parent.errors, status: :unprocessable_entity }
       end
     end
@@ -87,6 +107,10 @@ class ParentsController < ApplicationController
   # DELETE /parents/1.json
   def destroy
     @parent.destroy
+    flash[:notice] = {
+      type: "alert",
+      message: I18n.t('parent_delete_success')
+    }
     respond_to do |format|
       format.html { redirect_to parents_url}
       format.json { head :no_content }

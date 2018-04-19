@@ -37,7 +37,8 @@
         <%= render 'layouts/navigation' %>
       </header>
       <div class="container-fluid">
-          <%= yield %>
+        <%= render 'layouts/flash_message' %>
+        <%= yield %>
       </div>
     </body>
 </html>

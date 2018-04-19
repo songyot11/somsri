@@ -181,7 +181,7 @@ en:
   grade: "Grade"
   item_no: "No."
   item_desc: "Description"
-  
+
   invoice_form: "Invoice"
   date1: "Date"
   student_id1: "Student ID"
@@ -373,10 +373,17 @@ en:
   exit_without_save: "Do you want to leave screen?"
   new_parent: "Add parent"
   new_student: "+ Add student"
+  parent_info_cannot_save: "Cannot save parent information : "
+  parent_info_success_save: "Parent save successfully"
+  parent_delete_success: "Parent delete successfully"
 
   #Students
   add_parent: "+ Add parent"
   student_info_cannot_save: "Cannot save student information : "
+  student_info_success_save: "Student save successfully"
+  student_delete_success: "Student delete successfully"
+  student_resigned_success: "Change student's status to resigned successfully"
+  student_graduated_success: "Change student's status to graduated successfully"
   invoice: "Invoice #"
   school_year: "Academic year"
   term: "Semester"

@@ -373,10 +373,17 @@ th:
   exit_without_save: "คุณต้องการออกจากหน้านี้โดยไม่บันทึกค่าหรือไม่?"
   new_parent: "เพิ่มผู้ปกครองใหม่"
   new_student: "+ เพิ่มชื่อนักเรียน"
+  parent_info_cannot_save: "ข้อมูลของผู้ปกครองไม่สามารถบันทึกได้ : "
+  parent_info_success_save: "บันทึกผู้ปกครองสำเร็จ"
+  parent_delete_success: "ลบผู้ปกครองสำเร็จ"
 
   #Students
   add_parent: "+ เพิ่มชื่อผู้ปกครอง"
   student_info_cannot_save: "ข้อมูลของนักเรียนไม่สามารถบันทึกได้ : "
+  student_info_success_save: "บันทึกนักเรียนสำเร็จ"
+  student_delete_success: "ลบนักเรียนสำเร็จ"
+  student_resigned_success: "เปลี่ยนสถานะนักเรียนเป็นลาออกสำเร็จ"
+  student_graduated_success: "เปลี่ยนสถานะนักเรียนเป็นจบการศึกษาสำเร็จ"
   invoice: "Invoice #"
   school_year: "ปีการศึกษา"
   term: "ภาคเรียนที่"

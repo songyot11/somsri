@@ -1,0 +1,46 @@
+<div class="container mt-10">
+  <% if flash[:error] && flash[:error]["type"] == "panel" %>
+    <div id="error_expl" class="panel panel-danger">
+      <div class="panel-heading">
+        <h3 class="panel-title"><%= flash[:error]["title"].html_safe %></h3>
+        <button type="button" class="close" data-target="#error_expl" data-dismiss="alert" style="margin-top: -15px;">
+          <span aria-hidden="true">&times;</span>
+          <span class="sr-only">Close</span>
+        </button>
+      </div>
+      <div class="panel-body">
+        <%= flash[:error]["message"].html_safe %>
+      </div>
+    </div>
+  <% end %>
+  <% if flash[:notice] && flash[:notice]["type"] == "panel" %>
+    <div id="error_expl" class="panel panel-success">
+      <div class="panel-heading">
+        <h3 class="panel-title"><%= flash[:notice]["title"].html_safe %></h3>
+        <button type="button" class="close" data-target="#error_expl" data-dismiss="alert" style="margin-top: -15px;">
+          <span aria-hidden="true">&times;</span>
+          <span class="sr-only">Close</span>
+        </button>
+      </div>
+      <div class="panel-body">
+        <%= flash[:notice]["message"].html_safe %>
+      </div>
+    </div>
+  <% end %>
+  <% if flash[:error] && flash[:error]["type"] == "alert" %>
+    <div class="alert alert-danger alert-dismissible" role="alert">
+      <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+        <span aria-hidden="true">&times;</span>
+      </button>
+      <%= flash[:error]["message"].html_safe %>
+    </div>
+  <% end %>
+  <% if flash[:notice] && flash[:notice]["type"] == "alert" %>
+    <div class="alert alert-success alert-dismissible" role="alert">
+      <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+        <span aria-hidden="true">&times;</span>
+      </button>
+      <%= flash[:notice]["message"].html_safe %>
+    </div>
+  <% end %>
+</div>

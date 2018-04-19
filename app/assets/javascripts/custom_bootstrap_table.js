@@ -70,27 +70,27 @@ function selectionStudentFormatter(value, row, index){
   var html =
   '<span class="dropdown float-right cursor-pointer">' +
     '<span div data-toggle="dropdown" id="options' + row.id + '">' +
-      "<a class='color-blue-link'>ตัวเลือก <i class='fa fa-angle-down'></i></a>" +
+      "<a class='color-blue-link'>ตัวเลือก <i class='fa fa-angle-down ml-5'></i></a>" +
     '</span>' +
     '<ul class="dropdown-menu dropdown-menu-right" aria-labelledby="options' + row.id + '">' +
       '<li>' +
         "<a href='/students/" + row.id + "/edit'>" +
-          "<i class='fa fa-pencil-square-o' aria-hidden='true'></i> แก้ไข" +
+          "<i class='fa fa-pencil-square-o fa-fw' aria-hidden='true'></i>&nbsp; แก้ไข" +
         '</a>' +
       '</li>' +
       '<li>' +
         "<a onclick='openResignStudentModal(" + row.id + ")'>" +
-          "<i class='fa fa-share-square-o color-orange' aria-hidden='true'></i> ลาออกจากโรงเรียน" +
+          "<i class='fa fa-share-square-o color-orange fa-fw' aria-hidden='true'></i>&nbsp; ลาออกจากโรงเรียน" +
         '</a>' +
       '</li>' +
       '<li>' +
         "<a onclick='openGraduateStudentModal(" + row.id + ")'>" +
-          "<i class='fa fa-graduation-cap color-green' aria-hidden='true'></i> จบการศึกษา" +
+          "<i class='fa fa-graduation-cap color-green fa-fw' aria-hidden='true'></i>&nbsp; จบการศึกษา" +
         '</a>' +
       '</li>' +
       '<li>' +
         "<a onclick='openDeletedStudentModal(" + row.id + ")'>" +
-          "<i class='fa fa-trash color-red' aria-hidden='true'></i> ลบข้อมูล" +
+          "<i class='fa fa-trash color-red fa-fw' aria-hidden='true'></i>&nbsp; ลบข้อมูล" +
         '</a>' +
       '</li>' +
     '</ul>' +
@@ -130,17 +130,17 @@ function selectionParentFormatter(value, row, index){
     var html =
     '<span class="dropdown float-right cursor-pointer cursor-pointer">' +
       '<span div data-toggle="dropdown" id="options' + id + '">' +
-        "<a class='color-blue-link'>ตัวเลือก <i class='fa fa-angle-down'></i></a>" +
+        "<a class='color-blue-link'>ตัวเลือก <i class='fa fa-angle-down ml-5'></i></a>" +
       '</span>' +
       '<ul class="dropdown-menu dropdown-menu-right" aria-labelledby="options' + id + '">' +
         '<li>' +
           "<a href='/parents/" + id + "/edit'>" +
-            "<i class='fa fa-pencil-square-o' aria-hidden='true'></i> แก้ไข" +
+            "<i class='fa fa-pencil-square-o fa-fw' aria-hidden='true'></i>&nbsp; แก้ไข" +
           '</a>' +
         '</li>' +
         '<li>' +
           "<a onclick='openDeletedParentModal(" + id + ")'>" +
-            "<i class='fa fa-trash color-red' aria-hidden='true'></i> ลบข้อมูล" +
+            "<i class='fa fa-trash color-red fa-fw' aria-hidden='true'></i>&nbsp; ลบข้อมูล" +
           '</a>' +
         '</li>' +
       '</ul>' +
