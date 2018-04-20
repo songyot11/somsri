@@ -181,7 +181,7 @@ en:
   grade: "Grade"
   item_no: "No."
   item_desc: "Description"
-  
+
   invoice_form: "Invoice"
   date1: "Date"
   student_id1: "Student ID"
@@ -213,6 +213,7 @@ en:
   excess: "Surplus/Shortage"
   sender: "Report by"
   sign: "Signature"
+  remark: "Remark"
 
   semester: "Semester"
   semester_nofix: "All semesters"

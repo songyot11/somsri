@@ -213,6 +213,7 @@ th:
   excess: "ขาด/เกิน"
   sender: "ผู้นำส่งเงิน"
   sign: "ลงชื่อ"
+  remark: "หมายเหตุ"
 
   semester: "ภาคการศึกษา"
   semester_nofix: "ไม่ระบุภาคการเรียน"
