@@ -91,6 +91,7 @@ describe 'Student', js: true do
       parent_id: parent[0].id,
       invoice_status_id:  invoice_status_1.id,
       school_year: Time.current.year + 543,
+      student_name: "สมศรี ใบเสร็จ",
       semester: "1",
       line_items: [
         LineItem.make!(:tuition, amount: 48000),
@@ -110,6 +111,7 @@ describe 'Student', js: true do
         school_year: Time.current.year + 543,
         semester: "1",
         grade_name: "Kindergarten 1",
+        student_name: "สมศรี ใบเสร็จ",
         classroom: "1A",
         line_items: [
           LineItem.make!(:tuition, amount: 58000),
@@ -123,6 +125,7 @@ describe 'Student', js: true do
         school_year: Time.current.year + 543,
         semester: "2",
         grade_name: "Kindergarten 1",
+        student_name: "สมศรี ใบเสร็จ",
         classroom: "1B",
         line_items: [
           LineItem.make!(:tuition, amount: 48000),
@@ -137,6 +140,7 @@ describe 'Student', js: true do
         school_year: Time.current.year + 543 + 1,
         semester: "1",
         grade_name: "Kindergarten 2",
+        student_name: "สมศรี ใบเสร็จ",
         classroom: "2A",
         line_items: [
           LineItem.make!(:tuition, amount: 48000),
@@ -151,6 +155,7 @@ describe 'Student', js: true do
         school_year: Time.current.year + 543 + 1,
         semester: "2",
         grade_name: "Kindergarten 2",
+        student_name: "สมศรี ใบเสร็จ",
         classroom: "2B",
         line_items: [
           LineItem.make!(:tuition, amount: 48000),
@@ -363,6 +368,7 @@ describe 'Student', js: true do
 
     visit "/invoices/#{invoice.id}/slip.pdf?show_as_html=true"
     sleep(1)
+    save_screenshot('/Users/akiyama/Desktop/test1.jpg')
     eventually { expect(page).to have_content ("สมศรี") }
   end
 
@@ -472,6 +478,18 @@ describe 'Student', js: true do
     new_student = Student.where(full_name: "นักเรียนเพิ่มใหม่").first
     eventually { expect(new_student.student_lists.size).to eq(1) }
     eventually { expect(new_student.student_lists[0].list.name).to eq(classrooms[0].name) }
+  end
+
+  it 'should warning when create student with blank name' do
+    visit '/students/new#/'
+    sleep(1)
+    page.find("#student_classroom_id").select(classrooms[0].name)
+    sleep(1)
+    click_button("บันทึก")
+    sleep(1)
+    new_student = Student.where(full_name: "นักเรียนเพิ่มใหม่").first
+    expect(new_student.blank?).to eq true
+    expect(page).to have_content(I18n.t('student_info_cannot_save'))
   end
 
   it 'should create list when add classroom to student' do

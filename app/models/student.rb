@@ -56,9 +56,16 @@ class Student < ApplicationRecord
   end
 
   def clean_full_name
-    if self.full_name
-      self.full_name = self.full_name.gsub('ด.ช.', '')
+    self.full_name = Student.clean_full_name(self.full_name)
+    self.full_name_english = Student.clean_full_name(self.full_name_english)
+  end
+
+  def self.clean_full_name(full_name)
+    if full_name
+      full_name = full_name.gsub('ด.ช.', '')
       .gsub('ด.ญ.', '')
+      .gsub("ดช" , '')
+      .gsub('ดญ' , '')
       .gsub('เด็กหญิง', '')
       .gsub('เด็กชาย', '')
       .gsub('Master', '')
@@ -70,15 +77,17 @@ class Student < ApplicationRecord
   end
 
   def full_name_with_title
-    if gender_id != nil
-      title = ""
-      title = 'ด.ช.' if self.gender_id == 1
-      title = 'ด.ญ.' if self.gender_id == 2
-      name = self.full_name.nil? ? self.full_name_english : self.full_name
-      return "#{title} #{name}"
-    else
-      name = self.full_name.nil? ? self.full_name_english : self.full_name
-      return "#{name}"
+    title = ""
+    title = "ด.ช." if self.gender_id == 1
+    title = "ด.ญ." if self.gender_id == 2
+    thaiName = self.full_name.nil? ? "" : self.full_name
+    engName = self.full_name_english.nil? ? "" : self.full_name_english
+    if !thaiName.blank?
+      return "#{title} #{thaiName}".strip
+    elsif thaiName.blank? && !engName.blank?
+      title = "Master" if self.gender_id == 1
+      title = "Miss" if self.gender_id == 2
+      return "#{title} #{engName}".strip
     end
   end
 
@@ -395,21 +404,27 @@ class Student < ApplicationRecord
 
   def full_name_eng_thai_with_title
     title = ""
-    title = 'ด.ช.' if self.gender_id == 1
-    title = 'ด.ญ.' if self.gender_id == 2
+    title = "ด.ช." if self.gender_id == 1
+    title = "ด.ญ." if self.gender_id == 2
     thaiName = self.full_name.nil? ? "" : self.full_name
     engName = self.full_name_english.nil? ? "" : self.full_name_english
 
-    if gender_id != nil && (full_name_english != "" && full_name_english != nil)
-      return "#{title} #{thaiName} (#{engName})"
-    else
-      return "#{title} #{thaiName}"
+    if !thaiName.blank? && !engName.blank?
+      return "#{title} #{thaiName} (#{engName})".strip
+    elsif !thaiName.blank? && engName.blank?
+      return "#{title} #{thaiName}".strip
+    elsif thaiName.blank? && !engName.blank?
+      title = "Master" if self.gender_id == 1
+      title = "Miss" if self.gender_id == 2
+      return "#{title} #{engName}".strip
     end
   end
 
   def invoice_screen_full_name_display
-    if(nickname.to_s.strip != '')
-      full_name_with_title + ' (' + nickname.to_s.strip + ')'
+    if nickname.to_s.strip != '' && !self.full_name.blank?
+        return full_name_with_title + ' (' + nickname.to_s.strip + ')'
+    elsif nickname_english.to_s.strip != '' && !self.full_name_english.blank?
+      return full_name_with_title + ' (' + nickname_english.to_s.strip + ')'
     else
       full_name_with_title
     end

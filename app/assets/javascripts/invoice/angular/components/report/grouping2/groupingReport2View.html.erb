@@ -90,7 +90,7 @@
               <tbody>
                 <tr ng-repeat="row in groupingReport2.datas.rows track by $index">
                   <td ng-show="groupingReport2.isDisplay('header_row_invoice_id')" class="text-center">
-                    <a href="/somsri_invoice#/invoice/{{row.header_row_invoice_id}}/slip?page=grouping_report">{{row.header_row_invoice_id}}</a>
+                    <a href="/invoices/{{row.header_row_invoice_id}}/slip.pdf" target="_blank">{{row.header_row_invoice_id}}</a>
                   </td>
                   <td ng-show="groupingReport2.isDisplay('header_row_date')">
                     <a href="javascript:void(0)" ng-click="groupingReport2.selectDate(row.header_row_date)" class="text-center date_gropping numberic">{{row.header_row_date}}</a>

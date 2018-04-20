@@ -414,6 +414,8 @@ en:
   student_number: "Student No."
   full_name_1: "Full Name"
   birthday_1: "Birthdate"
+  student_male: "Master"
+  student_female: "Miss"
 
   #Alumni
   year_of_graduation: "Graduation Year"

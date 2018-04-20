@@ -248,7 +248,6 @@ class StudentsController < ApplicationController
   # POST /students.json
   def create
     @student = Student.new(student_params)
-    @student.full_name = student_params[:full_name].gsub('ด.ช.', '').gsub('ด.ญ.', '').gsub('เด็กหญิง', '').gsub('เด็กชาย', '').gsub("ดช" , '').gsub('ดญ' , '')
     parent_assign
     if @student.save
       relation_assign

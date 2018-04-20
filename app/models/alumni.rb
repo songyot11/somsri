@@ -8,7 +8,7 @@ class Alumni < ApplicationRecord
       return Alumni.new({
         student_id: student.id,
         name: student.full_name_with_title,
-        nickname: student.nickname,
+        nickname: student.full_name.blank? ? student.nickname_english : student.nickname,
         student_number: student.student_number,
         status: student.status,
         graduated_year: SchoolSetting.school_year,

@@ -131,17 +131,22 @@ class InvoicesController < ApplicationController
       student = nil
       qry_student = Student.all
       # Clean Up Student's name
-      student_name = student_params[:full_name].gsub('ด.ช.', '').gsub('ด.ญ.', '').gsub('เด็กหญิง', '').gsub('เด็กชาย', '').strip.gsub(/\s+/,' ')
+      student_name = Student.clean_full_name(student_params[:full_name])
 
       # try to search by Student Number
-      if student_params[:student_number].present? && student_params[:student_number].size > 0 && (student_params[:student_number].is_a? Integer) && student_params[:student_number] > 0
+      if student_params[:student_number].present? &&
+        student_params[:student_number].size > 0 &&
+        (student_params[:student_number].is_a? Integer) &&
+        student_params[:student_number] > 0
         qry_student = qry_student.where(student_number: student_params[:student_number])
       end
 
       # try to search by Student name
       if student_name.present? && student_name.size > 0
-        student_arel_table = Student.arel_table
-        qry_student = qry_student.where(student_arel_table[:full_name].matches("%#{student_name}%"))
+        # student_arel_table = Student.arel_table
+        # qry_student = qry_student.where(student_arel_table[:full_name].matches("%#{student_name}%"))
+        qry_student = qry_student.where(full_name: student_name).or(
+          Student.where(full_name_english: student_name))
       end
 
       student = qry_student.first
@@ -250,16 +255,9 @@ class InvoicesController < ApplicationController
 
   # GET /invoices/:id/slip
   def slip
-    student_prefix = ""
-    student_prefix = "ด.ช." if @invoice.student && @invoice.student.gender && @invoice.student.gender.name == "Male"
-    student_prefix = "ด.ญ." if @invoice.student && @invoice.student.gender && @invoice.student.gender.name == "Female"
-
-    student_nickname = ""
-    student_nickname = " (#{@invoice.student.nickname})" if @invoice.student && @invoice.student.nickname
-    student_display_name = "#{student_prefix} #{@invoice.student.full_name}#{student_nickname}"
     grade_name = @invoice.grade_name ? (@invoice.grade_name) : ""
-    if @invoice.student && @invoice.student.classroom
-      grade_name << " (#{@invoice.student.classroom.name})"
+    if @invoice.classroom
+      grade_name << " (#{@invoice.classroom})"
     end
 
     school = School.first
@@ -281,7 +279,7 @@ class InvoicesController < ApplicationController
         display_name: @invoice.parent.full_name
       },
       student: {
-        display_name: student_display_name,
+        display_name: @invoice.student_name,
         student_number: @invoice.student.student_number
       },
       display_schools_year_with_invoice_id: SiteConfig.get_cache.display_schools_year_with_invoice_id

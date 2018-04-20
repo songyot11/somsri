@@ -414,6 +414,8 @@ th:
   student_number: "เลขประจำตัวนักเรียน"
   full_name_1: "ชื่อ - นามสกุล"
   birthday_1: "วันเดือนปีเกิด"
+  student_male: "ด.ช."
+  student_female: "ด.ญ."
 
   #Alumni
   year_of_graduation: "จบปีการศึกษา"
