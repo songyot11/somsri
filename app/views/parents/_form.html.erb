@@ -164,7 +164,7 @@ function gen_selectize(round) {
               <select id="student'+round+'" name="student[]" index="'+round+'" placeholder="เลือกนักเรียน..." onchange="studentChange(this)">\
                 <option value="" disabled selected></option>\
                 <% @students.each do |s| %>\
-                  <option value="<%= s.id %>"><%= s.full_name %></option>\
+                  <option value="<%= s.id %>"><%= s.full_name_with_title %></option>\
                 <% end %>\
               </select>\
             </div>\
