@@ -153,7 +153,15 @@ class InvoicesController < ApplicationController
 
       # Stil not found create new Student
       if student.nil?
-        student = Student.new(full_name: student_name, student_number: student_params[:student_number])
+        # check name is thai or english
+        if (student_name =~ /^[a-zA-Z]/) != nil
+          student = Student.new(full_name_english: student_name,
+            student_number: student_params[:student_number])
+        else
+          student = Student.new(full_name: student_name,
+            student_number: student_params[:student_number])
+        end
+
         # Detect Gender from prefix
         if ['ด.ช.','เด็กชาย','master'].any? { |word| student_params[:full_name].downcase.include?(word) }
           student.gender_id = Gender.male.id
