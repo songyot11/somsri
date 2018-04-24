@@ -1,0 +1,36 @@
+(function () {
+  'use strict';
+
+  angular
+    .module('somsri.payroll.employee_skill.service', [])
+    .service('employeeSkillService', employeeSkillService);
+
+  employeeSkillService.$inject = ['$http'];
+
+  function employeeSkillService($http) {
+    var service = {
+      all: all,
+      create: create,
+      update: update,
+      remove: remove
+    };
+
+    function all(employeeId) {
+      return $http.get('/employees/' + employeeId + '/employee_skills');
+    }
+
+    function create(employeeId, employeeSkill) {
+      return $http.post('/employees/' + employeeId + '/employee_skills', employeeSkill);
+    }
+
+    function update(employeeId, id, employeeSkill) {
+      return $http.put('/employees/' + employeeId + '/employee_skills/' + id, employeeSkill);
+    }
+
+    function remove(employeeId, id) {
+      return $http.delete('/employees/' + employeeId + '/employee_skills/' + id);
+    }
+
+    return service;
+  }
+}());

@@ -468,3 +468,7 @@ th:
   teacher: คุณครู
   student: นักเรียน
   classroom_is_exist: "*มีห้องเรียนนี้ในระบบแล้ว"
+
+  skill: ทักษะ
+  score: คะแนน
+  add: เพิ่ม

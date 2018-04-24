@@ -9,6 +9,8 @@ class Employee < ApplicationRecord
   belongs_to :grade
   belongs_to :classroom
   has_many :teacher_attendance_lists
+  has_many :employee_skills, dependent: :destroy
+  has_many :employees, through: :employee_skills
 
   has_one :taxReduction
 

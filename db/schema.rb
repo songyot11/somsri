@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20180321050524) do
+ActiveRecord::Schema.define(version: 20180424042500) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -189,6 +189,16 @@ ActiveRecord::Schema.define(version: 20180321050524) do
     t.integer  "user_id"
     t.datetime "created_at",                     null: false
     t.datetime "updated_at",                     null: false
+  end
+
+  create_table "employee_skills", force: :cascade do |t|
+    t.integer  "employee_id"
+    t.integer  "skill_id"
+    t.integer  "score"
+    t.datetime "created_at",  null: false
+    t.datetime "updated_at",  null: false
+    t.index ["employee_id"], name: "index_employee_skills_on_employee_id", using: :btree
+    t.index ["skill_id"], name: "index_employee_skills_on_skill_id", using: :btree
   end
 
   create_table "employees", force: :cascade do |t|
@@ -457,6 +467,12 @@ ActiveRecord::Schema.define(version: 20180321050524) do
     t.string  "default_locale"
   end
 
+  create_table "skills", force: :cascade do |t|
+    t.string   "name"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+  end
+
   create_table "student_lists", force: :cascade do |t|
     t.integer  "student_id"
     t.integer  "list_id"
@@ -580,6 +596,8 @@ ActiveRecord::Schema.define(version: 20180321050524) do
   add_foreign_key "class_permisions", "lists"
   add_foreign_key "class_permisions", "users"
   add_foreign_key "classrooms", "classrooms", column: "next_id", on_delete: :nullify
+  add_foreign_key "employee_skills", "employees"
+  add_foreign_key "employee_skills", "skills"
   add_foreign_key "employees", "classrooms", on_delete: :nullify
   add_foreign_key "individuals", "employees", column: "child_id"
   add_foreign_key "individuals", "employees", column: "emergency_call_id"

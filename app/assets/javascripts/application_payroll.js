@@ -44,3 +44,4 @@
 
 //= require angular-xeditable/dist/js/xeditable
 //= require bootstrap-table
+//= require rich-autocomplete

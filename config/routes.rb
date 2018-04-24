@@ -25,7 +25,10 @@ Rails.application.routes.draw do
     end
   end
 
+  resources :skills, only: [:index, :create]
   resources :employees, only: [:index, :create, :show, :update, :destroy]  do
+    resources :employee_skills, except: %i[show new edit]
+
     collection do
       get 'slips'
       post 'create_by_name'

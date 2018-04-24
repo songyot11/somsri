@@ -1,0 +1,26 @@
+(function () {
+  'use strict';
+
+  angular
+    .module('somsri.payroll.skill.service', [])
+    .service('skillService', skillService);
+
+  skillService.$inject = ['$http'];
+
+  function skillService($http) {
+    var service = {
+      all: all,
+      create: create
+    };
+
+    function all() {
+      return $http.get('/skills');
+    }
+
+    function create(skill) {
+      return $http.post('/skills', skill);
+    }
+
+    return service;
+  }
+}());

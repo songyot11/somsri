@@ -283,6 +283,11 @@
                     {{ "tax_deduction" | translate }}
                   </a>
                 </li>
+                <li ng-class="{ 'active' : employee.activeTabPrivate === 'skill' }">
+                  <a data-toggle="tab" ng-click="employee.activeTabPrivate = 'skill'" href="javascript:void(0)">
+                    {{ "skill" | translate }}
+                  </a>
+                </li>
               </ul>
             </div>
             <div class="col-md-9 tab-content">
@@ -362,7 +367,6 @@
                     </div>
                   </div>
                 </div>
-
               </div>
 
               <div ng-class="{ 'in active' : employee.activeTabPrivate === 'tax' }" class="tab-pane fade">
@@ -591,11 +595,16 @@
                     </div>
                   </uib-accordion>
                 </div>
-
               </div>
+
               <div ng-class="{ 'in active' : employee.activeTabPrivate === 'family' }" class="tab-pane fade">
               </div>
+
               <div ng-class="{ 'in active' : employee.activeTabPrivate === 'education' }" class="tab-pane fade">
+              </div>
+
+              <div ng-class="{ 'in active' : employee.activeTabPrivate === 'skill' }" class="tab-pane fade">
+                <employee-skill employee="employee"></employee-skill>
               </div>
             </div>
           </div>
