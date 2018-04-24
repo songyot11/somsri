@@ -22,7 +22,7 @@
 en:
   #Payroll
   roll_download : Download Rollcall
-  switch_language : Switch language 
+  switch_language : Switch language
   emp_name : Name
   find : Search
   current_month : Current Month
@@ -479,3 +479,4 @@ en:
   skill: Skill
   score: Score
   add: Add
+  confirm_delete: Do you want to delete the classroom? (Deleting a classroom will not cause the student and teacher in the room to disappear.)
