@@ -75,7 +75,7 @@ describe 'Student Promote', js: true do
 
     it 'should go to next classroom management' do
       click_button("เลื่อนชั้นเรียน")
-      sleep(1.5)
+      sleep(2)
       eventually { expect(page).to have_content("ระดับชั้นเรียน เดิม") }
       eventually { expect(page).to have_content("ระดับชั้นเรียนใหม่") }
     end
