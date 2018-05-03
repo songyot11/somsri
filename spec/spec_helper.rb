@@ -73,7 +73,8 @@ end
 Dir[File.dirname(__FILE__) + "/support/**/*.rb"].each { |f| require f }
 # Capybara.javascript_driver = :webkit
 require 'capybara/poltergeist'
-# reqCapybara.raise_server_errors = falseuire 'capybara/poltergeist'
+Capybara.raise_server_errors = true
+# require 'capybara/poltergeist'
 Capybara.javascript_driver = :poltergeist
 options = { js_errors: false, timeout: 60 }
 Capybara.register_driver :poltergeist do |app|

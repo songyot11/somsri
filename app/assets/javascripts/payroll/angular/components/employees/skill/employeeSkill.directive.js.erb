@@ -55,10 +55,12 @@
     }
 
     function loadEmployeeSkill() {
-      employeeSkillService.all(employeeId)
+      if(employeeId && employeeId > 0) {
+        employeeSkillService.all(employeeId)
         .then(function(resp) {
           vm.employeeSkills = resp.data;
         });
+      }
     }
 
     function submitEmployeeSkill(skill) {

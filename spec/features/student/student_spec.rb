@@ -368,7 +368,6 @@ describe 'Student', js: true do
 
     visit "/invoices/#{invoice.id}/slip.pdf?show_as_html=true"
     sleep(1)
-    save_screenshot('/Users/akiyama/Desktop/test1.jpg')
     eventually { expect(page).to have_content ("สมศรี") }
   end
 
