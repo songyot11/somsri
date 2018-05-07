@@ -74,6 +74,7 @@ describe 'Student Promote', js: true do
     end
 
     it 'should go to next classroom management' do
+      
       click_button("เลื่อนชั้นเรียน")
       sleep(5)
       eventually { expect(page).to have_content("ระดับชั้นเรียน เดิม") }
@@ -136,7 +137,7 @@ describe 'Student Promote', js: true do
     end
 
     it 'should not promote student when set next classroom to be the same' do
-      sleep(1)
+      sleep(5)
       find("#classroom-list#{classrooms[0].id}").click
       find('a', text: classrooms[0].grade_with_name).click
       find("#classroom-list#{classrooms[1].id}").click
@@ -150,7 +151,7 @@ describe 'Student Promote', js: true do
 
       find('button[ng-click="next.studentPromote()"]').click
       click_button("ตกลง")
-      sleep(1)
+      sleep(5)
       eventually { expect(page).to have_content("1A 0 1") }
       eventually { expect(page).to have_content("1B 0 2") }
       eventually { expect(page).to have_content("2A 0 3") }

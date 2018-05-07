@@ -1,5 +1,5 @@
   <div class="container" id="invoice" style="width: 960px;">
-    <form name="createProjectForm" ng-submit="invoice.save()">
+    <form name="createProjectForm" ng-submit="invoice.save()" >
       <div class="row">
         <div class="col-md-6 heading">
           {{ 'invoice_form' | translate }}
@@ -14,17 +14,17 @@
         <div class="row">
           <div class="col-md-2">
             <div class="form-group">
-              <input type="text" class="form-control" id="student_code" placeholder="{{ 'student_id1' | translate }}" ng-model="invoice.datas.student.student_number" typeahead-on-select="invoice.onSelectStudentNumber($item)" uib-typeahead="student.student_number as student.student_number_display for student in invoice.student_info | filter:{student_number:$viewValue} | limitTo:8"  autocomplete="off">
+              <input type="text" class="form-control" id="student_code" placeholder="{{ 'student_id1' | translate }}" ng-model="invoice.datas.student.student_number"  typeahead-on-select="invoice.onSelectStudentNumber($item)" uib-typeahead="student.student_number as student.student_number_display for student in invoice.student_info | filter:{student_number:$viewValue} | limitTo:8"  autocomplete="off">
             </div>
           </div>
           <div class="col-md-4">
             <div class="form-group">
-              <input type="text" class="form-control" id="student_name" placeholder="{{ 'student_name' | translate }}" ng-model="invoice.datas.student.full_name" typeahead-on-select="invoice.onSelectStudentFullName($item)" uib-typeahead="student.full_name as student.full_name_display for student in invoice.student_info | filter:{full_name_display:$viewValue} | limitTo:8" required , autocomplete="off">
+              <input type="text" class="form-control" id="student_name" placeholder="{{ 'student_name' | translate }}" ng-model="invoice.datas.student.full_name"  typeahead-on-select="invoice.onSelectStudentFullName($item)" uib-typeahead="student.full_name as student.full_name_display for student in invoice.student_info | filter:{full_name_display:$viewValue} | limitTo:8" required , autocomplete="off">
             </div>
           </div>
           <div class="col-md-6">
             <div class="form-group">
-              <input type="text" class="form-control" id="parent_name" placeholder="{{ 'parent_name' | translate }}" ng-model="invoice.datas.parent.full_name" typeahead-on-select="invoice.onSelectParent($item)" uib-typeahead="parent.full_name as parent.full_name_display for parent in invoice.parent_info | filter:{full_name_display:$viewValue} | limitTo:8" required , autocomplete="off">
+              <input type="text" class="form-control" id="parent_name" placeholder="{{ 'parent_name' | translate }}" ng-model="invoice.datas.parent.full_name"  typeahead-on-select="invoice.onSelectParent($item)" uib-typeahead="parent.full_name as parent.full_name_display for parent in invoice.parent_info | filter:{full_name_display:$viewValue} | limitTo:8" required , autocomplete="off">
             </div>
           </div>
         </div>
@@ -142,7 +142,8 @@
 
         <div class="row noPrint actions">
           <div class="col-md-12 text-right-htable">
-            <button type="submit" class="btn btn-custom btn-blue mr-5">{{ 'pay' | translate }}</button>
+                    
+            <button type="submit" class="btn btn-custom btn-blue mr-5" >{{ 'pay' | translate }}</button>
             <a href="#" class="btn btn-custom btn-gray" ng-click="invoice.cancel()">{{ 'cancel' | translate }}</a>
           </div>
         </div>

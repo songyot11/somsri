@@ -4,6 +4,19 @@ module ApplicationHelper
     true if Float(string) rescue false
   end
 
+  def cleanNumber(stringOfNumber)
+    return stringOfNumber.to_s.gsub(".00",'')
+  end
+
+  def roundNumber(numberOfMoney)
+    if(numberOfMoney.round(2) == numberOfMoney.round(0))
+      return numberOfMoney.round(0)
+    else
+      return numberOfMoney.round(2)    
+    end
+  end
+
+
   def thaiBaht(number)
     number = number.to_s
     if !number
@@ -67,5 +80,7 @@ module ApplicationHelper
       return ""
     end
   end
+
+
 
 end

@@ -245,6 +245,7 @@ en:
   code: "Code"
   name: "Thai First Name"
   baht: "Baht"
+  receiver: "Receiver"
   delete: "Delete"
   close: "Close"
   new: New

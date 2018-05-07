@@ -245,6 +245,7 @@ th:
   code: "รหัส"
   name: "ชื่อ"
   baht: "บาท"
+  receiver: "ผู้รับเงิน"
   delete: "ลบ"
   close: "ปิด"
   new: ใหม่

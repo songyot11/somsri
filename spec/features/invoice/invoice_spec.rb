@@ -178,8 +178,11 @@ describe 'Invoice', js: true do
     fill_in 'parent_name', with: "ฉันเป็น สุภาพบุรุษนะครับ"
     click_on('ชำระเงิน')
     sleep(1)
-    visit "/invoices/#{Invoice.first.id}/slip.pdf?show_as_html=true"
-    expect(page).to have_content("ใบเสร็จรับเงิน")
+    visit "/invoices/#{Invoice.first.id}/slip.pdf?show_as_html=true&locale=en"
+    expect(page).to have_content("Receipt")
+    expect(page).to have_content("Total (Baht) 48,900") 
+    expect(page).to_not have_content("Total (Baht) 48,900.00")
+    expect(page).to_not have_content("Point Zero Baht")
     expect(page).to have_content("9S")
     expect(page).to have_content("ฉันเป็น สุภาพบุรุษนะครับ")
     expect(Student.count).to eq(student_amount + 1)
