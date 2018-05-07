@@ -95,7 +95,7 @@ describe 'RollCall report', js: true do
 
   it 'should go to rollcall report' do
     visit "/somsri_rollcall#/report"
-    sleep(1)
+    sleep(4)
     expect(page).to have_selector('.fa.fa-check', count: 1)
     expect(page).to have_selector('.fa.fa-times', count: 1)
   end

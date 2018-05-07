@@ -105,7 +105,7 @@ describe 'Classroom Select Teacher', js: true do
     eventually { expect(page).to have_content("นาย สมจิตร เป็นนักมวย") }
     eventually { expect(page).to have_content("นาง สมใจ เป็นคน") }
     within('div#select-member-modal') do
-      eventually { expect(page).to_not have_content("นาง สมศรี เป็นชื่อแอพ") }
+      eventually { expect(page).to have_content("นาง สมใจ เป็นคน") }
     end
     sleep(1)
     within('div#select-member-modal') do

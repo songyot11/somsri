@@ -134,13 +134,13 @@ describe 'Invoice', js: true do
     student_count = Student.count
     invoice_count = Invoice.all.count
     visit 'somsri_invoice#/invoice'
-    sleep(1)
+    sleep(5)
     fill_in 'student_name', with: "มั่งไม่มี"
     click_link('มั่งไม่มี เลขนักเรียน (ไม่)')
     click_on('ชำระเงิน')
-    sleep(1)
+    sleep(5)
     visit "/invoices/#{Invoice.first.id}/slip.pdf?show_as_html=true"
-    sleep(1.5)
+    sleep(5.5)
     expect(page).to have_content("ใบเสร็จรับเงิน")
     expect(page).to have_content("มั่งไม่มี เลขนักเรียน")
     expect(page).to have_content("ค่าธรรมเนียมการศึกษา")

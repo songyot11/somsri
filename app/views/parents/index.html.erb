@@ -6,7 +6,7 @@
       <h1><%= t('parent') %></h1>
     </div>
     <div class="col-xs-6 mt-10 px-0" style="text-align: right;">
-      <%= link_to ('<i class="fa fa-share-square-o" aria-hidden="true"></i> Export').html_safe, "#", :class => 'btn btn-custom btn-blue-sky float-right mr-5', :onclick => 'exportTable("parents")' %>
+      <a class="btn btn-custom btn-blue-sky float-right mr-5" href="#" onclick='exportTable("parents")'><i class="fa fa-share-square-o" aria-hidden="true"></i> <%= t('export') %></a>
       <%= link_to t('.addparent', :default => t("helpers.links.addparent")), new_parent_path, :class => 'btn btn-custom btn-blue float-right'%>
     </div>
   </div>

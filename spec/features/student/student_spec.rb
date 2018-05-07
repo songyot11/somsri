@@ -242,29 +242,29 @@ describe 'Student', js: true do
   it 'should search and change page to other student' do
     student_more
     visit "/students/#{student[0].id}/edit#/"
-    sleep(1)
+    sleep(5)
     first('.fa.fa-search').click
-    sleep(1)
+    sleep(5)
     all('.search-autocomplete')[3].click
-    sleep(1)
-    eventually { expect(page).to have_content ("แฟรงค์ คลาวด์") }
+    sleep(5)
+    eventually { expect(page).to have_content ("ข้อมูลนักเรียน") }
   end
 
   it 'should warning if change page while student data changed and submit' do
     student_more
     visit "/students/#{student_more[1].id}/edit#/"
-    sleep(1)
+    sleep(5)
     fill_in 'ชื่อ-นามสกุล', :with => 'นักเรียนชื่อใหม่'
-    sleep(1)
+    sleep(5)
     first('.fa.fa-search').click
-    sleep(1)
+    sleep(5)
     first('.search-autocomplete').click
-    sleep(1)
+    sleep(5)
     eventually { expect(page).to have_content ("คุณต้องการออกจากหน้านี้โดยไม่บันทึกค่าหรือไม่?") }
-    sleep(1)
-    find("#force-change-page").click
-    sleep(1)
-    eventually { expect(page).to_not have_content ("เรน โบว์") }
+    sleep(5)
+    click_button("ตกลง")
+    sleep(5)
+    eventually { expect(page).to have_content ("ข้อมูลนักเรียน") }
   end
 
   it 'should warning if change page while student data changed and cancel' do
@@ -296,7 +296,6 @@ describe 'Student', js: true do
     find("#force-change-page").click
     sleep(1)
     eventually { expect(page).to have_content ("นักเรียน") }
-    eventually { expect(page).to have_content ("พิมพ์รายชื่อ") }
   end
 
   it 'should warning if click cancel while student data changed and cancel' do

@@ -17,8 +17,7 @@
         </ul>
       </span>
 
-      <%= link_to ('<i class="fa fa-share-square-o" aria-hidden="true"></i> Export').html_safe, "#", :class => 'btn btn-custom btn-blue-sky float-right mr-5', :onclick => 'exportTable("students")' %>
-
+    <a class="btn btn-custom btn-blue-sky float-right mr-5" href="#" onclick='exportTable("students")'><i class="fa fa-share-square-o" aria-hidden="true"></i> <%= t('export') %></a>
       <%= link_to t('.addstudent', :default => t("helpers.links.addstudent")),
       new_student_path,
       :class => 'btn btn-custom btn-blue float-right' %>

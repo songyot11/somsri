@@ -8,7 +8,7 @@ module PdfUtils
       merged_file_tmp = generate_pdf_file_name(tmp_dir)
 
       yield data_file_tmp, data
-
+      
       PDF::Toolkit.pdftk(template, "background", data_file_tmp, "output", result_file_tmp)
 
       # merge

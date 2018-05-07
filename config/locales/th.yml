@@ -27,7 +27,7 @@ th:
   find : ค้นหา
   current_month : เดือนปัจจุบัน
   title : สมศรี - ระบบบริหารโรงเรียน 4.0
-  export: Export
+  export: นำข้อมูลออก
   salary: เงินเดือน
   current_payroll: "ค่าแรง / เงินเดือนปัจจุบัน"
   edit: "แก้ไข"

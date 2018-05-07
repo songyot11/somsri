@@ -78,7 +78,7 @@ describe 'invoice report(ใบเสร็จ)', js: true do
 
   it 'can see all invoices' do
     visit 'somsri_invoice#/invoice_report'
-    sleep(1)
+    sleep(2)
     # have 10 invoices on the first page
     eventually do
       expect( all('#invoice-table > tbody > tr').count ).to eq(10)

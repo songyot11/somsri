@@ -121,7 +121,6 @@ describe PayrollsController do
         end
       end
     end
-
     reader = PDF::Reader.new(header_pdfs)
     expect(reader.page_count).to eq(2)
 

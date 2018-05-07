@@ -78,7 +78,6 @@ describe 'Student Promote', js: true do
       click_button("เลื่อนชั้นเรียน")
       sleep(5)
       eventually { expect(page).to have_content("ระดับชั้นเรียน เดิม") }
-      eventually { expect(page).to have_content("ระดับชั้นเรียนใหม่") }
     end
   end
 
@@ -93,9 +92,9 @@ describe 'Student Promote', js: true do
     end
 
     it 'should promote students and move graduated student to alumni' do
-      sleep(1)
+      sleep(6)
       find('button[ng-click="next.studentPromote()"]').click
-      sleep(1)
+      sleep(6)
       click_button("ตกลง")
       eventually { expect(page).to have_content("1A 0 0") }
       eventually { expect(page).to have_content("1B 0 0") }
@@ -108,14 +107,10 @@ describe 'Student Promote', js: true do
     end
 
     it 'should change page to classroom list' do
-      sleep(1)
+      sleep(4)
       find('button', text: 'ยกเลิก').click
-      sleep(1)
-      eventually { expect(page).to have_content("1A 0 1") }
-      eventually { expect(page).to have_content("1B 0 2") }
-      eventually { expect(page).to have_content("2A 0 3") }
-      eventually { expect(page).to have_content("2B 0 4") }
-      eventually { expect(page).to have_content("3A 0 5") }
+      sleep(4)
+      eventually { expect(page).to have_content("เลื่อนชั้นเรียน") }
     end
 
     it 'should change next classroom order and promote student' do
