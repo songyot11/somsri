@@ -106,8 +106,8 @@
                 <span><%= I18n.t('cash') %></span>
               </div>
               <div class="col-xs-3">
-                <span>
-                &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<%= cleanNumber(number_with_precision(@results[:cash_amount], precision: 2, delimiter: ',')) %> <%= I18n.t('baht') %>
+                <span class="pull-right">
+               <%= cleanNumber(number_with_precision(@results[:cash_amount], precision: 2, delimiter: ',')) %> <%= I18n.t('baht') %>
                 </span>
               </div>
             </div>
@@ -120,7 +120,7 @@
                 </span>
               </div>
               <div class="col-xs-3">
-                <span >
+                <span class="pull-right">
                  <%= cleanNumber(number_with_precision(@results[:credit_card_amount], precision: 2, delimiter: ',')) %> <%= I18n.t('baht') %>
                 </span>
               </div>
@@ -136,7 +136,7 @@
               </div>
               <div class="col-xs-3">
                 <span class="pull-right">
-                  <%= cleanNumber(number_with_precision(@results[:cheque_amount], precision: 2, delimiter: ',')) %> <%= I18n.t('baht') %>
+                <%= cleanNumber(number_with_precision(@results[:cheque_amount], precision: 2, delimiter: ',')) %> <%= I18n.t('baht') %>
                 </span>
               </div>
             </div>
@@ -151,7 +151,7 @@
               </div>
               <div class="col-xs-3">
                 <span class="pull-right">
-                  <%= cleanNumber(number_with_precision(@results[:transfer_amount], precision: 2, delimiter: ',')) %> <%= I18n.t('baht') %>
+                <%= cleanNumber(number_with_precision(@results[:transfer_amount], precision: 2, delimiter: ',')) %> <%= I18n.t('baht') %>
                 </span>
               </div>
             </div>

@@ -84,6 +84,7 @@
           // Reset Value
           ctrl.datas = defaultInvoice
           $rootScope.openSlip(resp.data.id);
+          window.location.reload();
         },function(resp) {
 
         });
@@ -118,8 +119,8 @@
       };
 
       ctrl.save = function() {
-        if(isPaymentMethodMoreThanOne()){
-          $('#amount-modal').modal('show');
+        if(isPaymentMethodMoreThanOne()){    
+          $('#amount-modal').modal('show');       
         }else{
           ctrl.invoiceTotal();
           var pm = ctrl.datas.payment_method;
