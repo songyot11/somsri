@@ -316,14 +316,7 @@ en:
     month_names: [~, January, February, March, April, May, June, July, August, September, October, November, December]
     abbr_month_names: [~, Jan, Feb, Mar, Apr, May, Jun, Jul, Aug, Sep, Oct, Nov, Dec]
 
-  #Grade
-  Preschool: "Preschool"
-  Kindergarten1: "K.1"
-  Kindergarten2: "K.2"
-  Kindergarten3: "K.3"
-  Kindergarten 1: "K.1"
-  Kindergarten 2: "K.2"
-  Kindergarten 3: "K.3"
+ 
 
   #Gender
   Male: "Male"

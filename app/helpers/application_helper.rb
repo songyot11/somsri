@@ -16,7 +16,6 @@ module ApplicationHelper
     end
   end
 
-
   def thaiBaht(number)
     number = number.to_s
     if !number
