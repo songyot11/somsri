@@ -66,31 +66,31 @@ function imgTag(value, row, index){
   return '<div class="img-bg bg-light-gray circle"><i class="fa fa-user icon-default-img" aria-hidden="true"></i></div>'
 }
 
-function selectionStudentFormatter(value, row, index){
-  var html =
+function selectionStudentFormatter(value, row, index){  
+  var html = 
   '<span class="dropdown float-right cursor-pointer">' +
     '<span div data-toggle="dropdown" id="options' + row.id + '">' +
-      "<a class='color-blue-link'>ตัวเลือก <i class='fa fa-angle-down ml-5'></i></a>" +
+      "<a class='color-blue-link'>"+I18n.t("choice")+"<i class='fa fa-angle-down ml-5'></i></a>" +
     '</span>' +
     '<ul class="dropdown-menu dropdown-menu-right" aria-labelledby="options' + row.id + '">' +
       '<li>' +
         "<a href='/students/" + row.id + "/edit'>" +
-          "<i class='fa fa-pencil-square-o fa-fw' aria-hidden='true'></i>&nbsp; แก้ไข" +
+          "<i class='fa fa-pencil-square-o fa-fw' aria-hidden='true'></i>&nbsp;"+I18n.t("edit")+
         '</a>' +
       '</li>' +
       '<li>' +
         "<a onclick='openResignStudentModal(" + row.id + ")'>" +
-          "<i class='fa fa-share-square-o color-orange fa-fw' aria-hidden='true'></i>&nbsp; ลาออกจากโรงเรียน" +
+          "<i class='fa fa-share-square-o color-orange fa-fw' aria-hidden='true'></i>&nbsp;"+I18n.t("resign")+
         '</a>' +
       '</li>' +
       '<li>' +
         "<a onclick='openGraduateStudentModal(" + row.id + ")'>" +
-          "<i class='fa fa-graduation-cap color-green fa-fw' aria-hidden='true'></i>&nbsp; จบการศึกษา" +
+          "<i class='fa fa-graduation-cap color-green fa-fw' aria-hidden='true'></i>&nbsp;"+I18n.t("gradulated")+
         '</a>' +
       '</li>' +
       '<li>' +
         "<a onclick='openDeletedStudentModal(" + row.id + ")'>" +
-          "<i class='fa fa-trash color-red fa-fw' aria-hidden='true'></i>&nbsp; ลบข้อมูล" +
+          "<i class='fa fa-trash color-red fa-fw' aria-hidden='true'></i>&nbsp;"+I18n.t("delete")+
         '</a>' +
       '</li>' +
     '</ul>' +
@@ -103,7 +103,7 @@ function linkToStudentEditFormatter(value, row, index){
 }
 
 function openDeletedStudentModal(id){
-  $('#warningModal #modal-title').html("คุณต้องการลบนักเรียนคนนี้ใช่หรือไม่?")
+  $('#warningModal #modal-title').html(I18n.t("del_student"))
   $('#warningModal #actionModalForm').prop("action", "/students/" + id)
   $('#warningModal #actionModalForm').append('<input type="hidden" name="_method" value="delete">')
   $('#warningModal #actionModalForm').prop("method", "post")
@@ -111,14 +111,14 @@ function openDeletedStudentModal(id){
 }
 
 function openResignStudentModal(id){
-  $('#warningModal #modal-title').html("คุณต้องการเปลี่ยนสถานะนักเรียนคนนี้เป็น \"ลาออก\" ใช่หรือไม่?")
+  $('#warningModal #modal-title').html(I18n.t("change_status_student_resign"))
   $('#warningModal #actionModalForm').prop("action", "/students/" + id + "/resign")
   $('#warningModal #actionModalForm').prop("method", "post")
   $('#warningModal').modal()
 }
 
 function openGraduateStudentModal(id){
-  $('#warningModal #modal-title').html("คุณต้องการเปลี่ยนสถานะนักเรียนคนนี้เป็น \"จบการศึกษา\" ใช่หรือไม่?")
+  $('#warningModal #modal-title').html(I18n.t("change_status_student_graduate"))
   $('#warningModal #actionModalForm').prop("action", "/students/" + id + "/graduate")
   $('#warningModal #actionModalForm').prop("method", "post")
   $('#warningModal').modal()
@@ -130,17 +130,17 @@ function selectionParentFormatter(value, row, index){
     var html =
     '<span class="dropdown float-right cursor-pointer cursor-pointer">' +
       '<span div data-toggle="dropdown" id="options' + id + '">' +
-        "<a class='color-blue-link'>ตัวเลือก <i class='fa fa-angle-down ml-5'></i></a>" +
+        "<a class='color-blue-link'>"+I18n.t("choice")+"<i class='fa fa-angle-down ml-5'></i></a>" +
       '</span>' +
       '<ul class="dropdown-menu dropdown-menu-right" aria-labelledby="options' + id + '">' +
         '<li>' +
           "<a href='/parents/" + id + "/edit'>" +
-            "<i class='fa fa-pencil-square-o fa-fw' aria-hidden='true'></i>&nbsp; แก้ไข" +
+            "<i class='fa fa-pencil-square-o fa-fw' aria-hidden='true'></i>&nbsp;"+I18n.t("edit")+
           '</a>' +
         '</li>' +
         '<li>' +
           "<a onclick='openDeletedParentModal(" + id + ")'>" +
-            "<i class='fa fa-trash color-red fa-fw' aria-hidden='true'></i>&nbsp; ลบข้อมูล" +
+            "<i class='fa fa-trash color-red fa-fw' aria-hidden='true'></i>&nbsp;"+I18n.t("delete")+
           '</a>' +
         '</li>' +
       '</ul>' +
@@ -161,7 +161,7 @@ function linkToParentEditFormatter(value, row, index){
 }
 
 function openDeletedParentModal(id){
-  $('#warningModal #modal-title').html("คุณต้องการลบผู้ปกครองคนนี้ใช่หรือไม่?")
+  $('#warningModal #modal-title').html(I18n.t("del_parent"))
   $('#warningModal #actionModalForm').prop("action", "/parents/" + id)
   $('#warningModal #actionModalForm').append('<input type="hidden" name="_method" value="delete">')
   $('#warningModal #actionModalForm').prop("method", "post")

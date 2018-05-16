@@ -31,6 +31,8 @@
       <%= stylesheet_link_tag 'application_somsri', media: 'all' %>
       <%= javascript_include_tag 'application_invoice' %>
       <script src="//rawgit.com/hhurz/tableExport.jquery.plugin/master/tableExport.js"></script>
+      <%= render 'layouts/translates' %>
+      <%= javascript_include_tag 'application_translates' %>
     </head>
     <body ng-controller="mainCtrl as main">
       <header>

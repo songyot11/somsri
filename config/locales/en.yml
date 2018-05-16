@@ -273,7 +273,6 @@ en:
   setting: 'Settings'
   class_management: "Grade Management"
 
-
   activerecord:
     attributes:
       parent:
@@ -416,6 +415,7 @@ en:
   birthday_1: "Birthdate"
   student_male: "Master"
   student_female: "Miss"
+  topic: "Student list   Level .......................................... Semester ..../"
 
   #Alumni
   year_of_graduation: "Graduation Year"
@@ -473,3 +473,13 @@ en:
   score: Score
   add: Add
   confirm_delete: Do you want to delete the classroom? (Deleting a classroom will not cause the student and teacher in the room to disappear.)
+
+  # Option menu
+  choice: "Choice" 
+  edit: "Edit" 
+  resign: "Resing from school" 
+  delete: "Delete"
+  del_student: "Do you want to delete this student yes or no ?"  
+  change_status_student_graduate: 'Would you like to change this student status "graduate" yes or no ?'
+  change_status_student_resign: 'Would you like to change this student status "resign" yes or no ?'
+  del_parent: "Do you want to delete this parent yes or no ?"
