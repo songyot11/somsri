@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20180424042500) do
+ActiveRecord::Schema.define(version: 20180518030319) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -464,7 +464,7 @@ ActiveRecord::Schema.define(version: 20180424042500) do
     t.boolean "export_ktb_payroll",                   default: false
     t.boolean "outstanding_notification",             default: false
     t.boolean "slip_carbon",                          default: false
-    t.string  "default_locale"
+    t.string  "default_locale",                       default: "th"
   end
 
   create_table "skills", force: :cascade do |t|

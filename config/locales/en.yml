@@ -483,3 +483,9 @@ en:
   change_status_student_graduate: 'Would you like to change this student status "graduate" yes or no ?'
   change_status_student_resign: 'Would you like to change this student status "resign" yes or no ?'
   del_parent: "Do you want to delete this parent yes or no ?"
+
+  #Alert Payment
+  alertpayment: Please check your outstanding charges
+  back_to_menu: Back to the main menu
+  sorry_to_pay: Somsri sorry, if you pay for the service
+  application_issue: If you have problems using the somsri.io an be contacted at number
