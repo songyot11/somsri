@@ -244,7 +244,8 @@ describe 'invoice report(ใบเสร็จ)', js: true do
     visit 'somsri_invoice#/invoice_report'
     sleep(5)
     expect(page).to have_selector("#invoice-table > tbody > tr", count: 10)
-    expect(page).to have_content("‹ 12 ›")
+    expect(page).to have_selector(".pagination-prev.ng-scope a")
+    expect(page).to have_selector(".pagination-next.ng-scope a")
   end
 
   it 'should display page 2' do
@@ -254,7 +255,8 @@ describe 'invoice report(ใบเสร็จ)', js: true do
     find('#student-report > div > div.row.report-content.container-fluid > div.row.row-centered > div > ul > li.pagination-next.ng-scope > a').click
     sleep(1)
     expect(page).to have_selector("#invoice-table > tbody > tr", count: 1)
-    expect(page).to have_content("‹ 12 ›")
+    expect(page).to have_selector(".pagination-prev.ng-scope a")
+    expect(page).to have_selector(".pagination-next.ng-scope a")
   end
 
   it 'canceled must blank', :skip_before do

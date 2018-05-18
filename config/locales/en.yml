@@ -473,7 +473,7 @@ en:
   score: Score
   add: Add
   confirm_delete: Do you want to delete the classroom? (Deleting a classroom will not cause the student and teacher in the room to disappear.)
-
+  bringback: Bring back to system
   # Option menu
   choice: "Choice" 
   edit: "Edit" 
