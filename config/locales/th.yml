@@ -416,6 +416,9 @@ th:
   student_male: "ด.ช."
   student_female: "ด.ญ."
   topic: "บัญชีรายชื่อนักเรียน  ชั้น .......................................... ภาคเรียนที่ ..../" 
+  select_gender: "โปรดเลือกเพศ"
+  select_grade: "โปรดเลือกระดับชั้น"
+  select_class: "โปรดเลือกห้อง" 
 
   #Alumni
   year_of_graduation: "จบปีการศึกษา"

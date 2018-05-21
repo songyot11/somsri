@@ -416,6 +416,9 @@ en:
   student_male: "Master"
   student_female: "Miss"
   topic: "Student list   Level .......................................... Semester ..../"
+  select_gender: "Select Gender"
+  select_grade: "Select Grade"
+  select_class: "Select Class"
 
   #Alumni
   year_of_graduation: "Graduation Year"

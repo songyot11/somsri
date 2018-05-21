@@ -61,7 +61,7 @@
           <div class="form-group ">
             <%= f.label :gender_id, :class => 'control-label' %>
             <div class="col-md-12">
-              <%= f.collection_select :gender_id, Gender.all_cached, :id, :name, {prompt: "โปรดเลือกเพศ"}, {class: "form-control"}%>
+              <%= f.collection_select :gender_id, Gender.all_cached, :id, :translated_gender, {prompt: t('select_gender')}, {class: "form-control"}%>
             </div>
           </div>
         </div>
@@ -104,7 +104,7 @@
       <div class="form-group ">
         <%= f.label :grade_id, :class => 'control-label' %>
         <div class="col-md-12">
-          <%= f.collection_select :grade_id, Grade.all, :id, :name, {prompt: "โปรดเลือกระดับชั้น"}, {class: "form-control"} %>
+          <%= f.collection_select :grade_id, Grade.all, :id, :name, {prompt: t('select_grade')}, {class: "form-control"} %>
         </div>
       </div>
     </div>
@@ -112,7 +112,7 @@
       <div class="form-group">
         <%= f.label :classroom_id, :class => 'control-label' %>
         <div class="col-md-12">
-          <%= f.collection_select :classroom_id, Classroom.all, :id, :name, {prompt: "โปรดเลือกห้อง"}, {class: "form-control"} %>
+          <%= f.collection_select :classroom_id, Classroom.all, :id, :name, {prompt: t('select_class')}, {class: "form-control"} %>
         </div>
       </div>
     </div>
