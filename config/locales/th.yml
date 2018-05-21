@@ -84,6 +84,16 @@ th:
   ms: นาง
   miss: นางสาว
 
+  signature: "ผู้มีอํานาจลงนาม"
+  private_teacher_fund: "เงินสะสมกองทุนสงเคราะห์" 
+  acc_social: "เงินประกันสังคมสะสมต่อปี"
+  acc_tax: "ภาษีสะสมต่อปี"
+  acc_income: "รายได้สะสมต่อปี"
+  net_income: "เงินรับสุทธิ"
+  day_month_year: วัน / เดือน / ปี 
+  total_deduction: "รวมรายการหัก"
+  total_income: "รวมรายได้"
+  deduction: "รายการเงินหัก"
   add_new_employee: "เพิ่มพนักงานใหม่"
   full_name: "ชื่อ-นามสกุล"
   position: "ตำแหน่ง"
@@ -296,20 +306,20 @@ th:
         national_id: "รหัสประจำตัวประชาชน"
         remark: "หมายเหตุ / remark"
       payroll:
-        salary: "เงินเดือน / Salary"
-        allowance: "เบี้ยเลี้ยง / Shift"
-        attendance_bonus: "เบี้ยขยัน / Attendance Bonus"
-        ot: "เงินสอนพิเศษ / After School Class"
-        bonus: "โบนัส / Bonus"
-        position_allowance: "ค่าตำแหน่ง / Posticion"
-        extra_etc: "รายได้อื่นๆ / Etc."
-        absence: "ขาดงาน / Absence"
-        late: "สาย / Late"
-        tax: "ภาษี / Tax"
-        social_insurance: "ประกันสังคม / Social Sec."
-        fee_etc: "หักอื่นๆ / Etc."
-        pvf: "เงินสะสมกองทุนสงเคราะห์ / Private Teacher Aid fund"
-        advance_payment: "เบิกล่วงหน้า / Adv. Payment"
+        salary: "เงินเดือน"
+        allowance: "เบี้ยเลี้ยง"
+        attendance_bonus: "เบี้ยขยัน"
+        ot: "เงินสอนพิเศษ"
+        bonus: "โบนัส"
+        position_allowance: "ค่าตำแหน่ง"
+        extra_etc: "รายได้อื่นๆ"
+        absence: "ขาดงาน"
+        late: "สาย"
+        tax: "ภาษี"
+        social_insurance: "ประกันสังคม"
+        fee_etc: "หักอื่นๆ"
+        pvf: "เงินสะสมกองทุนสงเคราะห์"
+        advance_payment: "เบิกล่วงหน้า" 
 
   date:
     month_names: [~, มกราคม, กุมภาพันธ์, มีนาคม, เมษายน, พฤษภาคม, มิถุนายน, กรกฎาคม, สิงหาคม, กันยายน, ตุลาคม, พฤศจิกายน, ธันวาคม]

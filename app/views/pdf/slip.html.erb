@@ -10,7 +10,7 @@
     <div class="row">
       <div class="col-xs-5 col-xs-offset-7">
         <p>
-          <strong>ตำแหน่ง/Title</strong>
+          <strong><%=t('position')%></strong>
           <%= employee[:position] %>
         </p>
       </div>
@@ -20,19 +20,19 @@
     <div class="row">
       <div class="col-xs-3">
         <p>
-          <strong>รหัส/Code</strong>
+          <strong><%=t('code')%></strong>
           <span class="font-roboto"><%= employee[:code] %></span>
         </p>
       </div>
       <div class="col-xs-4">
         <p>
-          <strong>ชื่อ/Name</strong>
+          <strong><%=t('emp_name')%></strong>
           <%= employee[:name] %>
         </p>
       </div>
       <div class="col-xs-5 ">
         <p>
-          <strong>เลขที่บัญชี/Bank acct.</strong>
+          <strong><%=t('bank_account2')%></strong>
           <span class="font-roboto"><%= employee[:account_number] %></span>
         </p>
       </div>
@@ -45,10 +45,10 @@
         <table class="table table-bordered">
           <thead>
             <tr>
-              <th class="text-center align-middle py-5 bg-light-gray" width="30%">รายการได้ / Income</th>
-              <th class="text-center align-middle py-5 bg-light-gray" width="20%">จำนวนเงิน / Amount</th>
-              <th class="text-center align-middle py-5 bg-light-gray" width="30%">รายการเงินหัก / Deduction</th>
-              <th class="text-center align-middle py-5 bg-light-gray" width="20%">จำนวนเงิน / Amount</th>
+              <th class="text-center align-middle py-5 bg-light-gray" width="30%"><%=t('income_list')%></th>
+              <th class="text-center align-middle py-5 bg-light-gray" width="20%"><%=t('amount')%></th>
+              <th class="text-center align-middle py-5 bg-light-gray" width="30%"><%=t('deduction')%></th>
+              <th class="text-center align-middle py-5 bg-light-gray" width="20%"><%=t('amount')%></th>
             </tr>
           </thead>
           <tbody>
@@ -62,9 +62,6 @@
               <td class="text-right font-roboto">
                 <% employee[:payroll][:pay_orders].each_with_index do |pay_order, i| %>
                   <div><%= number_with_precision(pay_order[1][:value], precision: 2, delimiter: ',') %></div>
-                  <% if pay_order[1][:name].include? "เงินสอนพิเศษ" %>
-                    <div>&nbsp;</div>
-                  <% end %>
                 <% end %>
               </td>
 
@@ -76,22 +73,17 @@
               <td class="text-right font-roboto">
                 <% employee[:payroll][:fee_orders].each do |fee_order| %>
                   <div><%= number_with_precision(fee_order[1][:value], precision: 2, delimiter: ',') %></div>
-                  <% if fee_order[1][:name].include? "เงินสะสมกองทุนสงเคราะห์" %>
-                    <div>&nbsp;</div>
-                  <% end %>
                 <% end %>
               </td>
             </tr>
           </tbody>
           <tfoot>
-            <th class="text-right bg-light-gray py-5">
-              รวมรายได้<br>
-              Total Income
+            <th class="text-right bg-light-gray py-15">
+            <%=t('total_income')%>
             </th>
-            <td class="text-right align-middle py-15 font-roboto"><%= number_with_precision(employee[:extra_pay], precision: 2, delimiter: ',') %></td>
-            <th class="text-right bg-light-gray py-5">
-              รวมรายการหัก<br>
-              Total Deduction
+            <td class="text-right align-middle py-25 font-roboto"><%= number_with_precision(employee[:extra_pay], precision: 2, delimiter: ',') %></td>
+            <th class="text-right bg-light-gray py-15">
+            <%=t('total_deduction')%>
             </th>
             <td class="text-right align-middle py-15 font-roboto"><%= number_with_precision(employee[:extra_fee], precision: 2, delimiter: ',') %></td>
           </tfoot>
@@ -103,8 +95,7 @@
           <thead>
             <tr>
               <th class="text-center py-5 bg-light-gray">
-                วัน / เดือน / ปี<br>
-                Day / Month / Year
+              <%=t('day_month_year')%>
               </th>
             </tr>
           </thead>
@@ -116,8 +107,7 @@
           <thead>
             <tr>
               <th class="text-center py-5 bg-light-gray">
-                เงินรับสุทธิ<br>
-                Net Income
+              <%=t('net_income')%>
               </th>
             </tr>
           </thead>
@@ -137,20 +127,16 @@
           <thead>
             <tr>
               <th class="text-center py-5 bg-light-gray">
-                รายได้สะสมต่อปี<br>
-                Acc. Income
+              <%=t('acc_income')%>
               </th>
               <th class="text-center py-5 bg-light-gray">
-                ภาษีสะสมต่อปี<br>
-                Acc. Tax
+              <%=t('acc_tax')%>
               </th>
               <th class="text-center py-5 bg-light-gray">
-                เงินประกันสังคมสะสมต่อปี<br>
-                Acc. Social fund
+              <%=t('acc_social')%>
               </th>
               <th class="text-center py-5 bg-light-gray">
-                เงินสะสมกองทุนสงเคราะห์<br>
-                Private Teacher Aid fund
+              <%=t('private_teacher_fund')%>
               </th>
             </tr>
           </thead>
@@ -173,7 +159,7 @@
         </table>
       </div>
       <div class="col-xs-3">
-        <p class="border-top-1 text-center mt-85">ผู้มีอำนาจลงนาม / Signature</p>
+        <p class="border-top-1 text-center mt-85"><%=t('signature')%></p>
       </div>
     </div>
   </div>
