@@ -175,7 +175,7 @@
   </div>
 
   <div class="form-group somsri-invoice" style="margin-top: 25px; text-align:center">
-    <%= f.submit 'บันทึก', :class => 'btn btn-submit' %>
+    <%= f.submit t('save'), :class => 'btn btn-submit' %>
     <%= link_to t('.cancel', :default => t("helpers.links.cancel")),
                 "", onclick: "goToUrl('#{students_path}')", :class => 'btn btn-cancel' %>
   </div>

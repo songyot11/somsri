@@ -318,7 +318,7 @@
           ctrl.isSubmit = true
           if (ctrl.isEdit) {
             if(isDataChange()){
-              openConfirmationModal(translateFilter("close_without_save"), function(){
+              openConfirmationModal(translateFilter("save_data"), function(){
                 var datas_result = $.extend(true, {}, ctrl.datas);
                 service.saveEmployee(ctrl.datas.employee.id, datas_result).then(function(resp) {
                   ctrl.isSubmit = false;

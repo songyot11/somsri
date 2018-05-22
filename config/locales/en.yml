@@ -269,6 +269,7 @@ en:
   select: Select
   select_all: Select All
   close_without_save: "Do you want to leave this screen?"
+  save_data: "Do you want to save this change?"
 
   hello: "Hello world"
 
