@@ -78,6 +78,13 @@ describe 'Student', js: true do
     ]
   end
 
+  let(:gender)do
+    [
+      Gender.make!(name: "Female"),
+      Gender.make!(name: "Male")
+    ]
+  end
+
   let(:studentsparent) do
     [
       StudentsParent.make!({student_id: student[0].id , parent_id: parent[0].id, relationship_id: relationships[0].id})
@@ -176,6 +183,7 @@ describe 'Student', js: true do
     invoice_status_1
     invoice_status_2
     invoice
+    gender
   end
 
   it 'should access to student page' do
@@ -490,6 +498,28 @@ describe 'Student', js: true do
     expect(page).to have_content(I18n.t('student_info_cannot_save'))
   end
 
+  it 'should create student and gender when locale=th' do
+    visit '/students/new#/'
+    find('#student_full_name').set("นักเรียน สมศรี")
+    page.select 'หญิง', :from => 'student_gender_id'
+    sleep(1)
+    click_button("บันทึก")
+    sleep(1)
+    expect(page).to have_content('หญิง')
+  end  
+
+  it 'should create student and gender when locale=en' do
+    visit '/students/new/?locale=en#'
+    find('#student_full_name').set("นักเรียน สมศรี")
+    page.select 'Female', :from => 'student_gender_id'
+    click_button("Save")
+    find("#navbarDropdownMenuLink").click
+    find('.fa-commenting-o').hover
+    find(:xpath, "//a[@href='/language?locale=en']").click
+    sleep(1)
+    expect(page).to have_content('Female')
+  end   
+
   it 'should create list when add classroom to student' do
     visit "/students/#{student[0].id}/edit#/"
     sleep(1)
@@ -516,6 +546,27 @@ describe 'Student', js: true do
     visit "/students/#{student[0].id}/edit#/"
     sleep(1)
     eventually { expect(find('#mobile0').value).to eq("080-000000") }
+  end
+
+  it 'should edit gender student when locale=th' do
+    visit "/students/#{student[0].id}/edit#/"
+    page.select 'ชาย', :from => 'student_gender_id'
+    sleep(1)
+    click_button("บันทึก")
+    sleep(1)
+    expect(page).to have_content('ชาย')
+  end
+
+  it 'should edit gender student when locale=en' do
+    visit "/students/#{student[0].id}/edit/?locale=en#"
+    page.select 'Male', :from => 'student_gender_id'
+    click_button("Save")
+    sleep(1)
+    find("#navbarDropdownMenuLink").click
+    find('.fa-commenting-o').hover
+    find(:xpath, "//a[@href='/language?locale=en']").click
+    sleep(1)
+    expect(page).to have_content('Male')
   end
 
   it 'should disable parent\'s mobile and relationship when not select parent' do

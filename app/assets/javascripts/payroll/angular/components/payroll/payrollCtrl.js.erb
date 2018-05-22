@@ -216,16 +216,16 @@
     ctrl.employeeTypeFilter = function (){
       var mode = [];
       if(ctrl.employeeTypeMode.normal){
-        mode.push(translateFilter("employee_full_time"));
+        mode.push("ลูกจ้างประจำ");
       }
       if(ctrl.employeeTypeMode.temporary){
-        mode.push(translateFilter("employee_part_time"));
+        mode.push("ลูกจ้างชั่วคราว");
       }
       if(ctrl.employeeTypeMode.probationary){
-        mode.push(translateFilter("employee_probation"));
+        mode.push("ลูกจ้างทดลองงาน");
       }
       if(ctrl.employeeTypeMode.daily){
-        mode.push(translateFilter("employee_daily"));
+        mode.push("ลูกจ้างรายวัน");
       }
       var employees = JSON.parse(JSON.stringify(ctrl.employees_origin));
       for(var i = 0; i < employees.length; i++){
