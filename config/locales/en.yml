@@ -436,6 +436,8 @@ en:
   status: "Status"
   graduated_semester: "Graduation Semester"
   grade_classroom: "Level"
+  ลาออก: "Resign"
+  จบการศึกษา: "Graduated"
 
   # Rollcall
   monthly: "Month"

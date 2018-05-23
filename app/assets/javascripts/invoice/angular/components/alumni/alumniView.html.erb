@@ -26,7 +26,7 @@
       <ul class="dropdown-menu" aria-labelledby="graduated-status">
         <li ng-repeat="graduated_status in alumni.graduated_status">
           <a class="blue-highlight" ng-click="alumni.switchStatus(graduated_status)">
-            {{ graduated_status }}
+            {{ graduated_status | translate }}
           </a>
         </li>
       </ul>

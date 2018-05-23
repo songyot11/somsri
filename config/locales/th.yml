@@ -436,6 +436,8 @@ th:
   status: "สถานะ"
   graduated_semester: "ภาคเรียนที่"
   grade_classroom: "ระดับชั้นเรียน"
+  ลาออก: "ลาออก"
+  จบการศึกษา: "จบการศึกษา" 
 
   # Rollcall
   monthly: ประจำเดือน
