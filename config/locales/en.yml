@@ -387,6 +387,7 @@ en:
   parent_info_cannot_save: "Cannot save parent information : "
   parent_info_success_save: "Parent save successfully"
   parent_delete_success: "Parent delete successfully"
+  search_parent: "Search name parent"
 
   #Students
   add_parent: "+ Add parent"
@@ -430,6 +431,7 @@ en:
   select_gender: "Select Gender"
   select_grade: "Select Grade"
   select_class: "Select Class"
+  search_student: "Search name student"
 
   #Alumni
   year_of_graduation: "Graduation Year"
@@ -438,6 +440,7 @@ en:
   grade_classroom: "Level"
   ลาออก: "Resign"
   จบการศึกษา: "Graduated"
+  locale: "en"
 
   # Rollcall
   monthly: "Month"
@@ -496,7 +499,7 @@ en:
   resign: "Resing from school" 
   delete: "Delete"
   del_student: "Do you want to delete this student yes or no ?"  
-  change_status_student_graduate: 'Would you like to change this student status "graduate" yes or no ?'
+  change_status_student_graduated: 'Would you like to change this student status "graduated" yes or no ?'
   change_status_student_resign: 'Would you like to change this student status "resign" yes or no ?'
   del_parent: "Do you want to delete this parent yes or no ?"
 

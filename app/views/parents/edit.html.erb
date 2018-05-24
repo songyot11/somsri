@@ -3,7 +3,7 @@
   <div class="row head-sp justify-content-between">
     <h1>
       <span id="full-name-label"><%= @parent.full_name %></span>
-      <input id="search-by-name" class="typeahead" type="text" placeholder="ค้นหาชื่อผู้ปกครอง">
+      <input id="search-by-name" class="typeahead" type="text" placeholder=<%= t('search_parent') %>>
       <a onclick="toggleSearchInput()"><i class="fa fa-search" aria-hidden="true"></i></a>
     </h1>
   </div>

@@ -387,6 +387,7 @@ th:
   parent_info_cannot_save: "ข้อมูลของผู้ปกครองไม่สามารถบันทึกได้ : "
   parent_info_success_save: "บันทึกผู้ปกครองสำเร็จ"
   parent_delete_success: "ลบผู้ปกครองสำเร็จ"
+  search_parent: "ค้นหาชื่อผู้ปกครอง"
 
   #Students
   add_parent: "+ เพิ่มชื่อผู้ปกครอง"
@@ -430,6 +431,7 @@ th:
   select_gender: "โปรดเลือกเพศ"
   select_grade: "โปรดเลือกระดับชั้น"
   select_class: "โปรดเลือกห้อง" 
+  search_student: "ค้นหาชื่อนักเรียน"
 
   #Alumni
   year_of_graduation: "จบปีการศึกษา"
@@ -438,6 +440,7 @@ th:
   grade_classroom: "ระดับชั้นเรียน"
   ลาออก: "ลาออก"
   จบการศึกษา: "จบการศึกษา" 
+  locale: "th"
 
   # Rollcall
   monthly: ประจำเดือน
@@ -496,7 +499,7 @@ th:
   resign: "ลาออกจากโรงเรียน"
   delete: "ลบข้อมูล"
   del_student: "คุณต้องการลบนักเรียนคนนี้ใช่หรือไม่?" 
-  change_status_student_graduate: 'คุณต้องการเปลี่ยนสถานะนักเรียนคนนี้เป็น "จบการศึกษา" ใช่หรือไม่?'
+  change_status_student_graduated: 'คุณต้องการเปลี่ยนสถานะนักเรียนคนนี้เป็น "จบการศึกษา" ใช่หรือไม่?'
   change_status_student_resign: 'คุณต้องการเปลี่ยนสถานะนักเรียนคนนี้เป็น "ลาออก" ใช่หรือไม่?'
   del_parent: "คุณต้องการลบผู้ปกครองคนนี้ใช่หรือไม่?"
 

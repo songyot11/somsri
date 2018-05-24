@@ -74,7 +74,7 @@
           </div>
         </div>
         </div>
-        <table id="invoice-table" class="scrollable-header text-table-invoicereport for-display"></table>
+        <table id="invoice-table" class="scrollable-header text-table-invoicereport for-display" data-locale="{{ 'locale' | translate }}"></table>
         <div class="text-title for-print">{{ 'level' | translate }}</div>
         <div class="text-title-date for-print"><b>{{ 'from' | translate }}</b> {{ invoiceReport.start_date | dateFormat }} <b>{{ 'to' | translate }}</b> {{ invoiceReport.end_date | dateFormat }}</div>
         <table id="for-print-table" class="scrollable-header text-table-invoicereport for-print"></table>

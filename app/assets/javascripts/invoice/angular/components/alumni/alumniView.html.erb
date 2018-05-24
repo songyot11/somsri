@@ -12,7 +12,7 @@
       <ul class="dropdown-menu" aria-labelledby="graduated-year">
         <li ng-repeat="graduated_year in alumni.graduated_year">
           <a class="blue-highlight" ng-click="alumni.switchYear(graduated_year)">
-            {{ graduated_year }}
+            {{ graduated_year | translate }}
           </a>
         </li>
       </ul>
@@ -33,6 +33,6 @@
     </span>
   </div>
   <div class="row paper-white container-fluid padding30">
-    <table id="alumni-table"><table>
+    <table id="alumni-table" data-locale="{{ 'locale' | translate }}"><table>
   </div>
 </div>

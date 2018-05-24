@@ -626,4 +626,40 @@ describe 'Student', js: true do
     eventually { expect(page).to_not have_content("Kindergarten 2 (2B)") }
     eventually { expect(page).to_not have_content("152,500.00") }
   end
+
+  it 'should traslate table page parents when locale=th' do
+    visit "/parents#/"
+    sleep(1)
+    find('input[placeholder="ค้นหา"]').set("หาผู้ปกครองไม่เจอหรอก")
+    eventually { expect(page).to have_content("ไม่พบรายการที่ค้นหา !") }
+  end
+
+  it 'should traslate table page parents when locale=en' do
+    visit "/parents#/"
+    sleep(1)
+    find("#navbarDropdownMenuLink").click
+    find('.fa-commenting-o').hover
+    find(:xpath, "//a[@href='/language?locale=en']").click
+    sleep(1)
+    find('input[placeholder="Search"]').set("หาผู้ปกครองไม่เจอหรอก")
+    eventually { expect(page).to have_content("No matching records found") }
+  end
+
+  it 'should traslate table page students when locale=th' do
+    visit "/students#/"
+    sleep(1)
+    find('input[placeholder="ค้นหา"]').set("หานักเรียนไม่เจอหรอก")
+    eventually { expect(page).to have_content("ไม่พบรายการที่ค้นหา !") }
+  end
+
+  it 'should traslate table page students when locale=en' do
+    visit "/students#/"
+    sleep(1)
+    find("#navbarDropdownMenuLink").click
+    find('.fa-commenting-o').hover
+    find(:xpath, "//a[@href='/language?locale=en']").click
+    sleep(1)
+    find('input[placeholder="Search"]').set("หานักเรียนไม่เจอหรอก")
+    eventually { expect(page).to have_content("No matching records found") }
+  end
 end

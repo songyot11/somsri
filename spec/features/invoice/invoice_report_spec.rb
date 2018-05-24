@@ -277,4 +277,23 @@ describe 'invoice report(ใบเสร็จ)', js: true do
     expect(page).to_not have_content("ยกเลิกใบเสร็จ")
   end
 
+  it 'should traslate table page invoice report when locale=th' do
+    visit "/somsri_invoice#/invoice_report"
+    sleep(1)
+    find('#searchField').set("หาใบเสร็จไม่เจอหรอก")
+    eventually { expect(page).to have_content("ไม่พบรายการที่ค้นหา !") }
+  end
+
+  it 'should traslate table page invoice report when locale=en' do
+    visit "/somsri_invoice#/invoice_report"
+    sleep(1)
+    find("#navbarDropdownMenuLink").click
+    find('.fa-commenting-o').hover
+    find(:xpath, "//a[@href='/language?locale=en']").click
+    sleep(1)
+    visit "/somsri_invoice#/invoice_report"
+    sleep(1)
+    find('#searchField').set("หาใบเสร็จไม่เจอหรอก")
+    eventually { expect(page).to have_content("No matching records found") }
+  end 
 end

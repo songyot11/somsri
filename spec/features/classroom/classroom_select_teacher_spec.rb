@@ -177,7 +177,7 @@ describe 'Classroom Select Teacher', js: true do
     end
     sleep(1)
     within('div#select-member-modal') do
-      find('input[placeholder="Search"]').set("นาง")
+      find('input[placeholder="ค้นหา"]').set("นาง")
       eventually { expect(page).to have_content("นาง สมใจ เป็นคน") }
       eventually { expect(page).to_not have_content("นาย สมจิตร เป็นนักมวย") }
     end

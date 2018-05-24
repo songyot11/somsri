@@ -118,7 +118,7 @@ function openResignStudentModal(id){
 }
 
 function openGraduateStudentModal(id){
-  $('#warningModal #modal-title').html(I18n.t("change_status_student_graduate"))
+  $('#warningModal #modal-title').html(I18n.t("change_status_student_graduated"))
   $('#warningModal #actionModalForm').prop("action", "/students/" + id + "/graduate")
   $('#warningModal #actionModalForm').prop("method", "post")
   $('#warningModal').modal()

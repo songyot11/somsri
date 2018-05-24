@@ -74,8 +74,7 @@ describe 'Student Promote', js: true do
     end
 
     it 'should go to next classroom management' do
-      
-      click_button("เลื่อนชั้นเรียน")
+      find("button", :text => "เลื่อนชั้นเรียน").click 
       sleep(5)
       eventually { expect(page).to have_content("ระดับชั้นเรียน เดิม") }
     end
