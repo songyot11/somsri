@@ -47,6 +47,18 @@ describe 'Abilities', js: true do
       expect(page).to have_content 'เงินสอนพิเศษ ค่าตำแหน่ง เบี้ยเลี้ยง เบี้ยขยัน โบนัส อื่นๆ'
     end
 
+    it 'can goto payroll when locale=en' do
+      visit "/somsri_payroll#/payroll"
+      sleep(1)
+      find("#navbarDropdownMenuLink").click
+      find('.fa-commenting-o').hover
+      find("a", :text => "English").click
+      sleep(1)
+      visit "/somsri_payroll#/payroll"
+      sleep(1)
+      expect(page).to have_content 'Fullname Total IncomeOutcome Salary OverTime Position'
+    end
+
     it 'can goto main menu' do
       visit "/"
       sleep(1)

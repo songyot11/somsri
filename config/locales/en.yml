@@ -42,7 +42,7 @@ en:
   payroll_table: "Payroll"
   income_list: "Income"
   outcome_list: "Outcome"
-  employee_code: "Employee Id"
+  employee_code: "ID"
   employee_name: "Fullname"
   employee_allowance: "Allowance"
   employee_pvf: "PVF"
@@ -211,6 +211,7 @@ en:
   cash: "Cash"
   pay_error: "Amount of the payment methods are mismatched."
   sum: "sum"
+  no_data: "Data not found"
 
   receipt_search: "Search by Receipt, Invoice, Student's name, Parent's name"
   receipt_report: "Report"

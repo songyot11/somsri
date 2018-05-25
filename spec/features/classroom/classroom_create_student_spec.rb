@@ -120,7 +120,7 @@ describe 'Classroom Create Teacher', js: true do
     sleep(1)
     find("#navbarDropdownMenuLink").click
     find('.fa-commenting-o').hover
-    find(:xpath, "//a[@href='/language?locale=en']").click
+    find("a", :text => "English").click
     sleep(1)
     visit "/main#/classroom/#{classrooms[0].id}"
     sleep(1)

@@ -17,7 +17,7 @@ class HomeController < ApplicationController
   def language
     session['locale'] = params[:locale] || I18n.default_locale
     I18n.locale = session['locale']
-    redirect_to request.referer
+    redirect_to params[:weburl]
   end
 
   def locale

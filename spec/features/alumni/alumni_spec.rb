@@ -339,7 +339,7 @@ describe 'Alumni', js: true do
     sleep(1)
     find("#navbarDropdownMenuLink").click
     find('.fa-commenting-o').hover
-    find(:xpath, "//a[@href='/language?locale=en']").click
+    find("a", :text => "English").click
     sleep(1)
     visit '/somsri_invoice#/alumni'
     sleep(1)

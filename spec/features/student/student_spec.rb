@@ -515,7 +515,7 @@ describe 'Student', js: true do
     click_button("Save")
     find("#navbarDropdownMenuLink").click
     find('.fa-commenting-o').hover
-    find(:xpath, "//a[@href='/language?locale=en']").click
+    find("a", :text => "English").click
     sleep(1)
     expect(page).to have_content('Female')
   end   
@@ -564,7 +564,7 @@ describe 'Student', js: true do
     sleep(1)
     find("#navbarDropdownMenuLink").click
     find('.fa-commenting-o').hover
-    find(:xpath, "//a[@href='/language?locale=en']").click
+    find("a", :text => "English").click
     sleep(1)
     expect(page).to have_content('Male')
   end
@@ -639,7 +639,7 @@ describe 'Student', js: true do
     sleep(1)
     find("#navbarDropdownMenuLink").click
     find('.fa-commenting-o').hover
-    find(:xpath, "//a[@href='/language?locale=en']").click
+    find("a", :text => "English").click
     sleep(1)
     find('input[placeholder="Search"]').set("หาผู้ปกครองไม่เจอหรอก")
     eventually { expect(page).to have_content("No matching records found") }
@@ -657,7 +657,7 @@ describe 'Student', js: true do
     sleep(1)
     find("#navbarDropdownMenuLink").click
     find('.fa-commenting-o').hover
-    find(:xpath, "//a[@href='/language?locale=en']").click
+    find("a", :text => "English").click
     sleep(1)
     find('input[placeholder="Search"]').set("หานักเรียนไม่เจอหรอก")
     eventually { expect(page).to have_content("No matching records found") }
