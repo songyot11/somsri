@@ -211,7 +211,7 @@ en:
   at_date: "Date"
   this_detail: "As Description below"
   excess: "Surplus/Shortage"
-  sender: "Report by"
+  sender: "Report by" 
   sign: "Signature"
   remark: "Remark"
 
