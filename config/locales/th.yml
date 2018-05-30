@@ -487,7 +487,8 @@ th:
   select_teacher: "+ เลือกคุณครู"
   teacher: คุณครู
   student: นักเรียน
-  classroom_is_exist: "*มีห้องเรียนนี้ในระบบแล้ว"
+  classroom_is_exist: "* มีห้องเรียนนี้ในระบบแล้ว"
+  next_classroom: "ระดับชั้นเรียนใหม่"
 
   skill: ทักษะ
   score: คะแนน

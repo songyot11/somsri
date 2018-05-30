@@ -483,11 +483,12 @@ en:
   gradulated: Gradulated
   up_grade_classroom_all: "Do you want to promote all students?"
   current_grade_classroom: "Current Classroom"
-  select_student: "+ Choose student"
-  select_teacher: "+ Choose teacher"
+  select_student: "+ Choose Student"
+  select_teacher: "+ Choose Teacher"
   teacher: "Teacher"
   student: "Student"
-  classroom_is_exist: "*This classroom is exist."
+  classroom_is_exist: "* This classroom is exist."
+  next_classroom: "Next Classroom"
   
   skill: Skill
   score: Score
