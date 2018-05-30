@@ -417,7 +417,13 @@
 
       ctrl.getAllPayroll = function(id) {
         service.getEmployeePayrolls(id).then(function(resp) {
-          ctrl.employeePayrolls = resp.data
+          var checkcurrent = resp.data        
+          if (checkcurrent[0].date == "เดือนปัจจุบัน"){
+            resp.data.shift()
+            ctrl.employeePayrolls = resp.data
+          }else { 
+            ctrl.employeePayrolls = resp.data
+          }
         })
       }
 
