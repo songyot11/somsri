@@ -520,13 +520,13 @@ class Student < ApplicationRecord
       return {
         img_url: self.img_medium,
         full_name: self.full_name_eng_thai_with_title,
-        nickname: self.nickname_eng_thai,
+        nickname: self.nickname.nil? ? "" : self.nickname_eng_thai,
         grade_id: self.grade.nil? ? "" : self.grade.name,
         classroom_id: self.classroom ? self.classroom.name : "",
-        classroom_number: self.classroom_number,
+        classroom_number: self.classroom_number.nil? ? "" : self.classroom_number,
         student_number: self.student_number,
         gender_id: self.gender.nil? ? "" : I18n.t(self.gender.name),
-        birthdate: self.birthdate.nil? ? '' : self.birthdate.strftime('%d/%m/%Y'),
+        birthdate: self.birthdate.nil? ? "" : self.birthdate.strftime('%d/%m/%Y'),
         id: self.id
       }
 

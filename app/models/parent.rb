@@ -84,7 +84,7 @@ class Parent < ApplicationRecord
           name: relationship_names
         },
         students: {
-          full_name: studentFullname
+          full_name: studentFullname.nil? ? "" : studentFullname
         },
         edit: edit
       }
