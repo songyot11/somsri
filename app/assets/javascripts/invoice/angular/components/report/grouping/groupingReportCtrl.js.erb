@@ -3,7 +3,7 @@
   angular.module('somsri.invoice.groupingReport', [
   ])
   .controller('groupingReportCtrl', ['$compile', '$scope', '$window', '$filter', '$rootScope', 'groupingReportService', '$timeout', 'CSV', '$uibModal', 'moment', 'translateFilter', function($compile, $scope, $window, $filter, $rootScope, service, $timeout, CSV, $uibModal, moment, translateFilter) {
-    $rootScope.menu = translateFilter('classification_report')
+    $rootScope.menu = translateFilter('classification_report_1')
     var ctrl = this
 
     $rootScope.loadAndAuthorizeResource("invoice", function(){
