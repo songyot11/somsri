@@ -66,6 +66,10 @@ body {
   width: 20px !important;
 }
 
+.w-30p {
+  width: 30% !important;
+}
+
 .w-50 {
   width: 50px !important;
 }
@@ -551,4 +555,8 @@ ul.dropdown-menu.display-top{
 }
 .fixed-table-pagination{
   a{font-family: Helvetica, FontAwesome;}
+}
+
+.d-inline-block {
+  display: inline-block;
 }

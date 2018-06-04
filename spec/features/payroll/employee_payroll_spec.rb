@@ -161,11 +161,10 @@ describe 'Payroll', js: true do
     sleep(1)
     click_on("พฤศจิกายน 2559")
     sleep(1)
-
     eventually { expect(page).to have_content 'รายการได้รายการหัก' }
     eventually { expect(page).to have_content 'รหัส ชื่อ' }
     eventually { expect(page).to have_content 'เงินเดือน เงินสอนพิเศษ ค่าตำแหน่ง เบี้ยเลี้ยง เบี้ยขยัน โบนัส อื่นๆ' }
-    eventually { expect(page).to have_content 'ขาดงาน สาย ภาษี ประกันสังคม เงินสะสม เบิกล่วงหน้า อื่นๆ เงินเดือนสุทธิ' }
+    eventually { expect(page).to have_content 'ขาดงาน'}
     eventually { expect(page).to have_content /นาง สมศรี เป็นชื่อแอพ.*50,000.00 0.00 0.00 0.00 0.00 0.00 0.00/i }
     eventually { expect(page).to have_content /นาย สมจิตร เป็นนักมวย.*50,000.00 0.00 0.00 0.00 0.00 0.00 0.00/i }
     eventually { expect(page).to have_content /นาย คิง ฮาราบาส.*20.00 0.00 0.00 0.00 0.00 0.00 0.00/i }

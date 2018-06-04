@@ -122,7 +122,7 @@ class PayrollsController < ApplicationController
     payrolls = Payroll.where(employee_id: employees, effective_date: effective_date.beginning_of_day..effective_date.end_of_day)
                       .where("social_insurance > ?", 0)
                       .order('employee_id').to_a
-    render plain: "ไม่มีพนักงานที่ต้องเสียค่าประกันสังคม", status: :ok and return if payrolls.size == 0 || payrolls.blank?
+    render plain: I18n.t('social_insurance_pdf'), status: :ok and return if payrolls.size == 0 || payrolls.blank?
     employee_count = payrolls.size
     sum_salary = 0
     sum_insurance = 0
