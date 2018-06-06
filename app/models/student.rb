@@ -512,7 +512,7 @@ class Student < ApplicationRecord
   end
 
   def img_medium
-    self.img_url.exists? ? self.img_url.url(:medium) : ''
+    self.img_url.exists? ? self.img_url.expiring_url(10, :medium) : ''
   end
 
   def as_json(options={})

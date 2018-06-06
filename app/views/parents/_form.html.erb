@@ -84,7 +84,7 @@
         </label>
       <% else %>
         <label for="imageUpload" class="img-default">
-          <%= image_tag(@parent.img_url.url(:medium), :class => 'circle', id:'img-change') if @parent.img_url.exists? %>
+          <%= image_tag(@parent.img_url.expiring_url(10, :medium), :class => 'circle', id:'img-change') if @parent.img_url.exists? %>
         </label>
       <% end %>
       <div class="space20"></div>

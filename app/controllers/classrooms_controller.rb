@@ -63,7 +63,7 @@ class ClassroomsController < ApplicationController
     classroom = Classroom.find(params[:id])
     Employee.where(classroom: classroom).each do |teacher|
       teachers << {
-        img: teacher.img_url.exists? ? teacher.img_url.url(:medium) : nil,
+        img: teacher.img_url.exists? ? teacher.img_url.expiring_url(10, :medium) : nil,
         name: teacher.full_name_with_nickname,
         id: teacher.id
       }
@@ -79,7 +79,7 @@ class ClassroomsController < ApplicationController
     Employee.where(classroom_id: [nil, '', classroom_id])
             .where.not(id: exclude_ids).each do |teacher|
       teachers << {
-        img: teacher.img_url.exists? ? teacher.img_url.url(:medium) : nil,
+        img: teacher.img_url.exists? ? teacher.img_url.expiring_url(10, :medium) : nil,
         name: teacher.full_name_with_nickname,
         id: teacher.id
       }
@@ -93,7 +93,7 @@ class ClassroomsController < ApplicationController
     classroom = Classroom.find(params[:id])
     Student.where(classroom: classroom).each do |student|
       students << {
-        img: student.img_url.exists? ? student.img_url.url(:medium) : nil,
+        img: student.img_url.exists? ? student.img_url.expiring_url(10, :medium) : nil,
         name: student.invoice_screen_full_name_display,
         id: student.id
       }
@@ -109,7 +109,7 @@ class ClassroomsController < ApplicationController
     Student.where(classroom_id: [nil, '', classroom_id])
            .where.not(id: exclude_ids).each do |student|
       students << {
-        img: student.img_url.exists? ? student.img_url.url(:medium) : nil,
+        img: student.img_url.exists? ? student.img_url.expiring_url(10, :medium) : nil,
         name: student.invoice_screen_full_name_display,
         id: student.id
       }

@@ -82,7 +82,7 @@ class EmployeesController < ApplicationController
     end
     render json: {
       enable_rollcall: SiteConfig.get_cache.enable_rollcall,
-      img_url: @employee.img_url.exists? ? @employee.img_url.url : nil ,
+      img_url: @employee.img_url.exists? ? @employee.img_url.expiring_url(10, :medium) : nil ,
       employee: @employee,
       employee_display_name: @employee.full_name,
       payroll: payroll,
@@ -134,7 +134,7 @@ class EmployeesController < ApplicationController
     end
 
     render json: {
-      img_url: @employee.img_url.exists? ? @employee.img_url.url : nil ,
+      img_url: @employee.img_url.exists? ? @employee.img_url.expiring_url(10, :medium) : nil ,
       employee: @employee,
       payroll: @employee.lastest_payroll,
       tax_reduction: @employee.tax_reduction
@@ -171,7 +171,7 @@ class EmployeesController < ApplicationController
   def upload_photo
     @employee = Employee.where(id: params[:id]).update( img_url: upload_photo_params[:file] ).first
     @employee.reload
-    render json: [{ url: @employee.img_url.url }], status: :ok
+    render json: [{ url: @employee.img_url.expiring_url(10, :medium) }], status: :ok
   end
 
   def create_by_name
@@ -182,7 +182,7 @@ class EmployeesController < ApplicationController
     name[:nickname] = nickname
     employee = Employee.create(name)
     result = {
-      img: employee.img_url.exists? ? employee.img_url.url(:medium) : nil,
+      img: employee.img_url.exists? ? employee.img_url.expiring_url(10, :medium) : nil,
       name: employee.full_name_with_nickname,
       id: employee.id
     }

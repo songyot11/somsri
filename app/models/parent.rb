@@ -75,7 +75,7 @@ class Parent < ApplicationRecord
       return {
         parents:{
           id: self.id,
-          img_url: self.img_url.exists? ? self.img_url.url(:medium) : '',
+          img_url: self.img_url.exists? ? self.img_url.expiring_url(10, :medium) : '',
           full_name: self.full_name,
           mobile: self.mobile,
           email: self.email,
@@ -91,7 +91,7 @@ class Parent < ApplicationRecord
     elsif options[:autocomplete]
       return {
         full_name_label: self.invoice_screen_full_name_display,
-        img_url: self.img_url.exists? ? self.img_url.url(:medium) : '',
+        img_url: self.img_url.exists? ? self.img_url.expiring_url(10, :medium) : '',
         id: self.id
       }
     else

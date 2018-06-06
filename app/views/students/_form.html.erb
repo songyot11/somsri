@@ -84,7 +84,7 @@
       <% else %>
       <label for="imageUpload" class="img-default">
         <div class="img-upload-display hide">
-          <%= image_tag(@student.img_url.url(:medium), id:'img-change') if @student.img_url.exists? %>
+          <%= image_tag(@student.img_url.expiring_url(10, :medium), id:'img-change') if @student.img_url.exists? %>
         </div>
       </label>
       <% end %>
