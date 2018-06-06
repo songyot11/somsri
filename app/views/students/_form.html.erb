@@ -228,7 +228,7 @@ $(function() {
       '<div class="form-group" id="add-prn-'+round+'">\
         <div class="row add-st-pr">\
           <div class="col-md-5" style="margin-left:15px;">\
-            <select id="parent'+round+'" name="parent[]" index="'+round+'" onchange="parentChanged(this)"  placeholder="Select parent...">\
+            <select id="parent'+round+'" name="parent[]" index="'+round+'" onchange="parentChanged(this)"  placeholder="<%=t('select_parent')%>">\
               <option value="" disabled selected></option>\
               <% @parents.each do |p| %>\
                 <option value="<%= p.id %>"><%= p.full_name %></option>\

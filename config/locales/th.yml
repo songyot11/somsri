@@ -390,6 +390,7 @@ th:
   parent_info_success_save: "บันทึกผู้ปกครองสำเร็จ"
   parent_delete_success: "ลบผู้ปกครองสำเร็จ"
   search_parent: "ค้นหาชื่อผู้ปกครอง"
+  select_parent: "เลือกผู้ปกครอง..."
 
   #Students
   add_parent: "+ เพิ่มชื่อผู้ปกครอง"
@@ -434,14 +435,13 @@ th:
   select_grade: "โปรดเลือกระดับชั้น"
   select_class: "โปรดเลือกห้อง" 
   search_student: "ค้นหาชื่อนักเรียน"
+  select_students: "เลือกนักเรียน..."
 
   #Alumni
   year_of_graduation: "จบปีการศึกษา"
   status: "สถานะ"
   graduated_semester: "ภาคเรียนที่"
   grade_classroom: "ระดับชั้นเรียน"
-  ลาออก: "ลาออก"
-  จบการศึกษา: "จบการศึกษา" 
   locale: "th"
 
   # Rollcall

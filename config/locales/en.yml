@@ -390,6 +390,7 @@ en:
   parent_info_success_save: "Parent save successfully"
   parent_delete_success: "Parent delete successfully"
   search_parent: "Search name parent"
+  select_parent: "Select parent..."
 
   #Students
   add_parent: "+ Add parent"
@@ -434,14 +435,13 @@ en:
   select_grade: "Select Grade"
   select_class: "Select Class"
   search_student: "Search name student"
+  select_students: "Select student..."
 
   #Alumni
   year_of_graduation: "Graduation Year"
   status: "Status"
-  graduated_semester: "Graduation Semester"
+  graduated_semester: "Graduation Semester" 
   grade_classroom: "Level"
-  ลาออก: "Resign"
-  จบการศึกษา: "Graduated"
   locale: "en"
 
   # Rollcall
