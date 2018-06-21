@@ -19,7 +19,7 @@ class EmployeesController < ApplicationController
       employee[:payroll][:pay_orders] = employee[:payroll][:pay_orders]
                                                         .select { |key, value| value[:value] > 0}
       school = School.first
-      employee[:header] = school.payroll_slip_header || ""
+      employee[:header] = school.payroll_slip_header_with_logo || ""
       render json: employee, status: :ok
     else
       render json: [], status: :ok
@@ -36,7 +36,7 @@ class EmployeesController < ApplicationController
       employee[:payroll][:pay_orders] = employee[:payroll][:pay_orders]
                                                         .select { |key, value| value[:value] > 0}
       school = School.first
-      employee[:header] = school.payroll_slip_header || ""
+      employee[:header] = school.payroll_slip_header_with_logo || ""
       employees << employee
     end
 

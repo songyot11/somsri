@@ -16,7 +16,7 @@
       service.getDailyReport(id).then(function(resp) {
         ctrl.datas = resp.data;
         ctrl.total = resp.data.real_total - resp.data.total
-        ctrl.header = $sce.trustAsHtml(ctrl.datas.school.daily_report_header);
+        ctrl.header = $sce.trustAsHtml(ctrl.datas.header);
       },function(resp) {
         $rootScope.openDailyReport();
       });

@@ -7,8 +7,8 @@ class DailyReportsController < ApplicationController
   def show
     school = School.first
     render json: {
-      logo: school.logo.url(:medium),
       school: school,
+      header: school.daily_report_header_with_logo,
       cash: @daily_report.cash,
       credit_card: @daily_report.credit_card,
       cheque: @daily_report.cheque,
