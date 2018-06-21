@@ -409,7 +409,8 @@ textarea {
 }
 
 .form-slip-forslip-copy,
-.for-print{
+.for-print,
+.for-print-table{
   display: none;
 }
 
@@ -1714,6 +1715,11 @@ label.img-default{
   .for-print{
     display: block;
   }
+
+  .for-print-table{
+    display: table;
+  }
+  
   .container.form-slip-forslip.ng-scope, main.form-slip-forslip.ng-scope{
     margin-top: 150px !important;
   }

@@ -75,9 +75,9 @@
         </div>
         </div>
         <table id="invoice-table" class="scrollable-header text-table-invoicereport for-display"></table>
-        <div class="text-title for-print">{{ 'level' | translate }}</div>
+        <div class="text-title for-print">{{ 'level' | translate }} {{invoiceReport.grade_name}}</div>
         <div class="text-title-date for-print"><b>{{ 'from' | translate }}</b> {{ invoiceReport.start_date | dateFormat }} <b>{{ 'to' | translate }}</b> {{ invoiceReport.end_date | dateFormat }}</div>
-        <table id="for-print-table" class="scrollable-header text-table-invoicereport for-print"></table>
+        <table id="for-print-table" class="scrollable-header text-table-invoicereport for-print-table"></table>
         <div class="row row-centered for-display">
           <div class="col-centered">
             <ul uib-pagination ng-change="invoiceReport.pageChanged()" total-items="invoiceReport.totalItems" ng-model="invoiceReport.currentPage" max-size="invoiceReport.maxSize" class="pagination-md" num-pages="numPages" previous-text="‹" next-text="›" boundary-link-numbers='true' rotate='false'></ul>
