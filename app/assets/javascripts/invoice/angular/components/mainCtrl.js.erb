@@ -16,7 +16,14 @@
 
     function openInNewTab(url) {
       var win = window.open(url, '_blank');
-      win.focus();
+      if(win){
+        win.focus();
+        return true;
+      }else{
+        // window.open not working in safari
+        window.location = url;
+        return false;
+      }
     }
 
     $rootScope.loadAndAuthorizeResource = function(model, callback) {
@@ -63,7 +70,7 @@
     };
 
     $rootScope.openSlip = function (id, page) {
-      openInNewTab("/invoices/" + id + "/slip.pdf")
+      return openInNewTab("/invoices/" + id + "/slip.pdf")
     };
 
     $rootScope.openDailyReportPreview = function (id) {
