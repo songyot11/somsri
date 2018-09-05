@@ -80,6 +80,7 @@
       }
 
       ctrl.createInvoice = function(){
+        $('#invoice button#submit').prop('disabled', true);
         service.createInvoice(ctrl.datas).then(function(resp) {
           // Reset Value
           ctrl.datas = defaultInvoice
