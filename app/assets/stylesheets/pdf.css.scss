@@ -102,6 +102,32 @@
   background-repeat: no-repeat;
 }
 
+.pt-20{
+  padding-top: 20px !important;
+}
+
+.pt-10{
+  padding-top: 10px !important;
+}
+
+.mb-20{
+  margin-bottom: 20px;
+}
+
+.my-5{
+  margin-top: 5px;
+  margin-bottom: 5px;
+}
+
+.font-weight-normal{
+  font-weight: 200;
+}
+
+.header-table-page {
+  table { overflow: visible !important; }
+  thead { display: table-header-group }
+}
+
 table, tr, td, th, tbody, thead, tfoot {
     page-break-inside: avoid !important;
 }

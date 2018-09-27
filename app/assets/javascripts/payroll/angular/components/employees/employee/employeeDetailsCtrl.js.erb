@@ -310,8 +310,6 @@
         });
       };
 
-
-
       ctrl.submit = function(parm){
         var isValid = true
         if (isValid) {
@@ -417,11 +415,11 @@
 
       ctrl.getAllPayroll = function(id) {
         service.getEmployeePayrolls(id).then(function(resp) {
-          var checkcurrent = resp.data        
+          var checkcurrent = resp.data
           if (checkcurrent[0].date == "เดือนปัจจุบัน"){
             resp.data.shift()
             ctrl.employeePayrolls = resp.data
-          }else { 
+          } else { 
             ctrl.employeePayrolls = resp.data
           }
         })

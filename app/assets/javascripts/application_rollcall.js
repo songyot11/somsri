@@ -26,6 +26,8 @@
 //= require angular-ui-bootstrap-fontawesome
 //= require angular-translate/angular-translate
 //= require angular-translate-loader-url/angular-translate-loader-url
+//= require ng-file-upload-shim
+//= require ng-file-upload
 
 //= require translate/app.module
 //= require_tree ./translate
@@ -33,3 +35,6 @@
 //= require rollcall/angular/components/mainCtrl.js.erb
 //= require rollcall/angular/app.module
 //= require rollcall/angular/app.assets
+
+//= require bootstrap-table
+//= ajax.googleapis.com/ajax/libs/jquery/2.1.1/jquery.min

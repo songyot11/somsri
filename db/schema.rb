@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20180424042500) do
+ActiveRecord::Schema.define(version: 20180920050300) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -246,6 +246,28 @@ ActiveRecord::Schema.define(version: 20180424042500) do
     t.index ["school_id"], name: "index_employees_on_school_id", using: :btree
   end
 
+  create_table "expense_items", force: :cascade do |t|
+    t.integer "expense_id"
+    t.string  "detail"
+    t.integer "amount"
+    t.float   "cost"
+    t.index ["expense_id"], name: "index_expense_items_on_expense_id", using: :btree
+  end
+
+  create_table "expenses", force: :cascade do |t|
+    t.datetime "effective_date"
+    t.string   "expenses_id"
+    t.string   "detail"
+    t.datetime "created_at",           null: false
+    t.datetime "updated_at",           null: false
+    t.datetime "deleted_at"
+    t.string   "img_url_file_name"
+    t.string   "img_url_content_type"
+    t.integer  "img_url_file_size"
+    t.datetime "img_url_updated_at"
+    t.float    "total_cost"
+  end
+
   create_table "genders", force: :cascade do |t|
     t.string   "name"
     t.datetime "created_at", null: false
@@ -465,6 +487,7 @@ ActiveRecord::Schema.define(version: 20180424042500) do
     t.boolean "outstanding_notification",             default: false
     t.boolean "slip_carbon",                          default: false
     t.string  "default_locale"
+    t.boolean "enable_expenses",                      default: false
   end
 
   create_table "skills", force: :cascade do |t|

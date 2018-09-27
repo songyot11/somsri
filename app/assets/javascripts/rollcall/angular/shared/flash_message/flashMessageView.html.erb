@@ -1,0 +1,16 @@
+<div ng-show="typeSuccess && message" class="container mt-10">
+  <div class="alert alert-success" ng-show="message">
+    <button type="button" class="close" ng-click="message = null">
+      <span aria-hidden="true">&times;</span>
+    </button>
+    {{ message }}
+  </div>
+</div>
+<div ng-show="!typeSuccess && message" class="container mt-10">
+   <div class="alert alert-danger" ng-show="message">
+    <button type="button" class="close" ng-click="message = null">
+      <span aria-hidden="true">&times;</span>
+    </button>
+    {{ message }}
+  </div>
+</div>

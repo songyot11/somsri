@@ -152,3 +152,6 @@ end
 
 Alumni.blueprint do
 end
+
+Expense.blueprint do
+end

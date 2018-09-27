@@ -1,0 +1,310 @@
+(function() {
+  'use strict';
+  angular.module('somsri.rollcall.expenses', [])
+  .controller('expensesCtrl', ['$compile', '$scope', '$window', '$filter', '$rootScope', 'expensesService', '$timeout', 'translateFilter', '$uibModal', 'Upload', function($compile, $scope, $window, $filter, $rootScope, service, $timeout, translateFilter, $uibModal, Upload) {
+    $rootScope.menu = translateFilter("receipt")
+    var ctrl = this
+    var angularScopeRoot = 'angular.element(document.getElementById("angularCtrl")).scope().$root'
+    var angularScopeExpenses = 'angular.element(document.getElementById("angularCtrl")).scope().expensesCtrl'
+    var angularCtrlStr = 'angular.element(document.getElementById("angularCtrl")).scope().expenses'
+    ctrl.invoice = [];
+    ctrl.message = '';
+
+    $rootScope.loadAndAuthorizeResource("invoice", function(){
+      var main_table = $('#invoice-table');
+      ctrl.currentPage = 1;
+      ctrl.searchKeyword = '';
+      ctrl.sort = 'effective_date';
+      ctrl.order = 'desc';
+      ctrl.total_all_price = 0;
+
+      ctrl.show_img = function(item) {
+        service.show(item).then( function(resp){
+          window.open(resp.data.img);
+        })
+      }
+
+      ctrl.createExpenses = function() {
+        ctrl.case_edit = false;
+        ctrl.data = {};
+        ctrl.data.expense_items = [{amount:0, detail:"", cost:0.00, total_price:0.00}];
+        ctrl.data.effective_date = new Date();
+        $uibModal.open({
+          animation: true,
+          backdrop: 'static',
+          keyboard: false,
+          scope: $scope,
+          templateUrl: "<%= asset_path('rollcall/angular/components/modal/createExpenses/createExpensesModalView.html') %>",
+          controller: 'createExpensesModalCtrl as create',
+          size: 'lg',
+          resolve: {
+            resources: ['$ocLazyLoad', 'ASSETS', function($ocLazyLoad, ASSETS) {
+              return $ocLazyLoad.load([
+                ASSETS.somsri.rollcall.create_expenses_modal
+                ]);
+            }]
+          }
+        }).result.then(function (result) {
+          if (result) {
+            ctrl.items = result.expense_items_attributes.filter(function(item) {
+             return item.detail || item.amount || item.cost 
+            });
+            service.createExpenses({ 
+              effective_date: new Date(result.effective_date), 
+              expenses_id: result.expenses_id, 
+              detail: result.detail, 
+              total_cost: result.total_cost, 
+              expense_items_attributes: ctrl.items,
+              img_url: result.img_url
+            }).then(function(resp) {
+              ctrl.message = translateFilter('expense_create_success');
+              ctrl.typeSuccess = true;
+              getExpenses();
+            }, function(e){
+              ctrl.message = translateFilter('expenses_create_failed')
+              ctrl.typeSuccess = false;
+            });
+          }
+        });
+      }
+
+      ctrl.edit = function(item) {
+        ctrl.case_edit = true;
+        service.show(item).then( function(resp){
+          ctrl.data = resp.data
+          if (ctrl.data.expense_items.length == 0)
+            ctrl.data.expense_items = [{amount:0, detail:"", cost:0.00, total_price:0.00}];
+            $uibModal.open({
+              animation: true,
+              backdrop: 'static',
+              keyboard: false,
+              scope: $scope,
+              templateUrl: "<%= asset_path('rollcall/angular/components/modal/createExpenses/createExpensesModalView.html') %>",
+              controller: 'createExpensesModalCtrl as create',
+              size: 'lg',
+              resolve: {
+                resources: ['$ocLazyLoad', 'ASSETS', function($ocLazyLoad, ASSETS) {
+                  return $ocLazyLoad.load([
+                    ASSETS.somsri.rollcall.create_expenses_modal
+                    ]);
+                }]
+              }
+            }).result.then(function (result) {
+              if (result) {
+                ctrl.items = result.expense_items_attributes.filter(function(item) {
+                 return item.detail || item.amount || item.cost 
+                });
+                service.editExpenses({
+                  item_id: resp.data.id,
+                  effective_date: new Date(result.effective_date),
+                  expenses_id: result.expenses_id,
+                  detail: result.detail,
+                  total_cost: result.total_cost,
+                  expense_items_attributes: ctrl.items,
+                  img_url: result.img_url
+                }).then(function(resp) {
+                  ctrl.message = translateFilter('expense_edit_success');
+                  ctrl.typeSuccess = true;
+                  getExpenses();
+                }, function(e){
+                  ctrl.message = translateFilter('expenses_edit_failed')
+                  ctrl.typeSuccess = false;
+                });
+              }
+            });
+        });
+      }
+
+      ctrl.print_report = function() {
+        window.open("/expenses.pdf?for_print=true&start_date="+ctrl.start_date+"&end_date="+ctrl.end_date+"&sort="+ctrl.sort+"&order="+ctrl.order)
+      }
+
+      function openConfirmationModal(message, success, dismiss) {
+        $scope.message = message;
+        $uibModal.open({
+          animation: true,
+          backdrop: 'static',
+          keyboard: false,
+          scope: $scope,
+          templateUrl: "<%= asset_path('payroll/angular/components/modal/confirm/confirmModalView.html') %>",
+          controller: 'confirmModalCtrl as confirm',
+          size: 'md',
+          resolve: {
+            resources: ['$ocLazyLoad', 'ASSETS', function($ocLazyLoad, ASSETS) {
+              return $ocLazyLoad.load([
+                ASSETS.somsri.payroll.confirm_modal
+                ]);
+            }]
+          }
+        }).result.then(function (result) {
+          if (result) {
+            if(success){ success() }
+          }else{
+            if(dismiss){ dismiss() }
+          }
+        });
+      }
+      
+      ctrl.removeExpenses = function(id) {
+        openConfirmationModal(translateFilter('delete_expense'), function(){
+          service.removeExpenses(id).then(function(resp) {
+            getExpenses();
+            ctrl.message = translateFilter('expense_delete_success');
+            ctrl.typeSuccess = true;
+          }, function(e){
+            ctrl.message = translateFilter('expenses_delete_failed')
+            ctrl.typeSuccess = false;
+          });
+        })
+      }
+
+      // default last 7 days
+      ctrl.end_date = new Date();
+      ctrl.start_date = new Date(new Date().setMonth(new Date().getMonth() - 1));
+      ctrl.new_date = new Date();
+
+      function cleanDate(date){
+        if(!date || new Date(date) == "Invalid Date"){return;}
+        var nowDate = new Date()
+        date.setHours(nowDate.getHours())
+        date.setMinutes(nowDate.getMinutes())
+        date.setSeconds(nowDate.getSeconds())
+        return date
+      }
+
+      function filterDate(value, row, index) {
+        if (value) {
+          return $filter('date')(value, 'd/MM/yyyy');
+        }
+        return "-";
+      }
+
+      function filterCurrency(value, row, index) {
+        if (value) {
+          return $filter('number')(value.toFixed(2), 2);
+        }
+        return "-";
+      }
+
+      function menuFormatter(value, row, index) {
+        var html;
+        var show = angularCtrlStr + '.show_img('+ angularCtrlStr+ '.datas['+ index +'])';
+        var edit = angularCtrlStr + '.edit('+ angularCtrlStr+ '.datas['+ index +'])';
+        var remove = angularCtrlStr + '.removeExpenses('+ angularCtrlStr+ '.datas['+ index +'])';
+
+        if (angular.element(document.getElementById("angularCtrl")).scope().expenses.datas[index].img_url_file_name){
+          html = "<a href='javascript:void(0)' target='_blank' onclick='" + show + "'><i class='fa fa-picture-o fa-fw ml-20 mr-20 color-blue font-18'></i></a>";
+        } else {
+          html = "<i class='fa fa-picture-o color-transparent ml-20 mr-20 font-18 fa-fw'></i>";
+        }
+        html += "<a href='javascript:void(0)' class='ml-20 mr-20 color-dark-green' onclick='" + edit + "'><i class='fa fa-edit fa-fw font-18'></i>" + translateFilter('edit') + "</a>" ;
+        html += "<a href='javascript:void(0)' class='color-red' onclick='" + remove + "'><i class='fa fa-trash fa-fw font-18'></i></i>&nbsp" + translateFilter('delete') + "</a>";
+
+        return html;
+      }
+
+      ctrl.pageChanged = function() {
+        getExpenses()
+      };
+
+      ctrl.search = function() {
+        getExpenses();
+      }
+
+      var bootstrapTableOptions = {
+        onSort: function(name, order){
+          ctrl.sort = name;
+          ctrl.order = order;
+          getExpenses()
+        },
+        customSort: function(){},
+        columns: [{
+          field: 'effective_date',
+          title: translateFilter("expense_date"),
+          sortable: true,
+          formatter: filterDate
+        },{
+          field: 'expenses_id',
+          title: translateFilter("buy_slip"),
+          sortable: true,
+        },{
+          field: 'detail',
+          title: translateFilter("expense_detail"),
+          sortable: true,
+        },{
+          field: 'total_cost',
+          title: translateFilter("total_cost"),
+          sortable: true,
+          align: "right",
+        },{
+          field: 'menu',
+          sortable: false,
+          formatter: menuFormatter
+        }]
+      }
+      main_table.bootstrapTable($.extend(bootstrapTableOptions, {toolbar: "date-filter"}));
+
+      function getExpenses() {
+        ctrl.start_date = cleanDate(ctrl.start_date)
+        ctrl.end_date = cleanDate(ctrl.end_date)
+        if(!ctrl.currentPage){ ctrl.currentPage = 1 }
+          service.getExpenses(
+            ctrl.searchKeyword,
+            ctrl.start_date,
+            ctrl.end_date,
+            ctrl.currentPage,
+            ctrl.sort,
+            ctrl.order
+            ).then(function(resp) {
+              ctrl.datas = [];
+              if (resp.data && resp.data.expenses){
+                ctrl.datas = resp.data.expenses;
+                ctrl.totalItems = resp.data.total_records;
+                ctrl.currentPage = resp.data.current_page;
+                if (resp.data.total_price){
+                  ctrl.total_all_price = resp.data.total_price;
+                } else {
+                  ctrl.total_all_price = 0;
+                }
+              } else {
+                ctrl.totalItems = 0;
+                ctrl.currentPage = 0;
+              }
+              ctrl.paginateButtonMaxSize = 5;
+              main_table.bootstrapTable('load', ctrl.datas);
+            });
+      }
+
+      ctrl.optionsChange = function() {
+          getExpenses()
+      }
+
+      ctrl.openStartDatePopup = function() {
+        ctrl.startDatePopup.opened = true;
+      };
+
+      ctrl.startDatePopup = {
+        opened: false
+      };
+
+      ctrl.openEndDatePopup = function() {
+        ctrl.endDatePopup.opened = true;
+      };
+
+      ctrl.endDatePopup = {
+        opened: false
+      };
+
+      ctrl.openNewDatePopup = function() {
+        ctrl.newDatePopup.opened = true;
+      };
+
+      ctrl.newDatePopup = {
+        opened: false
+      };
+
+      getExpenses();
+
+    });
+}]);
+})();

@@ -16,8 +16,32 @@
             "<%= asset_path('rollcall/angular/components/report/reportCtrl.js') %>",
             "<%= asset_path('rollcall/angular/components/report/reportService.js') %>"
           ]
-        }
+        },
+        'expenses': {
+          name: 'somsri.rollcall.expenses',
+          files: [
+            "<%= asset_path('rollcall/angular/components/expenses/expensesCtrl.js') %>",
+            "<%= asset_path('rollcall/angular/components/expenses/expensesService.js') %>",
+            "<%= asset_path('rollcall/angular/shared/flash_message/flashMessageDirective.js') %>"
+          ]
+        },
+        'create_expenses_modal': {
+          name: 'somsri.rollcall.create_expenses_modal',
+          files: [
+            "<%= asset_path('rollcall/angular/components/modal/createExpenses/createExpensesModalCtrl.js') %>",
+            "<%= asset_path('rollcall/angular/components/modal/createExpenses/createExpensesModalService.js') %>",
+            "<%= asset_path('rollcall/angular/shared/flash_message/flashMessageDirective.js') %>"
+          ]
+        },
+
+    },'payroll': {
+      'confirm_modal': {
+        name: 'somsri.payroll.confirm_modal',
+        files: [
+          "<%= asset_path('payroll/angular/components/modal/confirm/confirmModalCtrl.js') %>"
+        ]
       }
+    }
     }
   });
 })();

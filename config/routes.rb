@@ -25,6 +25,11 @@ Rails.application.routes.draw do
     end
   end
 
+  resources :expenses, only: [:index, :create, :destroy, :show, :update] do
+    member do
+      patch 'upload_photo'
+    end
+  end
   resources :skills, only: [:index, :create]
   resources :employees, only: [:index, :create, :show, :update, :destroy]  do
     resources :employee_skills, except: %i[show new edit]

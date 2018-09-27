@@ -1,0 +1,17 @@
+(function() {
+  'use strict';
+  angular.module('somsri.rollcall.flash_message.directive', [])
+    .directive('flashMessageContent', flashMessageContent);
+
+  function flashMessageContent() {
+    return {
+      restrict: 'E',
+      scope: {
+        message: '=message',
+        typeSuccess: '=typeSuccess'
+      },
+      templateUrl: "<%= asset_path ('rollcall/angular/shared/flash_message/flashMessageView.html') %>",
+    };
+  }
+
+})();

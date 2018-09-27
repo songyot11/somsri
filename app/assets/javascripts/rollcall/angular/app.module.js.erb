@@ -1,5 +1,6 @@
 (function() {
   'use strict';
+  
   var app = angular.module('somsri.rollcall', [
     'somsri.rollcall.assets',
     'oc.lazyLoad',
@@ -9,7 +10,9 @@
     'angularMoment',
     'ui.utils.masks',
     'ngSanitize',
-    'somsri.translate'
+    'somsri.translate',
+    'ngFileUpload'
+
   ]);
 
   app.config(['stateHelperProvider', 'ASSETS', '$urlRouterProvider', '$httpProvider', function(stateHelperProvider, ASSETS, $urlRouterProvider, $httpProvider) {
@@ -43,6 +46,18 @@
           resources: ['$ocLazyLoad', function($ocLazyLoad) {
             return $ocLazyLoad.load([
               ASSETS.somsri.rollcall.report
+            ]);
+          }]
+        }
+      }).state({
+        url: '/expenses',
+        name: 'expenses',
+        templateUrl: "<%= asset_path('rollcall/angular/components/expenses/expensesView.html') %>",
+        controller: 'expensesCtrl as expenses',
+        resolve: {
+          resources: ['$ocLazyLoad', function($ocLazyLoad) {
+            return $ocLazyLoad.load([
+              ASSETS.somsri.rollcall.expenses
             ]);
           }]
         }
