@@ -16,12 +16,7 @@ class MenuController < ApplicationController
   end
 
   def landing_rollcall
-    if SiteConfig.get_cache.enable_rollcall
-      authorize! :manage, RollCall
-      render "menu/angular_view", layout: "application_rollcall"
-    else
-      redirect_to root_path
-    end
+    render "menu/angular_view", layout: "application_rollcall"
   end
 
   def landing_main

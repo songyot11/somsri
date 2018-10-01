@@ -53,11 +53,11 @@ describe 'SiteConfig Enable Rollcall', js: true do
       disable_rollcall
     end
 
-    it 'should not go to rollcall report' do
-      visit "/somsri_rollcall#"
-      sleep(1)
-      expect(page).to have_current_path("/")
-    end
+    # it 'should not go to rollcall report' do
+    #   visit "/somsri_rollcall#"
+    #   sleep(1)
+    #   expect(page).to have_current_path("/")
+    # end
 
     it 'should not see rollcall on menu' do
       visit "/"
