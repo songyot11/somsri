@@ -51,7 +51,7 @@ class ExpensesController < ApplicationController
   end
 
   def show
-    render json: @expense.as_json.merge({ 
+    render json: @expense.as_json.merge({
       expense_items: @expense.expense_items,
       img: @expense.img_url.exists? ? @expense.img_url.expiring_url(10) : nil
     })
@@ -64,7 +64,7 @@ class ExpensesController < ApplicationController
     else
       render json: { message: @expense.errors.full_messages }, status: :bad_request
     end
-  end 
+  end
 
   # PUT /expenses/:id
   def update

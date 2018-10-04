@@ -1,6 +1,6 @@
 (function() {
   'use strict';
-  
+
   var app = angular.module('somsri.rollcall', [
     'somsri.rollcall.assets',
     'oc.lazyLoad',
@@ -46,6 +46,30 @@
           resources: ['$ocLazyLoad', function($ocLazyLoad) {
             return $ocLazyLoad.load([
               ASSETS.somsri.rollcall.report
+            ]);
+          }]
+        }
+      }).state({
+        url: '/expenses/new',
+        name: 'create_expenses',
+        templateUrl: "<%= asset_path('rollcall/angular/components/updateExpenses/updateExpensesView.html') %>",
+        controller: 'updateExpensesCtrl as update',
+        resolve: {
+          resources: ['$ocLazyLoad', function($ocLazyLoad) {
+            return $ocLazyLoad.load([
+              ASSETS.somsri.rollcall.update_expenses
+            ]);
+          }]
+        }
+      }).state({
+        url: '/expenses/:id',
+        name: 'update_expenses',
+        templateUrl: "<%= asset_path('rollcall/angular/components/updateExpenses/updateExpensesView.html') %>",
+        controller: 'updateExpensesCtrl as update',
+        resolve: {
+          resources: ['$ocLazyLoad', function($ocLazyLoad) {
+            return $ocLazyLoad.load([
+              ASSETS.somsri.rollcall.update_expenses
             ]);
           }]
         }

@@ -25,13 +25,13 @@
       return $http.delete('/expenses/' + id.id)
     }
 
-    this.show = function(item) {
-      return $http.get('/expenses/' + item.id)
+    this.show = function(id) {
+      return $http.get('/expenses/' + id)
     }
 
-    this.editExpenses = function(data) {
+    this.updateExpenses = function(data, id) {
       return  Upload.upload({
-          url: '/expenses/' + data.item_id,
+          url: '/expenses/' + id,
           method: 'put',
           data: { expense: data }
         });
@@ -44,6 +44,6 @@
           data: { expense: data }
         });
     }
-    
+
   }]);
 })();

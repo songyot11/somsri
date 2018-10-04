@@ -1,27 +1,27 @@
-<flash-message-content message="create.message" type-success="false"></flash-message-content>
-<div id="create-member-modal">
-  <form name="createExpensesForm" ng-submit="create.save()" enctype="multipart/form-data">
-    <div class="modal-header">
-      <div ng-hide="create.is_edit_item">
+<flash-message-content message="update.message" type-success="update.typeSuccess"></flash-message-content>
+<div id="create-member-modal" class="container-fluid">
+  <form name="createExpensesForm" ng-submit="update.save()" enctype="multipart/form-data">
+    <div>
+      <div ng-hide="update.real_id">
         <h3>{{ 'create_new_expenses' | translate }}</h3>
       </div>
-      <div ng-show="create.is_edit_item">
+      <div ng-show="update.real_id">
         <h3>{{ 'edit_expenses' | translate }}</h3>
       </div>
     </div>
-    <div class="modal-body" id="validateForm">
+    <div class="panel-board" id="validateForm">
       <div class="row">
         <div class="col-xs-5">
           <div class="form-group">
             <label for="purchase_order" class="control-label m-bottom-15 d-inline-block">{{ 'buy_slip' | translate }}</label>
-            <input id="expenses_id" class="form-control d-inline-block w-70p" ng-model="create.expenses_id" placeholder="{{ 'buy_slip' | translate }}">
+            <input id="expenses_id" class="form-control d-inline-block w-70p" ng-model="update.expenses_id" placeholder="{{ 'buy_slip' | translate }}">
           </div>
         </div>
 
         <div class="col-xs-7">
           <div class="form-group">
               <label for="expenses" class="control-label d-inline-block">{{ 'detail' | translate }}</label>
-              <input id="detail" class="form-control d-inline-block w-80p" ng-model="create.detail" placeholder="{{ 'detail' | translate }}" required>
+              <input id="detail" class="form-control d-inline-block w-80p" ng-model="update.detail" placeholder="{{ 'detail' | translate }}" required>
           </div>
         </div>
       </div>
@@ -33,17 +33,17 @@
             </div>
             <span class="input-group col-xs-10">
               <input id="new_date" type="text" class="form-control" uib-datepicker-popup="dd/MM/yyyy" datepicker-options="{showWeeks:false}"
-                ng-model="create.effective_date" is-open="expenses.newDatePopup.opened" close-text="Close" ng-change="expenses.optionsChange()"
+                ng-model="update.effective_date" is-open="update.newDatePopup.opened" close-text="Close" ng-change="update.optionsChange()"
                 required />
               <span class="input-group-btn">
-                <button type="button" class="btn btn-default" ng-click="expenses.openNewDatePopup()"><i class="fa fa-calendar"></i></button>
+                <button type="button" class="btn btn-default" ng-click="update.openNewDatePopup()"><i class="fa fa-calendar"></i></button>
               </span>
             </span>
           </div>
         </div>
         <div class="col-xs-5">
           <label for="total_cost" class="control-label m-bottom-15 d-inline-block">{{ 'total_cost' | translate }}</label>
-          <input id="total_cost" class="form-control d-inline-block w-40p text-right numberic" value="0.00" min="0.00" step="1000" ng-model="create.total_cost"
+          <input id="total_cost" class="form-control d-inline-block w-40p text-right numberic" value="0.00" min="0.00" step="1000" ng-model="update.total_cost"
             placeholder="0.00" ui-number-mask="2" ui-negative-number>
           {{ 'baht' | translate }}
         </div>
@@ -54,13 +54,13 @@
             <uib-tab id="upload_photo" index="0" heading="{{ 'upload_photo' | translate }}">
               <div class="col-xs-12 text-center border-choose-file mt-20 mb-20">
                 <div class="show-upload text-center min-h-200 mt-10">
-                  <img class="max-h-200" id="img-display" ng-src="{{ create.imgDisplay }}" />
+                  <img class="max-h-200" id="img-display" ng-src="{{ update.imgDisplay }}" />
                 </div>
                 <div class="form-group">
                   <label for="file-upload" class="custom-file-upload mt-15">
                     <i class="fa fa-upload"></i> {{ 'choose_file' | translate }}
                   </label>
-                  <input id="file-upload" type="file" ngf-select="create.readUrl($event)" ng-model="create.imgUploadData" accept="image/*" size="60"/>
+                  <input id="file-upload" type="file" ngf-select="update.readUrl($event)" ng-model="update.imgUploadData" accept="image/*" size="60"/>
                 </div>
               </div>
             </uib-tab>
@@ -74,7 +74,7 @@
                   <div class="col-xs-2 text-right"></div>
                 </div>
                 <div class="max-h-300 overflow-y scrollbar">
-                  <div class="row" data-ng-repeat="item in create.items" ng-animate="'slide-down'">
+                  <div class="row" data-ng-repeat="item in update.items" ng-animate="'slide-down'">
                     <div class="col-xs-4">
                       <div class="form-group form-list">
                         <input type="text" id="item_detail" placeholder="{{ 'item_name' | translate }}" class="form-control grop-table" ng-model="item.detail">
@@ -82,12 +82,12 @@
                     </div>
                     <div class="col-xs-2 text-right">
                       <div class="form-group form-price">
-                        <input type="text" id="item_amount" value="0" ng-required min="0" step="1000" ng-validate="number" placeholder="0" class="form-control table-price" ng-model="item.amount" ng-change="create.expensesTotal()" ui-number-mask="0" ui-negative-number>
+                        <input type="text" id="item_amount" value="0" ng-required min="0" step="1000" ng-validate="number" placeholder="0" class="form-control table-price" ng-model="item.amount" ng-change="update.expensesTotal()" ui-number-mask="0" ui-negative-number>
                       </div>
                     </div>
                     <div class="col-xs-2 text-right">
                       <div class="form-group form-price">
-                        <input type="text" id="item_cost" value="0.00" ng-required min="0.00" step="1000" ng-validate="number" placeholder="0.00" class="form-control table-price" ng-model="item.cost" ng-change="create.expensesTotal()" ui-number-mask="2" ui-negative-number>
+                        <input type="text" id="item_cost" value="0.00" ng-required min="0.00" step="1000" ng-validate="number" placeholder="0.00" class="form-control table-price" ng-model="item.cost" ng-change="update.expensesTotal()" ui-number-mask="2" ui-negative-number>
                       </div>
                     </div>
                     <div class="col-xs-2 text-right">
@@ -96,17 +96,17 @@
                       </div>
                     </div>
                     <div class="col-xs-2 remove-item-container text-right">
-                      <a href ng-hide="printMode" ng-click="create.removeNewItem($index)" class="btn pl-10"><span class="fa fa-times-circle"></span></a>
+                      <a href ng-hide="printMode" ng-click="update.removeNewItem($index)" class="btn pl-10"><span class="fa fa-times-circle"></span></a>
                     </div>
                   </div>
                 </div>
               </div>
               <div class="row expenses-item add-expenses-item">
                 <div class="col-xs-5 add-item-container pl-0">
-                  <a class="btn btn-custom sm btn-green" ng-click="create.addNewItem()">+ {{ 'add_item' | translate }}</a>
+                  <a class="btn btn-custom sm btn-green" ng-click="update.addNewItem()">+ {{ 'add_item' | translate }}</a>
                 </div>
                 <div class="col-xs-5 pr-0">
-                  <label for="amount" class="control-label m-bottom-15 pull-right font-18">{{ 'total_price' | translate }} : <span class="numberic">{{ create.total.toFixed(2) | number:2 }}</span>  {{ 'baht' | translate }}</label>
+                  <label for="amount" class="control-label m-bottom-15 pull-right font-18">{{ 'total_price' | translate }} : <span class="numberic">{{ update.total.toFixed(2) | number:2 }}</span>  {{ 'baht' | translate }}</label>
                 </div>
               </div>
             </uib-tab>
@@ -116,7 +116,7 @@
       <div class="space30"></div>
       <div class="row">
         <div class="col-md-2 pull-right pl-0">
-          <button type="button" ng-click="create.cancel()" class="btn btn-custom btn-red pull-right btn-block">{{ 'cancel' |
+          <button type="button" ng-click="update.cancel()" class="btn btn-custom btn-red pull-right btn-block">{{ 'cancel' |
             translate }}</button>
         </div>
         <div class="col-md-2 pull-right pl-0">

@@ -19,100 +19,17 @@
       ctrl.total_all_price = 0;
 
       ctrl.show_img = function(item) {
-        service.show(item).then( function(resp){
+        service.show(item.id).then( function(resp){
           window.open(resp.data.img);
         })
       }
 
       ctrl.createExpenses = function() {
-        ctrl.case_edit = false;
-        ctrl.data = {};
-        ctrl.data.expense_items = [{amount:0, detail:"", cost:0.00, total_price:0.00}];
-        ctrl.data.effective_date = new Date();
-        $uibModal.open({
-          animation: true,
-          backdrop: 'static',
-          keyboard: false,
-          scope: $scope,
-          templateUrl: "<%= asset_path('rollcall/angular/components/modal/createExpenses/createExpensesModalView.html') %>",
-          controller: 'createExpensesModalCtrl as create',
-          size: 'lg',
-          resolve: {
-            resources: ['$ocLazyLoad', 'ASSETS', function($ocLazyLoad, ASSETS) {
-              return $ocLazyLoad.load([
-                ASSETS.somsri.rollcall.create_expenses_modal
-                ]);
-            }]
-          }
-        }).result.then(function (result) {
-          if (result) {
-            ctrl.items = result.expense_items_attributes.filter(function(item) {
-             return item.detail || item.amount || item.cost 
-            });
-            service.createExpenses({ 
-              effective_date: new Date(result.effective_date), 
-              expenses_id: result.expenses_id, 
-              detail: result.detail, 
-              total_cost: result.total_cost, 
-              expense_items_attributes: ctrl.items,
-              img_url: result.img_url
-            }).then(function(resp) {
-              ctrl.message = translateFilter('expense_create_success');
-              ctrl.typeSuccess = true;
-              getExpenses();
-            }, function(e){
-              ctrl.message = translateFilter('expenses_create_failed')
-              ctrl.typeSuccess = false;
-            });
-          }
-        });
+        $rootScope.openNewExpenses();
       }
 
       ctrl.edit = function(item) {
-        ctrl.case_edit = true;
-        service.show(item).then( function(resp){
-          ctrl.data = resp.data
-          if (ctrl.data.expense_items.length == 0)
-            ctrl.data.expense_items = [{amount:0, detail:"", cost:0.00, total_price:0.00}];
-            $uibModal.open({
-              animation: true,
-              backdrop: 'static',
-              keyboard: false,
-              scope: $scope,
-              templateUrl: "<%= asset_path('rollcall/angular/components/modal/createExpenses/createExpensesModalView.html') %>",
-              controller: 'createExpensesModalCtrl as create',
-              size: 'lg',
-              resolve: {
-                resources: ['$ocLazyLoad', 'ASSETS', function($ocLazyLoad, ASSETS) {
-                  return $ocLazyLoad.load([
-                    ASSETS.somsri.rollcall.create_expenses_modal
-                    ]);
-                }]
-              }
-            }).result.then(function (result) {
-              if (result) {
-                ctrl.items = result.expense_items_attributes.filter(function(item) {
-                 return item.detail || item.amount || item.cost 
-                });
-                service.editExpenses({
-                  item_id: resp.data.id,
-                  effective_date: new Date(result.effective_date),
-                  expenses_id: result.expenses_id,
-                  detail: result.detail,
-                  total_cost: result.total_cost,
-                  expense_items_attributes: ctrl.items,
-                  img_url: result.img_url
-                }).then(function(resp) {
-                  ctrl.message = translateFilter('expense_edit_success');
-                  ctrl.typeSuccess = true;
-                  getExpenses();
-                }, function(e){
-                  ctrl.message = translateFilter('expenses_edit_failed')
-                  ctrl.typeSuccess = false;
-                });
-              }
-            });
-        });
+        $rootScope.openUpdateExpenses(item.id);
       }
 
       ctrl.print_report = function() {
@@ -144,7 +61,7 @@
           }
         });
       }
-      
+
       ctrl.removeExpenses = function(id) {
         openConfirmationModal(translateFilter('delete_expense'), function(){
           service.removeExpenses(id).then(function(resp) {
@@ -188,12 +105,12 @@
 
       function menuFormatter(value, row, index) {
         var html;
-        var show = angularCtrlStr + '.show_img('+ angularCtrlStr+ '.datas['+ index +'])';
+        var display_img = angularCtrlStr + '.show_img('+ angularCtrlStr+ '.datas['+ index +'])';
         var edit = angularCtrlStr + '.edit('+ angularCtrlStr+ '.datas['+ index +'])';
         var remove = angularCtrlStr + '.removeExpenses('+ angularCtrlStr+ '.datas['+ index +'])';
 
         if (angular.element(document.getElementById("angularCtrl")).scope().expenses.datas[index].img_url_file_name){
-          html = "<a href='javascript:void(0)' target='_blank' onclick='" + show + "'><i class='fa fa-picture-o fa-fw ml-20 mr-20 color-blue font-18'></i></a>";
+          html = "<a href='javascript:void(0)' target='_blank' onclick='" + display_img + "'><i class='fa fa-picture-o fa-fw ml-20 mr-20 color-blue font-18'></i></a>";
         } else {
           html = "<i class='fa fa-picture-o color-transparent ml-20 mr-20 font-18 fa-fw'></i>";
         }
@@ -292,14 +209,6 @@
       };
 
       ctrl.endDatePopup = {
-        opened: false
-      };
-
-      ctrl.openNewDatePopup = function() {
-        ctrl.newDatePopup.opened = true;
-      };
-
-      ctrl.newDatePopup = {
         opened: false
       };
 
