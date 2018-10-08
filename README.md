@@ -111,3 +111,7 @@ PG is need to be
 ```
    gem install pg -v '0.19.0' -- --with-pg-config=/usr/pgsql-9.6/bin/pg_config
 ```
+
+-------
+กรณีที่มีการ update site_config หลังจาก deploy server แล้วต้องทำการ clear crash ด้วยทุกครั้งบน rails c
+Rails.cache.delete(:site_config)
