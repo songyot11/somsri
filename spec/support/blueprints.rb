@@ -155,3 +155,12 @@ end
 
 Expense.blueprint do
 end
+
+ExpenseItem.blueprint do
+end
+
+ExpenseTag.blueprint do
+end
+
+ExpenseTagItem.blueprint do
+end

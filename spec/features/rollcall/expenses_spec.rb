@@ -14,12 +14,45 @@ describe 'expense', js: true do
     ]
   end
 
+  let(:expense_items) do
+    [
+      ExpenseItem.make!(
+        expense_id: expenses[0].id,
+        detail: 'ค่ารถ',
+        amount: 1,
+        cost: 7000000
+      ),
+      ExpenseItem.make!(
+        expense_id: expenses[0].id,
+        detail: 'ส่งรถ',
+        amount: 1,
+        cost: 500000
+      )
+    ]
+  end
+
+  let(:expense_tags) do
+    [
+      ExpenseTag.make!(name: "car"),
+      ExpenseTag.make!(name: "ceo")
+    ]
+  end
+
+  let(:expense_tag_items) do
+    [
+      ExpenseTagItem.make!(expense_tag_id: expense_tags[0].id, expense_item_id: expense_items[0].id),
+      ExpenseTagItem.make!(expense_tag_id: expense_tags[1].id, expense_item_id: expense_items[0].id)
+    ]
+  end
+
   before do
     school
     user.add_role :admin
     login_as(user, scope: :user)
     site_config
     expenses
+    expense_tags
+    expense_tag_items
   end
 
   it 'should go to rollcall expenses' do
@@ -117,6 +150,60 @@ describe 'expense', js: true do
     click_button("ยกเลิก")
     sleep(1)
     expect(page).to have_content("ค่ารถตู้ใหม่ผอ.")
+  end
+
+  it 'should tag expenses item' do
+    visit "/somsri_rollcall#/expenses"
+    sleep(1)
+    click_button("+ เพิ่มรายการ")
+    page.find('#expenses_id').set("pen002")
+    page.find('#detail').set("ซื้อปากกาและดินสอให้ ห้องเรียนแต่ละห้อง")
+    page.find('#total_cost').set("1500.00")
+    sleep(1)
+    page.find('#item').click
+    sleep(1)
+    page.find('#item_detail').set("ซื้อปากกา")
+    page.find('#item_amount').set("50")
+    page.find('#item_cost').set("30.00")
+    page.find("#tag input").set("car")
+    page.find("#tag input").set("newone")
+    page.find('.btn-green').click
+    sleep(1)
+    click_button("บันทึก")
+    sleep(1)
+
+    expect(ExpenseTag.where(name: "newone").count).to eq(1)
+    expect(ExpenseTag.where(name: "car").count).to eq(1)
+
+    expense = Expense.where(expenses_id: "pen002").first
+    expect(expense.present?).to eq true
+    expense_items = expense.expense_items
+    expect(expense_items).to exist
+    expect(expense_items[0].expense_tag_items[0].expense_tag.name).to eq "car"
+    expect(expense_items[0].expense_tag_items[1].expense_tag.name).to eq "newone"
+  end
+
+  it 'should edit tag expenses item' do
+    visit "/somsri_rollcall#/expenses/#{expenses[0].id}"
+    sleep(1)
+    page.find('#item').click
+    page.first("#tag input").set("newone")
+    save_screenshot('/Users/akiyama/Desktop/test1.jpg')
+    sleep(1)
+    click_button("บันทึก")
+    sleep(1)
+    puts ExpenseTag.all.inspect
+    expect(ExpenseTag.where(name: "newone").count).to eq(1)
+    expect(ExpenseTag.where(name: "car").count).to eq(1)
+    expect(ExpenseTag.where(name: "ceo").count).to eq(1)
+
+    expense = Expense.find(expenses[0].id)
+    expect(expense.present?).to eq true
+    expense_items = expense.expense_items
+    expect(expense_items).to exist
+    expect(expense_items[0].expense_tag_items[0].expense_tag.name).to eq "car"
+    expect(expense_items[0].expense_tag_items[1].expense_tag.name).to eq "ceo"
+    expect(expense_items[0].expense_tag_items[2].expense_tag.name).to eq "newone"
   end
 
 end

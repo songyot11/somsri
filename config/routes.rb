@@ -30,6 +30,7 @@ Rails.application.routes.draw do
       patch 'upload_photo'
     end
   end
+  resources :expense_tags, only: [:index]
   resources :skills, only: [:index, :create]
   resources :employees, only: [:index, :create, :show, :update, :destroy]  do
     resources :employee_skills, except: %i[show new edit]

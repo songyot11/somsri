@@ -99,7 +99,9 @@ class ExpensesController < ApplicationController
       :detail,
       :total_cost,
       :img_url,
-      expense_items_attributes: [:detail, :amount, :cost]
+      expense_items_attributes: [:detail, :amount, :cost,
+        tags: [:text]
+      ]
     )
   end
 
@@ -109,7 +111,9 @@ class ExpensesController < ApplicationController
       :expenses_id,
       :detail,
       :total_cost,
-      expense_items_attributes: [:detail, :amount, :cost]
+      expense_items_attributes: [:detail, :amount, :cost,
+        tags: [:text]
+      ]
     )
   end
 

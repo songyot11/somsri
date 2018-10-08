@@ -21,6 +21,16 @@
       })
     }
 
+    var getExpenseTagsCanceler = $q.defer()
+    this.getExpenseTags = function(params) {
+      getExpenseTagsCanceler.resolve()
+      getExpenseTagsCanceler = $q.defer()
+      return $http.get('/expense_tags/', {
+        timeout: getExpenseTagsCanceler.promise,
+        params: params
+      })
+    }
+
     this.removeExpenses = function(id) {
       return $http.delete('/expenses/' + id.id)
     }

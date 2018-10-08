@@ -68,34 +68,40 @@
               <div class="items-table">
                 <div class="row header">
                   <div class="col-xs-4">{{ 'item' | translate }}</div>
-                  <div class="col-xs-2 text-right">{{ 'amount2' | translate }}</div>
-                  <div class="col-xs-2 text-right">{{ 'unit_price' | translate }}</div>
-                  <div class="col-xs-2 text-right">{{ 'total_cost' | translate }}</div>
-                  <div class="col-xs-2 text-right"></div>
+                  <div class="col-xs-4">Tag</div>
+                  <div class="col-xs-1 text-right">{{ 'amount2' | translate }}</div>
+                  <div class="col-xs-1 text-right">{{ 'unit_price' | translate }}</div>
+                  <div class="col-xs-1 text-right">{{ 'total_cost' | translate }}</div>
+                  <div class="col-xs-1 text-right"></div>
                 </div>
-                <div class="max-h-300 overflow-y scrollbar">
+                <div>
                   <div class="row" data-ng-repeat="item in update.items" ng-animate="'slide-down'">
                     <div class="col-xs-4">
                       <div class="form-group form-list">
                         <input type="text" id="item_detail" placeholder="{{ 'item_name' | translate }}" class="form-control grop-table" ng-model="item.detail">
                       </div>
                     </div>
-                    <div class="col-xs-2 text-right">
+                    <div class="col-xs-4 text-right">
+                      <tags-input id="tag" ng-model="item.tags">
+                        <auto-complete source="update.loadTags($query)"></auto-complete>
+                      </tags-input>
+                    </div>
+                    <div class="col-xs-1 text-right">
                       <div class="form-group form-price">
                         <input type="text" id="item_amount" value="0" ng-required min="0" step="1000" ng-validate="number" placeholder="0" class="form-control table-price" ng-model="item.amount" ng-change="update.expensesTotal()" ui-number-mask="0" ui-negative-number>
                       </div>
                     </div>
-                    <div class="col-xs-2 text-right">
+                    <div class="col-xs-1 text-right">
                       <div class="form-group form-price">
                         <input type="text" id="item_cost" value="0.00" ng-required min="0.00" step="1000" ng-validate="number" placeholder="0.00" class="form-control table-price" ng-model="item.cost" ng-change="update.expensesTotal()" ui-number-mask="2" ui-negative-number>
                       </div>
                     </div>
-                    <div class="col-xs-2 text-right">
+                    <div class="col-xs-1 text-right">
                       <div class="form-group form-price">
                         <span class="pull-right">{{ item.total_price.toFixed(2) | number:2 }}</span>
                       </div>
                     </div>
-                    <div class="col-xs-2 remove-item-container text-right">
+                    <div class="col-xs-1 remove-item-container text-right">
                       <a href ng-hide="printMode" ng-click="update.removeNewItem($index)" class="btn pl-10"><span class="fa fa-times-circle"></span></a>
                     </div>
                   </div>

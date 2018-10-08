@@ -25,6 +25,7 @@
     "animate.css": "^3.5.2",
     "rich-autocomplete": "",
     "angular-translate": "",
+    "ng-tags-input": "",
     "angular-translate-loader-url": ""
   },
   "resolutions": {
