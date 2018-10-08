@@ -326,7 +326,15 @@ class Student < ApplicationRecord
   end
 
   def first_name
-    self.full_name.gsub(/\s+/m, ' ').strip.split(" ")[0]
+    self.full_name.present? ? self.full_name.gsub(/\s+/m, ' ').strip.split(" ")[0] : ""
+  end
+
+  def first_name_eng
+    self.full_name_english.present? ? self.full_name_english.gsub(/\s+/m, ' ').strip.split(" ")[0] : ""
+  end
+
+  def first_name_thai_or_eng
+    self.first_name.present? ? self.first_name : self.first_name_eng
   end
 
   def first_name=(value)
@@ -340,18 +348,17 @@ class Student < ApplicationRecord
   end
 
   def last_name
-    name_a = self.full_name.gsub(/\s+/m, ' ').strip.split(" ")
-    if name_a.size > 2
-      last_name_a = Array.new
-      name_a.each_with_index do |n, index|
-        if index > 0
-          last_name_a.push(n)
-        end
-      end
-      return "#{last_name_a.join(' ')}"
-    else
-      return "#{name_a[1]}"
-    end
+    return "" unless self.full_name
+    return self.full_name.gsub(/\s+/m, ' ').strip.split(" ").drop(1).join(' ')
+  end
+
+  def last_name_eng
+    return "" unless self.full_name_english
+    return self.full_name_english.gsub(/\s+/m, ' ').strip.split(" ").drop(1).join(' ')
+  end
+
+  def last_name_thai_or_eng
+    self.last_name.present? ? self.last_name : self.last_name_eng
   end
 
   def last_name=(value)
