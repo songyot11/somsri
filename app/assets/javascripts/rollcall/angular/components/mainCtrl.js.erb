@@ -35,17 +35,5 @@
       $state.go('report')
     };
 
-    $rootScope.openUpdateExpenses = function (id) {
-      $state.go('update_expenses',{ id: id })
-    };
-
-    $rootScope.openNewExpenses = function () {
-      $state.go('create_expenses')
-    };
-
-    $rootScope.openExpenses = function () {
-      $state.go('expenses')
-    };
-
   }]);
 })();

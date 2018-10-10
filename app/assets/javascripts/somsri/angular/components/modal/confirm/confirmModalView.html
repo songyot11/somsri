@@ -1,0 +1,20 @@
+<div>
+  <div class="modal-body" id="modal-body">
+    <div class="row">
+      <div class="col-md-12">
+        <h4 class="modal-title" id="modal-title">{{confirm.message}}</h4>
+      </div>
+    </div>
+    <div class="space20"></div>
+    <div class="space20"></div>
+    <div class="space20"></div>
+    <div class="row">
+      <div class="col-md-3 pull-right">
+        <button class="btn btn-custom btn-gray" ng-click="confirm.close()">{{ 'cancel' | translate }}</button>
+      </div>
+      <div class="col-md-3 pull-right">
+        <button class="btn btn-custom btn-green" ng-click="confirm.ok()">{{ 'ok' | translate }}</button>
+      </div>
+    </div>
+  </div>
+</div>

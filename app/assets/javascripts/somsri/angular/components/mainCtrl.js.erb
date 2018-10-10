@@ -1,6 +1,6 @@
 (function() {
   'use strict';
-  angular.module('somsri.main.main', [
+  angular.module('somsri.somsri.main', [
   ])
   .controller('mainCtrl', ['$rootScope','$state', '$http', '$window', '$scope', '$uibModal', function($rootScope, $state, $http, $window, $scope, $uibModal) {
 
@@ -43,24 +43,24 @@
       $window.location.href = "/";
     };
 
-    $rootScope.openSetting = function() {
-      $state.go('setting')
-    };
-
     $rootScope.openSettingMenu = function() {
-      $state.go('setting_menu')
+      $window.location.href = "/main#/setting";
     };
 
     $rootScope.openExpensesTag = function() {
-      $window.location.href = "/somsri#/setting/expenses_tag";
+      $state.go('expenses_tag')
     };
 
-    $rootScope.openClassroomList = function() {
-      $window.location.href = "/main#/classroom";
+    $rootScope.openUpdateExpenses = function (id) {
+      $state.go('update_expenses',{ id: id })
     };
 
-    $rootScope.openNextClassroomList = function() {
-      $window.location.href = "/main#/next_classroom";
+    $rootScope.openExpenses = function () {
+      $state.go('expenses')
+    };
+
+    $rootScope.openNewExpenses = function () {
+      $state.go('create_expenses')
     };
 
     $rootScope.openConfirmationModal = function (message, success, dismiss) {
@@ -70,13 +70,13 @@
         backdrop: 'static',
         keyboard: false,
         scope: $scope,
-        templateUrl: "<%= asset_path('main/angular/components/modal/confirm/confirmModalView.html') %>",
+        templateUrl: "<%= asset_path('somsri/angular/components/modal/confirm/confirmModalView.html') %>",
         controller: 'confirmModalCtrl as confirm',
         size: 'md',
         resolve: {
           resources: ['$ocLazyLoad', 'ASSETS', function($ocLazyLoad, ASSETS) {
             return $ocLazyLoad.load([
-              ASSETS.somsri.main.confirm_modal
+              ASSETS.somsri.somsri.confirm_modal
             ]);
           }]
         }

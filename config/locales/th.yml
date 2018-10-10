@@ -508,3 +508,10 @@ th:
   expenses_edit_failed: "ไม่สามารถแก้ไขรายการค่าใช้จ่ายได้"
   expenses_delete_failed: "ไม่สามารถลบรายการค่าใช้จ่ายได้"
   expense_list: 'รายการสั่งซื้อ'
+  tag: "แท็ก"
+  tag_desciption: "รายละเอียดแท็ก"
+  expenses_tag_required_name: "กรุณาใส่ข้อมูลชื่อของแท็ก"
+  save_expense_tag_success: "บันทึกข้อมลูแท็กเรียบร้อยแล้ว"
+  expenses_tag_setting: "ตั้งค่าแท็กค่าใช้จ่าย"
+
+  save_change_confirmation: "คุณต้องการบันทึกการเปลี่ยนแปลงนี้หรือไม่"

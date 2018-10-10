@@ -1,12 +1,12 @@
 <flash-message-content message="update.message" type-success="update.typeSuccess"></flash-message-content>
-<div id="create-member-modal" class="container-fluid">
+<div id="create-member-modal" class="container">
   <form name="createExpensesForm" ng-submit="update.save()" enctype="multipart/form-data">
     <div>
       <div ng-hide="update.real_id">
-        <h3>{{ 'create_new_expenses' | translate }}</h3>
+        <h1>{{ 'create_new_expenses' | translate }}</h1>
       </div>
       <div ng-show="update.real_id">
-        <h3>{{ 'edit_expenses' | translate }}</h3>
+        <h1>{{ 'edit_expenses' | translate }}</h1>
       </div>
     </div>
     <div class="panel-board" id="validateForm">
@@ -31,7 +31,7 @@
             <div class="col-xs-2 px-0 mt-10">
               <label for="date-select" class="control-label m-bottom-15">{{ 'date1' | translate }}</label>
             </div>
-            <span class="input-group col-xs-10">
+            <span class="input-group col-xs-9">
               <input id="new_date" type="text" class="form-control" uib-datepicker-popup="dd/MM/yyyy" datepicker-options="{showWeeks:false}"
                 ng-model="update.effective_date" is-open="update.newDatePopup.opened" close-text="Close" ng-change="update.optionsChange()"
                 required />
@@ -65,49 +65,49 @@
               </div>
             </uib-tab>
             <uib-tab id="item" index="1" heading="{{ 'item' | translate }}">
-              <div class="items-table">
-                <div class="row header">
+              <div class="items-table font-16">
+                <div class="row header pb-10">
                   <div class="col-xs-4">{{ 'item' | translate }}</div>
-                  <div class="col-xs-4">Tag</div>
-                  <div class="col-xs-1 text-right">{{ 'amount2' | translate }}</div>
-                  <div class="col-xs-1 text-right">{{ 'unit_price' | translate }}</div>
-                  <div class="col-xs-1 text-right">{{ 'total_cost' | translate }}</div>
-                  <div class="col-xs-1 text-right"></div>
+                  <div class="col-xs-3 pl-0">Tag</div>
+                  <div class="col-xs-1 text-right pl-0">{{ 'amount2' | translate }}</div>
+                  <div class="col-xs-2 text-right pl-0">{{ 'unit_price' | translate }}</div>
+                  <div class="col-xs-1 text-right pl-0">{{ 'total_cost' | translate }}</div>
+                  <div class="col-xs-1 text-right pl-0"></div>
                 </div>
                 <div>
-                  <div class="row" data-ng-repeat="item in update.items" ng-animate="'slide-down'">
-                    <div class="col-xs-4">
-                      <div class="form-group form-list">
-                        <input type="text" id="item_detail" placeholder="{{ 'item_name' | translate }}" class="form-control grop-table" ng-model="item.detail">
+                  <div class="row border-bottom-1 p-5 border-color-gray" data-ng-repeat="item in update.items" ng-animate="'slide-down'">
+                    <div class="col-xs-4 pl-0">
+                      <div class="form-group form-list mb-0">
+                        <input type="text" id="item_detail" placeholder="{{ 'item_name' | translate }}" class="form-control grop-table border-b-0 border-b-1-hover" ng-model="item.detail">
                       </div>
                     </div>
-                    <div class="col-xs-4 text-right">
+                    <div class="col-xs-3 text-right pl-0">
                       <tags-input id="tag" ng-model="item.tags">
                         <auto-complete source="update.loadTags($query)"></auto-complete>
                       </tags-input>
                     </div>
-                    <div class="col-xs-1 text-right">
-                      <div class="form-group form-price">
-                        <input type="text" id="item_amount" value="0" ng-required min="0" step="1000" ng-validate="number" placeholder="0" class="form-control table-price" ng-model="item.amount" ng-change="update.expensesTotal()" ui-number-mask="0" ui-negative-number>
+                    <div class="col-xs-1 text-right pl-0">
+                      <div class="form-group form-price mb-0">
+                        <input type="text" id="item_amount" value="0" ng-required min="0" step="1000" ng-validate="number" placeholder="0" class="form-control table-price border-b-0 border-b-1-hover text-right" ng-model="item.amount" ng-change="update.expensesTotal()" ui-number-mask="0" ui-negative-number>
                       </div>
                     </div>
-                    <div class="col-xs-1 text-right">
-                      <div class="form-group form-price">
-                        <input type="text" id="item_cost" value="0.00" ng-required min="0.00" step="1000" ng-validate="number" placeholder="0.00" class="form-control table-price" ng-model="item.cost" ng-change="update.expensesTotal()" ui-number-mask="2" ui-negative-number>
+                    <div class="col-xs-2 text-right pl-0">
+                      <div class="form-group form-price mb-0">
+                        <input type="text" id="item_cost" value="0.00" ng-required min="0.00" step="1000" ng-validate="number" placeholder="0.00" class="form-control table-price border-b-0 border-b-1-hover text-right" ng-model="item.cost" ng-change="update.expensesTotal()" ui-number-mask="2" ui-negative-number>
                       </div>
                     </div>
-                    <div class="col-xs-1 text-right">
+                    <div class="col-xs-1 text-right pl-0">
                       <div class="form-group form-price">
-                        <span class="pull-right">{{ item.total_price.toFixed(2) | number:2 }}</span>
+                        <span class="pull-right pt-10 font-14">{{ item.total_price.toFixed(2) | number:2 }}</span>
                       </div>
                     </div>
-                    <div class="col-xs-1 remove-item-container text-right">
-                      <a href ng-hide="printMode" ng-click="update.removeNewItem($index)" class="btn pl-10"><span class="fa fa-times-circle"></span></a>
+                    <div class="col-xs-1 remove-item-container text-right pl-0">
+                      <a href ng-hide="printMode" ng-click="update.removeNewItem($index)" class="btn pl-10"><span class="fa fa-times-circle color-red text-center font-21"></span></a>
                     </div>
                   </div>
                 </div>
               </div>
-              <div class="row expenses-item add-expenses-item">
+              <div class="row expenses-item add-expenses-item mt-10">
                 <div class="col-xs-5 add-item-container pl-0">
                   <a class="btn btn-custom sm btn-green" ng-click="update.addNewItem()">+ {{ 'add_item' | translate }}</a>
                 </div>

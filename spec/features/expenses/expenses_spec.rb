@@ -1,7 +1,7 @@
 describe 'expense', js: true do
   let(:school) { school = School.make!({ name: "โรงเรียนแห่งหนึ่ง" }) }
   let(:user) { User.make!({ school_id: school.id }) }
-  let(:site_config) { SiteConfig.make!({ enable_rollcall: true }) }
+  let(:site_config) { SiteConfig.make!({ enable_expenses: true }) }
 
   let(:expenses) do
     [
@@ -56,13 +56,13 @@ describe 'expense', js: true do
   end
 
   it 'should go to rollcall expenses' do
-    visit "/somsri_rollcall#/expenses"
+    visit "/somsri#/expenses"
     sleep(1)
     expect(page).to have_content ('ใบเสร็จ')
   end
 
   it 'has add button' do
-    visit "/somsri_rollcall#/expenses"
+    visit "/somsri#/expenses"
     sleep(1)
     click_button("+ เพิ่มรายการ")
     sleep(1)
@@ -70,7 +70,7 @@ describe 'expense', js: true do
   end
 
   it 'can cancel' do
-    visit "/somsri_rollcall#/expenses"
+    visit "/somsri#/expenses"
     sleep(1)
     click_button("+ เพิ่มรายการ")
     sleep(1)
@@ -80,7 +80,7 @@ describe 'expense', js: true do
   end
 
   it 'create expense' do
-    visit "/somsri_rollcall#/expenses"
+    visit "/somsri#/expenses"
     sleep(1)
     click_button("+ เพิ่มรายการ")
     sleep(1)
@@ -95,7 +95,7 @@ describe 'expense', js: true do
   end
 
   it 'change tab' do
-    visit "/somsri_rollcall#/expenses"
+    visit "/somsri#/expenses"
     sleep(1)
     click_button("+ เพิ่มรายการ")
     sleep(1)
@@ -108,7 +108,7 @@ describe 'expense', js: true do
   end
 
   it 'add items list and save' do
-    visit "/somsri_rollcall#/expenses"
+    visit "/somsri#/expenses"
     sleep(1)
     click_button("+ เพิ่มรายการ")
     page.find('#expenses_id').set("pen12345")
@@ -131,7 +131,7 @@ describe 'expense', js: true do
   end
 
   it 'should go to rollcall expenses and delete item' do
-    visit "/somsri_rollcall#/expenses"
+    visit "/somsri#/expenses"
     sleep(1)
     expect(page).to have_content("vanz114214")
     find("a", text: "ลบ").click
@@ -142,7 +142,7 @@ describe 'expense', js: true do
   end
 
   it 'should go to rollcall expenses and cancel delete modal' do
-    visit "/somsri_rollcall#/expenses"
+    visit "/somsri#/expenses"
     sleep(1)
     expect(page).to have_content("vanz114214")
     find("a", text: "ลบ").click
@@ -153,7 +153,7 @@ describe 'expense', js: true do
   end
 
   it 'should tag expenses item' do
-    visit "/somsri_rollcall#/expenses"
+    visit "/somsri#/expenses"
     sleep(1)
     click_button("+ เพิ่มรายการ")
     page.find('#expenses_id').set("pen002")
@@ -179,16 +179,15 @@ describe 'expense', js: true do
     expect(expense.present?).to eq true
     expense_items = expense.expense_items
     expect(expense_items).to exist
-    expect(expense_items[0].expense_tag_items[0].expense_tag.name).to eq "car"
-    expect(expense_items[0].expense_tag_items[1].expense_tag.name).to eq "newone"
+    expect(["car", "newone"].include?(expense_items[0].expense_tag_items[0].expense_tag.name)).to eq true
+    expect(["car", "newone"].include?(expense_items[0].expense_tag_items[1].expense_tag.name)).to eq true
   end
 
   it 'should edit tag expenses item' do
-    visit "/somsri_rollcall#/expenses/#{expenses[0].id}"
+    visit "/somsri#/expenses/#{expenses[0].id}"
     sleep(1)
     page.find('#item').click
     page.first("#tag input").set("newone")
-    save_screenshot('/Users/akiyama/Desktop/test1.jpg')
     sleep(1)
     click_button("บันทึก")
     sleep(1)
@@ -201,9 +200,11 @@ describe 'expense', js: true do
     expect(expense.present?).to eq true
     expense_items = expense.expense_items
     expect(expense_items).to exist
-    expect(expense_items[0].expense_tag_items[0].expense_tag.name).to eq "car"
-    expect(expense_items[0].expense_tag_items[1].expense_tag.name).to eq "ceo"
-    expect(expense_items[0].expense_tag_items[2].expense_tag.name).to eq "newone"
+
+    tag_names = ["car", "newone", "ceo"]
+    expect(tag_names.include?(expense_items[0].expense_tag_items[0].expense_tag.name)).to eq true
+    expect(tag_names.include?(expense_items[0].expense_tag_items[1].expense_tag.name)).to eq true
+    expect(tag_names.include?(expense_items[0].expense_tag_items[2].expense_tag.name)).to eq true
   end
 
 end

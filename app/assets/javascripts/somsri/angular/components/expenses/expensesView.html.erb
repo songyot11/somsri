@@ -52,7 +52,7 @@
             </div>
           </div>
         </div>
-        <table id="invoice-table" class="scrollable-header text-table-invoicereport for-display font-16">
+        <table id="expenses-table" class="font-16">
           <tfoot class="font-18">
             <tr>
               <td colspan="3" class="text-currency font-weight-bold">{{ 'total_price' | translate }} : </td>
@@ -61,7 +61,7 @@
             </tr>
           </tfoot>
         </table>
-        <div class="row row-centered for-display">
+        <div class="row row-centered">
           <div class="col-centered">
             <ul uib-pagination ng-change="expenses.pageChanged()" total-items="expenses.totalItems" ng-model="expenses.currentPage" max-size="expenses.paginateButtonMaxSize" class="pagination-md" num-pages="numPages" previous-text="‹" next-text="›" boundary-link-numbers='true' rotate='false'></ul>
           </div>

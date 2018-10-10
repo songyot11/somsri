@@ -89,7 +89,7 @@
       <% if (SiteConfig.get_cache.enable_expenses) && (can? :manage, Expense) %>
         <div class="col-xs-4 col-centered menu-icon">
             <div class="<%= is_topbar ? 'dropdown-menu-btn' : 'menu-btn' %> alumni">
-                <a href="/somsri_rollcall#/expenses">
+                <a href="/somsri#/expenses">
                   <div class="wraptocenter">
                     <%= image_tag 'icon_expenses.png', class: (is_topbar ? 'img-menu-nav' : ''), width: is_topbar ? 50 : 70 %>
                   </div>

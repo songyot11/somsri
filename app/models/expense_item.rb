@@ -1,6 +1,6 @@
 class ExpenseItem < ApplicationRecord
 	belongs_to :expense
-	has_many :expense_tag_items
+	has_many :expense_tag_items, dependent: :destroy
 
 	# return [{ text: "tag_name" },...]
 	def tags

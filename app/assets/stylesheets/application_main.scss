@@ -16,6 +16,8 @@
  *= require_self
  *= require bootstrap-table
  *= require bootstrap-select/sass/bootstrap-select
+ *= require ng-tags-input
+ *= require ng-tags-input/ng-tags-input.bootstrap.min.css
  */
 @import "navigation_menu";
 @import "application_payroll";

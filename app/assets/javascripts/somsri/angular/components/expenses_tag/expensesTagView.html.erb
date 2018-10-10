@@ -1,0 +1,50 @@
+<flash-message-content message="tag.message" type-success="tag.typeSuccess"></flash-message-content>
+<div class="container setting" style="width: 960px;">
+  <div class="row">
+    <h1>{{ 'expenses_tag_setting' | translate }}</h1>
+  </div>
+  <div class="row paragraph bg-setting mt-0 max-height-inherit">
+    <div class="col-md-12">
+      <div class="row">
+        <div class="col-md-4">
+          <div class="form-group">
+            <label for="name">{{ 'tag' | translate }}</label>
+          </div>
+        </div>
+        <div class="col-md-7">
+          <div class="form-group">
+            <label for="name">{{ 'tag_desciption' | translate }}</label>
+          </div>
+        </div>
+      </div>
+      <div class="row" ng-repeat="data in tag.datas">
+        <div class="col-md-4">
+          <div class="form-group">
+            <input type="text" class="form-control" id="name{{$index}}" ng-model="data.name">
+          </div>
+        </div>
+        <div class="col-md-7">
+          <div class="form-group">
+            <input type="text" class="form-control" id="description{{$index}}" ng-model="data.description">
+          </div>
+        </div>
+        <div class="col-md-1">
+          <a href ng-click="tag.removeTag($index)" id="remove{{$index}}" class="btn pl-10"><span class="fa fa-times-circle color-red font-21"></span></a>
+        </div>
+      </div>
+      <div class="row">
+        <div class="col-md-4">
+          <a class="btn btn-custom sm btn-blue" id="add-item" ng-click="tag.addNewTag()">+ {{ 'add_item' | translate }}</a>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="footer-menu row" style="margin-right: -30px;">
+    <div class="col-md-offset-8 col-md-2 text-right">
+      <button type="button" class="btn btn-custom btn-green btn-block" ng-click="tag.save()">{{ 'save' | translate }}</button>
+    </div>
+    <div class="col-md-2 text-right">
+      <button type="button" class="btn btn-custom btn-gray btn-block" ng-click="openSettingMenu()">{{ 'back' | translate }}</button>
+    </div>
+  </div>
+</div>

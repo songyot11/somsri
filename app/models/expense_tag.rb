@@ -1,5 +1,5 @@
 class ExpenseTag < ApplicationRecord
-	has_many :expense_tag_items
+	has_many :expense_tag_items, dependent: :destroy
 
 	def self.search(keyword)
     if keyword.present?

@@ -142,6 +142,7 @@ describe 'Classroom Edit', js: true do
     visit "/main#/classroom/#{classrooms[0].id}"
     sleep(1)
     click_link("นักเรียน")
+    sleep(1)
     eventually { expect(page).to have_content("สมศรี3 ใบเสร็จ สมศรี2 ใบเสร็จ สมศรี1 ใบเสร็จ") }
     eventually { expect(page).to have_content("จำนวน 3 คน") }
   end
@@ -153,6 +154,7 @@ describe 'Classroom Edit', js: true do
     visit "/main#/classroom/#{classrooms[0].id}"
     sleep(1)
     click_button("+ เลือกคุณครู")
+    sleep(1)
     eventually { expect(page).to have_content("นาย สมจิตร เป็นนักมวย") }
     eventually { expect(page).to have_content("นาง สมใจ เป็นคน") }
     click_button("+ สร้างคุณครูใหม่")

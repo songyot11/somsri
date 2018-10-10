@@ -508,3 +508,10 @@ en:
   expenses_edit_failed: "Can't edit expense."
   expenses_delete_failed: "Can't delete expense."
   expense_list: "Expenses order list"
+  tag: "Tag"
+  tag_desciption: "Tag Description"
+  expenses_tag_required_name: "Tag name is required."
+  save_expense_tag_success: "Save Expenses Tag successfully."
+  expenses_tag_setting: "Expenses Tag Setting"
+
+  save_change_confirmation: "Do you want to save this change?"

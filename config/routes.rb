@@ -7,6 +7,7 @@ Rails.application.routes.draw do
   get "/somsri_invoice" => "menu#landing_invoice"
   get "/somsri_payroll" => "menu#landing_payroll"
   get "/somsri_rollcall" => "menu#landing_rollcall"
+  get "/somsri" => "menu#landing_somsri"
   get "/main" => "menu#landing_main"
   get "/language" => "home#language"
   get "/locale" => "home#locale"
@@ -30,7 +31,7 @@ Rails.application.routes.draw do
       patch 'upload_photo'
     end
   end
-  resources :expense_tags, only: [:index]
+  resources :expense_tags, only: [:index, :create]
   resources :skills, only: [:index, :create]
   resources :employees, only: [:index, :create, :show, :update, :destroy]  do
     resources :employee_skills, except: %i[show new edit]

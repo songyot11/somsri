@@ -16,6 +16,7 @@ class ExpensesController < ApplicationController
     qry_expenses = qry_expenses.search(search) if search.present?
     qry_expenses = qry_expenses.order("total_cost::FLOAT #{order}") if sort == 'total_cost' && order
     qry_expenses = qry_expenses.order("#{sort} #{order}") if sort != 'total_cost' && order
+    qry_expenses = qry_expenses.order("effective_date asc") if !order
 
     respond_to do |format|
       format.html do

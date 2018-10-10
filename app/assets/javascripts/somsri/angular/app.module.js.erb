@@ -1,0 +1,78 @@
+(function() {
+  'use strict';
+  var app = angular.module('somsri.somsri', [
+    'somsri.somsri.assets',
+    'oc.lazyLoad',
+    'ui.router.stateHelper',
+    'ui.bootstrap',
+    'somsri.somsri.main',
+    'angularMoment',
+    'ui.utils.masks',
+    'somsri.translate',
+    'ngFileUpload',
+    'ngTagsInput'
+  ]);
+
+  app.config(['stateHelperProvider', 'ASSETS', '$urlRouterProvider', '$httpProvider', function(stateHelperProvider, ASSETS, $urlRouterProvider, $httpProvider) {
+
+    // Default as JSON Format
+    $httpProvider.defaults.headers.post['Accept'] = 'application/json, text/javascript';
+    $httpProvider.defaults.headers.post['Content-Type'] = 'application/json; charset=utf-8';
+    $httpProvider.defaults.headers.common['Accept'] = 'application/json, text/javascript';
+    $httpProvider.defaults.headers.common['Content-Type'] = 'application/json; charset=utf-8';
+
+    stateHelperProvider.state({
+      url: '/setting/expenses_tag',
+      name: 'expenses_tag',
+      templateUrl: "<%= asset_path('somsri/angular/components/expenses_tag/expensesTagView.html') %>",
+      controller: 'expensesTagCtrl as tag',
+      resolve: {
+        resources: ['$ocLazyLoad', function($ocLazyLoad) {
+          return $ocLazyLoad.load([
+            ASSETS.somsri.somsri.expenses_tag
+          ]);
+        }]
+      }
+    }).state({
+      url: '/expenses',
+      name: 'expenses',
+      templateUrl: "<%= asset_path('somsri/angular/components/expenses/expensesView.html') %>",
+      controller: 'expensesCtrl as expenses',
+      resolve: {
+        resources: ['$ocLazyLoad', function($ocLazyLoad) {
+          return $ocLazyLoad.load([
+            ASSETS.somsri.somsri.expenses
+          ]);
+        }]
+      }
+    }).state({
+      url: '/expenses/new',
+      name: 'create_expenses',
+      templateUrl: "<%= asset_path('somsri/angular/components/updateExpenses/updateExpensesView.html') %>",
+      controller: 'updateExpensesCtrl as update',
+      resolve: {
+        resources: ['$ocLazyLoad', function($ocLazyLoad) {
+          return $ocLazyLoad.load([
+            ASSETS.somsri.somsri.update_expenses
+          ]);
+        }]
+      }
+    }).state({
+      url: '/expenses/:id',
+      name: 'update_expenses',
+      templateUrl: "<%= asset_path('somsri/angular/components/updateExpenses/updateExpensesView.html') %>",
+      controller: 'updateExpensesCtrl as update',
+      resolve: {
+        resources: ['$ocLazyLoad', function($ocLazyLoad) {
+          return $ocLazyLoad.load([
+            ASSETS.somsri.somsri.update_expenses
+          ]);
+        }]
+      }
+    })
+
+    $urlRouterProvider.when("", "/");
+  }]);
+
+  app.run();
+})();

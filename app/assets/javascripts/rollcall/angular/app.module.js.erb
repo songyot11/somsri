@@ -10,9 +10,7 @@
     'angularMoment',
     'ui.utils.masks',
     'ngSanitize',
-    'somsri.translate',
-    'ngFileUpload',
-    'ngTagsInput'
+    'somsri.translate'
   ]);
 
   app.config(['stateHelperProvider', 'ASSETS', '$urlRouterProvider', '$httpProvider', function(stateHelperProvider, ASSETS, $urlRouterProvider, $httpProvider) {
@@ -46,42 +44,6 @@
           resources: ['$ocLazyLoad', function($ocLazyLoad) {
             return $ocLazyLoad.load([
               ASSETS.somsri.rollcall.report
-            ]);
-          }]
-        }
-      }).state({
-        url: '/expenses/new',
-        name: 'create_expenses',
-        templateUrl: "<%= asset_path('rollcall/angular/components/updateExpenses/updateExpensesView.html') %>",
-        controller: 'updateExpensesCtrl as update',
-        resolve: {
-          resources: ['$ocLazyLoad', function($ocLazyLoad) {
-            return $ocLazyLoad.load([
-              ASSETS.somsri.rollcall.update_expenses
-            ]);
-          }]
-        }
-      }).state({
-        url: '/expenses/:id',
-        name: 'update_expenses',
-        templateUrl: "<%= asset_path('rollcall/angular/components/updateExpenses/updateExpensesView.html') %>",
-        controller: 'updateExpensesCtrl as update',
-        resolve: {
-          resources: ['$ocLazyLoad', function($ocLazyLoad) {
-            return $ocLazyLoad.load([
-              ASSETS.somsri.rollcall.update_expenses
-            ]);
-          }]
-        }
-      }).state({
-        url: '/expenses',
-        name: 'expenses',
-        templateUrl: "<%= asset_path('rollcall/angular/components/expenses/expensesView.html') %>",
-        controller: 'expensesCtrl as expenses',
-        resolve: {
-          resources: ['$ocLazyLoad', function($ocLazyLoad) {
-            return $ocLazyLoad.load([
-              ASSETS.somsri.rollcall.expenses
             ]);
           }]
         }
