@@ -2,6 +2,7 @@
   'use strict';
   var app = angular.module('somsri.somsri', [
     'somsri.somsri.assets',
+    'somsri.somsri.auth_service',
     'oc.lazyLoad',
     'ui.router.stateHelper',
     'ui.bootstrap',
@@ -12,6 +13,19 @@
     'ngFileUpload',
     'ngTagsInput'
   ]);
+
+  var check_permission = function(permission){
+    return ['$q', 'AclService', 'Auth', '$window', function($q, AclService, Auth, $window){
+      Auth.load_abilities();
+      Auth.load_user_roles();
+      if(AclService.can(permission)){
+        return true;
+      } else {
+        $window.location.href = "/";
+        return $q.reject('Unauthorized');
+      }
+    }]
+  }
 
   app.config(['stateHelperProvider', 'ASSETS', '$urlRouterProvider', '$httpProvider', function(stateHelperProvider, ASSETS, $urlRouterProvider, $httpProvider) {
 
@@ -27,6 +41,7 @@
       templateUrl: "<%= asset_path('somsri/angular/components/expenses_tag/expensesTagView.html') %>",
       controller: 'expensesTagCtrl as tag',
       resolve: {
+        check_permission: check_permission("expenses_tag"),
         resources: ['$ocLazyLoad', function($ocLazyLoad) {
           return $ocLazyLoad.load([
             ASSETS.somsri.somsri.expenses_tag
@@ -39,6 +54,7 @@
       templateUrl: "<%= asset_path('somsri/angular/components/expenses/expensesView.html') %>",
       controller: 'expensesCtrl as expenses',
       resolve: {
+        check_permission: check_permission("expenses"),
         resources: ['$ocLazyLoad', function($ocLazyLoad) {
           return $ocLazyLoad.load([
             ASSETS.somsri.somsri.expenses
@@ -51,6 +67,7 @@
       templateUrl: "<%= asset_path('somsri/angular/components/updateExpenses/updateExpensesView.html') %>",
       controller: 'updateExpensesCtrl as update',
       resolve: {
+        check_permission: check_permission("create_expenses"),
         resources: ['$ocLazyLoad', function($ocLazyLoad) {
           return $ocLazyLoad.load([
             ASSETS.somsri.somsri.update_expenses
@@ -63,6 +80,7 @@
       templateUrl: "<%= asset_path('somsri/angular/components/updateExpenses/updateExpensesView.html') %>",
       controller: 'updateExpensesCtrl as update',
       resolve: {
+        check_permission: check_permission("update_expenses"),
         resources: ['$ocLazyLoad', function($ocLazyLoad) {
           return $ocLazyLoad.load([
             ASSETS.somsri.somsri.update_expenses

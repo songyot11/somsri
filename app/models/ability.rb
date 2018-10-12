@@ -19,6 +19,10 @@ class Ability
       can :manage, Classroom
       can :manage, Alumni
       can :read, SiteConfig
+      can :manage, Expense
+      can :manage, ExpenseTag
+      can :manage, ExpenseTagItem
+      can :manage, ExpenseItem
     end
   end
 

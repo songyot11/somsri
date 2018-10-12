@@ -12,6 +12,13 @@ Rails.application.routes.draw do
   get "/language" => "home#language"
   get "/locale" => "home#locale"
 
+  resources :users, only: [] do
+    collection do
+      get "me"
+      get "site_config"
+    end
+  end
+
   resources :payrolls, only: [:index, :update, :create] do
     collection do
       get "effective_dates"
