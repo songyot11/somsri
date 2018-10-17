@@ -36,6 +36,10 @@
         window.open("/expenses.pdf?for_print=true&start_date="+ctrl.start_date+"&end_date="+ctrl.end_date+"&sort="+ctrl.sort+"&order="+ctrl.order)
       }
 
+      ctrl.print_report_by_type = function() {
+        window.open("/expenses/report_by_tag?start_date="+ctrl.start_date+"&end_date="+ctrl.end_date)
+      }
+
       function openConfirmationModal(message, success, dismiss) {
         $scope.message = message;
         $uibModal.open({

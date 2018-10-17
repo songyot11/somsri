@@ -1,0 +1,48 @@
+<div>
+  <h3 class="pt-10"><%= I18n.t('expenses_classification_report') %></h3>
+  <hr class="my-5">
+  <% if (@start_date_time && @end_date_time) %>
+    <% if Date.parse(@start_date_time.to_s) == Date.parse(@end_date_time.to_s) %>
+      <label class="font-weight-normal mb-20"><%= I18n.t('this_date') + " " + I18n.l(@start_date_time, format: '%d/%m/%Y') %></label>
+    <% else %>
+      <label class="font-weight-normal mb-20"><%= I18n.t('from') + " " + I18n.l(@start_date_time, format: '%d/%m/%Y') + " " + I18n.t('to') + " " + I18n.l(@end_date_time, format: '%d/%m/%Y') %></label>
+    <% end %>
+  <% elsif (@start_date_time && !@end_date_time) %>
+    <label class="font-weight-normal mb-20"><%= I18n.t('from_date') + " " + I18n.l(@start_date_time, format: '%d/%m/%Y') %></label>
+  <% elsif (!@start_date_time && @end_date_time) %>
+    <label class="font-weight-normal mb-20"><%= I18n.t('to_date') + " " + I18n.l(@end_date_time, format: '%d/%m/%Y') %></label>
+  <% else %>
+    <label class="font-weight-normal mb-20"><%= I18n.t('from_all') %></label>
+  <% end %>
+</div>
+<table class="font-14 header-table-page">
+  <thead class="bg-light-gray" display: table-row-group>
+    <td class="border-1 p-5 w-90p text-left"><b><%= I18n.t('item') %></b></td>
+    <td class="border-1 p-5 w-10p text-right"><b><%= I18n.t('amount') %></b></td>
+  </thead>
+  <tbody>
+    <% @results.each do |result| %>
+      <tr>
+        <td class="border-1 text-left p-5 text-indent-<%= (@lv_max - result[:lv]) * 25 %>">
+          <%= '<b>'.html_safe if(result[:lv] == @lv_max) %>
+            <%= (@expense_tags.find{|et| et.id == result[:id]}).name %>
+          <%= '</b>'.html_safe if(result[:lv] == @lv_max) %>
+        </td>
+        <td class="border-1 text-right p-5">
+          <%= '<b>'.html_safe if(result[:lv] == @lv_max) %>
+            <%= number_with_precision(result[:cost], :precision => 2, :delimiter => ',') %>
+          <%= '</b>'.html_safe if(result[:lv] == @lv_max) %>
+        </td>
+      </tr>
+    <% end %>
+    <tr>
+      <td class="border-1 p-5"><b><%= I18n.t('other_cost') %></b></td>
+      <td class="border-1 text-right p-5"><b><%= number_with_precision(@other_cost, :precision => 2, :delimiter => ',') %></b></td>
+    </tr>
+    <tr class="h-20"></tr>
+    <tr>
+      <td class="text-right p-5 font-18"><b><%= I18n.t('total') %> :</b></td>
+      <td class="text-right p-5 font-18"><b><%= number_with_precision(@total_cost, :precision => 2, :delimiter => ',') %></b></td>
+    </tr>
+  </tbody>
+</table>

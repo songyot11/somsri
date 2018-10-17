@@ -37,6 +37,9 @@ Rails.application.routes.draw do
     member do
       patch 'upload_photo'
     end
+    collection do
+      get "report_by_tag"
+    end
   end
   resources :expense_tags, only: [:index, :create]
   resources :skills, only: [:index, :create]

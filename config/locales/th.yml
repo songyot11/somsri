@@ -513,5 +513,7 @@ th:
   expenses_tag_required_name: "กรุณาใส่ข้อมูลชื่อของแท็ก"
   save_expense_tag_success: "บันทึกข้อมลูแท็กเรียบร้อยแล้ว"
   expenses_tag_setting: "ตั้งค่าแท็กค่าใช้จ่าย"
+  print_classification_report: "พิมพ์รายงานค่าใช้จ่ายแยกตามประเภท"
+  expenses_classification_report: "รายงานค่าใช้จ่ายแยกตามประเภท"
 
   save_change_confirmation: "คุณต้องการบันทึกการเปลี่ยนแปลงนี้หรือไม่"

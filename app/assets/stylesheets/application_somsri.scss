@@ -103,6 +103,9 @@ body {
 .w-80p {
   width: 80% !important;
 }
+.w-90p {
+  width: 90% !important;
+}
 .w-100p {
   width: 100% !important;
 }
@@ -405,6 +408,42 @@ body {
   overflow: hidden !important;
 }
 
+.text-indent-0 {
+  text-indent: 0px !important;
+}
+
+.text-indent-25 {
+  text-indent: 25px !important;
+}
+
+.text-indent-50 {
+  text-indent: 50px !important;
+}
+
+.text-indent-75 {
+  text-indent: 75px !important;
+}
+
+.text-indent-100 {
+  text-indent: 100px !important;
+}
+
+.text-indent-125 {
+  text-indent: 125px !important;
+}
+
+.text-indent-150 {
+  text-indent: 100px !important;
+}
+
+.text-indent-175 {
+  text-indent: 175px !important;
+}
+
+.text-indent-200 {
+  text-indent: 200px !important;
+}
+
 .btn-custom {
   font-family: 'Maitree', serif;
   font-size: 16px;
@@ -550,6 +589,12 @@ body {
   &:focus{
     color: #fff;
   }
+}
+
+.background-blue-hover:focus,
+.background-blue-hover:hover{
+  color: #fff !important;
+  background-color: #3fa1e6 !important;
 }
 
 .text-color {

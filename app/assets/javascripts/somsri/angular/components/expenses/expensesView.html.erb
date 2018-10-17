@@ -8,7 +8,23 @@
           <h1>รายการค่าใช้จ่าย</h1>
         </div>
         <div class="col-xs-6 pr-0 text-right">
-          <button class="btn btn-custom btn-black mr-5" ng-click="expenses.print_report()"><i class="fa fa-print"></i></button>
+          <div class="dropdown d-inline-block">
+            <label data-toggle="dropdown" id="print-report-btn" class="btn btn-custom btn-black mr-5" >
+              {{ "print_report" | translate }}&nbsp;&nbsp;<span class="fa fa-angle-down"></span>
+            </label>
+            <ul class="dropdown-menu" aria-labelledby="print-report-btn">
+              <li>
+                <a ng-click="expenses.print_report()" class="background-blue-hover">
+                  {{ "print_report" | translate }}
+                </a>
+              </li>
+              <li>
+                <a ng-click="expenses.print_report_by_type()" class="background-blue-hover">
+                  {{ "print_classification_report" | translate }}
+                </a>
+              </li>
+            </ul>
+          </div>
           <button class="btn btn-custom btn-blue" ng-click="expenses.createExpenses()" id="exportTable">+ {{ 'add_item' | translate}}</button>
         </div>
       </div>

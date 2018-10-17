@@ -92,7 +92,56 @@ class ExpensesController < ApplicationController
      render json: @expense
   end
 
+  def report_by_tag
+    @start_date_time = DateTime.parse(params[:start_date]).beginning_of_day if isDate(params[:start_date])
+    @end_date_time = DateTime.parse(params[:end_date]).end_of_day if isDate(params[:end_date])
+    tag_tree = JSON.parse(SiteConfig.get_cache.expense_tag_tree).collect{|ett| ett.deep_symbolize_keys }
+    @expense_tags = ExpenseTag.all.to_a
+
+    qry_expenses = Expense.all
+    qry_expenses = qry_date_range(
+                      qry_expenses,
+                      Expense.arel_table[:effective_date],
+                      @start_date_time,
+                      @end_date_time
+                    )
+    expenses = qry_expenses.to_a
+
+    expense_items = expenses.collect{|e| e.expense_items.to_a }
+    expense_items.compact!
+    expense_items.flatten!
+    ExpenseTagItem.all.each do |expense_tag_item|
+      tag_id = expense_tag_item.expense_tag_id
+      expense_item = expense_items.find{ |ei| ei.id == expense_tag_item.expense_item_id }
+      next unless expense_item
+      cost = expense_item.cost * expense_item.amount
+      set_cost_to_tag_tree(tag_tree, tag_id, cost)
+    end
+    @results = tag_tree
+    @lv_max = tag_tree[0][:lv]
+    @total_cost = expenses.inject(0){|sum, e| sum += e.total_cost }
+    bobo = @results.inject(0){|sum, r| sum += (r[:lv] == @lv_max) ? r[:cost] : 0  }
+    puts bobo
+    puts @total_cost
+    @other_cost = @total_cost - bobo
+    render pdf: "expense_export",
+            template: "pdf/expense_export_report.html.erb",
+            encoding: "UTF-8",
+            layout: 'pdf.html',
+            show_as_html: params[:show_as_html].present?
+  end
+
   private
+
+  def set_cost_to_tag_tree(tag_tree, tag_id, cost)
+    tag_tree.each do |th|
+      if th[:id] == tag_id
+        th[:cost] = (th[:cost] + cost).round(2)
+        return cost
+      end
+    end
+  end
+
   def expense_params
     params.require(:expense).permit(
       :effective_date,

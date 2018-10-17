@@ -513,5 +513,7 @@ en:
   expenses_tag_required_name: "Tag name is required."
   save_expense_tag_success: "Save Expenses Tag successfully."
   expenses_tag_setting: "Expenses Tag Setting"
+  print_classification_report: "Print expenses by type report"
+  expenses_classification_report: "Expenses by type report"
 
   save_change_confirmation: "Do you want to save this change?"
