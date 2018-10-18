@@ -37,5 +37,4 @@
 //= require rollcall/angular/app.assets
 
 //= require bootstrap-table
-//= require ng-tags-input
 //= ajax.googleapis.com/ajax/libs/jquery/2.1.1/jquery.min

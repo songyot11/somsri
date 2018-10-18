@@ -2,20 +2,18 @@ class ExpenseItem < ApplicationRecord
 	belongs_to :expense
 	has_many :expense_tag_items, dependent: :destroy
 
-	# return [{ text: "tag_name" },...]
+	# return [1,2,3...] #id
 	def tags
-	  expense_tag_items.collect do |eti|
-			{ text: eti.expense_tag.name } if eti.expense_tag
-		end
+	  ExpenseTagItem.where(expense_item_id: self.id).collect(&:expense_tag_id)
 	end
 
-	# values = [{ text: "tag_name" },...]
+	# values = [1,2,3...] #id
 	def tags=(values)
-		self.expense_tag_items = []
+		self.expense_tag_items.destroy_all
 	  values.each do |value|
 			self.expense_tag_items << ExpenseTagItem.new(
 				expense_item: self,
-				expense_tag: ExpenseTag.where(name: value[1]["text"]).first_or_initialize
+				expense_tag: ExpenseTag.where(id: value[1][:id]).first
 			)
 		end
 	end
@@ -27,7 +25,7 @@ class ExpenseItem < ApplicationRecord
 			detail: self.detail,
 			expense_id: self.expense_id,
 			id: self.id,
-			tags: self.tags
+			tags: ExpenseTag.where(id: self.tags)
 		}
 	end
 end

@@ -11,18 +11,18 @@
   ctrl.real_id = $state.params.id;
   ctrl.effective_date = new Date();
   ctrl.items = [];
-  addItem();
-
-  ctrl.tags = [
-    { text: 'just' },
-    { text: 'some' }
-  ];
-  ctrl.loadTags = function(query) {
-    return service.getExpenseTags({ search_keyword: query, autocomplete: true });
-  };
 
   function initData() {
-    if (!ctrl.real_id) { return; }
+    if (!ctrl.real_id) {
+      addItem();
+      service.getExpenseTags({ autocomplete: true }).then(function(resp){
+        ctrl.itemTypes = resp.data;
+        ctrl.lvMax = ctrl.itemTypes[0].lv;
+        ctrl.itemTypes.unshift({ name: "-", lv: ctrl.lvMax, ids: [], id: null, is_left: true });
+        ctrl.items[0].tags = ctrl.itemTypes[0]
+      });
+      return;
+    }
     service.show(ctrl.real_id).then(function(resp){
       var value = resp.data;
       ctrl.detail = value.detail;
@@ -32,8 +32,34 @@
       ctrl.expensesTotal();
       ctrl.imgDisplay = value.img;
       ctrl.expenses_id = value.expenses_id;
+      service.getExpenseTags({ autocomplete: true }).then(function(resp){
+        ctrl.itemTypes = resp.data;
+        ctrl.lvMax = ctrl.itemTypes[0].lv;
+        ctrl.itemTypes.unshift({ name: "-", lv: ctrl.lvMax, ids: [], id: null, is_left: true });
+        if(ctrl.items){
+          ctrl.items.forEach(function(item){
+            var selected = ctrl.itemTypes[0];
+            if(item.tags){
+              item.tags.forEach(function(tag){
+                if(tag.is_left){
+                  selected = tag;
+                }
+              });
+            }
+            item.tags = selected;
+          });
+        }
+      })
     })
   }
+
+  ctrl.addWhiteSpace = function(times) {
+    var whiteSpace = ""
+    for(var i = 0; i < times; i++){
+      whiteSpace += "&nbsp;	"
+    }
+    return whiteSpace
+  };
 
   //add item and remove item
   ctrl.addNewItem = function() {
@@ -81,6 +107,15 @@
         return item.detail || item.amount || item.cost
       });
       var effective_date = cleanDate(new Date(ctrl.effective_date))
+      ctrl.expense_items.forEach(function(item){
+        var tags = []
+        if(item.tags.ids){
+          item.tags.ids.forEach(function(id){
+            tags.push({id: id });
+          })
+          item.tags = tags
+        }
+      });
       var expense_datas = {
         effective_date: effective_date,
         expenses_id: ctrl.expenses_id,

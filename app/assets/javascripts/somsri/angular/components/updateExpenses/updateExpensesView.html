@@ -82,9 +82,14 @@
                       </div>
                     </div>
                     <div class="col-xs-3 text-right pl-0">
-                      <tags-input id="tag" ng-model="item.tags">
-                        <auto-complete source="update.loadTags($query)"></auto-complete>
-                      </tags-input>
+                      <ui-select theme="bootstrap" ng-model="item.tags">
+                        <ui-select-match>
+                          <span ng-bind="$select.selected.name"></span>
+                        </ui-select-match>
+                        <ui-select-choices repeat="item in (update.itemTypes | filter: $select.search) track by item.id" ui-disable-choice="!item.is_left">
+                          <span ng-bind-html="update.addWhiteSpace((update.lvMax - item.lv)*2)"></span><span ng-bind="item.name"></span>
+                        </ui-select-choices>
+                      </ui-select>
                     </div>
                     <div class="col-xs-1 text-right pl-0">
                       <div class="form-group form-price mb-0">

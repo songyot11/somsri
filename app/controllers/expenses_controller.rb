@@ -69,8 +69,7 @@ class ExpensesController < ApplicationController
 
   # PUT /expenses/:id
   def update
-    @expense = Expense.find params[:id]
-    @expense.expense_items = []
+    @expense.expense_items.destroy_all
     if (expense_params[:img_url].class.to_s == "ActionDispatch::Http::UploadedFile")
       if @expense.update(expense_params)
         render json: @expense
@@ -79,6 +78,7 @@ class ExpensesController < ApplicationController
       end
     else
       @expense.update(expense_params_no_img)
+      render json: @expense
     end
   end
 
@@ -120,10 +120,7 @@ class ExpensesController < ApplicationController
     @results = tag_tree
     @lv_max = tag_tree[0][:lv]
     @total_cost = expenses.inject(0){|sum, e| sum += e.total_cost }
-    bobo = @results.inject(0){|sum, r| sum += (r[:lv] == @lv_max) ? r[:cost] : 0  }
-    puts bobo
-    puts @total_cost
-    @other_cost = @total_cost - bobo
+    @other_cost = @total_cost - @results.inject(0){|sum, r| sum += (r[:lv] == @lv_max) ? r[:cost] : 0  }
     render pdf: "expense_export",
             template: "pdf/expense_export_report.html.erb",
             encoding: "UTF-8",
@@ -149,9 +146,7 @@ class ExpensesController < ApplicationController
       :detail,
       :total_cost,
       :img_url,
-      expense_items_attributes: [:detail, :amount, :cost,
-        tags: [:text]
-      ]
+      expense_items_attributes: [:detail, :amount, :cost, tags: [:id] ]
     )
   end
 
@@ -161,9 +156,7 @@ class ExpensesController < ApplicationController
       :expenses_id,
       :detail,
       :total_cost,
-      expense_items_attributes: [:detail, :amount, :cost,
-        tags: [:text]
-      ]
+      expense_items_attributes: [:detail, :amount, :cost, tags: [:id] ]
     )
   end
 

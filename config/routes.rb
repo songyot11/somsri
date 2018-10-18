@@ -41,7 +41,7 @@ Rails.application.routes.draw do
       get "report_by_tag"
     end
   end
-  resources :expense_tags, only: [:index, :create]
+  resources :expense_tags, only: [:index]
   resources :skills, only: [:index, :create]
   resources :employees, only: [:index, :create, :show, :update, :destroy]  do
     resources :employee_skills, except: %i[show new edit]
