@@ -14,12 +14,11 @@
 
   function initData() {
     if (!ctrl.real_id) {
-      addItem();
       service.getExpenseTags({ autocomplete: true }).then(function(resp){
         ctrl.itemTypes = resp.data;
         ctrl.lvMax = ctrl.itemTypes[0].lv;
-        ctrl.itemTypes.unshift({ name: "-", lv: ctrl.lvMax, ids: [], id: null, is_left: true });
-        ctrl.items[0].tags = ctrl.itemTypes[0]
+        ctrl.itemTypes.unshift({ name: "-", lv: ctrl.lvMax, ids: [], id: null, is_leaf: true });
+        addItem();
       });
       return;
     }
@@ -35,13 +34,13 @@
       service.getExpenseTags({ autocomplete: true }).then(function(resp){
         ctrl.itemTypes = resp.data;
         ctrl.lvMax = ctrl.itemTypes[0].lv;
-        ctrl.itemTypes.unshift({ name: "-", lv: ctrl.lvMax, ids: [], id: null, is_left: true });
+        ctrl.itemTypes.unshift({ name: "-", lv: ctrl.lvMax, ids: [], id: null, is_leaf: true });
         if(ctrl.items){
           ctrl.items.forEach(function(item){
             var selected = ctrl.itemTypes[0];
             if(item.tags){
               item.tags.forEach(function(tag){
-                if(tag.is_left){
+                if(tag.is_leaf){
                   selected = tag;
                 }
               });
@@ -49,6 +48,7 @@
             item.tags = selected;
           });
         }
+        addItem();
       })
     })
   }
@@ -75,7 +75,7 @@
   };
 
   function addItem() {
-    ctrl.items.push({amount:0, detail:"", cost:0.00, total_price:0.00});
+    ctrl.items.push({amount:0, detail:"", cost:0.00, total_price:0.00, tags: ctrl.itemTypes[0]});
   }
 
   // Calculates the sub total of the expenses

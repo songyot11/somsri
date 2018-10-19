@@ -1,7 +1,17 @@
 describe 'expense', js: true do
   let(:school) { school = School.make!({ name: "โรงเรียนแห่งหนึ่ง" }) }
   let(:user) { User.make!({ school_id: school.id }) }
-  let(:site_config) { SiteConfig.make!({ enable_expenses: true }) }
+  let(:site_config) do
+    expense_tag_tree = [
+      { id: expense_tags[0].id, cost: 0, lv: 2 },
+      { id: expense_tags[1].id, cost: 0, lv: 1 },
+      { id: expense_tags[2].id, cost: 0, lv: 2 },
+    ]
+    SiteConfig.make!({
+      enable_expenses: true,
+      expense_tag_tree: expense_tag_tree.to_json
+    })
+  end
 
   let(:expenses) do
     [
@@ -34,7 +44,8 @@ describe 'expense', js: true do
   let(:expense_tags) do
     [
       ExpenseTag.make!(name: "car"),
-      ExpenseTag.make!(name: "ceo")
+      ExpenseTag.make!(name: "ceo"),
+      ExpenseTag.make!(name: "kizuna")
     ]
   end
 
@@ -165,46 +176,37 @@ describe 'expense', js: true do
     page.find('#item_detail').set("ซื้อปากกา")
     page.find('#item_amount').set("50")
     page.find('#item_cost').set("30.00")
-    page.find("#tag input").set("car")
-    page.find("#tag input").set("newone")
+    page.find("#tags-0").click
+    page.find('#tags-0 span.ng-binding.ng-scope', text: 'ceo').click
     page.find('.btn-green').click
     sleep(1)
     click_button("บันทึก")
     sleep(1)
-
-    expect(ExpenseTag.where(name: "newone").count).to eq(1)
-    expect(ExpenseTag.where(name: "car").count).to eq(1)
-
     expense = Expense.where(expenses_id: "pen002").first
     expect(expense.present?).to eq true
     expense_items = expense.expense_items
     expect(expense_items).to exist
-    expect(["car", "newone"].include?(expense_items[0].expense_tag_items[0].expense_tag.name)).to eq true
-    expect(["car", "newone"].include?(expense_items[0].expense_tag_items[1].expense_tag.name)).to eq true
+    expect(["car", "ceo"].include?(expense_items[0].expense_tag_items[0].expense_tag.name)).to eq true
+    expect(["car", "ceo"].include?(expense_items[0].expense_tag_items[1].expense_tag.name)).to eq true
   end
 
   it 'should edit tag expenses item' do
     visit "/somsri#/expenses/#{expenses[0].id}"
     sleep(1)
     page.find('#item').click
-    page.first("#tag input").set("newone")
+    page.find("#tags-0").click
+    page.find('#tags-0 span.ng-binding.ng-scope', text: 'kizuna').click
     sleep(1)
     click_button("บันทึก")
     sleep(1)
-    puts ExpenseTag.all.inspect
-    expect(ExpenseTag.where(name: "newone").count).to eq(1)
-    expect(ExpenseTag.where(name: "car").count).to eq(1)
-    expect(ExpenseTag.where(name: "ceo").count).to eq(1)
 
     expense = Expense.find(expenses[0].id)
     expect(expense.present?).to eq true
     expense_items = expense.expense_items
     expect(expense_items).to exist
 
-    tag_names = ["car", "newone", "ceo"]
-    expect(tag_names.include?(expense_items[0].expense_tag_items[0].expense_tag.name)).to eq true
-    expect(tag_names.include?(expense_items[0].expense_tag_items[1].expense_tag.name)).to eq true
-    expect(tag_names.include?(expense_items[0].expense_tag_items[2].expense_tag.name)).to eq true
+    tag_names = []
+    expect(expense_items[0].expense_tag_items[0].expense_tag.name).to eq "kizuna"
   end
 
 end

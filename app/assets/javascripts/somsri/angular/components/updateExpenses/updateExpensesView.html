@@ -82,11 +82,11 @@
                       </div>
                     </div>
                     <div class="col-xs-3 text-right pl-0">
-                      <ui-select theme="bootstrap" ng-model="item.tags">
+                      <ui-select id="tags-{{$index}}" theme="bootstrap" ng-model="item.tags">
                         <ui-select-match>
                           <span ng-bind="$select.selected.name"></span>
                         </ui-select-match>
-                        <ui-select-choices repeat="item in (update.itemTypes | filter: $select.search) track by item.id" ui-disable-choice="!item.is_left">
+                        <ui-select-choices repeat="item in (update.itemTypes | filter: $select.search) track by item.id" ui-disable-choice="!item.is_leaf">
                           <span ng-bind-html="update.addWhiteSpace((update.lvMax - item.lv)*2)"></span><span ng-bind="item.name"></span>
                         </ui-select-choices>
                       </ui-select>

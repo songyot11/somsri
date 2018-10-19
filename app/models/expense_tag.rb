@@ -26,12 +26,14 @@ class ExpenseTag < ApplicationRecord
 		return ids
 	end
 
-	def is_left
+	def is_leaf
 		tag_tree = SiteConfig.get_cache.expense_tag_tree_hash
 		lv = 0
 		tag_tree.each do |tt|
+			if lv > 0
+				return lv > tt[:lv] ? false : true
+			end
 			lv = tt[:lv] if lv == 0 && tt[:id] == self.id
-			return false if lv > 0 && lv > tt[:lv]
 		end
 		return true
 	end
@@ -46,7 +48,7 @@ class ExpenseTag < ApplicationRecord
 			name: self.name,
 			ids: self.related_tag_ids,
 			id: self.id,
-			is_left: self.is_left,
+			is_leaf: self.is_leaf,
 			lv: self.level,
 			description: self.description
 		}

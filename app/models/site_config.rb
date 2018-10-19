@@ -23,7 +23,7 @@ class SiteConfig < ApplicationRecord
   end
 
   def expense_tag_tree_hash
-    JSON.parse(SiteConfig.get_cache.expense_tag_tree).collect do |ett|
+    JSON.parse(self.expense_tag_tree).collect do |ett|
       ett.deep_symbolize_keys
     end
   end
