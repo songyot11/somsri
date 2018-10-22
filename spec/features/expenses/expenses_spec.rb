@@ -165,7 +165,7 @@ describe 'expense', js: true do
     eventually { expect(Expense.where(
       expenses_id: "111111",
       detail: "ซื้อของใช้ครับ",
-      payment_method: "เช็คธนาคาร",
+      payment_method: "เงินโอน",
       transfer_bank_name: "กสิกรไทย",
       transfer_date: "12/11/18"
     ).count).to eq 1 }
