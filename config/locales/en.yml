@@ -516,5 +516,7 @@ en:
   print_classification_report: "Print expenses by type report"
   expenses_classification_report: "Expenses by type report"
   category: "Category"
+  expenses_payment_report: "Expenses payment method report"
+  print_expenses_payment_report: "Print expenses payment method report"
 
   save_change_confirmation: "Do you want to save this change?"

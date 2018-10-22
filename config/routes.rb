@@ -39,6 +39,7 @@ Rails.application.routes.draw do
     end
     collection do
       get "report_by_tag"
+      get "report_by_payment"
     end
   end
   resources :expense_tags, only: [:index]

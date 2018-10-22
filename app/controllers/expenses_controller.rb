@@ -128,6 +128,41 @@ class ExpensesController < ApplicationController
             show_as_html: params[:show_as_html].present?
   end
 
+  def report_by_payment
+    @start_date_time = DateTime.parse(params[:start_date]).beginning_of_day if isDate(params[:start_date])
+    @end_date_time = DateTime.parse(params[:end_date]).end_of_day if isDate(params[:end_date])
+    qry_expenses = Expense.all
+    qry_expenses = qry_date_range(
+                      qry_expenses,
+                      Expense.arel_table[:effective_date],
+                      @start_date_time,
+                      @end_date_time
+                    )
+    expenses = qry_expenses.select("payment_method, SUM(total_cost) as sum_total_cost")
+                            .group("payment_method")
+    @results = [
+      { payment_method: "เงินสด", total_cost: 0 },
+      { payment_method: "บัตรเครดิต", total_cost: 0 },
+      { payment_method: "เช็คธนาคาร", total_cost: 0 },
+      { payment_method: "เงินโอน", total_cost: 0 },
+    ]
+    @total_cost = 0
+    expenses.each do |e|
+      @results.each do |r|
+        if e.payment_method == r[:payment_method]
+          r[:total_cost] = e.sum_total_cost
+          @total_cost += e.sum_total_cost
+        end
+      end
+    end
+
+    render pdf: "expense_payment_report",
+            template: "pdf/expense_payment_report.html.erb",
+            encoding: "UTF-8",
+            layout: 'pdf.html',
+            show_as_html: params[:show_as_html].present?
+  end
+
   private
 
   def set_cost_to_tag_tree(tag_tree, tag_id, cost)

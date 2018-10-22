@@ -516,5 +516,7 @@ th:
   print_classification_report: "พิมพ์รายงานค่าใช้จ่ายแยกตามประเภท"
   expenses_classification_report: "รายงานค่าใช้จ่ายแยกตามประเภท"
   category: "ประเภท"
+  expenses_payment_report: "รายงานค่าใช้จ่ายแยกตามการชำระเงิน"
+  print_expenses_payment_report: "พิมพ์รายงานค่าใช้จ่ายแยกตามการชำระเงิน"
 
   save_change_confirmation: "คุณต้องการบันทึกการเปลี่ยนแปลงนี้หรือไม่"

@@ -23,6 +23,11 @@
                   {{ "print_classification_report" | translate }}
                 </a>
               </li>
+              <li>
+                <a ng-click="expenses.print_expenses_payment_report()" class="background-blue-hover">
+                  {{ "print_expenses_payment_report" | translate }}
+                </a>
+              </li>
             </ul>
           </div>
           <button class="btn btn-custom btn-blue" ng-click="expenses.createExpenses()" id="exportTable">+ {{ 'add_item' | translate}}</button>
