@@ -17,6 +17,7 @@
       service.getExpenseTags({ autocomplete: true }).then(function(resp){
         ctrl.itemTypes = resp.data;
         ctrl.lvMax = ctrl.itemTypes[0].lv;
+        ctrl.payment_method = "เงินสด";
         ctrl.itemTypes.unshift({ name: "-", lv: ctrl.lvMax, ids: [], id: null, is_leaf: true });
         addItem();
       });
@@ -28,6 +29,12 @@
       ctrl.total_cost = value.total_cost;
       ctrl.effective_date = new Date(value.effective_date);
       ctrl.items = value.expense_items;
+      ctrl.payment_method = value.payment_method;
+      ctrl.cheque_bank_name = value.cheque_bank_name;
+      ctrl.cheque_number = value.cheque_number;
+      ctrl.cheque_date = value.cheque_date;
+      ctrl.transfer_bank_name = value.transfer_bank_name;
+      ctrl.transfer_date = value.transfer_date;
       ctrl.expensesTotal();
       ctrl.imgDisplay = value.img;
       ctrl.expenses_id = value.expenses_id;
@@ -117,6 +124,12 @@
         }
       });
       var expense_datas = {
+        payment_method: ctrl.payment_method,
+        cheque_bank_name: ctrl.cheque_bank_name,
+        cheque_number: ctrl.cheque_number,
+        cheque_date: ctrl.cheque_date,
+        transfer_bank_name: ctrl.transfer_bank_name,
+        transfer_date: ctrl.transfer_date,
         effective_date: effective_date,
         expenses_id: ctrl.expenses_id,
         detail: ctrl.detail,

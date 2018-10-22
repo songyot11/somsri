@@ -515,5 +515,6 @@ en:
   expenses_tag_setting: "Expenses Tag Setting"
   print_classification_report: "Print expenses by type report"
   expenses_classification_report: "Expenses by type report"
+  category: "Category"
 
   save_change_confirmation: "Do you want to save this change?"

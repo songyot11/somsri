@@ -515,5 +515,6 @@ th:
   expenses_tag_setting: "ตั้งค่าแท็กค่าใช้จ่าย"
   print_classification_report: "พิมพ์รายงานค่าใช้จ่ายแยกตามประเภท"
   expenses_classification_report: "รายงานค่าใช้จ่ายแยกตามประเภท"
+  category: "ประเภท"
 
   save_change_confirmation: "คุณต้องการบันทึกการเปลี่ยนแปลงนี้หรือไม่"

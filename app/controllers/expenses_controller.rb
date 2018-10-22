@@ -146,6 +146,12 @@ class ExpensesController < ApplicationController
       :detail,
       :total_cost,
       :img_url,
+      :payment_method,
+      :cheque_bank_name,
+      :cheque_number,
+      :cheque_date,
+      :transfer_bank_name,
+      :transfer_date,
       expense_items_attributes: [:detail, :amount, :cost, tags: [:id] ]
     )
   end
@@ -156,6 +162,12 @@ class ExpensesController < ApplicationController
       :expenses_id,
       :detail,
       :total_cost,
+      :payment_method,
+      :cheque_bank_name,
+      :cheque_number,
+      :cheque_date,
+      :transfer_bank_name,
+      :transfer_date,
       expense_items_attributes: [:detail, :amount, :cost, tags: [:id] ]
     )
   end

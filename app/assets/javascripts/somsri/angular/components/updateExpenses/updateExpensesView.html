@@ -50,6 +50,47 @@
       </div>
       <div class="row">
         <div class="col-xs-12">
+          <b>{{ 'payment_channel' | translate }}</b>
+          <div class="radio">
+            <label><input id="is-cash" type="radio" value="เงินสด" ng-model="update.payment_method">&nbsp;&nbsp;{{ 'cash' | translate }}</label>
+          </div>
+          <div class="radio">
+            <label><input id="is-credit-card" type="radio" value="บัตรเครดิต" ng-true-value="true" ng-false-value="false" ng-model="update.payment_method">&nbsp;&nbsp;{{ 'credit_card' | translate }}</label>
+          </div>
+          <div class="radio row">
+            <div class="col-md-2" style="margin-right:20px;">
+              <label><input id="is-cheque" type="radio" value="เช็คธนาคาร" ng-model="update.payment_method">&nbsp;&nbsp;{{ 'bank_check' | translate }}</label>
+            </div>
+            <div class="input-bank">
+              <div class="col-md-3 col-payment">
+                <input id="cheque-bank-name" type="text" ng-disabled="update.payment_method != 'เช็คธนาคาร'" placeholder="{{ 'bank_name' | translate }}" class="form-control" ng-model="update.cheque_bank_name">
+              </div>
+              <div class="col-md-3">
+                <input id="cheque-number" type="text" ng-disabled="update.payment_method != 'เช็คธนาคาร'" placeholder="{{ 'bank_check_id' | translate }}" class="form-control" ng-model="update.cheque_number">
+              </div>
+              <div class="col-md-3">
+                <input id="cheque-date" type="text" ng-disabled="update.payment_method != 'เช็คธนาคาร'" placeholder="{{ 'bank_check_date' | translate }}" class="form-control" ng-model="update.cheque_date">
+              </div>
+            </div>
+          </div>
+          <div class="radio row">
+            <div class="col-md-2">
+              <label><input id="is-transfer" type="radio" value="เงินโอน" ng-model="update.payment_method">&nbsp;&nbsp;{{ 'bank_transfer' | translate }}</label>
+            </div>
+            <div class="input-bank">
+              <div class="col-md-3 col-payment">
+                <input id="transfer-bank-name" type="text" ng-disabled="update.payment_method != 'เงินโอน'" placeholder="{{ 'bank_name' | translate }}" class="form-control" ng-model="update.transfer_bank_name">
+              </div>
+              <div class="col-md-3">
+                <input id="transfer-date" type="text" ng-disabled="update.payment_method != 'เงินโอน'" placeholder="{{ 'bank_check_date' | translate }}" class="form-control" ng-model="update.transfer_date">
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="space30"></div>
+      <div class="row">
+        <div class="col-xs-12">
           <uib-tabset>
             <uib-tab id="upload_photo" index="0" heading="{{ 'upload_photo' | translate }}">
               <div class="col-xs-12 text-center border-choose-file mt-20 mb-20">
@@ -68,7 +109,7 @@
               <div class="items-table font-16">
                 <div class="row header pb-10">
                   <div class="col-xs-4">{{ 'item' | translate }}</div>
-                  <div class="col-xs-3 pl-0">Tag</div>
+                  <div class="col-xs-3 pl-0">{{ 'category' | translate }}</div>
                   <div class="col-xs-1 text-right pl-0">{{ 'amount2' | translate }}</div>
                   <div class="col-xs-2 text-right pl-0">{{ 'unit_price' | translate }}</div>
                   <div class="col-xs-1 text-right pl-0">{{ 'total_cost' | translate }}</div>

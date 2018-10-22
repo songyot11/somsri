@@ -102,7 +102,73 @@ describe 'expense', js: true do
     sleep(1)
     expect(page).to have_content ('ซื้อของใช้ครับ')
     expect(page).to have_content ("2000")
-    eventually { expect(Expense.where(expenses_id: "111111", detail: "ซื้อของใช้ครับ").count).to eq 1 }
+    eventually { expect(Expense.where(expenses_id: "111111", detail: "ซื้อของใช้ครับ", payment_method: "เงินสด").count).to eq 1 }
+  end
+
+  it 'create expense with credit card payment' do
+    visit "/somsri#/expenses"
+    sleep(1)
+    click_button("+ เพิ่มรายการ")
+    sleep(1)
+    page.find('#expenses_id').set("111111")
+    page.find('#detail').set("ซื้อของใช้ครับ")
+    page.find('#total_cost').set("2000.00")
+    page.find('#is-credit-card').click
+    click_button("บันทึก")
+    sleep(1)
+    expect(page).to have_content ('ซื้อของใช้ครับ')
+    expect(page).to have_content ("2000")
+    eventually { expect(Expense.where(expenses_id: "111111", detail: "ซื้อของใช้ครับ", payment_method: "บัตรเครดิต").count).to eq 1 }
+  end
+
+  it 'create expense with cheque payment' do
+    visit "/somsri#/expenses"
+    sleep(1)
+    click_button("+ เพิ่มรายการ")
+    sleep(1)
+    page.find('#expenses_id').set("111111")
+    page.find('#detail').set("ซื้อของใช้ครับ")
+    page.find('#total_cost').set("2000.00")
+    page.find('#is-cheque').click
+    page.find('#cheque-bank-name').set("กสิกรไทย")
+    page.find('#cheque-number').set("1234567890")
+    page.find('#cheque-date').set("12/11/18")
+    click_button("บันทึก")
+    sleep(1)
+    expect(page).to have_content ('ซื้อของใช้ครับ')
+    expect(page).to have_content ("2000")
+    eventually { expect(Expense.where(
+      expenses_id: "111111",
+      detail: "ซื้อของใช้ครับ",
+      payment_method: "เช็คธนาคาร",
+      cheque_bank_name: "กสิกรไทย",
+      cheque_number: "1234567890",
+      cheque_date: "12/11/18",
+    ).count).to eq 1 }
+  end
+
+  it 'create expense with transfer payment' do
+    visit "/somsri#/expenses"
+    sleep(1)
+    click_button("+ เพิ่มรายการ")
+    sleep(1)
+    page.find('#expenses_id').set("111111")
+    page.find('#detail').set("ซื้อของใช้ครับ")
+    page.find('#total_cost').set("2000.00")
+    page.find('#is-transfer').click
+    page.find('#transfer-bank-name').set("กสิกรไทย")
+    page.find('#transfer-date').set("12/11/18")
+    click_button("บันทึก")
+    sleep(1)
+    expect(page).to have_content ('ซื้อของใช้ครับ')
+    expect(page).to have_content ("2000")
+    eventually { expect(Expense.where(
+      expenses_id: "111111",
+      detail: "ซื้อของใช้ครับ",
+      payment_method: "เช็คธนาคาร",
+      transfer_bank_name: "กสิกรไทย",
+      transfer_date: "12/11/18"
+    ).count).to eq 1 }
   end
 
   it 'change tab' do
@@ -137,7 +203,7 @@ describe 'expense', js: true do
     sleep(1)
     expect(page).to have_content ("ซื้อปากกาและดินสอให้ ห้องเรียนแต่ละห้อง")
     expect(page).to have_content ("1500")
-    eventually { expect(Expense.where(expenses_id: "pen12345", detail: "ซื้อปากกาและดินสอให้ ห้องเรียนแต่ละห้อง").count).to eq 1 }
+    eventually { expect(Expense.where(expenses_id: "pen12345", detail: "ซื้อปากกาและดินสอให้ ห้องเรียนแต่ละห้อง", payment_method: "เงินสด").count).to eq 1 }
     eventually { expect(ExpenseItem.where(detail: "ซื้อปากกา", amount: "50", cost: "30.00").count).to eq 1 }
   end
 
