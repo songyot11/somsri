@@ -12,7 +12,8 @@
     'somsri.translate',
     'ngFileUpload',
     'ui.select',
-    'ngSanitize'
+    'ngSanitize',
+    'ui.tree'
   ]);
 
   var check_permission = function(permission){
@@ -37,15 +38,15 @@
     $httpProvider.defaults.headers.common['Content-Type'] = 'application/json; charset=utf-8';
 
     stateHelperProvider.state({
-      url: '/setting/expenses_tag',
-      name: 'expenses_tag',
-      templateUrl: "<%= asset_path('somsri/angular/components/expenses_tag/expensesTagView.html') %>",
-      controller: 'expensesTagCtrl as tag',
+      url: '/expenses/setting',
+      name: 'expenses_setting',
+      templateUrl: "<%= asset_path('somsri/angular/components/expenses/setting/expensesSettingView.html') %>",
+      controller: 'expensesSettingCtrl as tag',
       resolve: {
-        check_permission: check_permission("expenses_tag"),
+        check_permission: check_permission("expenses_setting"),
         resources: ['$ocLazyLoad', function($ocLazyLoad) {
           return $ocLazyLoad.load([
-            ASSETS.somsri.somsri.expenses_tag
+            ASSETS.somsri.somsri.expenses_setting
           ]);
         }]
       }

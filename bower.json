@@ -27,7 +27,8 @@
     "angular-translate": "",
     "angular-translate-loader-url": "",
     "angular-acl": "",
-    "angular-ui-select": ""
+    "angular-ui-select": "",
+    "angular-ui-tree": ""
   },
   "resolutions": {
     "angular": "1.5.9"

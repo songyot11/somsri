@@ -23,8 +23,10 @@ class SiteConfig < ApplicationRecord
   end
 
   def expense_tag_tree_hash
-    JSON.parse(self.expense_tag_tree).collect do |ett|
-      ett.deep_symbolize_keys
+    if self.expense_tag_tree.present?
+      return JSON.parse(self.expense_tag_tree).collect { |ett| ett.deep_symbolize_keys }
+    else
+      return []
     end
   end
 

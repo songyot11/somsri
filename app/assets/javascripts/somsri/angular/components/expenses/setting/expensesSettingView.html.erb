@@ -1,0 +1,51 @@
+<flash-message-content message="tag.message" type-success="tag.typeSuccess"></flash-message-content>
+<div class="container setting" style="width: 960px;">
+  <div class="row">
+    <h1>{{ 'expenses_category_setting' | translate }}</h1>
+  </div>
+  <div class="row paragraph bg-setting mt-0 max-height-inherit">
+    <div class="col-md-12">
+      <div class="row">
+        <div class="col-md-12">
+          <div ui-tree>
+            <ol ui-tree-nodes="" ng-model="tag.categories" id="tree-root">
+              <li ng-repeat="node in tag.categories" ui-tree-node ng-include="'nodes_renderer.html'"></li>
+            </ol>
+          </div>
+        </div>
+      </div>
+      <div class="row mt-20">
+        <div class="col-md-12">
+          <a id="add-new-item" class="btn btn-custom sm btn-green" ng-click="tag.addNewItem()">+ {{ 'add_item' | translate }}</a>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="footer-menu row" style="margin-right: -30px;">
+    <div class="col-md-offset-8 col-md-2 text-right">
+      <button id="save-btn" type="button" class="btn btn-custom btn-green btn-block" ng-click="tag.save()">{{ 'save' | translate }}</button>
+    </div>
+    <div class="col-md-2 text-right">
+      <button id="back-btn" type="button" class="btn btn-custom btn-gray btn-block" ng-click="openSettingMenu()">{{ 'back' | translate }}</button>
+    </div>
+  </div>
+</div>
+<script type="text/ng-template" id="nodes_renderer.html">
+  <div class="form-inline border-1 p-10 my-10 border-color-gray bg-white">
+    <div ui-tree-handle class="d-inline-block w-100p">
+      <a class="btn px-0" ng-if="node.nodes && node.nodes.length > 0" data-nodrag ng-click="tag.toggle(this)">
+        <i class="fa fa-fw font-21" ng-class="{ 'fa-angle-right': collapsed, 'fa-angle-down': !collapsed }"></i>
+      </a>
+      <input type="text" class="form-control w-70p border-b-0 border-b-1-hover" data-nodrag ng-model="node.name" placeholder="{{ 'expense_category_placeholder' | translate }}">
+      <div class="pull-right">
+        <a class="btn px-0" data-nodrag ng-click="tag.newSubItem(this)"><i class="fa fa-plus color-green text-center font-21 fa-fw" aria-hidden="true"></i></a>
+        <a href ng-click="tag.removeItem(this)" class="btn px-0" data-nodrag><span class="fa fa-times color-red text-center font-21 fa-fw"></span></a>
+        <a class="btn px-0"><i class="fa fa-arrows font-18 fa-fw" aria-hidden="true"></i></a>
+      </div>
+    </div>
+  </div>
+  <ol ui-tree-nodes="" ng-model="node.nodes" ng-class="{hidden: collapsed}">
+    <li ng-repeat="node in node.nodes" ui-tree-node ng-include="'nodes_renderer.html'">
+    </li>
+  </ol>
+</script>

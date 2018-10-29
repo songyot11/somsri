@@ -42,7 +42,11 @@ Rails.application.routes.draw do
       get "report_by_payment"
     end
   end
-  resources :expense_tags, only: [:index]
+  resources :expense_tags, only: [:index] do
+    collection do
+      post 'save'
+    end
+  end
   resources :skills, only: [:index, :create]
   resources :employees, only: [:index, :create, :show, :update, :destroy]  do
     resources :employee_skills, except: %i[show new edit]

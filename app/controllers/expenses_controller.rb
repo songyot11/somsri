@@ -95,7 +95,7 @@ class ExpensesController < ApplicationController
   def report_by_tag
     @start_date_time = DateTime.parse(params[:start_date]).beginning_of_day if isDate(params[:start_date])
     @end_date_time = DateTime.parse(params[:end_date]).end_of_day if isDate(params[:end_date])
-    tag_tree = JSON.parse(SiteConfig.get_cache.expense_tag_tree).collect{|ett| ett.deep_symbolize_keys }
+    tag_tree = SiteConfig.get_cache.expense_tag_tree_hash
     @expense_tags = ExpenseTag.all.to_a
 
     qry_expenses = Expense.all

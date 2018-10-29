@@ -133,9 +133,9 @@ describe 'Abilities', js: true do
     end
 
     it 'can goto setting expense tags' do
-      visit "/somsri#/setting/expenses_tag"
+      visit "/somsri#/expenses/setting"
       sleep(1)
-      expect(page).to have_content 'ตั้งค่าแท็กค่าใช้จ่าย'
+      expect(page).to have_content 'ตั้งค่าประเภทค่าใช้จ่าย'
     end
 
     it 'can goto expenses list' do
@@ -263,7 +263,7 @@ describe 'Abilities', js: true do
     end
 
     it 'can goto setting expense tags' do
-      visit "/somsri#/setting/expenses_tag"
+      visit "/somsri#/expenses/setting"
       sleep(1)
       expect(page).to have_current_path '/'
     end

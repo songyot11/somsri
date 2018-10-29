@@ -14,7 +14,7 @@ describe 'SiteConfig enable expense', js: true do
     enable_expenses_true
     visit "/main#/setting"
     sleep(1)
-    expect(page).to have_content("ตั้งค่าแท็กค่าใช้จ่าย")
+    expect(page).to have_content("ตั้งค่าประเภทค่าใช้จ่าย")
   end
 
   it 'should not display expense tag setting in menu' do
