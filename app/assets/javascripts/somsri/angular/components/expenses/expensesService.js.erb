@@ -1,6 +1,6 @@
 (function() {
   'use strict';
-  angular.module('somsri.rollcall.expenses.service', [
+  angular.module('somsri.somsri.expenses.service', [
   ])
   .service('expensesService', ['$http', '$q', 'Upload', function($http, $q, Upload) {
 
@@ -18,6 +18,16 @@
           sort: sort,
           order: order
         }
+      })
+    }
+
+    var getExpenseTagsCanceler = $q.defer()
+    this.getExpenseTags = function(params) {
+      getExpenseTagsCanceler.resolve()
+      getExpenseTagsCanceler = $q.defer()
+      return $http.get('/expense_tags/', {
+        timeout: getExpenseTagsCanceler.promise,
+        params: params
       })
     }
 

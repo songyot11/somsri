@@ -12,5 +12,9 @@
       return $http.patch('/settings/', params);
     };
 
+    this.getSiteConfig = function() {
+      return $http.get('/users/site_config');
+    };
+
   }]);
 })();

@@ -1,6 +1,6 @@
 (function() {
   'use strict';
-  angular.module('somsri.rollcall.expenses', [])
+  angular.module('somsri.somsri.expenses', [])
   .controller('expensesCtrl', ['$compile', '$scope', '$window', '$filter', '$rootScope', 'expensesService', '$timeout', 'translateFilter', '$uibModal', 'Upload', function($compile, $scope, $window, $filter, $rootScope, service, $timeout, translateFilter, $uibModal, Upload) {
     $rootScope.menu = translateFilter("receipt")
     var ctrl = this
@@ -11,7 +11,7 @@
     ctrl.message = '';
 
     $rootScope.loadAndAuthorizeResource("invoice", function(){
-      var main_table = $('#invoice-table');
+      var main_table = $('#expenses-table');
       ctrl.currentPage = 1;
       ctrl.searchKeyword = '';
       ctrl.sort = 'effective_date';
@@ -36,6 +36,26 @@
         window.open("/expenses.pdf?for_print=true&start_date="+ctrl.start_date+"&end_date="+ctrl.end_date+"&sort="+ctrl.sort+"&order="+ctrl.order)
       }
 
+      ctrl.print_report_by_type = function() {
+        window.open("/expenses/report_by_tag.pdf?start_date="+ctrl.start_date+"&end_date="+ctrl.end_date)
+      }
+
+      ctrl.print_expenses_payment_report = function() {
+        window.open("/expenses/report_by_payment.pdf?start_date="+ctrl.start_date+"&end_date="+ctrl.end_date)
+      }
+
+      ctrl.export_report = function() {
+        window.open("/expenses.xls?for_print=true&start_date="+ctrl.start_date+"&end_date="+ctrl.end_date+"&sort="+ctrl.sort+"&order="+ctrl.order)
+      }
+
+      ctrl.export_report_by_type = function() {
+        window.open("/expenses/report_by_tag.xls?start_date="+ctrl.start_date+"&end_date="+ctrl.end_date)
+      }
+
+      ctrl.export_expenses_payment_report = function() {
+        window.open("/expenses/report_by_payment.xls?start_date="+ctrl.start_date+"&end_date="+ctrl.end_date)
+      }
+
       function openConfirmationModal(message, success, dismiss) {
         $scope.message = message;
         $uibModal.open({
@@ -43,13 +63,13 @@
           backdrop: 'static',
           keyboard: false,
           scope: $scope,
-          templateUrl: "<%= asset_path('payroll/angular/components/modal/confirm/confirmModalView.html') %>",
+          templateUrl: "<%= asset_path('somsri/angular/components/modal/confirm/confirmModalView.html') %>",
           controller: 'confirmModalCtrl as confirm',
           size: 'md',
           resolve: {
             resources: ['$ocLazyLoad', 'ASSETS', function($ocLazyLoad, ASSETS) {
               return $ocLazyLoad.load([
-                ASSETS.somsri.payroll.confirm_modal
+                ASSETS.somsri.somsri.confirm_modal
                 ]);
             }]
           }

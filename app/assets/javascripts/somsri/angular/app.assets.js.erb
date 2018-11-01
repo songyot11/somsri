@@ -1,0 +1,40 @@
+(function() {
+  'use strict';
+  angular.module('somsri.somsri.assets', []).
+  constant('ASSETS', {
+    'somsri': {
+      'somsri': {
+        'confirm_modal': {
+          name: 'somsri.somsri.confirm_modal',
+          files: [
+            "<%= asset_path('somsri/angular/components/modal/confirm/confirmModalCtrl.js') %>"
+          ]
+        },
+        'expenses': {
+          name: 'somsri.somsri.expenses',
+          files: [
+            "<%= asset_path('somsri/angular/components/expenses/expensesCtrl.js') %>",
+            "<%= asset_path('somsri/angular/components/expenses/expensesService.js') %>",
+            "<%= asset_path('shared/angular/components/flash_message/flashMessageDirective.js') %>"
+          ]
+        },
+        'expenses_setting': {
+          name: 'somsri.somsri.expenses_setting',
+          files: [
+            "<%= asset_path('somsri/angular/components/expenses/setting/expensesSettingCtrl.js') %>",
+            "<%= asset_path('somsri/angular/components/expenses/setting/expensesSettingService.js') %>",
+            "<%= asset_path('shared/angular/components/flash_message/flashMessageDirective.js') %>"
+          ]
+        },
+        'update_expenses': {
+          name: 'somsri.somsri.update_expenses',
+          files: [
+            "<%= asset_path('somsri/angular/components/updateExpenses/updateExpensesCtrl.js') %>",
+            "<%= asset_path('somsri/angular/components/expenses/expensesService.js') %>",
+            "<%= asset_path('shared/angular/components/flash_message/flashMessageDirective.js') %>"
+          ]
+        }
+      }
+    }
+  });
+})();

@@ -508,3 +508,19 @@ th:
   expenses_edit_failed: "ไม่สามารถแก้ไขรายการค่าใช้จ่ายได้"
   expenses_delete_failed: "ไม่สามารถลบรายการค่าใช้จ่ายได้"
   expense_list: 'รายการสั่งซื้อ'
+  tag: "แท็ก"
+  tag_desciption: "รายละเอียดแท็ก"
+  expenses_category_required_name: "กรุณาใส่ข้อมูลชื่อของประเภท"
+  expenses_category_setting: "ตั้งค่าประเภทค่าใช้จ่าย"
+  print_classification_report: "พิมพ์รายงานค่าใช้จ่ายแยกตามประเภท"
+  expenses_classification_report: "รายงานค่าใช้จ่ายแยกตามประเภท"
+  category: "ประเภท"
+  expenses_payment_report: "รายงานค่าใช้จ่ายแยกตามการชำระเงิน"
+  print_expenses_payment_report: "พิมพ์รายงานค่าใช้จ่ายแยกตามการชำระเงิน"
+  expense_category_placeholder: "ชื่อประเภทค่าใช้จ่าย"
+  expense_category_already_used: "ไม่สามารถลบประเภทค่าใช้จ่ายที่ยังถูกใช้งานอยู่ได้"
+
+  # All
+  save_change_confirmation: "คุณต้องการบันทึกการเปลี่ยนแปลงนี้หรือไม่"
+  save_success: "บันทึกข้อมูลเรียบร้อยแล้ว"
+  save_falied: "ไม่สามารถบันทึกข้อมูลได้"

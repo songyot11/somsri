@@ -148,10 +148,20 @@ SiteConfig.blueprint do
   tax { true }
   outstanding_notification { false }
   slip_carbon { false }
+  enable_expenses { false }
 end
 
 Alumni.blueprint do
 end
 
 Expense.blueprint do
+end
+
+ExpenseItem.blueprint do
+end
+
+ExpenseTag.blueprint do
+end
+
+ExpenseTagItem.blueprint do
 end

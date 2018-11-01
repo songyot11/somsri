@@ -1,6 +1,6 @@
 (function() {
   'use strict';
-  angular.module('somsri.rollcall.update_expenses', [
+  angular.module('somsri.somsri.update_expenses', [
   ])
 .controller('updateExpensesCtrl', ['$state', '$log', 'expensesService', 'translateFilter', '$rootScope', function($state, $log, service, translateFilter, $rootScope) {
   $rootScope.menu = translateFilter("receipt")
@@ -11,21 +11,62 @@
   ctrl.real_id = $state.params.id;
   ctrl.effective_date = new Date();
   ctrl.items = [];
-  addItem();
 
   function initData() {
-    if (!ctrl.real_id) { return; }
+    if (!ctrl.real_id) {
+      service.getExpenseTags({ autocomplete: true }).then(function(resp){
+        ctrl.itemTypes = resp.data;
+        ctrl.lvMax = ctrl.itemTypes[0].lv;
+        ctrl.payment_method = "เงินสด";
+        ctrl.itemTypes.unshift({ name: "-", lv: ctrl.lvMax, ids: [], id: null, is_leaf: true });
+        addItem();
+      });
+      return;
+    }
     service.show(ctrl.real_id).then(function(resp){
       var value = resp.data;
       ctrl.detail = value.detail;
       ctrl.total_cost = value.total_cost;
       ctrl.effective_date = new Date(value.effective_date);
       ctrl.items = value.expense_items;
+      ctrl.payment_method = value.payment_method;
+      ctrl.cheque_bank_name = value.cheque_bank_name;
+      ctrl.cheque_number = value.cheque_number;
+      ctrl.cheque_date = value.cheque_date;
+      ctrl.transfer_bank_name = value.transfer_bank_name;
+      ctrl.transfer_date = value.transfer_date;
       ctrl.expensesTotal();
       ctrl.imgDisplay = value.img;
       ctrl.expenses_id = value.expenses_id;
+      service.getExpenseTags({ autocomplete: true }).then(function(resp){
+        ctrl.itemTypes = resp.data;
+        ctrl.lvMax = ctrl.itemTypes[0].lv;
+        ctrl.itemTypes.unshift({ name: "-", lv: ctrl.lvMax, ids: [], id: null, is_leaf: true });
+        if(ctrl.items){
+          ctrl.items.forEach(function(item){
+            var selected = ctrl.itemTypes[0];
+            if(item.tags){
+              item.tags.forEach(function(tag){
+                if(tag.is_leaf){
+                  selected = tag;
+                }
+              });
+            }
+            item.tags = selected;
+          });
+        }
+        addItem();
+      })
     })
   }
+
+  ctrl.addWhiteSpace = function(times) {
+    var whiteSpace = ""
+    for(var i = 0; i < times; i++){
+      whiteSpace += "&nbsp;	"
+    }
+    return whiteSpace
+  };
 
   //add item and remove item
   ctrl.addNewItem = function() {
@@ -41,7 +82,7 @@
   };
 
   function addItem() {
-    ctrl.items.push({amount:0, detail:"", cost:0.00, total_price:0.00});
+    ctrl.items.push({amount:0, detail:"", cost:0.00, total_price:0.00, tags: ctrl.itemTypes[0]});
   }
 
   // Calculates the sub total of the expenses
@@ -73,7 +114,22 @@
         return item.detail || item.amount || item.cost
       });
       var effective_date = cleanDate(new Date(ctrl.effective_date))
+      ctrl.expense_items.forEach(function(item){
+        var tags = []
+        if(item.tags.ids){
+          item.tags.ids.forEach(function(id){
+            tags.push({id: id });
+          })
+          item.tags = tags
+        }
+      });
       var expense_datas = {
+        payment_method: ctrl.payment_method,
+        cheque_bank_name: ctrl.cheque_bank_name,
+        cheque_number: ctrl.cheque_number,
+        cheque_date: ctrl.cheque_date,
+        transfer_bank_name: ctrl.transfer_bank_name,
+        transfer_date: ctrl.transfer_date,
         effective_date: effective_date,
         expenses_id: ctrl.expenses_id,
         detail: ctrl.detail,

@@ -7,7 +7,7 @@ class SkillsController < ApplicationController
   def create
     skill = Skill.new(params_skill)
     if skill.save
-      render json: skill, statu: :ok
+      render json: skill, status: :ok
     end
   end
 

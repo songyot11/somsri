@@ -1,0 +1,26 @@
+(function() {
+  'use strict';
+  angular.module('somsri.somsri.auth_service', [
+    'mm.acl'
+  ]).factory('Auth' ,['AclService', function (AclService) {
+    var service = {};
+
+    service.load_abilities = function(){
+      AclService.setAbilities({
+        finance_officer: ['expenses', 'update_expenses', 'create_expenses'],
+        admin: ['expenses', 'expenses_setting', 'update_expenses', 'create_expenses']
+      });
+    }
+
+    service.load_user_roles = function() {
+      var request = new XMLHttpRequest();
+      request.open('GET', '/users/me', false);
+      request.send(null);
+      JSON.parse(request.responseText).roles.forEach(function(role) {
+        AclService.attachRole(role);
+      })
+    }
+
+    return service;
+  }]);
+})();

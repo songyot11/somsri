@@ -22,6 +22,14 @@ class SiteConfig < ApplicationRecord
     end
   end
 
+  def expense_tag_tree_hash
+    if self.expense_tag_tree.present?
+      return JSON.parse(self.expense_tag_tree).collect { |ett| ett.deep_symbolize_keys }
+    else
+      return []
+    end
+  end
+
   private
   def can_only_has_one
     raise "Error: Config can only has one." if SiteConfig.count > 0

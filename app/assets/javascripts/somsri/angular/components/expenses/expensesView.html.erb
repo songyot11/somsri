@@ -5,10 +5,53 @@
     <div class="unused_for_print col-lg-12">
       <div class="row for-display mt-20">
         <div class="col-xs-6 pl-0">
-          <h1>รายการค่าใช้จ่าย</h1>
+          <h1>{{ "expense" | translate }}</h1>
         </div>
         <div class="col-xs-6 pr-0 text-right">
-          <button class="btn btn-custom btn-black mr-5" ng-click="expenses.print_report()"><i class="fa fa-print"></i></button>
+          <div class="dropdown d-inline-block">
+            <label data-toggle="dropdown" id="print-report-btn" class="btn btn-custom btn-black mr-5" >
+              {{ "print_report" | translate }}&nbsp;&nbsp;<span class="fa fa-angle-down"></span>
+            </label>
+            <ul class="dropdown-menu" aria-labelledby="print-report-btn">
+              <li>
+                <a ng-click="expenses.print_report()" class="background-blue-hover">
+                  {{ "print_report" | translate }}
+                </a>
+              </li>
+              <li>
+                <a ng-click="expenses.print_report_by_type()" class="background-blue-hover">
+                  {{ "print_classification_report" | translate }}
+                </a>
+              </li>
+              <li>
+                <a ng-click="expenses.print_expenses_payment_report()" class="background-blue-hover">
+                  {{ "print_expenses_payment_report" | translate }}
+                </a>
+              </li>
+            </ul>
+          </div>
+          <div class="dropdown d-inline-block">
+            <label data-toggle="dropdown" id="export-report-btn" class="btn btn-custom btn-blue-sky mr-5" >
+              Export&nbsp;&nbsp;<span class="fa fa-angle-down"></span>
+            </label>
+            <ul class="dropdown-menu" aria-labelledby="export-report-btn">
+              <li>
+                <a ng-click="expenses.export_report()" class="background-blue-hover">
+                  {{ "print_report" | translate }}
+                </a>
+              </li>
+              <li>
+                <a ng-click="expenses.export_report_by_type()" class="background-blue-hover">
+                  {{ "print_classification_report" | translate }}
+                </a>
+              </li>
+              <li>
+                <a ng-click="expenses.export_expenses_payment_report()" class="background-blue-hover">
+                  {{ "print_expenses_payment_report" | translate }}
+                </a>
+              </li>
+            </ul>
+          </div>
           <button class="btn btn-custom btn-blue" ng-click="expenses.createExpenses()" id="exportTable">+ {{ 'add_item' | translate}}</button>
         </div>
       </div>
@@ -52,7 +95,7 @@
             </div>
           </div>
         </div>
-        <table id="invoice-table" class="scrollable-header text-table-invoicereport for-display font-16">
+        <table id="expenses-table" class="font-16">
           <tfoot class="font-18">
             <tr>
               <td colspan="3" class="text-currency font-weight-bold">{{ 'total_price' | translate }} : </td>
@@ -61,7 +104,7 @@
             </tr>
           </tfoot>
         </table>
-        <div class="row row-centered for-display">
+        <div class="row row-centered">
           <div class="col-centered">
             <ul uib-pagination ng-change="expenses.pageChanged()" total-items="expenses.totalItems" ng-model="expenses.currentPage" max-size="expenses.paginateButtonMaxSize" class="pagination-md" num-pages="numPages" previous-text="‹" next-text="›" boundary-link-numbers='true' rotate='false'></ul>
           </div>
