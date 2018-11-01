@@ -37,11 +37,23 @@
       }
 
       ctrl.print_report_by_type = function() {
-        window.open("/expenses/report_by_tag?start_date="+ctrl.start_date+"&end_date="+ctrl.end_date)
+        window.open("/expenses/report_by_tag.pdf?start_date="+ctrl.start_date+"&end_date="+ctrl.end_date)
       }
 
       ctrl.print_expenses_payment_report = function() {
-        window.open("/expenses/report_by_payment?start_date="+ctrl.start_date+"&end_date="+ctrl.end_date)
+        window.open("/expenses/report_by_payment.pdf?start_date="+ctrl.start_date+"&end_date="+ctrl.end_date)
+      }
+
+      ctrl.export_report = function() {
+        window.open("/expenses.xls?for_print=true&start_date="+ctrl.start_date+"&end_date="+ctrl.end_date+"&sort="+ctrl.sort+"&order="+ctrl.order)
+      }
+
+      ctrl.export_report_by_type = function() {
+        window.open("/expenses/report_by_tag.xls?start_date="+ctrl.start_date+"&end_date="+ctrl.end_date)
+      }
+
+      ctrl.export_expenses_payment_report = function() {
+        window.open("/expenses/report_by_payment.xls?start_date="+ctrl.start_date+"&end_date="+ctrl.end_date)
       }
 
       function openConfirmationModal(message, success, dismiss) {

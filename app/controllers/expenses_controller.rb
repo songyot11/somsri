@@ -33,20 +33,25 @@ class ExpensesController < ApplicationController
         end
          render json: result, status: :ok
       end
+      @date_time_string = start_end_date_to_string_display(start_date, end_date)
+      filename = "#{I18n.t('expense_list')} #{@date_time_string}"
       format.pdf do
         @results = qry_expenses.to_a
-        total_all_price = 0
-        @results.each do |item|
-          total_all_price += item.total_cost.to_f
-        end
-        @total_price = total_all_price
-        @start_date_time = start_date
-        @end_date_time = end_date
-        render pdf: "expense",
+        @total_price = @results.inject(0){|sum,e| sum += e.total_cost.to_f }
+        render pdf: filename,
                 template: "pdf/expense_report.html.erb",
                 encoding: "UTF-8",
                 layout: 'pdf.html',
                 show_as_html: params[:show_as_html].present?
+      end
+      format.xls do
+        results = qry_expenses.to_a
+        io_buffer = ExportXls.export_expenses_xls(
+          results,
+          results.inject(0){|sum,e| sum += e.total_cost.to_f },
+          @date_time_string
+        )
+        send_data(io_buffer.read, filename: "#{filename}.xls")
       end
     end
   end
@@ -121,11 +126,29 @@ class ExpensesController < ApplicationController
     @lv_max = tag_tree[0][:lv]
     @total_cost = expenses.inject(0){|sum, e| sum += e.total_cost }
     @other_cost = @total_cost - @results.inject(0){|sum, r| sum += (r[:lv] == @lv_max) ? r[:cost] : 0  }
-    render pdf: "expense_export",
-            template: "pdf/expense_export_report.html.erb",
-            encoding: "UTF-8",
-            layout: 'pdf.html',
-            show_as_html: params[:show_as_html].present?
+    @date_time_string = start_end_date_to_string_display(@start_date_time, @end_date_time)
+    filename = "#{I18n.t('expenses_classification_report')} #{@date_time_string}"
+    respond_to do |format|
+      format.pdf do
+        render pdf: filename,
+                template: "pdf/expense_export_report.html.erb",
+                encoding: "UTF-8",
+                layout: 'pdf.html',
+                show_as_html: params[:show_as_html].present?
+      end
+      format.xls do
+        results = qry_expenses.to_a
+        io_buffer = ExportXls.export_by_tag_xls(
+          @results,
+          @expense_tags,
+          @total_cost,
+          @other_cost,
+          @lv_max,
+          @date_time_string
+        )
+        send_data(io_buffer.read, filename: "#{filename}.xls")
+      end
+    end
   end
 
   def report_by_payment
@@ -155,16 +178,29 @@ class ExpensesController < ApplicationController
         end
       end
     end
-
-    render pdf: "expense_payment_report",
-            template: "pdf/expense_payment_report.html.erb",
-            encoding: "UTF-8",
-            layout: 'pdf.html',
-            show_as_html: params[:show_as_html].present?
+    @date_time_string = start_end_date_to_string_display(@start_date_time, @end_date_time)
+    filename = "#{I18n.t('expenses_payment_report')} #{@date_time_string}"
+    respond_to do |format|
+      format.pdf do
+        render pdf: filename,
+                template: "pdf/expense_payment_report.html.erb",
+                encoding: "UTF-8",
+                layout: 'pdf.html',
+                show_as_html: params[:show_as_html].present?
+      end
+      format.xls do
+        results = qry_expenses.to_a
+        io_buffer = ExportXls.export_expenses_by_payment_xls(
+          @results,
+          @total_cost,
+          @date_time_string
+        )
+        send_data(io_buffer.read, filename: "#{filename}.xls")
+      end
+    end
   end
 
   private
-
   def set_cost_to_tag_tree(tag_tree, tag_id, cost)
     tag_tree.each do |th|
       if th[:id] == tag_id

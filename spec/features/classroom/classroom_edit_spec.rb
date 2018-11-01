@@ -229,7 +229,7 @@ describe 'Classroom Edit', js: true do
       click_button("บันทึก")
       sleep(1)
       edited_students = Student.where({ classroom_id: classrooms[0].id })
-      num_employee = edited_students.length
+      num_employee = edited_students.length 
       eventually { expect(num_employee).to eq 5 }
       eventually { expect(edited_students[1].classroom_id).to eq classrooms[0].id }
       eventually { expect(edited_students[1].grade_id).to eq grades[0].id }

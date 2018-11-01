@@ -141,7 +141,7 @@ describe 'Abilities', js: true do
     it 'can goto expenses list' do
       visit "/somsri#/expenses"
       sleep(1)
-      expect(page).to have_content 'รายการค่าใช้จ่าย'
+      expect(page).to have_content 'บันทึกค่าใช้จ่าย'
     end
 
     it 'can goto create expenses' do
@@ -271,7 +271,7 @@ describe 'Abilities', js: true do
     it 'can goto expenses list' do
       visit "/somsri#/expenses"
       sleep(1)
-      expect(page).to have_content 'รายการค่าใช้จ่าย'
+      expect(page).to have_content 'บันทึกค่าใช้จ่าย'
     end
 
     it 'can goto create expenses' do

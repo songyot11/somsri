@@ -1,19 +1,7 @@
 <div>
   <h3 class="pt-10"><%= I18n.t('expense_list') %></h3>
   <hr class="my-5">
-  <% if (@start_date_time && @end_date_time) %>
-    <% if Date.parse(@start_date_time.to_s) == Date.parse(@end_date_time.to_s) %>
-      <label class="font-weight-normal mb-20"><%= I18n.t('this_date') + " " + I18n.l(@start_date_time, format: '%d/%m/%Y') %></label>
-    <% else %>
-      <label class="font-weight-normal mb-20"><%= I18n.t('from') + " " + I18n.l(@start_date_time, format: '%d/%m/%Y') + " " + I18n.t('to') + " " + I18n.l(@end_date_time, format: '%d/%m/%Y') %></label>
-    <% end %>
-  <% elsif (@start_date_time && !@end_date_time) %>
-    <label class="font-weight-normal mb-20"><%= I18n.t('from_date') + " " + I18n.l(@start_date_time, format: '%d/%m/%Y') %></label>
-  <% elsif (!@start_date_time && @end_date_time) %>
-    <label class="font-weight-normal mb-20"><%= I18n.t('to_date') + " " + I18n.l(@end_date_time, format: '%d/%m/%Y') %></label>
-  <% else %>
-    <label class="font-weight-normal mb-20"><%= I18n.t('from_all') %></label>
-  <% end %>
+  <%= @date_time_string %>
 </div>
 <table class="font-12 header-table-page">
   <tbody>
