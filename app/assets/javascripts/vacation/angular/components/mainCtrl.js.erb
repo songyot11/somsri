@@ -1,0 +1,93 @@
+(function() {
+  'use strict';
+  angular.module('somsri.vacation.main', [
+  ])
+  .controller('mainCtrl', ['$rootScope','$state', '$http', function($rootScope, $state, $http) {
+
+    function checkAbility(model, callback){
+      if ($rootScope.abilities.manage && $rootScope.abilities.manage.all) {
+        callback();
+      } else if ($rootScope.abilities.manage && $rootScope.abilities.manage[model]) {
+        callback();
+      } else {
+        $state.go('menu');
+      }
+    }
+
+    function checkManage(model, callback){
+      if ($rootScope.abilities.manage && $rootScope.abilities.manage.all) {
+        callback(true);
+      } else if ($rootScope.abilities.manage && $rootScope.abilities.manage[model]) {
+        callback(true);
+      } else {
+        callback(false);
+      }
+    }
+
+    function openInNewTab(url) {
+      var win = window.open(url, '_blank');
+      if (win) {
+        win.focus();
+        return true;
+      } else {
+        // window.open not working in safari
+        window.location = url;
+        return false;
+      }
+    }
+
+    $rootScope.loadAndAuthorizeResource = function(model, callback) {
+      if ($rootScope.abilities && $rootScope.abilities.length > 0) {
+        checkAbility(model, callback);
+      } else {
+        // load ability
+        $http.get('/abilities').then(function(resp) {
+          $rootScope.abilities = [];
+          if (resp.data.length > 0) {
+            $rootScope.abilities = resp.data[0];
+            checkAbility(model, callback);
+          } else {
+            $state.go('menu');
+          }
+        });
+      }
+    };
+
+    $rootScope.canManage = function(model, callback) {
+      if ($rootScope.abilities && $rootScope.abilities.length > 0) {
+        checkManage(model, callback);
+      } else {
+        $http.get('/abilities').then(function(resp) {
+          if (resp.data.length > 0) {
+            $rootScope.abilities = resp.data[0];
+            checkManage(model, callback)
+          } else {
+            callback(true)
+          }
+        });
+      }
+    }
+
+    $('body').addClass('somsri-vacation');
+
+    $rootScope.openDashboard = function () {
+      $state.go('dashboard')
+    };
+
+    $rootScope.openMenu = function () {
+      $state.go('menu')
+    };
+
+    $rootScope.openCalendar = function () {
+      $state.go('calendar')
+    };
+
+    $rootScope.openLeaveRules = function () {
+      $state.go('leave_rules')
+    };
+
+    $rootScope.openSetting = function () {
+      $state.go('setting')
+    };
+  }]);
+})();

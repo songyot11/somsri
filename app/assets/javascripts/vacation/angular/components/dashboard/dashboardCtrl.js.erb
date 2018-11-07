@@ -1,0 +1,8 @@
+(function() {
+  'use strict';
+  angular.module('somsri.vacation.dashboard', [
+  ])
+  .controller('dashboardCtrl', ['$rootScope', 'translateFilter', function ($rootScope, translateFilter) {
+    $rootScope.menu = translateFilter('dashboard');
+  }]);
+})();

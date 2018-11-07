@@ -1,0 +1,13 @@
+(function() {
+  'use strict';
+  angular.module('somsri.vacation.menu', [
+  ])
+  .controller('menuCtrl', ['$rootScope', 'translateFilter', function ($rootScope, translateFilter) {
+    var ctrl = this;
+
+    $rootScope.menu = translateFilter('vacation');
+    $rootScope.canManage("all", function(canManange) {
+      ctrl.isAdmin = canManange
+    });
+  }]);
+})();

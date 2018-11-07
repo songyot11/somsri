@@ -1,0 +1,8 @@
+(function() {
+  'use strict';
+  angular.module('somsri.vacation.leave_rules', [
+  ])
+  .controller('ruleCtrl', ['$rootScope', 'translateFilter', function ($rootScope, translateFilter) {
+    $rootScope.menu = translateFilter('leave_rules');
+  }]);
+})();

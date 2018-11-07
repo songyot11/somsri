@@ -1,0 +1,40 @@
+<div class="container main-menu main">
+
+    <div class="col-xs-4">
+        <div class="menu-btn" ng-click="openDashboard()">
+            <div class="wraptocenter">
+                <%= image_tag 'vacation-dashboard-icon.png', class: "" %>
+            </div>
+        </div>
+        <p>{{ 'dashboard' | translate }}</p>
+    </div>
+
+    <div class="col-xs-4">
+        <div class="menu-btn slip" ng-click="openCalendar()">
+            <div class="wraptocenter">
+                <%= image_tag 'vacation-calendar-icon.png', class: "" %>
+            </div>
+        </div>
+        <p>{{ 'calendar' | translate }}</p>
+    </div>
+
+    <div class="col-xs-4">
+        <div class="menu-btn" ng-click="openLeaveRules()">
+            <div class="wraptocenter">
+                <%= image_tag 'vacation-rule-icon.png', class: "" %>
+            </div>
+        </div>
+        <p>{{ 'leave_rules' | translate }}</p>
+    </div>
+
+    <div class="col-xs-12 free-space"></div>
+
+    <div class="col-xs-4" ng-show="menu.isAdmin">
+        <div class="menu-btn" ng-click="openSetting()">
+            <div class="wraptocenter">
+                <%= image_tag 'vacation-setting-icon.png', class: "" %>
+            </div>
+        </div>
+        <p>{{ 'setting' | translate }}</p>
+    </div>
+</div>
