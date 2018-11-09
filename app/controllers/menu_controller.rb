@@ -27,8 +27,4 @@ class MenuController < ApplicationController
     render "menu/angular_view", layout: "application_somsri"
   end
 
-  def landing_vacation
-    render "menu/angular_view", layout: "application_vacation"
-  end
-
 end
