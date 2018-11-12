@@ -271,6 +271,7 @@ en:
   setting: 'Settings'
   class_management: "Grade Management"
   expense: "Expense"
+  vacation: "Vacation"
 
 
   activerecord:
@@ -519,6 +520,11 @@ en:
   print_expenses_payment_report: "Print expenses payment method report"
   expense_category_placeholder: "Category name"
   expense_category_already_used: "Cannot delete category that already used."
+
+  # Vacation
+  dashboard: "Dashboard"
+  calendar: "Calendar"
+  leave_rules: "Leave Rules"
 
   # All
   save_change_confirmation: "Do you want to save this change?"

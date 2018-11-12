@@ -18,6 +18,16 @@
       }
     }
 
+    function checkManage(model, callback){
+      if ($rootScope.abilities.manage && $rootScope.abilities.manage.all) {
+        callback(true);
+      } else if ($rootScope.abilities.manage && $rootScope.abilities.manage[model]) {
+        callback(true);
+      } else {
+        callback(false);
+      }
+    }
+
     $rootScope.loadAndAuthorizeResource = function(model, success, fail) {
       if($rootScope.abilities && $rootScope.abilities.length > 0){
         checkAbility(model, success, fail);
@@ -38,6 +48,21 @@
         });
       }
     };
+
+    $rootScope.canManage = function(model, callback) {
+      if ($rootScope.abilities && $rootScope.abilities.length > 0) {
+        checkManage(model, callback);
+      } else {
+        $http.get('/abilities').then(function(resp) {
+          if (resp.data.length > 0) {
+            $rootScope.abilities = resp.data[0];
+            checkManage(model, callback)
+          } else {
+            callback(true)
+          }
+        });
+      }
+    }
 
     $rootScope.openRoot = function() {
       $window.location.href = "/";
@@ -61,6 +86,26 @@
 
     $rootScope.openNewExpenses = function () {
       $state.go('create_expenses')
+    };
+
+    $rootScope.openVacationDashboard = function () {
+      $state.go('vacation_dashboard')
+    };
+
+    $rootScope.openVacationMenu = function () {
+      $state.go('vacation_menu')
+    };
+
+    $rootScope.openVacationCalendar = function () {
+      $state.go('vacation_calendar')
+    };
+
+    $rootScope.openVacationLeaveRules = function () {
+      $state.go('vacation_leave_rules')
+    };
+
+    $rootScope.openVacationSetting = function () {
+      $state.go('vacation_setting')
     };
 
     $rootScope.openConfirmationModal = function (message, success, dismiss) {

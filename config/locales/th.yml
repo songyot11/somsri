@@ -271,6 +271,7 @@ th:
   setting: 'การตั้งค่า'
   class_management: จัดการชั้นเรียน
   expense: "บันทึกค่าใช้จ่าย"
+  vacation: "การลา"
 
   activerecord:
     attributes:
@@ -519,6 +520,11 @@ th:
   print_expenses_payment_report: "พิมพ์รายงานค่าใช้จ่ายแยกตามการชำระเงิน"
   expense_category_placeholder: "ชื่อประเภทค่าใช้จ่าย"
   expense_category_already_used: "ไม่สามารถลบประเภทค่าใช้จ่ายที่ยังถูกใช้งานอยู่ได้"
+
+  # Vacation
+  dashboard: "วันลา"
+  calendar: "ปฏิทิน"
+  leave_rules: "ระเบียบวันลา"
 
   # All
   save_change_confirmation: "คุณต้องการบันทึกการเปลี่ยนแปลงนี้หรือไม่"
