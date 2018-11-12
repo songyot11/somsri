@@ -8,6 +8,7 @@ img {
 body {
   font-family: 'Maitree', serif;
   margin-bottom: 60px;
+  background-color: #F4F9FC;
 
   p {
     font-family: 'Maitree', serif;
@@ -174,6 +175,13 @@ $gray: #606060;
     &.dark-gray {
       color: $dark-gray;
     }
+  }
+
+  .limit-count {
+    margin-top: 22px;
+    margin-left: 22px;
+    font-size: 20px;
+    color: $gray;
   }
 
   .icon {
