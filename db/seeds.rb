@@ -453,3 +453,12 @@ if school
     school.save
   end
 end
+
+if VacationType.count == 0
+  VacationType.create!([
+   { id: "1", name: "ลาป่วย" },
+   { id: "2", name: "ลากิจ" },
+   { id: "3", name: "สลับวันทำงาน" },
+   { id: "4", name: "ทำงานที่บ้าน" },
+  ])
+end

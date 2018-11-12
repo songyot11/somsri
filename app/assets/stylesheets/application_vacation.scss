@@ -17,6 +17,21 @@ body {
   }
 }
 
+$orange: #F5A623;
+$purple: #9014FE;
+$blue: #4A90E2;
+$green: #417505;
+$dark-gray: #4A4A4A;
+$gray: #606060;
+$light-gray: #F0F0F0;
+
+hr.light {
+    border: none;
+    height: 1px;
+    color: $gray;
+    background-color: $light-gray;
+}
+
 .heading {
   float: left;
   font-size: 30px;
@@ -114,13 +129,6 @@ body {
 .container.dashboard {
   max-width: 85%;
 }
-
-$orange: #F5A623;
-$purple: #9014FE;
-$blue: #4A90E2;
-$green: #417505;
-$dark-gray: #4A4A4A;
-$gray: #606060;
 
 .dashboard-item {
   height: 110px;
