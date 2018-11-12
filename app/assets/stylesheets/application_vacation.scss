@@ -17,16 +17,18 @@ body {
 }
 
 .heading {
-  margin-bottom: 10px;
   float: left;
-  font-size: 36px;
+  font-size: 30px;
+  font-weight: bold;
   color: #5b5b5b;
-  line-height: 2.5em;
+  padding: 0px;
+  line-height: 2em;
+  margin-top: 30px;
+  margin-left: 10px;
 }
 
 .content-wrapper {
-  margin-top: -30px;
-  padding: 36px;
+  padding: 30px;
   border: 1px solid #ddd;
   box-shadow: 0 2px 4px 0 rgba(0, 0, 0, 0.3);
   background-color: #fff;
@@ -108,3 +110,97 @@ body {
   height: 450px;
 }
 
+.container.dashboard {
+  max-width: 85%;
+}
+
+$orange: #F5A623;
+$purple: #9014FE;
+$blue: #4A90E2;
+$green: #417505;
+$dark-gray: #4A4A4A;
+$gray: #606060;
+
+.dashboard-item {
+  height: 110px;
+  border: 1px solid #DDDDDD;
+  background-color: #FFFFFF;
+
+  &.orange {
+    box-shadow: inset 4px 0 0 0 $orange;
+  }
+  &.purple {
+    box-shadow: inset 4px 0 0 0 $purple;
+  }
+  &.blue {
+    box-shadow: inset 4px 0 0 0 $blue;
+  }
+  &.green {
+    box-shadow: inset 4px 0 0 0 $green;
+  }
+  &.dark-gray {
+    box-shadow: inset 4px 0 0 0 $dark-gray;
+  }
+
+  .title {
+    margin-top: 22px;
+    margin-left: 22px;
+    font-size: 15px;
+  }
+
+  .count {
+    margin-top: 22px;
+    margin-left: 22px;
+    font-size: 25px;
+    font-weight: bold;
+
+    &.orange {
+      font-size: 35px;
+      margin-top: 0px;
+      color: $orange;
+    }
+    &.gray {
+      color: $gray;
+    }
+    &.purple {
+      color: $purple;
+    }
+    &.blue {
+      color: $blue;
+    }
+    &.green {
+      color: $green;
+    }
+    &.dark-gray {
+      color: $dark-gray;
+    }
+  }
+
+  .icon {
+    height: 110px;
+    align-items: center;
+  }
+}
+
+.dashboard-item:after {
+    content:"";
+    position:absolute;
+    width:100%;
+    bottom:1px;
+    z-index:-1;
+    transform:scale(.9);
+    box-shadow: -4px 0px 8px 1.5px $gray;
+}
+
+.btn-send {
+  float: right;
+  padding-top: 4px;
+  padding-left: 32px;
+  padding-right: 32px;
+  height: 30px;
+  margin-bottom: 4px;
+  background-color: #63B20D;
+  color: #fff !important;
+  border: 2px solid #63B20D;
+  border-radius: 4px;
+}

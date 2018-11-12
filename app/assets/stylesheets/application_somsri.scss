@@ -63,6 +63,9 @@ body {
 .min-h-250 {
   min-height: 250px !important;
 }
+.min-h-350 {
+  min-height: 350px !important;
+}
 .w-20 {
   width: 20px !important;
 }
@@ -142,16 +145,21 @@ body {
   padding-left: 20px;
   padding-right: 20px;
 }
+
 .p-0 {
-  padding: 0px;
+  padding: 0px !important;
 }
 
 .p-5 {
-  padding: 5px;
+  padding: 5px !important;
 }
 
 .p-10 {
-  padding: 5px;
+  padding: 10px !important;
+}
+
+.p-15 {
+  padding: 15px !important;
 }
 
 .p-50 {
@@ -224,12 +232,24 @@ body {
   padding-bottom: 20px !important;
 }
 
+.m-0 {
+  margin: 0px !important;
+}
+
 .m-10 {
   margin: 10px !important;
 }
 
+.ml-0 {
+  margin-left: 0px !important;
+}
+
 .ml-5 {
   margin-left: 5px !important;
+}
+
+.ml-10 {
+  margin-left: 10px !important;
 }
 
 .ml-20 {
@@ -249,6 +269,9 @@ body {
 }
 .mb-0 {
   margin-bottom: 0 !important;
+}
+.mb-5 {
+  margin-bottom: 5 !important;
 }
 .mb-15 {
   margin-bottom: 15px !important;
@@ -284,6 +307,10 @@ body {
 
 .mt-0 {
   margin-top: 0px !important;
+}
+
+.mt-2 {
+  margin-top: 2px !important;
 }
 
 .mt-5 {
@@ -509,6 +536,9 @@ body {
 .color-blue {
   color: #5792C4 !important;
 }
+.color-purple {
+  color: #9014FE !important;
+}
 .color-red.hover:hover{
   color: #a50115 !important;
 }
@@ -516,7 +546,9 @@ body {
 .color-orange {
   color: #FFAB04 !important;
 }
-
+.color-light-gray {
+  color: #F0F0F0 !important;
+}
 .color-gray {
   color: #9D9D9D !important;
 }
