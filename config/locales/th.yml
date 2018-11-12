@@ -525,6 +525,16 @@ th:
   dashboard: "วันลา"
   calendar: "ปฏิทิน"
   leave_rules: "ระเบียบวันลา"
+  remaining_day: "วันหยุดคงเหลือ"
+  sick_leave: "ลาป่วย"
+  vacation_leave: "ลากิจ"
+  switch_date: "สลับวันทำงาน"
+  work_at_home: "ทำงานที่บ้าน"
+  vcation_and_request_list: "รายการวันหยุดและคำขอ"
+  holiday_list_in_this_week: "รายการวันหยุดใน 7 วันข้างหน้า"
+  send_request: "ส่งคำขอ"
+  pending: "รออนุมัติ"
+  approve: "อนุมัติแล้ว"
 
   # All
   save_change_confirmation: "คุณต้องการบันทึกการเปลี่ยนแปลงนี้หรือไม่"
