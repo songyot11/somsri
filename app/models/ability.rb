@@ -41,6 +41,7 @@ class Ability
     manage[:parent] = true if self.can? :manage, Parent
     manage[:setting] = true if self.can? :manage, :setting
     manage[:school] = true if self.can? :manage, School
+    manage[:vacation] = true if self.can? :manage, Vacation
     result = {
       manage: manage
     }

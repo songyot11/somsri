@@ -462,3 +462,12 @@ if VacationType.count == 0
    { id: "4", name: "ทำงานที่บ้าน" },
   ])
 end
+
+if Vacation.count == 0
+  Vacation.create!([
+   { id: "1", detail: "ไม่สบายขอนอนที่บ้าน", vacation_type_id: "1", user_id: 3 },
+   { id: "2", detail: "ไปเที่ยว", vacation_type_id: "2", user_id: 3 },
+   { id: "3", detail: "ขอทำงานวันเสาร์แทน", vacation_type_id: "3", user_id: 3 },
+   { id: "4", detail: "ช่างมาซ่อมไฟ ขอทำงานที่บ้านครับ", vacation_type_id: "4", user_id: 3 }
+  ])
+end
