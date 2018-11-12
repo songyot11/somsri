@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20181112051622) do
+ActiveRecord::Schema.define(version: 20181112051839) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -649,6 +649,7 @@ ActiveRecord::Schema.define(version: 20181112051622) do
     t.integer  "status",           default: 0
     t.datetime "created_at",                   null: false
     t.datetime "updated_at",                   null: false
+    t.string   "detail"
     t.index ["approver_id"], name: "index_vacations_on_approver_id", using: :btree
     t.index ["user_id"], name: "index_vacations_on_user_id", using: :btree
     t.index ["vacation_type_id"], name: "index_vacations_on_vacation_type_id", using: :btree
