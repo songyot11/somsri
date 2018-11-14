@@ -7,6 +7,7 @@ class Ability
       can :dashboard
       can :manage, :all
       can :manage, SiteConfig
+      can :manage, Vacation, :user_id => user.id
     elsif  user && user.finance_officer?
       can :manage, :menu
       can :manage, Invoice
@@ -23,6 +24,7 @@ class Ability
       can :manage, ExpenseTag
       can :manage, ExpenseTagItem
       can :manage, ExpenseItem
+      can :manage, Vacation, :user_id => user.id
     end
   end
 
@@ -39,6 +41,7 @@ class Ability
     manage[:parent] = true if self.can? :manage, Parent
     manage[:setting] = true if self.can? :manage, :setting
     manage[:school] = true if self.can? :manage, School
+    manage[:vacation] = true if self.can? :manage, Vacation
     result = {
       manage: manage
     }

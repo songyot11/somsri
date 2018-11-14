@@ -8,6 +8,7 @@ class User < ApplicationRecord
   belongs_to :school
   has_many :invoices, dependent: :destroy
   belongs_to :role
+  has_many :vacations
   delegate :can?, :cannot?, :to => :ability
 
   def ability

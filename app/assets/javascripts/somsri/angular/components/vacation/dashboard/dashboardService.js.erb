@@ -1,0 +1,11 @@
+(function() {
+  'use strict';
+  angular.module('somsri.somsri.dashboard.service', [
+  ])
+  .service('vacationService', ['$http', function($http) {
+
+    this.getVacations = function() {
+      return $http.get('/vacations')
+    }
+  }]);
+})();

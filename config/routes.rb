@@ -147,6 +147,9 @@ Rails.application.routes.draw do
     end
   end
 
+  resources :vacations, only: [:index] do
+  end
+
   devise_scope :user do
     get "/sign_in" => "devise/sessions#new"
   end

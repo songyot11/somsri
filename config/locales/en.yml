@@ -525,6 +525,16 @@ en:
   dashboard: "Dashboard"
   calendar: "Calendar"
   leave_rules: "Leave Rules"
+  remaining_day: "Remaining day"
+  sick_leave: "Sick leave"
+  vacation_leave: "Vacation leave"
+  switch_date: "Switch date"
+  work_at_home: "Work at home"
+  vcation_and_request_list: "Vacation and request list"
+  holiday_list_in_this_week: "Holiday list in this week"
+  send_request: "Send request"
+  pending: "Pending"
+  approve: "Approve"
 
   # All
   save_change_confirmation: "Do you want to save this change?"

@@ -2,7 +2,21 @@
   'use strict';
   angular.module('somsri.somsri.vacation.dashboard', [
   ])
-  .controller('vacationDashboardCtrl', ['$rootScope', 'translateFilter', function ($rootScope, translateFilter) {
+  .controller('vacationDashboardCtrl', ['$rootScope', 'translateFilter', 'vacationService', function ($rootScope, translateFilter, service) {
+    var ctrl = this;
     $rootScope.menu = translateFilter('dashboard');
+    $rootScope.loadAndAuthorizeResource("vacation", function() {
+      service.getVacations().then(function(response) {
+        ctrl.leave_allowance = response.data.leave_allowance;
+        ctrl.remaining_day = response.data.remaining_day;
+        ctrl.sick_leave = response.data.sick_leave;
+        ctrl.vacation_leave = response.data.vacation_leave;
+        ctrl.switch_date = response.data.switch_date;
+        ctrl.work_at_home = response.data.work_at_home;
+        ctrl.vacations = response.data.vacations;
+      }, function(e) {
+        console.log(e)
+      });
+    });
   }]);
 })();
