@@ -79,7 +79,7 @@
             <h4 class="mb-5">{{ 'vcation_and_request_list' | translate }}</h4>
           </div>
           <div class="col-md-6 pr-0 justify-content-end">
-            <a class="btn btn-send" href="#"><i class="fa fa-paper-plane" aria-hidden="true"></i> {{ 'send_request' | translate }}</a>
+            <a class="btn btn-send" data-toggle="modal" data-target="#leaveSubmissionModal"><i class="fa fa-paper-plane" aria-hidden="true"></i> {{ 'send_request' | translate }}</a>
           </div>
         </div>
         <div class="row">
@@ -135,6 +135,79 @@
             <hr class="light mt-0" />
           </div>
         </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- Modal -->
+<div class="modal" id="leaveSubmissionModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header pl-0 pb-5">
+        <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+        <h4 class="modal-title font-21 color-green">ส่งคำขอ</h4>
+      </div>
+      <div class="modal-body px-0">
+        <div class="row">
+          <div class="col-md-6">
+            <div class="form-group">
+              <label class="font-12" for="email">ประเภทการลา</label>
+              <select class="form-control dropdown" ng-change="dashboard.vacationTypeChanged(dashboard.selectedVacationType)" ng-model="dashboard.selectedVacationType" >
+                <option selected value="sick_leave" class="fa-align-left">ลาป่วย</option>
+                <option value="vacation_leave">ลากิจ</option>
+                <option value="switch_date">สลับวันทำงาน</option>
+                <option value="work_at_home">ทำงานที่บ้าน</option>
+              </select>
+            </div>
+          </div>
+          <div class="col-md-6">
+            <div class="form-group" ng-show="dashboard.showVacationLeaveType">
+              <label class="font-12" for="email">แบบการลากิจ</label>
+              <select class="form-control dropdown" ng-change="dashboard.vacationLeaveTypeChanged(dashboard.selectedVacationLeaveType)" ng-model="dashboard.selectedVacationLeaveType">
+                <option selected value="full_day">เต็มวัน</option>
+                <option value="half_day_morning">ครึ่งวัน (ช่วงเช้า)</option>
+                <option value="half_day_afternoon">ครึ่งวัน (ช่วงบ่าย)</option>
+              </select>
+            </div>
+          </div>
+        </div>
+        <hr class="dark mt-5" />
+        <div class="row">
+          <div class="col-md-6">
+            <div class="form-group">
+              <label class="font-12" for="email">จากวันที่</label>
+              <input placeholder="&#61447;" id="start_date" type="text" class="form-control datepicker" uib-datepicker-popup="dd/MM/yyyy" datepicker-options="{showWeeks:false}" ng-model="dashboard.start_date" is-open="dashboard.startDatePopup.opened" close-text="Close" ng-change="dashboard.optionsChange()" ng-click="dashboard.openStartDatePopup()"/>
+              <span class="fa fa-calendar datepicker"></span>
+            </div>
+          </div>
+          <div class="col-md-6">
+            <div class="form-group">
+              <label class="font-12" for="email">ถึงวันที่</label>
+              <input placeholder="&#61447;" id="start_date" type="text" class="form-control datepicker" uib-datepicker-popup="dd/MM/yyyy" datepicker-options="{showWeeks:false}" ng-model="dashboard.end_date" is-open="dashboard.endDatePopup.opened" close-text="Close" ng-change="dashboard.optionsChange()" ng-click="dashboard.openEndDatePopup()"/>
+              <span class="fa fa-calendar datepicker"></span>
+            </div>
+          </div>
+        </div>
+        <div class="row">
+          <div class="col-md-12">
+            <div class="form-group">
+              <label class="font-12" for="email">เหตุผล</label>
+              <textarea class="form-control border no-resize"></textarea>
+            </div>
+          </div>
+        </div>
+        <div class="row">
+          <div class="col-md-12">
+            <p class="color-red">
+              <b>หมายเหตุ</b> : การลาป่วย สามารถลาได้ตามสมควร ถ้าเกิน 3 วันต้องมีหนังสือรับรองจากแพทย์ หรือ ใบเสร็จรับเงินจากคลินิค, โรงพยาบาล
+            </p>
+          </div>
+        </div>
+      </div>
+      <div class="modal-footer">
+        <a class="btn btn-submit btn-light-green" ng-click="dashboard.submitLeaveRequest();"><i class="fa fa-paper-plane" aria-hidden="true"></i> {{ 'send_request' | translate }}</a>
+        <button type="button" class="btn btn-cancel-outline" data-dismiss="modal">{{ 'cancel' | translate }}</button>
       </div>
     </div>
   </div>

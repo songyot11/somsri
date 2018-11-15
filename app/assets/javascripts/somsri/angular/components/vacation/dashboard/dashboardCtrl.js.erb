@@ -18,5 +18,39 @@
         console.log(e)
       });
     });
+
+    ctrl.end_date = new Date();
+    ctrl.start_date = new Date();
+
+    ctrl.optionsChange = function() {
+      if (ctrl.start_date === undefined || ctrl.end_date === undefined) {
+        return
+      }
+    };
+    ctrl.openStartDatePopup = function() {
+      ctrl.startDatePopup.opened = true;
+    };
+    ctrl.openEndDatePopup = function() {
+      ctrl.endDatePopup.opened = true;
+    };
+    ctrl.startDatePopup = {
+      opened: false
+    };
+
+    ctrl.endDatePopup = {
+      opened: false
+    };
+
+    ctrl.selectedVacationType = "sick_leave";
+    ctrl.vacationTypeChanged = function(selectedVacationType) {
+      ctrl.showVacationLeaveType = selectedVacationType == 'vacation_leave';
+    };
+    ctrl.selectedVacationLeaveType = "full_day";
+    ctrl.vacationLeaveTypeChanged = function(selectedVacationLeaveType) {
+
+    };
+    ctrl.submitLeaveRequest = function() {
+
+    };
   }]);
 })();
