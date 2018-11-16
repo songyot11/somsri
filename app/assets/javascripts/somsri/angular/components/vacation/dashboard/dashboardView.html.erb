@@ -160,7 +160,7 @@
         <div class="row">
           <div class="col-md-6">
             <div class="form-group">
-              <label class="font-12" for="email">ประเภทการลา</label>
+              <label class="font-12" for="vacation_type">ประเภทการลา</label>
               <select class="form-control dropdown" ng-change="dashboard.vacationTypeChanged(dashboard.selectedVacationType)" ng-model="dashboard.selectedVacationType" >
                 <option selected value="sick_leave" class="fa-align-left">ลาป่วย</option>
                 <option value="vacation_leave">ลากิจ</option>
@@ -171,7 +171,7 @@
           </div>
           <div class="col-md-6">
             <div class="form-group" ng-show="dashboard.showVacationLeaveType">
-              <label class="font-12" for="email">แบบการลากิจ</label>
+              <label class="font-12" for="vacation_leave_type">แบบการลากิจ</label>
               <select class="form-control dropdown" ng-change="dashboard.vacationLeaveTypeChanged(dashboard.selectedVacationLeaveType)" ng-model="dashboard.selectedVacationLeaveType" ng-disabled="!dashboard.vacationConfig.can_leave_half_day">
                 <option selected value="vacation_leave_full_day">เต็มวัน</option>
                 <option value="vacation_leave_half_day_morning">ครึ่งวัน (ช่วงเช้า)</option>
@@ -184,15 +184,17 @@
         <div class="row">
           <div class="col-md-6">
             <div class="form-group">
-              <label class="font-12" for="email">จากวันที่</label>
+              <label class="font-12" for="start_date" ng-show="dashboard.selectedVacationType != 'switch_date'">จากวันที่</label>
+              <label class="font-12" for="start_date" ng-show="dashboard.selectedVacationType == 'switch_date'">สลับจากวันที่</label>
               <input placeholder="&#61447;" id="start_date" type="text" class="form-control datepicker" uib-datepicker-popup="dd/MM/yyyy" datepicker-options="{showWeeks:false}" ng-model="dashboard.start_date" is-open="dashboard.startDatePopup.opened" close-text="Close" ng-change="dashboard.optionsChange()" ng-click="dashboard.openStartDatePopup()"/>
               <span class="fa fa-calendar datepicker"></span>
             </div>
           </div>
           <div class="col-md-6">
             <div class="form-group">
-              <label class="font-12" for="email">ถึงวันที่</label>
-              <input placeholder="&#61447;" id="start_date" type="text" class="form-control datepicker" uib-datepicker-popup="dd/MM/yyyy" datepicker-options="{showWeeks:false}" ng-model="dashboard.end_date" is-open="dashboard.endDatePopup.opened" close-text="Close" ng-change="dashboard.optionsChange()" ng-click="dashboard.openEndDatePopup()"/>
+              <label class="font-12" for="end_date" ng-show="dashboard.selectedVacationType != 'switch_date'">ถึงวันที่</label>
+              <label class="font-12" for="end_date" ng-show="dashboard.selectedVacationType == 'switch_date'">มาเป็นถึงวันที่</label>
+              <input placeholder="&#61447;" id="end_date" type="text" class="form-control datepicker" uib-datepicker-popup="dd/MM/yyyy" datepicker-options="{showWeeks:false}" ng-model="dashboard.end_date" is-open="dashboard.endDatePopup.opened" close-text="Close" ng-change="dashboard.optionsChange()" ng-click="dashboard.openEndDatePopup()"/>
               <span class="fa fa-calendar datepicker"></span>
             </div>
           </div>
@@ -200,7 +202,7 @@
         <div class="row">
           <div class="col-md-12">
             <div class="form-group">
-              <label class="font-12" for="email">เหตุผล</label>
+              <label class="font-12" for="detail">เหตุผล</label>
               <textarea class="form-control border no-resize" ng-model="dashboard.detail"></textarea>
             </div>
           </div>

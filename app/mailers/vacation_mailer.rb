@@ -11,7 +11,7 @@ class VacationMailer < ApplicationMailer
     @user = user
     @vacation = vacation
     setup_link(vacation)
-    mail(to: recipient.email, subject: "#{@user.full_name} ยืนคำขอลาป่วย")
+    mail(to: recipient.email, subject: "#{@user.full_name} ยื่นคำขอลาป่วย")
   end
 
   def self.vacation_leave_request(user, vacation)
@@ -25,7 +25,7 @@ class VacationMailer < ApplicationMailer
     @user = user
     @vacation = vacation
     setup_link(vacation)
-    mail(to: recipient.email, subject: "#{@user.full_name} ยืนคำขอลากิจ")
+    mail(to: recipient.email, subject: "#{@user.full_name} ยื่นคำขอลากิจ")
   end
 
   def setup_link(vacation)
