@@ -456,13 +456,24 @@ end
 
 if VacationType.count == 0
   VacationType.create!([
-   { id: "1", name: "ลาป่วย", deduce_days: 0 },
-   { id: "2", name: "ลากิจ", deduce_days: 1 },
-   { id: "3", name: "ลากิจครึ่งวันเช้า", deduce_days: 0.5 },
-   { id: "4", name: "ลากิจครึ่งวันบ่าย", deduce_days: 0.5 },
-   { id: "5", name: "สลับวันทำงาน", deduce_days: 0 },
-   { id: "6", name: "ทำงานที่บ้าน", deduce_days: 0 },
+   { id: 1, name: "ลาป่วย", deduce_days: 0 },
+   { id: 2, name: "ลากิจ", deduce_days: 1 },
+   { id: 3, name: "ลากิจครึ่งวันเช้า", deduce_days: 0.5 },
+   { id: 4, name: "ลากิจครึ่งวันบ่าย", deduce_days: 0.5 },
+   { id: 5, name: "สลับวันทำงาน", deduce_days: 0 },
+   { id: 6, name: "ทำงานที่บ้าน", deduce_days: 0 },
   ])
+end
+
+
+if VacationConfig.count == 0
+  VacationConfig.create!({ id: "1",
+    vacation_leave_advance_at_least: 3,
+    switch_date_advance_at_least: 3,
+    work_at_home_unit: 0,
+    work_at_home_limit: 2,
+    can_leave_half_day: true
+  })
 end
 
 if Vacation.count == 0
