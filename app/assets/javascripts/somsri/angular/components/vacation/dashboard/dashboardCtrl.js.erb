@@ -2,7 +2,7 @@
   'use strict';
   angular.module('somsri.somsri.vacation.dashboard', [
   ])
-  .controller('vacationDashboardCtrl', ['$rootScope', '$window', 'moment', 'translateFilter', 'vacationService', function ($rootScope, $window, moment, translateFilter, service) {
+  .controller('vacationDashboardCtrl', ['$rootScope', '$window', '$sce', 'moment', 'translateFilter', 'vacationService', function ($rootScope, $window, $sce, moment, translateFilter, service) {
     var ctrl = this;
 
     var status = window.location.href.substr(window.location.href.lastIndexOf('/') + 1);
@@ -53,11 +53,21 @@
       opened: false
     };
 
-    ctrl.selectedVacationType = "sick_leave";
     ctrl.selectedVacationLeaveType = "vacation_leave_full_day";
     ctrl.vacationTypeChanged = function(selectedVacationType) {
       ctrl.showVacationLeaveType = selectedVacationType == 'vacation_leave';
+
+      if (selectedVacationType == 'sick_leave') {
+        ctrl.leaveHint = $sce.trustAsHtml("<b>หมายเหตุ</b> : การลาป่วย สามารถลาได้ตามสมควร ถ้าเกิน 3 วันต้องมีหนังสือรับรองจากแพทย์ หรือ ใบเสร็จรับเงินจากคลินิค, โรงพยาบาล");
+      } else if (selectedVacationType == 'vacation_leave') {
+        ctrl.leaveHint = $sce.trustAsHtml("<b>หมายเหตุ</b> : ลากิจ หรือ พักร้อน ต้องลาล่วงหน้าอย่างน้อย " + ctrl.vacationConfig.vacation_leave_advance_at_least + " วัน เป็นลายลักษณ์อักษร ทาง Banana Vacation (http://vacation.bananacoding.com), email หรือ slack");
+      } else if (selectedVacationType == 'switch_date') {
+        ctrl.leaveHint = $sce.trustAsHtml("<b>หมายเหตุ</b> : สลับวันทำงาน ต้องแจ้งล่วงหน้าอย่างน้อย " + ctrl.vacationConfig.switch_date_advance_at_least + " วัน เป็นลายลักษณ์อักษร ทาง Banana Vacation (http://vacation.bananacoding.com), email หรือ slack");
+      } else if (selectedVacationType == 'work_at_home') {
+        ctrl.leaveHint = $sce.trustAsHtml("<b>หมายเหตุ</b> : ทำงานนอกสถามที่ หรือ ที่บ้าน สามารถทำได้ " + ctrl.vacationConfig.work_at_home_limit + " วันต่อสัปดาห์ ต้องแจ้งทาง Banana Vacation (http://vacation.bananacoding.com), email หรือ slack");
+      }
     };
+    ctrl.vacationTypeChanged('sick_leave');
     ctrl.vacationLeaveTypeChanged = function(selectedVacationLeaveType) {
 
     };
