@@ -8,26 +8,16 @@ class VacationsController < ApplicationController
     @vacations = @vacations.where('created_at BETWEEN ? AND ?', start_date, end_date).order('created_at DESC')
 
     sick_leave_count = @vacations.sick_leave.count
-    full_day_leave = @vacations.vacation_full_day
-    half_day_morning_leave = @vacations.vacation_half_day_morning
-    half_day_afternoon_leave = @vacations.vacation_half_day_afternoon
-    vacation_leave_count = full_day_leave.not_approved.count + half_day_morning_leave.not_approved.count + half_day_afternoon_leave.not_approved.count
+    full_day_leave_count = @vacations.vacation_full_day.not_approved.count
+    half_day_morning_leave_count = @vacations.vacation_half_day_morning.not_approved.count
+    half_day_afternoon_leave_count = @vacations.vacation_half_day_afternoon.not_approved.count
+    vacation_leave_count = full_day_leave_count + half_day_morning_leave_count + half_day_afternoon_leave_count
     switch_date_count = @vacations.switch_date.count
     work_at_home_count = @vacations.work_at_home.count
 
-    deduce_days = 0
-    deduce_days += sick_leave_count * VacationType.sick_leave.deduce_days
-    deduce_days += full_day_leave.not_approved.count * VacationType.vacation_full_day.deduce_days
-    deduce_days += half_day_morning_leave.not_approved.count * VacationType.vacation_half_day_morning.deduce_days
-    deduce_days += half_day_afternoon_leave.not_approved.count * VacationType.vacation_half_day_afternoon.deduce_days
-    deduce_days += switch_date_count * VacationType.switch_date.deduce_days
-    type_work_at_home = VacationType.work_at_home
-    deduce_days += work_at_home_count * type_work_at_home.deduce_days
-    remaining_day = current_user.leave_allowance - deduce_days
-
     render json: {
       leave_allowance: current_user.leave_allowance,
-      remaining_day: remaining_day,
+      remaining_day: current_user.leave_remaining,
       sick_leave: sick_leave_count,
       vacation_leave: vacation_leave_count,
       switch_date: switch_date_count,
@@ -38,8 +28,10 @@ class VacationsController < ApplicationController
 
   def create
     vacation = Vacation.new(vacation_params)
+    vacation.user = current_user
     vacation.vacation_type_id = get_vacation_type_id(params[:vacation_type])
     if vacation.save
+      send_vacation_request(vacation)
       render json: vacation, status: :ok
     else
       render json: { error_message: vacation.errors }, status: 500
@@ -52,6 +44,26 @@ class VacationsController < ApplicationController
       render json: { status: 'success' }, status: :ok
     else
       render json: { error_message: vacation.errors }, status: 500
+    end
+  end
+
+  def approve
+    vacation = Vacation.find(params[:id])
+    vacation.status = 'approved'
+    if vacation.save
+      redirect_to '/somsri#/vacation/dashboard/approved'
+    else
+      redirect_to '/somsri#/vacation/dashboard/error'
+    end
+  end
+
+  def reject
+    vacation = Vacation.find(params[:id])
+    vacation.status = 'rejected'
+    if vacation.save
+      redirect_to '/somsri#/vacation/dashboard/rejected'
+    else
+      redirect_to '/somsri#/vacation/dashboard/error'
     end
   end
 
@@ -75,6 +87,19 @@ class VacationsController < ApplicationController
       VacationType.where(name: 'สลับวันทำงาน').first.id
     when 'work_at_home'
       VacationType.where(name: 'ทำงานที่บ้าน').first.id
+    end
+  end
+
+  def send_vacation_request(vacation)
+    case vacation.vacation_type.name
+    when 'ลาป่วย'
+      VacationMailer.sick_leave_request(current_user, vacation)
+    when 'ลากิจ', 'ลากิจครึ่งวันเช้า', 'ลากิจครึ่งวันบ่าย'
+      VacationMailer.vacation_leave_request(current_user, vacation)
+    when 'สลับวันทำงาน'
+      VacationMailer.switch_date_request(current_user, vacation)
+    when 'ทำงานที่บ้าน'
+      VacationMailer.work_at_home_request(current_user, vacation)
     end
   end
 end

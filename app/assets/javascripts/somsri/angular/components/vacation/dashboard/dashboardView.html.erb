@@ -94,7 +94,7 @@
             <p class="color-gray mt-5 mb-0">{{ vacation.detail }}</p>
           </div>
           <div class="col-md-2 pr-0">
-            <span class="text-capitalize" ng-class="{'color-green': vacation.status == 'approved', 'color-blue': vacation.status == 'pending'}">{{ vacation.status }}</span>
+            <span class="text-capitalize" ng-class="{'color-green': vacation.status == 'approved', 'color-red': vacation.status == 'rejected', 'color-blue': vacation.status == 'pending'}">{{ vacation.status }}</span>
           </div>
           <div class="col-md-1" ng-show="vacation.status == 'pending'">
             <i class='fa fa-trash-o color-gray fa-lg' aria-hidden='true' ng-click="dashboard.deleteVacation(vacation.id)"></i>
@@ -214,7 +214,7 @@
         </div>
       </div>
       <div class="modal-footer">
-        <a class="btn btn-submit btn-light-green" ng-click="dashboard.submitLeaveRequest();"><i class="fa fa-paper-plane" aria-hidden="true"></i> {{ 'send_request' | translate }}</a>
+        <a class="btn btn-submit btn-light-green" ng-click="dashboard.submitLeaveRequest();"><i class="fa fa-paper-plane" aria-hidden="true" ng-disabled="dashboard.isSaving"></i> {{ 'send_request' | translate }}</a>
         <button type="button" class="btn btn-cancel-outline" data-dismiss="modal">{{ 'cancel' | translate }}</button>
       </div>
     </div>

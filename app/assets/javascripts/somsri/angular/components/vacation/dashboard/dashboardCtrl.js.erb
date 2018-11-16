@@ -4,15 +4,21 @@
   ])
   .controller('vacationDashboardCtrl', ['$rootScope', '$window', 'moment', 'translateFilter', 'vacationService', function ($rootScope, $window, moment, translateFilter, service) {
     var ctrl = this;
+
+    var status = window.location.href.substr(window.location.href.lastIndexOf('/') + 1);
+    if (status != "") {
+      if (status == "approved") {
+        displayFlashMessage(translateFilter('vacation_was_approved'), true);
+      } else if (status == "rejected") {
+        displayFlashMessage(translateFilter('vacation_was_rejected'), true);
+      } else if (status == "error") {
+        displayFlashMessage(translateFilter('vacation_save_error'), false);
+      }
+    }
+
     $rootScope.menu = translateFilter('dashboard');
     $rootScope.loadAndAuthorizeResource("vacation", function() {
       loadVacationDashboard();
-
-      service.getVacationConfigs().then(function(response) {
-        ctrl.vacationConfig = response.data;
-      }, function(e) {
-        console.log(e)
-      });
     });
 
     ctrl.deleteVacation = function(vacationId) {
@@ -59,7 +65,7 @@
       ctrl.errorMessage = '';
       var startDate = moment(ctrl.start_date);
       var endDate = moment(ctrl.end_date);
-      if (startDate.isAfter(endDate)) {
+      if (startDate.isAfter(endDate) || startDate.isBefore(moment())) {
         ctrl.errorMessage = 'วันที่ไม่ถูกต้อง';
         return;
       }
@@ -70,16 +76,14 @@
           ctrl.errorMessage = 'วันลาของคุณหมดแล้ว';
         } else {
           var minimumLeaveDate = moment().add(ctrl.vacationConfig.vacation_leave_advance_at_least, 'days')
-          var diff = startDate.diff(minimumLeaveDate, 'days')
-          if (diff < 0) {
+          if (startDate.diff(minimumLeaveDate, 'days') < 0) {
             ctrl.errorMessage = 'กรุณาแจ้งล่วงหน้าอย่างน้อย ' + ctrl.vacationConfig.vacation_leave_advance_at_least + ' วัน';
           }
           sendLeaveRequest(ctrl.selectedVacationLeaveType);
         }
       } else if (ctrl.selectedVacationType == 'switch_date') {
         var minimumLeaveDate = moment().add(ctrl.vacationConfig.switch_date_advance_at_least, 'days')
-        var diff = startDate.diff(minimumLeaveDate, 'days');
-        if (diff < 0) {
+        if (startDate.diff(minimumLeaveDate, 'days') < 0) {
           ctrl.errorMessage = 'กรุณาแจ้งล่วงหน้าอย่างน้อย ' + ctrl.vacationConfig.switch_date_advance_at_least + ' วัน';
         } else {
           sendLeaveRequest(ctrl.selectedVacationType);
@@ -105,19 +109,27 @@
       }, function(e) {
         console.log(e)
       });
+      service.getVacationConfigs().then(function(response) {
+        ctrl.vacationConfig = response.data;
+      }, function(e) {
+        console.log(e)
+      });
     }
 
     function sendLeaveRequest(vacationType) {
+      ctrl.isSaving = true;
       service.newVacation({
         vacation_type: vacationType,
-        start_date: ctrl.start_date,
-        end_date: ctrl.end_date,
+        start_date: moment(ctrl.start_date).format('DD/MM/YYYY'),
+        end_date: moment(ctrl.end_date).format('DD/MM/YYYY'),
         detail: ctrl.detail
       }).then(function(response) {
         loadVacationDashboard();
         angular.element('#leaveSubmissionModal').modal('hide');
         displayFlashMessage(translateFilter('vacation_saved_success'), true);
+        ctrl.isSaving = false;
       }, function(e) {
+        ctrl.isSaving = false;
         console.log(e)
       });
     }
