@@ -535,6 +535,9 @@ th:
   send_request: "ส่งคำขอ"
   pending: "รออนุมัติ"
   approve: "อนุมัติแล้ว"
+  vacation_saved_success: "บันทึกการลาสำเร็จแล้ว"
+  vacation_deleted_success: "ลบการลาสำเสร็จแล้ว"
+  confirm_delete_vacation: "คุณต้องการที่จะลบการลานี้?"
 
   # All
   save_change_confirmation: "คุณต้องการบันทึกการเปลี่ยนแปลงนี้หรือไม่"

@@ -1,3 +1,4 @@
+<flash-message-content message="dashboard.flashMessage" type-success="dashboard.typeSuccess"></flash-message-content>
 <div class="container dashboard">
   <div class="row mt-5">
     <div class="col-md-12 heading">
@@ -96,7 +97,7 @@
             <span class="text-capitalize" ng-class="{'color-green': vacation.status == 'approved', 'color-blue': vacation.status == 'pending'}">{{ vacation.status }}</span>
           </div>
           <div class="col-md-1" ng-show="vacation.status == 'pending'">
-            <i class='fa fa-trash-o color-gray fa-lg' aria-hidden='true'></i>
+            <i class='fa fa-trash-o color-gray fa-lg' aria-hidden='true' ng-click="dashboard.deleteVacation(vacation.id)"></i>
           </div>
           <div class="row">
             <div class="col-md-12 p-0">
@@ -151,6 +152,13 @@
       <div class="modal-body px-0">
         <div class="row">
           <div class="col-md-6">
+            <div class="form-group has-error" ng-hide="dashboard.errorMessage == ''">
+              <span class="error text-danger">{{ dashboard.errorMessage }}</span>
+            </div>
+          </div>
+        </div>
+        <div class="row">
+          <div class="col-md-6">
             <div class="form-group">
               <label class="font-12" for="email">ประเภทการลา</label>
               <select class="form-control dropdown" ng-change="dashboard.vacationTypeChanged(dashboard.selectedVacationType)" ng-model="dashboard.selectedVacationType" >
@@ -164,10 +172,10 @@
           <div class="col-md-6">
             <div class="form-group" ng-show="dashboard.showVacationLeaveType">
               <label class="font-12" for="email">แบบการลากิจ</label>
-              <select class="form-control dropdown" ng-change="dashboard.vacationLeaveTypeChanged(dashboard.selectedVacationLeaveType)" ng-model="dashboard.selectedVacationLeaveType">
-                <option selected value="full_day">เต็มวัน</option>
-                <option value="half_day_morning">ครึ่งวัน (ช่วงเช้า)</option>
-                <option value="half_day_afternoon">ครึ่งวัน (ช่วงบ่าย)</option>
+              <select class="form-control dropdown" ng-change="dashboard.vacationLeaveTypeChanged(dashboard.selectedVacationLeaveType)" ng-model="dashboard.selectedVacationLeaveType" ng-disabled="!dashboard.vacationConfig.can_leave_half_day">
+                <option selected value="vacation_leave_full_day">เต็มวัน</option>
+                <option value="vacation_leave_half_day_morning">ครึ่งวัน (ช่วงเช้า)</option>
+                <option value="vacation_leave_half_day_afternoon">ครึ่งวัน (ช่วงบ่าย)</option>
               </select>
             </div>
           </div>
@@ -193,7 +201,7 @@
           <div class="col-md-12">
             <div class="form-group">
               <label class="font-12" for="email">เหตุผล</label>
-              <textarea class="form-control border no-resize"></textarea>
+              <textarea class="form-control border no-resize" ng-model="dashboard.detail"></textarea>
             </div>
           </div>
         </div>

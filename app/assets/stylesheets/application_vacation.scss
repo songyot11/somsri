@@ -237,12 +237,12 @@ textarea {
 }
 
 .dashboard-item:after {
-    content:"";
-    position:absolute;
-    width:100%;
-    bottom:1px;
-    z-index:-1;
-    transform:scale(.9);
+    content: "";
+    position: absolute;
+    width: 100%;
+    bottom: 1px;
+    z-index: -1;
+    transform: scale(.9);
     box-shadow: -4px 0px 8px 1.5px $gray;
 }
 
@@ -257,4 +257,8 @@ textarea {
   color: #fff !important;
   border: 2px solid #63B20D;
   border-radius: 4px;
+}
+
+.modal-content flash-message-content .alert {
+  width: 95%;
 }

@@ -2,22 +2,29 @@
   'use strict';
   angular.module('somsri.somsri.vacation.dashboard', [
   ])
-  .controller('vacationDashboardCtrl', ['$rootScope', 'translateFilter', 'vacationService', function ($rootScope, translateFilter, service) {
+  .controller('vacationDashboardCtrl', ['$rootScope', '$window', 'moment', 'translateFilter', 'vacationService', function ($rootScope, $window, moment, translateFilter, service) {
     var ctrl = this;
     $rootScope.menu = translateFilter('dashboard');
     $rootScope.loadAndAuthorizeResource("vacation", function() {
-      service.getVacations().then(function(response) {
-        ctrl.leave_allowance = response.data.leave_allowance;
-        ctrl.remaining_day = response.data.remaining_day;
-        ctrl.sick_leave = response.data.sick_leave;
-        ctrl.vacation_leave = response.data.vacation_leave;
-        ctrl.switch_date = response.data.switch_date;
-        ctrl.work_at_home = response.data.work_at_home;
-        ctrl.vacations = response.data.vacations;
+      loadVacationDashboard();
+
+      service.getVacationConfigs().then(function(response) {
+        ctrl.vacationConfig = response.data;
       }, function(e) {
         console.log(e)
       });
     });
+
+    ctrl.deleteVacation = function(vacationId) {
+      $rootScope.openConfirmationModal(translateFilter("confirm_delete_vacation"), function() {
+        service.deleteVacation(vacationId).then(function(response) {
+          loadVacationDashboard();
+          displayFlashMessage(translateFilter('vacation_deleted_success'), true);
+        }, function(e) {
+          console.log(e)
+        });
+      });
+    };
 
     ctrl.end_date = new Date();
     ctrl.start_date = new Date();
@@ -36,21 +43,89 @@
     ctrl.startDatePopup = {
       opened: false
     };
-
     ctrl.endDatePopup = {
       opened: false
     };
 
     ctrl.selectedVacationType = "sick_leave";
+    ctrl.selectedVacationLeaveType = "vacation_leave_full_day";
     ctrl.vacationTypeChanged = function(selectedVacationType) {
       ctrl.showVacationLeaveType = selectedVacationType == 'vacation_leave';
     };
-    ctrl.selectedVacationLeaveType = "full_day";
     ctrl.vacationLeaveTypeChanged = function(selectedVacationLeaveType) {
 
     };
     ctrl.submitLeaveRequest = function() {
-
+      ctrl.errorMessage = '';
+      var startDate = moment(ctrl.start_date);
+      var endDate = moment(ctrl.end_date);
+      if (startDate.isAfter(endDate)) {
+        ctrl.errorMessage = 'วันที่ไม่ถูกต้อง';
+        return;
+      }
+      if (ctrl.selectedVacationType == 'sick_leave') {
+        sendLeaveRequest(ctrl.selectedVacationType);
+      } else if (ctrl.selectedVacationType == 'vacation_leave') {
+        if (ctrl.vacationConfig.leave_remaining == 0) {
+          ctrl.errorMessage = 'วันลาของคุณหมดแล้ว';
+        } else {
+          var minimumLeaveDate = moment().add(ctrl.vacationConfig.vacation_leave_advance_at_least, 'days')
+          var diff = startDate.diff(minimumLeaveDate, 'days')
+          if (diff < 0) {
+            ctrl.errorMessage = 'กรุณาแจ้งล่วงหน้าอย่างน้อย ' + ctrl.vacationConfig.vacation_leave_advance_at_least + ' วัน';
+          }
+          sendLeaveRequest(ctrl.selectedVacationLeaveType);
+        }
+      } else if (ctrl.selectedVacationType == 'switch_date') {
+        var minimumLeaveDate = moment().add(ctrl.vacationConfig.switch_date_advance_at_least, 'days')
+        var diff = startDate.diff(minimumLeaveDate, 'days');
+        if (diff < 0) {
+          ctrl.errorMessage = 'กรุณาแจ้งล่วงหน้าอย่างน้อย ' + ctrl.vacationConfig.switch_date_advance_at_least + ' วัน';
+        } else {
+          sendLeaveRequest(ctrl.selectedVacationType);
+        }
+      } else if (ctrl.selectedVacationType == 'work_at_home') {
+        if (ctrl.vacationConfig.work_at_home_remaining == 0) {
+          ctrl.errorMessage = 'คุณทำงานที่บ้านครบกำหนดแล้ว';
+        } else {
+          sendLeaveRequest(ctrl.selectedVacationType);
+        }
+      }
     };
+
+    function loadVacationDashboard() {
+      service.getVacations().then(function(response) {
+        ctrl.leave_allowance = response.data.leave_allowance;
+        ctrl.remaining_day = response.data.remaining_day;
+        ctrl.sick_leave = response.data.sick_leave;
+        ctrl.vacation_leave = response.data.vacation_leave;
+        ctrl.switch_date = response.data.switch_date;
+        ctrl.work_at_home = response.data.work_at_home;
+        ctrl.vacations = response.data.vacations;
+      }, function(e) {
+        console.log(e)
+      });
+    }
+
+    function sendLeaveRequest(vacationType) {
+      service.newVacation({
+        vacation_type: vacationType,
+        start_date: ctrl.start_date,
+        end_date: ctrl.end_date,
+        detail: ctrl.detail
+      }).then(function(response) {
+        loadVacationDashboard();
+        angular.element('#leaveSubmissionModal').modal('hide');
+        displayFlashMessage(translateFilter('vacation_saved_success'), true);
+      }, function(e) {
+        console.log(e)
+      });
+    }
+
+    function displayFlashMessage(message, typeSuccess){
+      ctrl.flashMessage = message;
+      ctrl.typeSuccess = typeSuccess;
+      $window.scrollTo(0, 0);
+    }
   }]);
 })();

@@ -147,7 +147,9 @@ Rails.application.routes.draw do
     end
   end
 
-  resources :vacations, only: [:index] do
+  resources :vacations, only: [:index, :create, :destroy] do
+  end
+  resources :vacation_configs, only: [:index] do
   end
 
   devise_scope :user do
