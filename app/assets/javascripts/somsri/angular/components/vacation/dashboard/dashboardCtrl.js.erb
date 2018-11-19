@@ -8,11 +8,11 @@
     var status = window.location.href.substr(window.location.href.lastIndexOf('/') + 1);
     if (status != "") {
       if (status == "approved") {
-        displayFlashMessage(translateFilter('vacation_was_approved'), true);
+        $rootScope.openSuccessModal(translateFilter('vacation_was_approved'));
       } else if (status == "rejected") {
-        displayFlashMessage(translateFilter('vacation_was_rejected'), true);
+        $rootScope.openSuccessModal(translateFilter('vacation_was_rejected'));
       } else if (status == "error") {
-        displayFlashMessage(translateFilter('vacation_save_error'), false);
+        $rootScope.openErrorModal(translateFilter('vacation_save_error'));
       }
     }
 
@@ -25,7 +25,7 @@
       $rootScope.openConfirmationModal(translateFilter("confirm_delete_vacation"), function() {
         service.deleteVacation(vacationId).then(function(response) {
           loadVacationDashboard();
-          displayFlashMessage(translateFilter('vacation_deleted_success'), true);
+          $rootScope.openSuccessModal(translateFilter('vacation_deleted_success'));
         }, function(e) {
           console.log(e)
         });
@@ -134,18 +134,12 @@
       }).then(function(response) {
         loadVacationDashboard();
         angular.element('#leaveSubmissionModal').modal('hide');
-        displayFlashMessage(translateFilter('vacation_saved_success'), true);
+        $rootScope.openSuccessModal(translateFilter('vacation_saved_success'));
         ctrl.isSaving = false;
       }, function(e) {
         ctrl.isSaving = false;
         console.log(e)
       });
-    }
-
-    function displayFlashMessage(message, typeSuccess){
-      ctrl.flashMessage = message;
-      ctrl.typeSuccess = typeSuccess;
-      $window.scrollTo(0, 0);
     }
   }]);
 })();

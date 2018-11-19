@@ -536,12 +536,12 @@ th:
   pending: "รออนุมัติ"
   approved: "อนุมัติแล้ว"
   rejected: "ไม่อนุมัติ"
-  vacation_was_approved: "อนุมัติการลาแล้ว"
-  vacation_was_rejected: "ไม่อนุมัติการลาแล้ว"
+  vacation_was_approved: "อนุมัติคำขอสำเร็จแล้ว"
+  vacation_was_rejected: "ไม่อนุมัติคำขอสำเร็จแล้ว"
   vacation_save_error: "เกิดข้อผิดพลาด กรุณาลองอีกครั้ง"
-  vacation_saved_success: "บันทึกการลาสำเร็จแล้ว"
-  vacation_deleted_success: "ลบการลาสำเสร็จแล้ว"
-  confirm_delete_vacation: "คุณต้องการที่จะลบการลานี้?"
+  vacation_saved_success: "ส่งคำขอสำเร็จแล้ว"
+  vacation_deleted_success: "ลบคำขอสำเสร็จแล้ว"
+  confirm_delete_vacation: "คุณต้องการที่จะลบคำขอนี้?"
 
   # All
   save_change_confirmation: "คุณต้องการบันทึกการเปลี่ยนแปลงนี้หรือไม่"

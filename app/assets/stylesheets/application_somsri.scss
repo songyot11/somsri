@@ -529,6 +529,10 @@ body {
   padding: 5px 32px;
   font-size: 14px;
 }
+.btn-custom.lg {
+  padding: 10px 48px;
+  font-size: 24px;
+}
 .color-transparent {
   color: transparent !important;
 }
@@ -820,4 +824,26 @@ tags-input .tags .tag-item .remove-button{
 }
 .border-color-gray {
   border-color: #d0d0d0 !important;
+}
+.fa-9x {
+  font-size: 9em;
+}
+
+.modal {
+  text-align: center;
+  padding: 0!important;
+}
+
+.modal::before {
+  content: '';
+  display: inline-block;
+  height: 100%;
+  vertical-align: middle;
+  margin-right: -4px;
+}
+
+.modal-dialog {
+  display: inline-block;
+  text-align: left;
+  vertical-align: middle;
 }
