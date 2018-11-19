@@ -2,15 +2,12 @@ class VacationsController < ApplicationController
   load_and_authorize_resource
 
   def index
-    year = Time.current.year
-    start_date = Date.new(year, 1, 1).beginning_of_day
-    end_date = Date.new(year, 12, 31).end_of_day
-    @vacations = @vacations.where('created_at BETWEEN ? AND ?', start_date, end_date).order('created_at DESC')
+    @vacations = @vacations.this_year.order('created_at DESC')
 
     sick_leave_count = @vacations.sick_leave.count
-    full_day_leave_count = @vacations.vacation_full_day.not_approved.count
-    half_day_morning_leave_count = @vacations.vacation_half_day_morning.not_approved.count
-    half_day_afternoon_leave_count = @vacations.vacation_half_day_afternoon.not_approved.count
+    full_day_leave_count = @vacations.vacation_full_day.not_rejected.count
+    half_day_morning_leave_count = @vacations.vacation_half_day_morning.not_rejected.count
+    half_day_afternoon_leave_count = @vacations.vacation_half_day_afternoon.not_rejected.count
     vacation_leave_count = full_day_leave_count + half_day_morning_leave_count + half_day_afternoon_leave_count
     switch_date_count = @vacations.switch_date.count
     work_at_home_count = @vacations.work_at_home.count
@@ -49,21 +46,37 @@ class VacationsController < ApplicationController
 
   def approve
     vacation = Vacation.find(params[:id])
-    vacation.status = 'approved'
-    if vacation.save
-      redirect_to '/somsri#/vacation/dashboard/approved'
+    authorize! :approve, vacation
+
+    if vacation.pending?
+      vacation.status = 'approved'
+      vacation.approver = current_user
+      if vacation.save
+        VacationMailer.approved_rejected(vacation)
+        redirect_to '/somsri#/vacation/dashboard/approved'
+      else
+        redirect_to '/somsri#/vacation/dashboard/error'
+      end
     else
-      redirect_to '/somsri#/vacation/dashboard/error'
+      redirect_to '/somsri#/vacation/dashboard/'
     end
   end
 
   def reject
     vacation = Vacation.find(params[:id])
-    vacation.status = 'rejected'
-    if vacation.save
-      redirect_to '/somsri#/vacation/dashboard/rejected'
+    authorize! :reject, vacation
+
+    if vacation.pending?
+      vacation.status = 'rejected'
+      vacation.approver = current_user
+      if vacation.save
+        VacationMailer.approved_rejected(vacation)
+        redirect_to '/somsri#/vacation/dashboard/rejected'
+      else
+        redirect_to '/somsri#/vacation/dashboard/error'
+      end
     else
-      redirect_to '/somsri#/vacation/dashboard/error'
+      redirect_to '/somsri#/vacation/dashboard/'
     end
   end
 

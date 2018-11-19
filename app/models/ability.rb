@@ -7,7 +7,7 @@ class Ability
       can :dashboard
       can :manage, :all
       can :manage, SiteConfig
-      can :manage, Vacation, :user_id => user.id
+      can [:read, :approve, :reject], Vacation
       can :manage, VacationConfig
     elsif  user && user.finance_officer?
       can :manage, :menu
