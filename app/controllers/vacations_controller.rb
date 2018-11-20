@@ -26,7 +26,8 @@ class VacationsController < ApplicationController
   def create
     vacation = Vacation.new(vacation_params)
     vacation.user = current_user
-    vacation.vacation_type_id = get_vacation_type_id(params[:vacation_type])
+    vacation.vacation_type = get_vacation_type(params[:vacation_type])
+
     if vacation.save
       send_vacation_request(vacation)
       render json: vacation, status: :ok
@@ -86,20 +87,20 @@ class VacationsController < ApplicationController
     params.permit(:start_date, :end_date, :detail)
   end
 
-  def get_vacation_type_id(vacation_type)
+  def get_vacation_type(vacation_type)
     case vacation_type
     when 'sick_leave'
-      VacationType.where(name: 'ลาป่วย').first.id
+      VacationType.where(name: 'ลาป่วย').first
     when 'vacation_leave_full_day'
-      VacationType.where(name: 'ลากิจ').first.id
+      VacationType.where(name: 'ลากิจ').first
     when 'vacation_leave_half_day_morning'
-      VacationType.where(name: 'ลากิจครึ่งวันเช้า').first.id
+      VacationType.where(name: 'ลากิจครึ่งวันเช้า').first
     when 'vacation_leave_half_day_afternoon'
-      VacationType.where(name: 'ลากิจครึ่งวันบ่าย').first.id
+      VacationType.where(name: 'ลากิจครึ่งวันบ่าย').first
     when 'switch_date'
-      VacationType.where(name: 'สลับวันทำงาน').first.id
+      VacationType.where(name: 'สลับวันทำงาน').first
     when 'work_at_home'
-      VacationType.where(name: 'ทำงานที่บ้าน').first.id
+      VacationType.where(name: 'ทำงานที่บ้าน').first
     end
   end
 

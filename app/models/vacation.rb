@@ -14,12 +14,19 @@ class Vacation < ApplicationRecord
   belongs_to :approver, :class_name => "User"
   belongs_to :vacation_type
 
+  def deduce_days
+    days = (self.end_date.to_date - self.start_date.to_date).to_i + 1
+    deduce_days = days * vacation_type.deduce_days
+    deduce_days
+  end
+
   def as_json(options={})
     {
       id: self.id,
       detail: self.detail,
       status: self.status,
       vacation_type: self.vacation_type,
+      start_date: self.start_date,
       created_at: self.created_at.strftime('%d/%m/%Y'),
     }
   end

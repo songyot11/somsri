@@ -478,11 +478,11 @@ end
 
 if Vacation.count == 0
   Vacation.create!([
-   { id: "1", detail: "ไม่สบายขอนอนที่บ้าน", vacation_type_id: "1", user_id: 3 },
-   { id: "2", detail: "ไปเที่ยวครับ", vacation_type_id: "2", user_id: 3 },
-   { id: "3", detail: "เช้าไปธุระครับ", vacation_type_id: "3", user_id: 3 },
-   { id: "4", detail: "ลาตอนบ่ายไปหาหมอครับ", vacation_type_id: "4", user_id: 3 },
-   { id: "5", detail: "ขอทำงานวันเสาร์แทนครับ", vacation_type_id: "5", user_id: 3 },
-   { id: "6", detail: "ช่างมาซ่อมไฟ ขอทำงานที่บ้านครับ", vacation_type_id: "6", user_id: 3 }
+   { id: 1, detail: "ไม่สบายขอนอนที่บ้าน", vacation_type_id: "1", user_id: 3 },
+   { id: 2, detail: "ไปเที่ยวครับ", vacation_type_id: "2", user_id: 3 },
+   { id: 3, detail: "เช้าไปธุระครับ", vacation_type_id: "3", user_id: 3 },
+   { id: 4, detail: "ลาตอนบ่ายไปหาหมอครับ", vacation_type_id: "4", user_id: 3 },
+   { id: 5, detail: "ขอทำงานวันเสาร์แทนครับ", vacation_type_id: "5", user_id: 3 },
+   { id: 6, detail: "ช่างมาซ่อมไฟ ขอทำงานที่บ้านครับ", vacation_type_id: "6", user_id: 3 }
   ])
 end

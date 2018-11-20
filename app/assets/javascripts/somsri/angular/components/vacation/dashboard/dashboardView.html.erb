@@ -89,7 +89,7 @@
         </div>
         <div class="row" ng-repeat="vacation in dashboard.vacations">
           <div class="col-md-9 p-0">
-            <b class="font-12 orange m-0"><span class="font-16 color-orange">{{ vacation.created_at }}</span> - {{ vacation.vacation_type.name }}</b>
+            <b class="font-12 orange m-0"><span class="font-16 color-orange">{{ vacation.start_date }}</span> - {{ vacation.vacation_type.name }}</b>
             <p class="color-gray mt-5 mb-0">{{ vacation.detail }}</p>
           </div>
           <div class="col-md-2 pr-0">
@@ -145,7 +145,7 @@
   <div class="modal-dialog" role="document">
     <div class="modal-content">
       <div class="modal-header pl-0 pb-5">
-        <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+        <button type="button" class="close" data-dismiss="modal" aria-hidden="true" ng-disabled="dashboard.isSaving">&times;</button>
         <h4 class="modal-title font-21 color-green">ส่งคำขอ</h4>
       </div>
       <div class="modal-body px-0">
@@ -213,8 +213,8 @@
         </div>
       </div>
       <div class="modal-footer">
-        <a class="btn btn-submit btn-light-green" ng-click="dashboard.submitLeaveRequest();"><i class="fa fa-paper-plane" aria-hidden="true" ng-disabled="dashboard.isSaving"></i> {{ 'send_request' | translate }}</a>
-        <button type="button" class="btn btn-cancel-outline" data-dismiss="modal">{{ 'cancel' | translate }}</button>
+        <a class="btn btn-submit btn-light-green" ng-click="dashboard.submitLeaveRequest();" ng-disabled="dashboard.isSaving"><i class="fa fa-paper-plane" aria-hidden="true"></i> {{ 'send_request' | translate }}</a>
+        <button type="button" class="btn btn-cancel-outline" data-dismiss="modal" ng-disabled="dashboard.isSaving">{{ 'cancel' | translate }}</button>
       </div>
     </div>
   </div>

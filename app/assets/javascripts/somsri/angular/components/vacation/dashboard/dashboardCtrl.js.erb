@@ -67,6 +67,7 @@
     ctrl.vacationLeaveTypeChanged = function(selectedVacationLeaveType) {
 
     };
+    ctrl.vacationTypeChanged('sick_leave');
     ctrl.submitLeaveRequest = function() {
       ctrl.errorMessage = '';
       var startDate = moment(ctrl.start_date);
