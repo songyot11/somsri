@@ -21,17 +21,6 @@
       loadVacationDashboard();
     });
 
-    ctrl.deleteVacation = function(vacationId) {
-      $rootScope.openConfirmationModal(translateFilter("confirm_delete_vacation"), function() {
-        service.deleteVacation(vacationId).then(function(response) {
-          loadVacationDashboard();
-          $rootScope.openSuccessModal(translateFilter('vacation_deleted_success'));
-        }, function(e) {
-          console.log(e)
-        });
-      });
-    };
-
     ctrl.end_date = new Date();
     ctrl.start_date = new Date();
 
@@ -67,7 +56,7 @@
     ctrl.vacationLeaveTypeChanged = function(selectedVacationLeaveType) {
 
     };
-    ctrl.vacationTypeChanged('sick_leave');
+    ctrl.vacationTypeChanged(ctrl.selectedVacationType);
     ctrl.submitLeaveRequest = function() {
       ctrl.errorMessage = '';
       var startDate = moment(ctrl.start_date);
@@ -93,7 +82,7 @@
         if (startDate.isSame(endDate, 'days')) {
           ctrl.errorMessage = 'ไม่สามารถสลับวันทำงานเป็นวันเดียวกันได้'
         } else if (startDate.diff(minimumLeaveDate, 'days') < 0) {
-          ctrl.errorMessage = 'กรุณาแจ้งล่วงหน้าอย่างน้อย ' + ctrl.vacationConfig.switch_date_advance_at_least + ' วัน';
+          ctrl.errorMessage = 'กรุณาแจ้งล่วงหน้าอย่างน้อย ' + ctrl.vacationConfig.switch_date_advance_at_least + ' ' + translateFilter('day');
         } else {
           sendLeaveRequest(ctrl.selectedVacationType);
         }
@@ -106,15 +95,20 @@
       }
     };
 
+    ctrl.deleteVacation = function(vacationId) {
+      $rootScope.openConfirmationModal(translateFilter("confirm_delete_vacation"), function() {
+        service.deleteVacation(vacationId).then(function(response) {
+          loadVacationDashboard();
+          $rootScope.openSuccessModal(translateFilter('vacation_deleted_success'));
+        }, function(e) {
+          console.log(e)
+        });
+      });
+    };
+
     function loadVacationDashboard() {
       service.getVacations().then(function(response) {
-        ctrl.leave_allowance = response.data.leave_allowance;
-        ctrl.remaining_day = response.data.remaining_day;
-        ctrl.sick_leave = response.data.sick_leave;
-        ctrl.vacation_leave = response.data.vacation_leave;
-        ctrl.switch_date = response.data.switch_date;
-        ctrl.work_at_home = response.data.work_at_home;
-        ctrl.vacations = response.data.vacations;
+        ctrl.vacation = response.data;
       }, function(e) {
         console.log(e)
       });
