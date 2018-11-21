@@ -547,7 +547,7 @@ th:
   approved: "อนุมัติแล้ว"
   rejected: "ไม่อนุมัติ"
   vacation_was_approved: "อนุมัติคำขอสำเร็จแล้ว"
-  vacation_was_rejected: "ไม่อนุมัติคำขอสำเร็จแล้ว"
+  vacation_was_rejected: "ยกเลิกคำขอสำเร็จแล้ว"
   vacation_save_error: "เกิดข้อผิดพลาด กรุณาลองอีกครั้ง"
   vacation_saved_success: "ส่งคำขอสำเร็จแล้ว"
   vacation_deleted_success: "ลบคำขอสำเสร็จแล้ว"
