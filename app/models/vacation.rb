@@ -10,8 +10,8 @@ class Vacation < ApplicationRecord
   scope :work_at_home, -> { where(vacation_type: VacationType.where(name: 'ทำงานที่บ้าน').first) }
   scope :this_year, -> { where("to_date(start_date, 'DD/MM/YYYY') BETWEEN ? AND ?", Date.today.at_beginning_of_year, Date.today.at_end_of_year) }
 
-  belongs_to :user, :class_name => "User"
-  belongs_to :approver, :class_name => "User"
+  belongs_to :requester, :class_name => "Employee"
+  belongs_to :approver, :class_name => "Employee"
   belongs_to :vacation_type
 
   def deduce_days

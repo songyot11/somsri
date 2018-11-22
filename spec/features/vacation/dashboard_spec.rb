@@ -1,6 +1,6 @@
 describe 'Vacation Dasboard', js: true do
 
-  let(:user) { user = User.make!({
+  let(:requester) { requester = Employee.make!({
     email: 'test@mail.com',
     password: '123456789',
     leave_allowance: 12
@@ -31,18 +31,18 @@ describe 'Vacation Dasboard', js: true do
     yesterday = Date.yesterday.strftime('%d/%m/%Y')
     today = Date.today.strftime('%d/%m/%Y')
     Vacation.create!([
-     { detail: "ไม่สบายขอนอนที่บ้าน", vacation_type_id: "1", user_id: user.id, start_date: yesterday, end_date: yesterday },
-     { detail: "ไปเที่ยวครับ", vacation_type_id: "2", user_id: user.id, start_date: yesterday, end_date: yesterday },
-     { detail: "เช้าไปธุระครับ", vacation_type_id: "3", user_id: user.id, start_date: yesterday, end_date: yesterday },
-     { detail: "ลาตอนบ่ายไปหาหมอครับ", vacation_type_id: "4", user_id: user.id, start_date: yesterday, end_date: yesterday },
-     { detail: "ขอทำงานวันเสาร์แทนครับ", vacation_type_id: "5", user_id: user.id, start_date: yesterday, end_date: today },
-     { detail: "ช่างมาซ่อมไฟ ขอทำงานที่บ้านครับ", vacation_type_id: "6", user_id: user.id, start_date: yesterday, end_date: yesterday }
+     { detail: "ไม่สบายขอนอนที่บ้าน", vacation_type_id: "1", requester_id: requester.id, start_date: yesterday, end_date: yesterday },
+     { detail: "ไปเที่ยวครับ", vacation_type_id: "2", requester_id: requester.id, start_date: yesterday, end_date: yesterday },
+     { detail: "เช้าไปธุระครับ", vacation_type_id: "3", requester_id: requester.id, start_date: yesterday, end_date: yesterday },
+     { detail: "ลาตอนบ่ายไปหาหมอครับ", vacation_type_id: "4", requester_id: requester.id, start_date: yesterday, end_date: yesterday },
+     { detail: "ขอทำงานวันเสาร์แทนครับ", vacation_type_id: "5", requester_id: requester.id, start_date: yesterday, end_date: today },
+     { detail: "ช่างมาซ่อมไฟ ขอทำงานที่บ้านครับ", vacation_type_id: "6", requester_id: requester.id, start_date: yesterday, end_date: yesterday }
     ])
   }
 
   before do
-    user.add_role :finance_officer
-    login_as(user, scope: :user)
+    requester.add_role :approver
+    login_as(requester, scope: :employee)
 
     visit '/somsri#/vacation/dashboard/'
     sleep(1)
@@ -55,8 +55,8 @@ describe 'Vacation Dasboard', js: true do
     sleep(1)
 
     expect(page).to have_content("วันหยุดคงเหลือ")
-    expect(page).to have_content("#{user.leave_remaining}")
-    expect(page).to have_content("/ #{user.leave_allowance}")
+    expect(page).to have_content("#{requester.leave_remaining}")
+    expect(page).to have_content("/ #{requester.leave_allowance}")
     expect(page).to have_content("ลาป่วย")
     expect(page).to have_content("ลากิจ")
     expect(page).to have_content("ลากิจครึ่งวันเช้า")

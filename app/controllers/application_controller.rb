@@ -1,4 +1,5 @@
 class ApplicationController < ActionController::Base
+  include ApplicationHelper
   include CanCan::ControllerAdditions
   protect_from_forgery with: :exception
   before_action :set_cache_buster, :set_locale
@@ -17,6 +18,14 @@ class ApplicationController < ActionController::Base
 
   def set_csrf_cookie_for_ng
     cookies['XSRF-TOKEN'] = form_authenticity_token if protect_against_forgery?
+  end
+
+  def current_ability
+    if current_user.present?
+      @current_ability ||= Ability.new(current_user)
+    elsif current_employee.present?
+      @current_ability ||= Ability.new(current_employee)
+    end
   end
 
   def isDate(date_string)

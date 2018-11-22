@@ -13,8 +13,8 @@ class VacationsController < ApplicationController
     work_at_home_count = @vacations.work_at_home.count
 
     render json: {
-      leave_allowance: current_user.leave_allowance,
-      remaining_day: current_user.leave_remaining,
+      leave_allowance: current_employee.leave_allowance,
+      remaining_day: current_employee.leave_remaining,
       sick_leave: sick_leave_count,
       vacation_leave: vacation_leave_count,
       switch_date: switch_date_count,
@@ -25,7 +25,7 @@ class VacationsController < ApplicationController
 
   def create
     vacation = Vacation.new(vacation_params)
-    vacation.user = current_user
+    vacation.requester = current_employee
     vacation.vacation_type = get_vacation_type(params[:vacation_type])
 
     if vacation.save
@@ -51,7 +51,7 @@ class VacationsController < ApplicationController
 
     if vacation.pending?
       vacation.status = 'approved'
-      vacation.approver = current_user
+      vacation.approver = current_employee
       if vacation.save
         VacationMailer.approved_rejected(vacation)
         redirect_to '/somsri#/vacation/dashboard/approved'
@@ -69,7 +69,7 @@ class VacationsController < ApplicationController
 
     if vacation.pending?
       vacation.status = 'rejected'
-      vacation.approver = current_user
+      vacation.approver = current_employee
       if vacation.save
         VacationMailer.approved_rejected(vacation)
         redirect_to '/somsri#/vacation/dashboard/rejected'
@@ -107,13 +107,13 @@ class VacationsController < ApplicationController
   def send_vacation_request(vacation)
     case vacation.vacation_type.name
     when 'ลาป่วย'
-      VacationMailer.sick_leave_request(current_user, vacation)
+      VacationMailer.sick_leave_request(current_employee, vacation)
     when 'ลากิจ', 'ลากิจครึ่งวันเช้า', 'ลากิจครึ่งวันบ่าย'
-      VacationMailer.vacation_leave_request(current_user, vacation)
+      VacationMailer.vacation_leave_request(current_employee, vacation)
     when 'สลับวันทำงาน'
-      VacationMailer.switch_date_request(current_user, vacation)
+      VacationMailer.switch_date_request(current_employee, vacation)
     when 'ทำงานที่บ้าน'
-      VacationMailer.work_at_home_request(current_user, vacation)
+      VacationMailer.work_at_home_request(current_employee, vacation)
     end
   end
 end
