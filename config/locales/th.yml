@@ -271,7 +271,7 @@ th:
   setting: 'การตั้งค่า'
   class_management: จัดการชั้นเรียน
   expense: "บันทึกค่าใช้จ่าย"
-  vacation: "การลา"
+  vacation: "วันลา"
 
   activerecord:
     attributes:
@@ -523,7 +523,7 @@ th:
 
   # Vacation
   day: "วัน"
-  dashboard: "วันลา"
+  dashboard: "ลางาน"
   calendar: "ปฏิทิน"
   leave_rules: "ระเบียบวันลา"
   remaining_day: "วันหยุดคงเหลือ"
@@ -539,9 +539,9 @@ th:
   vcation_and_request_list: "รายการวันหยุดและคำขอ"
   holiday_list_in_this_week: "รายการวันหยุดใน 7 วันข้างหน้า"
   send_request: "ส่งคำขอ"
-  vacation_from_date: "จากวันท่"
+  vacation_from_date: "จากวันที่"
   vacation_to_date: "ถึงวันที่"
-  switch_from_date: "สลับจาก่วันที่"
+  switch_from_date: "สลับจากวันหยุดที่"
   switch_to_date: "มาเป็นวันที่"
   pending: "รออนุมัติ"
   approved: "อนุมัติแล้ว"
