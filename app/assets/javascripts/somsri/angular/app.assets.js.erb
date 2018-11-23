@@ -10,6 +10,18 @@
             "<%= asset_path('somsri/angular/components/modal/confirm/confirmModalCtrl.js') %>"
           ]
         },
+        'success_modal': {
+          name: 'somsri.somsri.sccess_modal',
+          files: [
+            "<%= asset_path('somsri/angular/components/modal/success/successModalCtrl.js') %>"
+          ]
+        },
+        'error_modal': {
+          name: 'somsri.somsri.error_modal',
+          files: [
+            "<%= asset_path('somsri/angular/components/modal/error/errorModalCtrl.js') %>"
+          ]
+        },
         'expenses': {
           name: 'somsri.somsri.expenses',
           files: [
@@ -45,7 +57,8 @@
             name: 'somsri.somsri.vacation.dashboard',
             files: [
               "<%= asset_path('somsri/angular/components/vacation/dashboard/dashboardCtrl.js') %>",
-              "<%= asset_path('somsri/angular/components/vacation/dashboard/dashboardService.js') %>"
+              "<%= asset_path('somsri/angular/components/vacation/dashboard/dashboardService.js') %>",
+              "<%= asset_path('shared/angular/components/flash_message/flashMessageDirective.js') %>"
             ]
           },
           'calendar': {

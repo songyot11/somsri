@@ -7,5 +7,14 @@
     this.getVacations = function() {
       return $http.get('/vacations')
     }
+    this.newVacation = function(data) {
+      return $http.post('/vacations', data)
+    }
+    this.deleteVacation = function(id) {
+      return $http.delete('/vacations/' + id)
+    }
+    this.getVacationConfigs = function() {
+      return $http.get('/vacation_configs')
+    }
   }]);
 })();

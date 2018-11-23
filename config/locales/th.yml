@@ -271,7 +271,7 @@ th:
   setting: 'การตั้งค่า'
   class_management: จัดการชั้นเรียน
   expense: "บันทึกค่าใช้จ่าย"
-  vacation: "การลา"
+  vacation: "วันลา"
 
   activerecord:
     attributes:
@@ -522,7 +522,8 @@ th:
   expense_category_already_used: "ไม่สามารถลบประเภทค่าใช้จ่ายที่ยังถูกใช้งานอยู่ได้"
 
   # Vacation
-  dashboard: "วันลา"
+  day: "วัน"
+  dashboard: "ลางาน"
   calendar: "ปฏิทิน"
   leave_rules: "ระเบียบวันลา"
   remaining_day: "วันหยุดคงเหลือ"
@@ -530,11 +531,28 @@ th:
   vacation_leave: "ลากิจ"
   switch_date: "สลับวันทำงาน"
   work_at_home: "ทำงานที่บ้าน"
+  full_day: "เต็มวัน"
+  half_day_morning: "ครึ่งวัน (ช่วงเช้า)"
+  half_day_afternoon: "ครึ่งวัน (ช่วงบ่าย)"
+  vacation_type: "ประเภทการลา"
+  vacation_leave_type: "แบบการลากิจ"
   vcation_and_request_list: "รายการวันหยุดและคำขอ"
   holiday_list_in_this_week: "รายการวันหยุดใน 7 วันข้างหน้า"
   send_request: "ส่งคำขอ"
+  vacation_from_date: "จากวันที่"
+  vacation_to_date: "ถึงวันที่"
+  switch_from_date: "สลับจากวันหยุดที่"
+  switch_to_date: "มาเป็นวันที่"
   pending: "รออนุมัติ"
-  approve: "อนุมัติแล้ว"
+  approved: "อนุมัติแล้ว"
+  rejected: "ไม่อนุมัติ"
+  vacation_was_approved: "อนุมัติคำขอสำเร็จแล้ว"
+  vacation_was_rejected: "ยกเลิกคำขอสำเร็จแล้ว"
+  vacation_save_error: "เกิดข้อผิดพลาด กรุณาลองอีกครั้ง"
+  vacation_saved_success: "ส่งคำขอสำเร็จแล้ว"
+  vacation_deleted_success: "ลบคำขอสำเสร็จแล้ว"
+  confirm_delete_vacation: "คุณต้องการที่จะลบคำขอนี้?"
+  # your_work_at_home_: 'คุณทำงานที่บ้านครบกำหนดแล้ว'
 
   # All
   save_change_confirmation: "คุณต้องการบันทึกการเปลี่ยนแปลงนี้หรือไม่"

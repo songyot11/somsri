@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20181113175656) do
+ActiveRecord::Schema.define(version: 20181116063405) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -636,6 +636,14 @@ ActiveRecord::Schema.define(version: 20181113175656) do
     t.index ["user_id", "role_id"], name: "index_users_roles_on_user_id_and_role_id", using: :btree
   end
 
+  create_table "vacation_configs", force: :cascade do |t|
+    t.integer "vacation_leave_advance_at_least", default: 0
+    t.integer "switch_date_advance_at_least",    default: 0
+    t.integer "work_at_home_unit",               default: 0
+    t.integer "work_at_home_limit",              default: 0
+    t.boolean "can_leave_half_day",              default: true
+  end
+
   create_table "vacation_types", force: :cascade do |t|
     t.string   "name"
     t.datetime "created_at",  null: false
@@ -651,6 +659,8 @@ ActiveRecord::Schema.define(version: 20181113175656) do
     t.datetime "created_at",                   null: false
     t.datetime "updated_at",                   null: false
     t.string   "detail"
+    t.string   "start_date"
+    t.string   "end_date"
     t.index ["approver_id"], name: "index_vacations_on_approver_id", using: :btree
     t.index ["user_id"], name: "index_vacations_on_user_id", using: :btree
     t.index ["vacation_type_id"], name: "index_vacations_on_vacation_type_id", using: :btree

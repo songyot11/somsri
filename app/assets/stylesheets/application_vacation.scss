@@ -24,12 +24,50 @@ $green: #417505;
 $dark-gray: #4A4A4A;
 $gray: #606060;
 $light-gray: #F0F0F0;
+$border: #E4E4E4;
+
+hr.dark {
+    border: none;
+    height: 1px;
+    color: $gray;
+    background-color: #DBDADB;
+}
 
 hr.light {
     border: none;
     height: 1px;
     color: $gray;
     background-color: $light-gray;
+}
+
+select.dropdown {
+  border: 1px solid $border;
+}
+
+input.datepicker {
+  border: 1px solid $border !important;
+  padding-left: 30px;
+  border-width: 1px !important;
+  border-radius: 4px ;
+}
+
+span.datepicker {
+  float: left;
+  margin-left: 8px;
+  margin-top: -24px;
+  position: relative;
+  z-index: 2;
+}
+
+textarea {
+  height: 100px !important;
+
+  &.border {
+    border: 1px solid $border;
+  }
+  &.no-resize {
+    resize: none;
+  }
 }
 
 .heading {
@@ -199,12 +237,12 @@ hr.light {
 }
 
 .dashboard-item:after {
-    content:"";
-    position:absolute;
-    width:100%;
-    bottom:1px;
-    z-index:-1;
-    transform:scale(.9);
+    content: "";
+    position: absolute;
+    width: 100%;
+    bottom: 1px;
+    z-index: -1;
+    transform: scale(.9);
     box-shadow: -4px 0px 8px 1.5px $gray;
 }
 

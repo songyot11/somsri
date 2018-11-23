@@ -58,6 +58,14 @@ RSpec.configure do |config|
     end
   end
 
+  ENV['ASSET_PRECOMPILE_DONE'] = nil
+  config.before(:each, :js) do
+    if ! ENV['ASSET_PRECOMPILE_DONE']
+      system 'bundle exec rake assets:precompile'
+      ENV['ASSET_PRECOMPILE_DONE'] = 'true'
+    end
+  end
+
   config.before(:each) do
     DatabaseCleaner.start
   end
