@@ -1,7 +1,7 @@
 class VacationMailer < ApplicationMailer
 
   def self.sick_leave_request(user, vacation)
-    recipients = User.with_role(:admin)
+    recipients = Employee.with_role(:approver)
     recipients.each do |recipient|
       send_sick_leave_request(recipient, user, vacation).deliver
     end
@@ -15,7 +15,7 @@ class VacationMailer < ApplicationMailer
   end
 
   def self.vacation_leave_request(user, vacation)
-    recipients = User.with_role(:admin)
+    recipients = Employee.with_role(:approver)
     recipients.each do |recipient|
       send_vacation_leave_request(recipient, user, vacation).deliver
     end
@@ -29,7 +29,7 @@ class VacationMailer < ApplicationMailer
   end
 
   def self.switch_date_request(user, vacation)
-    recipients = User.with_role(:admin)
+    recipients = Employee.with_role(:approver)
     recipients.each do |recipient|
       send_switch_date_request(recipient, user, vacation).deliver
     end
@@ -43,7 +43,7 @@ class VacationMailer < ApplicationMailer
   end
 
   def self.work_at_home_request(user, vacation)
-    recipients = User.with_role(:admin)
+    recipients = Employee.with_role(:approver)
     recipients.each do |recipient|
       send_work_at_home_request(recipient, user, vacation).deliver
     end
@@ -57,8 +57,8 @@ class VacationMailer < ApplicationMailer
   end
 
   def self.approved_rejected(vacation)
-    send_approved_rejected(vacation.user, vacation)
-    recipients = User.with_role(:admin)
+    send_approved_rejected(vacation.requester, vacation)
+    recipients = Employee.with_role(:approver)
     recipients.each do |recipient|
       send_approved_rejected(recipient, vacation).deliver
     end

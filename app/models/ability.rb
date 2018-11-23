@@ -2,31 +2,39 @@ class Ability
   include CanCan::Ability
 
   def initialize(user)
-    if user && user.admin?
-      can :access, :rails_admin
-      can :dashboard
-      can :manage, :all
-      can :manage, SiteConfig
-      can [:read, :approve, :reject], Vacation
-      can :manage, VacationConfig
-    elsif  user && user.finance_officer?
+    case user
+    when User
+      if user.admin?
+        can :access, :rails_admin
+        can :dashboard
+        can :manage, :all
+        can :manage, SiteConfig
+      elsif  user.finance_officer?
+        can :manage, :menu
+        can :manage, Invoice
+        can :manage, DailyReport
+        can :read, Grade
+        can :manage, Student
+        can :manage, Parent
+        can :read, School
+        can :manage, :setting
+        can :manage, Classroom
+        can :manage, Alumni
+        can :read, SiteConfig
+        can :manage, Expense
+        can :manage, ExpenseTag
+        can :manage, ExpenseTagItem
+        can :manage, ExpenseItem
+      end
+    when Employee
       can :manage, :menu
-      can :manage, Invoice
-      can :manage, DailyReport
-      can :read, Grade
-      can :manage, Student
-      can :manage, Parent
-      can :read, School
-      can :manage, :setting
-      can :manage, Classroom
-      can :manage, Alumni
-      can :read, SiteConfig
-      can :manage, Expense
-      can :manage, ExpenseTag
-      can :manage, ExpenseTagItem
-      can :manage, ExpenseItem
-      can :manage, Vacation, :user_id => user.id
-      can :read, VacationConfig
+      can :manage, Vacation, :requester_id => user.id
+      if user.approver?
+        can :manage, VacationConfig
+        can [:approve, :reject], Vacation
+      else
+        can :read, VacationConfig
+      end
     end
   end
 
