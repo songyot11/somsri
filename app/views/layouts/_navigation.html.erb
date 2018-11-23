@@ -12,8 +12,9 @@
       </div>
     </div>
     <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
-      <% if current_page?("/") %><ul class="nav navbar-nav" style="display:none;"><% else %><ul class="nav navbar-nav"><% end %>
-        <li class="dropdown">
+      <% if user_signed_in? || employee_signed_in? %>
+        <ul class="nav navbar-nav">
+          <li class="dropdown">
           <a id="menu" class="dropdown-toggle text-navbar-left" data-toggle="dropdown" href="">
             <span ng-show="menu" ng-bind="menu"></span>
             <span ng-hide="menu"><%= @menu %></span>
@@ -23,6 +24,7 @@
             <%= render 'layouts/menu', is_topbar: true %>
           </ul>
         </li>
+      <% end %>
       </ul>
       <ul class="nav navbar-nav navbar-right dropdown" role="menu" aria-labelledby="dLabel">
           <% if user_signed_in? %>
