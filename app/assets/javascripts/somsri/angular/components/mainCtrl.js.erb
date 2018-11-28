@@ -4,27 +4,39 @@
   ])
   .controller('mainCtrl', ['$rootScope','$state', '$http', '$window', '$scope', '$uibModal', function($rootScope, $state, $http, $window, $scope, $uibModal) {
 
-    function checkAbility(model, success, fail){
-      if($rootScope.abilities.manage && $rootScope.abilities.manage.all){
+    function checkAbility(model, success, fail) {
+      if ($rootScope.abilities.manage && $rootScope.abilities.manage.all) {
         success();
-      }else if($rootScope.abilities.manage && $rootScope.abilities.manage[model]){
+      } else if ($rootScope.abilities.manage && $rootScope.abilities.manage[model]) {
         success();
-      }else{
-        if(fail){
+      } else {
+        if (fail) {
           fail();
-        }else{
+        } else {
           $rootScope.openRoot();
         }
       }
     }
 
-    function checkManage(model, callback){
+    function checkManage(model, callback) {
       if ($rootScope.abilities.manage && $rootScope.abilities.manage.all) {
         callback(true);
       } else if ($rootScope.abilities.manage && $rootScope.abilities.manage[model]) {
         callback(true);
       } else {
         callback(false);
+      }
+    }
+
+    function canUpdate(model, success, fail) {
+      if ($rootScope.abilities.update && $rootScope.abilities.update[model]) {
+        success();
+      } else {
+        if (fail) {
+          fail();
+        } else {
+          $rootScope.openRoot();
+        }
       }
     }
 
@@ -59,6 +71,25 @@
             checkManage(model, callback)
           } else {
             callback(true)
+          }
+        });
+      }
+    }
+
+    $rootScope.canUpdate = function(model, success, fail) {
+      if ($rootScope.abilities && $rootScope.abilities.length > 0) {
+        checkManage(model, callback);
+      } else {
+        $http.get('/abilities').then(function(resp) {
+          if (resp.data.length > 0) {
+            $rootScope.abilities = resp.data[0];
+            canUpdate(model, success, fail);
+          } else {
+            if (fail) {
+              fail();
+            } else {
+              $rootScope.openRoot();
+            }
           }
         });
       }

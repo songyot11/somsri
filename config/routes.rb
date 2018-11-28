@@ -154,7 +154,11 @@ Rails.application.routes.draw do
       get 'reject'
     end
   end
+
   resources :vacation_configs, only: [:index] do
+  end
+
+  resources :vacation_leave_rules, only: [:index, :update] do
   end
 
   devise_scope :user do

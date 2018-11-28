@@ -26,7 +26,7 @@ end
 if User.count == 0
   User.create!([
     {email: "test@test.com", password: "password", password_confirmation: "password", reset_password_token: nil, reset_password_sent_at: nil, remember_created_at: nil, sign_in_count: 0, current_sign_in_at: nil, last_sign_in_at: nil, current_sign_in_ip: nil, last_sign_in_ip: nil, school_id: schools[0].id, name: nil},
-    {email: "admin@bananacoding.com", password: "password", password_confirmation: "password", reset_password_token: nil, reset_password_sent_at: nil, remember_created_at: nil, sign_in_count: 2, current_sign_in_at: "2016-12-26 07:33:11", last_sign_in_at: "2016-12-26 07:28:33", current_sign_in_ip: "180.183.204.78", last_sign_in_ip: "180.183.204.78", school_id: schools[0].id, name: nil},
+    {email: "admin@bananacoding.com", password: "password", password_confirmation: "password", reset_password_token: nil, reset_password_sent_at: nil, remember_created_at: nil, sign_in_count: 2, current_sign_in_at: "2016-12-26 07:33:11", last_sign_in_at: "2016-12-26 07:28:33", current_sign_in_ip: "180.183.204.78", last_sign_in_ip: "180.183.204.78", school_id: schools[0].id, name: 'Admin'},
     {email: "manit@bananacoding.com", password: "password", password_confirmation: "password", reset_password_token: nil, reset_password_sent_at: nil, remember_created_at: nil, sign_in_count: 3, current_sign_in_at: "2016-12-26 10:25:26", last_sign_in_at: "2016-12-26 08:19:32", current_sign_in_ip: "::1", last_sign_in_ip: "58.11.94.19", school_id: schools[0].id, name: nil},
     {email: "putamthong@gmail.com", password: "password", password_confirmation: "password", reset_password_token: nil, reset_password_sent_at: nil, remember_created_at: nil, sign_in_count: 1, current_sign_in_at: "2016-12-27 02:20:42", last_sign_in_at: "2016-12-27 02:20:42", current_sign_in_ip: "::1", last_sign_in_ip: "::1", school_id: schools[0].id, name: nil},
     {email: "admin@sunshinekindergarten.com", password: "password", password_confirmation: "password", reset_password_token: nil, reset_password_sent_at: nil, remember_created_at: nil, sign_in_count: 0, current_sign_in_at: nil, last_sign_in_at: nil, current_sign_in_ip: nil, last_sign_in_ip: nil, school_id: schools[0].id, name: nil}
@@ -490,3 +490,27 @@ if Vacation.count == 0
    { id: 6, detail: "ช่างมาซ่อมไฟ ขอทำงานที่บ้านครับ", vacation_type_id: "6", requester_id: 3 }
   ])
 end
+
+if VacationLeaveRule.count == 0
+  VacationLeaveRule.create!({
+    updated_by: User.find(2),
+    message: """
+    <h3><span style='color:#ffab04'>การลาป่วย</span></h3>
+    <p>- ลาป่วย ตามสมควร ถ้าเกิน 3 วันต้องมีหนังสือรับรองจากแพทย์ หรือ ใบเสร็จรับเงินจากคลีนิค, โรงพยาบาล</p>
+    &nbsp;
+    <h3><span style='color:#ffab04'>การลากิจ</span></h3>
+    &nbsp;
+    <p>- ต้องลาล่วงหน้าอย่างน้อย 3 วัน เป็นลายลักษณ์อักษร ทาง Banana Vacation (<a href='http://vacation.bananacoding.com'>http://vacation.bananacoding.com</a>), email หรือ slack</p>
+    <p>- สำหรับพนักงานทำงานไม่ถึงหนึ่งปี จะลาได้ไม่เกิน 7 วัน</p>
+    <p>- สำหรับพนักงานเกินหนึ่งปี จะเป็นไปตามอายุงาน และจะเพิ่มปีละ 2 วัน เช่นเข้าทำงานได้ 2 ปีจะได้วันหยุด 11 วัน</p>
+    <p>- สำหรับพนักงานช่วงทดลองงาน 3 เดือน ลากิจ จะเป็นการลาแบบไม่ได้เงินเดือน ตามจำนวณวันที่ลา เช่นเงินเดือน 10,000 บาท พนักงานต้องทำงานวันละ 8 ชัวโมงต่อวัน 20 วันต่อเดือน คือหัก วันละ 500 บาท</p>
+    &nbsp;
+    <h3><span style='color:#ffab04'>การทำงานที่บ้าน</span></h3>
+    &nbsp;
+    <p>- ทำงานนอกสถานที่ หรือ ที่บ้าน สามารถทำได้ 2 วันต่อสัปดาห์ ต้องแจ้ง ทาง Banana Vacation (<a href='http://vacation.bananacoding.com'>http://vacation.bananacoding.com</a>), email หรือ slack</p>
+    &nbsp;
+    <p>เพิ่มเติมตามกฎหมายแรงงานที่ <a href='http://www.mol.go.th/employee/rihgt_labor%20low'>http://www.mol.go.th/employee/rihgt_labor%20low</a></p>
+    &nbsp;
+  """ })
+end
+

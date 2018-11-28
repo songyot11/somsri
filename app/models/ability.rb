@@ -9,6 +9,7 @@ class Ability
         can :dashboard
         can :manage, :all
         can :manage, SiteConfig
+        can :update, VacationLeaveRule
       elsif  user.finance_officer?
         can :manage, :menu
         can :manage, Invoice
@@ -39,6 +40,7 @@ class Ability
   end
 
   def as_json(options={})
+    update = {}
     manage = {}
     manage[:all] = true if self.can? :manage, :all
     manage[:menu] = true if self.can? :manage, :menu
@@ -53,7 +55,9 @@ class Ability
     manage[:school] = true if self.can? :manage, School
     manage[:vacation] = true if self.can? :manage, Vacation
     manage[:vacation_config] = true if self.can? :manage, VacationConfig
+    update[:vacation_leave_rules] = true if self.can? :update, VacationLeaveRule
     result = {
+      update: update,
       manage: manage
     }
     return result

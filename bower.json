@@ -28,7 +28,8 @@
     "angular-translate-loader-url": "",
     "angular-acl": "",
     "angular-ui-select": "",
-    "angular-ui-tree": ""
+    "angular-ui-tree": "",
+    "ng-ckeditor": "ng.ckeditor#^2.0.5"
   },
   "resolutions": {
     "angular": "1.5.9"

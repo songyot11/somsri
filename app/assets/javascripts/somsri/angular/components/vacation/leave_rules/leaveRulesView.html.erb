@@ -5,6 +5,25 @@
     </div>
   </div>
   <div class="row content-wrapper">
-    <p data-ng-bind-html="leaveRules.leaveRulesHtmlText"></p>
+    <p data-ng-bind-html="leaveRules.leaveRulesHtmlText" ng-hide="leaveRules.isAdmin"></p>
+    <ng-ckeditor ng-model="leaveRules.leaveRulesText" skin="moono" ng-show="leaveRules.isAdmin" class="mt-10"></ng-ckeditor>
+    <div class="row mt-10" ng-hide="leaveRules.isAdmin">
+      <div class="col-md-6"></div>
+      <div class="col-md-6 text-right">
+        <p class="font-12">{{ 'updated_at' | translate }} {{ leaveRules.vacationLeaveRule.updated_at }}</p>
+      </div>
+    </div>
+    <div class="row" ng-hide="leaveRules.isAdmin">
+      <div class="col-md-6"></div>
+      <div class="col-md-6 text-right">
+        <p class="font-12">{{ 'updated_by' | translate }} {{ leaveRules.vacationLeaveRule.updated_by }}</p>
+      </div>
+    </div>
+    <div class="row mt-10" ng-show="leaveRules.isAdmin">
+      <div class="col-md-9"></div>
+      <div class="col-md-3 text-center">
+        <button class="btn btn-custom btn-green btn-block" ng-click="leaveRules.updateLeaveRules()" ng-disabled="leaveRules.isSaving">{{ 'save' | translate }}</button>
+      </div>
+    </div>
   </div>
 </div>

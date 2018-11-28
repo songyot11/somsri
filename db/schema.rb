@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20181122203437) do
+ActiveRecord::Schema.define(version: 20181123100815) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -661,6 +661,14 @@ ActiveRecord::Schema.define(version: 20181122203437) do
     t.integer "work_at_home_unit",               default: 0
     t.integer "work_at_home_limit",              default: 0
     t.boolean "can_leave_half_day",              default: true
+  end
+
+  create_table "vacation_leave_rules", force: :cascade do |t|
+    t.text     "message"
+    t.integer  "updated_by_id"
+    t.datetime "created_at",    null: false
+    t.datetime "updated_at",    null: false
+    t.index ["updated_by_id"], name: "index_vacation_leave_rules_on_updated_by_id", using: :btree
   end
 
   create_table "vacation_types", force: :cascade do |t|

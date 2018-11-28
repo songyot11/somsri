@@ -553,7 +553,8 @@ th:
   vacation_saved_success: "ส่งคำขอสำเร็จแล้ว"
   vacation_deleted_success: "ลบคำขอสำเสร็จแล้ว"
   confirm_delete_vacation: "คุณต้องการที่จะลบคำขอนี้?"
-  # your_work_at_home_: 'คุณทำงานที่บ้านครบกำหนดแล้ว'
+  updated_by: "อัพเดทโดย:"
+  updated_at: "อัพเดทเมื่อ:"
 
   # All
   save_change_confirmation: "คุณต้องการบันทึกการเปลี่ยนแปลงนี้หรือไม่"
