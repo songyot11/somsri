@@ -151,13 +151,6 @@
       <div class="modal-body px-0">
         <div class="row">
           <div class="col-md-6">
-            <div class="form-group has-error" ng-hide="dashboard.errorMessage == ''">
-              <span class="error text-danger">{{ dashboard.errorMessage }}</span>
-            </div>
-          </div>
-        </div>
-        <div class="row">
-          <div class="col-md-6">
             <div class="form-group">
               <label class="font-12" for="vacation_type">{{ 'vacation_type' | translate }}</label>
               <select class="form-control dropdown" ng-change="dashboard.vacationTypeChanged(dashboard.selectedVacationType)" ng-model="dashboard.selectedVacationType" >

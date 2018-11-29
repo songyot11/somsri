@@ -139,8 +139,9 @@
       $state.go('vacation_setting')
     };
 
-    $rootScope.openConfirmationModal = function (message, success, dismiss) {
+    $rootScope.openConfirmationModal = function (message, detail, success, dismiss) {
       $scope.message = message;
+      $scope.detail = detail;
       $uibModal.open({
         animation: true,
         backdrop: 'static',
@@ -160,7 +161,7 @@
         if (isConfirm) {
           if(success){ success() }
         }else{
-          if(dismiss){ dismiss() }
+        if(dismiss){ dismiss() }
         }
       });
     }
@@ -185,7 +186,7 @@
       });
     }
 
-    $rootScope.openErrorModal = function(message) {
+    $rootScope.openErrorModal = function(message, callback) {
       $scope.message = message;
       $uibModal.open({
         animation: true,
@@ -202,6 +203,10 @@
             ]);
           }]
         }
+      }).result.then(function() {
+          if (callback) {
+            callback();
+          }
       });
     }
 

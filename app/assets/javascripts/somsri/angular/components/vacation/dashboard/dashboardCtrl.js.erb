@@ -58,37 +58,58 @@
     };
     ctrl.vacationTypeChanged(ctrl.selectedVacationType);
     ctrl.submitLeaveRequest = function() {
-      ctrl.errorMessage = '';
       var startDate = moment(ctrl.start_date);
       var endDate = moment(ctrl.end_date);
       if (startDate.isAfter(endDate, 'days') || startDate.isBefore(moment(), 'days')) {
-        ctrl.errorMessage = 'วันที่ไม่ถูกต้อง';
+        hideLeaveSubmissionModal();
+        $rootScope.openErrorModal('วันที่ไม่ถูกต้อง', function() {
+          showLeaveSubmissionModal();
+        });
         return;
       }
       if (ctrl.selectedVacationType == 'sick_leave') {
         sendLeaveRequest(ctrl.selectedVacationType);
       } else if (ctrl.selectedVacationType == 'vacation_leave') {
         if (ctrl.vacationConfig.leave_remaining == 0) {
-          ctrl.errorMessage = 'วันลาของคุณหมดแล้ว';
+          hideLeaveSubmissionModal();
+          $rootScope.openConfirmationModal('วันลาของคุณหมดแล้ว', 'คุณยังต้องการที่จะยื่นคำขออีกหรือไม่?', function() {
+            sendLeaveRequest(ctrl.selectedVacationLeaveType);
+          }, function() {
+            showLeaveSubmissionModal();
+          });
         } else {
           var minimumLeaveDate = moment().add(ctrl.vacationConfig.vacation_leave_advance_at_least, 'days')
           if (startDate.diff(minimumLeaveDate, 'days') < 0) {
-            ctrl.errorMessage = 'กรุณาแจ้งล่วงหน้าอย่างน้อย ' + ctrl.vacationConfig.vacation_leave_advance_at_least + ' วัน';
+            hideLeaveSubmissionModal();
+            $rootScope.openConfirmationModal('กรุณาแจ้งล่วงหน้าอย่างน้อย ' + ctrl.vacationConfig.vacation_leave_advance_at_least + ' วัน', 'คุณยังต้องการที่จะยื่นคำขออีกหรือไม่?' , function() {
+              sendLeaveRequest(ctrl.selectedVacationLeaveType);
+            }, function() {
+              showLeaveSubmissionModal();
+            });
           }
-          sendLeaveRequest(ctrl.selectedVacationLeaveType);
         }
       } else if (ctrl.selectedVacationType == 'switch_date') {
         var minimumLeaveDate = moment().add(ctrl.vacationConfig.switch_date_advance_at_least, 'days')
         if (startDate.isSame(endDate, 'days')) {
-          ctrl.errorMessage = 'ไม่สามารถสลับวันทำงานเป็นวันเดียวกันได้'
+          hideLeaveSubmissionModal();
+          $rootScope.openErrorModal('ไม่สามารถสลับวันทำงานเป็นวันเดียวกันได้', function() {
+            showLeaveSubmissionModal();
+          });
         } else if (startDate.diff(minimumLeaveDate, 'days') < 0) {
-          ctrl.errorMessage = 'กรุณาแจ้งล่วงหน้าอย่างน้อย ' + ctrl.vacationConfig.switch_date_advance_at_least + ' ' + translateFilter('day');
+          $rootScope.openConfirmationModal('กรุณาแจ้งล่วงหน้าอย่างน้อย ' + ctrl.vacationConfig.switch_date_advance_at_least + ' วัน', 'คุณยังต้องการที่จะยื่นคำขออีกหรือไม่?', function() {
+              sendLeaveRequest(ctrl.selectedVacationType);
+          });
         } else {
           sendLeaveRequest(ctrl.selectedVacationType);
         }
       } else if (ctrl.selectedVacationType == 'work_at_home') {
         if (ctrl.vacationConfig.work_at_home_remaining == 0) {
-          ctrl.errorMessage = 'คุณทำงานที่บ้านครบกำหนดแล้ว';
+          hideLeaveSubmissionModal();
+          $rootScope.openConfirmationModal('คุณทำงานที่บ้านครบกำหนดแล้ว', 'คุณยังต้องการที่จะยื่นคำขออีกหรือไม่?', function() {
+            sendLeaveRequest(ctrl.selectedVacationType);
+          }, function() {
+            showLeaveSubmissionModal();
+          });
         } else {
           sendLeaveRequest(ctrl.selectedVacationType);
         }
@@ -135,6 +156,14 @@
         ctrl.isSaving = false;
         console.log(e)
       });
+    }
+
+    function showLeaveSubmissionModal() {
+      angular.element('#leaveSubmissionModal').modal('show');
+    }
+
+    function hideLeaveSubmissionModal() {
+      angular.element('#leaveSubmissionModal').modal('hide');
     }
   }]);
 })();
