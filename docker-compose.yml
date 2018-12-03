@@ -12,6 +12,11 @@ services:
       - DB_PORT=5432
       - DB_USER=root
       - DB_PASS=pass
+      - PDFTK_PATH=''
+      - SENDGRID_USERNAME=''
+      - SENDGRID_PASSWORD=''
+      - BIND_ON=0.0.0.0:3000
+      - RAILS_ENV=production
     volumes:
       - .:/app/somsri/payroll
   db:
@@ -25,4 +30,4 @@ services:
       - DB_USER=root
       - DB_PASS=pass
     volumes:
-      - /srv/docker/postgresql:/var/lib/postgresql
+      - .:/var/lib/postgresql
