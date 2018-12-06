@@ -271,6 +271,7 @@ th:
   setting: 'การตั้งค่า'
   class_management: จัดการชั้นเรียน
   expense: "บันทึกค่าใช้จ่าย"
+  inventory: "พัสดุ"
 
   activerecord:
     attributes:
@@ -428,6 +429,18 @@ th:
   status: "สถานะ"
   graduated_semester: "ภาคเรียนที่"
   grade_classroom: "ระดับชั้นเรียน"
+
+  #Inventory
+  list_inventory: "รายการพัสดุ"
+  add_inventory: "+ เพิ่มพัสดุ"
+  item_name: "ชื่อพัสดุ"
+  serial_number: "หมายเลขซีเรียล"
+  model: "รุ่น"
+  description: "ลักษณะ"
+  price: "ราคา"
+  date_purchase: "วันที่ซื้อ" 
+  category: "ประเภท"
+  date_add: "วันที่เพิ่ม"
 
   # Rollcall
   monthly: ประจำเดือน

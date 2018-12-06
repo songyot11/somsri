@@ -1,0 +1,17 @@
+(function() {
+  'use strict';
+  angular.module('somsri.inventory.inventory', [])
+  .controller('inventoryCtrl', ['$compile', '$scope', '$window', '$filter', '$rootScope', '$timeout', 'translateFilter', '$uibModal', 'Upload', function($compile, $scope, $window, $filter, $rootScope, $timeout, translateFilter, $uibModal, Upload) {
+    $rootScope.menu = translateFilter("inventory")
+    var ctrl = this
+    var angularScopeRoot = 'angular.element(document.getElementById("angularCtrl")).scope().$root'
+    var angularScopeInventory = 'angular.element(document.getElementById("angularCtrl")).scope().inventoryCtrl '
+    var angularCtrlStr = 'angular.element(document.getElementById("angularCtrl")).scope().inventory '
+    ctrl.inventory = [];
+    ctrl.message = '';
+  $rootScope.loadAndAuthorizeResource("inventory", function(){
+    
+        
+  });
+  }]);
+})();

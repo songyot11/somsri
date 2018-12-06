@@ -7,7 +7,7 @@ Rails.application.routes.draw do
   get "/somsri_invoice" => "menu#landing_invoice"
   get "/somsri_payroll" => "menu#landing_payroll"
   get "/somsri_rollcall" => "menu#landing_rollcall"
-  get "/somsri" => "menu#landing_somsri"
+  get "/somsri_inventory" => "menu#landing_somsri"
   get "/main" => "menu#landing_main"
   get "/language" => "home#language"
   get "/locale" => "home#locale"

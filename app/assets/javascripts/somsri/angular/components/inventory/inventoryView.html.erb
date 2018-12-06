@@ -1,0 +1,87 @@
+
+
+
+
+<div class="container">
+  <div class="row">
+    <div id="inventory">
+      <div class="col-xs-12">
+        <div class="row">
+          <div class="col-xs-6 mb-20">
+            <h1><h1>{{ "list_inventory" | translate }}</h1></h1>
+          </div>
+          <div class="col-xs-3 mt-10" style="text-align: right;">
+            
+          </div>
+          <div class="col-xs-3 mt-10" style="text-align: right;">
+            <a class="btn btn-custom btn-orange" href="javascript:void(0)">
+              {{ "add_inventory" | translate }}
+            </a>
+          </div>
+        </div>
+        <div class="row report-content container-fluid panel-board">
+          <ul class="nav nav-tabs" role="tablist">
+            <li role="presentation" class="active"><a href="#home" aria-controls="home" role="tab" data-toggle="tab">พัสดุ</a></li>
+            <li role="presentation"><a href="#profile" aria-controls="profile" role="tab" data-toggle="tab">คำขอใช้พัสดุ</a></li>
+          </ul>
+          <div class="tab-content">
+            <div role="tabpanel" class="tab-pane active" id="home">
+              <div class="row">
+                <div class="col-xs-3">
+                  <div class="search">
+                    <input class="form-control" id="search" type="text" placeholder="ค้นหา" onchange="search()" onkeyup="this.onchange()">
+                  </div>
+                </div>
+              </div>
+              <div class="row ">
+                <table class="table">
+                  <thead>
+                    <tr>
+                      <th>#</th>
+                      <th>Item name</th>
+                      <th>Serial Number</th>
+                      <th>Model</th>
+                      <th> Description</th>
+                      <th class="text-right">Price</th>
+                      <th>Date purchase </th>
+                      <th>Category</th>
+                      <th>Date add</th>
+                      <th></th>
+                      <th></th>
+                     
+                    </tr>
+                  </thead>
+                  <tbody>
+                    <tr>
+                      <th>1</th>
+                      <td>MackBook Pro</td>
+                      <td>SFXFP4HHV29</td>
+                      <td>MPXT2TH/A</th>
+                      <td>Apple 13.3” I5/2.3GHZ/8GB</td>
+                      <td class="text-right">22,000.00</td>
+                      <td>01/09/2561</td>
+                      <td>Computer</th>
+                      <td>01/09/2561</td>
+                      <td> <i class="fa fa-edit"></i></td>
+                      <td><i class="fa fa-trash-alt"></i></td>
+                    </tr>
+               
+                  </tbody>
+                </table>
+              </div>
+            </div>
+          </div>
+          
+          
+          <table  id="tableForExport" data-toolbar="none" data-tableexport-display="always" style="display: none;"><table>
+
+              </div>
+            
+            </div>
+            <div role="tabpanel" class="tab-pane" id="profile">...</div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
