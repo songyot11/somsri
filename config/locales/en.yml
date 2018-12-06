@@ -271,6 +271,7 @@ en:
   setting: 'Settings'
   class_management: "Grade Management"
   expense: "Expense"
+  inventory: "Inventory"
 
 
   activerecord:
@@ -428,6 +429,17 @@ en:
   status: "Status"
   graduated_semester: "Graduation Semester"
   grade_classroom: "Level"
+
+ #Inventory
+  add_inventory: "+ Add inventory"
+  item_name: "Item name"
+  serial_number: "Serial number"
+  model: "Model"
+  description: "Description"
+  price: "ราคา"
+  date_purchase: "Date purchase" 
+  category: "Category"
+  date_add: "Date add"
 
   # Rollcall
   monthly: "Month"
