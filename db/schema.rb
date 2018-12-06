@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20181019103523) do
+ActiveRecord::Schema.define(version: 20181206050556) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -248,9 +248,9 @@ ActiveRecord::Schema.define(version: 20181019103523) do
 
   create_table "expense_items", force: :cascade do |t|
     t.integer "expense_id"
-    t.string  "detail",     null: false
-    t.integer "amount",     null: false
-    t.float   "cost",       null: false
+    t.string  "detail"
+    t.integer "amount"
+    t.float   "cost"
     t.index ["expense_id"], name: "index_expense_items_on_expense_id", using: :btree
   end
 
@@ -267,9 +267,9 @@ ActiveRecord::Schema.define(version: 20181019103523) do
   end
 
   create_table "expenses", force: :cascade do |t|
-    t.datetime "effective_date",       null: false
+    t.datetime "effective_date"
     t.string   "expenses_id"
-    t.string   "detail",               null: false
+    t.string   "detail"
     t.datetime "created_at",           null: false
     t.datetime "updated_at",           null: false
     t.datetime "deleted_at"
@@ -331,6 +331,28 @@ ActiveRecord::Schema.define(version: 20181019103523) do
     t.index ["friend_id"], name: "index_individuals_on_friend_id", using: :btree
     t.index ["parent_id"], name: "index_individuals_on_parent_id", using: :btree
     t.index ["spouse_id"], name: "index_individuals_on_spouse_id", using: :btree
+  end
+
+  create_table "inventories", force: :cascade do |t|
+    t.string   "item_name"
+    t.string   "serial_number"
+    t.string   "model"
+    t.string   "description"
+    t.float    "price"
+    t.string   "date_purchase"
+    t.string   "category"
+    t.string   "date_add"
+    t.datetime "created_at",    null: false
+    t.datetime "updated_at",    null: false
+  end
+
+  create_table "inventoy_requests", force: :cascade do |t|
+    t.integer  "user_id"
+    t.integer  "inventory_id"
+    t.string   "request_date"
+    t.integer  "inventory_status"
+    t.datetime "created_at",       null: false
+    t.datetime "updated_at",       null: false
   end
 
   create_table "invoice_statuses", force: :cascade do |t|
@@ -458,8 +480,6 @@ ActiveRecord::Schema.define(version: 20181019103523) do
     t.string   "round"
     t.string   "check_date"
     t.integer  "list_id"
-    t.datetime "deleted_at"
-    t.index ["deleted_at"], name: "index_roll_calls_on_deleted_at", using: :btree
     t.index ["list_id"], name: "index_roll_calls_on_list_id", using: :btree
     t.index ["student_id", "list_id", "check_date", "round"], name: "index_roll_calls_uniq_roll", unique: true, using: :btree
     t.index ["student_id"], name: "index_roll_calls_on_student_id", using: :btree
@@ -489,7 +509,6 @@ ActiveRecord::Schema.define(version: 20181019103523) do
     t.integer  "logo_file_size"
     t.datetime "logo_updated_at"
     t.text     "payroll_slip_header"
-    t.string   "account_number"
   end
 
   create_table "site_configs", force: :cascade do |t|
@@ -507,8 +526,7 @@ ActiveRecord::Schema.define(version: 20181019103523) do
     t.boolean "export_ktb_payroll",                   default: false
     t.boolean "outstanding_notification",             default: false
     t.boolean "slip_carbon",                          default: false
-    t.boolean "export_kbank_payroll",                 default: false
-    t.string  "default_locale",                       default: "th"
+    t.string  "default_locale"
     t.boolean "enable_expenses",                      default: false
     t.string  "expense_tag_tree"
   end

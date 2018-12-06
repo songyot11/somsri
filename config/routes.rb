@@ -153,4 +153,24 @@ Rails.application.routes.draw do
   comfy_route :cms, :path => '/homepage', :sitemap => false
   comfy_route :cms_admin, :path => '/cms_admin'
   root to: 'home#index'
+
+  resources :inventories do
+    collection do
+    end
+
+    member do
+    end
+  end
+
+  resources :inventories_request do 
+        collection do
+    end
+
+    member do
+      put 'approve'
+      put 'pendeing'
+      put 'reject'
+      put 'done'
+    end
+  end
 end
