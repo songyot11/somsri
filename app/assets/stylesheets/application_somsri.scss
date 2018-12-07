@@ -761,10 +761,7 @@ tags-input .tags .tag-item .remove-button{
 .border-color-gray {
   border-color: #d0d0d0 !important;
 }
-.nav-tabs.main-in{
-  margin-left: 0px;
-  margin-right: 15px;
-}
+
 
 .nav-tabs.inventory > li > a {
   padding: 20px 40px 20px 40px;
@@ -777,6 +774,7 @@ tags-input .tags .tag-item .remove-button{
 .nav-tabs.inventory {
   margin-left: 0px;
   margin-right: 15px;
+  cursor: pointer;
 }
 
 .nav-tabs.inventory > li.cyan > a {
