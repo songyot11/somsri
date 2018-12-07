@@ -1,5 +1,7 @@
 FROM rails:latest
 
+ENV RAILS_ENV production
+
 ENV APP_HOME /app/somsri/payroll
 RUN mkdir $APP_HOME -p
 WORKDIR $APP_HOME
@@ -15,5 +17,7 @@ RUN bundle install
 
 ADD . $APP_HOME/
 
-EXPOSE 3000
-CMD bundle exec rails server -b 0.0.0.0 -p 3000
+RUN cp config/application_sample.yml config/application.yml
+RUN RAILS_GROUPS=assets bundle exec rake assets:precompile
+
+CMD puma -C config/puma.rb

@@ -10,16 +10,22 @@
             
           </div>
           <div class="col-xs-3 mt-10" style="text-align: right;">
-            <a class="btn btn-custom btn-orange" href="javascript:void(0)">
+            <a class="btn btn-custom btn-orange" href="somsri#/inventory/new">
               {{ "add_inventory" | translate }}
             </a>
           </div>
         </div>
-        <div class="row report-content container-fluid panel-board">
-          <ul class="nav nav-tabs" role="tablist">
-            <li role="presentation" class="active"><a href="#home" aria-controls="home" role="tab" data-toggle="tab">พัสดุ</a></li>
-            <li role="presentation"><a href="#profile" aria-controls="profile" role="tab" data-toggle="tab">คำขอใช้พัสดุ</a></li>
+        <div class="row">
+          <ul class="nav nav-tabs main">
+            <li class="cyan active">
+              <a data-toggle="tab" class="ng-binding">พัสดุ</a>
+            </li>
+            <li class="cyan " >
+              <a data-toggle="tab"  class="ng-binding">คำขอใช้พัสดุ</a>
+            </li>
           </ul>
+        </div>
+        <div class="row report-content container-fluid panel-board">
           <div class="tab-content">
             <div role="tabpanel" class="tab-pane active" id="home">
               <div class="row">
@@ -31,7 +37,7 @@
               </div>
               <div class="row">
                 <table id="inventory-table" >
-                    <thead>
+                  <thead>
                     <tr>
                         <th data-field="id">#</th>
                         <th data-field="item_name">Item Name</th>
@@ -45,7 +51,7 @@
                         <th data-field="edit"></th>
                         <th data-field="delete"></th>
                     </tr>
-                    </thead>
+                  </thead>
                 </table>
                 <div class="row row-centered for-display">
                   <div class="col-centered">
@@ -60,17 +66,10 @@
               </div>
             </div>
           </div>
-          
-          
           <table  id="tableForExport" data-toolbar="none" data-tableexport-display="always" style="display: none;"><table>
-
-              </div>
-            
-            </div>
-            <div role="tabpanel" class="tab-pane" id="profile">...</div>
-          </div>
         </div>
       </div>
+      <div role="tabpanel" class="tab-pane" id="profile">...</div>
     </div>
   </div>
 </div>

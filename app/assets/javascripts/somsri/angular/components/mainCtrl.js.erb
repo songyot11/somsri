@@ -92,6 +92,10 @@
         }
       });
     }
+    
+    $rootScope.openInventory = function() {
+      $state.go('inventory')
+    };
 
   }]);
 })();

@@ -1,0 +1,59 @@
+(function() {
+  'use strict';
+  angular.module('somsri.somsri.inventory_new', [])
+    .controller('inventoryNewCtrl', ['$compile', '$scope', '$window', '$filter', '$rootScope', '$timeout', 'translateFilter', '$uibModal', 'Upload', "inventoryService", "employeesService", function($compile, $scope, $window, $filter, $rootScope, $timeout, translateFilter, $uibModal, Upload, service, employeesService) {
+      $rootScope.menu = translateFilter("พัสดุ")
+        var ctrl = this
+        var angularScopeRoot = 'angular.element(document.getElementById("angularCtrl")).scope().$root'
+        var angularScopeInventoryNew = 'angular.element(document.getElementById("angularCtrl")).scope().inventoryNewCtrl'
+        var angularCtrlStr = 'angular.element(document.getElementById("angularCtrl")).scope().inventoryNew'
+        ctrl.inventoryNew = [];
+        ctrl.message = '';
+        ctrl.name = ""
+        ctrl.serial_number = ""
+        ctrl.model = ""
+        ctrl.description = ""
+        ctrl.price = ""
+        ctrl.category = ""
+        ctrl.date_purchase = new Date()
+        ctrl.employee = ""
+        // default last 7 days
+        ctrl.end_date = new Date();
+        ctrl.start_date = new Date(new Date().setMonth(new Date().getMonth() - 1));
+
+        function cleanDate(date){
+          if(!date || new Date(date) == "Invalid Date"){return;}
+          var nowDate = new Date()
+          date.setHours(nowDate.getHours())
+          date.setMinutes(nowDate.getMinutes())        
+          date.setSeconds(nowDate.getSeconds())
+          return date
+        }
+
+        ctrl.createInventory = function() {
+          var changePrice = parseFloat(ctrl.price);
+          var changeDatePurchase = $filter('date')(new Date(ctrl.date_purchase), "dd/MM/yyyy")
+          var changeDateAdd = $filter('date')(new Date(Date()), "dd/MM/yyyy")
+          service.newInventory({
+              item_name: ctrl.name,
+              serial_number: ctrl.serial_number,
+              model: ctrl.model,
+              description: ctrl.description,
+              price: changePrice,
+              date_purchase: changeDatePurchase,
+              category: ctrl.category,
+              date_add: changeDateAdd
+            }).then(function(resp) {
+              $rootScope.openInventory();
+          });
+        };
+
+        function getEmployee() {
+          employeesService.getAllEmployee().then(function(resp) {
+              ctrl.employee = resp.data
+          });
+        }
+
+        getEmployee();
+  }]);
+})();
