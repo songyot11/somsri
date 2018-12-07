@@ -1,0 +1,27 @@
+(function() {
+	'use strict';
+
+	angular.module('somsri.somsri.inventory.service', [])
+	.service('inventoryService', ['$http', 'Upload', function($http, Upload) {
+		this.newInventory = function(data) {
+			return $http.post('/inventories', data)
+		};
+
+		this.getInventory = function() {
+			return $http.get('/inventories');
+		};
+
+		this.removeInventory = function(id) {
+			return $http.delete('/inventories/' + id.id);
+		};
+
+		this.updateInventory = function(data, id) {
+			return Upload.upload({
+							url: '/inventories/' + id,
+							method: 'put',
+							data: { inventory: data }
+						});
+		}
+
+	 }]);
+})();

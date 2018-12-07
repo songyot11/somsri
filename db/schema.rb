@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20181019103523) do
+ActiveRecord::Schema.define(version: 20181206142749) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -331,6 +331,28 @@ ActiveRecord::Schema.define(version: 20181019103523) do
     t.index ["friend_id"], name: "index_individuals_on_friend_id", using: :btree
     t.index ["parent_id"], name: "index_individuals_on_parent_id", using: :btree
     t.index ["spouse_id"], name: "index_individuals_on_spouse_id", using: :btree
+  end
+
+  create_table "inventories", force: :cascade do |t|
+    t.string   "item_name"
+    t.string   "serial_number"
+    t.string   "model"
+    t.string   "description"
+    t.float    "price"
+    t.string   "date_purchase"
+    t.string   "category"
+    t.string   "date_add"
+    t.datetime "created_at",    null: false
+    t.datetime "updated_at",    null: false
+  end
+
+  create_table "inventory_requests", force: :cascade do |t|
+    t.integer  "user_id"
+    t.integer  "inventory_id"
+    t.string   "request_date"
+    t.integer  "inventory_status"
+    t.datetime "created_at",       null: false
+    t.datetime "updated_at",       null: false
   end
 
   create_table "invoice_statuses", force: :cascade do |t|

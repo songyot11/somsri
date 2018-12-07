@@ -1,0 +1,111 @@
+<div class="container" >
+  <div class="row">
+    <div id="inventory">
+      <div class="col-xs-12">
+        <div class="row">
+          <div class="col-xs-6 mb-20">
+            <h1><h1>{{ "list_inventory" | translate }}</h1></h1>
+          </div>
+        </div>
+        <div class="row">
+          <ul class="nav nav-tabs main">
+            <li class="cyan active">
+              <a data-toggle="tab" class="ng-binding">พัสดุ</a>
+            </li>
+          </ul>
+        </div>
+        <div class="row report-content container-fluid panel-board" style="height: 350px;">
+          <div class="tab-content">
+            <div class="row">
+              <div class="col-md-3">
+                <div class="form-group">
+                  <label class="control-label" for="student_full_name">Name </label>
+                  <div class="col-md-12">
+                    <input class="form-control" autocomplete="off" type="text" name="student[full_name]" id="student_full_name">
+                  </div>
+                </div>
+              </div>
+              <div class="col-md-5">
+                <div class="form-group">
+                  <label class="control-label" for="student_nickname">Serial Number</label>
+                  <div class="col-md-12">
+                    <input class="form-control" autocomplete="off" type="text" name="student[nickname]" id="student_nickname">
+                  </div>
+                </div>
+              </div>
+              <div class="col-md-4">
+                <div class="form-group">
+                  <label class="control-label" for="student_nickname">Model </label>
+                  <div class="col-md-12">
+                    <input class="form-control" autocomplete="off" type="text" name="student[nickname]" id="student_nickname">
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div class="row mt-20">
+              <div class="col-md-8">
+                <div class="form-group">
+                  <label class="control-label" for="student_nickname">Description</label>
+                  <div class="col-md-12">
+                    <input class="form-control" autocomplete="off" type="text" name="student[nickname]" id="student_nickname">
+                  </div>
+                </div>
+              </div>
+              <div class="col-md-4">
+                <div class="form-group">
+                  <label class="control-label" for="student_nickname">Price</label>
+                  <div class="col-md-12">
+                    <input class="form-control" autocomplete="off" type="text" name="student[nickname]" id="student_nickname">
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div class="row mt-20">
+              <div class="col-md-4">
+                <div class="form-group ">
+                  <label class="control-label" for="student_gender_id">Category</label>
+                  <div class="col-md-12">
+                    <select class="form-control" name="student[gender_id]" id="student_gender_id"><option value="">เลือกประเภท</option>
+                      <option value="1">1</option>
+                      <option value="2">2</option>
+                    </select>
+                  </div>
+                </div>
+              </div>
+              <div class="col-md-4">
+                <div class="form-group">
+                  <label class="control-label" for="student_birthdate">Date purchase </label>
+                  <div class="col-md-12">
+                    <input class="form-control" data-provide="datepicker" type="date" name="student[birthdate]" id="student_birthdate">
+                  </div>
+                </div>
+              </div>
+              <div class="col-md-4">
+                <div class="form-group ">
+                  <label class="control-label" for="student_gender_id">Employee</label>
+                  <div class="col-md-12">
+                    <select class="form-control" name="student[gender_id]" id="student_gender_id"><option value="">โปรดเลือกเพศ</option>
+                      <option value="1">Male</option>
+                      <option value="2">Female</option>
+                    </select>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="footer-menu row mt-20">
+          <div class="pull-right text-right padding-left10">
+            <button type="button" class="btn btn-custom btn-gray ng-binding">ยกเลิก</button>
+          </div>
+          <div class="pull-right text-right padding-left10">
+            <button type="submit" class="btn btn-custom btn-green ng-binding">เพิ่ม</button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+
+        

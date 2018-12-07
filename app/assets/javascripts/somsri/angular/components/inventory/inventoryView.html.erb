@@ -10,33 +10,22 @@
             
           </div>
           <div class="col-xs-3 mt-10" style="text-align: right;">
-            <a class="btn btn-custom btn-orange" href="javascript:void(0)">
+            <a class="btn btn-custom btn-orange" href="/inventoryNew">
               {{ "add_inventory" | translate }}
             </a>
           </div>
         </div>
         <div class="row">
           <ul class="nav nav-tabs main">
-            <li class="cyan active" ng-class="{ 'active' : employee.activeTab === 'general' }">
-              <a data-toggle="tab" ng-click="employee.activeTab = 'general'" href="javascript:void(0)" class="ng-binding">พัสดุ</a>
+            <li class="cyan active">
+              <a data-toggle="tab" class="ng-binding">พัสดุ</a>
             </li>
-            <li class="cyan ng-hide" ng-class="{ 'active' : employee.activeTab === 'salary' }" ng-show="employee.hasPayroll &amp;&amp; employee.isEdit">
-              <a data-toggle="tab" ng-click="employee.activeTab = 'salary'; employee.calTotal();" href="javascript:void(0)" class="ng-binding">เงินเดือน</a>
-            </li>
-            <li class="orange ng-hide" ng-class="{ 'active' : employee.activeTab === 'private' }" ng-show="employee.isEdit">
-              <a data-toggle="tab" ng-click="employee.activeTab = 'private'" href="javascript:void(0)" class="ng-binding">ข้อมูลส่วนตัว</a>
+            <li class="cyan " >
+              <a data-toggle="tab"  class="ng-binding">คำขอใช้พัสดุ</a>
             </li>
           </ul>
         </div>
-
-
-
-
         <div class="row report-content container-fluid panel-board">
-          <ul class="nav nav-tabs" role="tablist">
-            <li role="presentation" class="active"><a href="#home" aria-controls="home" role="tab" data-toggle="tab">พัสดุ</a></li>
-            <li role="presentation"><a href="#profile" aria-controls="profile" role="tab" data-toggle="tab">คำขอใช้พัสดุ</a></li>
-          </ul>
           <div class="tab-content">
             <div role="tabpanel" class="tab-pane active" id="home">
               <div class="row">
@@ -46,55 +35,29 @@
                   </div>
                 </div>
               </div>
-              <div class="row ">
-                <table class="table">
+              <div class="row">
+                <table id="inventory-table" >
                   <thead>
                     <tr>
-                      <th>#</th>
-                      <th>Item name</th>
-                      <th>Serial Number</th>
-                      <th>Model</th>
-                      <th> Description</th>
-                      <th class="text-right">Price</th>
-                      <th>Date purchase </th>
-                      <th>Category</th>
-                      <th>Date add</th>
-                      <th></th>
-                      <th></th>
-                     
+                      <th data-field="invetory_id">#</th>
+                      <th data-field="item_name">Item Name</th>
+                      <th data-field="serial_number">Serial Number</th>
+                      <th data-field="model">Model</th>
+                      <th data-field="description">Description</th>
+                      <th data-field="price">Price</th>
+                      <th data-field="date_purchase">Date Purchase</th>
+                      <th data-field="category">Category</th>
+                      <th data-field="date_add">Date Add</th>
                     </tr>
                   </thead>
-                  <tbody>
-                    <tr>
-                      <th>1</th>
-                      <td>MackBook Pro</td>
-                      <td>SFXFP4HHV29</td>
-                      <td>MPXT2TH/A</th>
-                      <td>Apple 13.3” I5/2.3GHZ/8GB</td>
-                      <td class="text-right">22,000.00</td>
-                      <td>01/09/2561</td>
-                      <td>Computer</th>
-                      <td>01/09/2561</td>
-                      <td> <i class="fa fa-edit"></i></td>
-                      <td><i class="fa fa-trash-alt"></i></td>
-                    </tr>
-               
-                  </tbody>
                 </table>
               </div>
             </div>
           </div>
-          
-          
           <table  id="tableForExport" data-toolbar="none" data-tableexport-display="always" style="display: none;"><table>
-
-              </div>
-            
-            </div>
-            <div role="tabpanel" class="tab-pane" id="profile">...</div>
-          </div>
         </div>
       </div>
+      <div role="tabpanel" class="tab-pane" id="profile">...</div>
     </div>
   </div>
 </div>

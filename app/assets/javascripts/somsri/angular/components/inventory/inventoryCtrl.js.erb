@@ -1,17 +1,111 @@
 (function() {
   'use strict';
-  angular.module('somsri.inventory.inventory', [])
-  .controller('inventoryCtrl', ['$compile', '$scope', '$window', '$filter', '$rootScope', '$timeout', 'translateFilter', '$uibModal', 'Upload', function($compile, $scope, $window, $filter, $rootScope, $timeout, translateFilter, $uibModal, Upload) {
+  angular.module('somsri.somsri.inventory', [])
+  .controller('inventoryCtrl', ['$compile', '$scope', '$window', '$filter', '$rootScope', '$timeout', 'translateFilter', '$uibModal', 'Upload', "inventoryService", function($compile, $scope, $window, $filter, $rootScope, $timeout, translateFilter, $uibModal, Upload, services) {
     $rootScope.menu = translateFilter("inventory")
     var ctrl = this
     var angularScopeRoot = 'angular.element(document.getElementById("angularCtrl")).scope().$root'
-    var angularScopeInventory = 'angular.element(document.getElementById("angularCtrl")).scope().inventoryCtrl '
-    var angularCtrlStr = 'angular.element(document.getElementById("angularCtrl")).scope().inventory '
+    var angularScopeInventory = 'angular.element(document.getElementById("angularCtrl")).scope().inventoryCtrl'
+    var angularCtrlStr = 'angular.element(document.getElementById("angularCtrl")).scope().inventory'
     ctrl.inventory = [];
     ctrl.message = '';
   $rootScope.loadAndAuthorizeResource("inventory", function(){
+    var main_table = $('#inventory-table');
+    ctrl.currentPage = 1;
+    ctrl.sort = 'inventores.id';
+
+    // default last 7 days
+    ctrl.end_date = new Date();
+    ctrl.start_date = new Date(new Date().setMonth(new Date().getMonth() - 1));
+
+    function cleanDate(date){
+      if(!date || new Date(date) == "Invalid Date"){return;}
+      var nowDate = new Date()
+      date.setHours(nowDate.getHours())
+      date.setMinutes(nowDate.getMinutes())        
+      date.setSeconds(nowDate.getSeconds())
+      return date
+    }
+
+    function filterDate(value, row, index) {
+      if (value) {
+        return $filter('date')(value, 'd/MM/yyyy');
+      }
+      return "-";
+    }
+
+    var bootstrapTableOptions = {
+      onSort: function(item_name, order) {
+        ctrl.sort = item_name;
+        ctrl.order = order;
+      },
+      customSort: function(){},
+      columns : [{
+        field: 'invetory_id',
+        title: '#',
+        classes: 'text-right',
+        sortable: true,
+        formatter: filterDate
+      },{
+        field: 'item_name',
+        title: translateFilter("item_name"),
+        sortable: true,
+      },{
+        field: 'serial_number',
+        title: translateFilter("serial_number"),
+        sortable: true,
+      },{
+        field: 'model',
+        title: translateFilter("model"),
+        sortable: true,
+      },{
+        field: 'description',
+        title: translateFilter("description"),
+        sortable: true,
+      },{
+        field: 'price',
+        title: translateFilter("price"),
+        sortable: true,
+      },{
+        field: 'date_purchase',
+        title: translateFilter("date_purchase"),
+        sortable: true,
+      },{
+        field: 'category',
+        title: translateFilter("category"),
+        sortable: true,
+        formatter: filterDate
+      },{
+        field: 'date_add',
+        title: translateFilter("date_add"),
+        sortable: true,
+        formatter: filterDate
+      }]
+    }
+
+    main_table.bootstrapTable($.extend(bootstrapTableOptions, {toolbar: "date-filter"}));
     
-        
+    function getInventory() {
+      // ctrl.start_date = cleanDate(ctrl.start_date)
+      // ctrl.end_date = cleanDate(ctrl.end_date)
+      if(!ctrl.currentPage){ ctrl.currentPage = 1 }
+        services.getInventory().then(function(resp) {
+          ctrl.datasExport = [];
+          if (resp.data && resp.data.inventories) {
+            ctrl.datasExport = resp.data.inventories;
+            ctrl.totalItems = resp.data.total_records;
+            ctrl.currentPage = resp.data.current_page;
+          } else {
+            ctrl.totalItems = 0;
+            ctrl.currentPage = 0;
+          }
+          ctrl.maxSize = 5;
+          main_table.bootstrapTable('load', ctrl.datasExport);
+        });
+    }
+
+    getInventory();
+
   });
   }]);
 })();

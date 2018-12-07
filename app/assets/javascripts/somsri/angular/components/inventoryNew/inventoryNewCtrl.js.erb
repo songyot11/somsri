@@ -1,0 +1,30 @@
+(function() {
+  'use strict';
+  angular.module('somsri.somsri.inventoryNew', [])
+    .controller('inventoryNewCtrl', ['$compile', '$scope', '$window', '$filter', '$rootScope', '$timeout', 'translateFilter', '$uibModal', 'Upload', function($compile, $scope, $window, $filter, $rootScope, $timeout, translateFilter, $uibModal, Upload) {
+      $rootScope.menu = translateFilter("พัสดุ")
+      var ctrl = this
+      var angularScopeRoot = 'angular.element(document.getElementById("angularCtrl")).scope().$root'
+      var angularScopeInventoryNew = 'angular.element(document.getElementById("angularCtrl")).scope().inventoryNewCtrl'
+      var angularCtrlStr = 'angular.element(document.getElementById("angularCtrl")).scope().inventoryNew'
+      ctrl.inventoryNew = [];
+      ctrl.message = '';
+      // default last 7 days
+      ctrl.end_date = new Date();
+      ctrl.start_date = new Date(new Date().setMonth(new Date().getMonth() - 1));
+
+      function cleanDate(date){
+        if(!date || new Date(date) == "Invalid Date"){return;}
+        var nowDate = new Date()
+        date.setHours(nowDate.getHours())
+        date.setMinutes(nowDate.getMinutes())        
+        date.setSeconds(nowDate.getSeconds())
+        return date
+      }
+
+
+
+
+
+  }]);
+})();
