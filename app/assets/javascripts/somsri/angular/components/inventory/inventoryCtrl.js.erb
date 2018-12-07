@@ -35,17 +35,16 @@
     }
 
     var bootstrapTableOptions = {
-      onSort: function(item_name, order) {
+      onSort: function(itxem_name, order) {
         ctrl.sort = item_name;
         ctrl.order = order;
       },
       customSort: function(){},
       columns : [{
-        field: 'invetory_id',
+        field: 'id',
         title: '#',
         classes: 'text-right',
         sortable: true,
-        formatter: filterDate
       },{
         field: 'item_name',
         title: translateFilter("item_name"),
@@ -86,23 +85,28 @@
     main_table.bootstrapTable($.extend(bootstrapTableOptions, {toolbar: "date-filter"}));
     
     function getInventory() {
-      // ctrl.start_date = cleanDate(ctrl.start_date)
-      // ctrl.end_date = cleanDate(ctrl.end_date)
+      ctrl.start_date = cleanDate(ctrl.start_date)
+      ctrl.end_date = cleanDate(ctrl.end_date)
       if(!ctrl.currentPage){ ctrl.currentPage = 1 }
         services.getInventory().then(function(resp) {
           ctrl.datasExport = [];
-          if (resp.data && resp.data.inventories) {
-            ctrl.datasExport = resp.data.inventories;
+          if (resp.data) {
             ctrl.totalItems = resp.data.total_records;
             ctrl.currentPage = resp.data.current_page;
+            ctrl.datasExport = resp.data.inventories
           } else {
             ctrl.totalItems = 0;
             ctrl.currentPage = 0;
           }
-          ctrl.maxSize = 5;
+
+          ctrl.paginateButtonMaxSize = 5;
           main_table.bootstrapTable('load', ctrl.datasExport);
         });
     }
+
+      ctrl.pageChanged = function() {
+        getInventory()
+      };
 
     getInventory();
 

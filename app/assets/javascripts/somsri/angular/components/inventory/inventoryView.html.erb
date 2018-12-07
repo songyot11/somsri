@@ -33,7 +33,7 @@
                 <table id="inventory-table" >
                     <thead>
                     <tr>
-                        <th data-field="invetory_id">#</th>
+                        <th data-field="id">#</th>
                         <th data-field="item_name">Item Name</th>
                         <th data-field="serial_number">Serial Number</th>
                         <th data-field="model">Model</th>
@@ -42,9 +42,21 @@
                         <th data-field="date_purchase">Date Purchase</th>
                         <th data-field="category">Category</th>
                         <th data-field="date_add">Date Add</th>
+                        <th data-field="edit"></th>
+                        <th data-field="delete"></th>
                     </tr>
                     </thead>
                 </table>
+                <div class="row row-centered for-display">
+                  <div class="col-centered">
+                    <ul uib-pagination ng-change="inventory.pageChanged()" total-items="inventory.totalItems" ng-model="inventory.currentPage" max-size="inventory.paginateButtonMaxSize" class="pagination-md" num-pages="numPages" previous-text="‹" next-text="›" boundary-link-numbers='true' rotate='false'></ul>
+                  </div>
+                </div>
+               <!--  <div class="row row-centered">
+                  <div class="col-centered">
+                    <ul uib-pagination ng-change="inventory.pageChanged()" total-items="inventory.totalItems" ng-model="inventory.currentPage" max-size="inventory.paginateButtonMaxSize" class="pagination-md" num-pages="numPages" previous-text="‹" next-text="›" boundary-link-numbers='true' rotate='false'></ul>
+                  </div>
+                </div> -->
               </div>
             </div>
           </div>
