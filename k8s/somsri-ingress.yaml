@@ -1,0 +1,13 @@
+apiVersion: extensions/v1beta1
+kind: Ingress
+metadata:
+  name: somsri-ing
+spec:
+  rules:
+    - host: www.somsri.io
+      http:
+        paths:
+          - backend:
+              serviceName: app
+              servicePort: 3000
+            path: /

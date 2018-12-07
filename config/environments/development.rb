@@ -65,4 +65,6 @@ Rails.application.configure do
   Paperclip.options[:command_path] = "/usr/local/bin/"
 
   I18n.default_locale = :en
+
+  config.web_console.whiny_requests = false
 end
