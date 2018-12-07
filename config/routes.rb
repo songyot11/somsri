@@ -7,7 +7,7 @@ Rails.application.routes.draw do
   get "/somsri_invoice" => "menu#landing_invoice"
   get "/somsri_payroll" => "menu#landing_payroll"
   get "/somsri_rollcall" => "menu#landing_rollcall"
-  get "/somsri_inventory" => "menu#landing_somsri"
+  get "/somsri" => "menu#landing_somsri"
   get "/main" => "menu#landing_main"
   get "/language" => "home#language"
   get "/locale" => "home#locale"
@@ -154,14 +154,7 @@ Rails.application.routes.draw do
   comfy_route :cms_admin, :path => '/cms_admin'
   root to: 'home#index'
 
-  resources :inventories do
-    collection do
-    end
-
-    member do
-    end
-  end
-
+  resources :inventories
   resources :inventories_request do 
         collection do
     end

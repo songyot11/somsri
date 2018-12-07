@@ -1,8 +1,7 @@
 (function() {
   'use strict';
 
-  angular.module('somsri.payroll.employees.service', [
-  ])
+  angular.module('somsri.payroll.employees.service', [])
   .service('employeesService', ['$http', function($http) {
     this.getAllEmployee = function() {
       return $http.get('/employees');

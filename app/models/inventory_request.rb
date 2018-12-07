@@ -1,5 +1,4 @@
-class InventoyRequest < ApplicationRecord
-	belongs_to :user
+class InventoryRequest < ApplicationRecord
 	belongs_to :inventory
 	enum inventory_status: [:pending, :approved, :rejected , :done]
 

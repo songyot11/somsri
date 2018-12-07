@@ -4,7 +4,7 @@ class InventoriesController < ApplicationController
 	# GET: /inventories
 	def index
 		inventories = Inventory.all
-		render json: inventories.as_json(methods: [:inventoy_requests]), status: :ok
+		render json: inventories.as_json(methods: [:inventory_request]), status: :ok
 	end
 
 	# GET: /inventories/:id
