@@ -15,6 +15,23 @@
             </a>
           </div>
         </div>
+        <div class="row">
+          <ul class="nav nav-tabs main">
+            <li class="cyan active" ng-class="{ 'active' : employee.activeTab === 'general' }">
+              <a data-toggle="tab" ng-click="employee.activeTab = 'general'" href="javascript:void(0)" class="ng-binding">พัสดุ</a>
+            </li>
+            <li class="cyan ng-hide" ng-class="{ 'active' : employee.activeTab === 'salary' }" ng-show="employee.hasPayroll &amp;&amp; employee.isEdit">
+              <a data-toggle="tab" ng-click="employee.activeTab = 'salary'; employee.calTotal();" href="javascript:void(0)" class="ng-binding">เงินเดือน</a>
+            </li>
+            <li class="orange ng-hide" ng-class="{ 'active' : employee.activeTab === 'private' }" ng-show="employee.isEdit">
+              <a data-toggle="tab" ng-click="employee.activeTab = 'private'" href="javascript:void(0)" class="ng-binding">ข้อมูลส่วนตัว</a>
+            </li>
+          </ul>
+        </div>
+
+
+
+
         <div class="row report-content container-fluid panel-board">
           <ul class="nav nav-tabs" role="tablist">
             <li role="presentation" class="active"><a href="#home" aria-controls="home" role="tab" data-toggle="tab">พัสดุ</a></li>
