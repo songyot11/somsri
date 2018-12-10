@@ -85,10 +85,19 @@
                 <div class="form-group ">
                   <label class="control-label" for="student_gender_id">Employee</label>
                   <div class="col-md-12">
-                    <select class="form-control" name="student[gender_id]" id="student_gender_id" ng-model="inventory.employee"><option value="">เลือกพนักงาน</option>
-                      <option value="1">Male</option>
-                      <option value="2">Female</option>
-                    </select>
+                    <div class="dropdown">
+                      <h4 id="employlist-list" data-toggle="dropdown">
+                        <span ng-bind="inventory.currentEmployeeString" ></span>
+                            <i class="fa fa-angle-down" aria-hidden="true"></i>
+                      </h4>
+                      <ul class="dropdown-menu" aria-labelledby="employee-list">
+                        <li ng-repeat="employee in inventory.employee_list">
+                          <a class="blue-highlight" ng-click="inventory.switchEmployee(employee.name, employee.id)">
+                            {{ employee.name | translate }}
+                          </a>
+                        </li>
+                      </ul>
+                    </div>
                   </div>
                 </div>
               </div>

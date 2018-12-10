@@ -4,43 +4,12 @@ class InventoriesController < ApplicationController
 	# GET: /inventories
 	def index
 		page = params[:page]
-		inventories = Inventory.all
+		# inventories = Inventory.all
 		# inventories = inventories.paginate(page: page, per_page: Inventory.count)
-		# inventories = get_inventories(params[:page])
-		# if params[:page] && inventories.total_pages < inventories.current_page
-		# 	inventories = get_inventories()
-		# end
-
-		# if params[:limit] && params[:offset]
-		# 	per_page = params[:limit].to_i
-		# 	page = (params[:offset].to_i.per_page) + 1
-		# respond_to do |format|
-		# 	format.json do
-		# 		result = {
-		# 			inventories: inventories.paginate(page: page, per_page: Inventory.count)
-		# 		}
-		# 		if page
-		# 			result[:current_page] = result[:inventories].current_page
-		# 			result[:total_records] = result[:inventories].total_records
-		# 		end
-		# 		render json: result, status: :ok
-		# 	end
-		# end
-
-		# result = {
-		# 	inventories: inventories.paginate(page: params[:page], per_page: Inventory.count)
-		# }
-		# end
-
-		# if params[:page] 
-		# 	result[:current_page] = result[:inventories].current_page
-		# 	result[:total_records] = result[:inventories].total_records
-		# end
-
-		# # result = {
-		# 	row: inventories.as_json({ index: true}),
-		# 	total: inventories.count
-		# }
+		inventories = get_inventories(params[:page])
+		if params[:page] && inventories.total_pages < inventories.current_page
+			inventories = get_inventories()
+		end
 
 		result = {}
 		if params[:bootstrap_table].to_s == "1" 
@@ -51,8 +20,8 @@ class InventoriesController < ApplicationController
 			}
 
 			if params[:page]
-				result[:current_page] = result[:inventories].current_page
-				result[:total_records] = result[:inventories].total_records
+				result[:current_page] = inventories.current_page
+				result[:total_records] = inventories.total_entries
 			end
 		end
 		render json: result, status: :ok
@@ -99,12 +68,12 @@ class InventoriesController < ApplicationController
 	private
 
 	def inventory_params
-		params.require(:inventory).permit(:item_name, :serial_number, :model, :description, :price, :date_purchase, :category, :date_add)
+		params.require(:inventory).permit(:item_name, :serial_number, :model, :description, :price, :date_purchase, :category, :date_add, :employee_id)
 	end
 
 	def get_inventories(page)
 		inventories = Inventory.all
-		inventories = inventories.paginate(page: page, per_page: Inventory.count)
+		inventories = inventories.paginate(page: page, per_page: 10)
 		return inventories.to_a
 	end
 end

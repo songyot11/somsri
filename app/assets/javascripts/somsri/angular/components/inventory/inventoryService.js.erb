@@ -7,8 +7,12 @@
 			return $http.post('/inventories', data)
 		};
 
-		this.getInventory = function() {
-			return $http.get('/inventories');
+		this.getInventory = function(page) {
+			return $http.get('/inventories',{
+				params: {
+					page: page,
+				}
+			});
 		};
 
 		this.removeInventory = function(id) {

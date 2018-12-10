@@ -88,7 +88,7 @@
       ctrl.start_date = cleanDate(ctrl.start_date)
       ctrl.end_date = cleanDate(ctrl.end_date)
       if(!ctrl.currentPage){ ctrl.currentPage = 1 }
-        services.getInventory().then(function(resp) {
+        services.getInventory(ctrl.currentPage).then(function(resp) {
           ctrl.datasExport = [];
           if (resp.data) {
             ctrl.totalItems = resp.data.total_records;
@@ -98,6 +98,8 @@
             ctrl.totalItems = 0;
             ctrl.currentPage = 0;
           }
+
+          console.log(resp.data.inventories)
 
           ctrl.paginateButtonMaxSize = 5;
           main_table.bootstrapTable('load', ctrl.datasExport);
