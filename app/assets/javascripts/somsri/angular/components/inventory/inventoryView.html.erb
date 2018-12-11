@@ -9,8 +9,8 @@
           <div class="col-xs-3 mt-10" style="text-align: right;">
             
           </div>
-          <div class="col-xs-3 mt-10 pr-0" style="text-align: right;">
-            <a class="btn btn-custom btn-orange" href="/inventoryNew">
+          <div class="col-xs-3 mt-10" style="text-align: right;">
+            <a class="btn btn-custom btn-orange" href="somsri#/inventory/new">
               {{ "add_inventory" | translate }}
             </a>
           </div>
@@ -39,18 +39,25 @@
                 <table id="inventory-table" >
                   <thead>
                     <tr>
-                      <th data-field="invetory_id">#</th>
-                      <th data-field="item_name">Item Name</th>
-                      <th data-field="serial_number">Serial Number</th>
-                      <th data-field="model">Model</th>
-                      <th data-field="description">Description</th>
-                      <th data-field="price">Price</th>
-                      <th data-field="date_purchase">Date Purchase</th>
-                      <th data-field="category">Category</th>
-                      <th data-field="date_add">Date Add</th>
+                        <th data-field="id">#</th>
+                        <th data-field="item_name">Item Name</th>
+                        <th data-field="serial_number">Serial Number</th>
+                        <th data-field="model">Model</th>
+                        <th data-field="description">Description</th>
+                        <th data-field="price">Price</th>
+                        <th data-field="date_purchase">Date Purchase</th>
+                        <th data-field="category">Category</th>
+                        <th data-field="date_add">Date Add</th>
+                        <th data-field="edit"></th>
+                        <th data-field="delete"></th>
                     </tr>
                   </thead>
                 </table>
+                <div class="row row-centered for-display">
+                  <div class="col-centered">
+                    <ul uib-pagination ng-change="inventory.pageChanged()" total-items="inventory.totalItems" ng-model="inventory.currentPage" max-size="inventory.paginateButtonMaxSize" class="pagination-md" num-pages="numPages" previous-text="‹" next-text="›" boundary-link-numbers='true' rotate='false'></ul>
+                  </div>
+                </div>
               </div>
             </div>
           </div>

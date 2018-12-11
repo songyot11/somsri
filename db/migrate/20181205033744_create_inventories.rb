@@ -9,6 +9,7 @@ class CreateInventories < ActiveRecord::Migration[5.0]
     	t.string :date_purchase
     	t.string :category
     	t.string :date_add
+      t.integer :employee_id
       t.timestamps
     end
   end

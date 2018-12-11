@@ -19,9 +19,10 @@
             <div class="row">
               <div class="col-md-3">
                 <div class="form-group">
-                  <label class="control-label" for="student_full_name">Name </label>
+                  <label class="control-label" for="student_full_name">Name</label>
+
                   <div class="col-md-12">
-                    <input class="form-control" autocomplete="off" type="text" name="student[full_name]" id="student_full_name">
+                    <input class="form-control" autocomplete="off" type="text" name="student[full_name]" id="inventory_name" ng-model="inventory.name">
                   </div>
                 </div>
               </div>
@@ -29,15 +30,15 @@
                 <div class="form-group">
                   <label class="control-label" for="student_nickname">Serial Number</label>
                   <div class="col-md-12">
-                    <input class="form-control" autocomplete="off" type="text" name="student[nickname]" id="student_nickname">
+                    <input class="form-control" autocomplete="off" type="text" name="student[nickname]" id="inventory_serial_number" ng-model="inventory.serial_number">
                   </div>
                 </div>
               </div>
               <div class="col-md-4">
                 <div class="form-group">
-                  <label class="control-label" for="student_nickname">Model </label>
+                  <label class="control-label" for="student_nickname">Model</label>
                   <div class="col-md-12">
-                    <input class="form-control" autocomplete="off" type="text" name="student[nickname]" id="student_nickname">
+                    <input class="form-control" autocomplete="off" type="text" name="student[nickname]" id="inventory_model" ng-model="inventory.model">
                   </div>
                 </div>
               </div>
@@ -47,7 +48,7 @@
                 <div class="form-group">
                   <label class="control-label" for="student_nickname">Description</label>
                   <div class="col-md-12">
-                    <input class="form-control" autocomplete="off" type="text" name="student[nickname]" id="student_nickname">
+                    <input class="form-control" autocomplete="off" type="text" name="student[nickname]" id="inventory_description" ng-model="inventory.description">
                   </div>
                 </div>
               </div>
@@ -55,7 +56,7 @@
                 <div class="form-group">
                   <label class="control-label" for="student_nickname">Price</label>
                   <div class="col-md-12">
-                    <input class="form-control" autocomplete="off" type="text" name="student[nickname]" id="student_nickname">
+                    <input class="form-control" autocomplete="off" type="text" name="student[nickname]" id="inventory_price" ng-model="inventory.price">
                   </div>
                 </div>
               </div>
@@ -65,7 +66,7 @@
                 <div class="form-group ">
                   <label class="control-label" for="student_gender_id">Category</label>
                   <div class="col-md-12">
-                    <select class="form-control" name="student[gender_id]" id="student_gender_id"><option value="">เลือกประเภท</option>
+                    <select class="form-control" name="student[gender_id]" id="inventory_category" ng-model="inventory.category"><option value="">เลือกประเภท</option>
                       <option value="1">1</option>
                       <option value="2">2</option>
                     </select>
@@ -74,9 +75,9 @@
               </div>
               <div class="col-md-4">
                 <div class="form-group">
-                  <label class="control-label" for="student_birthdate">Date purchase </label>
+                  <label class="control-label" for="date_purchase">Date purchase</label>
                   <div class="col-md-12">
-                    <input class="form-control" data-provide="datepicker" type="date" name="student[birthdate]" id="student_birthdate">
+                    <input class="form-control" data-provide="datepicker" type="date" name="student[birthdate]" id="inventory_date_purchase" ng-model="inventory.date_purchase">
                   </div>
                 </div>
               </div>
@@ -84,10 +85,19 @@
                 <div class="form-group ">
                   <label class="control-label" for="student_gender_id">Employee</label>
                   <div class="col-md-12">
-                    <select class="form-control" name="student[gender_id]" id="student_gender_id"><option value="">โปรดเลือกเพศ</option>
-                      <option value="1">Somsug</option>
-                      <option value="2">Somsri</option>
-                    </select>
+                    <div class="dropdown">
+                      <h4 id="employlist-list" data-toggle="dropdown">
+                        <span ng-bind="inventory.currentEmployeeString" ></span>
+                            <i class="fa fa-angle-down" aria-hidden="true"></i>
+                      </h4>
+                      <ul class="dropdown-menu" aria-labelledby="employee-list">
+                        <li ng-repeat="employee in inventory.employee_list">
+                          <a class="blue-highlight" ng-click="inventory.switchEmployee(employee.name, employee.id)">
+                            {{ employee.name | translate }}
+                          </a>
+                        </li>
+                      </ul>
+                    </div>
                   </div>
                 </div>
               </div>
@@ -99,7 +109,7 @@
             <button type="button" class="btn btn-custom btn-gray ng-binding">ยกเลิก</button>
           </div>
           <div class="pull-right text-right padding-left10">
-            <button type="submit" class="btn btn-custom btn-green ng-binding">เพิ่ม</button>
+            <button type="submit" class="btn btn-custom btn-green ng-binding" ng-click="inventory.save()">{{inventory.add_button}}</button>
           </div>
         </div>
       </div>

@@ -110,6 +110,7 @@ function openDeletedStudentModal(id){
   $('#warningModal').modal()
 }
 
+
 function openResignStudentModal(id){
   $('#warningModal #modal-title').html("คุณต้องการเปลี่ยนสถานะนักเรียนคนนี้เป็น \"ลาออก\" ใช่หรือไม่?")
   $('#warningModal #actionModalForm').prop("action", "/students/" + id + "/resign")
@@ -167,3 +168,5 @@ function openDeletedParentModal(id){
   $('#warningModal #actionModalForm').prop("method", "post")
   $('#warningModal').modal()
 }
+
+

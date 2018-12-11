@@ -7,12 +7,20 @@
 			return $http.post('/inventories', data)
 		};
 
-		this.getInventory = function() {
-			return $http.get('/inventories');
+		this.getInventory = function(page) {
+			return $http.get('/inventories',{
+				params: {
+					page: page,
+				}
+			});
 		};
 
+		this.show = function(id) {
+     	 return $http.get('/inventories/' + id)
+    	}
+
 		this.removeInventory = function(id) {
-			return $http.delete('/inventories/' + id.id);
+			return $http.delete('/inventories/' + id);
 		};
 
 		this.updateInventory = function(data, id) {
@@ -22,6 +30,8 @@
 							data: { inventory: data }
 						});
 		}
+
+		
 
 	 }]);
 })();

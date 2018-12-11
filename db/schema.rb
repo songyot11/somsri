@@ -342,6 +342,7 @@ ActiveRecord::Schema.define(version: 20181206142749) do
     t.string   "date_purchase"
     t.string   "category"
     t.string   "date_add"
+    t.integer  "employee_id"
     t.datetime "created_at",    null: false
     t.datetime "updated_at",    null: false
   end
