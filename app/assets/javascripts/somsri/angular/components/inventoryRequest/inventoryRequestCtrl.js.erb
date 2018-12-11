@@ -1,0 +1,28 @@
+(function() {
+  'use strict';
+  angular.module('somsri.somsri.inventory_Request', [])
+    .controller('inventoryRequestCtrl', ['$compile', '$scope', '$window', '$filter', '$rootScope', '$timeout', 'translateFilter', '$uibModal', 'Upload', "inventoryService", 'employeesService', '$state', function($compile, $scope, $window, $filter, $rootScope, $timeout, translateFilter, $uibModal, Upload, service, employeesService, $state) {
+      $rootScope.menu = translateFilter("พัสดุ")
+        var ctrl = this
+        var angularScopeRoot = 'angular.element(document.getElementById("angularCtrl")).scope().$root'
+        var angularScopeInventoryNew = 'angular.element(document.getElementById("angularCtrl")).scope().inventoryNewCtrl'
+        var angularCtrlStr = 'angular.element(document.getElementById("angularCtrl")).scope().inventoryNew'
+        ctrl.inventoryNew = [];
+        ctrl.real_id = $state.params.id;
+        ctrl.message = '';
+        ctrl.name = ""
+        ctrl.serial_number = ""
+        ctrl.model = ""
+        ctrl.description = ""
+        ctrl.price = ""
+        ctrl.category = ""
+        ctrl.date_purchase = new Date()
+        ctrl.employee = "เลือกพนักงาน"
+        ctrl.add_button = "เพิ่ม"
+        // default last 7 days
+        ctrl.end_date = new Date();
+        ctrl.start_date = new Date(new Date().setMonth(new Date().getMonth() - 1));
+        
+
+  }]);
+})();
