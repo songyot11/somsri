@@ -59,7 +59,6 @@
         ctrl.save = function() {
           var changePrice = parseFloat(ctrl.price);
           var changeDatePurchase = $filter('date')(new Date(ctrl.date_purchase), "dd/MM/yyyy")
-          // var changeDateAdd = $filter('date')(new Date(Date()), "dd/MM/yyyy")
 
           if (!ctrl.real_id) {
             ctrl.date_add = $filter('date')(new Date(Date()), "dd/MM/yyyy")
