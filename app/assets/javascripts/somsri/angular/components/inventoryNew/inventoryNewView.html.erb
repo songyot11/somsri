@@ -75,7 +75,7 @@
               </div>
               <div class="col-md-4">
                 <div class="form-group">
-                  <label class="control-label" for="student_birthdate">Date purchase</label>
+                  <label class="control-label" for="date_purchase">Date purchase</label>
                   <div class="col-md-12">
                     <input class="form-control" data-provide="datepicker" type="date" name="student[birthdate]" id="inventory_date_purchase" ng-model="inventory.date_purchase">
                   </div>
@@ -109,7 +109,7 @@
             <button type="button" class="btn btn-custom btn-gray ng-binding">ยกเลิก</button>
           </div>
           <div class="pull-right text-right padding-left10">
-            <button type="submit" class="btn btn-custom btn-green ng-binding" ng-click="inventory.createInventory()">เพิ่ม</button>
+            <button type="submit" class="btn btn-custom btn-green ng-binding" ng-click="inventory.save()">{{inventory.add_button}}</button>
           </div>
         </div>
       </div>

@@ -15,8 +15,12 @@
 			});
 		};
 
+		this.show = function(id) {
+     	 return $http.get('/inventories/' + id)
+    	}
+
 		this.removeInventory = function(id) {
-			return $http.delete('/inventories/' + id.id);
+			return $http.delete('/inventories/' + id);
 		};
 
 		this.updateInventory = function(data, id) {

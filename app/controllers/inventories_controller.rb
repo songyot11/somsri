@@ -4,8 +4,6 @@ class InventoriesController < ApplicationController
 	# GET: /inventories
 	def index
 		page = params[:page]
-		# inventories = Inventory.all
-		# inventories = inventories.paginate(page: page, per_page: Inventory.count)
 		inventories = get_inventories(params[:page])
 		if params[:page] && inventories.total_pages < inventories.current_page
 			inventories = get_inventories()
@@ -13,7 +11,7 @@ class InventoriesController < ApplicationController
 
 		result = {}
 		if params[:bootstrap_table].to_s == "1" 
-			# result = inventories.as_json({ bootstrap_table: true })
+			result = inventories.as_json({ bootstrap_table: true })
 		else 
 			result = {
 				inventories: inventories.as_json({ index: true })
@@ -29,7 +27,8 @@ class InventoriesController < ApplicationController
 
 	# GET: /inventories/:id
 	def show 
-
+		inventory = Inventory.find(params[:id])
+		render json: inventory, status: :ok
 	end
 
 	def new
@@ -61,7 +60,7 @@ class InventoriesController < ApplicationController
 	# DELETE: /inventories/:id
 	def destroy
 		inventory = Inventory.find(params[:id])
-		inventory.destory
+		inventory.destroy
 		render json: { status: :success }
 	end
 

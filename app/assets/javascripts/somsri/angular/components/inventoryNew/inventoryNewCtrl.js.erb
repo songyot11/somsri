@@ -1,13 +1,14 @@
 (function() {
   'use strict';
   angular.module('somsri.somsri.inventory_new', [])
-    .controller('inventoryNewCtrl', ['$compile', '$scope', '$window', '$filter', '$rootScope', '$timeout', 'translateFilter', '$uibModal', 'Upload', "inventoryService", "employeesService", function($compile, $scope, $window, $filter, $rootScope, $timeout, translateFilter, $uibModal, Upload, service, employeesService) {
+    .controller('inventoryNewCtrl', ['$compile', '$scope', '$window', '$filter', '$rootScope', '$timeout', 'translateFilter', '$uibModal', 'Upload', "inventoryService", 'employeesService', '$state', function($compile, $scope, $window, $filter, $rootScope, $timeout, translateFilter, $uibModal, Upload, service, employeesService, $state) {
       $rootScope.menu = translateFilter("พัสดุ")
         var ctrl = this
         var angularScopeRoot = 'angular.element(document.getElementById("angularCtrl")).scope().$root'
         var angularScopeInventoryNew = 'angular.element(document.getElementById("angularCtrl")).scope().inventoryNewCtrl'
         var angularCtrlStr = 'angular.element(document.getElementById("angularCtrl")).scope().inventoryNew'
         ctrl.inventoryNew = [];
+        ctrl.real_id = $state.params.id;
         ctrl.message = '';
         ctrl.name = ""
         ctrl.serial_number = ""
@@ -17,9 +18,34 @@
         ctrl.category = ""
         ctrl.date_purchase = new Date()
         ctrl.employee = "เลือกพนักงาน"
+        ctrl.add_button = "เพิ่ม"
         // default last 7 days
         ctrl.end_date = new Date();
         ctrl.start_date = new Date(new Date().setMonth(new Date().getMonth() - 1));
+
+        function initData() {
+          if (!ctrl.real_id) { 
+            return
+          }
+
+          ctrl.add_button = "แก้ไข"
+
+          service.show(ctrl.real_id).then(function(resp) {
+            var value = resp.data
+            ctrl.name = value.item_name
+            ctrl.serial_number = value.serial_number
+            ctrl.model = value.model
+            ctrl.description = value.description
+            ctrl.price = value.price
+            ctrl.date_purchase = new Date($filter('date')(new Date(value.date_purchase), "dd/MM/yyyy"))
+            ctrl.category = value.category
+            ctrl.date_add = value.date_add
+            ctrl.employee_id = value.employee_id
+            if (ctrl.employee_id) {
+              getEmployeeById(ctrl.employee_id)
+            }
+          })
+        }
 
         function cleanDate(date){
           if(!date || new Date(date) == "Invalid Date"){return;}
@@ -30,24 +56,49 @@
           return date
         }
 
-        ctrl.createInventory = function() {
+        ctrl.save = function() {
           var changePrice = parseFloat(ctrl.price);
           var changeDatePurchase = $filter('date')(new Date(ctrl.date_purchase), "dd/MM/yyyy")
-          var changeDateAdd = $filter('date')(new Date(Date()), "dd/MM/yyyy")
-          service.newInventory({
-              item_name: ctrl.name,
+          // var changeDateAdd = $filter('date')(new Date(Date()), "dd/MM/yyyy")
+
+          if (!ctrl.real_id) {
+            ctrl.date_add = $filter('date')(new Date(Date()), "dd/MM/yyyy")
+          }
+
+          var inventory_datas = {
+            item_name: ctrl.name,
               serial_number: ctrl.serial_number,
               model: ctrl.model,
               description: ctrl.description,
               price: changePrice,
               date_purchase: changeDatePurchase,
               category: ctrl.category,
-              date_add: changeDateAdd,
+              date_add: ctrl.date_add,
               employee_id: ctrl.employee_id
-            }).then(function(resp) {
-              $rootScope.openInventory();
-          });
+          }
+
+          if (!ctrl.real_id) {
+            createInventory(inventory_datas)
+          } else {
+            updateInventory(inventory_datas, ctrl.real_id)
+          }
         };
+
+        function createInventory(inventory_datas) {
+           service.newInventory(inventory_datas).then(function(resp) {
+              $rootScope.openInventory();
+          }, function(e){
+            // Error
+          });
+        }
+
+        function updateInventory(inventory_datas, id) {
+          service.updateInventory(inventory_datas, id).then(function(resp) {
+             $rootScope.openInventory();
+          },function(e) {
+            // Error
+          })
+        }
 
         ctrl.switchEmployee = function(name, employee_id) {
           ctrl.employee = name
@@ -62,7 +113,14 @@
           });
         };
 
+        function getEmployeeById(id) {
+          employeesService.getEmployee(id).then(function(resp) {
+            ctrl.employee = resp.data.employee_display_name
+          })
+        }
         getEmployee();
+        initData()
+        
 
   }]);
 })();
