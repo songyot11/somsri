@@ -3,13 +3,35 @@ class InventoryRequestsController < ApplicationController
 
 	# GET: /inventories
 	def index
-		inventories_requests = InventoryRequests.all
-		render json: inventories_requests.as_json(methods: [:uesr, :inventory]), status: :ok
+		# inventories_requests = InventoryRequests.all
+		# render json: inventories_requests. status: :ok
+		# render json: inventories_requests.as_json(methods: [:employee, :inventory]), status: :ok
+
+		inventories_requests = get_inventories_request(params[:page])
+		if params[:page] && inventories_requests.total_pages < inventories_requests.current_page
+			inventories_requests = get_inventories_request()
+		end
+
+		result = {}
+		if params[:bootstrap_table].to_s == "1" 
+			result = inventories_requests.as_json({ bootstrap_table: true })
+		else 
+			result = {
+				inventories_requests: inventories_requests.as_json({ index: true })
+			}
+
+			if params[:page]
+				result[:current_page] = inventories_requests.current_page
+				result[:total_records] = inventories_requests.total_entries
+			end
+		end
+		render json: result, status: :ok
 	end
 
 	# GET: /inventories/:id
 	def show 
-
+		inventories_request = InventoryRequests.find(params[:id])
+		render json: inventories_request, status: :ok
 	end
 
 	def new
@@ -19,7 +41,12 @@ class InventoryRequestsController < ApplicationController
 	#POST: /inventories_request
 	def create 
 		inventories = InventoryRequests.all
-		render json: inventories, status: :ok
+		inventory = Inventory.new(inventory_params)
+		if inventory.save
+			render json: inventory, status: :ok
+		else
+			render json: inventory.errors.full_messages, status: :ok
+		end
 	end
 
 	def edit
@@ -29,7 +56,6 @@ class InventoryRequestsController < ApplicationController
 	def update
 		inventory = InventoryRequests.find(params[:id])
 		inventory.update(inventory_params)
-
 		render json: inventory
 	end
 
@@ -69,6 +95,12 @@ class InventoryRequestsController < ApplicationController
 	private
 
 	def inventory_params
-		params.require(:inventory).permit(:user_id, :inventory_id, :item_name, :description, :price, :request_date)
+		params.require(:inventory).permit(:user_name, :item_name, :description, :price, :request_date)
+	end
+
+	def get_inventories_request(page)
+		inventories = InventoryRequests.all
+		inventories = inventories.paginate(page: page, per_page: 10)
+		return inventories.to_a
 	end
 end
