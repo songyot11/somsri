@@ -508,7 +508,6 @@ body {
 .color-red.hover:hover{
   color: #a50115 !important;
 }
-
 .color-orange {
   color: #FFAB04 !important;
 }
@@ -761,7 +760,47 @@ tags-input .tags .tag-item .remove-button{
 .border-color-gray {
   border-color: #d0d0d0 !important;
 }
-.nav-tabs.main-in{
+
+
+.nav-tabs.inventory > li > a {
+  padding: 20px 40px 20px 40px;
+}
+
+.nav-tabs.inventory > li > a {
+  font-size: 22px;
+}
+
+.nav-tabs.inventory {
   margin-left: 0px;
   margin-right: 15px;
+  cursor: pointer;
+}
+
+.nav-tabs.inventory > li.cyan > a {
+  color: #62C4CC;
+}
+
+.nav-tabs.inventory > li.orange > a {
+  color: #F59C0B;
+}
+
+.nav-tabs.inventory > li.active.cyan > a,
+.nav-tabs.inventory > li.active.orange > a {
+  color: #333;
+}
+
+.nav-tabs.inventory > li.active > a,
+.nav-tabs.inventory > li.active > a:hover,
+.nav-tabs.inventory > li.active > a:focus {
+  margin-top: 2px;
+  background-color: white;
+}
+
+.nav-tabs.inventory > li > a {
+  margin-top: 2px;
+  transition: all 0.25s ease;
+
+  &:hover{
+    background-color: #f1f1f1;
+  }
 }
