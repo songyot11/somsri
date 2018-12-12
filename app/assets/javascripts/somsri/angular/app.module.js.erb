@@ -89,7 +89,7 @@
           ]);
         }]
       }
-    }).state({
+      }).state({
       url: '/inventory/new',
       name: 'new_inventory',
       templateUrl: "<%= asset_path('somsri/angular/components/inventoryNew/inventoryNewView.html') %>",
@@ -110,18 +110,6 @@
         resources: ['$ocLazyLoad', function($ocLazyLoad) {
           return $ocLazyLoad.load([
             ASSETS.somsri.somsri.inventoryNew
-          ]);
-        }]
-      }
-    }).state({
-      url: '/inventory/new_request',
-      name: 'new_inventory_new_request',
-      templateUrl: "<%= asset_path('somsri/angular/components/inventoryRequest/inventoryRequestView.html') %>",
-      controller: 'inventoryRequestCtrl as inventory',
-      resolve: {
-        resources: ['$ocLazyLoad', function($ocLazyLoad) {
-          return $ocLazyLoad.load([
-            ASSETS.somsri.somsri.inventory_request
           ]);
         }]
       }
