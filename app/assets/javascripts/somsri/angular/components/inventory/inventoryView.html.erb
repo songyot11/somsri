@@ -15,167 +15,94 @@
             </a>
           </div>
         </div>
-        <div class="row">
-          <ul class="nav nav-tabs">
-            <li class="cyan" ng-class="{ 'active' : inventory.activeTab === 'inventory_info' }">
-              <a data-toggle="tab" ng-click="inventory.activeTab = 'inventory_info'" href="javascript:void(0)">{{ "inventory" | translate }}</a>
-            </li>
-            <li class="cyan" ng-class="{ 'active' : inventory.activeTab === 'inventory_request' }" >
-              <a data-toggle="tab"  class="ng-binding" href="javascript:void(0)">{{ "invetory_request" | translate }}</a>
-            </li>
-          </ul>
-        </div>
-      <div class="row report-content container-fluid panel-board">
-        <div class="tab-content">
-          <div ng-class="{ 'in active' : inventory.activeTab === 'inventory_info' }" id="invetoryInfo" class="tab-pane fade">
-              <div class="row">
-                <div class="col-md-12">
-                  <div class="row">
-                    <div class="col-xs-3">
-                      <div class="search">
-                        <input class="form-control" id="search" type="text" placeholder="ค้นหา" onchange="search()" onkeyup="this.onchange()">
-                      </div>
-                    </div>
-                  </div>
-                  <div class="row">
-                    <table id="inventory-table" >
-                      <thead>
-                        <tr>
-                          <th data-field="id">#</th>
-                          <th data-field="item_name">Item Name</th>
-                          <th data-field="serial_number">Serial Number</th>
-                          <th data-field="model">Model</th>
-                          <th data-field="description">Description</th>
-                          <th data-field="price">Price</th>
-                          <th data-field="date_purchase">Date Purchase</th>
-                          <th data-field="category">Category</th>
-                          <th data-field="date_add">Date Add</th>
-                          <th data-field="edit "></th>
-                          <th data-field="delete"></th>
-                        </tr>
-                      </thead>
-                    </table>
-                    <div class="row row-centered for-display">
-                      <div class="col-centered">
-                        <ul uib-pagination ng-change="inventory.pageChanged()" total-items="inventory.totalItems" ng-model="inventory.currentPage" max-size="inventory.paginateButtonMaxSize" class="pagination-md" num-pages="numPages" previous-text="‹" next-text="›" boundary-link-numbers='true' rotate='false'></ul>
-                      </div>
-                    </div>
-                  </div>
-                </div>
-            </div>
-          </div>
 
-          <div ng-class="{ 'in active' : inventory.activeTab === 'inventory_request' }" id="inventoryRequestInfo" class="tab-pane fade">
-              <div class="row">
-                <div class="col-md-12">
+      
+        <div class="row">
+          <div class="col-md-12">
+            <ul class="nav nav-tabs">
+              <li class="cyan col-md-12">
+                <uib-tabset>
+                  <uib-tab id="inventory_list" index="0" heading="{{ 'inventory' | translate }}"> 
                     <div class="row">
-                      <table id="inventory-request-table" >
-                        <thead>
-                          <tr>
-                            <th data-field="id_re">###</th>
-                            <th data-field="item_name">Item Nameeeeee</th>
-                            <th data-field="serial_number">Serial Number</th>
-                            <th data-field="model">Model</th>
-                            <th data-field="description">Description</th>
-                            <th data-field="price">Price</th>
-                            <th data-field="date_purchase">Date Purchase</th>
-                            <th data-field="category">Category</th>
-                            <th data-field="date_add">Date Add</th>
-                            <th data-field="edit "></th>
-                            <th data-field="delete"></th>
-                          </tr>
-                        </thead>
-                      </table>
-                      <div class="row row-centered for-display">
-                        <div class="col-centered">
-                          <ul uib-pagination ng-change="inventory.pageChanged()" total-items="inventory.totalItems" ng-model="inventory.currentPage" max-size="inventory.paginateButtonMaxSize" class="pagination-md" num-pages="numPages" previous-text="‹" next-text="›" boundary-link-numbers='true' rotate='false'></ul>
+                      <div class="col-md-12">
+                        <div class="row">
+                          <div class="col-xs-3">
+                            <div class="search">
+                              <input class="form-control" id="search" type="text" placeholder="ค้นหา" onchange="search()" onkeyup="this.onchange()">
+                            </div>
+                          </div>
+                        </div>
+                        <div class="row">
+                          <table id="inventory-table" >
+                            <thead>
+                              <tr>
+                                <th data-field="id">#</th>
+                                <th data-field="item_name">Item Name</th>
+                                <th data-field="serial_number">Serial Number</th>
+                                <th data-field="model">Model</th>
+                                <th data-field="description">Description</th>
+                                <th data-field="price">Price</th>
+                                <th data-field="date_purchase">Date Purchase</th>
+                                <th data-field="category">Category</th>
+                                <th data-field="date_add">Date Add</th>
+                                <th data-field="edit "></th>
+                                <th data-field="delete"></th>
+                              </tr>
+                            </thead>
+                          </table>
+                          <div class="row row-centered for-display">
+                            <div class="col-centered">
+                              <ul uib-pagination ng-change="inventory.pageChanged()" total-items="inventory.totalItems" ng-model="inventory.currentPage" max-size="inventory.paginateButtonMaxSize" class="pagination-md" num-pages="numPages" previous-text="‹" next-text="›" boundary-link-numbers='true' rotate='false'></ul>
+                            </div>
+                          </div>
                         </div>
                       </div>
                     </div>
-                </div>
-              </div>
-          </div> 
+                  </uib-tab>
+                  <uib-tab id="inventory_request_list" index="1" heading="{{ 'inventory_request' | translate }}">
+                     <div class="row">
+                      <div class="col-md-12">
+                        <div class="row">
+                          <div class="col-xs-3">
+                            <div class="search">
+                              <input class="form-control" id="search" type="text" placeholder="ค้นหา" onchange="search()" onkeyup="this.onchange()">
+                            </div>
+                          </div>
+                        </div>
+                        <div class="row">
+                          <table id="inventory-request-table" >
+                            <thead>
+                              <tr>
+                                <th data-field="id">#</th>
+                                <th data-field="user_name">Item Name</th>
+                                <th data-field="item_name">Serial Number</th>
+                                <th data-field="description">Description</th>
+                                <th data-field="price">Price</th>
+                                <th data-field="request_date">Date Purchase</th>
+                                <th data-field="status">Category</th>
+                                <th data-field="edit"></th>
+                                <th data-field="delete"></th>
+                              </tr>
+                            </thead>
+                          </table>
+                          <div class="row row-centered for-display">
+                            <div class="col-centered">
+                              <ul uib-pagination ng-change="inventory.pageRequestChanged()" total-items="inventory.requestTotalItems" ng-model="inventory.requestCurrentPage" max-size="inventory.paginateButtonMaxSize" class="pagination-md" num-pages="numPages" previous-text="‹" next-text="›" boundary-link-numbers='true' rotate='false'></ul>
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                  </uib-tab>
+                </uib-tabset>  
+              </li>
+            </ul>
+          </div>
         </div>
+        <table  id="tableForExport" data-toolbar="none" data-tableexport-display="always" style="display: none;"><table>
       </div>
-
-
-        <!-- <div class="row report-content container-fluid panel-board">
-          <div class="tab-content">
-            <div id="inventory_info" class="tab-pane fade">
-              <div role="tabpanel" class="tab-pane active" id="inventory_info">
-                <div class="row">
-                  <div class="col-xs-3">
-                    <div class="search">
-                      <input class="form-control" id="search" type="text" placeholder="ค้นหา" onchange="search()" onkeyup="this.onchange()">
-                    </div>
-                  </div>
-                </div>
-                <div class="row">
-                  <table id="inventory-table" >
-                    <thead>
-                      <tr>
-                          <th data-field="id">#</th>
-                          <th data-field="item_name">Item Name</th>
-                          <th data-field="serial_number">Serial Number</th>
-                          <th data-field="model">Model</th>
-                          <th data-field="description">Description</th>
-                          <th data-field="price">Price</th>
-                          <th data-field="date_purchase">Date Purchase</th>
-                          <th data-field="category">Category</th>
-                          <th data-field="date_add">Date Add</th>
-                          <th data-field="edit "></th>
-                          <th data-field="delete"></th>
-                      </tr>
-                    </thead>
-                  </table>
-                  <div class="row row-centered for-display">
-                    <div class="col-centered">
-                      <ul uib-pagination ng-change="inventory.pageChanged()" total-items="inventory.totalItems" ng-model="inventory.currentPage" max-size="inventory.paginateButtonMaxSize" class="pagination-md" num-pages="numPages" previous-text="‹" next-text="›" boundary-link-numbers='true' rotate='false'></ul>
-                    </div>
-                  </div>
-                </div>
-              </div>
-              </div>
-            </div>
-            <div id="inventory_request" class="tab-pane fade">
-              <div role="tabpanel" class="tab-pane active" id="inventory_request">
-                <div class="row">
-                  <div class="col-xs-3">
-                    <div class="search">
-                      <input class="form-control" id="search" type="text" placeholder="ค้นหา" onchange="search()" onkeyup="this.onchange()">
-                    </div>
-                  </div>
-                </div>
-                <div class="row">
-                  <table id="inventory-request-table" >
-                    <thead>
-                      <tr>
-                          <th data-field="id">#####</th>
-                          <th data-field=" ">User</th>
-                          <th data-field="item_name">Item name</th>
-                          <th data-field="description">Description</th>
-                          <th data-field="price">Price</th>
-                          <th data-field=" ">Request date</th>
-                          <th data-field=" ">Status</th>
-                          <th data-field=" "></th>
-                          <th data-field="edit "></th>
-                          <th data-field="delete"></th>
-                      </tr>
-                    </thead>
-                  </table>
-                  <div class="row row-centered for-display">
-                    <div class="col-centered">
-                      <ul uib-pagination ng-change="inventory.pageChanged()" total-items="inventory.totalItems" ng-model="inventory.currentPage" max-size="inventory.paginateButtonMaxSize" class="pagination-md" num-pages="numPages" previous-text="‹" next-text="›" boundary-link-numbers='true' rotate='false'></ul>
-                    </div>
-                  </div>
-                </div>
-              </div>
-            </div>
-          </div> -->
-          <table  id="tableForExport" data-toolbar="none" data-tableexport-display="always" style="display: none;"><table>
-        </div>
-      </div>
-      <div role="tabpanel" class="tab-pane" id="profile">...</div>
+    </div>
+    <div role="tabpanel" class="tab-pane" id="profile">...</div>
     </div>
   </div>
 </div>

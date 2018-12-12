@@ -1,4 +1,4 @@
-class InventoryRequestsController < ApplicationController
+class InventoriesRequestsController < ApplicationController
 	skip_before_action :verify_authenticity_token
 
 	# GET: /inventories
@@ -30,7 +30,7 @@ class InventoryRequestsController < ApplicationController
 
 	# GET: /inventories/:id
 	def show 
-		inventories_request = InventoryRequests.find(params[:id])
+		inventories_request = InventoryRequest.find(params[:id])
 		render json: inventories_request, status: :ok
 	end
 
@@ -38,10 +38,10 @@ class InventoryRequestsController < ApplicationController
 
 	end
 
-	#POST: /inventories_request
+	#POST: /inventories_requests
 	def create 
-		inventories = InventoryRequests.all
-		inventory = Inventory.new(inventory_params)
+		inventories = InventoryRequest.all
+		inventory = InventoryRequest.new(inventory_params)
 		if inventory.save
 			render json: inventory, status: :ok
 		else
@@ -52,44 +52,63 @@ class InventoryRequestsController < ApplicationController
 	def edit
 
 	end
-	# PUT: /inventories_request/:id
+	# PUT: /inventories_requests/:id
 	def update
-		inventory = InventoryRequests.find(params[:id])
+		inventory = InventoryRequest.find(params[:id])
 		inventory.update(inventory_params)
 		render json: inventory
 	end
 
-	# DELETE: /inventories_request/:id
+	# DELETE: /inventories_requests/:id
 	def destroy
-		inventory = InventoryRequests.find(params[:id])
-		inventory.destory
+		inventory = InventoryRequest.find(params[:id])
+		inventory.destroy
 		render json: { status: :success }
 	end
 
-	# PUT: inventories_request/:id/approve // Member
-	# PUT: inventories_request/approve    // Collection
+	# PUT: inventories_requests/:id/approve // Member
+	# PUT: inventories_requests/approve    // Collection
+	#[:approved, :rejected ,:pending, :accept, :purchasing, :done, :assinged]
 	def approve
-		inventory = InventoryRequests.first
+		inventory = InventoryRequest.first
 		inventory.approve?
 		inventory.update(inventory_status: :approve)
 	end
 
-	def pending
-		inventory = InventoryRequests.first
-		inventory.pending?
-		inventory.update(inventory_status: :pending)
-	end
-
 	def reject
-		inventory = InventoryRequests.first
+		inventory = InventoryRequest.first
 		inventory.reject?
 		inventory.update(inventory_status: :reject)
 	end
 
+	def pending
+		inventory = InventoryRequest.first
+		inventory.pending?
+		inventory.update(inventory_status: :pending)
+	end
+
+	def accept
+		inventory = InventoryRequest.first
+		inventory.accept?
+		inventory.update(inventory_status: :accept)
+	end
+
+	def purchasing
+		inventory = InventoryRequest.first
+		inventory.purchasing?
+		inventory.update(inventory_status: :purchasing)
+	end
+
 	def done
-		inventory = InventoryRequests.first
+		inventory = InventoryRequest.first
 		inventory.done?
 		inventory.update(inventory_status: :done)
+	end
+
+	def assinged
+		inventory = InventoryRequest.first
+		inventory.assinged?
+		inventory.update(inventory_status: :assinged)
 	end
 
 	private
@@ -99,7 +118,7 @@ class InventoryRequestsController < ApplicationController
 	end
 
 	def get_inventories_request(page)
-		inventories = InventoryRequests.all
+		inventories = InventoryRequest.all
 		inventories = inventories.paginate(page: page, per_page: 10)
 		return inventories.to_a
 	end

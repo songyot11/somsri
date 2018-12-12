@@ -1,7 +1,7 @@
 (function() {
   'use strict';
   angular.module('somsri.somsri.inventory', [])
-  .controller('inventoryCtrl', ['$compile', '$scope', '$window', '$filter', '$rootScope', '$timeout', 'translateFilter', '$uibModal', 'Upload', "inventoryService", function($compile, $scope, $window, $filter, $rootScope, $timeout, translateFilter, $uibModal, Upload, services) {
+  .controller('inventoryCtrl', ['$compile', '$scope', '$window', '$filter', '$rootScope', '$timeout', 'translateFilter', '$uibModal', 'Upload', "inventoryService", "inventoryRequestService", function($compile, $scope, $window, $filter, $rootScope, $timeout, translateFilter, $uibModal, Upload, services, inventoryRequestService) {
     $rootScope.menu = translateFilter("inventory")
     var ctrl = this
     var angularScopeRoot = 'angular.element(document.getElementById("angularCtrl")).scope().$root'
@@ -11,8 +11,10 @@
     ctrl.inventory = [];
     ctrl.message = '';
   $rootScope.loadAndAuthorizeResource("inventory", function(){
-    var main_table = $('#inventory-table');
+    var inventory_table = $('#inventory-table');
+    var inventory_request_table = $('#inventory-request-table');
     ctrl.currentPage = 1;
+    ctrl.requestCurrentPage = 1;
     ctrl.sort = 'inventories.id';
     ctrl.activeTab = 'inventory_info';
 
@@ -36,7 +38,7 @@
       return "-";
     }
 
-    var bootstrapTableOptions = {
+    var bootstrapTableOptionsInventory = {
       onSort: function(item_name, order) {
         ctrl.sort = item_name;
         ctrl.order = order;
@@ -94,8 +96,8 @@
       }]
     }
 
-    main_table.bootstrapTable($.extend(bootstrapTableOptions, {toolbar: "date-filter"}));
-    
+    inventory_table.bootstrapTable($.extend(bootstrapTableOptionsInventory, {toolbar: "date-filter"}));
+
     function getInventory() {
       ctrl.start_date = cleanDate(ctrl.start_date)
       ctrl.end_date = cleanDate(ctrl.end_date)
@@ -111,7 +113,7 @@
             ctrl.currentPage = 0;
           }
           ctrl.paginateButtonMaxSize = 5;
-          main_table.bootstrapTable('load', ctrl.datasExport);
+          inventory_table.bootstrapTable('load', ctrl.datasExport);
         });
     }
 
@@ -132,46 +134,155 @@
     }
 
     ctrl.deleteInventory = function(id) {
-      console.log(id)
-        openConfirmationModal(translateFilter('delete_expense'), function(){
-          services.removeInventory(id).then(function(resp) {
-            getInventory()
-            ctrl.message = translateFilter('inventory_delete_success')
-            ctrl.typeSuccess = true
-          }, function(e){
-            ctrl.message = translateFilter('inventory_delete_failed')
-            ctrl.typeSuccess = false
-          })
+     openConfirmationModal(translateFilter('delete_expense'), function(){
+        services.removeInventory(id).then(function(resp) {
+          getInventory()
+          ctrl.message = translateFilter('inventory_delete_success')
+          ctrl.typeSuccess = true
+        }, function(e){
+          ctrl.message = translateFilter('inventory_delete_failed')
+          ctrl.typeSuccess = false
         })
+      })   
     }
 
     function openConfirmationModal(message, success, dismiss) {
-        $scope.message = message;
-        $uibModal.open({
-          animation: true,
-          backdrop: 'static',
-          keyboard: false,
-          scope: $scope,
-          templateUrl: "<%= asset_path('somsri/angular/components/modal/confirm/confirmModalView.html') %>",
-          controller: 'confirmModalCtrl as confirm',
-          size: 'md',
-          resolve: {
-            resources: ['$ocLazyLoad', 'ASSETS', function($ocLazyLoad, ASSETS) {
-              return $ocLazyLoad.load([
-                ASSETS.somsri.somsri.confirm_modal
-                ]);
-            }]
-          }
-        }).result.then(function (result) {
-          if (result) {
-            if(success){ success() }
-          }else{
-            if(dismiss){ dismiss() }
-          }
-        });
-      }
+      $scope.message = message;
+      $uibModal.open({
+        animation: true,
+        backdrop: 'static',
+        keyboard: false,
+        scope: $scope,
+        templateUrl: "<%= asset_path('somsri/angular/components/modal/confirm/confirmModalView.html') %>",
+        controller: 'confirmModalCtrl as confirm',
+        size: 'md',
+        resolve: {
+          resources: ['$ocLazyLoad', 'ASSETS', function($ocLazyLoad, ASSETS) {
+            return $ocLazyLoad.load([
+              ASSETS.somsri.somsri.confirm_modal
+            ]);
+          }]
+        }
+      }).result.then(function (result) {
+        if (result) {
+          if(success){ success() }
+        }else{
+          if(dismiss){ dismiss() }
+        }
+      });
+    }
 
     getInventory();
+
+    var bootstrapTableOptionsInvetoryRequest = {
+      onSort: function(item_name, order) {
+        ctrl.sort = item_name;
+        ctrl.order = order;
+      },
+      customSort: function(){},
+      columns : [{
+        field: 'id',
+        title: '#',
+        classes: 'text-right',
+        sortable: true,
+      },{
+        field: 'user_name',
+        title: translateFilter("User"),
+        sortable: true,
+      },{
+        field: 'item_name',
+        title: translateFilter("item_name"),
+        sortable: true,
+      },{
+        field: 'description',
+        title: translateFilter("description"),
+        sortable: true,
+      },{
+        field: 'price',
+        title: translateFilter("price"),
+        sortable: true,
+      },{
+        field: 'request_date',
+        title: translateFilter("request_date"),
+        sortable: true,
+      },{
+        field: 'status',
+        title: translateFilter("status"),
+        sortable: true,
+        formatter: filterDate
+      },{
+        field: 'edit',
+        title: "",
+        sortable: false,
+        formatter : editInventoryRequestFormatter
+      },{
+        field: 'delete',
+        title: "",
+        sortable: false,
+        formatter : deleteInventoryRequestFormatter
+      }]
+    }
+
+    inventory_request_table.bootstrapTable($.extend(bootstrapTableOptionsInvetoryRequest, {toolbar: "date-filter"}));
+
+    function getInventoryRequest() {
+      ctrl.start_date = cleanDate(ctrl.start_date)
+      ctrl.end_date = cleanDate(ctrl.end_date)
+      if(!ctrl.requestCurrentPage){ ctrl.requestCurrentPage = 1 }
+        inventoryRequestService.getInventoryRequest(ctrl.requestCurrentPage).then(function(resp) {
+          ctrl.datasReuestExport = [];
+          if (resp.data) {
+            ctrl.requestTotalItems = resp.data.total_records;
+            ctrl.requestCurrentPage = resp.data.current_page;
+            ctrl.datasReuestExport = resp.data.inventories_requests
+          } else {
+            ctrl.requestTotalItems = 0;
+            ctrl.requestCurrentPage = 0;
+          }
+          ctrl.paginateButtonMaxSize = 5;
+          inventory_request_table.bootstrapTable('load', ctrl.datasReuestExport);
+        });
+    }
+
+    ctrl.pageRequestChanged = function() {
+      getInventoryRequest()
+    };
+
+    // function managerInventoryRequestFormatter(value, row, index) {
+    //   return '<a id="managerInventoryRequest' + row['id'] + '" onclick="' + angularCtrlStr + '.managerInventoryRequest(' + row['id'] + ')"> <i>จัดการ</i> </a>';
+    // }
+
+    // ctrl.managerInventoryRequest = function(id) {
+    //   $rootScope.updateInventory(id)
+    // }
+
+
+    function editInventoryRequestFormatter(value, row, index) {
+      return '<a id="editInventoryRequest' + row['id'] + '" onclick="' + angularCtrlStr + '.editInventoryRequest(' + row['id'] + ')"> <i class=\'fa fa-pencil-square-o fa-fw\'></i> </a>';
+    }
+
+    ctrl.editInventoryRequest = function(id) {
+      $rootScope.updateInventory(id)
+    }
+
+    function deleteInventoryRequestFormatter(value, row, index) {
+      return '<a id="deleteInventoryRequest' + row['id'] + '" onclick="' + angularCtrlStr + '.deleteInventoryRequest(' + row['id'] + ')"> <i class=\'fa fa-trash color-red fa-fw\'></i></i> </a>';
+    }
+
+    ctrl.deleteInventoryRequest = function(id) {
+      openConfirmationModal(translateFilter('delete_expense'), function(){
+        inventoryRequestService.removeInventoryRequest(id).then(function(resp) {
+          getInventoryRequest()
+          ctrl.message = translateFilter('inventory_request_delete_success')
+          ctrl.typeSuccess = true
+        }, function(e){
+          ctrl.message = translateFilter('inventory_request_delete_failed')
+          ctrl.typeSuccess = false
+        })
+      })
+    }
+
+    getInventoryRequest();
 
   });
   }]);
