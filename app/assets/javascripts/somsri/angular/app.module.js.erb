@@ -90,9 +90,9 @@
         }]
       }
       }).state({
-      url: '/inventory/Request',
-      name: 'Request_inventory',
-      templateUrl: "<%= asset_path('somsri/angular/components/inventory/inventoryRequestView.html') %>",
+      url: '/inventory/request',
+      name: 'request_inventory',
+      templateUrl: "<%= asset_path('somsri/angular/components/inventory/inventoryView.html') %>",
       controller: 'inventoryRequestCtrl as inventory',
       resolve: {
         resources: ['$ocLazyLoad', function($ocLazyLoad) {
@@ -134,6 +134,18 @@
         resources: ['$ocLazyLoad', function($ocLazyLoad) {
           return $ocLazyLoad.load([
             ASSETS.somsri.somsri.inventory
+          ]);
+        }]
+      }
+      }).state({
+      url: '/inventory_new_request',
+      name: 'new_request_inventory',
+      templateUrl: "<%= asset_path('somsri/angular/components/inventoryNewRequest/inventoryNewRequestView.html') %>",
+      controller: 'inventoryNewRequestCtrl as inventory',
+      resolve: {
+        resources: ['$ocLazyLoad', function($ocLazyLoad) {
+          return $ocLazyLoad.load([
+            ASSETS.somsri.somsri.inventory_new_request
           ]);
         }]
       }
