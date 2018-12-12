@@ -18,44 +18,80 @@
         <div class="row">
           <ul class="nav nav-tabs inventory ">
             <li class="cyan active">
-              <a data-toggle="tab" class="ng-binding"  href="/inventory ">พัสดุ</a>
+              <a data-toggle="tab" class="ng-binding"  href="#inventory">พัสดุ</a>
             </li>
             <li class="cyan" >
-              <a data-toggle="tab"  class="ng-binding" href="/inventoryRequest">คำขอใช้พัสดุ</a>
+              <a data-toggle="tab"  class="ng-binding" href="#request">คำขอใช้พัสดุ</a>
             </li>
           </ul>
         </div>
         <div class="row report-content container-fluid panel-board">
           <div class="tab-content">
-            <div role="tabpanel" class="tab-pane active" id="home">
-              <div class="row">
-                <div class="col-xs-3">
-                  <div class="search">
-                    <input class="form-control" id="search" type="text" placeholder="ค้นหา" onchange="search()" onkeyup="this.onchange()">
+            <div id="inventory" class="tab-pane fade in active">
+              <div role="tabpanel" class="tab-pane active" id="inventory">
+                <div class="row">
+                  <div class="col-xs-3">
+                    <div class="search">
+                      <input class="form-control" id="search" type="text" placeholder="ค้นหา" onchange="search()" onkeyup="this.onchange()">
+                    </div>
+                  </div>
+                </div>
+                <div class="row">
+                  <table id="inventory-table" >
+                    <thead>
+                      <tr>
+                          <th data-field="id">#</th>
+                          <th data-field="item_name">Item Name</th>
+                          <th data-field="serial_number">Serial Number</th>
+                          <th data-field="model">Model</th>
+                          <th data-field="description">Description</th>
+                          <th data-field="price">Price</th>
+                          <th data-field="date_purchase">Date Purchase</th>
+                          <th data-field="category">Category</th>
+                          <th data-field="date_add">Date Add</th>
+                          <th data-field="edit "></th>
+                          <th data-field="delete"></th>
+                      </tr>
+                    </thead>
+                  </table>
+                  <div class="row row-centered for-display">
+                    <div class="col-centered">
+                      <ul uib-pagination ng-change="inventory.pageChanged()" total-items="inventory.totalItems" ng-model="inventory.currentPage" max-size="inventory.paginateButtonMaxSize" class="pagination-md" num-pages="numPages" previous-text="‹" next-text="›" boundary-link-numbers='true' rotate='false'></ul>
+                    </div>
                   </div>
                 </div>
               </div>
-              <div class="row">
-                <table id="inventory-table" >
-                  <thead>
-                    <tr>
-                        <th data-field="id">#</th>
-                        <th data-field="item_name">Item Name</th>
-                        <th data-field="serial_number">Serial Number</th>
-                        <th data-field="model">Model</th>
-                        <th data-field="description">Description</th>
-                        <th data-field="price">Price</th>
-                        <th data-field="date_purchase">Date Purchase</th>
-                        <th data-field="category">Category</th>
-                        <th data-field="date_add">Date Add</th>
-                        <th data-field="edit "></th>
-                        <th data-field="delete"></th>
-                    </tr>
-                  </thead>
-                </table>
-                <div class="row row-centered for-display">
-                  <div class="col-centered">
-                    <ul uib-pagination ng-change="inventory.pageChanged()" total-items="inventory.totalItems" ng-model="inventory.currentPage" max-size="inventory.paginateButtonMaxSize" class="pagination-md" num-pages="numPages" previous-text="‹" next-text="›" boundary-link-numbers='true' rotate='false'></ul>
+            </div>
+            <div id="request" class="tab-pane fade">
+              <div role="tabpanel" class="tab-pane active" id="request">
+                <div class="row">
+                  <div class="col-xs-3">
+                    <div class="search">
+                      <input class="form-control" id="search" type="text" placeholder="ค้นหา" onchange="search()" onkeyup="this.onchange()">
+                    </div>
+                  </div>
+                </div>
+                <div class="row">
+                  <table id="inventory-table" >
+                    <thead>
+                      <tr>
+                          <th data-field="id">#</th>
+                          <th data-field=" ">User</th>
+                          <th data-field="item_name">Item name</th>
+                          <th data-field="description">Description</th>
+                          <th data-field="price">Price</th>
+                          <th data-field=" ">Request date</th>
+                          <th data-field=" ">Status</th>
+                          <th data-field=" "></th>
+                          <th data-field="edit "></th>
+                          <th data-field="delete"></th>
+                      </tr>
+                    </thead>
+                  </table>
+                  <div class="row row-centered for-display">
+                    <div class="col-centered">
+                      <ul uib-pagination ng-change="inventory.pageChanged()" total-items="inventory.totalItems" ng-model="inventory.currentPage" max-size="inventory.paginateButtonMaxSize" class="pagination-md" num-pages="numPages" previous-text="‹" next-text="›" boundary-link-numbers='true' rotate='false'></ul>
+                    </div>
                   </div>
                 </div>
               </div>
