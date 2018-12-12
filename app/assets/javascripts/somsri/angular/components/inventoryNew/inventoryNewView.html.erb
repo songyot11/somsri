@@ -19,26 +19,26 @@
             <div class="row">
               <div class="col-md-3">
                 <div class="form-group">
-                  <label class="control-label" for="student_full_name">Name</label>
+                  <label class="control-label" for="item_name">Name</label>
 
                   <div class="col-md-12">
-                    <input class="form-control" autocomplete="off" type="text" name="student[full_name]" id="inventory_name" ng-model="inventory.name">
+                    <input class="form-control" autocomplete="off" type="text id="inventory_name" ng-model="inventory.name">
                   </div>
                 </div>
               </div>
               <div class="col-md-5">
                 <div class="form-group">
-                  <label class="control-label" for="student_nickname">Serial Number</label>
+                  <label class="control-label" for="serial_number">Serial Number</label>
                   <div class="col-md-12">
-                    <input class="form-control" autocomplete="off" type="text" name="student[nickname]" id="inventory_serial_number" ng-model="inventory.serial_number">
+                    <input class="form-control" autocomplete="off" type="text" id="inventory_serial_number" ng-model="inventory.serial_number">
                   </div>
                 </div>
               </div>
               <div class="col-md-4">
                 <div class="form-group">
-                  <label class="control-label" for="student_nickname">Model</label>
+                  <label class="control-label" for="model">Model</label>
                   <div class="col-md-12">
-                    <input class="form-control" autocomplete="off" type="text" name="student[nickname]" id="inventory_model" ng-model="inventory.model">
+                    <input class="form-control" autocomplete="off" type="text" id="inventory_model" ng-model="inventory.model">
                   </div>
                 </div>
               </div>
@@ -46,17 +46,17 @@
             <div class="row mt-20">
               <div class="col-md-8">
                 <div class="form-group">
-                  <label class="control-label" for="student_nickname">Description</label>
+                  <label class="control-label" for="description">Description</label>
                   <div class="col-md-12">
-                    <input class="form-control" autocomplete="off" type="text" name="student[nickname]" id="inventory_description" ng-model="inventory.description">
+                    <input class="form-control" autocomplete="off" type="text" id="inventory_description" ng-model="inventory.description">
                   </div>
                 </div>
               </div>
               <div class="col-md-4">
                 <div class="form-group">
-                  <label class="control-label" for="student_nickname">Price</label>
+                  <label class="control-label" for="price">Price</label>
                   <div class="col-md-12">
-                    <input class="form-control" autocomplete="off" type="text" name="student[nickname]" id="inventory_price" ng-model="inventory.price">
+                    <input class="form-control" autocomplete="off" type="text" id="inventory_price" ng-model="inventory.price">
                   </div>
                 </div>
               </div>
@@ -64,9 +64,9 @@
             <div class="row mt-20">
               <div class="col-md-4">
                 <div class="form-group ">
-                  <label class="control-label" for="student_gender_id">Category</label>
+                  <label class="control-label" for="category">Category</label>
                   <div class="col-md-12">
-                    <select class="form-control" name="student[gender_id]" id="inventory_category" ng-model="inventory.category"><option value="">เลือกประเภท</option>
+                    <select class="form-control" id="inventory_category" ng-model="inventory.category"><option value="">เลือกประเภท</option>
                       <option value="1">1</option>
                       <option value="2">2</option>
                     </select>
@@ -77,13 +77,13 @@
                 <div class="form-group">
                   <label class="control-label" for="date_purchase">Date purchase</label>
                   <div class="col-md-12">
-                    <input class="form-control" data-provide="datepicker" type="date" name="student[birthdate]" id="inventory_date_purchase" ng-model="inventory.date_purchase">
+                    <input class="form-control" data-provide="datepicker" type="date" id="inventory_date_purchase" ng-model="inventory.date_purchase">
                   </div>
                 </div>
               </div>
               <div class="col-md-4">
                 <div class="form-group ">
-                  <label class="control-label" for="student_gender_id">Employee</label>
+                  <label class="control-label" for="employee">Employee</label>
                   <div class="col-md-12">
                     <div class="dropdown">
                       <h4 id="employlist-list" data-toggle="dropdown">
