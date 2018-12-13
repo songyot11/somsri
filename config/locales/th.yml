@@ -42,6 +42,7 @@ th:
   employee_pvf: "เงินสะสมเข้ากองทุนสงเคราะห์"
   employee_extra_etc: รายได้อื่นๆ
   employee_fee_etc: รายหักอื่นๆ
+  select_employee: "เลือกพนักงาน"
   ot: "เงินสอนพิเศษ"
   position_allowance: "ค่าตำแหน่ง"
   allowance: "เบี้ยเลี้ยง"
@@ -431,7 +432,8 @@ th:
   grade_classroom: "ระดับชั้นเรียน"
 
   #Inventory
-  list_inventory: "รายการพัสดุ"
+  inventory_list: "รายการพัสดุ"
+  inventory_request: "คำขอใช้พัสดุ"
   add_inventory: "+ เพิ่มพัสดุ"
   item_name: "ชื่อพัสดุ"
   serial_number: "หมายเลขซีเรียล"
@@ -441,6 +443,7 @@ th:
   date_purchase: "วันที่ซื้อ" 
   category: "ประเภท"
   date_add: "วันที่เพิ่ม"
+  select_category: "เลือกประเภท"
 
   # Rollcall
   monthly: ประจำเดือน
