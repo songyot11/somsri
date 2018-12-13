@@ -2,7 +2,7 @@
   'use strict';
   angular.module('somsri.somsri.inventory_new', [])
     .controller('inventoryNewCtrl', ['$compile', '$scope', '$window', '$filter', '$rootScope', '$timeout', 'translateFilter', '$uibModal', 'Upload', "inventoryService", 'employeesService', '$state', function($compile, $scope, $window, $filter, $rootScope, $timeout, translateFilter, $uibModal, Upload, service, employeesService, $state) {
-      $rootScope.menu = translateFilter("พัสดุ")
+      $rootScope.menu = translateFilter("inventory")
         var ctrl = this
         var angularScopeRoot = 'angular.element(document.getElementById("angularCtrl")).scope().$root'
         var angularScopeInventoryNew = 'angular.element(document.getElementById("angularCtrl")).scope().inventoryNewCtrl'
@@ -17,8 +17,8 @@
         ctrl.price = ""
         ctrl.category = ""
         ctrl.date_purchase = new Date()
-        ctrl.employee = "เลือกพนักงาน"
-        ctrl.add_button = "เพิ่ม"
+        ctrl.employee = translateFilter("select_employee")
+        ctrl.add_button = "add"
         // default last 7 days
         ctrl.end_date = new Date();
         ctrl.start_date = new Date(new Date().setMonth(new Date().getMonth() - 1));
@@ -28,7 +28,7 @@
             return
           }
 
-          ctrl.add_button = "แก้ไข"
+          ctrl.add_button = "edit"
 
           service.show(ctrl.real_id).then(function(resp) {
             var value = resp.data
@@ -99,6 +99,10 @@
           })
         }
 
+        ctrl.cancel = function() {
+           $rootScope.openInventory();
+        }
+
         ctrl.switchEmployee = function(name, employee_id) {
           ctrl.employee = name
           ctrl.currentEmployeeString = name
@@ -108,7 +112,7 @@
         function getEmployee(){
           employeesService.getAllEmployee().then(function(resp) {
               ctrl.employee_list = resp.data
-              ctrl.currentEmployeeString = ctrl.employee
+              ctrl.currentEmployeeString = translateFilter(ctrl.employee)
           });
         };
 
