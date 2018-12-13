@@ -10,9 +10,7 @@
             
           </div>
           <div class="col-xs-3 mt-10 pr-0" style="text-align: right;">
-            <a class="btn btn-custom btn-orange" href="somsri#/inventory/new">
-              {{ "add_inventory" | translate }}
-            </a>
+            <a class="btn btn-custom btn-orange" href="somsri#/inventory/new">{{inventory.selectTab | translate }}</a>
           </div>
         </div>
 
@@ -21,7 +19,7 @@
             <ul class="nav nav-tabs">
               <li class="cyan col-md-12">
                 <uib-tabset>
-                  <uib-tab id="inventory_list" index="0" heading="{{ 'inventory' | translate }}"> 
+                  <uib-tab id="inventory_list" index="0" heading="{{ 'inventory' | translate }}" ng-click="inventory.changeTab('add_inventory')"> 
                     <div class="row">
                       <div class="col-md-12">
                         <div class="row">
@@ -58,7 +56,7 @@
                       </div>
                     </div>
                   </uib-tab>
-                  <uib-tab id="inventory_request_list" index="1" heading="{{ 'inventory_request' | translate }}">
+                  <uib-tab id="inventory_request_list" index="1" heading="{{ 'inventory_request' | translate }}" ng-click="inventory.changeTab('add_request')">
                      <div class="row">
                       <div class="col-md-12">
                         <div class="row">

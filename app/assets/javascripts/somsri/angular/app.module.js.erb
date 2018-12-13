@@ -90,6 +90,18 @@
         }]
       }
       }).state({
+      url: '/inventory/request',
+      name: 'request_inventory',
+      templateUrl: "<%= asset_path('somsri/angular/components/inventory/inventoryView.html') %>",
+      controller: 'inventoryRequestCtrl as inventory',
+      resolve: {
+        resources: ['$ocLazyLoad', function($ocLazyLoad) {
+          return $ocLazyLoad.load([
+            ASSETS.somsri.somsri.inventoryRequest
+          ]);
+        }]
+      }
+    }).state({
       url: '/inventory/new',
       name: 'new_inventory',
       templateUrl: "<%= asset_path('somsri/angular/components/inventoryNew/inventoryNewView.html') %>",
@@ -122,6 +134,18 @@
         resources: ['$ocLazyLoad', function($ocLazyLoad) {
           return $ocLazyLoad.load([
             ASSETS.somsri.somsri.inventory
+          ]);
+        }]
+      }
+      }).state({
+      url: '/inventory/new_request',
+      name: 'new_request_inventory',
+      templateUrl: "<%= asset_path('somsri/angular/components/inventoryNewRequest/inventoryNewRequestView.html') %>",
+      controller: 'inventoryNewRequestCtrl as inventory',
+      resolve: {
+        resources: ['$ocLazyLoad', function($ocLazyLoad) {
+          return $ocLazyLoad.load([
+            ASSETS.somsri.somsri.inventory_new_request
           ]);
         }]
       }

@@ -1,0 +1,80 @@
+<div class="container" >
+  <div class="row">
+    <div id="inventory">
+      <div class="col-xs-12">
+        <div class="row">
+          <div class="col-xs-6 mb-20">
+            <h1><h1>{{ "list_request" | translate }}</h1></h1>
+          </div>
+        </div>
+        <div class="row">
+          <ul class="nav nav-tabs inventory">
+            <li class="cyan active">
+              <a data-toggle="tab" class="ng-binding">พัสดุ</a>
+            </li>
+          </ul>
+        </div>
+        <div class="row report-content container-fluid panel-board" style="height: 300px;">
+          <div class="tab-content">
+            <div class="row">
+              <div class="col-md-3">
+                <div class="form-group">
+                  <label class="control-label" for="item_name">Item name </label>
+
+                  <div class="col-md-12">
+                    <input class="form-control" autocomplete="off" >
+                  </div>
+                </div>
+              </div>
+              <div class="col-md-9">
+                <div class="form-group">
+                  <label class="control-label" for="description">Description</label>
+                  <div class="col-md-12">
+                    <input class="form-control" autocomplete="off">
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div class="row mt-20">
+							<div class="col-md-3">
+								<div class="form-group">
+									<label class="control-label" for="request_date">Request date</label>
+									<div class="col-md-12">
+										<input class="form-control" data-provide="datepicker" type="date">
+									</div>
+								</div>
+							</div>
+              <div class="col-md-3">
+                <div class="form-group">
+                  <label class="control-label" for="price">Price</label>
+                  <div class="col-md-12">
+                    <input class="form-control" autocomplete="off" type="text">
+                  </div>
+                </div>
+							</div>
+							<div class="col-md-3">
+								<div class="form-group">
+									<label class="control-label" for="user_name">Username</label>
+									<div class="col-md-12">
+										<input class="form-control" autocomplete="off" type="text" >
+									</div>
+								</div>
+							</div>
+            </div>
+          </div>
+        </div>
+        <div class="footer-menu row mt-20">
+          <div class="pull-right text-right padding-left10">
+            <button type="button" class="btn btn-custom btn-red ng-binding"> Reject </button>
+          </div>
+          <div class="pull-right text-right padding-left10">
+            <button type="submit" class="btn btn-custom btn-green ng-binding"> Approve</button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+
+        

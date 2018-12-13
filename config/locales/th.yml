@@ -433,6 +433,7 @@ th:
   #Inventory
   list_inventory: "รายการพัสดุ"
   add_inventory: "+ เพิ่มพัสดุ"
+  inventory_request: "คำขอใช้พัสดุ"
   item_name: "ชื่อพัสดุ"
   serial_number: "หมายเลขซีเรียล"
   model: "รุ่น"
@@ -441,6 +442,16 @@ th:
   date_purchase: "วันที่ซื้อ" 
   category: "ประเภท"
   date_add: "วันที่เพิ่ม"
+
+   #InventoryRequest
+  list_request: "รายการคำขอใช้พัสดุ"
+  add_request: "+ เพิ่มคำขอใช้พัสดุ"
+  user: "ผู้ใช้"
+  item_name: "ชื่อพัสดุ"
+  description: "ลักษณะ"
+  price: "ราคา"
+  Request date: "วันที่ขอ"
+  Status: "สถานะ"
 
   # Rollcall
   monthly: ประจำเดือน
