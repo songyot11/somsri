@@ -145,9 +145,13 @@
         }
 
         function getEmployee(){
+          ctrl.employee_lists = []
+          ctrl.employee_lists.push({
+            name: translateFilter("no_employee_selection"),
+            id: 0
+          })
           employeesService.getAllEmployee().then(function(resp) {
             if (resp.data.length > 0) {
-              ctrl.employee_lists = []
               for (var i = 0; i < resp.data.length; i++) {
                 var employees = resp.data[i]
                 if (employees.name !== ctrl.displayName) {
@@ -226,7 +230,7 @@
               break
             }
           }
-          
+
           if (check) {
             generateCategoryBarcode(str)
           }
@@ -251,7 +255,6 @@
           getEmployee()
         }
         getInventoryList()
-        // generateCategoryBarcode("office_furniture")
         initData()
 
   }]);

@@ -43,6 +43,7 @@ th:
   employee_extra_etc: รายได้อื่นๆ
   employee_fee_etc: รายหักอื่นๆ
   select_employee: "เลือกพนักงาน"
+  no_employee_selection: "ไม่เลือกพนักงาน"
   ot: "เงินสอนพิเศษ"
   position_allowance: "ค่าตำแหน่ง"
   allowance: "เบี้ยเลี้ยง"

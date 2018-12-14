@@ -43,6 +43,7 @@ en:
   employee_extra_etc: Extra etc.
   employee_fee_etc: Fee etc.
   select_employee: "Select employee"
+  no_employee_selection: "No employee selection"
   ot: "OverTime"
   position_allowance: "Position Allowance"
   allowance: "Allowance"

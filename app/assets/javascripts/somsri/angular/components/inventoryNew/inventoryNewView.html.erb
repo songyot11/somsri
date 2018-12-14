@@ -1,4 +1,5 @@
 <div class="container" >
+  <form ng-submit="inventory.save()">
   <div class="row">
     <div id="inventory">
       <div class="col-xs-12">
@@ -22,7 +23,7 @@
                   <label class="control-label" for="item_name">{{ "item_name" | translate }}</label>
 
                   <div class="col-md-12">
-                    <input class="form-control" autocomplete="off" type="text id="inventory_name" ng-model="inventory.name">
+                    <input class="form-control" autocomplete="off" type="text id="inventory_name" ng-model="inventory.name" required="true">
                   </div>
                 </div>
               </div>
@@ -30,7 +31,7 @@
                 <div class="form-group">
                   <label class="control-label" for="serial_number">{{ "serial_number" | translate}} </label>
                   <div class="col-md-12">
-                    <input class="form-control" autocomplete="off" type="text" id="inventory_serial_number" ng-model="inventory.serial_number">
+                    <input class="form-control" autocomplete="off" type="text" id="inventory_serial_number" ng-model="inventory.serial_number" required="true">
                   </div>
                 </div>
               </div>
@@ -38,7 +39,7 @@
                 <div class="form-group">
                   <label class="control-label" for="model">{{ "model" | translate }}</label>
                   <div class="col-md-12">
-                    <input class="form-control" autocomplete="off" type="text" id="inventory_model" ng-model="inventory.model">
+                    <input class="form-control" autocomplete="off" type="text" id="inventory_model" ng-model="inventory.model" required="true">
                   </div>
                 </div>
               </div>
@@ -48,7 +49,7 @@
                 <div class="form-group">
                   <label class="control-label" for="description">{{ "description" | translate }}</label>
                   <div class="col-md-12">
-                    <input class="form-control" autocomplete="off" type="text" id="inventory_description" ng-model="inventory.description">
+                    <input class="form-control" autocomplete="off" type="text" id="inventory_description" ng-model="inventory.description" required="true">
                   </div>
                 </div>
               </div>
@@ -56,7 +57,7 @@
                 <div class="form-group">
                   <label class="control-label" for="price">{{ "price" | translate }}</label>
                   <div class="col-md-12">
-                    <input class="form-control" autocomplete="off" type="text" id="inventory_price" ng-model="inventory.price" ng-validate="number">
+                    <input class="form-control" autocomplete="off" type="number" id="inventory_price" ng-model="inventory.price" ng-validate="number" required="true">
                   </div>
                 </div>
               </div>
@@ -66,7 +67,7 @@
                 <div class="form-group ">
                   <label class="control-label" for="category">{{ "category" | translate }}</label>
                   <div class="col-md-12">
-                    <select class="form-control" id="inventory_category" ng-model="inventory.category">
+                    <select class="form-control" id="inventory_category" ng-model="inventory.category" required="true">
                       <option value="{{ 'select_category' | translate }}">{{ "select_category" | translate }}</option>
                       <option ng-repeat="item in inventory.item_catogery" value="{{item.name}}">{{item.name | translate }}</option>
                   <!--     <option value="{{ 'select_category' | translate }}">{{ "select_category" | translate }}</option>
@@ -87,7 +88,7 @@
                 <div class="form-group">
                   <label class="control-label" for="date_purchase">{{ "date_purchase" | translate }}</label>
                   <p class="input-group">
-                    <input id="date_purchase" type="text" class="form-control numberic" uib-datepicker-popup="dd/MM/yyyy" ng-model="inventory.datas.date_purchase" is-open="inventory.datePurchasePopup.opened" close-text="Close"/>
+                    <input id="date_purchase" type="text" class="form-control numberic" uib-datepicker-popup="dd/MM/yyyy" ng-model="inventory.datas.date_purchase" is-open="inventory.datePurchasePopup.opened" close-text="Close" required="true"/>
                     <span class="input-group-btn">
                       <button type="button" class="btn btn-default" ng-click="inventory.openDatePurchasePopup()"><i class="fa fa-calendar"></i></button>
                     </span>
@@ -98,7 +99,7 @@
                 <div class="form-group">
                   <label class="control-label" for="end_warranty">{{ "end_warranty" | translate }}</label>
                    <p class="input-group">
-                    <input id="end_warranty" type="text" class="form-control numberic" uib-datepicker-popup="dd/MM/yyyy" ng-model="inventory.datas.end_warranty" is-open="inventory.endWarrantyPopup.opened" close-text="Close"/>
+                    <input id="end_warranty" type="text" class="form-control numberic" uib-datepicker-popup="dd/MM/yyyy" ng-model="inventory.datas.end_warranty" is-open="inventory.endWarrantyPopup.opened" close-text="Close" required="true"/>
                     <span class="input-group-btn">
                       <button type="button" class="btn btn-default" ng-click="inventory.openEndWarrantyPopup()"><i class="fa fa-calendar"></i></button>
                     </span>
@@ -134,12 +135,13 @@
             <button type="button" class="btn btn-custom btn-gray ng-binding" ng-click="inventory.cancel()">{{ "cancel" | translate }}</button>
           </div>
           <div class="pull-right text-right padding-left10">
-            <button type="submit" class="btn btn-custom btn-green ng-binding" ng-click="inventory.save()">{{inventory.add_button | translate}}</button>
+            <button type="submit" class="btn btn-custom btn-green ng-binding">{{inventory.add_button | translate}}</button>
           </div>
         </div>
       </div>
     </div>
   </div>
+  </form>
 </div>
 
 
