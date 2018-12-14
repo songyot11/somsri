@@ -42,6 +42,8 @@ th:
   employee_pvf: "เงินสะสมเข้ากองทุนสงเคราะห์"
   employee_extra_etc: รายได้อื่นๆ
   employee_fee_etc: รายหักอื่นๆ
+  select_employee: "เลือกพนักงาน"
+  no_employee_selection: "ไม่เลือกพนักงาน"
   ot: "เงินสอนพิเศษ"
   position_allowance: "ค่าตำแหน่ง"
   allowance: "เบี้ยเลี้ยง"
@@ -271,6 +273,7 @@ th:
   setting: 'การตั้งค่า'
   class_management: จัดการชั้นเรียน
   expense: "บันทึกค่าใช้จ่าย"
+  inventory: "พัสดุ"
 
   activerecord:
     attributes:
@@ -428,6 +431,29 @@ th:
   status: "สถานะ"
   graduated_semester: "ภาคเรียนที่"
   grade_classroom: "ระดับชั้นเรียน"
+
+  #Inventory
+  inventory_list: "รายการพัสดุ"
+  inventory_request: "คำขอใช้พัสดุ"
+  add_inventory: "+ เพิ่มพัสดุ"
+  item_name: "ชื่อพัสดุ"
+  serial_number: "หมายเลขซีเรียล"
+  model: "รุ่น"
+  description: "ลักษณะ"
+  price: "ราคา"
+  date_purchase: "วันที่ซื้อ" 
+  category: "ประเภท"
+  date_add: "วันที่เพิ่ม"
+  select_category: "เลือกประเภท"
+  end_warranty: "วันสิ้นสุดการรับประกัน"
+  office_furniture: "เฟอร์นิเจอร์สำนักงาน"
+  equipment_computer: "อุปกรณ์คอมพิวเตอร์"
+  office_supplies: "อุปกรณ์สำนักงานเบ็ดเตล็ด"
+  maintenance_equipment: "อุปกรณ์ซ่อมบำรุง"
+  cleaning_products: "แคนทีนและผลิตภัณฑ์ทำความสะอาด"
+  electronic_office_equipment: "อุปกรณ์สำนักงานอิเล็กทรอนิกส์"
+  paper_products: "ผลิตภัณฑ์กระดาษ"
+  meeting_presentation_equipment: "อุปกรณ์เพื่อการประชุมและนำเสนอ"
 
   # Rollcall
   monthly: ประจำเดือน

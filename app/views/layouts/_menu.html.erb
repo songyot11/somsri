@@ -86,6 +86,19 @@
             <%= content_tag(:p, t('.alumni', :default => t("alumni")) ) %>
         </div>
       <% end %>
+
+        <div class="col-xs-4 col-centered menu-icon">
+            <div class="<%= is_topbar ? 'dropdown-menu-btn' : 'menu-btn' %> inventory">
+                <a href="/somsri#/inventory">
+                  <div class="wraptocenter">
+                    <%= image_tag 'inventory.png', class: (is_topbar ? 'img-menu-nav' : ''), width: is_topbar ? 50 : 80 %>
+                  </div>
+                </a>
+            </div>
+            <%= content_tag(:p, t('.inventory', :default => t("inventory")) ) %>
+        </div>
+
+      
       <% if (SiteConfig.get_cache.enable_expenses) && (can? :manage, Expense) %>
         <div class="col-xs-4 col-centered menu-icon">
             <div class="<%= is_topbar ? 'dropdown-menu-btn' : 'menu-btn' %> alumni">

@@ -42,6 +42,8 @@ en:
   employee_pvf: "PVF"
   employee_extra_etc: Extra etc.
   employee_fee_etc: Fee etc.
+  select_employee: "Select employee"
+  no_employee_selection: "No employee selection"
   ot: "OverTime"
   position_allowance: "Position Allowance"
   allowance: "Allowance"
@@ -271,6 +273,7 @@ en:
   setting: 'Settings'
   class_management: "Grade Management"
   expense: "Expense"
+  inventory: "Inventory"
 
 
   activerecord:
@@ -428,6 +431,30 @@ en:
   status: "Status"
   graduated_semester: "Graduation Semester"
   grade_classroom: "Level"
+
+ #Inventory
+  add_inventory: "+ Add inventory"
+  item_name: "Item name"
+  serial_number: "Serial number"
+  model: "Model"
+  description: "Description"
+  price: "Price"
+  date_purchase: "Date purchase" 
+  category: "Category"
+  date_add: "Date add"
+  inventory_list: "Inventory list"
+  inventory_request: "Inventory request"
+  select_category: "Select category"
+  end_warranty: "End of warranty"
+  office_furniture: "Office furniture"
+  equipment_computer: "Equipment computer "
+  office_supplies: "Office upplies"
+  maintenance_equipment: "Maintenance equipment"
+  cleaning_products: "Canteen and cleaning products"
+  electronic_office_equipment: "Electronic office equipment"
+  paper_products: "Paper products"
+  meeting_presentation_equipment: "Meeting and presentation equipment"
+
 
   # Rollcall
   monthly: "Month"

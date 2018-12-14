@@ -88,6 +88,14 @@
         }
       });
     }
+    
+    $rootScope.openInventory = function() {
+      $state.go('inventory')
+    };
+
+    $rootScope.updateInventory = function(id) {
+      $state.go('update_inventory', { id: id })
+    }
 
   }]);
 })();
