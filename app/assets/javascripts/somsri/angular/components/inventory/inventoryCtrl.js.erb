@@ -18,6 +18,7 @@
     // default last 7 days
     ctrl.end_date = new Date();
     ctrl.start_date = new Date(new Date().setMonth(new Date().getMonth() - 1));
+  
 
     function cleanDate(date){
       if(!date || new Date(date) == "Invalid Date"){return;}
@@ -30,9 +31,16 @@
 
     function filterDate(value, row, index) {
       if (value) {
-        return $filter('date')(value, 'd/MM/yyyy');
+        return $filter('date')(value, 'dd/MM/yyyy');
       }
       return "-";
+    }
+
+    function translateCategory(value, row, index) {
+      if (value) {
+        return translateFilter(value)
+      }
+      return "-"
     }
 
     var bootstrapTableOptions = {
@@ -70,14 +78,20 @@
         field: 'date_purchase',
         title: translateFilter("date_purchase"),
         sortable: true,
+        formatter: filterDate
       },{
         field: 'category',
         title: translateFilter("category"),
         sortable: true,
-        formatter: filterDate
+        formatter: translateCategory
       },{
         field: 'date_add',
         title: translateFilter("date_add"),
+        sortable: true,
+        formatter: filterDate
+      },{
+        field: 'end_warranty',
+        title: translateFilter("end_warranty"),
         sortable: true,
         formatter: filterDate
       },{
@@ -145,30 +159,34 @@
     }
 
     function openConfirmationModal(message, success, dismiss) {
-        $scope.message = message;
-        $uibModal.open({
-          animation: true,
-          backdrop: 'static',
-          keyboard: false,
-          scope: $scope,
-          templateUrl: "<%= asset_path('somsri/angular/components/modal/confirm/confirmModalView.html') %>",
-          controller: 'confirmModalCtrl as confirm',
-          size: 'md',
-          resolve: {
-            resources: ['$ocLazyLoad', 'ASSETS', function($ocLazyLoad, ASSETS) {
-              return $ocLazyLoad.load([
-                ASSETS.somsri.somsri.confirm_modal
-                ]);
-            }]
-          }
-        }).result.then(function (result) {
-          if (result) {
-            if(success){ success() }
-          }else{
-            if(dismiss){ dismiss() }
-          }
-        });
-      }
+      $scope.message = message;
+      $uibModal.open({
+        animation: true,
+        backdrop: 'static',
+        keyboard: false,
+        scope: $scope,
+        templateUrl: "<%= asset_path('somsri/angular/components/modal/confirm/confirmModalView.html') %>",
+        controller: 'confirmModalCtrl as confirm',
+        size: 'md',
+        resolve: {
+          resources: ['$ocLazyLoad', 'ASSETS', function($ocLazyLoad, ASSETS) {
+            return $ocLazyLoad.load([
+              ASSETS.somsri.somsri.confirm_modal
+              ]);
+          }]
+        }
+      }).result.then(function (result) {
+        if (result) {
+          if(success){ success() }
+        }else{
+          if(dismiss){ dismiss() }
+        }
+      });
+    }
+
+    ctrl.selectCategory = function(str) {
+      console.log(str)
+    }
 
     getInventory();
 

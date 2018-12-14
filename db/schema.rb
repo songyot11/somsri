@@ -341,10 +341,12 @@ ActiveRecord::Schema.define(version: 20181206142749) do
     t.float    "price"
     t.string   "date_purchase"
     t.string   "category"
+    t.string   "category_barcode"
     t.string   "date_add"
+    t.string   "end_warranty"
     t.integer  "employee_id"
-    t.datetime "created_at",    null: false
-    t.datetime "updated_at",    null: false
+    t.datetime "created_at",       null: false
+    t.datetime "updated_at",       null: false
   end
 
   create_table "inventory_requests", force: :cascade do |t|

@@ -67,7 +67,7 @@ class InventoriesController < ApplicationController
 	private
 
 	def inventory_params
-		params.require(:inventory).permit(:item_name, :serial_number, :model, :description, :price, :date_purchase, :category, :date_add, :employee_id)
+		params.require(:inventory).permit(:item_name, :serial_number, :model, :description, :price, :date_purchase, :category, :category_barcode, :date_add, :end_warranty ,:employee_id)
 	end
 
 	def get_inventories(page)
