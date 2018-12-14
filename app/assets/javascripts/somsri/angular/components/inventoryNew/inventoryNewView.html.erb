@@ -111,16 +111,16 @@
               <div class="col-md-4">
                 <div class="dropdown">
                   <label class="control-label" for="employee">{{ "employee" | translate }}</label>
-                  <div class="form-control">
+                  <div class="form-control" style="padding-top: 0px;" >
                     <h4 id="employeeName" onclick="window.setTimeout(function(){ $('#employeeFilter').val('').trigger('change').focus()}, 10)" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="true">
                       <span ng-bind="inventory.displayName"></span>
-                      <span class="fa fa-angle-down"></span>
+                      <span class="fa fa-angle-down pull-right"></span>
                     </h4>
-                    <ul class="dropdown-menu">              
+                    <ul class="dropdown-menu mn-inventory">              
                       <li ng-show="inventory.employee_lists.length > 0"><input class="employee-filter" id="employeeFilter" type="text" ng-model="inventory.filterKeyword" /></li>
                       <li ng-repeat="data in inventory.employee_lists | filter:inventory.filterKeyword">
                         <a class="py-5" ng-click="inventory.switchEmployee(data.name,data.id)" href="javascript:void(0)">
-                          <span class="dropdown-employee-name">{{data.name}}</span>
+                          <span class="dropdown-employee-name" style="padding-left: 20px;" >{{data.name}}</span>
                         </a>
                       </li>
                     </ul>

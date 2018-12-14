@@ -808,3 +808,8 @@ tags-input .tags .tag-item .remove-button{
     background-color: #f1f1f1;
   }
 }
+.mn-inventory {
+  max-height: calc(100vh - 200px);
+  overflow-y: scroll;
+  height: 200px;
+}
