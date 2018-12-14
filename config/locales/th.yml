@@ -43,6 +43,7 @@ th:
   employee_extra_etc: รายได้อื่นๆ
   employee_fee_etc: รายหักอื่นๆ
   select_employee: "เลือกพนักงาน"
+  no_employee_selection: "ไม่เลือกพนักงาน"
   ot: "เงินสอนพิเศษ"
   position_allowance: "ค่าตำแหน่ง"
   allowance: "เบี้ยเลี้ยง"
@@ -444,6 +445,15 @@ th:
   category: "ประเภท"
   date_add: "วันที่เพิ่ม"
   select_category: "เลือกประเภท"
+  end_warranty: "วันสิ้นสุดการรับประกัน"
+  office_furniture: "เฟอร์นิเจอร์สำนักงาน"
+  equipment_computer: "อุปกรณ์คอมพิวเตอร์"
+  office_supplies: "อุปกรณ์สำนักงานเบ็ดเตล็ด"
+  maintenance_equipment: "อุปกรณ์ซ่อมบำรุง"
+  cleaning_products: "แคนทีนและผลิตภัณฑ์ทำความสะอาด"
+  electronic_office_equipment: "อุปกรณ์สำนักงานอิเล็กทรอนิกส์"
+  paper_products: "ผลิตภัณฑ์กระดาษ"
+  meeting_presentation_equipment: "อุปกรณ์เพื่อการประชุมและนำเสนอ"
 
   # Rollcall
   monthly: ประจำเดือน
