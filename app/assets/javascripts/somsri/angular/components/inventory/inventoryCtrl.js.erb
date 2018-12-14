@@ -133,7 +133,7 @@
     };
 
     function editInventoryFormatter(value, row, index) {
-      return '<a id="editInventory' + row['id'] + '" onclick="' + angularCtrlStr + '.editInventory(' + row['id'] + ')"> <i class=\'fa fa-pencil-square-o fa-fw\'></i> </a>';
+      return '<a id="editInventory' + row['id'] + '" onclick="' + angularCtrlStr + '.editInventory(' + row['id'] + ')"> <i class=\'fa fa-pencil-square-o fa-fw color-orange\'></i> </a>';
     }
 
     ctrl.editInventory = function(id) {
