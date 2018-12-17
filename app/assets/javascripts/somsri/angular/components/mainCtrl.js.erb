@@ -90,7 +90,8 @@
     }
     
     $rootScope.openInventory = function(id) {
-      $state.go('inventory', { id: id })
+      $rootScope.index_id = id;
+      $state.go('inventory');
     };
 
     $rootScope.updateInventory = function(id) {

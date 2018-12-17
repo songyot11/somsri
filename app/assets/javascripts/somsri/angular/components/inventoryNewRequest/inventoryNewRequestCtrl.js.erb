@@ -66,15 +66,14 @@
 
     function createInventoryRequest(inventory_data) {
    		service.newInventoryRequest(inventory_data).then(function(resp) {
-        console.log(resp)
-   			$rootScope.openInventory("2")
+   			$rootScope.openInventory(1)
    		}, function(e) {
 
     	})
     } 
 
     ctrl.cancel = function() {
-      $rootScope.openInventory("2");
+      $rootScope.openInventory(1);
     }
 
     ctrl.openRequestDatePopup = function() {
