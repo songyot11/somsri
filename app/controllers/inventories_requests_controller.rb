@@ -70,51 +70,58 @@ class InventoriesRequestsController < ApplicationController
 	# PUT: inventories_requests/approve    // Collection
 	#[:approved, :rejected ,:pending, :accept, :purchasing, :done, :assinged]
 	def approve
-		inventory = InventoryRequest.first
-		inventory.approve?
-		inventory.update(inventory_status: :approve)
+		inventory = InventoryRequest.find(params[:id])
+		inventory.approved?
+		inventory.update(inventory_status: :approved)
+		render json: inventory ,status: :ok
 	end
 
 	def reject
-		inventory = InventoryRequest.first
-		inventory.reject?
-		inventory.update(inventory_status: :reject)
+		inventory = InventoryRequest.find(params[:id])
+		inventory.rejected?
+		inventory.update(inventory_status: :rejected)
+		render json: inventory ,status: :ok
 	end
 
 	def pending
-		inventory = InventoryRequest.first
+		inventory = InventoryRequest.find(params[:id])
 		inventory.pending?
 		inventory.update(inventory_status: :pending)
+		render json: inventory ,status: :ok
 	end
 
 	def accept
-		inventory = InventoryRequest.first
+		inventory = InventoryRequest.find(params[:id])
 		inventory.accept?
 		inventory.update(inventory_status: :accept)
+		render json: inventory ,status: :ok
 	end
 
 	def purchasing
-		inventory = InventoryRequest.first
+		inventory = InventoryRequest.find(params[:id])
 		inventory.purchasing?
 		inventory.update(inventory_status: :purchasing)
+		render json: inventory ,status: :ok
 	end
 
 	def done
-		inventory = InventoryRequest.first
+		inventory = InventoryRequest.find(params[:id])
 		inventory.done?
 		inventory.update(inventory_status: :done)
+		render json: inventory ,status: :ok
 	end
 
 	def assigned
-		inventory = InventoryRequest.first
-		inventory.assinged?
-		inventory.update(inventory_status: :assinged)
+		inventory = InventoryRequest.find(params[:id])
+		inventory.assigned?
+		inventory.update(inventory_status: :assigned)
+		render json: inventory ,status: :ok
 	end
 
 	private
 
 	def inventory_params
-		params.require(:inventory).permit(:user_name, :item_name, :description, :price, :request_date, :inventory_status )
+		params.require(:inventories_request).permit(:user_name, :item_name, :description, :price, :request_date, :inventory_status)
 	end
 
 	def get_inventories_request(page)

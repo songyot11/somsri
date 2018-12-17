@@ -1,4 +1,5 @@
 <div class="container" >
+  <form ng-submit="inventory.save()">
   <div class="row">
     <div id="inventory">
       <div class="col-xs-12">
@@ -22,7 +23,7 @@
                   <label class="control-label" for="item_name">{{ "item_name" | translate }}</label>
 
                   <div class="col-md-12">
-                    <input class="form-control" autocomplete="off" >
+                    <input class="form-control" autocomplete="off" type="text" id="inventory_name" ng-model="inventory.name" required="true">
                   </div>
                 </div>
               </div>
@@ -30,7 +31,7 @@
                 <div class="form-group">
                   <label class="control-label" for="description">{{ "description" | translate }}</label>
                   <div class="col-md-12">
-                    <input class="form-control" autocomplete="off">
+                    <input class="form-control" autocomplete="off" type="text" id="inventory_description" ng-model="inventory.description" required="true">
                   </div>
                 </div>
               </div>
@@ -39,30 +40,22 @@
 
 
             <div class="row mt-20">
-    <!--           <div class="col-md-4">
+              <div class="col-md-4">
                 <div class="form-group">
                   <label class="control-label" for="request_date">{{ "request_date" | translate }}</label>
                   <p class="input-group">
                     <input id="request_date" type="text" class="form-control numberic" uib-datepicker-popup="dd/MM/yyyy" ng-model="inventory.datas.request_date" is-open="inventory.requestDatePopup.opened" close-text="Close" required="true"/>
                     <span class="input-group-btn">
-                      <button type="button" class="btn btn-default" ng-click="inventory.openRequestDatePopup()"><i class="fa fa-calendar"></i></button>
+                      <button type="button" class="btn btn-default" ng-click="inventory.openRequestDatePopup()" ><i class="fa fa-calendar"></i></button>
                     </span>
                   </p>
                 </div>
-              </div> -->
-							<div class="col-md-3">
-								<div class="form-group">
-									<label class="control-label" for="request_date">{{ "request_date" | translate }}</label>
-									<div class="col-md-12">
-										<input class="form-control" data-provide="datepicker" type="date">
-									</div>
-								</div>
-							</div>
+              </div>
               <div class="col-md-3">
                 <div class="form-group">
                   <label class="control-label" for="price">{{ "price" | translate }}</label>
                   <div class="col-md-12">
-                    <input class="form-control" autocomplete="off" type="text">
+                    <input class="form-control" autocomplete="off" type="number" id="inventory_price" ng-model="inventory.price" ng-validate="number" required="true">
                   </div>
                 </div>
 							</div>
@@ -70,7 +63,7 @@
 								<div class="form-group">
 									<label class="control-label" for="user_request">{{ "user_request" | translate }}</label>
 									<div class="col-md-12">
-										<input class="form-control" autocomplete="off" type="text" >
+										<input class="form-control" autocomplete="off" type="text" id="inventory_user" ng-model="inventory.user_name" required="true" >
 									</div>
 								</div>
 							</div>
@@ -79,15 +72,16 @@
         </div>
         <div class="footer-menu row mt-20">
           <div class="pull-right text-right padding-left10">
-            <button type="button" class="btn btn-custom btn-red ng-binding">{{ "reject" | translate }}</button>
+            <button type="button" class="btn btn-custom btn-gray ng-binding" ng-click="inventory.cancel()">{{ "cancel" | translate }}</button>
           </div>
           <div class="pull-right text-right padding-left10">
-            <button type="submit" class="btn btn-custom btn-green ng-binding">{{ "approve" | translate }}</button>
+            <button type="submit" class="btn btn-custom btn-green ng-binding">{{ inventory.add_button | translate}}</button>
           </div>
         </div>
       </div>
     </div>
   </div>
+  </form>
 </div>
 
 

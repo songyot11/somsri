@@ -162,7 +162,7 @@ Rails.application.routes.draw do
     member do
       put 'approve'  
       put 'reject'
-      put 'pendeing'
+      put 'pending'
       put 'accept'
       put 'purchasing'
       put 'done'

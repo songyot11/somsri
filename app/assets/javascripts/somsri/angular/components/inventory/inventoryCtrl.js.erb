@@ -1,13 +1,13 @@
 (function() {
   'use strict';
   angular.module('somsri.somsri.inventory', [])
-  .controller('inventoryCtrl', ['$compile', '$scope', '$window', '$filter', '$rootScope', '$timeout', 'translateFilter', '$uibModal', 'Upload', "inventoryService", "inventoryRequestService", function($compile, $scope, $window, $filter, $rootScope, $timeout, translateFilter, $uibModal, Upload, services, inventoryRequestService) {
+  .controller('inventoryCtrl', ['$compile', '$scope', '$window', '$filter', '$rootScope', '$timeout', 'translateFilter', '$uibModal', 'Upload', "inventoryService", "inventoryRequestService", '$state', function($compile, $scope, $window, $filter, $rootScope, $timeout, translateFilter, $uibModal, Upload, services, inventoryRequestService, $state) {
     $rootScope.menu = translateFilter("inventory")
     var ctrl = this
     var angularScopeRoot = 'angular.element(document.getElementById("angularCtrl")).scope().$root'
     var angularScopeInventory = 'angular.element(document.getElementById("angularCtrl")).scope().inventoryCtrl'
     var angularCtrlStr = "angular.element(document.getElementById('angularCtrl')).scope().inventory"
-    // var alumni = "angular.element(document.getElementById('angularCtrl')).scope().alumni"
+
     ctrl.inventory = [];
     ctrl.message = '';
   $rootScope.loadAndAuthorizeResource("inventory", function(){
@@ -18,6 +18,7 @@
     ctrl.sort = 'inventories.id';
     ctrl.selectTab = "add_inventory";
     ctrl.url_path = "somsri#/inventory/new"
+    ctrl.real_id = $state.params.id;
 
     // default last 7 days
     ctrl.end_date = new Date();
@@ -230,7 +231,7 @@
         title: translateFilter("request_date"),
         sortable: true,
       },{
-        field: 'status',
+        field: 'inventory_status',
         title: translateFilter("status"),
         sortable: true,
         formatter: filterDate
@@ -290,7 +291,7 @@
     }
 
     ctrl.editInventoryRequest = function(id) {
-      $rootScope.updateInventory(id)
+      $rootScope.updateInventoryRequest(id)
     }
 
     function deleteInventoryRequestFormatter(value, row, index) {

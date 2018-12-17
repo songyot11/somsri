@@ -353,7 +353,7 @@ ActiveRecord::Schema.define(version: 20181206142749) do
     t.string   "user_name"
     t.string   "item_name"
     t.string   "description"
-    t.string   "price"
+    t.float    "price"
     t.string   "request_date"
     t.integer  "inventory_status"
     t.datetime "created_at",       null: false
