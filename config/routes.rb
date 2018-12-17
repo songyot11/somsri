@@ -166,7 +166,7 @@ Rails.application.routes.draw do
       put 'accept'
       put 'purchasing'
       put 'done'
-      put 'assinged'
+      put 'assigned'
     end
   end
 end

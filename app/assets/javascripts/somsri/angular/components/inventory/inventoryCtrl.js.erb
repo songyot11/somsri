@@ -17,10 +17,12 @@
     ctrl.requestCurrentPage = 1;
     ctrl.sort = 'inventories.id';
     ctrl.selectTab = "add_inventory";
+    ctrl.url_path = "somsri#/inventory/new"
 
     // default last 7 days
     ctrl.end_date = new Date();
     ctrl.start_date = new Date(new Date().setMonth(new Date().getMonth() - 1));
+  
 
     function cleanDate(date){
       if(!date || new Date(date) == "Invalid Date"){return;}
@@ -33,9 +35,16 @@
 
     function filterDate(value, row, index) {
       if (value) {
-        return $filter('date')(value, 'd/MM/yyyy');
+        return $filter('date')(value, 'dd/MM/yyyy');
       }
       return "-";
+    }
+
+    function translateCategory(value, row, index) {
+      if (value) {
+        return translateFilter(value)
+      }
+      return "-"
     }
 
     var bootstrapTableOptionsInventory = {
@@ -73,14 +82,20 @@
         field: 'date_purchase',
         title: translateFilter("date_purchase"),
         sortable: true,
+        formatter: filterDate
       },{
         field: 'category',
         title: translateFilter("category"),
         sortable: true,
-        formatter: filterDate
+        formatter: translateCategory
       },{
         field: 'date_add',
         title: translateFilter("date_add"),
+        sortable: true,
+        formatter: filterDate
+      },{
+        field: 'end_warranty',
+        title: translateFilter("end_warranty"),
         sortable: true,
         formatter: filterDate
       },{
@@ -119,6 +134,11 @@
 
     ctrl.changeTab = function(str) {
       ctrl.selectTab = str
+      if (str === "add_inventory") {
+        ctrl.url_path = "somsri#/inventory/new"
+      } else {
+        ctrl.url_path = "somsri#/inventory/new/request"
+      }
     }
 
     ctrl.pageChanged = function() {
@@ -126,7 +146,7 @@
     };
 
     function editInventoryFormatter(value, row, index) {
-      return '<a id="editInventory' + row['id'] + '" onclick="' + angularCtrlStr + '.editInventory(' + row['id'] + ')"> <i class=\'fa fa-pencil-square-o fa-fw\'></i> </a>';
+      return '<a id="editInventory' + row['id'] + '" onclick="' + angularCtrlStr + '.editInventory(' + row['id'] + ')"> <i class=\'fa fa-pencil-square-o fa-fw color-orange\'></i> </a>';
     }
 
     ctrl.editInventory = function(id) {
@@ -246,6 +266,10 @@
           ctrl.paginateButtonMaxSize = 5;
           inventory_request_table.bootstrapTable('load', ctrl.datasReuestExport);
         });
+    }
+
+    ctrl.selectCategory = function(str) {
+      console.log(str)
     }
 
     ctrl.pageRequestChanged = function() {

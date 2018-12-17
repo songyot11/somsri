@@ -1,9 +1,33 @@
 (function() {
   'use strict';
   angular.module('somsri.somsri.inventory_new_request', [])
-    .controller('inventoryNewRequestCtrl', ['$compile', '$scope', '$window', '$filter', '$rootScope', '$timeout', 'translateFilter', '$uibModal', 'Upload', '$state', 'inventoryRequestService', function($compile, $scope, $window, $filter, $rootScope, $timeout, translateFilter, $uibModal, Upload, $state, inventoryRequestService) {
+    .controller('inventoryNewRequestCtrl', ['$compile', '$scope', '$window', '$filter', '$rootScope', '$timeout', 'translateFilter', '$uibModal', 'Upload', '$state', "inventoryRequestService" , function($compile, $scope, $window, $filter, $rootScope, $timeout, translateFilter, $uibModal, Upload, $state, service) {
+	$rootScope.menu = translateFilter("inventory_request")
+		var ctrl = this
+	 	var angularScopeRoot = 'angular.element(document.getElementById("angularCtrl")).scope().$root'
+    var angularScopeInventoryNew = 'angular.element(document.getElementById("angularCtrl")).scope().inventoryNewRequestCtrl'
+    var angularCtrlStr = 'angular.element(document.getElementById("angularCtrl")).scope().inventoryNewRequest'
 
-        
+    ctrl.save = function() {
 
+    	var changePrice = parseFloat(ctrl.price)
+    	var checngeRequestDate = $filter('date')(new Date(ctrl.datas.request_date), 'yyyy-MM-ddTh:MM:ss')
+
+    	var inventory_datas = {
+    		item_name: ctrl.item_name,
+    		description: ctrl.description,
+    		request_date: checngeRequestDate,
+    		price: changePrice,
+    		user_name: ctrl.user_name
+    	}
+    }
+
+    function createInventoryRequest(inventory_data) {
+   		service.newInventoryRequest(inventory_data).then(function(resp) {
+   			$rootScope.openInventory("2")
+   		}, function(e) {
+
+    	})
+    }   
   }]);
 })();

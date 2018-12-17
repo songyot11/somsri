@@ -28,7 +28,7 @@ class InventoriesRequestsController < ApplicationController
 		render json: result, status: :ok
 	end
 
-	# GET: /inventories/:id
+	# GET: /inventories_request/:id
 	def show 
 		inventories_request = InventoryRequest.find(params[:id])
 		render json: inventories_request, status: :ok
@@ -40,12 +40,12 @@ class InventoriesRequestsController < ApplicationController
 
 	#POST: /inventories_requests
 	def create 
-		inventories = InventoryRequest.all
-		inventory = InventoryRequest.new(inventory_params)
-		if inventory.save
-			render json: inventory, status: :ok
+		inventories_request = InventoryRequest.all
+		inventories = InventoryRequest.new(inventory_params)
+		if inventories.save
+			render json: inventories, status: :ok
 		else
-			render json: inventory.errors.full_messages, status: :ok
+			render json: inventories.errors.full_messages, status: :ok
 		end
 	end
 
@@ -105,7 +105,7 @@ class InventoriesRequestsController < ApplicationController
 		inventory.update(inventory_status: :done)
 	end
 
-	def assinged
+	def assigned
 		inventory = InventoryRequest.first
 		inventory.assinged?
 		inventory.update(inventory_status: :assinged)
@@ -114,7 +114,7 @@ class InventoriesRequestsController < ApplicationController
 	private
 
 	def inventory_params
-		params.require(:inventory).permit(:user_name, :item_name, :description, :price, :request_date)
+		params.require(:inventory).permit(:user_name, :item_name, :description, :price, :request_date, :inventory_status )
 	end
 
 	def get_inventories_request(page)

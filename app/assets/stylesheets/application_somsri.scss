@@ -761,7 +761,6 @@ tags-input .tags .tag-item .remove-button{
   border-color: #d0d0d0 !important;
 }
 
-
 .nav-tabs.inventory > li > a {
   padding: 20px 40px 20px 40px;
 }
@@ -774,6 +773,10 @@ tags-input .tags .tag-item .remove-button{
   margin-left: 0px;
   margin-right: 15px;
   cursor: pointer;
+}
+
+.somsri-somsri .logo.text-center {
+    background: #ffab04;
 }
 
 .nav-tabs.inventory > li.cyan > a {
@@ -803,4 +806,9 @@ tags-input .tags .tag-item .remove-button{
   &:hover{
     background-color: #f1f1f1;
   }
+}
+.mn-inventory {
+  max-height: calc(100vh - 200px);
+  overflow-y: scroll;
+  height: 200px;
 }

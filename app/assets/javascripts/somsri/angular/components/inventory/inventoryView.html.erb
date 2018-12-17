@@ -1,19 +1,18 @@
 <div class="container">
   <div class="row">
     <div id="inventory">
-      <div class="col-xs-12">
+      <div class="col-xs-12 mt-50">
         <div class="row">
           <div class="col-xs-6 mb-20 pl-0">
-            <h1><h1>{{ "list_inventory" | translate }}</h1></h1>
+            <h1><h1>{{ "inventory_list" | translate }}</h1></h1>
           </div>
           <div class="col-xs-3 mt-10" style="text-align: right;">
             
           </div>
           <div class="col-xs-3 mt-10 pr-0" style="text-align: right;">
-            <a class="btn btn-custom btn-orange" href="somsri#/inventory/new">{{inventory.selectTab | translate }}</a>
+            <a class="btn btn-custom btn-orange" href="{{inventory.url_path}}">{{inventory.selectTab | translate }}</a>
           </div>
         </div>
-
         <div class="row">
           <div class="col-md-12">
             <ul class="nav nav-tabs">
@@ -98,8 +97,6 @@
         </div>
         <table  id="tableForExport" data-toolbar="none" data-tableexport-display="always" style="display: none;"><table>
       </div>
-    </div>
-    <div role="tabpanel" class="tab-pane" id="profile">...</div>
     </div>
   </div>
 </div>
