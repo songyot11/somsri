@@ -19,13 +19,12 @@
     ctrl.selectTab = "add_inventory";
     ctrl.url_path = "somsri#/inventory/new"
     ctrl.real_id = $rootScope.index_id
-    // console.log("ID1", $rootScope.ddd)
     // default last 7 days
     ctrl.end_date = new Date();
     ctrl.start_date = new Date(new Date().setMonth(new Date().getMonth() - 1));
 
     function activeTab() {
-      // console.log("ID2",ctrl.real_id)
+      
       if (!ctrl.real_id) {
         ctrl.active = 0
         ctrl.selectTab = "add_inventory"
@@ -70,13 +69,10 @@
     }
 
     var bootstrapTableOptionsInventory = {
-      onSort: function(item_name, order) {
-        ctrl.sort = item_name;
-        ctrl.order = order;
-      },
-      customSort: function(){},
+      sortName: 'full_name',
+      sortOrder: 'asc',
       columns : [{
-        field: 'id',
+        field: 'number',
         title: '#',
         classes: 'text-right',
         sortable: true,
@@ -145,6 +141,27 @@
             ctrl.totalItems = resp.data.total_records;
             ctrl.currentPage = resp.data.current_page;
             ctrl.datasExport = resp.data.inventories
+            var datas = []
+            var count = ctrl.datasExport.length
+            for(var i = 0; i<count; i++) {
+              datas.push({
+                number: i+1,
+                id: ctrl.datasExport[i].id,
+                item_name: ctrl.datasExport[i].item_name,
+                serial_number: ctrl.datasExport[i].serial_number,
+                model: ctrl.datasExport[i].model,
+                description: ctrl.datasExport[i].description,
+                price: ctrl.datasExport[i].price,
+                date_purchase: ctrl.datasExport[i].date_purchase,
+                category: ctrl.datasExport[i].category,
+                date_add: ctrl.datasExport[i].date_add,
+                end_warranty: ctrl.datasExport[i].end_warranty,
+                created_at: ctrl.datasExport[i].created_at,
+                updated_at: ctrl.datasExport[i].updated_at
+              })
+            }
+            ctrl.datasExport = datas
+
           } else {
             ctrl.totalItems = 0;
             ctrl.currentPage = 0;
@@ -221,13 +238,10 @@
     getInventory();
 
     var bootstrapTableOptionsInvetoryRequest = {
-      onSort: function(item_name, order) {
-        ctrl.sort = item_name;
-        ctrl.order = order;
-      },
-      customSort: function(){},
+      sortName: 'full_name',
+      sortOrder: 'asc',
       columns : [{
-        field: 'id',
+        field: 'number',
         title: '#',
         classes: 'text-right',
         sortable: true,
@@ -281,6 +295,23 @@
             ctrl.requestTotalItems = resp.data.total_records;
             ctrl.requestCurrentPage = resp.data.current_page;
             ctrl.datasReuestExport = resp.data.inventories_requests
+            var datas = []
+            var count = ctrl.datasReuestExport.length
+            for(var i = 0; i<count; i++) {
+              datas.push({
+                number: i+1,
+                id: ctrl.datasReuestExport[i].id,
+                user_name: ctrl.datasReuestExport[i].user_name,
+                item_name: ctrl.datasReuestExport[i].item_name,
+                description: ctrl.datasReuestExport[i].description,
+                price: ctrl.datasReuestExport[i].price,
+                request_date: ctrl.datasReuestExport[i].request_date,
+                inventory_status: ctrl.datasReuestExport[i].inventory_status,
+                created_at: ctrl.datasReuestExport[i].created_at,
+                updated_at: ctrl.datasReuestExport[i].updated_at
+              })
+            }
+            ctrl.datasReuestExport = datas
           } else {
             ctrl.requestTotalItems = 0;
             ctrl.requestCurrentPage = 0;
