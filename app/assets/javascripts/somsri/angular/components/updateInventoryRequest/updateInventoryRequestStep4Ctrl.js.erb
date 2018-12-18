@@ -1,0 +1,118 @@
+(function() {
+	angular.module('somsri.somsri.update_inventory_request_step4', [])
+    .controller('updateInventoryRequestStep4Ctrl', ['$compile', '$scope', '$window', '$filter', '$rootScope', '$timeout', 'translateFilter', '$uibModal', 'Upload', '$state', "inventoryRequestService", "employeesService" , function($compile, $scope, $window, $filter, $rootScope, $timeout, translateFilter, $uibModal, Upload, $state, service, employeesService) {
+	$rootScope.menu = translateFilter("inventory_request")
+		var ctrl = this
+		ctrl.real_id = $state.params.id;
+		ctrl.filterKeyword = ""
+		ctrl.checkName = true
+
+		function checkStep() {
+			ctrl.step = $rootScope.step
+			if(!ctrl.step) {
+				if (ctrl.real_id) {
+					$rootScope.updateInventoryRequest(ctrl.real_id)
+				}
+			} else {
+				//show
+				ctrl.get_date	= $filter('date')(new Date(ctrl.step.step3.get_date), 'dd/MM/yyyy')
+    		ctrl.buy_slip =	ctrl.step.step3.buy_slip
+    		ctrl.end_warranty	=  $filter('date')(new Date(ctrl.step.step3.end_warranty), 'dd/MM/yyyy') 
+    		ctrl.save_by_step3 = ctrl.step.step3.save_by
+
+    		//send
+			}
+			console.log("step4",ctrl.step)
+		}
+		function initDatas(){
+       if(!ctrl.datas) { ctrl.datas = {} }
+     }
+	
+	  function autoFillEmployee($item){
+      if($item.id){
+        for(var i = 0;i < ctrl.employee_lists.length; i++){
+        	ctrl.checkName = true
+          if($item.id == ctrl.employee_lists[i].id){
+            initDatas();
+            ctrl.checkName = false
+            // console.log("name1", ctrl.datas.name)
+            // if(!ctrl.datas.name){
+            //   ctrl.datas.name = ctrl.employee_lists[i].name;
+            //   console.log("name2",ctrl.datas.name)
+            // }
+          }
+        }
+      }
+    }
+
+    function autoCheckName(data) {
+    	if(data[0].id){
+        for(var i = 0;i < ctrl.employee_lists.length; i++){
+          if(data[0].id == ctrl.employee_lists[i].id){
+            ctrl.checkName = false
+          } else {
+        		ctrl.checkName = true
+        	}
+        }
+      }
+    }
+
+    ctrl.onChangeName = function() {
+    	var data = []
+    	data.push({
+    		name: ctrl.datas.name,
+        id: -1
+    	})
+
+    	// console.log("item3", data)
+      autoCheckName(data);
+    }
+
+		ctrl.onSelectEmployeeFullName = function($item) {
+      ctrl.datas.name = $item.name;
+      autoFillEmployee($item);
+     };
+
+		function getEmployee(){
+      ctrl.employee_lists = []
+      ctrl.employee_lists.push({
+        name: translateFilter("no_employee_selection"),
+        id: 0
+     	})
+
+      employeesService.getAllEmployee().then(function(resp) {
+        if (resp.data.length > 0) {
+          for (var i = 0; i < resp.data.length; i++) {
+            var employees = resp.data[i]
+            if (employees.name !== ctrl.displayName) {
+              ctrl.employee_lists.push({
+                name: employees.name,
+                id: employees.id
+              })
+            }
+          }
+        }
+      });
+    };
+
+    ctrl.continue = function() {
+    	// console.log(ctrl.datas.name)
+    	// ctrl.step.step4.send_to = ctrl.datas.name
+    	// ctrl.step.step4.save_by = "Admin"
+    	var data = {
+    		first_name: ctrl.datas.name
+    	}
+    	if (ctrl.checkName) {
+    		console.log("checkName")
+    		// employeesService.createEmployee(data).then(function(resp) {
+    		// 	console.log(resp)
+    		// })
+    	}
+    	
+    	// $rootScope.updateInventoryRequestStepถ(ctrl.step, ctrl.real_id)
+    }
+
+   	getEmployee()
+		// checkStep()
+	}]);
+})();

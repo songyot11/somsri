@@ -51,8 +51,7 @@
         item_name: ctrl.name,
         description: ctrl.description,
         price: changePrice,
-        request_date: checngeRequestDate,
-        inventory_status: ctrl.inventory_status
+        request_date: checngeRequestDate
     	}
 
 
@@ -66,11 +65,14 @@
 
     function createInventoryRequest(inventory_data) {
    		service.newInventoryRequest(inventory_data).then(function(resp) {
-   			$rootScope.openInventory(1)
+        service.pending(resp.data.id).then(function(resp) {
+          $rootScope.openInventory(1)
+        })
+   			
    		}, function(e) {
 
     	})
-    } 
+    }
 
     ctrl.cancel = function() {
       $rootScope.openInventory(1);

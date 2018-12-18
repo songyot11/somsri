@@ -121,7 +121,7 @@ class InventoriesRequestsController < ApplicationController
 	private
 
 	def inventory_params
-		params.require(:inventories_request).permit(:user_name, :item_name, :description, :price, :request_date, :inventory_status)
+		params.require(:inventories_request).permit(:user_name, :item_name, :description, :price, :request_date)
 	end
 
 	def get_inventories_request(page)

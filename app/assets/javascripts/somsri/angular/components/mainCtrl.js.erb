@@ -99,7 +99,27 @@
     }
 
     $rootScope.updateInventoryRequest = function(id) {
-      $state.go('update_invetory_request', { id: id })
+      $state.go('update_inventory_request', { id: id })
+    }
+
+    $rootScope.updateInventoryRequestStep2 = function(step, id) {
+      $rootScope.step = step
+      $state.go('update_inventory_request_step2', { id: id})
+    }
+
+    $rootScope.updateInventoryRequestStep3 = function(step, id) {
+      $rootScope.step = step
+      $state.go('update_inventory_request_step3', { id: id})
+    }
+
+    $rootScope.updateInventoryRequestStep4 = function(step, id) {
+      $rootScope.step = step
+      $state.go('update_inventory_request_step4', { id: id})
+    }
+
+    $rootScope.updateInventoryRequestStep5 = function(step, id) {
+      $rootScope.step = step
+      $state.go('update_inventory_request_step5', { id: id})
     }
 
   }]);

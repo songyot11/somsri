@@ -5,7 +5,31 @@
 	$rootScope.menu = translateFilter("inventory_request")
 		var ctrl = this
 		ctrl.real_id = $state.params.id;
+		ctrl.active = 1
 		console.log(ctrl.real_id)
+		ctrl.step = {
+    	step1: {
+    		accept: "accept",
+    		save_by: "Admin"
+    	},
+    	step2: {
+    		date_purchasing: "",
+    		date_send: "",
+    		price: "",
+    		save_by: ""
+    	},
+    	step3: {
+    		get_date: "",
+    		buy_slip: "",
+    		end_warranty: "",
+    		save_by: ""
+    	},
+    	step4: {
+    		send_to: "",
+    		save_by: ""
+    	}
+    }
+
   	function initData() {
       if (!ctrl.real_id) { 
         return
@@ -19,12 +43,58 @@
         ctrl.price = value.price
         ctrl.user_name = value.user_name
         ctrl.request_date = new Date(value.request_date)
+        ctrl.inventory_status = value.inventory_status
         if (value.request_date) {
           ctrl.datas.request_date = new Date(ctrl.datas.request_date)
         } else {
           ctrl.datas.request_date = null
         }
       })
+    }
+  
+
+
+    ctrl.save = function() {
+
+    	var changePrice = parseFloat(ctrl.price)
+    	var checngeRequestDate = $filter('date')(new Date(ctrl.datas.request_date), 'yyyy-MM-ddTh:MM:ss')
+
+    	var inventory_datas = {
+        user_name: ctrl.user_name,
+        item_name: ctrl.name,
+        description: ctrl.description,
+        price: changePrice,
+        request_date: checngeRequestDate
+    	}
+
+
+      if (ctrl.real_id) {
+        updateInventoryRequest(inventory_datas, ctrl.real_id)
+      } 
+    }
+
+    function updateInventoryRequest(inventory_datas, id) {
+    	service.updateInventoryRequest(inventory_datas, id).then(function(resp) {
+    		$rootScope.openInventory(1)
+    	}, function(e){
+
+    	})
+    }
+
+    ctrl.cancel = function() {
+      $rootScope.openInventory(1);
+    }
+
+    ctrl.accept = function() {
+      service.accept(ctrl.real_id).then(function(resp) {
+        $rootScope.updateInventoryRequestStep2(ctrl.step, ctrl.real_id)
+      })
+    } 
+
+    ctrl.reject = function() {
+      service.reject(ctrl.real_id).then(function(resp) {
+
+      })  
     }
 
     initData()

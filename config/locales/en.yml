@@ -470,6 +470,18 @@ en:
 
   #Update inventory request
   details_inventory_request: "Details Inventory Request"
+  approve_request: "Approve request"
+  inventory_purchase: "Inventory purchase"
+  get_inventory: "Get inventory"
+  dispatch_to_employees: "Dispatch to employees"
+  date_get_inventory: "Date get inventory"
+  date_purchase_inventory: "Date purchare inventory"
+  date_send_inventory: "Date send inventory"
+  save_by: "Save by"
+  request_approval: "Requested approval"
+  bath: "Bath"
+  receive_products_on_date: "Receive products on date"
+  continue: "Continue"
 
   # Rollcall
   monthly: "Month"

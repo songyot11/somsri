@@ -103,13 +103,61 @@
       }
     }).state({
       url: '/inventory/update/inventoryRequest/:id',
-      name: 'update_invetory_request',
+      name: 'update_inventory_request',
       templateUrl: "<%= asset_path('somsri/angular/components/updateInventoryRequest/updateInventoryRequestView.html') %>",
       controller: 'updateInventoryRequestCtrl as inventory',
       resolve: {
         resources: ['$ocLazyLoad', function($ocLazyLoad) {
           return $ocLazyLoad.load([
             ASSETS.somsri.somsri.update_inventory_request
+          ]);
+        }]
+      }
+    }).state({
+      url: '/inventory/update/inventoryRequest/:id/step2',
+      name: 'update_inventory_request_step2',
+      templateUrl: "<%= asset_path('somsri/angular/components/updateInventoryRequest/step2.html') %>",
+      controller: 'updateInventoryRequestStep2Ctrl as inventory',
+      resolve: {
+        resources: ['$ocLazyLoad', function($ocLazyLoad) {
+          return $ocLazyLoad.load([
+            ASSETS.somsri.somsri.update_inventory_request_step2
+          ]);
+        }]
+      }
+    }).state({
+      url: '/inventory/update/inventoryRequest/:id/step3',
+      name: 'update_inventory_request_step3',
+      templateUrl: "<%= asset_path('somsri/angular/components/updateInventoryRequest/step3.html') %>",
+      controller: 'updateInventoryRequestStep3Ctrl as inventory',
+      resolve: {
+        resources: ['$ocLazyLoad', function($ocLazyLoad) {
+          return $ocLazyLoad.load([
+            ASSETS.somsri.somsri.update_inventory_request_step3
+          ]);
+        }]
+      }
+    }).state({
+      url: '/inventory/update/inventoryRequest/:id/step4',
+      name: 'update_inventory_request_step4',
+      templateUrl: "<%= asset_path('somsri/angular/components/updateInventoryRequest/step4.html') %>",
+      controller: 'updateInventoryRequestStep4Ctrl as inventory',
+      resolve: {
+        resources: ['$ocLazyLoad', function($ocLazyLoad) {
+          return $ocLazyLoad.load([
+            ASSETS.somsri.somsri.update_inventory_request_step4
+          ]);
+        }]
+      }
+    }).state({
+      url: '/inventory/update/inventoryRequest/:id/step5',
+      name: 'update_inventory_request_step5',
+      templateUrl: "<%= asset_path('somsri/angular/components/updateInventoryRequest/step5.html') %>",
+      controller: 'updateInventoryRequestStep5Ctrl as inventory',
+      resolve: {
+        resources: ['$ocLazyLoad', function($ocLazyLoad) {
+          return $ocLazyLoad.load([
+            ASSETS.somsri.somsri.update_inventory_request_step5
           ]);
         }]
       }

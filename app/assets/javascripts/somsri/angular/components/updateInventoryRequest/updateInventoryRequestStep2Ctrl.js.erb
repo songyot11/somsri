@@ -1,0 +1,57 @@
+(function() {
+	angular.module('somsri.somsri.update_inventory_request_step2', [])
+    .controller('updateInventoryRequestStep2Ctrl', ['$compile', '$scope', '$window', '$filter', '$rootScope', '$timeout', 'translateFilter', '$uibModal', 'Upload', '$state', "inventoryRequestService" , function($compile, $scope, $window, $filter, $rootScope, $timeout, translateFilter, $uibModal, Upload, $state, service) {
+	$rootScope.menu = translateFilter("inventory_request")
+		var ctrl = this
+		ctrl.real_id = $state.params.id;
+		ctrl.date_purchasing = new Date()
+		ctrl.date_send = new Date()
+		ctrl.price_step2 = ""
+
+		function checkStep() {
+			ctrl.step = $rootScope.step
+			if(!ctrl.step) {
+				if (ctrl.real_id) {
+					$rootScope.updateInventoryRequest(ctrl.real_id)
+				}
+			} else {
+				ctrl.save_by = ctrl.step.step1.save_by
+				//
+				ctrl.save_by_step2 = ctrl.step.step2.save_by
+				ctrl.date_purchasing = ctrl.step.step2.date_pruchase
+				ctrl.date_send = ctrl.step.step2.date_send
+				ctrl.price_step2 = ctrl.step.step2.price
+			}
+
+			console.log("step2",ctrl.step)
+		}
+
+		checkStep()
+
+    ctrl.openDatePurchasePopup = function() {
+      ctrl.datePurchasePopup.opened = true;
+    };
+
+    ctrl.datePurchasePopup = {
+      opened: false
+    }; 
+
+
+    ctrl.openDateSendPopup = function() {
+      ctrl.dateSendPopup.opened = true;
+    };
+
+    ctrl.dateSendPopup = {
+      opened: false
+    };
+
+    ctrl.continue = function() {
+    	ctrl.step.step2.date_purchasing = ctrl.date_purchasing
+    	ctrl.step.step2.date_send = ctrl.date_send
+    	ctrl.step.step2.price = ctrl.price_step2
+    	ctrl.step.step2.save_by = "Admin"
+    	$rootScope.updateInventoryRequestStep3(ctrl.step, ctrl.real_id)
+    }
+
+	}]);
+})();
