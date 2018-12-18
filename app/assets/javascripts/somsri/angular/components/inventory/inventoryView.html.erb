@@ -28,11 +28,23 @@
         <div class="row report-content container-fluid panel-board">
           <div class="tab-content">
             <div role="tabpanel" class="tab-pane active" id="home">
-              <div class="row">
-                <div class="col-xs-3">
-                  <div class="search">
-                    <input class="form-control" id="search" type="text" placeholder="ค้นหา" onchange="search()" onkeyup="this.onchange()">
+              <div class="row pl-0">
+                <div class="col-md-3">
+                  <div id="custom-search-input">
+                    <div class="col-md-12 input-group">
+                      <div class="row">
+                        <div class="col-md-2 pl-20">
+                            <i class="glyphicon glyphicon-search"></i>
+                        </div>
+                        <div class="col-md-10">
+                            <input type="text" class="col-md-3 form-control input-lg" placeholder="Search" />
+                        </div>
+                      </div>                        
+                    </div>
                   </div>
+                </div> 
+                <div class="col-md-2">
+                  <button type="button" class="btn btn-filter btn-block" data-toggle="modal" data-target="#myModal"><i class="fa fa-filter"></i> Filter</button>
                 </div>
               </div>
               <div class="row">
@@ -68,3 +80,119 @@
     </div>
   </div>
 </div>
+<!-- Modal -->
+<div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+    <div class="modal-dialog" role="document">
+      <div class="modal-content">
+        <div class="modal-header">
+          <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+          <h4 class="modal-title color-blue" id="myModalLabel"> <i class="fa fa-filter "></i>  ตัวกรอง</h4>
+        </div>
+        <div class="modal-body">
+          <div class="row">
+            <div class="col-md-2">
+              <b>สถานะ</b>
+            </div>
+            <div class="col-md-10 pl-0">
+              <label class="checkbox-inline">
+                <input type="checkbox" id="inlineCheckbox1" value="option1"> All
+              </label>
+            </div>
+          </div>
+          <div class="row status mt-10">
+            <div class="col-md-4">
+              <label class="checkbox-inline">
+                <input type="checkbox" id="inlineCheckbox1" value="option1"> Pending
+              </label>
+            </div>
+            <div class="col-md-4">
+              <label class="checkbox-inline">
+                <input type="checkbox" id="inlineCheckbox2" value="option2"> Accept
+              </label>
+            </div>
+            <div class="col-md-4">
+              <label class="checkbox-inline">
+                <input type="checkbox" id="inlineCheckbox3" value="option3"> Reject
+              </label>
+            </div>
+          </div>
+          <div class="row status mt-10">
+            <div class="col-md-4">
+              <label class="checkbox-inline">
+                <input type="checkbox" id="inlineCheckbox1" value="option4"> Purchasing 
+              </label>
+            </div>
+            <div class="col-md-4">
+              <label class="checkbox-inline">
+                <input type="checkbox" id="inlineCheckbox2" value="option5"> Done
+              </label>
+            </div>
+            <div class="col-md-4">
+              <label class="checkbox-inline">
+                <input type="checkbox" id="inlineCheckbox3" value="option6"> Assigned 
+              </label>
+            </div>
+          </div>
+          <div class="row mt-20">
+            <div class="col-md-12">
+              <b>ช่วงวันที่ส่งคำขอ</b>
+            </div>
+          </div>
+          <div class="row mt-10">
+            <div class="col-md-6"> จาก
+              <div class="form-group">
+                <p class="input-group">
+                  <input id="date_purchase" type="text" class="form-control numberic" uib-datepicker-popup="dd/MM/yyyy" ng-model="inventory.datas.date_purchase" is-open="inventory.datePurchasePopup.opened" close-text="Close" required="true"/>
+                  <span class="input-group-btn">
+                    <button type="button" class="btn btn-default" ng-click="inventory.openDatePurchasePopup()"><i class="fa fa-calendar"></i></button>
+                  </span>
+                </p>
+              </div>
+            </div>
+            <div class="col-md-6">
+                <div class="form-group">ถึง
+                  <p class="input-group">
+                    <input id="date_purchase" type="text" class="form-control numberic" uib-datepicker-popup="dd/MM/yyyy" ng-model="inventory.datas.date_purchase" is-open="inventory.datePurchasePopup.opened" close-text="Close" required="true"/>
+                    <span class="input-group-btn">
+                      <button type="button" class="btn btn-default" ng-click="inventory.openDatePurchasePopup()"><i class="fa fa-calendar"></i></button>
+                    </span>
+                  </p>
+                </div>
+            </div>
+          </div>
+          <div class="row mt-20">
+            <div class="col-md-12">
+              <b>ช่วงวันที่ซื้อ</b>
+            </div>
+          </div>
+          <div class="row mt-10">
+            <div class="col-md-6"> จาก
+              <div class="form-group">
+                <p class="input-group">
+                  <input id="date_purchase" type="text" class="form-control numberic" uib-datepicker-popup="dd/MM/yyyy" ng-model="inventory.datas.date_purchase" is-open="inventory.datePurchasePopup.opened" close-text="Close" required="true"/>
+                  <span class="input-group-btn">
+                    <button type="button" class="btn btn-default" ng-click="inventory.openDatePurchasePopup()"><i class="fa fa-calendar"></i></button>
+                  </span>
+                </p>
+              </div>
+            </div>
+            <div class="col-md-6">
+                <div class="form-group">ถึง
+                  <p class="input-group">
+                    <input id="date_purchase" type="text" class="form-control numberic" uib-datepicker-popup="dd/MM/yyyy" ng-model="inventory.datas.date_purchase" is-open="inventory.datePurchasePopup.opened" close-text="Close" required="true"/>
+                    <span class="input-group-btn">
+                      <button type="button" class="btn btn-default" ng-click="inventory.openDatePurchasePopup()"><i class="fa fa-calendar"></i></button>
+                    </span>
+                  </p>
+                </div>
+            </div>
+          </div>
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-blue">ตกลง</button>
+          <button type="button" class="btn btn-gray" data-dismiss="modal">ยกเลิก</button>
+        </div>
+      </div>
+    </div>
+  </div>
+  
