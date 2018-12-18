@@ -1,5 +1,5 @@
 <div class="container" >
-		<form ng-submit="inventory.save()">
+	<form ng-submit="inventory.save()">
 		<div class="row">
 			<div id="inventory">
 				<div class="col-xs-12">
@@ -21,7 +21,7 @@
 								<div class="col-md-3">
 									<div class="form-group">
 										<label class="control-label" for="item_name">ชื่อรายการ</label>
-	
+
 										<div class="col-md-12">
 											<input class="form-control" autocomplete="off" type="text" id="inventory_name" ng-model="inventory.name" required="true">
 										</div>
@@ -67,66 +67,69 @@
 							</div>
 						</div>
 					</div>
-					<div class="mt-20" style="height: 300px;">
-						<div class="row">
-							<div class="report-content container-fluid panel-board">
-								<ul class="step d-flex flex-nowrap">
-									<li class="step-item active">
-										<a href="#!" class="">
-											<!--  <i class="fa fa-check fa-2x icon-in-step"></i> -->
-											<h3 class="text-in-step mt-0">1</h3> 
-											อนุมัติคำขอ
-										</a>
-									</li>
-									<li class="step-item">
-										<a href="#!" class="">
-											<!-- 	<i class="fa fa-check fa-2x icon-in-step"></i> -->
-											<h3 class="text-in-step2 mt-0">2</h3> 
-											สั่งซื้อพัสดุ
-										</a>
-									</li>
-									<li class="step-item">
-										<a href="#!" class="">
-											<!-- <i class="fa fa-check fa-2x icon-in-step2"></i> --> 
-											<h3 class="text-in-step3 mt-0">3</h3>
-											รับพัสดุ
-										</a>
-									</li>
-									<li class="step-item ">
-										<a href="#!" class="">
-											<!-- <i class="fa fa-check fa-2x icon-in-step"></i>  -->
-											<h3 class="text-in-step4 mt-0">4</h3>
-											จัดส่งให้พนักงาน  
-										</a>
-									</li>
-								</ul> 
-								<div class="row mt-50">
-									<b class="font-16 pl-20 ">อนุมัติคำขอ</b>
-								</div>
-								<div class="row mt-20">
-									<div class="col-md-2">
-										<button type="submit" class="btn btn-custom btn-green ng-binding">Accept</button>
-									</div>
-									<div class="col-md-2 pl-0">
-										<button type="submit" class="btn btn-custom btn-red ng-binding">Reject</button>
-									</div>
-								</div>
+					<div class="row mt-20">
+						<div class="report-content container-fluid panel-board">
+							<ul class="step d-flex flex-nowrap">
+								<li class="step-item">
+									<a href="#!" class="">
+										<i class="fa fa-check fa-2x icon-in-step"></i>
+										<!-- <h3 class="text-in-step mt-0">1</h3>  -->
+										อนุมัติคำขอ
+									</a>
+								</li>
+								<li class="step-item">
+									<a href="#!" class="">
+										<i class="fa fa-check fa-2x icon-in-step2"></i>
+										<!-- <h3 class="text-in-step2 mt-0">2</h3>  -->
+										สั่งซื้อพัสดุ
+									</a>
+								</li>
+								<li class="step-item">
+									<a href="#!" class="">
+										<i class="fa fa-check fa-2x icon-in-step3"></i> 
+										<!-- <h3 class="text-in-step3 mt-0">3</h3> -->
+										รับพัสดุ
+									</a>
+								</li>
+								<li class="step-item">
+									<a href="#!" class="">
+										<i class="fa fa-check fa-2x icon-in-step4"></i> 
+										<!-- <h3 class="text-in-step4 mt-0">4</h3> -->
+										จัดส่งให้พนักงาน  
+									</a>
+								</li>
+							</ul> 
+							<div class="row mt-20"  style="color: #B6B6B6;">
+								<p class="pl-20" >
+									ได้ทำการอนุมัติคำขอ (บันทึกโดย Admin A) <br>
+									ได้ทำการสั่งซื้อวันที่ dd/mm/yyyy  <br>
+									จัดส่งในวันที่ dd/mm/yyyy <br>
+									ราคา 10,000 บาท (บันทึกโดย Admin A) <br>
+									ได้รับสินค้าในวันที่ dd/mm/yyyy   <br>
+									เลขที่ใบเสร็จ A1101   <br>
+									สิ้นสุดการรับประกันในวันที่ dd/mm/yyyy (บันทึกโดย Admin A) <br>
+									ได้ทำการส่งมอบพัสดุให้กับ Somsuk เรียบร้อยแล้ว (บันทึกโดย Admin A) 
+								</p>
 							</div>
 						</div>
-					</div>
-					<div class="footer-menu row mt-20">
-						<div class="pull-right text-right padding-left10">
-							<button type="button" class="btn btn-custom btn-gray ng-binding" ng-click="inventory.cancel()">ยกเลิก</button>
-						</div>
-						<div class="pull-right text-right padding-left10">
-							<button type="submit" class="btn btn-custom btn-blue ng-binding">บันทึก</button>
-						</div>
-					</div>
+					</div>			
 				</div>
 			</div>
 		</div>
-		</form>
+	</form>
+	<div class="row">
+		<div class="footer-menu mt-20">
+			<div class="pull-right text-right padding-left10">
+				<button type="button" class="btn btn-custom btn-gray ng-binding" ng-click="inventory.cancel()">ยกเลิก</button>
+			</div>
+			<div class="pull-right text-right padding-left10">
+				<button type="submit" class="btn btn-custom btn-blue ng-binding">บันทึก</button>
+			</div>
+		</div>
 	</div>
-				
-				
-								
+</div>
+
+			
+
+
+              
