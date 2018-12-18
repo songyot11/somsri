@@ -5,13 +5,13 @@
 			<div class="col-xs-12">
 				<div class="row">
 					<div class="col-xs-6 mb-20">
-						<h1><h1>รายละเอียดคำขอใช้พัสดุ</h1></h1>
+						<h1><h1>{{ "details_inventory_request" | translate }}</h1></h1>
 					</div>
 				</div>
 				<div class="row">
 					<ul class="nav nav-tabs inventory">
 						<li class="cyan active">
-							<a data-toggle="tab" class="ng-binding">พัสดุ</a>
+							<a data-toggle="tab" class="ng-binding">{{ "inventory" | translate }}</a>
 						</li>
 					</ul>
 				</div>
@@ -20,7 +20,7 @@
 						<div class="row">
 							<div class="col-md-3">
 								<div class="form-group">
-									<label class="control-label" for="item_name">ชื่อรายการ</label>
+									<label class="control-label" for="item_name">{{ "item_name" | translate }}</label>
 
 									<div class="col-md-12">
 										<input class="form-control" autocomplete="off" type="text" id="inventory_name" ng-model="inventory.name" required="true">
@@ -29,7 +29,7 @@
 							</div>
 							<div class="col-md-9">
 								<div class="form-group">
-									<label class="control-label" for="description">ลักษณะ</label>
+									<label class="control-label" for="description">{{ "description" | translate }}</label>
 									<div class="col-md-12">
 										<input class="form-control" autocomplete="off" type="text" id="inventory_description" ng-model="inventory.description" required="true">
 									</div>
@@ -39,7 +39,7 @@
 						<div class="row mt-20">
 							<div class="col-md-4">
 								<div class="form-group">
-									<label class="control-label" for="request_date">วันที่ขอ</label>
+									<label class="control-label" for="request_date">{{ "request_date" | translate }}</label>
 									<p class="input-group">
 										<input id="request_date" type="text" class="form-control numberic" uib-datepicker-popup="dd/MM/yyyy" ng-model="inventory.datas.request_date" is-open="inventory.requestDatePopup.opened" close-text="Close" required="true"/>
 										<span class="input-group-btn">
@@ -50,7 +50,7 @@
 							</div>
 							<div class="col-md-3">
 								<div class="form-group">
-									<label class="control-label" for="price">ราคา</label>
+									<label class="control-label" for="price">{{ "price" | translate }}</label>
 									<div class="col-md-12">
 										<input class="form-control" autocomplete="off" type="number" id="inventory_price" ng-model="inventory.price" ng-validate="number" required="true">
 									</div>
@@ -58,7 +58,7 @@
 							</div>
 							<div class="col-md-3">
 									<div class="form-group">
-											<label class="control-label" for="user_request">ชื่อผู้ขอ</label>
+											<label class="control-label" for="user_request">{{ "user_request" | translate }}</label>
 											<div class="col-md-12">
 													<input class="form-control" autocomplete="off" type="text" id="inventory_user" ng-model="inventory.user_name" required="true" >
 											</div>

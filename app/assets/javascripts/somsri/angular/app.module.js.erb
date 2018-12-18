@@ -102,17 +102,17 @@
         }]
       }
     }).state({
-    url: '/inventory/editRequest',
-    name: 'edit_request',
-    templateUrl: "<%= asset_path('somsri/angular/components/editRequest/EditRequestView.html') %>",
-    controller: 'EditRequestCtrl as inventory',
-    resolve: {
-      resources: ['$ocLazyLoad', function($ocLazyLoad) {
-        return $ocLazyLoad.load([
-          ASSETS.somsri.somsri.inventory_editRequest
-        ]);
-      }]
-    }
+      url: '/inventory/update/inventoryRequest/:id',
+      name: 'update_invetory_request',
+      templateUrl: "<%= asset_path('somsri/angular/components/updateInventoryRequest/updateInventoryRequestView.html') %>",
+      controller: 'updateInventoryRequestCtrl as inventory',
+      resolve: {
+        resources: ['$ocLazyLoad', function($ocLazyLoad) {
+          return $ocLazyLoad.load([
+            ASSETS.somsri.somsri.update_inventory_request
+          ]);
+        }]
+      }
     }).state({
       url: '/inventory/new',
       name: 'new_inventory',

@@ -469,13 +469,8 @@ th:
   done: "เสร็จ"
   assigned: "ได้รีบเรียบร้อย"
 
-  #EditRequest
-  title: "รายละเอียดคำขอใช้อุปกรณ์"
-  item_name: "ชื่อรายการ"
-  description: "ลักษณะ"
-  request_date: "วันที่ขอ"
-  price: "ราคา"
-  user_request: "ชื่อผู้ขอ"
+  #Update inventory request
+  details_inventory_request: "รายละเอียดคำขอใช้อุปกรณ์"
 
   # Rollcall
   monthly: ประจำเดือน

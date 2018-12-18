@@ -468,6 +468,9 @@ en:
   done: "Done"
   assigned: "Assigned"
 
+  #Update inventory request
+  details_inventory_request: "Details Inventory Request"
+
   # Rollcall
   monthly: "Month"
   student_record: "Attendance Record"
