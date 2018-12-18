@@ -53,7 +53,6 @@ class InventoriesController < ApplicationController
 	def update
 		inventory = Inventory.find(params[:id])
 		inventory.update(inventory_params)
-
 		render json: inventory
 	end
 

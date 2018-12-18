@@ -155,15 +155,18 @@ Rails.application.routes.draw do
   root to: 'home#index'
 
   resources :inventories
-  resources :inventories_request do 
-        collection do
+  resources :inventories_requests do 
+    collection do
     end
-
+    
     member do
-      put 'approve'
-      put 'pendeing'
+      put 'approve'  
       put 'reject'
+      put 'pending'
+      put 'accept'
+      put 'purchasing'
       put 'done'
+      put 'assigned'
     end
   end
 end

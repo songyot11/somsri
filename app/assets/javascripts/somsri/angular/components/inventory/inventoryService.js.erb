@@ -17,7 +17,7 @@
 
 		this.show = function(id) {
      	 return $http.get('/inventories/' + id)
-    	}
+    	};
 
 		this.removeInventory = function(id) {
 			return $http.delete('/inventories/' + id);
@@ -29,9 +29,6 @@
 							method: 'put',
 							data: { inventory: data }
 						});
-		}
-
-		
-
+		};
 	 }]);
 })();

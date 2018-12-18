@@ -455,6 +455,18 @@ en:
   paper_products: "Paper products"
   meeting_presentation_equipment: "Meeting and presentation equipment"
 
+  #Inventory Request
+  list_request: "Request list"
+  add_request: "+ Add Request"
+  user_request: "User request"
+  request_date: "Request date"
+  reject: "Reject"
+  approve: "Approveิ"
+  pending: "Pending"
+  accept: "Accept"
+  purchasing: "Purchasing"
+  done: "Done"
+  assigned: "Assigned"
 
   # Rollcall
   monthly: "Month"

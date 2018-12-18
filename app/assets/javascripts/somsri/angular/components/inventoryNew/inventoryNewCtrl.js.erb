@@ -101,16 +101,16 @@
 
           var inventory_datas = {
             item_name: ctrl.name,
-              serial_number: ctrl.serial_number,
-              model: ctrl.model,
-              description: ctrl.description,
-              price: changePrice,
-              date_purchase: changeDatePurchase,
-              category: ctrl.category,
-              category_barcode: ctrl.category_barcode,
-              date_add: ctrl.date_add,
-              end_warranty: changeDateEndWarranty,
-              employee_id: ctrl.employee_id
+            serial_number: ctrl.serial_number,
+            model: ctrl.model,
+            description: ctrl.description,
+            price: changePrice,
+            date_purchase: changeDatePurchase,
+            category: ctrl.category,
+            category_barcode: ctrl.category_barcode,
+            date_add: ctrl.date_add,
+            end_warranty: changeDateEndWarranty,
+            employee_id: ctrl.employee_id
           }
           if (!ctrl.real_id) {
             createInventory(inventory_datas)
