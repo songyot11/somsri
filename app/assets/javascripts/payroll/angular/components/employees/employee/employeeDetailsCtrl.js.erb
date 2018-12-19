@@ -175,11 +175,13 @@
 
           var e = resp.data.employee;
           ctrl.datas.salary = parseFloat(ctrl.datas.employee.salary);
+          console.log(e.start_date)
           if(e.start_date){
             ctrl.datas.employee.start_date = new Date(ctrl.datas.employee.start_date);
           }else{
             ctrl.datas.employee.start_date = null;
           }
+          console.log(ctrl.datas.employee.start_date)
 
           if(ctrl.datas.employee.birthdate){
             ctrl.datas.employee.birthdate = new Date(ctrl.datas.employee.birthdate);

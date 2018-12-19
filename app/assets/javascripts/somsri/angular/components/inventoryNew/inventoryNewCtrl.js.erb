@@ -1,30 +1,261 @@
 (function() {
   'use strict';
-  angular.module('somsri.somsri.inventoryNew', [])
-    .controller('inventoryNewCtrl', ['$compile', '$scope', '$window', '$filter', '$rootScope', '$timeout', 'translateFilter', '$uibModal', 'Upload', function($compile, $scope, $window, $filter, $rootScope, $timeout, translateFilter, $uibModal, Upload) {
-      $rootScope.menu = translateFilter("พัสดุ")
-      var ctrl = this
-      var angularScopeRoot = 'angular.element(document.getElementById("angularCtrl")).scope().$root'
-      var angularScopeInventoryNew = 'angular.element(document.getElementById("angularCtrl")).scope().inventoryNewCtrl'
-      var angularCtrlStr = 'angular.element(document.getElementById("angularCtrl")).scope().inventoryNew'
-      ctrl.inventoryNew = [];
-      ctrl.message = '';
-      // default last 7 days
-      ctrl.end_date = new Date();
-      ctrl.start_date = new Date(new Date().setMonth(new Date().getMonth() - 1));
+  angular.module('somsri.somsri.inventory_new', [])
+    .controller('inventoryNewCtrl', ['$compile', '$scope', '$window', '$filter', '$rootScope', '$timeout', 'translateFilter', '$uibModal', 'Upload', "inventoryService", 'employeesService', '$state', function($compile, $scope, $window, $filter, $rootScope, $timeout, translateFilter, $uibModal, Upload, service, employeesService, $state) {
+      $rootScope.menu = translateFilter("inventory")
+        var ctrl = this
+        var angularScopeRoot = 'angular.element(document.getElementById("angularCtrl")).scope().$root'
+        var angularScopeInventoryNew = 'angular.element(document.getElementById("angularCtrl")).scope().inventoryNewCtrl'
+        var angularCtrlStr = 'angular.element(document.getElementById("angularCtrl")).scope().inventoryNew'
+        ctrl.inventoryNew = [];
+        ctrl.real_id = $state.params.id;
+        ctrl.message = '';
+        ctrl.name = ""
+        ctrl.serial_number = ""
+        ctrl.model = ""
+        ctrl.description = ""
+        ctrl.price = ""
+        ctrl.category = translateFilter("select_category")
+        // ctrl.date_purchase = new Date()
+        // ctrl.date_end_warranty = new Date()
+        ctrl.displayName = translateFilter("select_employee")
+        ctrl.add_button = "add"
+        ctrl.filterKeyword = ''
+        // default last 7 days
+        ctrl.end_date = new Date();
+        ctrl.start_date = new Date(new Date().setMonth(new Date().getMonth() - 1));
+        ctrl.item_catogery = [
+          {name: "office_furniture"},
+          {name: "equipment_computer"},
+          {name: "office_supplies"},
+          {name: "maintenance_equipment"},
+          {name: "cleaning_products"},
+          {name: "electronic_office_equipment"},
+          {name: "paper_products"},
+          {name: "meeting_presentation_equipment"}
+        ]
+        ctrl.category_barcode_list = []
+ 
+        function initData() {
+          if (!ctrl.real_id) { 
+            return
+          }
 
-      function cleanDate(date){
-        if(!date || new Date(date) == "Invalid Date"){return;}
-        var nowDate = new Date()
-        date.setHours(nowDate.getHours())
-        date.setMinutes(nowDate.getMinutes())        
-        date.setSeconds(nowDate.getSeconds())
-        return date
-      }
+          ctrl.add_button = "edit"
 
+          service.show(ctrl.real_id).then(function(resp) {
+            var value = resp.data
+            ctrl.datas = resp.data
+            ctrl.name = value.item_name
+            ctrl.serial_number = value.serial_number
+            ctrl.model = value.model
+            ctrl.description = value.description
+            ctrl.price = value.price
+            ctrl.date_purchase = new Date(value.date_purchase)
+            ctrl.date_end_warranty = new Date(value.end_warranty)
+            if (value.date_purchase) {
+              ctrl.datas.date_purchase = new Date(ctrl.datas.date_purchase)
+            } else {
+              ctrl.datas.date_purchase = null
+            }
 
+            if (value.end_warranty) {
+              ctrl.datas.end_warranty = new Date(ctrl.datas.end_warranty)
+            } else {
+              ctrl.datas.end_warranty = null
+            }
+            
+            ctrl.category = value.category
+            ctrl.category_barcode = value.category_barcode
+            ctrl.date_add = value.date_add
+            ctrl.employee_id = value.employee_id
+            if (ctrl.employee_id) {
+              getEmployeeById(ctrl.employee_id)
+            }
+          })
+        }
 
+        function cleanDate(date){
+          if(!date || new Date(date) == "Invalid Date"){return;}
+          var nowDate = new Date()
+          date.setHours(nowDate.getHours())
+          date.setMinutes(nowDate.getMinutes())        
+          date.setSeconds(nowDate.getSeconds())
+          return date
+        }
 
+        ctrl.save = function() {
+          var changePrice = parseFloat(ctrl.price);
+          var changeDatePurchase = $filter('date')(new Date(ctrl.datas.date_purchase), 'yyyy-MM-ddTh:MM:ss')
+          var changeDateEndWarranty = $filter('date')(new Date(ctrl.datas.end_warranty), 'yyyy-MM-ddTh:MM:ss')
+          if (!ctrl.real_id) {
+            ctrl.date_add = $filter('date')(new Date(Date()), 'dd/MM/yyyy')
+          }
+
+          if (ctrl.category === translateFilter("select_category")) {
+            ctrl.category = null
+          }
+
+          generateCategoryBarcode(ctrl.category)
+          console.log("ctrl",ctrl.category_barcode)
+
+          var inventory_datas = {
+            item_name: ctrl.name,
+              serial_number: ctrl.serial_number,
+              model: ctrl.model,
+              description: ctrl.description,
+              price: changePrice,
+              date_purchase: changeDatePurchase,
+              category: ctrl.category,
+              category_barcode: ctrl.category_barcode,
+              date_add: ctrl.date_add,
+              end_warranty: changeDateEndWarranty,
+              employee_id: ctrl.employee_id
+          }
+          if (!ctrl.real_id) {
+            createInventory(inventory_datas)
+          } else {
+            updateInventory(inventory_datas, ctrl.real_id)
+          }
+        };
+
+        function createInventory(inventory_datas) {
+           service.newInventory(inventory_datas).then(function(resp) {
+              $rootScope.openInventory();
+          }, function(e){
+            // Error
+          });
+        }
+
+        function updateInventory(inventory_datas, id) {
+          service.updateInventory(inventory_datas, id).then(function(resp) {
+             $rootScope.openInventory();
+          },function(e) {
+            // Error
+          })
+        }
+
+        ctrl.cancel = function() {
+           $rootScope.openInventory();
+        }
+
+        ctrl.switchEmployee = function(name,employee_id) {
+          ctrl.employee_id = employee_id
+          ctrl.displayName = name
+        }
+
+        function getEmployee(){
+          ctrl.employee_lists = []
+          ctrl.employee_lists.push({
+            name: translateFilter("no_employee_selection"),
+            id: 0
+          })
+          employeesService.getAllEmployee().then(function(resp) {
+            if (resp.data.length > 0) {
+              for (var i = 0; i < resp.data.length; i++) {
+                var employees = resp.data[i]
+                if (employees.name !== ctrl.displayName) {
+                  ctrl.employee_lists.push({
+                    name: employees.name,
+                    id: employees.id
+                  })
+                }
+              }
+            }
+          });
+        };
+
+        function getEmployeeById(id) {
+          employeesService.getEmployee(id).then(function(resp) {
+              ctrl.displayName = resp.data.employee_display_name
+              getEmployee()
+          })
+        }
+
+        ctrl.openDatePurchasePopup = function() {
+          ctrl.datePurchasePopup.opened = true;
+        };
+
+        ctrl.datePurchasePopup = {
+          opened: false
+        };
+
+        ctrl.openEndWarrantyPopup = function() {
+          ctrl.endWarrantyPopup.opened = true;
+        };
+
+        ctrl.endWarrantyPopup = {
+          opened: false
+        };
+
+        function generateCategoryBarcode(str) {
+          ctrl.barcode = ""
+          var random = randomNumber()
+          switch(str) {
+            case 'office_furniture': 
+               ctrl.barcode = "fu"
+              break
+            case 'equipment_computer': 
+               ctrl.barcode = "co"
+              break
+            case 'office_supplies': 
+               ctrl.barcode = "or"
+              break
+            case 'maintenance_equipment': 
+               ctrl.barcode = "ma"
+              break
+            case 'cleaning_products': 
+               ctrl.barcode = "cl"
+              break
+            case 'electronic_office_equipment': 
+               ctrl.barcode = "el"
+              break
+            case 'paper_products': 
+               ctrl.barcode = "pa"
+            break
+            case 'meeting_presentation_equipment': 
+               ctrl.barcode = "pr"
+              break
+            default :
+              break  
+          }
+
+          ctrl.barcode = ctrl.barcode+random
+
+          var check = false
+          for(var i = 0; i < ctrl.category_barcode_list.length; i++) {
+            console.log(ctrl.category_barcode_list[i])
+            if (ctrl.barcode === ctrl.category_barcode_list[i]) {
+              check = true
+              break
+            }
+          }
+
+          if (check) {
+            generateCategoryBarcode(str)
+          }
+
+          ctrl.category_barcode = ctrl.barcode
+        }
+
+        function randomNumber() {
+          return Math.floor(100000+Math.random() * 9999)
+        }
+
+        function getInventoryList() {
+          service.getInventory().then(function(resp) {
+            for (var i = 0; i < resp.data.inventories.length; i++) {
+              ctrl.category_barcode_list.push(resp.data.inventories[i].category_barcode)
+            }
+          })
+          console.log(ctrl.category_barcode_list)
+        }
+       
+        if (!ctrl.real_id) {
+          getEmployee()
+        }
+        getInventoryList()
+        initData()
 
   }]);
 })();
