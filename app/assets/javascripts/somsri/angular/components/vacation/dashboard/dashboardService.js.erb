@@ -5,7 +5,7 @@
   .service('vacationService', ['$http', function($http) {
 
     this.getVacations = function() {
-      return $http.get('/vacations')
+      return $http.get('/vacations/dashboard')
     }
     this.newVacation = function(data) {
       return $http.post('/vacations', data)

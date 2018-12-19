@@ -149,6 +149,9 @@ Rails.application.routes.draw do
   end
 
   resources :vacations, only: [:index, :create, :destroy] do
+    collection do
+      get 'dashboard'
+    end
     member do
       get 'approve'
       get 'reject'
@@ -159,6 +162,9 @@ Rails.application.routes.draw do
   end
 
   resources :vacation_leave_rules, only: [:index, :update] do
+  end
+
+  resources :holidays, only: [:index, :create, :destroy] do
   end
 
   devise_scope :user do

@@ -2,25 +2,7 @@ class VacationsController < ApplicationController
   load_and_authorize_resource
 
   def index
-    @vacations = @vacations.this_year.order('created_at DESC')
-
-    sick_leave_count = @vacations.sick_leave.count
-    full_day_leave_count = @vacations.vacation_full_day.not_rejected.count
-    half_day_morning_leave_count = @vacations.vacation_half_day_morning.not_rejected.count
-    half_day_afternoon_leave_count = @vacations.vacation_half_day_afternoon.not_rejected.count
-    vacation_leave_count = full_day_leave_count + half_day_morning_leave_count + half_day_afternoon_leave_count
-    switch_date_count = @vacations.switch_date.count
-    work_at_home_count = @vacations.work_at_home.count
-
-    render json: {
-      leave_allowance: current_employee.leave_allowance,
-      remaining_day: current_employee.leave_remaining,
-      sick_leave: sick_leave_count,
-      vacation_leave: vacation_leave_count,
-      switch_date: switch_date_count,
-      work_at_home: work_at_home_count,
-      vacations: @vacations
-    }, status: :ok
+    render json: Vacation.all.this_year, status: :ok
   end
 
   def create
@@ -43,6 +25,28 @@ class VacationsController < ApplicationController
     else
       render json: { error_message: vacation.errors }, status: 500
     end
+  end
+
+  def dashboard
+    @vacations = @vacations.this_year.order('created_at DESC')
+
+    sick_leave_count = @vacations.sick_leave.count
+    full_day_leave_count = @vacations.vacation_full_day.not_rejected.count
+    half_day_morning_leave_count = @vacations.vacation_half_day_morning.not_rejected.count
+    half_day_afternoon_leave_count = @vacations.vacation_half_day_afternoon.not_rejected.count
+    vacation_leave_count = full_day_leave_count + half_day_morning_leave_count + half_day_afternoon_leave_count
+    switch_date_count = @vacations.switch_date.count
+    work_at_home_count = @vacations.work_at_home.count
+
+    render json: {
+      leave_allowance: current_employee.leave_allowance,
+      remaining_day: current_employee.leave_remaining,
+      sick_leave: sick_leave_count,
+      vacation_leave: vacation_leave_count,
+      switch_date: switch_date_count,
+      work_at_home: work_at_home_count,
+      vacations: @vacations
+    }, status: :ok
   end
 
   def approve

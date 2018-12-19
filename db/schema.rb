@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20181123100815) do
+ActiveRecord::Schema.define(version: 20181206133613) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -321,6 +321,13 @@ ActiveRecord::Schema.define(version: 20181123100815) do
   create_table "grouping_report_options", force: :cascade do |t|
     t.string "name"
     t.string "keyword"
+  end
+
+  create_table "holidays", force: :cascade do |t|
+    t.string   "name"
+    t.string   "name_en"
+    t.datetime "start_at"
+    t.datetime "end_at"
   end
 
   create_table "individuals", force: :cascade do |t|

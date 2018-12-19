@@ -63,7 +63,7 @@ describe 'Vacation Leave Rules', js: true do
     expect(page).to have_content("- ทำงานนอกสถานที่ หรือ ที่บ้าน สามารถทำได้ 2 วันต่อสัปดาห์ ต้องแจ้ง ทาง Banana Vacation (http://vacation.bananacoding.com), email หรือ slack")
     expect(page).to have_content("- ทำงานนอกสถานที่ หรือ ที่บ้าน สามารถทำได้ 2 วันต่อสัปดาห์ ต้องแจ้ง ทาง Banana Vacation (http://vacation.bananacoding.com), email หรือ slack")
     expect(page).to have_content("เพิ่มเติมตามกฎหมายแรงงานที่ http://www.mol.go.th/employee/rihgt_labor%20low")
-    expect(page).to have_content("อัพเดทโดย: #{admin.name}")
+    expect(page).to have_content("อัพเดทโดย: #{admin.email}")
     expect(page).to have_content("อัพเดทเมื่อ: #{vacation_leave_rules.updated_at.strftime('%d/%m/%Y')}")
   end
 

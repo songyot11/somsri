@@ -6,7 +6,7 @@
       </div>
       <div class="col-xs-2 font-9">
         <div class="row">
-          <span><%= I18n.t('receipt_no') %> &nbsp;<%= @results[:slip_id] %>/<%= @results[:school_year] %></span>
+          <span><%= I18n.t('receipt_no') %> &nbsp;<%= @results[:slip_id] %>/<%= @results[:create_year] %></span>
         </div>
         <div class="row mt-10">
           <%= I18n.t('date1') %> <%= I18n.locale == :th ? @results[:thai_now_date] : @results[:eng_now_date] %>

@@ -86,6 +86,8 @@
             }, function() {
               showLeaveSubmissionModal();
             });
+          } else {
+            sendLeaveRequest(ctrl.selectedVacationLeaveType);
           }
         }
       } else if (ctrl.selectedVacationType == 'switch_date') {
@@ -117,7 +119,7 @@
     };
 
     ctrl.deleteVacation = function(vacationId) {
-      $rootScope.openConfirmationModal(translateFilter("confirm_delete_vacation"), function() {
+      $rootScope.openConfirmationModal(translateFilter("confirm_delete_vacation"), '', function() {
         service.deleteVacation(vacationId).then(function(response) {
           loadVacationDashboard();
           $rootScope.openSuccessModal(translateFilter('vacation_deleted_success'));

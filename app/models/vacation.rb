@@ -23,10 +23,14 @@ class Vacation < ApplicationRecord
   def as_json(options={})
     {
       id: self.id,
-      detail: self.detail,
+      detail: self.detail.presence || "",
       status: self.status,
+      requester: self.requester&.full_name,
       vacation_type: self.vacation_type,
       start_date: self.start_date,
+      end_date: self.end_date,
+      start_at: self.start_date.to_date,
+      end_at: self.end_date.to_date,
       created_at: self.created_at.strftime('%d/%m/%Y'),
     }
   end

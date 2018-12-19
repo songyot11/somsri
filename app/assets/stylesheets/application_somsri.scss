@@ -212,6 +212,9 @@ body {
 .pr-0 {
   padding-right: 0px !important;
 }
+.pr-2 {
+  padding-right: 2px !important;
+}
 .pt-5 {
   padding-top: 5px !important;
 }
@@ -335,10 +338,15 @@ body {
 .mt-20 {
   margin-top: 20px !important;
 }
+.mt-30 {
+  margin-top: 30px !important;
+}
 .mt-50 {
   margin-top: 50px !important;
 }
-
+.mt-60 {
+  margin-top: 60px !important;
+}
 .mt-80 {
   margin-top: 80px !important;
 }
@@ -419,6 +427,10 @@ body {
 
 .font-12 {
   font-size: 12px !important;
+}
+
+.font-13 {
+  font-size: 13px !important;
 }
 
 .font-14 {
@@ -846,8 +858,4 @@ tags-input .tags .tag-item .remove-button{
   display: inline-block;
   text-align: left;
   vertical-align: middle;
-}
-
-.cke_contents {
-  height: 400px !important;
 }

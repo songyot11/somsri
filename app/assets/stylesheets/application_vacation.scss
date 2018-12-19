@@ -258,3 +258,48 @@ textarea {
   border: 2px solid #63B20D;
   border-radius: 4px;
 }
+
+.cke_contents {
+  height: 400px !important;
+}
+
+// Calendar
+
+.dot {
+  height: 13px;
+  width: 13px;
+  border-radius: 50%;
+  display: inline-block;
+  vertical-align: middle;
+
+  &.purple {
+    background-color: $purple;
+  }
+  &.blue {
+    background-color: $blue;
+  }
+  &.green {
+    background-color: $green;
+  }
+  &.dark-gray {
+    background-color: $dark-gray;
+  }
+
+  &.small {
+    height: 8px;
+    width: 8px;
+  }
+}
+
+input[type='radio']:checked:after {
+    width: 15px;
+    height: 15px;
+    border-radius: 15px;
+    top: -2px;
+    left: -1px;
+    position: relative;
+    background-color: #7ED322;
+    content: '';
+    display: inline-block;
+    visibility: visible;
+}

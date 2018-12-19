@@ -555,6 +555,14 @@ en:
   confirm_delete_vacation: "Do you want to delete this vacation?"
   updated_by: "Updated by:"
   updated_at: "Updated at:"
+  holiday_calendar: "Holiday calendar"
+  holiday_of_year: "Holiday of year"
+  create_holiday: "Create holiday"
+  this_year: "This year"
+  every_year: "Every year"
+  confirm_delete_holiday: "Do you want to delete this holiday?"
+  holiday_delete_success: "Delete holiday successfully."
+  holiday_delete_failed: "Delete holiday failed."
 
   # All
   save_change_confirmation: "Do you want to save this change?"
