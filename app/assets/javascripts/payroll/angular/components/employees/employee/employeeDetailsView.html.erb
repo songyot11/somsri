@@ -50,6 +50,9 @@
             <li class="orange" ng-class="{ 'active' : employee.activeTab === 'private' }" ng-show="employee.isEdit">
               <a data-toggle="tab" ng-click="employee.activeTab = 'private'" href="javascript:void(0)">{{ "personal_data" | translate }}</a>
             </li>
+            <li class="cyan" ng-class="{ 'active' : employee.activeTab === 'inventory' }" ng-show="employee.isEdit">
+              <a data-toggle="tab" ng-click="employee.activeTab = 'inventory'" href="">{{ "inventory_data" | translate }}</a>
+            </li>
           </ul>
         </div>
       </div>
@@ -762,6 +765,31 @@
           </div>
         </div>
       </div>
+
+      <div ng-class="{ 'in active' : employee.activeTab === 'inventory' }" id="inventoryInfo" class="tab-pane fade">
+        <div class="paragraph cyan tab-content salary" ng-show="employee.isEdit && employee.hasPayroll">
+          <div class="row mt-50">
+            <table class="table">
+              <thead>
+                <tr>
+                  <th data-field="invetory_id">#</th>
+                  <th data-field="item_name">Device</th>
+                  <th data-field="serial_number">Serial Number</th>
+                  <th data-field="model">Model</th>
+                  <th data-field="description">Description</th>
+                  <th data-field="status">status</th>
+                  <th data-field="delete"></th>
+                </tr>
+              </thead>
+            </table>
+          </div>
+        </div>
+      </div>
+
+
+
+
+
     </div>
     <div class="footer-menu row">
       <div class="col-md-4">

@@ -441,6 +441,7 @@ th:
   date_purchase: "วันที่ซื้อ" 
   category: "ประเภท"
   date_add: "วันที่เพิ่ม"
+  inventory_data: "ข้อมูลพัสดุ"
 
   # Rollcall
   monthly: ประจำเดือน
