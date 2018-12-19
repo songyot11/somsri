@@ -556,19 +556,6 @@ body {
     color: #fff;
   }
 }
-.btn-filter {
-  background-color: #3fa1e6;
-  color: #fff;
-  border: 2px solid #3fa1e6;
-  padding: 12px;
-  &:hover{
-    background-color: #3fa1e6;
-    color: #fff;
-  }
-  &:focus{
-    color: #fff;
-  }
-}
 
 .btn-continue {
   background-color: #00D2D7;
@@ -984,8 +971,13 @@ tags-input .tags .tag-item .remove-button{
     li>a.nav-link{
       padding: 20px 40px;
       font-size: 22px;
+      color: #00D2D7; 
+    }
+    li.active>a.nav-link{
+      color: #59596E;
     }
   }
+
   .tab-content{
     margin-top: 0 !important;
   }
