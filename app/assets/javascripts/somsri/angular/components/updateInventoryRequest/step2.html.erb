@@ -102,9 +102,9 @@
 							<div class="row mt-50">
 								<div class="col-md-3">
 									<div class="form-group">
-										<label class="control-label" for="date_purchasing">วันที่สั่งซื้อ</label>
+										<label class="control-label" for="date_purchase">วันที่สั่งซื้อ</label>
 										<p class="input-group">
-											<input id="date_purchasing" type="text" class="form-control numberic" uib-datepicker-popup="dd/MM/yyyy" ng-model="inventory.date_purchasing" is-open="inventory.datePurchasePopup.opened" close-text="Close" required="true"/>
+											<input id="date_purchase" type="text" class="form-control numberic" uib-datepicker-popup="dd/MM/yyyy" ng-model="inventory.date_purchase" is-open="inventory.datePurchasePopup.opened" close-text="Close" required="true"/>
 											<span class="input-group-btn">
 												<button type="button" class="btn btn-default" ng-click="inventory.openDatePurchasePopup()"><i class="fa fa-calendar"></i></button>
 											</span>
@@ -133,7 +133,7 @@
 							</div>
 							<div class="row mt-20">
 								<div class="col-md-2">
-									<button type="submit" class="btn btn-custom btn-continue ng-binding" ng-click="inventory.continue()">{{ "continue" | translate }}</button>
+									<button type="button" class="btn btn-custom btn-continue ng-binding" ng-click="inventory.continue()">{{ "continue" | translate }}</button>
 								</div>
 								<div class="col-md-2 pl-0">
 									<button type="button" class="btn btn-custom btn-gray ng-binding" ng-click="inventory.cancel()">{{ "cancel" | translate }}</button>

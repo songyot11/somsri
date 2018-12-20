@@ -25,13 +25,15 @@ class InventoriesRequestsController < ApplicationController
 				result[:total_records] = inventories_requests.total_entries
 			end
 		end
+
 		render json: result, status: :ok
 	end
 
 	# GET: /inventories_request/:id
 	def show 
 		inventories_request = InventoryRequest.find(params[:id])
-		render json: inventories_request, status: :ok
+		
+		render json: inventories_request.as_json(methods:[:manage_inventory]), status: :ok
 	end
 
 	def new

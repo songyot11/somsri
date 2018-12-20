@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20181206142749) do
+ActiveRecord::Schema.define(version: 20181219040533) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -341,9 +341,12 @@ ActiveRecord::Schema.define(version: 20181206142749) do
     t.float    "price"
     t.string   "date_purchase"
     t.string   "category"
+    t.string   "category_barcode"
     t.string   "date_add"
-    t.datetime "created_at",    null: false
-    t.datetime "updated_at",    null: false
+    t.string   "end_warranty"
+    t.integer  "employee_id"
+    t.datetime "created_at",       null: false
+    t.datetime "updated_at",       null: false
   end
 
   create_table "inventory_requests", force: :cascade do |t|
@@ -399,6 +402,28 @@ ActiveRecord::Schema.define(version: 20181206142749) do
     t.string   "category",   default: "", null: false
     t.datetime "created_at",              null: false
     t.datetime "updated_at",              null: false
+  end
+
+  create_table "manage_inventory_requests", force: :cascade do |t|
+    t.integer  "inventory_request_id"
+    t.integer  "step"
+    t.string   "save_by"
+    t.string   "accept"
+    t.string   "save_by_step2"
+    t.string   "date_purchase"
+    t.string   "date_send"
+    t.string   "price"
+    t.string   "save_by_step3"
+    t.string   "get_date"
+    t.string   "buy_slip"
+    t.string   "end_warranty"
+    t.string   "save_by_step4"
+    t.string   "send_to_employee_name"
+    t.string   "send_to_employee_id"
+    t.string   "save_by_step5"
+    t.datetime "created_at",            null: false
+    t.datetime "updated_at",            null: false
+    t.index ["inventory_request_id"], name: "index_manage_inventory_requests_on_inventory_request_id", using: :btree
   end
 
   create_table "parents", force: :cascade do |t|

@@ -483,6 +483,8 @@ th:
   bath: "บาท"
   receive_products_on_date: "ได้รับสินค้าในวันที่"
   continue: "ต่อไป"
+  completed: "เรียบร้อยแล้ว"
+  send_the_package_to: "ได้ทำการส่งมอบพัสดุให้กับ"
 
   # Rollcall
   monthly: ประจำเดือน

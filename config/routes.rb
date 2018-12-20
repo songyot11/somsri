@@ -168,5 +168,9 @@ Rails.application.routes.draw do
       put 'done'
       put 'assigned'
     end
+
+    # POST: /inventories_requests/:inventories_request_id/manage_inventories_requests
+    resources :manage_inventories_requests
   end
+  
 end

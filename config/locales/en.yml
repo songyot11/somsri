@@ -482,6 +482,8 @@ en:
   bath: "Bath"
   receive_products_on_date: "Receive products on date"
   continue: "Continue"
+  completed: "Completed"
+  send_the_package_to: "Send the package to"
 
   # Rollcall
   monthly: "Month"

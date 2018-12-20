@@ -102,7 +102,7 @@
 							<div class="row mt-50">
 								<div class="col-md-4">
 			          	<div class="form-group">
-			            	<input type="text" class="form-control" id="employee_name" placeholder="{{ 'employee_name' | translate }}" ng-model="inventory.datas.name"  typeahead-on-select="inventory.onSelectEmployeeFullName($item)" ng-change="inventory.onChangeName()" uib-typeahead="inventory.name as inventory.name for inventory in inventory.employee_lists | filter:{name:$viewValue} | limitTo:8" required , autocomplete="off">
+			            	<input type="text" class="form-control" id="employee_name" placeholder="{{ 'employee_name' | translate }}" ng-model="inventory.employee_name"  typeahead-on-select="inventory.onSelectEmployeeFullName($item)" ng-change="inventory.onChangeName()" uib-typeahead="inventory.name as inventory.name for inventory in inventory.employee_lists | filter:{name:$viewValue} | limitTo:8" required , autocomplete="off">
 			         		</div>
 			       		</div>
 								<!-- <div class="col-md-4">
@@ -127,7 +127,7 @@
 							</div>
 							<div class="row mt-20">
 								<div class="col-md-2">
-									<button type="submit" class="btn btn-custom btn-continue ng-binding" ng-click="inventory.continue()">{{ "continue" | translate }}</button>
+									<button type="button" class="btn btn-custom btn-continue ng-binding" ng-click="inventory.continue()">{{ "continue" | translate }}</button>
 								</div>
 								<div class="col-md-2 pl-0">
 									<button type="button" class="btn btn-custom btn-gray ng-binding" ng-click="inventory.cancel()">{{ "cancel" | translate }}</button>

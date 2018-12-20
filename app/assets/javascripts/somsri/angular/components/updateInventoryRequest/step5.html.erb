@@ -101,14 +101,14 @@
 							</ul> 
 							<div class="row mt-20"  style="color: #B6B6B6;">
 								<p class="pl-20" >
-									ได้ทำการอนุมัติคำขอ (บันทึกโดย Admin A) <br>
-									ได้ทำการสั่งซื้อวันที่ dd/mm/yyyy  <br>
-									จัดส่งในวันที่ dd/mm/yyyy <br>
-									ราคา 10,000 บาท (บันทึกโดย Admin A) <br>
-									ได้รับสินค้าในวันที่ dd/mm/yyyy   <br>
-									เลขที่ใบเสร็จ A1101   <br>
-									สิ้นสุดการรับประกันในวันที่ dd/mm/yyyy (บันทึกโดย Admin A) <br>
-									ได้ทำการส่งมอบพัสดุให้กับ Somsuk เรียบร้อยแล้ว (บันทึกโดย Admin A) 
+									{{ "request_approval" | translate }} ({{ "save_by" | translate }} {{ inventory.save_by }}) <br>
+									{{ "date_purchase_inventory" | translate }}:  {{ inventory.date_purchase }}  <br>
+									{{ "date_send_inventory" | translate }}:  {{ inventory.date_send }} <br>
+									{{ "price" | translate }}: {{ inventory.price_step2 }} {{ "bath" | translate }} ({{ "save_by" | translate }} {{ inventory.save_by_step2 }}) <br>
+									{{ "receive_products_on_date" | translate }}  {{ inventory.get_date }}   <br>
+									{{ "buy_slip" | translate }} {{ inventory.buy_slip }}   <br>
+									{{ "end_warranty" | translate }}  {{ inventory.end_warranty }} ({{ "save_by" | translate }} {{ inventory.save_by_step3 }}) <br>
+									{{ "send_the_package_to" | translate }} {{ inventory.employee_name }} {{ "completed" | translate }} ({{ "save_by" | translate }} {{ inventory.save_by_step4 }})
 								</p>
 							</div>
 						</div>
@@ -116,17 +116,18 @@
 				</div>
 			</div>
 		</div>
-	</form>
+	
 	<div class="row">
 		<div class="footer-menu mt-20">
 			<div class="pull-right text-right padding-left10">
 				<button type="button" class="btn btn-custom btn-gray ng-binding" ng-click="inventory.cancel()">{{ "cancel" | translate }}</button>
 			</div>
 			<div class="pull-right text-right padding-left10">
-				<button type="submit" class="btn btn-custom btn-blue ng-binding">{{ "save" | translate }}s</button>
+				<button type="submit" class="btn btn-custom btn-blue ng-binding">{{ "save" | translate }}</button>
 			</div>
 		</div>
 	</div>
+	</form>
 </div>
 
 			

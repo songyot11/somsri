@@ -60,7 +60,13 @@
 			return $http.put('/inventories_requests/' + id + '/assigned')
 		}
 
-		
+		this.createManageInventoryRequest = function(data,inventory_request_id) {
+			return $http.post('/inventories_requests/' + inventory_request_id + '/manage_inventories_requests', data)
+		}
+
+		this.updateManageInventoryRequest = function(data, inventory_request_id ,id) {
+			return $http.put('/inventories_requests/' + inventory_request_id+ '/manage_inventories_requests/' + id, data)
+		}
 
 	 }]);
 })();
