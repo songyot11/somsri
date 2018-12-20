@@ -87,7 +87,11 @@
         ctrl.save = function() {
           var changePrice = parseFloat(ctrl.price);
           var changeDatePurchase = $filter('date')(new Date(ctrl.datas.date_purchase), 'yyyy-MM-ddTh:MM:ss')
-          var changeDateEndWarranty = $filter('date')(new Date(ctrl.datas.end_warranty), 'yyyy-MM-ddTh:MM:ss')
+          var changeDateEndWarranty = ""
+          if (ctrl.datas.end_warranty) {
+            changeDateEndWarranty = $filter('date')(new Date(ctrl.datas.end_warranty), 'yyyy-MM-ddTh:MM:ss')
+          }
+          
           if (!ctrl.real_id) {
             ctrl.date_add = $filter('date')(new Date(Date()), 'dd/MM/yyyy')
           }
@@ -97,8 +101,33 @@
           }
 
           generateCategoryBarcode(ctrl.category)
-          console.log("ctrl",ctrl.category_barcode)
 
+          if (ctrl.checkName) {
+            var data = {
+              first_name: ctrl.employee_name
+            }
+            if (ctrl.employee_name) {
+              employeesService.createEmployee(data).then(function(resp) {
+                ctrl.employee_id = resp.data.employee.id
+                beforeCreate(changePrice,changeDatePurchase,changeDateEndWarranty)
+              })
+            } else {
+              ctrl.employee_id = 0
+              beforeCreate(changePrice,changeDatePurchase,changeDateEndWarranty)
+            }
+          } else {
+            if (ctrl.employee_name) {
+              beforeCreate(changePrice,changeDatePurchase,changeDateEndWarranty)
+            } else {
+              ctrl.employee_id = 0
+              beforeCreate(changePrice,changeDatePurchase,changeDateEndWarranty)
+            }
+            
+          }
+
+        };
+
+        function beforeCreate(changePrice,changeDatePurchase,changeDateEndWarranty) {
           var inventory_datas = {
             item_name: ctrl.name,
               serial_number: ctrl.serial_number,
@@ -117,7 +146,7 @@
           } else {
             updateInventory(inventory_datas, ctrl.real_id)
           }
-        };
+        }
 
         function createInventory(inventory_datas) {
            service.newInventory(inventory_datas).then(function(resp) {
@@ -139,17 +168,50 @@
            $rootScope.openInventory();
         }
 
-        ctrl.switchEmployee = function(name,employee_id) {
-          ctrl.employee_id = employee_id
-          ctrl.displayName = name
+        function initDatas(){
+          if(!ctrl.datas) { ctrl.datas = {} }
         }
+  
+        function autoFillEmployee($item){
+          if($item.id){
+            for(var i = 0;i < ctrl.employee_lists.length; i++){
+              if($item.id == ctrl.employee_lists[i].id){
+                initDatas();
+                ctrl.checkName = false
+              }
+            }
+          }
+        }
+
+        function autoCheckName(data) {
+          if(data[0].id){
+            for(var i = 0;i < ctrl.employee_lists.length; i++){
+              if(data[0].id == ctrl.employee_lists[i].id){
+                ctrl.checkName = false
+              } else {
+                ctrl.checkName = true
+              }
+            }
+          }
+        }
+
+        ctrl.onChangeName = function() {
+          var data = []
+          data.push({
+            name: ctrl.employee_name,
+            id: -1
+          })
+          autoCheckName(data);
+        }
+
+        ctrl.onSelectEmployeeFullName = function($item) {
+          ctrl.employee_name = $item.name;
+          ctrl.employee_id = $item.id
+          autoFillEmployee($item);
+         };
 
         function getEmployee(){
           ctrl.employee_lists = []
-          ctrl.employee_lists.push({
-            name: translateFilter("no_employee_selection"),
-            id: 0
-          })
           employeesService.getAllEmployee().then(function(resp) {
             if (resp.data.length > 0) {
               for (var i = 0; i < resp.data.length; i++) {
@@ -167,8 +229,8 @@
 
         function getEmployeeById(id) {
           employeesService.getEmployee(id).then(function(resp) {
-              ctrl.displayName = resp.data.employee_display_name
-              getEmployee()
+              ctrl.employee_name = resp.data.employee_display_name
+              // getEmployee()
           })
         }
 
@@ -224,7 +286,6 @@
 
           var check = false
           for(var i = 0; i < ctrl.category_barcode_list.length; i++) {
-            console.log(ctrl.category_barcode_list[i])
             if (ctrl.barcode === ctrl.category_barcode_list[i]) {
               check = true
               break
@@ -248,12 +309,9 @@
               ctrl.category_barcode_list.push(resp.data.inventories[i].category_barcode)
             }
           })
-          console.log(ctrl.category_barcode_list)
         }
-       
-        if (!ctrl.real_id) {
-          getEmployee()
-        }
+      
+        getEmployee()
         getInventoryList()
         initData()
 
