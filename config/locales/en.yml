@@ -454,6 +454,7 @@ en:
   electronic_office_equipment: "Electronic office equipment"
   paper_products: "Paper products"
   meeting_presentation_equipment: "Meeting and presentation equipment"
+  inventory_data: "Device"
 
 
   # Rollcall
@@ -551,6 +552,3 @@ en:
   save_change_confirmation: "Do you want to save this change?"
   save_success: "Save successfully."
   save_falied: "Save failed."
-
-  #inventory
-  inventory_data: "Device"
