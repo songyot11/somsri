@@ -14,7 +14,7 @@ class ManageInventoriesRequestsController < ApplicationController
 		# PUT /manage_inventory_requests/:id
 		def update
 			inventory_rquest = InventoryRequest.find(params[:inventories_request_id])
-			# manage = ManageInventoryRequest.find(params[:id])
+			# manage = ManageInventoryRequest.find(params[:id])git 
 			manage = inventory_rquest.manage_inventory_requests.update(manage_params)
 			render json: manage , status: :ok
 		end
