@@ -40,13 +40,17 @@
 			ctrl.save_by = ctrl.manage_inventory.step1.save_by
 			//step2
 			ctrl.save_by_step2 = ctrl.manage_inventory.step2.save_by
-			ctrl.date_purchase = $filter('date')(new Date(ctrl.manage_inventory.step2.date_purchase), 'dd/MM/yyyy')
-			ctrl.date_send = $filter('date')(new Date(ctrl.manage_inventory.step2.date_send), 'dd/MM/yyyy')
+			ctrl.date_purchase_save = ctrl.manage_inventory.step2.date_purchase//$filter('date')(new Date(ctrl.manage_inventory.step2.date_purchase), 'dd/MM/yyyy')
+			ctrl.date_send_save = ctrl.manage_inventory.step2.date_send//$filter('date')(new Date(ctrl.manage_inventory.step2.date_send), 'dd/MM/yyyy')
+      ctrl.date_purchase = $filter('date')(new Date(ctrl.manage_inventory.step2.date_purchase), 'dd/MM/yyyy')
+      ctrl.date_send = $filter('date')(new Date(ctrl.manage_inventory.step2.date_send), 'dd/MM/yyyy')
 			ctrl.price_step2 = ctrl.manage_inventory.step2.price
 			//step3
-			ctrl.get_date	= $filter('date')(new Date(ctrl.manage_inventory.step3.get_date), 'dd/MM/yyyy')
+			ctrl.get_date_save	= ctrl.manage_inventory.step3.get_date
+      ctrl.get_date = $filter('date')(new Date(ctrl.manage_inventory.step3.get_date), 'dd/MM/yyyy')
   		ctrl.buy_slip =	ctrl.manage_inventory.step3.buy_slip
-  		ctrl.end_warranty	=  $filter('date')(new Date(ctrl.manage_inventory.step3.end_warranty), 'dd/MM/yyyy') 
+  		ctrl.end_warranty_save	= ctrl.manage_inventory.step3.end_warranty 
+      ctrl.end_warranty =  $filter('date')(new Date(ctrl.manage_inventory.step3.end_warranty), 'dd/MM/yyyy') 
   		ctrl.save_by_step3 = ctrl.manage_inventory.step3.save_by
   		//step4
   		ctrl.employee_name = ctrl.manage_inventory.step4.send_to_employee_name
@@ -71,12 +75,16 @@
 				ctrl.save_by = ctrl.step.step1.save_by
 				//step2
 				ctrl.save_by_step2 = ctrl.step.step2.save_by
+        ctrl.date_purchase_save = ctrl.step.step2.date_purchase
+        ctrl.date_send_save = ctrl.step.step2.date_send
 				ctrl.date_purchase = $filter('date')(new Date(ctrl.step.step2.date_purchase), 'dd/MM/yyyy')
 				ctrl.date_send = $filter('date')(new Date(ctrl.step.step2.date_send), 'dd/MM/yyyy')
 				ctrl.price_step2 = ctrl.step.step2.price
 				//step3
+        ctrl.get_date_save = ctrl.step.step3.get_date
 				ctrl.get_date	= $filter('date')(new Date(ctrl.step.step3.get_date), 'dd/MM/yyyy')
     		ctrl.buy_slip =	ctrl.step.step3.buy_slip
+        ctrl.end_warranty_save = ctrl.step.step3.end_warranty
     		ctrl.end_warranty	=  $filter('date')(new Date(ctrl.step.step3.end_warranty), 'dd/MM/yyyy') 
     		ctrl.save_by_step3 = ctrl.step.step3.save_by
     		//step4
@@ -110,20 +118,20 @@
           accept: "accept",
           save_by: ctrl.save_by,
           save_by_step2: ctrl.save_by_step2,
-          date_purchase: ctrl.date_purchase,
-          date_send: ctrl.date_send,
+          date_purchase: ctrl.date_purchase_save,
+          date_send: ctrl.date_send_save,
           price: ctrl.price_step2,
           save_by_step3: ctrl.save_by_step4,
-          get_date: ctrl.get_date,
+          get_date: ctrl.get_date_save,
           buy_slip: ctrl.buy_slip,
-          end_warranty: ctrl.end_warranty,
+          end_warranty: ctrl.end_warranty_save,
           save_by_step4: ctrl.save_by_step4,
           send_to_employee_name: ctrl.employee_name,
           send_to_employee_id: ctrl.employee_id,
           save_by_step5: "Admin"//ctrl.name_setting
         }
       }
-
+      $rootScope.step = null
       service.updateInventoryRequest(inventory_datas, id).then(function(resp) {
         if (!ctrl.manage_inventory_id) {
           updateManageInventory(data)

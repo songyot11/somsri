@@ -43,6 +43,8 @@
         ctrl.save_by = ctrl.manage_inventory.step1.save_by
         //setp2
         ctrl.save_by_step2 = ctrl.manage_inventory.step2.save_by
+        ctrl.date_purchase_save = ctrl.manage_inventory.step2.date_purchase
+        ctrl.date_send_save = ctrl.manage_inventory.step2.date_send
         ctrl.date_purchase = $filter('date')(new Date(ctrl.manage_inventory.step2.date_purchase), 'dd/MM/yyyy')
         ctrl.date_send = $filter('date')(new Date(ctrl.manage_inventory.step2.date_send), 'dd/MM/yyyy')
         ctrl.price_step2 = ctrl.manage_inventory.step2.price
@@ -68,6 +70,8 @@
 				ctrl.save_by = ctrl.step.step1.save_by
         //setp2
 				ctrl.save_by_step2 = ctrl.step.step2.save_by
+        ctrl.date_purchase_save = ctrl.step.step2.date_purchase
+        ctrl.date_send_save = ctrl.step.step2.date_send
 				ctrl.date_purchase = $filter('date')(new Date(ctrl.step.step2.date_purchase), 'dd/MM/yyyy')
 				ctrl.date_send = $filter('date')(new Date(ctrl.step.step2.date_send), 'dd/MM/yyyy')
 				ctrl.price_step2 = ctrl.step.step2.price
@@ -108,7 +112,7 @@
         updateInventoryRequest(inventory_datas, ctrl.real_id)
       } 
   	}
-
+    
     function updateInventoryRequest(inventory_datas, id) {
       var data = {
         manage_inventories_requests: {
@@ -116,11 +120,11 @@
           accept: "accept",
           save_by: ctrl.save_by,
           save_by_step2: ctrl.save_by_step2,
-          date_purchase: ctrl.date_purchase,
-          date_send: ctrl.date_send,
+          date_purchase: ctrl.date_purchase_save,
+          date_send: ctrl.date_send_save,
           price: ctrl.price_step2,
           save_by_step3: ctrl.name_setting,
-          get_date: ctrl.get_date,
+          get_date: ctrl.date_get_inventory,
           buy_slip: ctrl.buy_slip,
           end_warranty: ctrl.end_warranty
         }
