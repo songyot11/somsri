@@ -454,6 +454,7 @@ th:
   electronic_office_equipment: "อุปกรณ์สำนักงานอิเล็กทรอนิกส์"
   paper_products: "ผลิตภัณฑ์กระดาษ"
   meeting_presentation_equipment: "อุปกรณ์เพื่อการประชุมและนำเสนอ"
+  inventory_search: "ค้นหาจากชื่อ รุ่น หมายเลขซีเรียล วันที่ซื้อ ชื่อคนใช้งาน"
 
   # Rollcall
   monthly: ประจำเดือน

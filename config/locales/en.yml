@@ -454,7 +454,7 @@ en:
   electronic_office_equipment: "Electronic office equipment"
   paper_products: "Paper products"
   meeting_presentation_equipment: "Meeting and presentation equipment"
-
+  inventory_search: "Search form name, model, serial number, date purchase and user name"
 
   # Rollcall
   monthly: "Month"
