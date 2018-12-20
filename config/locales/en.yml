@@ -456,6 +456,19 @@ en:
   meeting_presentation_equipment: "Meeting and presentation equipment"
   inventory_search: "Search form name, model, serial number, date purchase and user name"
 
+  #Inventory Request
+  list_request: "Request list"
+  add_request: "+ Add Request"
+  user_request: "User request"
+  request_date: "Request date"
+  reject: "Reject"
+  approve: "Approveิ"
+  pending: "Pending"
+  accept: "Accept"
+  purchasing: "Purchasing"
+  done: "Done"
+  assigned: "Assigned"
+
   # Rollcall
   monthly: "Month"
   student_record: "Attendance Record"

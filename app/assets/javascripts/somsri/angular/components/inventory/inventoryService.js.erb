@@ -7,17 +7,19 @@
 			return $http.post('/inventories', data)
 		};
 
-		this.getInventory = function(page) {
+		this.getInventory = function(page, searchKeyword) {
+			console.log("searchKeyword",searchKeyword)
 			return $http.get('/inventories',{
 				params: {
 					page: page,
+					search_keyword: searchKeyword,
 				}
 			});
 		};
 
 		this.show = function(id) {
      	 return $http.get('/inventories/' + id)
-    	}
+    	};
 
 		this.removeInventory = function(id) {
 			return $http.delete('/inventories/' + id);
@@ -29,9 +31,6 @@
 							method: 'put',
 							data: { inventory: data }
 						});
-		}
-
-		
-
+		};
 	 }]);
 })();
