@@ -44,13 +44,33 @@
           service.show(ctrl.real_id).then(function(resp) {
             var value = resp.data
             ctrl.datas = resp.data
+            
             ctrl.name = value.item_name
+            if (!ctrl.name) {
+              ctrl.name = "-"
+            }
+            
             ctrl.serial_number = value.serial_number
+            if (!ctrl.serial_number) {
+              ctrl.serial_number = "-"
+            }
+
             ctrl.model = value.model
+            if (!ctrl.model) {
+              ctrl.model = "-"
+            }
+            
             ctrl.description = value.description
+            if (!ctrl.description) {
+              ctrl.description = "-"
+            }
+            
             ctrl.price = value.price
-            ctrl.date_purchase = new Date(value.date_purchase)
-            ctrl.date_end_warranty = new Date(value.end_warranty)
+            ctrl.price.round(2)
+            if (!ctrl.price) {
+              ctrl.price = "0"
+            }
+
             if (value.date_purchase) {
               ctrl.datas.date_purchase = new Date(ctrl.datas.date_purchase)
             } else {
@@ -74,6 +94,8 @@
             ctrl.employee_id = value.employee_id
             if (ctrl.employee_id) {
               getEmployeeById(ctrl.employee_id)
+            } else {
+              ctrl.employee_name = "-"
             }
           })
         }
@@ -89,6 +111,7 @@
 
         ctrl.save = function() {
           var changePrice = parseFloat(ctrl.price);
+          changePrice = changePrice
           var changeDatePurchase = $filter('date')(new Date(ctrl.datas.date_purchase), 'yyyy-MM-ddTh:MM:ss')
           var changeDateEndWarranty = ""
           if (ctrl.datas.end_warranty) {
@@ -131,6 +154,15 @@
         };
 
         function beforeCreate(changePrice,changeDatePurchase,changeDateEndWarranty) {
+
+          if (!ctrl.serial_number) {
+            ctrl.serial_number = "-"
+          }
+
+          if (!ctrl.model) {
+            ctrl.model = "-"
+          }
+
           var inventory_datas = {
             item_name: ctrl.name,
             serial_number: ctrl.serial_number,
