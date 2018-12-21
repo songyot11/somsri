@@ -19,7 +19,7 @@ class InventoriesController < ApplicationController
 			result = inventories.as_json({ bootstrap_table: true })
 		else 
 			result = {
-				inventories: inventories.as_json({ index: true })
+				inventories: inventories.as_json(methods:[:categories])
 			}
 
 			if params[:page]
@@ -33,7 +33,7 @@ class InventoriesController < ApplicationController
 	# GET: /inventories/:id
 	def show 
 		inventory = Inventory.find(params[:id])
-		render json: inventory, status: :ok
+		render json: inventory.as_json(methods:[:categories]), status: :ok
 	end
 
 	def new

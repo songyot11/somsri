@@ -16,8 +16,6 @@
         ctrl.description = ""
         ctrl.price = ""
         ctrl.category = translateFilter("select_category")
-        // ctrl.date_purchase = new Date()
-        // ctrl.date_end_warranty = new Date()
         ctrl.displayName = translateFilter("select_employee")
         ctrl.add_button = "add"
         ctrl.filterKeyword = ''
@@ -25,14 +23,14 @@
         ctrl.end_date = new Date();
         ctrl.start_date = new Date(new Date().setMonth(new Date().getMonth() - 1));
         ctrl.item_catogery = [
-          {name: "office_furniture"},
-          {name: "equipment_computer"},
-          {name: "office_supplies"},
-          {name: "maintenance_equipment"},
-          {name: "cleaning_products"},
-          {name: "electronic_office_equipment"},
-          {name: "paper_products"},
-          {name: "meeting_presentation_equipment"}
+          {name: "office_furniture", id: 1},
+          {name: "equipment_computer", id: 2},
+          {name: "office_supplies", id: 3},
+          {name: "maintenance_equipment", id: 4},
+          {name: "cleaning_products", id: 5},
+          {name: "electronic_office_equipment", id: 6},
+          {name: "paper_products", id: 7},
+          {name: "meeting_presentation_equipment", id: 8}
         ]
         ctrl.category_barcode_list = []
  
@@ -64,9 +62,10 @@
             } else {
               ctrl.datas.end_warranty = null
             }
-            
-            ctrl.category = value.category
-            ctrl.category_barcode = value.category_barcode
+            ctrl.get_category_id = value.categories.id
+            ctrl.category_id = value.categories.category_id
+            ctrl.category = value.categories.category_name
+            ctrl.category_barcode = value.categories.category_barcode
             ctrl.date_add = value.date_add
             ctrl.employee_id = value.employee_id
             if (ctrl.employee_id) {
@@ -92,12 +91,11 @@
             ctrl.date_add = $filter('date')(new Date(Date()), 'dd/MM/yyyy')
           }
 
-          if (ctrl.category === translateFilter("select_category")) {
+          if (ctrl.category == translateFilter("select_category")) {
             ctrl.category = null
           }
 
           generateCategoryBarcode(ctrl.category)
-          console.log("ctrl",ctrl.category_barcode)
 
           var inventory_datas = {
             item_name: ctrl.name,
@@ -106,32 +104,52 @@
             description: ctrl.description,
             price: changePrice,
             date_purchase: changeDatePurchase,
-            category: ctrl.category,
-            category_barcode: ctrl.category_barcode,
             date_add: ctrl.date_add,
             end_warranty: changeDateEndWarranty,
             employee_id: ctrl.employee_id
           }
+
+          var category_datas = {
+            categories: {
+              category_id: ctrl.category_id,
+              category_name: ctrl.category,
+              category_barcode: ctrl.category_barcode
+          }
+            }
+            
+
           if (!ctrl.real_id) {
-            createInventory(inventory_datas)
+            createInventory(inventory_datas, category_datas)
           } else {
-            updateInventory(inventory_datas, ctrl.real_id)
+            updateInventory(inventory_datas, ctrl.real_id, category_datas)
           }
         };
 
-        function createInventory(inventory_datas) {
+        function createInventory(inventory_datas, category_datas) {
            service.newInventory(inventory_datas).then(function(resp) {
-              $rootScope.openInventory();
+              createCategory(resp.data.id, category_datas)
           }, function(e){
             // Error
           });
         }
 
-        function updateInventory(inventory_datas, id) {
-          service.updateInventory(inventory_datas, id).then(function(resp) {
+        function createCategory(inventory_id, data) {
+          service.createCategory(inventory_id, data).then(function(resp) {
              $rootScope.openInventory();
+          })
+        }
+
+        function updateInventory(inventory_datas, id, category_datas) {
+          service.updateInventory(inventory_datas, id).then(function(resp) {
+            updateCategory(id, ctrl.get_category_id, category_datas)
           },function(e) {
             // Error
+          })
+        }
+
+        function updateCategory(inventory_id, category_id, data) {
+          service.updateCategory(inventory_id, category_id, data).then(function(resp) {
+             $rootScope.openInventory();
           })
         }
 
@@ -142,6 +160,15 @@
         ctrl.switchEmployee = function(name,employee_id) {
           ctrl.employee_id = employee_id
           ctrl.displayName = name
+        }
+
+        ctrl.switchCategory = function() {
+          for( var i = 0; i < ctrl.item_catogery.length; i++ ) {
+            if (ctrl.item_catogery[i].name == ctrl.category) {
+              ctrl.category = ctrl.item_catogery[i].name
+              ctrl.category_id = ctrl.item_catogery[i].id
+            }
+          }
         }
 
         function getEmployee(){
@@ -224,7 +251,6 @@
 
           var check = false
           for(var i = 0; i < ctrl.category_barcode_list.length; i++) {
-            console.log(ctrl.category_barcode_list[i])
             if (ctrl.barcode === ctrl.category_barcode_list[i]) {
               check = true
               break
@@ -248,7 +274,6 @@
               ctrl.category_barcode_list.push(resp.data.inventories[i].category_barcode)
             }
           })
-          console.log(ctrl.category_barcode_list)
         }
        
         if (!ctrl.real_id) {

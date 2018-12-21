@@ -118,12 +118,12 @@
   </div>
 </div>
 <!-- Modal -->
-<div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+<div class="modal fade" id="listrequest" tabindex="-1" role="dialog" aria-labelledby="listrequest">
     <div class="modal-dialog" role="document">
       <div class="modal-content">
         <div class="modal-header">
           <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-          <h4 class="modal-title color-blue" id="myModalLabel"> <i class="fa fa-filter "></i>  ตัวกรอง</h4>
+          <h4 class="modal-title color-blue" id="listrequest"> <i class="fa fa-filter "></i>  ตัวกรอง</h4>
         </div>
         <div class="modal-body">
           <div class="row">
@@ -139,34 +139,34 @@
           <div class="row status mt-10">
             <div class="col-md-4">
               <label class="checkbox-inline">
-                <input type="checkbox" id="inlineCheckbox1" value="option1"> Pending
+                <input type="checkbox" id="inlineCheckbox2" value="option1"> Pending
               </label>
             </div>
             <div class="col-md-4">
               <label class="checkbox-inline">
-                <input type="checkbox" id="inlineCheckbox2" value="option2"> Accept
+                <input type="checkbox" id="inlineCheckbox3" value="option2"> Accept
               </label>
             </div>
             <div class="col-md-4">
               <label class="checkbox-inline">
-                <input type="checkbox" id="inlineCheckbox3" value="option3"> Reject
+                <input type="checkbox" id="inlineCheckbox4" value="option3"> Reject
               </label>
             </div>
           </div>
           <div class="row status mt-10">
             <div class="col-md-4">
               <label class="checkbox-inline">
-                <input type="checkbox" id="inlineCheckbox1" value="option4"> Purchasing 
+                <input type="checkbox" id="inlineCheckbox5" value="option4"> Purchasing 
               </label>
             </div>
             <div class="col-md-4">
               <label class="checkbox-inline">
-                <input type="checkbox" id="inlineCheckbox2" value="option5"> Done
+                <input type="checkbox" id="inlineCheckbox6" value="option5"> Done
               </label>
             </div>
             <div class="col-md-4">
               <label class="checkbox-inline">
-                <input type="checkbox" id="inlineCheckbox3" value="option6"> Assigned 
+                <input type="checkbox" id="inlineCheckbox7" value="option6"> Assigned 
               </label>
             </div>
           </div>
@@ -226,59 +226,32 @@
           </div>
         </div>
         <div class="modal-footer">
-          <button type="button" class="btn btn-custom btn-blue ng-binding">ตกลง</button>
+          <button type="button" class="btn btn-custom btn-blue ng-binding" ng-click="inventory.inventory_filter()">ตกลง</button>
           <button type="button" class="btn btn-custom btn-gray  ng-binding" data-dismiss="modal">ยกเลิก</button>
         </div>
       </div>
     </div>
   </div>
   <!-- Modal filter request-->
-<div class="modal fade" id="listrequest" tabindex="-1" role="dialog" aria-labelledby="listrequest">
+<div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModal">
     <div class="modal-dialog" role="document">
       <div class="modal-content">
         <div class="modal-header">
           <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-          <h4 class="modal-title color-blue" id="listrequest"> <i class="fa fa-filter "></i>  ตัวกรอง</h4>
+          <h4 class="modal-title color-blue" id="myModal"> <i class="fa fa-filter "></i>  ตัวกรอง</h4>
         </div>
         <div class="modal-body">
           <div class="row">
             <div class="col-md-2">
               <b>ประเภท</b>
             </div>
-            <div class="col-md-10 pl-0">
-              <label class="checkbox-inline">
-                <input type="checkbox" id="inlineCheckbox1" value="option1"> All
-              </label>
-            </div>
-          </div>
-          <div class="row status mt-10">
-            <div class="col-md-4">
-              <label class="checkbox-inline">
-                <input type="checkbox" id="inlineCheckbox1" value="option1"> Computer   
-              </label>
-            </div>
-            <div class="col-md-4">
-              <label class="checkbox-inline">
-                <input type="checkbox" id="inlineCheckbox2" value="option2"> Keyboard  
-              </label>
-            </div>
-            <div class="col-md-4">
-              <label class="checkbox-inline">
-                <input type="checkbox" id="inlineCheckbox3" value="option3"> Monitor 
-              </label>
-            </div>
-          </div>
-          <div class="row status mt-10">
-            <div class="col-md-4">
-              <label class="checkbox-inline">
-                <input type="checkbox" id="inlineCheckbox1" value="option4"> CPU 
-              </label>
-            </div>
-            <div class="col-md-4">
-              <label class="checkbox-inline">
-                <input type="checkbox" id="inlineCheckbox2" value="option5"> Mouse  
-              </label>
-            </div>
+            <form id="slectionForm">
+              <input type="checkbox" ng-click="inventory.toggleAll()" ng-model="inventory.isAllSelected"> Select all
+              <br>
+              <div ng-repeat="item in inventory.check_box">
+                  <input type="checkbox" ng-model="item.selected" ng-change="inventory.checkBoxToggled()"> {{ item.value | translate }}
+              </div>
+            </form>
           </div>
           <div class="row mt-20">
             <div class="col-md-12">

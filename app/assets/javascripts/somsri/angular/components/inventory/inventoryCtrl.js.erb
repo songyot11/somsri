@@ -1,7 +1,8 @@
 (function() {
   'use strict';
   angular.module('somsri.somsri.inventory', [])
-  .controller('inventoryCtrl', ['$compile', '$scope', '$window', '$filter', '$rootScope', '$timeout', 'translateFilter', '$uibModal', 'Upload', "inventoryService", "inventoryRequestService", '$state', function($compile, $scope, $window, $filter, $rootScope, $timeout, translateFilter, $uibModal, Upload, services, inventoryRequestService, $state) {
+  .controller('inventoryCtrl', ['$compile', '$scope', '$window', '$filter', '$rootScope', '$timeout', 'translateFilter', '$uibModal', 'Upload', "inventoryService", "inventoryRequestService", '$state', 
+    function($compile, $scope, $window, $filter, $rootScope, $timeout, translateFilter, $uibModal, Upload, services, inventoryRequestService, $state) {
     $rootScope.menu = translateFilter("inventory")
     var ctrl = this
     var angularScopeRoot = 'angular.element(document.getElementById("angularCtrl")).scope().$root'
@@ -50,13 +51,10 @@
     }
 
     var bootstrapTableOptionsInventory = {
-      onSort: function(item_name, order) {
-        ctrl.sort = item_name;
-        ctrl.order = order;
-      },
-      customSort: function(){},
+      sortName: 'date_add',
+      sortOrder: 'asc',
       columns : [{
-        field: 'id',
+        field: 'number',
         title: '#',
         classes: 'text-right',
         sortable: true,
@@ -125,6 +123,26 @@
             ctrl.totalItems = resp.data.total_records;
             ctrl.currentPage = resp.data.current_page;
             ctrl.datasExport = resp.data.inventories
+            var datas = []
+            var count = ctrl.datasExport.length
+            for(var i = 0; i<count; i++) {
+              datas.push({
+                number: i+1,
+                id: ctrl.datasExport[i].id,
+                item_name: ctrl.datasExport[i].item_name,
+                serial_number: ctrl.datasExport[i].serial_number,
+                model: ctrl.datasExport[i].model,
+                description: ctrl.datasExport[i].description,
+                price: ctrl.datasExport[i].price,
+                date_purchase: ctrl.datasExport[i].date_purchase,
+                category: ctrl.datasExport[i].categories.category_name,
+                date_add: ctrl.datasExport[i].date_add,
+                end_warranty: ctrl.datasExport[i].end_warranty,
+                created_at: ctrl.datasExport[i].created_at,
+                updated_at: ctrl.datasExport[i].updated_at
+              })
+            }
+            ctrl.datasExport = datas
           } else {
             ctrl.totalItems = 0;
             ctrl.currentPage = 0;
@@ -138,6 +156,9 @@
       getInventory()
     }
 
+    ctrl.filterInventory = function() {
+      
+    }
 
     ctrl.changeTab = function(str) {
       ctrl.selectTab = str
@@ -206,11 +227,8 @@
     getInventory();
 
     var bootstrapTableOptionsInvetoryRequest = {
-      onSort: function(item_name, order) {
-        ctrl.sort = item_name;
-        ctrl.order = order;
-      },
-      customSort: function(){},
+      sortName: 'request_date',
+      sortOrder: 'asc',
       columns : [{
         field: 'id',
         title: '#',
@@ -236,11 +254,11 @@
         field: 'request_date',
         title: translateFilter("request_date"),
         sortable: true,
+        formatter: filterDate
       },{
         field: 'inventory_status',
         title: translateFilter("status"),
         sortable: true,
-        formatter: filterDate
       },{
         field: 'edit',
         title: "",
@@ -266,6 +284,23 @@
             ctrl.requestTotalItems = resp.data.total_records;
             ctrl.requestCurrentPage = resp.data.current_page;
             ctrl.datasReuestExport = resp.data.inventories_requests
+            var datas = []
+            var count = ctrl.datasReuestExport.length
+            for(var i = 0; i<count; i++) {
+              datas.push({
+                number: i+1,
+                id: ctrl.datasReuestExport[i].id,
+                user_name: ctrl.datasReuestExport[i].user_name,
+                item_name: ctrl.datasReuestExport[i].item_name,
+                description: ctrl.datasReuestExport[i].description,
+                price: ctrl.datasReuestExport[i].price,
+                request_date: ctrl.datasReuestExport[i].request_date,
+                inventory_status: ctrl.datasReuestExport[i].inventory_status,
+                created_at: ctrl.datasReuestExport[i].created_at,
+                updated_at: ctrl.datasReuestExport[i].updated_at
+              })
+            }
+            ctrl.datasReuestExport = datas
           } else {
             ctrl.requestTotalItems = 0;
             ctrl.requestCurrentPage = 0;
@@ -276,7 +311,6 @@
     }
 
     ctrl.selectCategory = function(str) {
-      console.log(str)
     }
 
     ctrl.pageRequestChanged = function() {
@@ -315,6 +349,39 @@
           ctrl.typeSuccess = false
         })
       })
+    }
+
+    ctrl.check_box = [
+      {value: 'office_furniture', selected: true ,id: 1},
+      {value: 'equipment_computer', selected: true ,id: 2},
+      {value: 'office_supplies', selected: true ,id: 3},
+      {value: 'maintenance_equipment', selected: true ,id: 4},
+      {value: 'cleaning_products', selected: true ,id: 5},
+      {value: 'electronic_office_equipment', selected: true ,id: 6},
+      {value: 'paper_products', selected: true ,id: 7},
+      {value: 'meeting_presentation_equipment', selected: true ,id: 8},
+    ]
+
+    ctrl.isAllSelected = true
+
+    ctrl.toggleAll = function() {
+      var toggleStatus = ctrl.isAllSelected
+      angular.forEach(ctrl.check_box, function(item){ item.selected = toggleStatus })
+    }
+
+    ctrl.checkBoxToggled = function() {
+      ctrl.isAllSelected = ctrl.check_box.every(function(item){ return item.selected })
+      ctrl.getSelected = []
+      for( var i = 0; i < ctrl.check_box.length; i++ ) {
+        if (ctrl.check_box[i].selected) {
+          ctrl.getSelected.push({
+            id: ctrl.check_box[i].id
+          })
+          console.log(ctrl.check_box[i].id)
+        }
+      }
+      console.log(ctrl.getSelected)
+      console.log(ctrl.isAllSelected, ctrl.check_box)
     }
 
     getInventoryRequest();

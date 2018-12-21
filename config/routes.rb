@@ -154,7 +154,10 @@ Rails.application.routes.draw do
   comfy_route :cms_admin, :path => '/cms_admin'
   root to: 'home#index'
 
-  resources :inventories
+  resources :inventories do
+    resources :categories
+  end
+  
   resources :inventories_requests do 
     collection do
     end
@@ -169,4 +172,5 @@ Rails.application.routes.draw do
       put 'assigned'
     end
   end
+  
 end

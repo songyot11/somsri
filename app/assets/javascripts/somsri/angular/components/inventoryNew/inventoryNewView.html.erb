@@ -67,18 +67,9 @@
                 <div class="form-group ">
                   <label class="control-label" for="category">{{ "category" | translate }}</label>
                   <div class="col-md-12">
-                    <select class="form-control" id="inventory_category" ng-model="inventory.category" required="true">
+                    <select class="form-control" id="inventory_category" ng-model="inventory.category" ng-change="inventory.switchCategory()" required="true">
                       <option value="{{ 'select_category' | translate }}">{{ "select_category" | translate }}</option>
-                      <option ng-repeat="item in inventory.item_catogery" value="{{item.name}}">{{item.name | translate }}</option>
-                  <!--     <option value="{{ 'select_category' | translate }}">{{ "select_category" | translate }}</option>
-                      <option value="office_furniture">{{ "office_furniture" | translate }}</option>
-                      <option value="equipment_computer">{{ "equipment_computer" | translate }}</option>
-                      <option value="office_supplies">{{ "office_supplies" | translate }}</option>
-                      <option value="maintenance_equipment">{{ "maintenance_equipment" | translate }}</option>
-                      <option value="cleaning_products">{{ "cleaning_products" | translate }}</option>
-                      <option value="electronic_office_equipment">{{ "electronic_office_equipment" | translate }}</option>
-                      <option value="paper_products">{{ "paper_products" | translate }}</option>
-                      <option value="meeting_presentation_equipment">{{ "meeting_presentation_equipment" | translate }}</option> -->
+                      <option ng-repeat="item in inventory.item_catogery" value="{{item.name}}" >{{ item.name | translate }}</option>
                     </select>
                   </div>
                 </div>
