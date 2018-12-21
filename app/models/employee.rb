@@ -11,7 +11,7 @@ class Employee < ApplicationRecord
   has_many :teacher_attendance_lists
   has_many :employee_skills, dependent: :destroy
   has_many :employees, through: :employee_skills
-
+  has_many :inventories
   has_one :taxReduction
 
   has_many :payrolls

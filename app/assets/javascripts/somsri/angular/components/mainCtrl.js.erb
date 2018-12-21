@@ -89,12 +89,16 @@
       });
     }
     
-    $rootScope.openInventory = function() {
-      $state.go('inventory')
+    $rootScope.openInventory = function(id) {
+      $state.go('inventory', { id: id })
     };
 
     $rootScope.updateInventory = function(id) {
       $state.go('update_inventory', { id: id })
+    }
+
+    $rootScope.updateInventoryRequest = function(id) {
+      $state.go('new_inventory_request', { id: id })
     }
 
   }]);

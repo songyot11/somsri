@@ -436,6 +436,7 @@ th:
   inventory_list: "รายการพัสดุ"
   inventory_request: "คำขอใช้พัสดุ"
   add_inventory: "+ เพิ่มพัสดุ"
+  inventory_request: "คำขอใช้พัสดุ"
   item_name: "ชื่อพัสดุ"
   serial_number: "หมายเลขซีเรียล"
   model: "รุ่น"
@@ -454,6 +455,28 @@ th:
   electronic_office_equipment: "อุปกรณ์สำนักงานอิเล็กทรอนิกส์"
   paper_products: "ผลิตภัณฑ์กระดาษ"
   meeting_presentation_equipment: "อุปกรณ์เพื่อการประชุมและนำเสนอ"
+  inventory_search: "ค้นหาจากชื่อ รุ่น หมายเลขซีเรียล วันที่ซื้อ ชื่อคนใช้งาน"
+
+   #InventoryRequest
+  list_request: "รายการคำขอใช้พัสดุ"
+  add_request: "+ เพิ่มคำขอใช้พัสดุ"
+  user_request: "ชื่อผู้ขอ"
+  request_date: "วันที่ขอ"
+  reject: "ปฏิเสธ"
+  approve: "อนุมัติ"
+  pending: "รอการอนุมัติ"
+  accept: "ยอมรับ"
+  purchasing: "ทำการสั่งซื้อ"
+  done: "เสร็จ"
+  assigned: "ได้รีบเรียบร้อย"
+
+  #EditRequest
+  title: "รายละเอียดคำขอใช้อุปกรณ์"
+  item_name: "ชื่อรายการ"
+  description: "ลักษณะ"
+  request_date: "วันที่ขอ"
+  price: "ราคา"
+  user_request: "ชื่อผู้ขอ"
 
   # Rollcall
   monthly: ประจำเดือน

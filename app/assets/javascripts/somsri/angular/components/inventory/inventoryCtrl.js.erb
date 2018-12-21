@@ -1,19 +1,26 @@
 (function() {
   'use strict';
   angular.module('somsri.somsri.inventory', [])
-  .controller('inventoryCtrl', ['$compile', '$scope', '$window', '$filter', '$rootScope', '$timeout', 'translateFilter', '$uibModal', 'Upload', "inventoryService", function($compile, $scope, $window, $filter, $rootScope, $timeout, translateFilter, $uibModal, Upload, services) {
+  .controller('inventoryCtrl', ['$compile', '$scope', '$window', '$filter', '$rootScope', '$timeout', 'translateFilter', '$uibModal', 'Upload', "inventoryService", "inventoryRequestService", '$state', 
+    function($compile, $scope, $window, $filter, $rootScope, $timeout, translateFilter, $uibModal, Upload, services, inventoryRequestService, $state) {
     $rootScope.menu = translateFilter("inventory")
     var ctrl = this
     var angularScopeRoot = 'angular.element(document.getElementById("angularCtrl")).scope().$root'
     var angularScopeInventory = 'angular.element(document.getElementById("angularCtrl")).scope().inventoryCtrl'
     var angularCtrlStr = "angular.element(document.getElementById('angularCtrl')).scope().inventory"
-    // var alumni = "angular.element(document.getElementById('angularCtrl')).scope().alumni"
+
     ctrl.inventory = [];
     ctrl.message = '';
   $rootScope.loadAndAuthorizeResource("inventory", function(){
-    var main_table = $('#inventory-table');
+    var inventory_table = $('#inventory-table');
+    var inventory_request_table = $('#inventory-request-table');
     ctrl.currentPage = 1;
+    ctrl.requestCurrentPage = 1;
     ctrl.sort = 'inventories.id';
+    ctrl.selectTab = "add_inventory";
+    ctrl.url_path = "somsri#/inventory/new"
+    ctrl.real_id = $state.params.id;
+    ctrl.searchKeyword = ''
 
     // default last 7 days
     ctrl.end_date = new Date();
@@ -36,6 +43,13 @@
       return "-";
     }
 
+    function formatePrice(value, row, index) {
+      if (value) {
+          return $filter('number')(value.toFixed(2), 2);
+      }
+      return "-"
+    }
+
     function translateCategory(value, row, index) {
       if (value) {
         return translateFilter(value)
@@ -43,55 +57,63 @@
       return "-"
     }
 
-    var bootstrapTableOptions = {
-      onSort: function(item_name, order) {
-        ctrl.sort = item_name;
-        ctrl.order = order;
-      },
-      customSort: function(){},
+    var bootstrapTableOptionsInventory = {
+      sortName: 'date_purchase',
+      sortOrder: 'asc',
       columns : [{
-        field: 'id',
+        field: 'number',
         title: '#',
         classes: 'text-right',
         sortable: true,
       },{
         field: 'item_name',
         title: translateFilter("item_name"),
+        align: 'left',
         sortable: true,
       },{
         field: 'serial_number',
         title: translateFilter("serial_number"),
+        align: 'left',
         sortable: true,
       },{
         field: 'model',
         title: translateFilter("model"),
+        align: 'left',
         sortable: true,
       },{
         field: 'description',
         title: translateFilter("description"),
+        align: 'left',
         sortable: true,
       },{
         field: 'price',
         title: translateFilter("price"),
+        align: 'right',
         sortable: true,
+        class: 'text-currency',
+        formatter: formatePrice
       },{
         field: 'date_purchase',
         title: translateFilter("date_purchase"),
+        align: 'right',
         sortable: true,
         formatter: filterDate
       },{
         field: 'category',
         title: translateFilter("category"),
+        align: 'center',
         sortable: true,
         formatter: translateCategory
       },{
         field: 'date_add',
         title: translateFilter("date_add"),
+        align: 'right',
         sortable: true,
         formatter: filterDate
       },{
         field: 'end_warranty',
         title: translateFilter("end_warranty"),
+        align: 'center',
         sortable: true,
         formatter: filterDate
       },{
@@ -107,25 +129,62 @@
       }]
     }
 
-    main_table.bootstrapTable($.extend(bootstrapTableOptions, {toolbar: "date-filter"}));
-    
+    inventory_table.bootstrapTable($.extend(bootstrapTableOptionsInventory, {toolbar: "date-filter"}));
+
     function getInventory() {
       ctrl.start_date = cleanDate(ctrl.start_date)
       ctrl.end_date = cleanDate(ctrl.end_date)
       if(!ctrl.currentPage){ ctrl.currentPage = 1 }
-        services.getInventory(ctrl.currentPage).then(function(resp) {
+        services.getInventory(ctrl.currentPage, ctrl.searchKeyword).then(function(resp) {
           ctrl.datasExport = [];
           if (resp.data) {
             ctrl.totalItems = resp.data.total_records;
             ctrl.currentPage = resp.data.current_page;
             ctrl.datasExport = resp.data.inventories
+            var datas = []
+            var count = ctrl.datasExport.length
+            for(var i = 0; i<count; i++) {
+              datas.push({
+                number: i+1,
+                id: ctrl.datasExport[i].id,
+                item_name: ctrl.datasExport[i].item_name,
+                serial_number: ctrl.datasExport[i].serial_number,
+                model: ctrl.datasExport[i].model,
+                description: ctrl.datasExport[i].description,
+                price: ctrl.datasExport[i].price,
+                date_purchase: ctrl.datasExport[i].date_purchase,
+                category: ctrl.datasExport[i].categories.category_name,
+                date_add: ctrl.datasExport[i].date_add,
+                end_warranty: ctrl.datasExport[i].end_warranty,
+                created_at: ctrl.datasExport[i].created_at,
+                updated_at: ctrl.datasExport[i].updated_at
+              })
+            }
+            ctrl.datasExport = datas
           } else {
             ctrl.totalItems = 0;
             ctrl.currentPage = 0;
           }
           ctrl.paginateButtonMaxSize = 5;
-          main_table.bootstrapTable('load', ctrl.datasExport);
+          inventory_table.bootstrapTable('load', ctrl.datasExport);
         });
+    }
+
+    ctrl.searchInventory = function() {
+      getInventory()
+    }
+
+    ctrl.filterInventory = function() {
+      
+    }
+
+    ctrl.changeTab = function(str) {
+      ctrl.selectTab = str
+      if (str === "add_inventory") {
+        ctrl.url_path = "somsri#/inventory/new"
+      } else {
+        ctrl.url_path = "somsri#/inventory/new/request"
+      }
     }
 
     ctrl.pageChanged = function() {
@@ -145,17 +204,16 @@
     }
 
     ctrl.deleteInventory = function(id) {
-      console.log(id)
-        openConfirmationModal(translateFilter('delete_expense'), function(){
-          services.removeInventory(id).then(function(resp) {
-            getInventory()
-            ctrl.message = translateFilter('inventory_delete_success')
-            ctrl.typeSuccess = true
-          }, function(e){
-            ctrl.message = translateFilter('inventory_delete_failed')
-            ctrl.typeSuccess = false
-          })
+     openConfirmationModal(translateFilter('delete_expense'), function(){
+        services.removeInventory(id).then(function(resp) {
+          getInventory()
+          ctrl.message = translateFilter('inventory_delete_success')
+          ctrl.typeSuccess = true
+        }, function(e){
+          ctrl.message = translateFilter('inventory_delete_failed')
+          ctrl.typeSuccess = false
         })
+      })   
     }
 
     function openConfirmationModal(message, success, dismiss) {
@@ -172,7 +230,7 @@
           resources: ['$ocLazyLoad', 'ASSETS', function($ocLazyLoad, ASSETS) {
             return $ocLazyLoad.load([
               ASSETS.somsri.somsri.confirm_modal
-              ]);
+            ]);
           }]
         }
       }).result.then(function (result) {
@@ -184,11 +242,166 @@
       });
     }
 
-    ctrl.selectCategory = function(str) {
-      console.log(str)
+    getInventory();
+
+    var bootstrapTableOptionsInvetoryRequest = {
+      sortName: 'request_date',
+      sortOrder: 'asc',
+      columns : [{
+        field: 'id',
+        title: '#',
+        classes: 'text-right',
+        sortable: true,
+      },{
+        field: 'user_name',
+        title: translateFilter("User"),
+        sortable: true,
+      },{
+        field: 'item_name',
+        title: translateFilter("item_name"),
+        sortable: true,
+      },{
+        field: 'description',
+        title: translateFilter("description"),
+        sortable: true,
+      },{
+        field: 'price',
+        title: translateFilter("price"),
+        formatter: formatePrice,
+        align: 'right',
+        sortable: true,
+      },{
+        field: 'request_date',
+        title: translateFilter("request_date"),
+        sortable: true,
+        formatter: filterDate
+      },{
+        field: 'inventory_status',
+        title: translateFilter("status"),
+        sortable: true,
+      },{
+        field: 'edit',
+        title: "",
+        sortable: false,
+        formatter : editInventoryRequestFormatter
+      },{
+        field: 'delete',
+        title: "",
+        sortable: false,
+        formatter : deleteInventoryRequestFormatter
+      }]
     }
 
-    getInventory();
+    inventory_request_table.bootstrapTable($.extend(bootstrapTableOptionsInvetoryRequest, {toolbar: "date-filter"}));
+
+    function getInventoryRequest() {
+      ctrl.start_date = cleanDate(ctrl.start_date)
+      ctrl.end_date = cleanDate(ctrl.end_date)
+      if(!ctrl.requestCurrentPage){ ctrl.requestCurrentPage = 1 }
+        inventoryRequestService.getInventoryRequest(ctrl.requestCurrentPage).then(function(resp) {
+          ctrl.datasReuestExport = [];
+          if (resp.data) {
+            ctrl.requestTotalItems = resp.data.total_records;
+            ctrl.requestCurrentPage = resp.data.current_page;
+            ctrl.datasReuestExport = resp.data.inventories_requests
+            var datas = []
+            var count = ctrl.datasReuestExport.length
+            for(var i = 0; i<count; i++) {
+              datas.push({
+                number: i+1,
+                id: ctrl.datasReuestExport[i].id,
+                user_name: ctrl.datasReuestExport[i].user_name,
+                item_name: ctrl.datasReuestExport[i].item_name,
+                description: ctrl.datasReuestExport[i].description,
+                price: ctrl.datasReuestExport[i].price,
+                request_date: ctrl.datasReuestExport[i].request_date,
+                inventory_status: ctrl.datasReuestExport[i].inventory_status,
+                created_at: ctrl.datasReuestExport[i].created_at,
+                updated_at: ctrl.datasReuestExport[i].updated_at
+              })
+            }
+            ctrl.datasReuestExport = datas
+          } else {
+            ctrl.requestTotalItems = 0;
+            ctrl.requestCurrentPage = 0;
+          }
+          ctrl.paginateButtonMaxSize = 5;
+          inventory_request_table.bootstrapTable('load', ctrl.datasReuestExport);
+        });
+    }
+
+    ctrl.selectCategory = function(str) {
+    }
+
+    ctrl.pageRequestChanged = function() {
+      getInventoryRequest()
+    };
+
+    // function managerInventoryRequestFormatter(value, row, index) {
+    //   return '<a id="managerInventoryRequest' + row['id'] + '" onclick="' + angularCtrlStr + '.managerInventoryRequest(' + row['id'] + ')"> <i>จัดการ</i> </a>';
+    // }
+
+    // ctrl.managerInventoryRequest = function(id) {
+    //   $rootScope.updateInventory(id)
+    // }
+
+
+    function editInventoryRequestFormatter(value, row, index) {
+      return '<a id="editInventoryRequest' + row['id'] + '" onclick="' + angularCtrlStr + '.editInventoryRequest(' + row['id'] + ')"> <i class=\'fa fa-pencil-square-o fa-fw color-orange \'></i> </a>';
+    }
+
+    ctrl.editInventoryRequest = function(id) {
+      $rootScope.updateInventoryRequest(id)
+    }
+
+    function deleteInventoryRequestFormatter(value, row, index) {
+      return '<a id="deleteInventoryRequest' + row['id'] + '" onclick="' + angularCtrlStr + '.deleteInventoryRequest(' + row['id'] + ')"> <i class=\'fa fa-trash color-red fa-fw\'></i></i> </a>';
+    }
+
+    ctrl.deleteInventoryRequest = function(id) {
+      openConfirmationModal(translateFilter('delete_expense'), function(){
+        inventoryRequestService.removeInventoryRequest(id).then(function(resp) {
+          getInventoryRequest()
+          ctrl.message = translateFilter('inventory_request_delete_success')
+          ctrl.typeSuccess = true
+        }, function(e){
+          ctrl.message = translateFilter('inventory_request_delete_failed')
+          ctrl.typeSuccess = false
+        })
+      })
+    }
+
+    ctrl.check_box = [
+      {value: 'office_furniture', selected: true ,id: 1},
+      {value: 'equipment_computer', selected: true ,id: 2},
+      {value: 'office_supplies', selected: true ,id: 3},
+      {value: 'maintenance_equipment', selected: true ,id: 4},
+      {value: 'cleaning_products', selected: true ,id: 5},
+      {value: 'electronic_office_equipment', selected: true ,id: 6},
+      {value: 'paper_products', selected: true ,id: 7},
+      {value: 'meeting_presentation_equipment', selected: true ,id: 8},
+    ]
+
+    ctrl.isAllSelected = true
+
+    ctrl.toggleAll = function() {
+      var toggleStatus = ctrl.isAllSelected
+      angular.forEach(ctrl.check_box, function(item){ item.selected = toggleStatus })
+    }
+
+    ctrl.checkBoxToggled = function() {
+      ctrl.isAllSelected = ctrl.check_box.every(function(item){ return item.selected })
+      ctrl.getSelected = []
+      for( var i = 0; i < ctrl.check_box.length; i++ ) {
+        if (ctrl.check_box[i].selected) {
+          ctrl.getSelected.push({
+            id: ctrl.check_box[i].id
+          })
+        }
+      }
+    }
+
+    getInventoryRequest();
 
   });
   }]);

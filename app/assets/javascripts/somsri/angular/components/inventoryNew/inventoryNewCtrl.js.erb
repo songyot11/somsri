@@ -16,8 +16,6 @@
         ctrl.description = ""
         ctrl.price = ""
         ctrl.category = translateFilter("select_category")
-        // ctrl.date_purchase = new Date()
-        // ctrl.date_end_warranty = new Date()
         ctrl.displayName = translateFilter("select_employee")
         ctrl.add_button = "add"
         ctrl.filterKeyword = ''
@@ -25,14 +23,14 @@
         ctrl.end_date = new Date();
         ctrl.start_date = new Date(new Date().setMonth(new Date().getMonth() - 1));
         ctrl.item_catogery = [
-          {name: "office_furniture"},
-          {name: "equipment_computer"},
-          {name: "office_supplies"},
-          {name: "maintenance_equipment"},
-          {name: "cleaning_products"},
-          {name: "electronic_office_equipment"},
-          {name: "paper_products"},
-          {name: "meeting_presentation_equipment"}
+          {name: "office_furniture", id: 1},
+          {name: "equipment_computer", id: 2},
+          {name: "office_supplies", id: 3},
+          {name: "maintenance_equipment", id: 4},
+          {name: "cleaning_products", id: 5},
+          {name: "electronic_office_equipment", id: 6},
+          {name: "paper_products", id: 7},
+          {name: "meeting_presentation_equipment", id: 8}
         ]
         ctrl.category_barcode_list = []
  
@@ -46,13 +44,33 @@
           service.show(ctrl.real_id).then(function(resp) {
             var value = resp.data
             ctrl.datas = resp.data
+            
             ctrl.name = value.item_name
+            if (!ctrl.name) {
+              ctrl.name = "-"
+            }
+            
             ctrl.serial_number = value.serial_number
+            if (!ctrl.serial_number) {
+              ctrl.serial_number = "-"
+            }
+
             ctrl.model = value.model
+            if (!ctrl.model) {
+              ctrl.model = "-"
+            }
+            
             ctrl.description = value.description
+            if (!ctrl.description) {
+              ctrl.description = "-"
+            }
+            
             ctrl.price = value.price
-            ctrl.date_purchase = new Date(value.date_purchase)
-            ctrl.date_end_warranty = new Date(value.end_warranty)
+            if (!ctrl.price) {
+              ctrl.price = ""
+            }
+
+            console.log(value.date_purchase)
             if (value.date_purchase) {
               ctrl.datas.date_purchase = new Date(ctrl.datas.date_purchase)
             } else {
@@ -64,13 +82,20 @@
             } else {
               ctrl.datas.end_warranty = null
             }
+            ctrl.get_category_id = value.categories.id
+            ctrl.category_id = value.categories.category_id
+            ctrl.category = value.categories.category_name
+            if (!ctrl.category) {
+              ctrl.category = translateFilter("select_category")
+            }
             
-            ctrl.category = value.category
-            ctrl.category_barcode = value.category_barcode
+            ctrl.category_barcode = value.categories.category_barcode
             ctrl.date_add = value.date_add
             ctrl.employee_id = value.employee_id
             if (ctrl.employee_id) {
               getEmployeeById(ctrl.employee_id)
+            } else {
+              ctrl.employee_name = "-"
             }
           })
         }
@@ -85,53 +110,112 @@
         }
 
         ctrl.save = function() {
+          console.log("price",ctrl.price)
           var changePrice = parseFloat(ctrl.price);
+          console.log("price2", changePrice)
           var changeDatePurchase = $filter('date')(new Date(ctrl.datas.date_purchase), 'yyyy-MM-ddTh:MM:ss')
-          var changeDateEndWarranty = $filter('date')(new Date(ctrl.datas.end_warranty), 'yyyy-MM-ddTh:MM:ss')
+          var changeDateEndWarranty = ""
+          if (ctrl.datas.end_warranty) {
+            changeDateEndWarranty = $filter('date')(new Date(ctrl.datas.end_warranty), 'yyyy-MM-ddTh:MM:ss')
+          }
+          
           if (!ctrl.real_id) {
             ctrl.date_add = $filter('date')(new Date(Date()), 'dd/MM/yyyy')
           }
 
-          if (ctrl.category === translateFilter("select_category")) {
+          if (ctrl.category == translateFilter("select_category")) {
             ctrl.category = null
           }
 
           generateCategoryBarcode(ctrl.category)
-          console.log("ctrl",ctrl.category_barcode)
+
+          if (ctrl.checkName) {
+            var data = {
+              first_name: ctrl.employee_name
+            }
+            if (ctrl.employee_name) {
+              employeesService.createEmployee(data).then(function(resp) {
+                ctrl.employee_id = resp.data.employee.id
+                beforeCreate(changePrice,changeDatePurchase,changeDateEndWarranty)
+              })
+            } else {
+              ctrl.employee_id = 0
+              beforeCreate(changePrice,changeDatePurchase,changeDateEndWarranty)
+            }
+          } else {
+            if (ctrl.employee_name) {
+              beforeCreate(changePrice,changeDatePurchase,changeDateEndWarranty)
+            } else {
+              ctrl.employee_id = 0
+              beforeCreate(changePrice,changeDatePurchase,changeDateEndWarranty)
+            }
+            
+          }
+
+        };
+
+        function beforeCreate(changePrice,changeDatePurchase,changeDateEndWarranty) {
+
+          if (!ctrl.serial_number) {
+            ctrl.serial_number = "-"
+          }
+
+          if (!ctrl.model) {
+            ctrl.model = "-"
+          }
 
           var inventory_datas = {
             item_name: ctrl.name,
-              serial_number: ctrl.serial_number,
-              model: ctrl.model,
-              description: ctrl.description,
-              price: changePrice,
-              date_purchase: changeDatePurchase,
-              category: ctrl.category,
-              category_barcode: ctrl.category_barcode,
-              date_add: ctrl.date_add,
-              end_warranty: changeDateEndWarranty,
-              employee_id: ctrl.employee_id
+            serial_number: ctrl.serial_number,
+            model: ctrl.model,
+            description: ctrl.description,
+            price: changePrice,
+            date_purchase: changeDatePurchase,
+            date_add: ctrl.date_add,
+            end_warranty: changeDateEndWarranty,
+            employee_id: ctrl.employee_id
           }
-          if (!ctrl.real_id) {
-            createInventory(inventory_datas)
-          } else {
-            updateInventory(inventory_datas, ctrl.real_id)
-          }
-        };
 
-        function createInventory(inventory_datas) {
+          var category_datas = {
+            categories: {
+              category_id: ctrl.category_id,
+              category_name: ctrl.category,
+              category_barcode: ctrl.category_barcode
+            }
+          }
+            
+          if (!ctrl.real_id) {
+            createInventory(inventory_datas, category_datas)
+          } else {
+            updateInventory(inventory_datas, ctrl.real_id, category_datas)
+          }
+        }
+
+        function createInventory(inventory_datas, category_datas) {
            service.newInventory(inventory_datas).then(function(resp) {
-              $rootScope.openInventory();
+              createCategory(resp.data.id, category_datas)
           }, function(e){
             // Error
           });
         }
 
-        function updateInventory(inventory_datas, id) {
-          service.updateInventory(inventory_datas, id).then(function(resp) {
+        function createCategory(inventory_id, data) {
+          service.createCategory(inventory_id, data).then(function(resp) {
              $rootScope.openInventory();
+          })
+        }
+
+        function updateInventory(inventory_datas, id, category_datas) {
+          service.updateInventory(inventory_datas, id).then(function(resp) {
+            updateCategory(category_datas)
           },function(e) {
             // Error
+          })
+        }
+
+        function updateCategory(data) {
+          service.updateCategory(ctrl.real_id, ctrl.get_category_id, data).then(function(resp) {
+             $rootScope.openInventory();
           })
         }
 
@@ -139,17 +223,59 @@
            $rootScope.openInventory();
         }
 
-        ctrl.switchEmployee = function(name,employee_id) {
-          ctrl.employee_id = employee_id
-          ctrl.displayName = name
+        function initDatas(){
+          if(!ctrl.datas) { ctrl.datas = {} }
         }
+  
+        function autoFillEmployee($item){
+          if($item.id){
+            for(var i = 0;i < ctrl.employee_lists.length; i++){
+              if($item.id == ctrl.employee_lists[i].id){
+                initDatas();
+                ctrl.checkName = false
+              }
+            }
+          }
+        }
+
+        function autoCheckName(data) {
+          if(data[0].id){
+            for(var i = 0;i < ctrl.employee_lists.length; i++){
+              if(data[0].id == ctrl.employee_lists[i].id){
+                ctrl.checkName = false
+              } else {
+                ctrl.checkName = true
+              }
+            }
+          }
+        }
+
+        ctrl.onChangeName = function() {
+          var data = []
+          data.push({
+            name: ctrl.employee_name,
+            id: -1
+          })
+          autoCheckName(data);
+        }
+
+        ctrl.switchCategory = function() {
+          for( var i = 0; i < ctrl.item_catogery.length; i++ ) {
+            if (ctrl.item_catogery[i].name == ctrl.category) {
+              ctrl.category = ctrl.item_catogery[i].name
+              ctrl.category_id = ctrl.item_catogery[i].id
+            }
+          }
+        }
+
+        ctrl.onSelectEmployeeFullName = function($item) {
+          ctrl.employee_name = $item.name;
+          ctrl.employee_id = $item.id
+          autoFillEmployee($item);
+        };
 
         function getEmployee(){
           ctrl.employee_lists = []
-          ctrl.employee_lists.push({
-            name: translateFilter("no_employee_selection"),
-            id: 0
-          })
           employeesService.getAllEmployee().then(function(resp) {
             if (resp.data.length > 0) {
               for (var i = 0; i < resp.data.length; i++) {
@@ -167,8 +293,7 @@
 
         function getEmployeeById(id) {
           employeesService.getEmployee(id).then(function(resp) {
-              ctrl.displayName = resp.data.employee_display_name
-              getEmployee()
+              ctrl.employee_name = resp.data.employee_display_name
           })
         }
 
@@ -224,7 +349,6 @@
 
           var check = false
           for(var i = 0; i < ctrl.category_barcode_list.length; i++) {
-            console.log(ctrl.category_barcode_list[i])
             if (ctrl.barcode === ctrl.category_barcode_list[i]) {
               check = true
               break
@@ -248,12 +372,9 @@
               ctrl.category_barcode_list.push(resp.data.inventories[i].category_barcode)
             }
           })
-          console.log(ctrl.category_barcode_list)
         }
-       
-        if (!ctrl.real_id) {
-          getEmployee()
-        }
+      
+        getEmployee()
         getInventoryList()
         initData()
 

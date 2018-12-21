@@ -38,7 +38,8 @@
           name: 'somsri.somsri.inventory',
           files: [
             "<%= asset_path('somsri/angular/components/inventory/inventoryCtrl.js') %>",
-            "<%= asset_path('somsri/angular/components/inventory/inventoryService.js') %>"
+            "<%= asset_path('somsri/angular/components/inventory/inventoryService.js') %>",
+            "<%= asset_path('somsri/angular/components/inventoryNewRequest/inventoryRequestService.js') %>"
           ]
         },
         'inventoryNew': {
@@ -47,6 +48,21 @@
             "<%= asset_path('somsri/angular/components/inventoryNew/inventoryNewCtrl.js') %>",
             "<%= asset_path('somsri/angular/components/inventory/inventoryService.js') %>",
             "<%= asset_path('payroll/angular/components/employees/employeesService.js') %>"
+          ]
+        },
+         'inventory_editRequest': {
+          name: 'somsri.somsri.inventory_editRequest',
+          files: [
+            "<%= asset_path('somsri/angular/components/inventoryNew/inventoryNewCtrl.js') %>",
+            "<%= asset_path('somsri/angular/components/inventory/inventoryService.js') %>",
+            "<%= asset_path('payroll/angular/components/employees/employeesService.js') %>"
+          ]
+        },
+        'inventory_new_request': {
+          name: 'somsri.somsri.inventory_new_request',
+          files: [
+            "<%= asset_path('somsri/angular/components/inventoryNewRequest/inventoryNewRequestCtrl.js') %>",
+            "<%= asset_path('somsri/angular/components/inventoryNewRequest/inventoryRequestService.js') %>"
           ]
         }
       }
