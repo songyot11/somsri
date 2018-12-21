@@ -13,7 +13,8 @@
     'ngFileUpload',
     'ui.select',
     'ngSanitize',
-    'ui.tree'
+    'ui.tree',
+    'ng.ckeditor'
   ]);
 
   var check_permission = function(permission){
@@ -89,7 +90,7 @@
           ]);
         }]
       }
-      }).state({
+    }).state({
       url: '/inventory/request',
       name: 'request_inventory',
       templateUrl: "<%= asset_path('somsri/angular/components/inventory/inventoryView.html') %>",
@@ -102,17 +103,17 @@
         }]
       }
     }).state({
-    url: '/inventory/editRequest',
-    name: 'edit_request',
-    templateUrl: "<%= asset_path('somsri/angular/components/editRequest/EditRequestView.html') %>",
-    controller: 'EditRequestCtrl as inventory',
-    resolve: {
-      resources: ['$ocLazyLoad', function($ocLazyLoad) {
-        return $ocLazyLoad.load([
-          ASSETS.somsri.somsri.inventory_editRequest
-        ]);
-      }]
-    }
+      url: '/inventory/editRequest',
+      name: 'edit_request',
+      templateUrl: "<%= asset_path('somsri/angular/components/editRequest/EditRequestView.html') %>",
+      controller: 'EditRequestCtrl as inventory',
+      resolve: {
+        resources: ['$ocLazyLoad', function($ocLazyLoad) {
+          return $ocLazyLoad.load([
+            ASSETS.somsri.somsri.inventory_editRequest
+          ]);
+        }]
+      }
     }).state({
       url: '/inventory/new',
       name: 'new_inventory',
@@ -126,6 +127,30 @@
         }]
       }
     }).state({
+        url: '/vacation',
+        name: 'vacation_menu',
+        templateUrl: "<%= asset_path('somsri/angular/components/vacation/menu/menuView.html') %>",
+        controller: 'vacationMenuCtrl as menu',
+        resolve: {
+          resources: ['$ocLazyLoad', function($ocLazyLoad) {
+            return $ocLazyLoad.load([
+              ASSETS.somsri.somsri.vacation.menu
+            ]);
+          }]
+        }
+    }).state({
+      url: '/vacation/dashboard/:status',
+      name: 'vacation_dashboard',
+      templateUrl: "<%= asset_path('somsri/angular/components/vacation/dashboard/dashboardView.html') %>",
+      controller: 'vacationDashboardCtrl as dashboard',
+      resolve: {
+        resources: ['$ocLazyLoad', function($ocLazyLoad) {
+          return $ocLazyLoad.load([
+            ASSETS.somsri.somsri.vacation.dashboard
+          ]);
+        }]
+      }
+    }).state({
       url: '/inventory/:id',
       name: 'update_inventory',
       templateUrl: "<%= asset_path('somsri/angular/components/inventoryNew/inventoryNewView.html') %>",
@@ -134,6 +159,18 @@
         resources: ['$ocLazyLoad', function($ocLazyLoad) {
           return $ocLazyLoad.load([
             ASSETS.somsri.somsri.inventoryNew
+            ]);
+        }]
+      }
+    }).state({
+      url: '/vacation/calendar',
+      name: 'vacation_calendar',
+      templateUrl: "<%= asset_path('somsri/angular/components/vacation/calendar/calendarView.html') %>",
+      controller: 'vacationCalendarCtrl as calendar',
+      resolve: {
+        resources: ['$ocLazyLoad', function($ocLazyLoad) {
+          return $ocLazyLoad.load([
+            ASSETS.somsri.somsri.vacation.calendar
           ]);
         }]
       }
@@ -150,6 +187,18 @@
         }]
       }
     }).state({
+      url: '/vacation/leave_rules',
+      name: 'vacation_leave_rules',
+      templateUrl: "<%= asset_path('somsri/angular/components/vacation/leave_rules/leaveRulesView.html') %>",
+      controller: 'vacationLeaveRulesCtrl as leaveRules',
+      resolve: {
+        resources: ['$ocLazyLoad', function($ocLazyLoad) {
+          return $ocLazyLoad.load([
+            ASSETS.somsri.somsri.vacation.leave_rules
+          ]);
+        }]
+      }
+    }).state({
       url: '/inventory',
       name: 'inventory',
       templateUrl: "<%= asset_path('somsri/angular/components/inventory/inventoryView.html') %>",
@@ -161,8 +210,19 @@
           ]);
         }]
       }
+    }).state({
+      url: '/vacation/setting',
+      name: 'vacation_setting',
+      templateUrl: "<%= asset_path('somsri/angular/components/vacation/setting/settingView.html') %>",
+      controller: 'vacationSettingCtrl as setting',
+      resolve: {
+        resources: ['$ocLazyLoad', function($ocLazyLoad) {
+          return $ocLazyLoad.load([
+            ASSETS.somsri.somsri.vacation.setting
+          ]);
+        }]
+      }
     });
-
 
     $urlRouterProvider.when("", "/");
   }]);

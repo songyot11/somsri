@@ -92,6 +92,9 @@ GEM
       rack (>= 1.0.0)
       rack-test (>= 0.5.4)
       xpath (~> 2.0)
+    ckeditor (4.2.4)
+      cocaine
+      orm_adapter (~> 0.5.0)
     climate_control (0.1.0)
     cliver (0.3.2)
     cocaine (0.5.8)
@@ -394,6 +397,7 @@ DEPENDENCIES
   capistrano-rvm
   capistrano3-unicorn
   capybara
+  ckeditor
   coffee-rails (~> 4.2)
   comfortable_mexican_sofa (~> 1.12.0)
   database_cleaner
@@ -444,4 +448,4 @@ RUBY VERSION
    ruby 2.3.1p112
 
 BUNDLED WITH
-   1.16.2
+   1.17.1

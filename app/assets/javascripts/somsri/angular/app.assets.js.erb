@@ -10,6 +10,18 @@
             "<%= asset_path('somsri/angular/components/modal/confirm/confirmModalCtrl.js') %>"
           ]
         },
+        'success_modal': {
+          name: 'somsri.somsri.sccess_modal',
+          files: [
+            "<%= asset_path('somsri/angular/components/modal/success/successModalCtrl.js') %>"
+          ]
+        },
+        'error_modal': {
+          name: 'somsri.somsri.error_modal',
+          files: [
+            "<%= asset_path('somsri/angular/components/modal/error/errorModalCtrl.js') %>"
+          ]
+        },
         'expenses': {
           name: 'somsri.somsri.expenses',
           files: [
@@ -64,6 +76,42 @@
             "<%= asset_path('somsri/angular/components/inventoryNewRequest/inventoryNewRequestCtrl.js') %>",
             "<%= asset_path('somsri/angular/components/inventoryNewRequest/inventoryRequestService.js') %>"
           ]
+        },
+        'vacation': {
+          'menu': {
+            name: 'somsri.somsri.vacation.menu',
+            files: [
+              "<%= asset_path('somsri/angular/components/vacation/menu/menuCtrl.js') %>"
+            ]
+          },
+          'dashboard': {
+            name: 'somsri.somsri.vacation.dashboard',
+            files: [
+              "<%= asset_path('somsri/angular/components/vacation/dashboard/dashboardCtrl.js') %>",
+              "<%= asset_path('somsri/angular/components/vacation/dashboard/dashboardService.js') %>",
+              "<%= asset_path('shared/angular/components/flash_message/flashMessageDirective.js') %>"
+            ]
+          },
+          'calendar': {
+            name: 'somsri.somsri.vacation.calendar',
+            files: [
+              "<%= asset_path('somsri/angular/components/vacation/calendar/calendarCtrl.js') %>",
+              "<%= asset_path('somsri/angular/components/vacation/calendar/calendarService.js') %>"
+            ]
+          },
+          'leave_rules': {
+            name: 'somsri.somsri.vacation.leave_rules',
+            files: [
+              "<%= asset_path('somsri/angular/components/vacation/leave_rules/leaveRulesCtrl.js') %>",
+              "<%= asset_path('somsri/angular/components/vacation/leave_rules/leaveRulesService.js') %>",
+            ]
+          },
+          'setting': {
+            name: 'somsri.somsri.vacation.setting',
+            files: [
+              "<%= asset_path('somsri/angular/components/vacation/setting/settingCtrl.js') %>"
+            ]
+          }
         }
       }
     }
