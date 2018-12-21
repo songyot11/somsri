@@ -67,7 +67,7 @@
             
             ctrl.price = value.price
             if (!ctrl.price) {
-              ctrl.price = "0"
+              ctrl.price = ""
             }
 
             console.log(value.date_purchase)
@@ -110,8 +110,9 @@
         }
 
         ctrl.save = function() {
+          console.log("price",ctrl.price)
           var changePrice = parseFloat(ctrl.price);
-          changePrice = changePrice
+          console.log("price2", changePrice)
           var changeDatePurchase = $filter('date')(new Date(ctrl.datas.date_purchase), 'yyyy-MM-ddTh:MM:ss')
           var changeDateEndWarranty = ""
           if (ctrl.datas.end_warranty) {
