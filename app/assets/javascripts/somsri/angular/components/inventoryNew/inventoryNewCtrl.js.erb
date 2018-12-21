@@ -66,11 +66,11 @@
             }
             
             ctrl.price = value.price
-            ctrl.price.round(2)
             if (!ctrl.price) {
               ctrl.price = "0"
             }
 
+            console.log(value.date_purchase)
             if (value.date_purchase) {
               ctrl.datas.date_purchase = new Date(ctrl.datas.date_purchase)
             } else {
