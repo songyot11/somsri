@@ -14,8 +14,8 @@ class CategoriesController < ApplicationController
 	#PUT /categories/:id
 	def update
 		inventories = Inventory.find(params[:inventory_id])
-		category = inventories.category.update(categories_params)
-		render json: category, status: :ok
+		categories = inventories.category.update(categories_params)
+		render json: categories, status: :ok
 	end
 
 	private

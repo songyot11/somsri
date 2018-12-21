@@ -8,7 +8,6 @@
 		};
 
 		this.getInventory = function(page, searchKeyword) {
-			console.log("searchKeyword",searchKeyword)
 			return $http.get('/inventories',{
 				params: {
 					page: page,
@@ -38,7 +37,7 @@
 		}
 
 		this.updateCategory = function(inventory_id ,id , data) {
-			return $http.put('/inventories/' + inventory_id+ '/categories/' + id, data)
+			return $http.put('/inventories/' + inventory_id + '/categories/' + id, data)
 		}
 
 	 }]);
