@@ -7,11 +7,13 @@
 			return $http.post('/inventories', data)
 		};
 
-		this.getInventory = function(page, searchKeyword) {
+		this.getInventory = function(page, searchKeyword, start_date_purchase, end_date_purchase) {
 			return $http.get('/inventories',{
 				params: {
 					page: page,
 					search_keyword: searchKeyword,
+					start_date_purchase: start_date_purchase,
+					end_date_purchase: end_date_purchase,
 				}
 			});
 		};

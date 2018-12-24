@@ -23,8 +23,8 @@
     ctrl.searchKeyword = ''
 
     // default last 7 days
-    ctrl.end_date = new Date();
-    ctrl.start_date = new Date(new Date().setMonth(new Date().getMonth() - 1));
+    // ctrl.end_date_purchase = new Date();
+    // ctrl.start_date_purchase = new Date(new Date().setMonth(new Date().getMonth() - 1));
   
 
     function cleanDate(date){
@@ -58,7 +58,7 @@
     }
 
     var bootstrapTableOptionsInventory = {
-      sortName: 'date_purchase',
+      sortName: 'date_add',
       sortOrder: 'asc',
       columns : [{
         field: 'number',
@@ -132,10 +132,10 @@
     inventory_table.bootstrapTable($.extend(bootstrapTableOptionsInventory, {toolbar: "date-filter"}));
 
     function getInventory() {
-      ctrl.start_date = cleanDate(ctrl.start_date)
-      ctrl.end_date = cleanDate(ctrl.end_date)
+      ctrl.start_date_purchase = cleanDate(ctrl.start_date_purchase)
+      ctrl.end_date_purchase = cleanDate(ctrl.end_date_purchase)
       if(!ctrl.currentPage){ ctrl.currentPage = 1 }
-        services.getInventory(ctrl.currentPage, ctrl.searchKeyword).then(function(resp) {
+        services.getInventory(ctrl.currentPage, ctrl.searchKeyword, ctrl.start_date_purchase, ctrl.end_date_purchase).then(function(resp) {
           ctrl.datasExport = [];
           if (resp.data) {
             ctrl.totalItems = resp.data.total_records;
@@ -168,6 +168,28 @@
           ctrl.paginateButtonMaxSize = 5;
           inventory_table.bootstrapTable('load', ctrl.datasExport);
         });
+    }
+
+    ctrl.openStartDatePurchasePopup = function() {
+      ctrl.startDatePuchasePopup.opened = true;
+    };
+
+    ctrl.startDatePuchasePopup = {
+      opened: false
+    };
+
+    ctrl.openEndDatePurchasePopup = function() {
+      ctrl.endDatePurchasePopup.opened = true;
+    };
+
+    ctrl.endDatePurchasePopup = {
+      opened: false
+    };
+
+    ctrl.optionsChange = function() {
+      // check date incorrect input
+      if(ctrl.start_date_purchase === undefined || ctrl.end_date_purchase === undefined){return}
+      getInventory()
     }
 
     ctrl.searchInventory = function() {
@@ -295,8 +317,8 @@
     inventory_request_table.bootstrapTable($.extend(bootstrapTableOptionsInvetoryRequest, {toolbar: "date-filter"}));
 
     function getInventoryRequest() {
-      ctrl.start_date = cleanDate(ctrl.start_date)
-      ctrl.end_date = cleanDate(ctrl.end_date)
+      ctrl.start_date_purchase = cleanDate(ctrl.start_date_purchase)
+      ctrl.end_date_purchase = cleanDate(ctrl.end_date_purchase)
       if(!ctrl.requestCurrentPage){ ctrl.requestCurrentPage = 1 }
         inventoryRequestService.getInventoryRequest(ctrl.requestCurrentPage).then(function(resp) {
           ctrl.datasReuestExport = [];
