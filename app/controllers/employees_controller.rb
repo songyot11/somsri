@@ -219,7 +219,8 @@ class EmployeesController < ApplicationController
       :pay_pvf,
       :pay_social_insurance,
       :grade_id,
-      :classroom_id
+      :classroom_id,
+      :password
     ]).to_h
     return result
   end
