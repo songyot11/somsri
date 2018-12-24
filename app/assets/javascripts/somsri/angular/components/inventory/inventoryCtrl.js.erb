@@ -1,8 +1,8 @@
 (function() {
   'use strict';
   angular.module('somsri.somsri.inventory', [])
-  .controller('inventoryCtrl', ['$compile', '$scope', '$window', '$filter', '$rootScope', '$timeout', 'translateFilter', '$uibModal', 'Upload', "inventoryService", "inventoryRequestService", '$state', 
-    function($compile, $scope, $window, $filter, $rootScope, $timeout, translateFilter, $uibModal, Upload, services, inventoryRequestService, $state) {
+  .controller('inventoryCtrl', ['$compile', '$scope', '$window', '$filter', '$rootScope', '$timeout', 'translateFilter', '$uibModal', 'Upload', "inventoryService", "inventoryRequestService", '$state' ,'$location', 
+    function($compile, $scope, $window, $filter, $rootScope, $timeout, translateFilter, $uibModal, Upload, services, inventoryRequestService, $state, $location) {
     $rootScope.menu = translateFilter("inventory")
     var ctrl = this
     var angularScopeRoot = 'angular.element(document.getElementById("angularCtrl")).scope().$root'
@@ -19,13 +19,39 @@
     ctrl.sort = 'inventories.id';
     ctrl.selectTab = "add_inventory";
     ctrl.url_path = "somsri#/inventory/new"
-    ctrl.real_id = $state.params.id;
+    // ctrl.real_id = $state.params.id;
     ctrl.searchKeyword = ''
 
     // default last 7 days
     // ctrl.end_date_purchase = new Date();
     // ctrl.start_date_purchase = new Date(new Date().setMonth(new Date().getMonth() - 1));
+
+    ctrl.real_id = $rootScope.index_id
+    // default last 7 days
+    ctrl.end_date = new Date();
+    ctrl.start_date = new Date(new Date().setMonth(new Date().getMonth() - 1));
+
+    function activeTab() {
+      
+      if (!ctrl.real_id) {
+        ctrl.active = 0
+        ctrl.selectTab = "add_inventory"
+        ctrl.url_path = "somsri#/inventory/new"
+      } else {
+        ctrl.active = ctrl.real_id
+        $rootScope.index_id = null
+
+        if (ctrl.real_id === 0) {
+          ctrl.selectTab = "add_inventory"
+          ctrl.url_path = "somsri#/inventory/new"
+        } else {
+          ctrl.selectTab = "add_request"
+          ctrl.url_path = "somsri#/inventory/new/request"
+        }
+      }
+    }
   
+    activeTab()
 
     function cleanDate(date){
       if(!date || new Date(date) == "Invalid Date"){return;}
@@ -270,7 +296,7 @@
       sortName: 'request_date',
       sortOrder: 'asc',
       columns : [{
-        field: 'id',
+        field: 'number',
         title: '#',
         classes: 'text-right',
         sortable: true,
@@ -424,7 +450,6 @@
     }
 
     getInventoryRequest();
-
   });
   }]);
 })();

@@ -1,0 +1,183 @@
+(function() {
+	angular.module('somsri.somsri.update_inventory_request_step3', [])
+    .controller('updateInventoryRequestStep3Ctrl', ['$compile', '$scope', '$window', '$filter', '$rootScope', '$timeout', 'translateFilter', '$uibModal', 'Upload', '$state', "inventoryRequestService", "settingService", 
+    	function($compile, $scope, $window, $filter, $rootScope, $timeout, translateFilter, $uibModal, Upload, $state, service, settingService) {
+	$rootScope.menu = translateFilter("inventory_request")
+		var ctrl = this
+		ctrl.real_id = $state.params.id;
+
+		ctrl.date_get_inventory = ""
+		ctrl.buy_slip = ""
+		ctrl.end_warranty = ""
+		ctrl.step = $rootScope.step
+
+ 		function initData() {
+      if (!ctrl.real_id) { 
+        return
+      }
+
+      service.show(ctrl.real_id).then(function(resp) {
+        var value = resp.data
+        ctrl.datas = resp.data
+        ctrl.name = value.item_name
+        ctrl.description = value.description
+        ctrl.price = value.price
+        ctrl.user_name = value.user_name
+        ctrl.request_date = new Date(value.request_date)
+        ctrl.inventory_status = value.inventory_status
+        ctrl.manage_inventory = value.manage_inventory
+        ctrl.step_to = ctrl.manage_inventory.step
+	      ctrl.manage_inventory_id = ctrl.manage_inventory.id
+        if (value.request_date) {
+          ctrl.datas.request_date = new Date(ctrl.datas.request_date)
+        } else {
+          ctrl.datas.request_date = null
+        }
+        checkStep()
+      })
+    }
+
+    function setData() {
+      if (ctrl.step_to) {
+        //setp1
+        ctrl.save_by = ctrl.manage_inventory.step1.save_by
+        //setp2
+        ctrl.save_by_step2 = ctrl.manage_inventory.step2.save_by
+        ctrl.date_purchase_save = ctrl.manage_inventory.step2.date_purchase
+        ctrl.date_send_save = ctrl.manage_inventory.step2.date_send
+        ctrl.date_purchase = $filter('date')(new Date(ctrl.manage_inventory.step2.date_purchase), 'dd/MM/yyyy')
+        ctrl.date_send = $filter('date')(new Date(ctrl.manage_inventory.step2.date_send), 'dd/MM/yyyy')
+        ctrl.price_step2 = ctrl.manage_inventory.step2.price
+        //setp3
+        ctrl.save_by_step3 = ctrl.manage_inventory.step3.save_by
+        ctrl.date_get_inventory = ctrl.manage_inventory.step3.get_date
+        ctrl.buy_slip = ctrl.manage_inventory.step3.buy_slip
+        ctrl.end_warranty = ctrl.manage_inventory.step3.end_warranty
+      }
+    }
+
+		function checkStep() {
+			if(!ctrl.step) {
+        if (ctrl.step_to == 2) {
+          setData()
+        } else {
+          if (ctrl.real_id) {
+            $rootScope.updateInventoryRequest(ctrl.real_id)
+          }
+        }
+			} else {
+        //setp1
+				ctrl.save_by = ctrl.step.step1.save_by
+        //setp2
+				ctrl.save_by_step2 = ctrl.step.step2.save_by
+        ctrl.date_purchase_save = ctrl.step.step2.date_purchase
+        ctrl.date_send_save = ctrl.step.step2.date_send
+				ctrl.date_purchase = $filter('date')(new Date(ctrl.step.step2.date_purchase), 'dd/MM/yyyy')
+				ctrl.date_send = $filter('date')(new Date(ctrl.step.step2.date_send), 'dd/MM/yyyy')
+				ctrl.price_step2 = ctrl.step.step2.price
+				//setp3
+				ctrl.save_by_step3 = ctrl.step.step3.save_by
+				ctrl.date_get_inventory = ctrl.step.step3.get_date
+				ctrl.buy_slip = ctrl.step.step3.buy_slip
+				ctrl.end_warranty = ctrl.step.step3.end_warranty
+			} 
+		}
+
+		ctrl.continue = function() {
+    	ctrl.step.step3.get_date = ctrl.date_get_inventory
+    	ctrl.step.step3.buy_slip = ctrl.buy_slip
+    	ctrl.step.step3.end_warranty = ctrl.end_warranty
+    	ctrl.step.step3.save_by = ctrl.name_setting
+    	$rootScope.updateInventoryRequestStep4(ctrl.step, ctrl.real_id)
+    }
+
+    ctrl.cancel = function() {
+      $window.history.back();
+    }
+
+    ctrl.save = function() {
+
+  		var changePrice = parseFloat(ctrl.price)
+  		var checngeRequestDate = $filter('date')(new Date(ctrl.datas.request_date), 'yyyy-MM-ddTh:MM:ss')
+
+    	var inventory_datas = {
+        user_name: ctrl.user_name,
+        item_name: ctrl.name,
+        description: ctrl.description,
+        price: changePrice,
+        request_date: checngeRequestDate
+    	}
+
+      if (ctrl.real_id) {
+        updateInventoryRequest(inventory_datas, ctrl.real_id)
+      } 
+  	}
+    
+    function updateInventoryRequest(inventory_datas, id) {
+      var data = {
+        manage_inventories_requests: {
+          step: 3,
+          accept: "accept",
+          save_by: ctrl.save_by,
+          save_by_step2: ctrl.save_by_step2,
+          date_purchase: ctrl.date_purchase_save,
+          date_send: ctrl.date_send_save,
+          price: ctrl.price_step2,
+          save_by_step3: ctrl.name_setting,
+          get_date: ctrl.date_get_inventory,
+          buy_slip: ctrl.buy_slip,
+          end_warranty: ctrl.end_warranty
+        }
+      }
+    	service.updateInventoryRequest(inventory_datas, id).then(function(resp) {
+    		if (!ctrl.manage_inventory_id) {
+    			updateManageInventory(data)
+    		} else {
+    			createManageInventory(data)
+    		}
+    		
+    	}, function(e){
+
+    	})
+    }
+
+	  function createManageInventory(data) {
+      service.createManageInventoryRequest(data, ctrl.real_id).then(function(resp) {
+        $rootScope.openInventory(1)
+      })
+    }
+
+    function updateManageInventory(data) {
+    	service.updateManageInventoryRequest(data, ctrl.real_id , ctrl.manage_inventory_id).then(function(resp) {
+        $rootScope.openInventory(1)
+    	})
+	  }
+
+    ctrl.opengetInventorytDatePopup = function() {
+      ctrl.getInventoryDatePopup.opened = true;
+    };
+
+    ctrl.getInventoryDatePopup = {
+      opened: false
+    }; 
+
+
+    ctrl.openEndwarrantytDatePopup = function() {
+      ctrl.endWarrantyDatePopup.opened = true;
+    };
+
+    ctrl.endWarrantyDatePopup = {
+      opened: false
+    };
+
+
+	 	function getSetting() {
+  		settingService.getSetting().then(function(resp) {
+    		ctrl.name_setting  = resp.data.user.full_name
+  		})
+		}
+
+    getSetting()
+    initData()
+	}]);
+})();

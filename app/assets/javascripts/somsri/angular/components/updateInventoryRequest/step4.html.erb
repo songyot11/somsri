@@ -5,13 +5,13 @@
 				<div class="col-xs-12">
 					<div class="row">
 						<div class="col-xs-6 mb-20">
-							<h1>รายละเอียดคำขอใช้พัสดุ</h1>
+							<h1>{{ "details_inventory_request" | translate }}</h1>
 						</div>
 					</div>
 					<div class="row">
 						<ul class="col-md-12 nav nav-tabs inventory">
 							<li class="cyan active">
-								<a data-toggle="tab" class="ng-binding">พัสดุ</a>
+								<a data-toggle="tab" class="ng-binding">{{ "inventory" | translate }}</a>
 							</li>
 						</ul>
 					</div>
@@ -20,8 +20,8 @@
 							<div class="row">
 								<div class="col-md-3">
 									<div class="form-group">
-										<label class="control-label" for="item_name">ชื่อรายการ</label>
-
+										<label class="control-label" for="item_name">{{"item_name" | translate}}</label>
+	
 										<div class="col-md-12">
 											<input class="form-control" autocomplete="off" type="text" id="inventory_name" ng-model="inventory.name" required="true">
 										</div>
@@ -29,7 +29,7 @@
 								</div>
 								<div class="col-md-9">
 									<div class="form-group">
-										<label class="control-label" for="description">ลักษณะ</label>
+										<label class="control-label" for="description">{{"description" | translate}}</label>
 										<div class="col-md-12">
 											<input class="form-control" autocomplete="off" type="text" id="inventory_description" ng-model="inventory.description" required="true">
 										</div>
@@ -39,7 +39,7 @@
 							<div class="row mt-20">
 								<div class="col-md-4">
 									<div class="form-group">
-										<label class="control-label" for="request_date">วันที่ขอ</label>
+										<label class="control-label" for="request_date">{{"request_date" | translate}}</label>
 										<p class="input-group">
 											<input id="request_date" type="text" class="form-control numberic" uib-datepicker-popup="dd/MM/yyyy" ng-model="inventory.datas.request_date" is-open="inventory.requestDatePopup.opened" close-text="Close" required="true"/>
 											<span class="input-group-btn">
@@ -50,7 +50,7 @@
 								</div>
 								<div class="col-md-3">
 									<div class="form-group">
-										<label class="control-label" for="price">ราคา</label>
+										<label class="control-label" for="price">{{"price" | translate}}</label>
 										<div class="col-md-12">
 											<input class="form-control" autocomplete="off" type="number" id="inventory_price" ng-model="inventory.price" ng-validate="number" required="true">
 										</div>
@@ -58,7 +58,7 @@
 								</div>
 								<div class="col-md-3">
 										<div class="form-group">
-												<label class="control-label" for="user_request">ชื่อผู้ขอ</label>
+												<label class="control-label" for="user_request">{{"user_request" | translate}}</label>
 												<div class="col-md-12">
 														<input class="form-control" autocomplete="off" type="text" id="inventory_user" ng-model="inventory.user_name" required="true" >
 												</div>
@@ -74,77 +74,70 @@
 									<a href="#!" class="">
 										<i class="fa fa-check fa-2x icon-in-step"></i>
 										<!-- <h3 class="text-in-step mt-0">1</h3>  -->
-										อนุมัติคำขอ
+										{{ "approve_request" | translate }}
 									</a>
 								</li>
 								<li class="step-item">
 									<a href="#!" class="">
 										<i class="fa fa-check fa-2x icon-in-step2"></i>
 										<!-- <h3 class="text-in-step2 mt-0">2</h3>  -->
-										สั่งซื้อพัสดุ
+										{{ "inventory_purchase" | translate }}
 									</a>
 								</li>
-								<li class="step-item active">
+								<li class="step-item">
 									<a href="#!" class="">
-										<!-- <i class="fa fa-check fa-2x icon-in-step2"></i> --> 
-										<h3 class="text-in-step3 mt-0">3</h3>
-										รับพัสดุ
+										<i class="fa fa-check fa-2x icon-in-step3"></i> 
+										<!-- <h3 class="text-in-step3 mt-0">3</h3> -->
+										{{ "get_inventory" | translate }}
 									</a>
 								</li>
-								<li class="step-item ">
+								<li class="step-item active ">
 									<a href="#!" class="">
-										<!-- <i class="fa fa-check fa-2x icon-in-step"></i>  -->
+										<!-- <i class="fa fa-check fa-2x icon-in-step3"></i>  -->
 										<h3 class="text-in-step4 mt-0">4</h3>
-										จัดส่งให้พนักงาน  
+										{{ "dispatch_to_employees" | translate }}    
 									</a>
 								</li>
 							</ul> 
 							<div class="row mt-50">
-								<div class="col-md-3">
-									<div class="form-group">
-										<label class="control-label" for="date_purchase">วันที่ได้รับ</label>
-										<p class="input-group">
-											<input id="date_purchase" type="text" class="form-control numberic" uib-datepicker-popup="dd/MM/yyyy" ng-model="" is-open="" close-text="Close" required="true"/>
-											<span class="input-group-btn">
-												<button type="button" class="btn btn-default" ng-click=""><i class="fa fa-calendar"></i></button>
-											</span>
-										</p>
+								<div class="col-md-4">
+			          	<div class="form-group">
+			            	<input type="text" class="form-control" id="employee_name" placeholder="{{ 'employee_name' | translate }}" ng-model="inventory.employee_name"  typeahead-on-select="inventory.onSelectEmployeeFullName($item)" ng-change="inventory.onChangeName()" uib-typeahead="inventory.name as inventory.name for inventory in inventory.employee_lists | filter:{name:$viewValue} | limitTo:8" required , autocomplete="off">
+			         		</div>
+			       		</div>
+								<!-- <div class="col-md-4">
+									<div class="dropdown">
+										<label class="control-label" for="employee">ส่งพัสดุให้</label>
+										<div class="form-control" style="padding-top: 0px;" >
+											<h4 id="employeeName" onclick="window.setTimeout(function(){ $('#employeeFilter').val('').trigger('change').focus()}, 10)" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="true">
+												<span ng-bind="inventory.displayName"></span>
+												<span class="fa fa-angle-down pull-right"></span>
+											</h4>
+											<ul class="dropdown-menu mn-inventory">              
+												<li ng-show="inventory.employee_lists.length > 0"><input class="employee-filter" id="employeeFilter" type="text" ng-model="inventory.filterKeyword" /></li>
+												<li ng-repeat="data in inventory.employee_lists | filter:inventory.filterKeyword">
+													<a class="py-5" ng-click="inventory.switchEmployee(data.name,data.id)" href="javascript:void(0)">
+														<span class="dropdown-employee-name" style="padding-left: 20px;" >{{data.name}}</span>
+													</a>
+												</li>
+											</ul>
+											</div>
 									</div>
-								</div>
-								<div class="col-md-3">
-									<div class="form-group">
-										<label class="control-label" for="item_name">เลขที่ใบเสร็จ</label>
-	
-										<div class="col-md-12">
-											<input class="form-control" autocomplete="off" type="text" id="" ng-model="" required="true">
-										</div>
-									</div>
-								</div>
-								<div class="col-md-3">
-									<div class="form-group">
-										<label class="control-label" for="date_purchase">วันที่สิ้นสุดประกัน</label>
-										<p class="input-group">
-											<input id="date_purchase" type="text" class="form-control numberic" uib-datepicker-popup="dd/MM/yyyy" ng-model="" is-open="" close-text="Close" required="true"/>
-											<span class="input-group-btn">
-												<button type="button" class="btn btn-default" ng-click=""><i class="fa fa-calendar"></i></button>
-											</span>
-										</p>
-									</div>
-								</div>
+								</div> -->
 							</div>
 							<div class="row mt-20">
 								<div class="col-md-2">
-									<button type="submit" class="btn btn-custom btn-continue ng-binding">Continue</button>
+									<button type="button" class="btn btn-custom btn-continue ng-binding" ng-click="inventory.continue()">{{ "continue" | translate }}</button>
 								</div>
 								<div class="col-md-2 pl-0">
-									<button type="button" class="btn btn-custom btn-gray ng-binding" ng-click="inventory.cancel()">Cencel</button>
+									<button type="button" class="btn btn-custom btn-gray ng-binding" ng-click="inventory.cancel()">{{ "cancel" | translate }}</button>
 								</div>
 							</div>
 							<div class="row mt-20"  style="color: #B6B6B6;">
 								<p class="pl-20" >
-									ได้ทำการสั่งซื้อวันที่ dd/mm/yyyy  <br>
-									จัดส่งในวันที่ dd/mm/yyyy <br>
-									ราคา 10,000 บาท (บันทึกโดย Admin A)
+									{{ "receive_products_on_date" | translate }}  {{ inventory.get_date }}   <br>
+									{{ "buy_slip" | translate }} {{ inventory.buy_slip }}   <br>
+									{{ "end_warranty" | translate }}  {{ inventory.end_warranty }} ({{ "save_by" | translate }} {{ inventory.save_by_step3 }})
 								</p>
 							</div>
 						</div>
@@ -156,10 +149,10 @@
 	<div class="row">
 		<div class="footer-menu mt-20">
 			<div class="pull-right text-right padding-left10">
-				<button type="button" class="btn btn-custom btn-gray ng-binding" ng-click="inventory.cancel()">ยกเลิก</button>
+				<button type="button" class="btn btn-custom btn-gray ng-binding" ng-click="inventory.cancel()">{{ "cancel" | translate }}</button>
 			</div>
 			<div class="pull-right text-right padding-left10">
-				<button type="submit" class="btn btn-custom btn-blue ng-binding">บันทึก</button>
+				<button type="submit" class="btn btn-custom btn-blue ng-binding">{{ "save" | translate }}</button>
 			</div>
 		</div>
 	</div>

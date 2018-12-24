@@ -470,13 +470,22 @@ th:
   done: "เสร็จ"
   assigned: "ได้รีบเรียบร้อย"
 
-  #EditRequest
-  title: "รายละเอียดคำขอใช้อุปกรณ์"
-  item_name: "ชื่อรายการ"
-  description: "ลักษณะ"
-  request_date: "วันที่ขอ"
-  price: "ราคา"
-  user_request: "ชื่อผู้ขอ"
+  #Update inventory request
+  details_inventory_request: "รายละเอียดคำขอใช้อุปกรณ์"
+  approve_request: "อนุมัติคำขอ"
+  inventory_purchase: "สั่งซื้อพัสดุ"
+  get_inventory: "รับพัสดุ"
+  dispatch_to_employees: "จัดส่งให้พนักงาน"
+  date_get_inventory: "วันที่ได้รับ"
+  date_purchase_inventory: "ได้ทำการสั่งซื้อวันที่"
+  date_send_inventory: "จัดส่งในวันที่"
+  save_by: "บันทึกโดย"
+  request_approval: "ได้ทำการอนุมัติคำขอ"
+  bath: "บาท"
+  receive_products_on_date: "ได้รับสินค้าในวันที่"
+  continue: "ต่อไป"
+  completed: "เรียบร้อยแล้ว"
+  send_the_package_to: "ได้ทำการส่งมอบพัสดุให้กับ"
 
   # Rollcall
   monthly: ประจำเดือน

@@ -15,7 +15,7 @@
         </div>
             <ul class="nav nav-tabs tabs-menu">
               <li class="cyan col-md-12">
-                <uib-tabset class="mt-0">
+                <uib-tabset class="mt-0" active="inventory.active">
                   <uib-tab id="inventory_list" index="0" heading="{{ 'inventory' | translate }}" ng-click="inventory.changeTab('add_inventory') " > 
                       <div class="col-md-12 panel-board">
                         <div class="row pl-0">
@@ -41,7 +41,7 @@
                           <table id="inventory-table" >
                             <thead>
                               <tr>
-                                <th data-field="id">#</th>
+                                <th data-field="number">#</th>
                                 <th data-field="item_name">Item Name</th>
                                 <th data-field="serial_number">Serial Number</th>
                                 <th data-field="model">Model</th>
@@ -84,22 +84,23 @@
                             <button type="button" class="btn btn-custom btn-blue btn-block  ng-binding" data-toggle="modal" data-target="#listrequest"><i class="fa fa-filter"></i> Filter</button>
                           </div>
                         </div>
-                        <div class="row">
-                          <table id="inventory-request-table" >
-                            <thead>
-                              <tr>
-                                <th data-field="id">#</th>
-                                <th data-field="user_name">Item Name</th>
-                                <th data-field="item_name">Serial Number</th>
-                                <th data-field="description">Description</th>
-                                <th data-field="price">Price</th>
-                                <th data-field="request_date">Date Purchase</th>
-                                <th data-field="inventory_status">Category</th>
-                                <th data-field="edit"></th>
-                                <th data-field="delete"></th>
-                              </tr>
-                            </thead>
-                          </table>
+                      </div>
+                      <div class="row">
+                        <table id="inventory-request-table" >
+                          <thead>
+                            <tr>
+                              <th data-field="number">#</th>
+                              <th data-field="user_name">Item Name</th>
+                              <th data-field="item_name">Serial Number</th>
+                              <th data-field="description">Description</th>
+                              <th data-field="price">Price</th>
+                              <th data-field="request_date">Date Purchase</th>
+                              <th data-field="inventory_status">Category</th>
+                              <th data-field="edit"></th>
+                              <th data-field="delete"></th>
+                            </tr>
+                          </thead>
+                        </table>
                           <div class="row row-centered for-display">
                             <div class="col-centered">
                               <ul uib-pagination ng-change="inventory.pageRequestChanged()" total-items="inventory.requestTotalItems" ng-model="inventory.requestCurrentPage" max-size="inventory.paginateButtonMaxSize" class="pagination-md" num-pages="numPages" previous-text="‹" next-text="›" boundary-link-numbers='true' rotate='false'></ul>
