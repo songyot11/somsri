@@ -1,8 +1,8 @@
 (function() {
   'use strict';
   angular.module('somsri.somsri.inventory', [])
-  .controller('inventoryCtrl', ['$compile', '$scope', '$window', '$filter', '$rootScope', '$timeout', 'translateFilter', '$uibModal', 'Upload', "inventoryService", "inventoryRequestService", '$state' ,'$location', 
-    function($compile, $scope, $window, $filter, $rootScope, $timeout, translateFilter, $uibModal, Upload, services, inventoryRequestService, $state, $location) {
+  .controller('inventoryCtrl', ['$compile', '$scope', '$window', '$filter', '$rootScope', '$timeout', 'translateFilter', '$uibModal', 'Upload', "inventoryService", "inventoryRequestService", '$state' ,'$location','dateFilter', 
+    function($compile, $scope, $window, $filter, $rootScope, $timeout, translateFilter, $uibModal, Upload, services, inventoryRequestService, $state, $location, dateFilter) {
     $rootScope.menu = translateFilter("inventory")
     var ctrl = this
     var angularScopeRoot = 'angular.element(document.getElementById("angularCtrl")).scope().$root'
@@ -27,9 +27,6 @@
     // ctrl.start_date_purchase = new Date(new Date().setMonth(new Date().getMonth() - 1));
 
     ctrl.real_id = $rootScope.index_id
-    // default last 7 days
-    ctrl.end_date = new Date();
-    ctrl.start_date = new Date(new Date().setMonth(new Date().getMonth() - 1));
 
     function activeTab() {
       
@@ -64,7 +61,8 @@
 
     function filterDate(value, row, index) {
       if (value) {
-        return $filter('date')(value, 'dd/MM/yyyy');
+        console.log("change", dateFilter(Date.parse(value), 'dd/MM/yyyy'), $filter('date')(Date.parse(value), 'dd/MM/yyyy'))
+        return $filter('date')(Date.parse(value), 'dd/MM/yyyy');
       }
       return "-";
     }
@@ -160,8 +158,10 @@
     function getInventory() {
       ctrl.start_date_purchase = cleanDate(ctrl.start_date_purchase)
       ctrl.end_date_purchase = cleanDate(ctrl.end_date_purchase)
+      ctrl.start_date_add = cleanDate(ctrl.start_date_add)
+      ctrl.end_date_add = cleanDate(ctrl.end_date_add)
       if(!ctrl.currentPage){ ctrl.currentPage = 1 }
-        services.getInventory(ctrl.currentPage, ctrl.searchKeyword, ctrl.start_date_purchase, ctrl.end_date_purchase).then(function(resp) {
+        services.getInventory(ctrl.currentPage, ctrl.searchKeyword, ctrl.start_date_purchase, ctrl.end_date_purchase, ctrl.getSelected, ctrl.start_date_add, ctrl.end_date_add).then(function(resp) {
           ctrl.datasExport = [];
           if (resp.data) {
             ctrl.totalItems = resp.data.total_records;
@@ -212,9 +212,25 @@
       opened: false
     };
 
+    ctrl.openStartDateAddPopup = function() {
+      ctrl.startDateAddPopup.opened = true;
+    };
+
+    ctrl.startDateAddPopup = {
+      opened: false
+    };
+
+    ctrl.openEndDateAddPopup = function() {
+      ctrl.endDateAddPopup.opened = true;
+    };
+
+    ctrl.endDateAddPopup = {
+      opened: false
+    };
+
     ctrl.optionsChange = function() {
       // check date incorrect input
-      if(ctrl.start_date_purchase === undefined || ctrl.end_date_purchase === undefined){return}
+      // if(ctrl.start_date_purchase === undefined || ctrl.end_date_purchase === undefined){return}
       getInventory()
     }
 
@@ -435,6 +451,7 @@
     ctrl.toggleAll = function() {
       var toggleStatus = ctrl.isAllSelected
       angular.forEach(ctrl.check_box, function(item){ item.selected = toggleStatus })
+      ctrl.getSelected = []
     }
 
     ctrl.checkBoxToggled = function() {
@@ -442,11 +459,10 @@
       ctrl.getSelected = []
       for( var i = 0; i < ctrl.check_box.length; i++ ) {
         if (ctrl.check_box[i].selected) {
-          ctrl.getSelected.push({
-            id: ctrl.check_box[i].id
-          })
+          ctrl.getSelected.push(ctrl.check_box[i].id)
         }
       }
+      console.log("get",ctrl.getSelected)
     }
 
     getInventoryRequest();

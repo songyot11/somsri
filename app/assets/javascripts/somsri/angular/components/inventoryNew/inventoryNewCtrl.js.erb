@@ -110,17 +110,17 @@
         }
 
         ctrl.save = function() {
-          console.log("price",ctrl.price)
           var changePrice = parseFloat(ctrl.price);
-          console.log("price2", changePrice)
-          var changeDatePurchase = $filter('date')(new Date(ctrl.datas.date_purchase), 'yyyy-MM-ddTh:MM:ss')
-          var changeDateEndWarranty = ""
-          if (ctrl.datas.end_warranty) {
-            changeDateEndWarranty = $filter('date')(new Date(ctrl.datas.end_warranty), 'yyyy-MM-ddTh:MM:ss')
-          }
+       
+
+          // var changeDatePurchase = $filter('date')(new Date(ctrl.datas.date_purchase), 'yyyy-MM-ddTh:MM:ss')
+          // var changeDateEndWarranty = ""
+          // if (ctrl.datas.end_warranty) {
+          //   changeDateEndWarranty = $filter('date')(new Date(ctrl.datas.end_warranty), 'yyyy-MM-ddTh:MM:ss')
+          // }
           
           if (!ctrl.real_id) {
-            ctrl.date_add = $filter('date')(new Date(Date()), 'dd/MM/yyyy')
+            ctrl.date_add = Date()
           }
 
           if (ctrl.category == translateFilter("select_category")) {
@@ -136,25 +136,25 @@
             if (ctrl.employee_name) {
               employeesService.createEmployee(data).then(function(resp) {
                 ctrl.employee_id = resp.data.employee.id
-                beforeCreate(changePrice,changeDatePurchase,changeDateEndWarranty)
+                beforeCreate(changePrice)
               })
             } else {
               ctrl.employee_id = 0
-              beforeCreate(changePrice,changeDatePurchase,changeDateEndWarranty)
+              beforeCreate(changePrice)
             }
           } else {
             if (ctrl.employee_name) {
-              beforeCreate(changePrice,changeDatePurchase,changeDateEndWarranty)
+              beforeCreate(changePrice)
             } else {
               ctrl.employee_id = 0
-              beforeCreate(changePrice,changeDatePurchase,changeDateEndWarranty)
+              beforeCreate(changePrice)
             }
             
           }
 
         };
 
-        function beforeCreate(changePrice,changeDatePurchase,changeDateEndWarranty) {
+        function beforeCreate(changePrice) {
 
           if (!ctrl.serial_number) {
             ctrl.serial_number = "-"
@@ -164,15 +164,17 @@
             ctrl.model = "-"
           }
 
+          console.log("date_add",ctrl.date_add)
+
           var inventory_datas = {
             item_name: ctrl.name,
             serial_number: ctrl.serial_number,
             model: ctrl.model,
             description: ctrl.description,
             price: changePrice,
-            date_purchase: changeDatePurchase,
+            date_purchase: ctrl.datas.date_purchase,
             date_add: ctrl.date_add,
-            end_warranty: changeDateEndWarranty,
+            end_warranty: ctrl.datas.end_warranty,
             employee_id: ctrl.employee_id
           }
 
@@ -264,6 +266,7 @@
             if (ctrl.item_catogery[i].name == ctrl.category) {
               ctrl.category = ctrl.item_catogery[i].name
               ctrl.category_id = ctrl.item_catogery[i].id
+              console.log("category_id", ctrl.category_id)
             }
           }
         }

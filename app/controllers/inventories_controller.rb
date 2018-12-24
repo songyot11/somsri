@@ -7,6 +7,10 @@ class InventoriesController < ApplicationController
 		search = params[:search_keyword]
 		start_date_purchase = DateTime.parse(params[:start_date_purchase]).beginning_of_day if isDate(params[:start_date_purchase])
     end_date_purchase = DateTime.parse(params[:end_date_purchase]).end_of_day if isDate(params[:end_date_purchase])
+    start_date_add = DateTime.parse(params[:start_date_add]).beginning_of_day if isDate(params[:start_date_add])
+    end_date_add = DateTime.parse(params[:end_date_add]).end_of_day if isDate(params[:end_date_add])
+    check_box = params[:check_box]
+    puts check_box
 		
 		# inventories = get_inventories(params[:search_keyword],start_date_purchase,end_date_purchase,params[:page])
 		# if params[:page] && inventories.total_pages < inventories.current_page
@@ -15,8 +19,14 @@ class InventoriesController < ApplicationController
 
 		inventories = Inventory.all
     inventories = inventories.search(search) if search.present?
-    data_field = Inventory.arel_table[:created_at]
+
+    if check_box 
+    	inventories = inventories.joins(:category).where(categories: { category_id: check_box })
+    end
+
+		data_field = Inventory.arel_table[:date_purchase]
     inventories = qry_date_range(inventories, data_field, start_date_purchase, end_date_purchase)
+    inventories = qry_date_range(inventories, data_field, start_date_add, end_date_add)
     inventories = inventories.paginate(page: page, per_page: 10)
 
 		result = {}

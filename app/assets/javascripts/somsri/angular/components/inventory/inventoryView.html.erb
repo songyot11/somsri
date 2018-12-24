@@ -281,16 +281,16 @@
           </div>
           <div class="row mt-20">
             <div class="col-md-12">
-              <b>ช่วงวันที่จัดส่ง</b>
+              <b>ช่วงวันที่เพิ่ม</b>
             </div>
           </div>
           <div class="row mt-10">
             <div class="col-md-6"> จาก
               <div class="form-group">
                 <p class="input-group">
-                  <input id="date_purchase" type="text" class="form-control numberic" uib-datepicker-popup="dd/MM/yyyy" ng-model="inventory.datas.date_purchase" is-open="inventory.datePurchasePopup.opened" close-text="Close" required="true"/>
+                  <input id="date_purchase" type="text" class="form-control numberic" uib-datepicker-popup="dd/MM/yyyy" ng-model="inventory.start_date_add" is-open="inventory.startDateAddPopup.opened" close-text="Close" required="true"/>
                   <span class="input-group-btn">
-                    <button type="button" class="btn btn-default" ng-click="inventory.openDatePurchasePopup()"><i class="fa fa-calendar"></i></button>
+                    <button type="button" class="btn btn-default" ng-click="inventory.openStartDateAddPopup()"><i class="fa fa-calendar"></i></button>
                   </span>
                 </p>
               </div>
@@ -298,9 +298,9 @@
             <div class="col-md-6">
                 <div class="form-group">ถึง
                   <p class="input-group">
-                    <input id="date_purchase" type="text" class="form-control numberic" uib-datepicker-popup="dd/MM/yyyy" ng-model="inventory.datas.date_purchase" is-open="inventory.datePurchasePopup.opened" close-text="Close" required="true"/>
+                    <input id="date_purchase" type="text" class="form-control numberic" uib-datepicker-popup="dd/MM/yyyy" ng-model="inventory.end_date_add" is-open="inventory.endDateAddPopup.opened" close-text="Close" required="true"/>
                     <span class="input-group-btn">
-                      <button type="button" class="btn btn-default" ng-click="inventory.openDatePurchasePopup()"><i class="fa fa-calendar"></i></button>
+                      <button type="button" class="btn btn-default" ng-click="inventory.openEndDateAddPopup()"><i class="fa fa-calendar"></i></button>
                     </span>
                   </p>
                 </div>

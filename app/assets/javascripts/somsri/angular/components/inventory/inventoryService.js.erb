@@ -7,13 +7,17 @@
 			return $http.post('/inventories', data)
 		};
 
-		this.getInventory = function(page, searchKeyword, start_date_purchase, end_date_purchase) {
+		this.getInventory = function(page, searchKeyword, start_date_purchase, end_date_purchase ,select_checkbox, start_date_add, end_date_add) {
+			console.log("selct",select_checkbox)
 			return $http.get('/inventories',{
 				params: {
 					page: page,
 					search_keyword: searchKeyword,
 					start_date_purchase: start_date_purchase,
 					end_date_purchase: end_date_purchase,
+					'check_box[]': select_checkbox,
+					start_date_add: start_date_add,
+					end_date_add: end_date_add,
 				}
 			});
 		};
