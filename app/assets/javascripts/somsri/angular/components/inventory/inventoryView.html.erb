@@ -1,70 +1,317 @@
-<div class="container">
+<div class="container-fluid ng-scope">
   <div class="row">
     <div id="inventory">
       <div class="col-xs-12 mt-50">
-        <div class="row">
-          <div class="col-xs-6 mb-20 pl-0">
+        <div class="row title-inventory">
+          <div class="col-xs-6 mb-20 pl-30">
             <h1><h1>{{ "inventory_list" | translate }}</h1></h1>
           </div>
           <div class="col-xs-3 mt-10" style="text-align: right;">
             
           </div>
-          <div class="col-xs-3 mt-10 pr-0" style="text-align: right;">
-            <a class="btn btn-custom btn-orange" href="somsri#/inventory/new">
-              {{ "add_inventory" | translate }}
-            </a>
+          <div class="col-xs-3 mt-10" style="text-align: right; padding-right: 30px;">
+            <a class="btn btn-custom btn-orange" href="{{inventory.url_path}}">{{inventory.selectTab | translate }}</a>
           </div>
         </div>
-        <div class="row">
-          <ul class="nav nav-tabs inventory col-md-12">
-            <li class="cyan active">
-              <a data-toggle="tab" class="ng-binding">{{ "inventory" | translate }}</a>
-            </li>
-            <li class="cyan " >
-              <a data-toggle="tab"  class="ng-binding">{{ "inventory_request" | translate }}</a>
-            </li>
-          </ul>
-        </div>
-        <div class="row report-content container-fluid panel-board">
-          <div class="tab-content">
-            <div role="tabpanel" class="tab-pane active" id="home">
-              <div class="row">
-                <div class="col-xs-3">
-                  <div class="search">
-                    <input class="form-control" id="search" type="text" placeholder="ค้นหา" onchange="search()" onkeyup="this.onchange()">
-                  </div>
-                </div>
-              </div>
-              <div class="row">
-                <table id="inventory-table" >
-                  <thead>
-                    <tr>
-                        <th data-field="id">#</th>
-                        <th data-field="item_name">Item Name</th>
-                        <th data-field="serial_number">Serial Number</th>
-                        <th data-field="model">Model</th>
-                        <th data-field="description">Description</th>
-                        <th data-field="price">Price</th>
-                        <th data-field="date_purchase">Date Purchase</th>
-                        <th data-field="category">Category</th>
-                        <th data-field="date_add">Date Add</th>
-                        <th data-field="end_warranty">End Warranty</th>
-                        <th data-field="edit"></th>
-                        <th data-field="delete"></th>
-                    </tr>
-                  </thead>
-                </table>
-                <div class="row row-centered for-display">
-                  <div class="col-centered">
-                    <ul uib-pagination ng-change="inventory.pageChanged()" total-items="inventory.totalItems" ng-model="inventory.currentPage" max-size="inventory.paginateButtonMaxSize" class="pagination-md" num-pages="numPages" previous-text="‹" next-text="›" boundary-link-numbers='true' rotate='false'></ul>
-                  </div>
-                </div>
-              </div>
-            </div>
-          </div>
-          <table  id="tableForExport" data-toolbar="none" data-tableexport-display="always" style="display: none;"><table>
-        </div>
+            <ul class="nav nav-tabs tabs-menu">
+              <li class="cyan col-md-12">
+                <uib-tabset class="mt-0">
+                  <uib-tab id="inventory_list" index="0" heading="{{ 'inventory' | translate }}" ng-click="inventory.changeTab('add_inventory') " > 
+                      <div class="col-md-12 panel-board">
+                        <div class="row pl-0">
+                          <div class="col-md-3">
+                            <div id="custom-search-input">
+                              <div class="col-md-12 input-group">
+                                <div class="row">
+                                  <div class="col-md-2 pl-20">
+                                      <i class="glyphicon glyphicon-search"></i>
+                                  </div>
+                                  <div class="col-md-10">
+                                       <input class="col-md-3 form-control input-lg" id="searchField" type="text" ng-model="inventory.searchKeyword" ng-change="inventory.searchInventory()" placeholder="{{ 'inventory_search' | translate }}" class="search-sp" />
+                                  </div>
+                                </div>                        
+                              </div>
+                            </div>
+                          </div> 
+                          <div class="col-md-2">
+                            <button type="button" class="btn btn-custom btn-blue btn-block  ng-binding" data-toggle="modal" data-target="#myModal"><i class="fa fa-filter"></i> Filter</button>
+                          </div>
+                        </div>
+                        <div class="row mt-20">
+                          <table id="inventory-table" >
+                            <thead>
+                              <tr>
+                                <th data-field="id">#</th>
+                                <th data-field="item_name">Item Name</th>
+                                <th data-field="serial_number">Serial Number</th>
+                                <th data-field="model">Model</th>
+                                <th data-field="description">Description</th>
+                                <th data-field="price">Price</th>
+                                <th data-field="date_purchase">Date Purchase</th>
+                                <th data-field="category">Category</th>
+                                <th data-field="date_add">Date Add</th>
+                                <th data-field="edit "></th>
+                                <th data-field="delete"></th>
+                              </tr>
+                            </thead>
+                          </table>
+                          <div class="row row-centered for-display">
+                            <div class="col-centered">
+                              <ul uib-pagination ng-change="inventory.pageChanged()" total-items="inventory.totalItems" ng-model="inventory.currentPage" max-size="inventory.paginateButtonMaxSize" class="pagination-md" num-pages="numPages" previous-text="‹" next-text="›" boundary-link-numbers='true' rotate='false'></ul>
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+                  </uib-tab>
+                  <uib-tab id="inventory_request_list" index="1" heading="{{ 'inventory_request' | translate }}" ng-click="inventory.changeTab('add_request')">
+                      <div class="col-md-12 panel-board">
+                        <div class="row pl-0">
+                          <div class="col-md-3">
+                            <div id="custom-search-input">
+                              <div class="col-md-12 input-group">
+                                <div class="row">
+                                  <div class="col-md-2 pl-20">
+                                      <i class="glyphicon glyphicon-search"></i>
+                                  </div>
+                                  <div class="col-md-10">
+                                      <input type="text" class="col-md-3 form-control input-lg" placeholder="Search" />
+                                  </div>
+                                </div>                        
+                              </div>
+                            </div>
+                          </div> 
+                          <div class="col-md-2">
+                            <button type="button" class="btn btn-custom btn-blue btn-block  ng-binding" data-toggle="modal" data-target="#listrequest"><i class="fa fa-filter"></i> Filter</button>
+                          </div>
+                        </div>
+                        <div class="row">
+                          <table id="inventory-request-table" >
+                            <thead>
+                              <tr>
+                                <th data-field="id">#</th>
+                                <th data-field="user_name">Item Name</th>
+                                <th data-field="item_name">Serial Number</th>
+                                <th data-field="description">Description</th>
+                                <th data-field="price">Price</th>
+                                <th data-field="request_date">Date Purchase</th>
+                                <th data-field="inventory_status">Category</th>
+                                <th data-field="edit"></th>
+                                <th data-field="delete"></th>
+                              </tr>
+                            </thead>
+                          </table>
+                          <div class="row row-centered for-display">
+                            <div class="col-centered">
+                              <ul uib-pagination ng-change="inventory.pageRequestChanged()" total-items="inventory.requestTotalItems" ng-model="inventory.requestCurrentPage" max-size="inventory.paginateButtonMaxSize" class="pagination-md" num-pages="numPages" previous-text="‹" next-text="›" boundary-link-numbers='true' rotate='false'></ul>
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+                  </uib-tab>
+                </uib-tabset>  
+              </li>
+            </ul>
+        <table  id="tableForExport" data-toolbar="none" data-tableexport-display="always" style="display: none;"><table>
       </div>
     </div>
   </div>
 </div>
+<!-- Modal -->
+<div class="modal fade" id="listrequest" tabindex="-1" role="dialog" aria-labelledby="listrequest">
+    <div class="modal-dialog" role="document">
+      <div class="modal-content">
+        <div class="modal-header">
+          <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+          <h4 class="modal-title color-blue" id="listrequest"> <i class="fa fa-filter "></i>  ตัวกรอง</h4>
+        </div>
+        <div class="modal-body">
+          <div class="row">
+            <div class="col-md-2">
+              <b>สถานะ</b>
+            </div>
+            <div class="col-md-10 pl-0">
+              <label class="checkbox-inline">
+                <input type="checkbox" id="inlineCheckbox1" value="option1"> All
+              </label>
+            </div>
+          </div>
+          <div class="row status mt-10">
+            <div class="col-md-4">
+              <label class="checkbox-inline">
+                <input type="checkbox" id="inlineCheckbox2" value="option1"> Pending
+              </label>
+            </div>
+            <div class="col-md-4">
+              <label class="checkbox-inline">
+                <input type="checkbox" id="inlineCheckbox3" value="option2"> Accept
+              </label>
+            </div>
+            <div class="col-md-4">
+              <label class="checkbox-inline">
+                <input type="checkbox" id="inlineCheckbox4" value="option3"> Reject
+              </label>
+            </div>
+          </div>
+          <div class="row status mt-10">
+            <div class="col-md-4">
+              <label class="checkbox-inline">
+                <input type="checkbox" id="inlineCheckbox5" value="option4"> Purchasing 
+              </label>
+            </div>
+            <div class="col-md-4">
+              <label class="checkbox-inline">
+                <input type="checkbox" id="inlineCheckbox6" value="option5"> Done
+              </label>
+            </div>
+            <div class="col-md-4">
+              <label class="checkbox-inline">
+                <input type="checkbox" id="inlineCheckbox7" value="option6"> Assigned 
+              </label>
+            </div>
+          </div>
+          <div class="row mt-20">
+            <div class="col-md-12">
+              <b>ช่วงวันที่ส่งคำขอ</b>
+            </div>
+          </div>
+          <div class="row mt-10">
+            <div class="col-md-6"> จาก
+              <div class="form-group">
+                <p class="input-group">
+                  <input id="date_purchase" type="text" class="form-control numberic" uib-datepicker-popup="dd/MM/yyyy" ng-model="inventory.datas.date_purchase" is-open="inventory.datePurchasePopup.opened" close-text="Close" required="true"/>
+                  <span class="input-group-btn">
+                    <button type="button" class="btn btn-default" ng-click="inventory.openDatePurchasePopup()"><i class="fa fa-calendar"></i></button>
+                  </span>
+                </p>
+              </div>
+            </div>
+            <div class="col-md-6">
+                <div class="form-group">ถึง
+                  <p class="input-group">
+                    <input id="date_purchase" type="text" class="form-control numberic" uib-datepicker-popup="dd/MM/yyyy" ng-model="inventory.datas.date_purchase" is-open="inventory.datePurchasePopup.opened" close-text="Close" required="true"/>
+                    <span class="input-group-btn">
+                      <button type="button" class="btn btn-default" ng-click="inventory.openDatePurchasePopup()"><i class="fa fa-calendar"></i></button>
+                    </span>
+                  </p>
+                </div>
+            </div>
+          </div>
+          <div class="row mt-20">
+            <div class="col-md-12">
+              <b>ช่วงวันที่ซื้อ</b>
+            </div>
+          </div>
+          <div class="row mt-10">
+            <div class="col-md-6"> จาก
+              <div class="form-group">
+                <p class="input-group">
+                  <input id="date_purchase" type="text" class="form-control numberic" uib-datepicker-popup="dd/MM/yyyy" ng-model="inventory.datas.date_purchase" is-open="inventory.datePurchasePopup.opened" close-text="Close" required="true"/>
+                  <span class="input-group-btn">
+                    <button type="button" class="btn btn-default" ng-click="inventory.openDatePurchasePopup()"><i class="fa fa-calendar"></i></button>
+                  </span>
+                </p>
+              </div>
+            </div>
+            <div class="col-md-6">
+                <div class="form-group">ถึง
+                  <p class="input-group">
+                    <input id="date_purchase" type="text" class="form-control numberic" uib-datepicker-popup="dd/MM/yyyy" ng-model="inventory.datas.date_purchase" is-open="inventory.datePurchasePopup.opened" close-text="Close" required="true"/>
+                    <span class="input-group-btn">
+                      <button type="button" class="btn btn-default" ng-click="inventory.openDatePurchasePopup()"><i class="fa fa-calendar"></i></button>
+                    </span>
+                  </p>
+                </div>
+            </div>
+          </div>
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-custom btn-blue ng-binding" ng-click="inventory.inventory_filter()">ตกลง</button>
+          <button type="button" class="btn btn-custom btn-gray  ng-binding" data-dismiss="modal">ยกเลิก</button>
+        </div>
+      </div>
+    </div>
+  </div>
+  <!-- Modal filter request-->
+<div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModal">
+    <div class="modal-dialog" role="document">
+      <div class="modal-content">
+        <div class="modal-header">
+          <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+          <h4 class="modal-title color-blue" id="myModal"> <i class="fa fa-filter "></i>  ตัวกรอง</h4>
+        </div>
+        <div class="modal-body">
+          <div class="row">
+            <div class="col-md-2">
+              <b>ประเภท</b>
+            </div>
+            <form id="slectionForm">
+              <input type="checkbox" ng-click="inventory.toggleAll()" ng-model="inventory.isAllSelected"> Select all
+              <br>
+              <div ng-repeat="item in inventory.check_box">
+                  <input type="checkbox" ng-model="item.selected" ng-change="inventory.checkBoxToggled()"> {{ item.value | translate }}
+              </div>
+            </form>
+          </div>
+          <div class="row mt-20">
+            <div class="col-md-12">
+              <b>ช่วงวันที่สั่งซื้อ</b>
+            </div>
+          </div>
+          <div class="row mt-10">
+            <div class="col-md-6"> จาก
+              <div class="form-group">
+                <p class="input-group">
+                  <input id="date_purchase" type="text" class="form-control numberic" uib-datepicker-popup="dd/MM/yyyy" ng-model="inventory.datas.date_purchase" is-open="inventory.datePurchasePopup.opened" close-text="Close" required="true"/>
+                  <span class="input-group-btn">
+                    <button type="button" class="btn btn-default" ng-click="inventory.openDatePurchasePopup()"><i class="fa fa-calendar"></i></button>
+                  </span>
+                </p>
+              </div>
+            </div>
+            <div class="col-md-6">
+                <div class="form-group">ถึง
+                  <p class="input-group">
+                    <input id="date_purchase" type="text" class="form-control numberic" uib-datepicker-popup="dd/MM/yyyy" ng-model="inventory.datas.date_purchase" is-open="inventory.datePurchasePopup.opened" close-text="Close" required="true"/>
+                    <span class="input-group-btn">
+                      <button type="button" class="btn btn-default" ng-click="inventory.openDatePurchasePopup()"><i class="fa fa-calendar"></i></button>
+                    </span>
+                  </p>
+                </div>
+            </div>
+          </div>
+          <div class="row mt-20">
+            <div class="col-md-12">
+              <b>ช่วงวันที่จัดส่ง</b>
+            </div>
+          </div>
+          <div class="row mt-10">
+            <div class="col-md-6"> จาก
+              <div class="form-group">
+                <p class="input-group">
+                  <input id="date_purchase" type="text" class="form-control numberic" uib-datepicker-popup="dd/MM/yyyy" ng-model="inventory.datas.date_purchase" is-open="inventory.datePurchasePopup.opened" close-text="Close" required="true"/>
+                  <span class="input-group-btn">
+                    <button type="button" class="btn btn-default" ng-click="inventory.openDatePurchasePopup()"><i class="fa fa-calendar"></i></button>
+                  </span>
+                </p>
+              </div>
+            </div>
+            <div class="col-md-6">
+                <div class="form-group">ถึง
+                  <p class="input-group">
+                    <input id="date_purchase" type="text" class="form-control numberic" uib-datepicker-popup="dd/MM/yyyy" ng-model="inventory.datas.date_purchase" is-open="inventory.datePurchasePopup.opened" close-text="Close" required="true"/>
+                    <span class="input-group-btn">
+                      <button type="button" class="btn btn-default" ng-click="inventory.openDatePurchasePopup()"><i class="fa fa-calendar"></i></button>
+                    </span>
+                  </p>
+                </div>
+            </div>
+          </div>
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-custom btn-blue ng-binding">ตกลง</button>
+          <button type="button" class="btn btn-custom btn-gray ng-binding" data-dismiss="modal">ยกเลิก</button>
+        </div>
+      </div>
+    </div>
+  </div>
+  

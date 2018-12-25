@@ -1,0 +1,67 @@
+(function() {
+	'use strict';
+
+	angular.module('somsri.somsri.inventory.request.service', [])
+	.service('inventoryRequestService', ['$http', 'Upload', function($http, Upload) {
+		this.newInventoryRequest = function(data) {
+			console.log(data)
+			return $http.post('/inventories_requests', data)
+		};
+
+		this.getInventoryRequest = function(page) {
+			return $http.get('/inventories_requests',{
+				params: {
+					page: page,
+				}
+			});
+		};
+
+		this.show = function(id) {
+     	 return $http.get('/inventories_requests/' + id)
+    	};
+
+		this.removeInventoryRequest = function(id) {
+			return $http.delete('/inventories_requests/' + id)
+		};
+
+		this.updateInventoryRequest = function(data, id) {
+			return Upload.upload({
+							url: '/inventories_requests/' + id,
+							method: 'put',
+							data: { inventory: data }
+						});
+		};
+		//[:approved, :rejected ,:pending, :accept, :purchasing, :done, :assinged]
+
+		this.approve = function(id) {
+			return $http.put('/inventories_requests' + id + '/approve')
+		}
+
+		this.rejected = function(id) {
+			return $http.put('/inventories_requests' + id + '/rejected')
+		}
+
+		this.pending = function(id) {
+			return $http.put('/inventories_requests' + id + '/pending')
+		}
+
+		this.accept = function(id) {
+			return $http.put('/inventories_requests' + id + '/accept')
+		}
+
+		this.purchasing = function(id) {
+			return $http.put('/inventories_requests' + id + '/purchasing')
+		}
+
+		this.done = function(id) {
+			return $http.put('/inventories_requests' + id + '/done')
+		}
+
+		this.assigned = function(id) {
+			return $http.put('/inventories_requests' + id + '/assigned')
+		}
+
+		
+
+	 }]);
+})();
