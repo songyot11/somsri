@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20181224064018) do
+ActiveRecord::Schema.define(version: 20181225064941) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -393,6 +393,9 @@ ActiveRecord::Schema.define(version: 20181224064018) do
     t.integer  "inventory_status"
     t.datetime "created_at",       null: false
     t.datetime "updated_at",       null: false
+    t.string   "comment"
+    t.integer  "employee_id"
+    t.index ["employee_id"], name: "index_inventory_requests_on_employee_id", using: :btree
   end
 
   create_table "invoice_statuses", force: :cascade do |t|

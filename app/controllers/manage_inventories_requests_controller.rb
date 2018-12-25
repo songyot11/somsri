@@ -2,7 +2,7 @@ class ManageInventoriesRequestsController < ApplicationController
 	# ManageInventoryRequestsController
 		# POST /manage_inventory_requests
 		def create
-			invetory_request = InventoryRequest.find(params[:inventories_request_id])
+			invetory_request = InventoryRequest.find(params[:inventory_request_id])
 			manage = invetory_request.build_manage_inventory_request(manage_params) # has_one use build
 			if manage.save
 				render json: manage, status: :ok
@@ -13,7 +13,7 @@ class ManageInventoriesRequestsController < ApplicationController
 
 		# PUT /manage_inventory_requests/:id
 		def update
-			inventory_rquest = InventoryRequest.find(params[:inventories_request_id])
+			inventory_rquest = InventoryRequest.find(params[:inventory_request_id])
 			manage = inventory_rquest.manage_inventory_request.update(manage_params)
 			render json: manage , status: :ok
 		end

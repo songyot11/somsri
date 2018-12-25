@@ -8,8 +8,11 @@ class Ability
         can :access, :rails_admin
         can :dashboard
         can :manage, :all
+
         can :manage, SiteConfig
         can :update, VacationLeaveRule
+        cannot :manage, InventoryRequest, inventory_status: [:delete_inventory]
+
       elsif  user.finance_officer?
         can :manage, :menu
         can :manage, Invoice
@@ -26,10 +29,12 @@ class Ability
         can :manage, ExpenseTag
         can :manage, ExpenseTagItem
         can :manage, ExpenseItem
+
       end
     when Employee
       can :manage, :menu
       can :manage, Vacation, :requester_id => user.id
+      can :manage, InventoryRequest, employee_id: user.id
       if user.approver?
         can :manage, VacationConfig
         can [:approve, :reject], Vacation

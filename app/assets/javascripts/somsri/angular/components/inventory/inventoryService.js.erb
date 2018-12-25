@@ -8,7 +8,6 @@
 		};
 
 		this.getInventory = function(page, searchKeyword, start_date_purchase, end_date_purchase ,select_checkbox, start_date_add, end_date_add) {
-			console.log("selct",select_checkbox)
 			return $http.get('/inventories',{
 				params: {
 					page: page,

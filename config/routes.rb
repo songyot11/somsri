@@ -178,7 +178,7 @@ Rails.application.routes.draw do
     resources :categories
   end
   
-  resources :inventories_requests do 
+  resources :inventory_requests do 
     collection do
     end
     
@@ -190,6 +190,8 @@ Rails.application.routes.draw do
       put 'purchasing'
       put 'done'
       put 'assigned'
+      put 'delete_inventory'
+      put 'wait'
     end
 
     # POST: /inventories_requests/:inventories_request_id/manage_inventories_requests

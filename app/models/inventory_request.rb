@@ -1,6 +1,7 @@
 class InventoryRequest < ApplicationRecord
 	has_one :manage_inventory_request
-	enum inventory_status: [:approved, :rejected ,:pending, :accept, :purchasing, :done, :assigned]
+	belongs_to :employee
+	enum inventory_status: [:wait, :approved, :rejected ,:pending, :accept, :purchasing, :done, :assigned ,:delete_inventory]
 	def manage_inventory
 
 		step = manage_inventory_request

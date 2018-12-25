@@ -21,7 +21,7 @@
     ctrl.url_path = "somsri#/inventory/new"
     // ctrl.real_id = $state.params.id;
     ctrl.searchKeyword = ''
-
+    ctrl.comment = ""
     // default last 7 days
     // ctrl.end_date_purchase = new Date();
     // ctrl.start_date_purchase = new Date(new Date().setMonth(new Date().getMonth() - 1));
@@ -61,7 +61,6 @@
 
     function filterDate(value, row, index) {
       if (value) {
-        console.log("change", dateFilter(Date.parse(value), 'dd/MM/yyyy'), $filter('date')(Date.parse(value), 'dd/MM/yyyy'))
         return $filter('date')(Date.parse(value), 'dd/MM/yyyy');
       }
       return "-";
@@ -264,11 +263,11 @@
     }
 
     function deleteInventoryFormatter(value, row, index) {
-      return '<a id="deleteInventory' + row['id'] + '" onclick="' + angularCtrlStr + '.deleteInventory(' + row['id'] + ')"> <i class=\'fa fa-trash color-red fa-fw\'></i></i> </a>';
+      return '<a id="deleteInventory' + row['id'] + '" onclick="' + angularCtrlStr + '.deleteInventory(' + row['id'] + ')"> <i class=\'fa fa-trash color-red fa-fw\' data-toggle=\'modal\' data-target=\'#inventory-modal-body\'></i></i> </a>';
     }
 
     ctrl.deleteInventory = function(id) {
-     openConfirmationModal(translateFilter('delete_expense'), function(){
+      $rootScope.openConfirmationModal(translateFilter('delete_expense'), function(resp){
         services.removeInventory(id).then(function(resp) {
           getInventory()
           ctrl.message = translateFilter('inventory_delete_success')
@@ -278,32 +277,6 @@
           ctrl.typeSuccess = false
         })
       })   
-    }
-
-    function openConfirmationModal(message, success, dismiss) {
-      $scope.message = message;
-      $uibModal.open({
-        animation: true,
-        backdrop: 'static',
-        keyboard: false,
-        scope: $scope,
-        templateUrl: "<%= asset_path('somsri/angular/components/modal/confirmInventory/confirmInventoryModalView.html') %>",
-        controller: 'confirmInventoryModalCtrl as confirm',
-        size: 'md',
-        resolve: {
-          resources: ['$ocLazyLoad', 'ASSETS', function($ocLazyLoad, ASSETS) {
-            return $ocLazyLoad.load([
-              ASSETS.somsri.somsri.confirm_inventory_modal
-            ]);
-          }]
-        }
-      }).result.then(function (result) {
-        if (result) {
-          if(success){ success() }
-        }else{
-          if(dismiss){ dismiss() }
-        }
-      });
     }
 
     getInventory();
@@ -331,6 +304,7 @@
       },{
         field: 'price',
         title: translateFilter("price"),
+        class: 'text-currency',
         formatter: formatePrice,
         align: 'right',
         sortable: true,
@@ -338,10 +312,13 @@
         field: 'request_date',
         title: translateFilter("request_date"),
         sortable: true,
+        align: 'center',
         formatter: filterDate
       },{
         field: 'inventory_status',
         title: translateFilter("status"),
+        align: 'center',
+        formatter: statusFormmatter,
         sortable: true,
       },{
         field: 'edit',
@@ -371,18 +348,26 @@
             var datas = []
             var count = ctrl.datasReuestExport.length
             for(var i = 0; i<count; i++) {
-              datas.push({
-                number: i+1,
-                id: ctrl.datasReuestExport[i].id,
-                user_name: ctrl.datasReuestExport[i].user_name,
-                item_name: ctrl.datasReuestExport[i].item_name,
-                description: ctrl.datasReuestExport[i].description,
-                price: ctrl.datasReuestExport[i].price,
-                request_date: ctrl.datasReuestExport[i].request_date,
-                inventory_status: ctrl.datasReuestExport[i].inventory_status,
-                created_at: ctrl.datasReuestExport[i].created_at,
-                updated_at: ctrl.datasReuestExport[i].updated_at
-              })
+              
+              if (ctrl.datasReuestExport[i].inventory_status != "delete_inventory") {
+                var status = ctrl.datasReuestExport[i].inventory_status
+                if (ctrl.datasReuestExport[i].inventory_status == "wait") {
+                  status = "-"
+                }
+                datas.push({
+                  number: i+1,
+                  id: ctrl.datasReuestExport[i].id,
+                  user_name: ctrl.datasReuestExport[i].user_name,
+                  item_name: ctrl.datasReuestExport[i].item_name,
+                  description: ctrl.datasReuestExport[i].description,
+                  price: ctrl.datasReuestExport[i].price,
+                  request_date: ctrl.datasReuestExport[i].request_date,
+                  inventory_status: status,
+                  comment: ctrl.datasReuestExport[i].comment,
+                  created_at: ctrl.datasReuestExport[i].created_at,
+                  updated_at: ctrl.datasReuestExport[i].updated_at
+                })
+              }
             }
             ctrl.datasReuestExport = datas
           } else {
@@ -401,14 +386,15 @@
       getInventoryRequest()
     };
 
-    // function managerInventoryRequestFormatter(value, row, index) {
-    //   return '<a id="managerInventoryRequest' + row['id'] + '" onclick="' + angularCtrlStr + '.managerInventoryRequest(' + row['id'] + ')"> <i>จัดการ</i> </a>';
-    // }
 
-    // ctrl.managerInventoryRequest = function(id) {
-    //   $rootScope.updateInventory(id)
-    // }
-
+    function statusFormmatter(value, row, index) {
+      console.log(row, value, index)
+      if (row['inventory_status'] == 'rejected') {
+        return '<span class="pointer" data-trigger="hover" data-container="body" data-toggle="popover" data-placement="top" title="Reason" data-content="' + row['comment'] + '">' +  row['inventory_status'] + '</span>' 
+      } else {
+        return row['inventory_status']
+      }
+    }
 
     function editInventoryRequestFormatter(value, row, index) {
       return '<a id="editInventoryRequest' + row['id'] + '" onclick="' + angularCtrlStr + '.editInventoryRequest(' + row['id'] + ')"> <i class=\'fa fa-pencil-square-o fa-fw color-orange \'></i> </a>';
@@ -423,14 +409,27 @@
     }
 
     ctrl.deleteInventoryRequest = function(id) {
-      openConfirmationModal(translateFilter('delete_expense'), function(){
-        inventoryRequestService.removeInventoryRequest(id).then(function(resp) {
-          getInventoryRequest()
-          ctrl.message = translateFilter('inventory_request_delete_success')
-          ctrl.typeSuccess = true
-        }, function(e){
-          ctrl.message = translateFilter('inventory_request_delete_failed')
-          ctrl.typeSuccess = false
+
+      $rootScope.openConfirmationInventoryModal(translateFilter('delete_expense'), function(){
+        ctrl.comment = $rootScope.comment
+        $rootScope.comment = null
+
+        inventoryRequestService.show(id).then(function(resp) {
+          var inventory_datas = {
+            user_name: resp.data.user_name,
+            item_name: resp.data.name,
+            description: resp.data.description,
+            price: resp.data.price,
+            request_date: resp.data.request_date,
+            comment: ctrl.comment,
+            employee_id: resp.data.employee_id
+          }
+
+          inventoryRequestService.updateInventoryRequest(inventory_datas, id).then(function(resp) {
+            inventoryRequestService.delete(id).then(function(resp) {
+              getInventoryRequest()
+            })
+          })
         })
       })
     }
@@ -462,7 +461,6 @@
           ctrl.getSelected.push(ctrl.check_box[i].id)
         }
       }
-      console.log("get",ctrl.getSelected)
     }
 
     getInventoryRequest();

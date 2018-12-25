@@ -17,6 +17,7 @@ class Employee < ApplicationRecord
   has_many :employee_skills, dependent: :destroy
   has_many :employees, through: :employee_skills
   has_many :inventories
+  has_many :inventory_requests
   has_many :vacations, foreign_key: 'requester_id'
   has_one :taxReduction
 

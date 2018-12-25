@@ -165,6 +165,32 @@
         }
       });
     }
+
+     $rootScope.openConfirmationInventoryModal = function(message, success, dismiss) {
+      $scope.message = message;
+      $uibModal.open({
+        animation: true,
+        backdrop: 'static',
+        keyboard: false,
+        scope: $scope,
+        templateUrl: "<%= asset_path('somsri/angular/components/modal/confirmInventory/confirmInventoryModalView.html') %>",
+        controller: 'confirmInventoryModalCtrl as confirm',
+        size: 'md',
+        resolve: {
+          resources: ['$ocLazyLoad', 'ASSETS', function($ocLazyLoad, ASSETS) {
+            return $ocLazyLoad.load([
+              ASSETS.somsri.somsri.confirm_inventory_modal
+            ]);
+          }]
+        }
+      }).result.then(function (result) {
+        if (result) {
+          if(success){ success() }
+        }else{
+          if(dismiss){ dismiss() }
+        }
+      });
+    }
     
     $rootScope.openInventory = function(id) {
       $rootScope.index_id = id;

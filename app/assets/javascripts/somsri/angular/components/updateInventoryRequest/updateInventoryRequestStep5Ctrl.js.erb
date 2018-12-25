@@ -20,6 +20,7 @@
         ctrl.price = value.price
         ctrl.user_name = value.user_name
         ctrl.request_date = new Date(value.request_date)
+        ctrl.employee_id_request = value.employee_id
         ctrl.inventory_status = value.inventory_status
         ctrl.manage_inventory = value.manage_inventory
         ctrl.step_to = ctrl.manage_inventory.step
@@ -103,7 +104,8 @@
         item_name: ctrl.name,
         description: ctrl.description,
         price: changePrice,
-        request_date: checngeRequestDate
+        request_date: checngeRequestDate,
+        employee_id: ctrl.employee_id_request
       }
 
       if (ctrl.real_id) {
@@ -143,8 +145,12 @@
       })
     }
 
-    ctrl.cancel = function() {
+    ctrl.backToRooView = function() {
       $rootScope.openInventory(1)
+    }
+
+    ctrl.cancel = function() {
+      $window.history.back();
     }
 
     function createManageInventory(data) {

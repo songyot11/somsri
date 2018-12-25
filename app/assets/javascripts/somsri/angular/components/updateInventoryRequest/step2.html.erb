@@ -104,7 +104,7 @@
 									<div class="form-group">
 										<label class="control-label" for="date_purchase">วันที่สั่งซื้อ</label>
 										<p class="input-group">
-											<input id="date_purchase" type="text" class="form-control numberic" uib-datepicker-popup="dd/MM/yyyy" ng-model="inventory.date_purchase" is-open="inventory.datePurchasePopup.opened" close-text="Close" required="true"/>
+											<input id="date_purchase" type="text" class="form-control numberic" uib-datepicker-popup="dd/MM/yyyy" ng-model="inventory.date_purchase" is-open="inventory.datePurchasePopup.opened" close-text="Close"/>
 											<span class="input-group-btn">
 												<button type="button" class="btn btn-default" ng-click="inventory.openDatePurchasePopup()"><i class="fa fa-calendar"></i></button>
 											</span>
@@ -115,7 +115,7 @@
 									<div class="form-group">
 										<label class="control-label" for="date_send">วันที่จัดส่ง</label>
 										<p class="input-group">
-											<input id="date_send" type="text" class="form-control numberic" uib-datepicker-popup="dd/MM/yyyy" ng-model="inventory.date_send" is-open="inventory.dateSendPopup.opened" close-text="Close" required="true"/>
+											<input id="date_send" type="text" class="form-control numberic" uib-datepicker-popup="dd/MM/yyyy" ng-model="inventory.date_send" is-open="inventory.dateSendPopup.opened" close-text="Close" />
 											<span class="input-group-btn">
 												<button type="button" class="btn btn-default" ng-click="inventory.openDateSendPopup()"><i class="fa fa-calendar"></i></button>
 											</span>
@@ -126,7 +126,7 @@
 									<div class="form-group">
 										<label class="control-label" for="price">ราคา</label>
 										<div class="col-md-12">
-											<input class="form-control" autocomplete="off" type="number" id="inventory_price_step2" ng-model="inventory.price_step2" ng-validate="number" required="true">
+											<input class="form-control" autocomplete="off" type="number" id="inventory_price_step2" ng-model="inventory.price_step2" ng-validate="number" >
 										</div>
 									</div>
 								</div>
@@ -147,17 +147,17 @@
 				</div>
 			</div>
 		</div>
-	</form>
-	<div class="row">
-		<div class="footer-menu mt-20">
-			<div class="pull-right text-right padding-left10">
-				<button type="button" class="btn btn-custom btn-gray ng-binding" ng-click="inventory.cancel()">{{ "cancel" | translate }}</button>
-			</div>
-			<div class="pull-right text-right padding-left10">
-				<button type="submit" class="btn btn-custom btn-blue ng-binding">{{ "save" | translate }}</button>
+		<div class="row">
+			<div class="footer-menu mt-20">
+				<div class="pull-right text-right padding-left10">
+					<button type="button" class="btn btn-custom btn-gray ng-binding" ng-click="inventory.backToRooView()">{{ "cancel" | translate }}</button>
+				</div>
+				<div class="pull-right text-right padding-left10">
+					<button type="submit" class="btn btn-custom btn-blue ng-binding">{{ "save" | translate }}</button>
+				</div>
 			</div>
 		</div>
-	</div>
+	</form>
 </div>
 
 			
