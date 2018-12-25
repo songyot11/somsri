@@ -50,7 +50,7 @@
                                 <th data-field="date_purchase">Date Purchase</th>
                                 <th data-field="category">Category</th>
                                 <th data-field="date_add">Date Add</th>
-                                <th data-field="edit "></th>
+                                <th data-field="edit"></th>
                                 <th data-field="delete"></th>
                               </tr>
                             </thead>
@@ -247,7 +247,7 @@
             <form id="slectionForm">
               <input type="checkbox" ng-click="inventory.toggleAll()" ng-model="inventory.isAllSelected"> Select all
               <br>
-              <div ng-repeat="item in inventory.check_box">
+              <div class="col-md-6 mt-10" ng-repeat="item in inventory.check_box">
                   <input type="checkbox" ng-model="item.selected" ng-change="inventory.checkBoxToggled()"> {{ item.value | translate }}
               </div>
             </form>

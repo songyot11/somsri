@@ -256,7 +256,7 @@
     };
 
     function editInventoryFormatter(value, row, index) {
-      return '<a id="editInventory' + row['id'] + '" onclick="' + angularCtrlStr + '.editInventory(' + row['id'] + ')"> <i class=\'fa fa-pencil-square-o fa-fw color-orange\'></i> </a>';
+      return '<a id="editInventory' + row['id'] + '" onclick="' + angularCtrlStr + '.editInventory(' + row['id'] + ')"> <i class=\'fa fa-pencil-square-o fa-fw color-orange cursor-pointer \' ></i> </a>';
     }
 
     ctrl.editInventory = function(id) {
@@ -264,7 +264,7 @@
     }
 
     function deleteInventoryFormatter(value, row, index) {
-      return '<a id="deleteInventory' + row['id'] + '" onclick="' + angularCtrlStr + '.deleteInventory(' + row['id'] + ')"> <i class=\'fa fa-trash color-red fa-fw\'></i></i> </a>';
+      return '<a id="deleteInventory' + row['id'] + '" onclick="' + angularCtrlStr + '.deleteInventory(' + row['id'] + ')"> <i class=\'fa fa-trash color-red fa-fw cursor-pointer \'></i></i> </a>';
     }
 
     ctrl.deleteInventory = function(id) {
