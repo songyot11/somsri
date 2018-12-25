@@ -1,7 +1,7 @@
 <div class="container">
   <div class="row mt-5">
     <div class="col-md-5 col-sm-7 heading">
-      {{ 'holiday_calendar' | translate }}
+      {{ 'holiday_calendar' | translate }} <span><i class="fa fa-share-alt color-light-blue" style="cursor: pointer;" data-toggle="modal" data-target="#shareHolidayModal"aria-hidden="true"></i> </span>
     </div>
     <div class="col-md-1 col-sm-1 p-0 text-center">
       <p class="font-13 mt-60"><span class="dot purple mr-5"></span>{{ 'sick_leave' | translate }}</p>
@@ -44,7 +44,7 @@
   </div>
 </div>
 
-<!-- Modal -->
+<!-- Add Holiday Modal -->
 <div class="modal" id="addHolidayModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
   <div class="modal-dialog" role="document">
     <div class="modal-content">
@@ -95,6 +95,42 @@
       <div class="modal-footer">
         <a class="btn btn-submit btn-light-green" ng-click="calendar.submitNewHoliday();" ng-disabled="calendar.isSaving">{{ 'save' | translate }}</a>
         <button type="button" class="btn btn-cancel-outline" data-dismiss="modal" ng-disabled="calendar.isSaving">{{ 'cancel' | translate }}</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- Share Holiday Modal -->
+<div class="modal" id="shareHolidayModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-body" id="modal-body">
+        <div class="row">
+          <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+        </div>
+        <div class="space20"></div>
+        <div class="row">
+          <h3 class="font-weight-bold text-center">Your calendar Sharing URL</h3>
+        </div>
+        <div class="row">
+          <p class="font-14 text-center color-gray">Copy and paste the line below into email, chats or browsers.</p>
+        </div>
+        <div class="row mt-5">
+          <div class="col-md-1"></div>
+          <div class="col-md-10 fa-border">
+            <h5 class="font-weight-bold text-center color-light-blue"><a href="{{calendar.shareHolidayUrl}}" id="shareHolidayUrl">{{ calendar.shareHolidayUrl }}</a><span><i class="fa fa-files-o fa-pull-right mr-5" style="cursor: pointer;" ng-click="calendar.copyToClipboard()"></i></span></h5>
+          </div>
+          <div class="col-md-1"></div>
+        </div>
+        <div class="space20"></div>
+        <div class="space20"></div>
+        <div class="row">
+          <div class="col-md-4"></div>
+          <div class="col-md-4 justify-content-center">
+            <button class="btn btn-custom lg btn-light-green" data-dismiss="modal">{{ 'close' | translate }}</button>
+          </div>
+          <div class="col-md-4"></div>
+        </div>
       </div>
     </div>
   </div>

@@ -25,6 +25,21 @@ class HolidaysController < ApplicationController
     end
   end
 
+  def share
+    cal = Icalendar::Calendar.new
+
+    Holiday.where("start_at > ?", Date.new(Date.today.year, 01, 01)).each do |h|
+      cal.event do |e|
+        e.dtstart     = Icalendar::Values::Date.new(h.start_at.strftime("%Y%m%d"))
+        e.dtend       = Icalendar::Values::Date.new(h.end_at.strftime("%Y%m%d"))
+        e.summary     = h.name
+        e.ip_class    = "PRIVATE"
+      end
+    end
+
+    render text: cal.to_ical
+  end
+
   private
 
   def holiday_params
