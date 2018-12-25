@@ -287,5 +287,49 @@
       });
     }
 
+    $rootScope.openSuccessModal = function(message) {
+      $scope.message = message;
+      $uibModal.open({
+        animation: true,
+        backdrop: 'static',
+        keyboard: false,
+        scope: $scope,
+        templateUrl: "<%= asset_path('somsri/angular/components/modal/success/successModalView.html') %>",
+        controller: 'successModalCtrl as success',
+        size: 'md',
+        resolve: {
+          resources: ['$ocLazyLoad', 'ASSETS', function($ocLazyLoad, ASSETS) {
+            return $ocLazyLoad.load([
+              ASSETS.somsri.somsri.success_modal
+            ]);
+          }]
+        }
+      });
+    }
+
+    $rootScope.openErrorModal = function(message, callback) {
+      $scope.message = message;
+      $uibModal.open({
+        animation: true,
+        backdrop: 'static',
+        keyboard: false,
+        scope: $scope,
+        templateUrl: "<%= asset_path('somsri/angular/components/modal/error/errorModalView.html') %>",
+        controller: 'errorModalCtrl as error',
+        size: 'md',
+        resolve: {
+          resources: ['$ocLazyLoad', 'ASSETS', function($ocLazyLoad, ASSETS) {
+            return $ocLazyLoad.load([
+              ASSETS.somsri.somsri.error_modal
+            ]);
+          }]
+        }
+      }).result.then(function() {
+          if (callback) {
+            callback();
+          }
+      });
+    }
+
   }]);
 })();
