@@ -223,13 +223,13 @@
         backdrop: 'static',
         keyboard: false,
         scope: $scope,
-        templateUrl: "<%= asset_path('somsri/angular/components/modal/confirm/confirmModalView.html') %>",
-        controller: 'confirmModalCtrl as confirm',
+        templateUrl: "<%= asset_path('somsri/angular/components/modal/confirmInventory/confirmInventoryModalView.html') %>",
+        controller: 'confirmInventoryModalCtrl as confirm',
         size: 'md',
         resolve: {
           resources: ['$ocLazyLoad', 'ASSETS', function($ocLazyLoad, ASSETS) {
             return $ocLazyLoad.load([
-              ASSETS.somsri.somsri.confirm_modal
+              ASSETS.somsri.somsri.confirm_inventory_modal
             ]);
           }]
         }

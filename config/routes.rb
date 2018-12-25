@@ -1,6 +1,7 @@
 Rails.application.routes.draw do
   mount RailsAdmin::Engine => '/admin', as: 'rails_admin'
   devise_for :users, :skip => [:registrations]
+  devise_for :employees, path: 'employees', :skip => [:registrations]
 
   get 'changelog', to: 'home#changelog'
   get "/menu" => "menu#index"
@@ -145,6 +146,25 @@ Rails.application.routes.draw do
       get 'years'
       get 'status'
     end
+  end
+
+  resources :vacations, only: [:index, :create, :destroy] do
+    collection do
+      get 'dashboard'
+    end
+    member do
+      get 'approve'
+      get 'reject'
+    end
+  end
+
+  resources :vacation_configs, only: [:index] do
+  end
+
+  resources :vacation_leave_rules, only: [:index, :update] do
+  end
+
+  resources :holidays, only: [:index, :create, :destroy] do
   end
 
   devise_scope :user do

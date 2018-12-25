@@ -1,0 +1,161 @@
+(function() {
+  'use strict';
+  angular.module('somsri.somsri.vacation.calendar', [
+  ])
+  .controller('vacationCalendarCtrl', ['$rootScope', 'moment', 'translateFilter', 'calendarService', function ($rootScope, moment, translateFilter, service) {
+    var ctrl = this;
+    var holidays = [];
+    var sickLeaves = [];
+    var vacationLeaves = [];
+    var switchDates = [];
+    var workAtHomes = [];
+    ctrl.year = moment().add(543, 'years').format('YYYY');
+
+    $rootScope.menu = translateFilter('calendar');
+    $rootScope.canManage("all", function(canManange) {
+      ctrl.isAdmin = canManange
+    });
+
+    ctrl.name = '';
+    ctrl.end_date = new Date();
+    ctrl.start_date = new Date();
+
+    ctrl.optionsChange = function() {
+      if (ctrl.start_date === undefined || ctrl.end_date === undefined) {
+        return
+      }
+    };
+    ctrl.openStartDatePopup = function() {
+      ctrl.startDatePopup.opened = true;
+    };
+    ctrl.openEndDatePopup = function() {
+      ctrl.endDatePopup.opened = true;
+    };
+    ctrl.startDatePopup = { opened: false };
+    ctrl.endDatePopup = { opened: false };
+
+    ctrl.submitNewHoliday = function() {
+      var startDate = moment(ctrl.start_date);
+      var endDate = moment(ctrl.end_date);
+      if (startDate.isAfter(endDate, 'days')) {
+        angular.element('#addHolidayModal').modal('hide');
+        $rootScope.openErrorModal('วันที่ไม่ถูกต้อง', function() {
+          angular.element('#addHolidayModal').modal('show');
+        });
+        return;
+      }
+
+      ctrl.isSaving = true;
+      service.newHoliday({
+        name: ctrl.name,
+        start_at: moment(ctrl.start_date).format('DD-MM-YYYY'),
+        end_at: moment(ctrl.end_date).format('DD-MM-YYYY'),
+        detail: ctrl.detail
+      }).then(function(response) {
+        angular.element('#addHolidayModal').modal('hide');
+        $rootScope.openSuccessModal(translateFilter('save_success'));
+        ctrl.isSaving = false;
+        loadHolidays();
+      }, function(e) {
+        ctrl.isSaving = false;
+        console.log(e)
+      });
+    };
+
+    ctrl.deleteHoliday = function(id) {
+      $rootScope.openConfirmationModal(translateFilter('confirm_delete_holiday'), '', function() {
+        ctrl.isSaving = true;
+        service.deleteHoliday(id).then(function(response) {
+          $rootScope.openSuccessModal(translateFilter('holiday_delete_success'));
+          loadHolidays();
+          ctrl.isSaving = false;
+        }, function(e) {
+          $rootScope.openErrorModal(translateFilter('holiday_delete_failed'));
+          ctrl.isSaving = false;
+          console.log(e)
+        });
+      });
+    };
+
+    function loadHolidays() {
+      service.getHolidays().then(function(response) {
+        ctrl.holidays = response.data;
+        prepareHolidayEvents(response.data);
+      });
+    }
+
+    function loadVacations() {
+      service.getVacations().then(function(response) {
+        prepareVacationEvents(response.data);
+      });
+    }
+
+    function rerenderCalendarEvents() {
+      angular.element('#calendar').fullCalendar('removeEvents');
+      angular.element('#calendar').fullCalendar('addEventSource', holidays);
+      angular.element('#calendar').fullCalendar('addEventSource', { events: sickLeaves, color: '#9014FE' });
+      angular.element('#calendar').fullCalendar('addEventSource', { events: vacationLeaves, color: '#4A90E2' });
+      angular.element('#calendar').fullCalendar('addEventSource', { events: switchDates, color: '#417505' });
+      angular.element('#calendar').fullCalendar('addEventSource', { events: workAtHomes, color: '#4A4A4A' });
+      angular.element('#calendar').fullCalendar('rerenderEvents');
+    }
+
+    function prepareHolidayEvents(events) {
+      holidays = [];
+      for (var i = 0; i < events.length; i++) {
+        var holiday = events[i];
+        var startDate = moment(holiday.start_at);
+        var endDate = moment(holiday.end_at);
+        var event = {
+          'title': holiday.name,
+          'start': holiday.start_at,
+          'allDay': true
+        }
+        if (!startDate.isSame(endDate)) {
+          event['end'] = endDate.add(1, 'days').format('YYYY-MM-DD');
+        }
+        holidays.push(event);
+      }
+      rerenderCalendarEvents();
+    }
+
+    function prepareVacationEvents(events) {
+      sickLeaves = [];
+      vacationLeaves = [];
+      switchDates = [];
+      workAtHomes = [];
+      for (var i = 0; i < events.length; i++) {
+        var vacation = events[i];
+        var vacationTypeName = vacation.vacation_type.name;
+        var title = vacation.requester + " " + vacation.detail;
+        var startDate = moment(vacation.start_at);
+        var endDate = moment(vacation.end_at);
+        var event = {
+          'title': title,
+          'start': vacation.start_at,
+          'allDay': true
+        }
+        if (!startDate.isSame(endDate)) {
+          event['end'] = endDate.add(1, 'days').format('YYYY-MM-DD');
+        }
+
+        if (vacationTypeName == 'ลาป่วย') {
+          sickLeaves.push(event);
+        } else if (vacationTypeName == 'ลากิจ') {
+          vacationLeaves.push(event);
+        } else if (vacationTypeName == 'สลับวันทำงาน') {
+          event['end'] = null;
+          switchDates.push(event);
+        } else if (vacationTypeName == 'ทำงานที่บ้าน') {
+          workAtHomes.push(event);
+        }
+      }
+      rerenderCalendarEvents();
+    }
+
+    angular.element('#calendar').fullCalendar({});
+
+    loadHolidays();
+    loadVacations();
+  }]);
+})();

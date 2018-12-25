@@ -4,6 +4,7 @@
   ])
   .controller('confirmModalCtrl', ['$scope', '$uibModalInstance', function($scope, $uibModalInstance) {
     this.message = $scope.message;
+    this.detail = $scope.detail;
 
     this.ok = function () {
       $uibModalInstance.close(true);
