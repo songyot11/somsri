@@ -389,6 +389,7 @@
 
     function statusFormmatter(value, row, index) {
       console.log(row, value, index)
+      
       if (row['inventory_status'] == 'rejected') {
         return '<span class="pointer" data-trigger="hover" data-container="body" data-toggle="popover" data-placement="top" title="Reason" data-content="' + row['comment'] + '">' +  row['inventory_status'] + '</span>' 
       } else {
