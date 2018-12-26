@@ -2,10 +2,9 @@
   'use strict';
   angular.module('somsri.somsri.confirm_inventory_modal', [
   ])
-  .controller('confirmInventoryModalCtrl', ['$scope', '$uibModalInstance','$rootScope', function($scope, $uibModalInstance, $rootScope) {
+  .controller('confirmInventoryModalCtrl', ['$scope', '$uibModalInstance', function($scope, $uibModalInstance) {
     this.message = $scope.message;
     this.detail = $scope.detail;
-    this.comment = ""
     
 
     this.ok = function () {
@@ -15,10 +14,6 @@
     this.close = function () {
       $uibModalInstance.close(false);
     };
-
-    this.comments = function() {
-      $rootScope.comment = this.comment
-    }
     
 
   }]);

@@ -91,7 +91,7 @@
             ctrl.category_barcode = value.categories.category_barcode
             ctrl.date_add = value.date_add
             ctrl.employee_id = value.employee_id
-            if (ctrl.employee_id) {
+            if (ctrl.employee_id && ctrl.employee_id != 0) {
               getEmployeeById(ctrl.employee_id)
             } else {
               ctrl.employee_name = "-"
@@ -160,6 +160,10 @@
 
           if (!ctrl.description) {
             ctrl.description = "-"
+          }
+
+          if (ctrl.employee_id == 0) {
+            ctrl.employee_name = ""
           }
 
           var inventory_datas = {
@@ -291,9 +295,11 @@
         };
 
         function getEmployeeById(id) {
-          employeesService.getEmployee(id).then(function(resp) {
+          if (ctrl.employee_id != 0) {
+              employeesService.getEmployee(id).then(function(resp) {
               ctrl.employee_name = resp.data.employee_display_name
-          })
+            })
+          }
         }
 
         ctrl.openDatePurchasePopup = function() {

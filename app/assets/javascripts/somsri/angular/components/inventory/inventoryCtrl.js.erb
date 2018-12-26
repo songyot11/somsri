@@ -267,7 +267,7 @@
     }
 
     ctrl.deleteInventory = function(id) {
-      $rootScope.openConfirmationModal(translateFilter('delete_expense'), function(resp){
+      $rootScope.openConfirmationInventoryModal(translateFilter('delete_expense'), function(resp){
         services.removeInventory(id).then(function(resp) {
           getInventory()
           ctrl.message = translateFilter('inventory_delete_success')
@@ -406,7 +406,7 @@
 
     ctrl.deleteInventoryRequest = function(id) {
 
-      $rootScope.openConfirmationInventoryModal(translateFilter('delete_expense'), function(){
+      $rootScope.openConfirmationInventoryRequestModal(translateFilter('delete_expense'), function(){
         ctrl.comment = $rootScope.comment
         $rootScope.comment = null
 

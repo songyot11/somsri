@@ -1,10 +1,15 @@
 <div>
-  <div class="modal-body" id="inventory-modal-body">
+  <div class="modal-body" id="inventory-modal-body" tabindex="-1" role="dialog" aria-labelledby="inventory-modal-body">
     <div class="row">
       <div class="col-md-12">
         <h4 class="modal-title text-center mt-50" id="modal-title">{{confirm.message}}</h4>
       </div>
     </div>
+     <form>
+      <div class=“form-group”>
+       <textarea class=“form-control” id=“exampleFormControlTextarea1" rows=“3” ng-change="confirm.comments()" ng-model="confirm.comment"></textarea>
+     </div>
+    </form>
     <div class="row mt-20">
       <div class="col-md-3 pull-right">
         <button class="btn btn-custom btn-gray" ng-click="confirm.close()">{{ 'cancel' | translate }}</button>

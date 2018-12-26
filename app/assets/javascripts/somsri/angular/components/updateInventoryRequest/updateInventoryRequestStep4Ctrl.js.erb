@@ -109,7 +109,6 @@
     }
 
     function autoCheckName(data) {
-      
     	if(data[0].id){
         for(var i = 0;i < ctrl.employee_lists.length; i++){
           if(data[0].id == ctrl.employee_lists[i].id){
@@ -126,7 +125,7 @@
     	var data = []
     	data.push({
     		name: ctrl.employee_name,
-        id: -1
+        id: 0
     	})
       autoCheckName(data);
     }
