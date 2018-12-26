@@ -122,30 +122,30 @@
           generateCategoryBarcode(ctrl.category)
 
           if (ctrl.checkName) {
-            var data = {
-              first_name: ctrl.employee_name,
-              email: "",
-              password: ""
-            }
-            if (ctrl.employee_name) {
-              employeesService.createEmployee(data).then(function(resp) {
-                ctrl.employee_id = resp.data.employee.id
-                beforeCreate(changePrice)
-              })
-            } else {
-              ctrl.employee_id = 0
-              beforeCreate(changePrice)
-            }
+            ctrl.employee_id = 0
+            beforeCreate(changePrice)
+            // var data = {
+            //   first_name: ctrl.employee_name,
+            //   email: "",
+            //   password: ""
+            // }
+            // if (ctrl.employee_name) {
+            //   employeesService.createEmployee(data).then(function(resp) {
+            //     ctrl.employee_id = resp.data.employee.id
+            //     beforeCreate(changePrice)
+            //   })
+            // } else {
+            //   ctrl.employee_id = 0
+            //   beforeCreate(changePrice)
+            // }
           } else {
             if (ctrl.employee_name) {
               beforeCreate(changePrice)
             } else {
               ctrl.employee_id = 0
               beforeCreate(changePrice)
-            }
-            
+            } 
           }
-
         };
 
         function beforeCreate(changePrice) {
@@ -156,6 +156,10 @@
 
           if (!ctrl.model) {
             ctrl.model = "-"
+          }
+
+          if (!ctrl.description) {
+            ctrl.description = "-"
           }
 
           var inventory_datas = {
@@ -237,6 +241,7 @@
             for(var i = 0;i < ctrl.employee_lists.length; i++){
               if(data[0].id == ctrl.employee_lists[i].id){
                 ctrl.checkName = false
+                break
               } else {
                 ctrl.checkName = true
               }

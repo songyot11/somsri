@@ -10,7 +10,7 @@ class InventoryRequestsController < ApplicationController
 		# render json: inventories_requests.as_json(methods: [:employee, :inventory]), status: :ok
 
 		@inventory_requests = @inventory_requests.paginate(page: params[:page], per_page: 10)
-
+		@inventory_requests = @inventory_requests.order(updated_at: :desc)
 		# if params[:page] && inventories_requests.total_pages < inventories_requests.current_page
 		# 	inventories_requests = get_inventories_request()
 		# end

@@ -191,14 +191,13 @@
 
     function updateInventoryRequest(inventory_datas, id) {
 
-      var data = {
-        first_name: ctrl.employee_name
-      }
+      // var data = {
+      //   first_name: ctrl.employee_name
+      // }
       if (ctrl.checkName) {
-        
-        employeesService.createEmployee(data).then(function(resp) {
-          ctrl.employee_id = resp.data.employee.id
-        })
+        // employeesService.createEmployee(data).then(function(resp) {
+        ctrl.employee_id = 0
+        // })
       }
 
       if (ctrl.is_save) {

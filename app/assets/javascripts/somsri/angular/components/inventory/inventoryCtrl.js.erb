@@ -81,8 +81,8 @@
     }
 
     var bootstrapTableOptionsInventory = {
-      sortName: 'date_add',
-      sortOrder: 'asc',
+      sortName: 'updated_at',
+      sortOrder: 'desc',
       columns : [{
         field: 'number',
         title: '#',
@@ -170,7 +170,7 @@
             var count = ctrl.datasExport.length
             for(var i = 0; i<count; i++) {
               datas.push({
-                number: i+1,
+                number: ((ctrl.currentPage - 1) * 10) + i + 1,
                 id: ctrl.datasExport[i].id,
                 item_name: ctrl.datasExport[i].item_name,
                 serial_number: ctrl.datasExport[i].serial_number,
@@ -282,8 +282,8 @@
     getInventory();
 
     var bootstrapTableOptionsInvetoryRequest = {
-      sortName: 'request_date',
-      sortOrder: 'asc',
+      sortName: 'updated_at',
+      sortOrder: 'desc',
       columns : [{
         field: 'number',
         title: '#',
@@ -291,7 +291,7 @@
         sortable: true,
       },{
         field: 'user_name',
-        title: translateFilter("User"),
+        title: translateFilter("user_request"),
         sortable: true,
       },{
         field: 'item_name',
@@ -355,7 +355,7 @@
                   status = "-"
                 }
                 datas.push({
-                  number: i+1,
+                  number: ((ctrl.requestCurrentPage - 1) * 10) + i + 1,
                   id: ctrl.datasReuestExport[i].id,
                   user_name: ctrl.datasReuestExport[i].user_name,
                   item_name: ctrl.datasReuestExport[i].item_name,
@@ -377,9 +377,6 @@
           ctrl.paginateButtonMaxSize = 5;
           inventory_request_table.bootstrapTable('load', ctrl.datasReuestExport);
         });
-    }
-
-    ctrl.selectCategory = function(str) {
     }
 
     ctrl.pageRequestChanged = function() {

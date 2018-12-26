@@ -40,13 +40,13 @@
     }
 
     ctrl.save = function() {
-      var data = {
-        first_name: ctrl.employee_name
-      }
+      // var data = {
+      //   first_name: ctrl.employee_name
+      // }
       if (ctrl.checkName) {
-        employeesService.createEmployee(data).then(function(resp) {
-          ctrl.employee_id = resp.data.employee.id
-        })
+        // employeesService.createEmployee(data).then(function(resp) {
+          ctrl.employee_id = 0
+        // })
       }
 
     	var changePrice = parseFloat(ctrl.price)
@@ -97,6 +97,7 @@
         for(var i = 0;i < ctrl.employee_lists.length; i++){
           if(data[0].id == ctrl.employee_lists[i].id){
             ctrl.checkName = false
+            break
           } else {
             ctrl.checkName = true
           }

@@ -27,6 +27,7 @@ class InventoriesController < ApplicationController
     inventories = qry_date_range(inventories, data_field, start_date_purchase, end_date_purchase)
     inventories = qry_date_range(inventories, data_field, start_date_add, end_date_add)
     inventories = inventories.paginate(page: page, per_page: 10)
+    inventories = inventories.order(updated_at: :desc)
 
 		result = {}
 		if params[:bootstrap_table].to_s == "1" 
