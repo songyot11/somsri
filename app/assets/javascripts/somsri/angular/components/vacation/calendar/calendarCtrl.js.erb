@@ -2,7 +2,7 @@
   'use strict';
   angular.module('somsri.somsri.vacation.calendar', [
   ])
-  .controller('vacationCalendarCtrl', ['$rootScope', 'moment', 'translateFilter', 'calendarService', function ($rootScope, moment, translateFilter, service) {
+  .controller('vacationCalendarCtrl', ['$rootScope', '$location', '$timeout', 'moment', 'translateFilter', 'calendarService', function ($rootScope, $location, $timeout, moment, translateFilter, service) {
     var ctrl = this;
     var holidays = [];
     var sickLeaves = [];
@@ -10,6 +10,8 @@
     var switchDates = [];
     var workAtHomes = [];
     ctrl.year = moment().add(543, 'years').format('YYYY');
+    ctrl.baseUrl = $location.$$protocol + '://' + $location.$$host;
+    ctrl.shareHolidayUrl = ctrl.baseUrl + '/holiday.ics';
 
     $rootScope.menu = translateFilter('calendar');
     $rootScope.canManage("all", function(canManange) {
@@ -76,6 +78,30 @@
         });
       });
     };
+
+    ctrl.copyToClipboard = function() {
+       // create temp element
+      var copyElement = document.createElement("span");
+      copyElement.appendChild(document.createTextNode(ctrl.shareHolidayUrl));
+      copyElement.id = 'tempCopyToClipboard';
+      angular.element(document.body.append(copyElement));
+
+      // select the text
+      var range = document.createRange();
+      range.selectNode(copyElement);
+      window.getSelection().removeAllRanges();
+      window.getSelection().addRange(range);
+
+      // copy & cleanup
+      document.execCommand('copy');
+      window.getSelection().removeAllRanges();
+      copyElement.remove();
+
+      ctrl.shareHolidayUrl = "Copied!";
+      $timeout(function() {
+        ctrl.shareHolidayUrl = ctrl.baseUrl + '/holiday.ics';
+      }, 1000);
+    }
 
     function loadHolidays() {
       service.getHolidays().then(function(response) {

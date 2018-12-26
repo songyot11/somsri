@@ -12,6 +12,7 @@ Rails.application.routes.draw do
   get "/main" => "menu#landing_main"
   get "/language" => "home#language"
   get "/locale" => "home#locale"
+  get 'holiday.ics' => 'holidays#share'
 
   resources :users, only: [] do
     collection do
