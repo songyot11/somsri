@@ -69,7 +69,6 @@
 		}
 
 		this.createManageInventoryRequest = function(data,inventory_request_id) {
-			console.log(inventory_request_id)
 			return $http.post('/inventory_requests/' + inventory_request_id + '/manage_inventories_requests', data)
 		}
 

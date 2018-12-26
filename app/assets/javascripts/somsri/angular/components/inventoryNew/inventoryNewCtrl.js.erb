@@ -70,7 +70,6 @@
               ctrl.price = ""
             }
 
-            console.log(value.date_purchase)
             if (value.date_purchase) {
               ctrl.datas.date_purchase = new Date(ctrl.datas.date_purchase)
             } else {
@@ -124,7 +123,9 @@
 
           if (ctrl.checkName) {
             var data = {
-              first_name: ctrl.employee_name
+              first_name: ctrl.employee_name,
+              email: "",
+              password: ""
             }
             if (ctrl.employee_name) {
               employeesService.createEmployee(data).then(function(resp) {
@@ -156,8 +157,6 @@
           if (!ctrl.model) {
             ctrl.model = "-"
           }
-
-          console.log("date_add",ctrl.date_add)
 
           var inventory_datas = {
             item_name: ctrl.name,
@@ -259,7 +258,6 @@
             if (ctrl.item_catogery[i].name == ctrl.category) {
               ctrl.category = ctrl.item_catogery[i].name
               ctrl.category_id = ctrl.item_catogery[i].id
-              console.log("category_id", ctrl.category_id)
             }
           }
         }

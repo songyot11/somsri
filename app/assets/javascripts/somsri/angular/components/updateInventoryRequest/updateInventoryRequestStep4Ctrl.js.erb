@@ -90,7 +90,6 @@
         ctrl.employee_name = ctrl.step.step4.send_to_employee_name
         ctrl.employee_id = ctrl.step.step4.send_to_employee_id
         ctrl.save_by_step4 = ctrl.step.step4.save_by
-     
       }
 		}
 
@@ -110,10 +109,9 @@
     }
 
     function autoCheckName(data) {
-      console.log("Data", data, ctrl.employee_lists.length)
+      
     	if(data[0].id){
         for(var i = 0;i < ctrl.employee_lists.length; i++){
-          console.log("id:", ctrl.employee_lists[i].id , data[0].id)
           if(data[0].id == ctrl.employee_lists[i].id){
             ctrl.checkName = false
             break
@@ -166,12 +164,14 @@
           autoCheckName(data)
         }
       });
-
-     
     };
 
     ctrl.save = function() {
+      ctrl.is_save = true
+      beforeSave()
+    }
 
+    function beforeSave() {
       var changePrice = parseFloat(ctrl.price)
       var checngeRequestDate = $filter('date')(new Date(ctrl.datas.request_date), 'yyyy-MM-ddTh:MM:ss')
 
@@ -195,15 +195,21 @@
         first_name: ctrl.employee_name
       }
       if (ctrl.checkName) {
-        console.log("checkName")
+        
         employeesService.createEmployee(data).then(function(resp) {
           ctrl.employee_id = resp.data.employee.id
         })
       }
 
+      if (ctrl.is_save) {
+        ctrl.step_num = 3
+      } else {
+        ctrl.step_num = 4
+      }
+
       var data = {
         manage_inventories_requests: {
-          step: 3,
+          step: ctrl.step_num,
           accept: "accept",
           save_by: ctrl.save_by,
           save_by_step2: ctrl.save_by_step2,
@@ -230,15 +236,25 @@
       })
     }
 
+    function isSave() {
+      if (ctrl.is_save) {
+          $rootScope.openInventory(1)
+      } else {
+        service.assigned(ctrl.real_id).then(function(resp) {
+          $rootScope.updateInventoryRequestStep5(ctrl.step, ctrl.real_id)
+        })
+      }
+    }
+
     function createManageInventory(data) {
       service.createManageInventoryRequest(data, ctrl.real_id).then(function(resp) {
-        $rootScope.openInventory(1)
+        isSave()
       })
     }
 
     function updateManageInventory(data) {
       service.updateManageInventoryRequest(data, ctrl.real_id , ctrl.manage_inventory_id).then(function(resp) {
-        $rootScope.openInventory(1)
+        isSave()
       })
     }
 
@@ -253,6 +269,7 @@
     }
 
     ctrl.continue = function() {
+      ctrl.is_save = false
   		ctrl.step.step4.send_to_employee_name = ctrl.employee_name
     	ctrl.step.step4.send_to_employee_id = ctrl.employee_id
     	ctrl.step.step4.save_by = ctrl.name_setting 
@@ -265,9 +282,9 @@
           ctrl.step.step4.send_to_employee_id = ctrl.employee_id
         })
       }
-      service.assigned(ctrl.real_id).then(function(resp) {
-        $rootScope.updateInventoryRequestStep5(ctrl.step, ctrl.real_id)
-      })
+
+      beforeSave()
+     
     }
 
     function getSetting() {

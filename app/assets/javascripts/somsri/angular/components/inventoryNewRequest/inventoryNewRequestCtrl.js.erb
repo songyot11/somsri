@@ -45,13 +45,12 @@
       }
       if (ctrl.checkName) {
         employeesService.createEmployee(data).then(function(resp) {
+          console.log("createEmployee", resp)
           ctrl.employee_id = resp.data.employee.id
         })
       }
 
-      console.log(ctrl.price)
     	var changePrice = parseFloat(ctrl.price)
-      console.log(changePrice)
     	var checngeRequestDate = $filter('date')(new Date(ctrl.datas.request_date), 'yyyy-MM-ddTh:MM:ss')
       if (!ctrl.real_id) {
         ctrl.inventory_status = 2

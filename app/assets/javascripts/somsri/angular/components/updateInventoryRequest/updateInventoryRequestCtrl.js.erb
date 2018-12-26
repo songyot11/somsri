@@ -6,7 +6,6 @@
 	$rootScope.menu = translateFilter("inventory_request")
 		var ctrl = this
 		ctrl.real_id = $state.params.id;
-    console.log("id", ctrl.real_id)
 		ctrl.active = 1
 		ctrl.step = {
     	step1: {
@@ -155,7 +154,6 @@
 
         service.updateInventoryRequest(inventory_datas, ctrl.real_id).then(function(resp) {
           service.reject(ctrl.real_id).then(function(resp) {
-            console.log("back")
             $window.history.back();
           })
         })
