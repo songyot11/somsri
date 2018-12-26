@@ -45,7 +45,6 @@
       }
       if (ctrl.checkName) {
         employeesService.createEmployee(data).then(function(resp) {
-          console.log("createEmployee", resp)
           ctrl.employee_id = resp.data.employee.id
         })
       }
