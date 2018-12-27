@@ -24,7 +24,7 @@
                               <div class="col-md-12 input-group">
                                 <div class="row">
                                   <div class="col-md-2 pl-20">
-                                      <i class="glyphicon glyphicon-search"></i>
+                                    <i class="fa fa-search glyphicon-search"></i>
                                   </div>
                                   <div class="col-md-10">
                                        <input class="col-md-3 form-control input-lg" id="searchField" type="text" ng-model="inventory.searchKeyword" ng-change="inventory.searchInventory()" placeholder="{{ 'inventory_search' | translate }}" class="search-sp" />
@@ -71,7 +71,7 @@
                               <div class="col-md-12 input-group">
                                 <div class="row">
                                   <div class="col-md-2 pl-20">
-                                      <i class="glyphicon glyphicon-search"></i>
+                                    <i class="fa fa-search glyphicon-search"></i>
                                   </div>
                                   <div class="col-md-10">
                                       <input type="text" class="col-md-3 form-control input-lg" placeholder="Search" />
@@ -247,7 +247,7 @@
             <form id="slectionForm">
               <input type="checkbox" ng-click="inventory.toggleAll()" ng-model="inventory.isAllSelected"> Select all
               <br>
-              <div ng-repeat="item in inventory.check_box">
+              <div class="col-md-6 mt-10" ng-repeat="item in inventory.check_box">
                   <input type="checkbox" ng-model="item.selected" ng-change="inventory.checkBoxToggled()"> {{ item.value | translate }}
               </div>
             </form>
