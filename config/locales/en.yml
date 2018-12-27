@@ -85,12 +85,12 @@ en:
   miss: Miss.
 
   signature: "Signature"
-  private_teacher_fund: "Private Teacher Aid fund" 
+  private_teacher_fund: "Private Teacher Aid fund"
   acc_social: "Acc. Social fund"
   acc_tax: "Acc. Tax"
   acc_income: "Acc. Income"
   net_income: "Net Income"
-  day_month_year: Day / Month / Year 
+  day_month_year: Day / Month / Year
   total_deduction: "Total Deduction"
   total_income: "Total Income"
   deduction: "Deduction"
@@ -274,6 +274,7 @@ en:
   save_data: "Do you want to save this change?"
 
   hello: "Hello world"
+  print_delivery_money: "Print Delivery Money"
 
   #Menu
   payroll: "Payroll"
@@ -322,13 +323,13 @@ en:
         social_insurance: "Social Sec."
         fee_etc: "Etc."
         pvf: "Private Teacher Aid fund"
-        advance_payment: "Adv. Payment" 
+        advance_payment: "Adv. Payment"
 
   date:
     month_names: [~, January, February, March, April, May, June, July, August, September, October, November, December]
     abbr_month_names: [~, Jan, Feb, Mar, Apr, May, Jun, Jul, Aug, Sep, Oct, Nov, Dec]
 
- 
+
 
   #Gender
   Male: "Male"
@@ -440,7 +441,7 @@ en:
   #Alumni
   year_of_graduation: "Graduation Year"
   status: "Status"
-  graduated_semester: "Graduation Semester" 
+  graduated_semester: "Graduation Semester"
   grade_classroom: "Level"
   locale: "en"
 
@@ -490,7 +491,7 @@ en:
   student: "Student"
   classroom_is_exist: "* This classroom is exist."
   next_classroom: "Next Classroom"
-  
+
   social_insurance_pdf: "No employees have to pay Social Security."
   skill: Skill
   score: Score
@@ -498,11 +499,11 @@ en:
   confirm_delete: Do you want to delete the classroom? (Deleting a classroom will not cause the student and teacher in the room to disappear.)
   bringback: Bring back to system
   # Option menu
-  choice: "Choice" 
-  edit: "Edit" 
-  resign: "Resing from school" 
+  choice: "Choice"
+  edit: "Edit"
+  resign: "Resing from school"
   delete: "Delete"
-  del_student: "Do you want to delete this student yes or no ?"  
+  del_student: "Do you want to delete this student yes or no ?"
   change_status_student_graduated: 'Would you like to change this student status "graduated" yes or no ?'
   change_status_student_resign: 'Would you like to change this student status "resign" yes or no ?'
   del_parent: "Do you want to delete this parent yes or no ?"
