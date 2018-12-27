@@ -162,6 +162,18 @@
         }]
       }
     }).state({
+    url: '/inventory/detal/supplier',
+    name: 'new_detal_supplier',
+    templateUrl: "<%= asset_path('somsri/angular/components/inventoryNewSupplier/DetalSupplierView.html') %>",
+    controller: 'inventoryNewSupplierCtrl as inventory',
+    resolve: {
+      resources: ['$ocLazyLoad', function($ocLazyLoad) {
+        return $ocLazyLoad.load([
+        ASSETS.somsri.somsri.new_inventory_supplier
+        ]);
+      }]
+    }
+    }).state({
       url: '/inventory',
       name: 'inventory',
       templateUrl: "<%= asset_path('somsri/angular/components/inventory/inventoryView.html') %>",
