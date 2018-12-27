@@ -138,7 +138,7 @@
     } 
 
     ctrl.reject = function() {
-      $rootScope.openConfirmationInventoryModal(translateFilter("delete_expense"), function(){
+      $rootScope.openConfirmationInventoryRequestModal(translateFilter("delete_expense"), function(){
         ctrl.comment = $rootScope.comment
         $rootScope.comment = null
         var changePrice = parseFloat(ctrl.price)
