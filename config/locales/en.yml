@@ -470,6 +470,12 @@ en:
   done: "Done"
   assigned: "Assigned"
 
+  #inventory supplier
+  inventory_supplier: "Supplier"
+  list_supplier: "Supplier list"
+  add_supplier: "+ Add supplier"
+  detal_supplier: "Detal supplier"
+
   # Rollcall
   monthly: "Month"
   student_record: "Attendance Record"

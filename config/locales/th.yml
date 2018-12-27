@@ -479,6 +479,14 @@ th:
   price: "ราคา"
   user_request: "ชื่อผู้ขอ"
 
+  #inventory supplier
+  inventory_supplier: "ร้านค้า"
+  list_supplier: "รายการร้านค้า"
+  add_supplier: "+ เพิ่มร้านค้า"
+  detal_supplier: "รายละเอียดร้านค้า"
+  supplier: "ชื่อร้านค้า"
+  addate: "ที่อยู่"
+
   # Rollcall
   monthly: ประจำเดือน
   student_record: แบบบันทึกเวลาเรียนชั้นมัธยมศึกษาปีที่

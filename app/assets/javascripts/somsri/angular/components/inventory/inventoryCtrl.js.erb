@@ -14,6 +14,7 @@
   $rootScope.loadAndAuthorizeResource("inventory", function(){
     var inventory_table = $('#inventory-table');
     var inventory_request_table = $('#inventory-request-table');
+    var inventory_supplier_table = $('#inventory-supplier-table');
     ctrl.currentPage = 1;
     ctrl.requestCurrentPage = 1;
     ctrl.sort = 'inventories.id';
@@ -180,12 +181,16 @@
 
     ctrl.changeTab = function(str) {
       ctrl.selectTab = str
-      if (str === "add_inventory") {
-        ctrl.url_path = "somsri#/inventory/new"
-      } else {
-        ctrl.url_path = "somsri#/inventory/new/request"
+        if (str === "add_inventory") {
+          ctrl.url_path = "somsri#/inventory/new"
+          } else if (str === "add_request"){
+          ctrl.url_path = "somsri#/inventory/new/request"
+        } else {
+          console.log("urlpath")
+          ctrl.url_path = "somsri#/inventory/new/supplier"
+          console.log("urlpath", ctrl.url_path)
+        }
       }
-    }
 
     ctrl.pageChanged = function() {
       getInventory()
@@ -402,6 +407,49 @@
     }
 
     getInventoryRequest();
+    //getInventorySupplier();
+
+      var bootstrapTableOptionsInvetorySupplier = {
+      sortName: 'request_date',
+      sortOrder: 'asc',
+      columns : [{
+        field: 'id',
+        title: '#',
+        classes: 'text-right',
+        sortable: true,
+      },{
+        field: 'supplier_name',
+        title: translateFilter("supplier"),
+        sortable: true,
+        class: 'font-weight-bold '
+      },{
+        field: 'addate',
+        title: translateFilter("addate"),
+        sortable: true,
+      },{
+        field: 'phone_number',
+        title: translateFilter("phone_number"),
+        sortable: true,
+      },{
+        field: 'email',
+        title: translateFilter("email"),
+        sortable: true,
+      },{
+        field: 'edit',
+        title: "",
+        sortable: false,
+        //formatter : editInventorySupplierFormatter
+      },{
+        field: 'delete',
+        title: "",
+        sortable: false,
+        //formatter : deleteInventorySupplierFormatter
+      }]
+    }
+
+    inventory_supplier_table.bootstrapTable($.extend(bootstrapTableOptionsInvetorySupplier, {toolbar: "date-filter"}));
+
+
 
   });
   }]);
