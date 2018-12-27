@@ -29,7 +29,7 @@
         <div class="col-md-6 col-btn-print-report">
 
           <button class="btn btn-custom btn-black mr-5" ng-click="invoiceReport.getStudentsForPrint()"><i class="fa fa-print"></i></button>
-            
+
           <button class="btn btn-custom btn-blue-sky" id="exportTable"><i class="fa fa-share-square-o" aria-hidden="true"></i>  {{ 'export' | translate }}</button>
 
         </div>
@@ -80,12 +80,12 @@
         <table id="for-print-table" class="scrollable-header text-table-invoicereport for-print"></table>
         <div class="row row-centered for-display">
           <div class="col-centered">
-            <ul uib-pagination ng-change="invoiceReport.pageChanged()" total-items="invoiceReport.totalItems" ng-model="invoiceReport.currentPage" max-size="invoiceReport.maxSize" class="pagination-md icon-pagination" 
-            boundary-link-numbers="true" 
+            <ul uib-pagination ng-change="invoiceReport.pageChanged()" total-items="invoiceReport.totalItems" ng-model="invoiceReport.currentPage" max-size="invoiceReport.maxSize" class="pagination-md icon-pagination"
+            boundary-link-numbers="true"
             num-pages="numPages"
             rotate="false"
             previous-text="&#xf104;"
-            next-text="&#xf105;"></ul> 
+            next-text="&#xf105;"></ul>
             </div>
         </div>
       </div>

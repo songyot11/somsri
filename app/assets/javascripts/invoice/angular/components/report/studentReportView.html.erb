@@ -110,7 +110,7 @@
                 <td>{{student.classroom}}</td>
                 <td class="numberic">{{student.classroom_number}}</td>
                 <td>{{student.parent_names}}</td>
-                <td>{{student.active_invoice_status}}</td>
+                <td>{{student.active_invoice_status | translate}}</td>
                 <td>{{student.active_invoice_payment_method}}</td>
                 <td class="text-currency numberic">{{student.active_invoice_tuition_fee.toFixed(2) | number:2}}</td>
                 <td class="text-currency numberic">{{student.active_invoice_other_fee.toFixed(2) | number:2}}</td>
@@ -133,8 +133,8 @@
           </table>
           <div class="row row-centered">
             <div class="col-centered">
-              <ul uib-pagination ng-change="studentReport.pageChanged()" total-items="studentReport.totalItems" ng-model="studentReport.currentPage" max-size="studentReport.maxSize" class="pagination-md icon-pagination" 
-              boundary-link-numbers="true" 
+              <ul uib-pagination ng-change="studentReport.pageChanged()" total-items="studentReport.totalItems" ng-model="studentReport.currentPage" max-size="studentReport.maxSize" class="pagination-md icon-pagination"
+              boundary-link-numbers="true"
               num-pages="numPages"
               rotate="false"
               previous-text="&#xf104;"
