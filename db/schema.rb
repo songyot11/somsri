@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20181221014300) do
+ActiveRecord::Schema.define(version: 20181225064941) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -376,9 +376,9 @@ ActiveRecord::Schema.define(version: 20181221014300) do
     t.string   "model"
     t.string   "description"
     t.float    "price"
-    t.string   "date_purchase"
-    t.string   "date_add"
-    t.string   "end_warranty"
+    t.datetime "date_purchase"
+    t.datetime "date_add"
+    t.datetime "end_warranty"
     t.integer  "employee_id"
     t.datetime "created_at",    null: false
     t.datetime "updated_at",    null: false
@@ -389,10 +389,13 @@ ActiveRecord::Schema.define(version: 20181221014300) do
     t.string   "item_name"
     t.string   "description"
     t.float    "price"
-    t.string   "request_date"
+    t.datetime "request_date"
     t.integer  "inventory_status"
     t.datetime "created_at",       null: false
     t.datetime "updated_at",       null: false
+    t.string   "comment"
+    t.integer  "employee_id"
+    t.index ["employee_id"], name: "index_inventory_requests_on_employee_id", using: :btree
   end
 
   create_table "invoice_statuses", force: :cascade do |t|
@@ -445,13 +448,13 @@ ActiveRecord::Schema.define(version: 20181221014300) do
     t.string   "save_by"
     t.string   "accept"
     t.string   "save_by_step2"
-    t.string   "date_purchase"
-    t.string   "date_send"
+    t.datetime "date_purchase"
+    t.datetime "date_send"
     t.string   "price"
     t.string   "save_by_step3"
-    t.string   "get_date"
+    t.datetime "get_date"
     t.string   "buy_slip"
-    t.string   "end_warranty"
+    t.datetime "end_warranty"
     t.string   "save_by_step4"
     t.string   "send_to_employee_name"
     t.string   "send_to_employee_id"

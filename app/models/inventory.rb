@@ -32,15 +32,4 @@ class Inventory < ApplicationRecord
 			self.all
 		end
 	end
-
-	def self.filter(keyword)
-		if keyword.present?
-			where(
-        "CAST(inventories.id AS TEXT) LIKE :search OR
-        category LIKE :search
-       ",
-        search: "%#{keyword}%")
-		else
-		end
-	end
 end

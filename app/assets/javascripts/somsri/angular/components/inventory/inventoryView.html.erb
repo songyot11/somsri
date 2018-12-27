@@ -15,7 +15,7 @@
         </div>
             <ul class="nav nav-tabs tabs-menu">
               <li class="cyan col-md-12">
-                <uib-tabset class="mt-0">
+                <uib-tabset class="mt-0" active="inventory.active">
                   <uib-tab id="inventory_list" index="0" heading="{{ 'inventory' | translate }}" ng-click="inventory.changeTab('add_inventory') " > 
                       <div class="col-md-12 panel-board">
                         <div class="row pl-0">
@@ -41,7 +41,7 @@
                           <table id="inventory-table" >
                             <thead>
                               <tr>
-                                <th data-field="id">#</th>
+                                <th data-field="number">#</th>
                                 <th data-field="item_name">Item Name</th>
                                 <th data-field="serial_number">Serial Number</th>
                                 <th data-field="model">Model</th>
@@ -50,7 +50,7 @@
                                 <th data-field="date_purchase">Date Purchase</th>
                                 <th data-field="category">Category</th>
                                 <th data-field="date_add">Date Add</th>
-                                <th data-field="edit "></th>
+                                <th data-field="edit"></th>
                                 <th data-field="delete"></th>
                               </tr>
                             </thead>
@@ -74,7 +74,7 @@
                                       <i class="glyphicon glyphicon-search"></i>
                                   </div>
                                   <div class="col-md-10">
-                                      <input type="text" class="col-md-3 form-control input-lg" placeholder="Search" />
+                                      <input type="text" class="col-md-3 form-control input-lg" id="searchRequestField" ng-model="inventory.searchRequestKeyword" ng-change="inventory.searchInventoryRequest()" placeholder="{{ 'inventory_request_search' | translate }}" />
                                   </div>
                                 </div>                        
                               </div>
@@ -84,22 +84,22 @@
                             <button type="button" class="btn btn-custom btn-blue btn-block  ng-binding" data-toggle="modal" data-target="#listrequest"><i class="fa fa-filter"></i> Filter</button>
                           </div>
                         </div>
-                        <div class="row">
-                          <table id="inventory-request-table" >
-                            <thead>
-                              <tr>
-                                <th data-field="id">#</th>
-                                <th data-field="user_name">Item Name</th>
-                                <th data-field="item_name">Serial Number</th>
-                                <th data-field="description">Description</th>
-                                <th data-field="price">Price</th>
-                                <th data-field="request_date">Date Purchase</th>
-                                <th data-field="inventory_status">Category</th>
-                                <th data-field="edit"></th>
-                                <th data-field="delete"></th>
-                              </tr>
-                            </thead>
-                          </table>
+                      <div class="row">
+                        <table id="inventory-request-table" >
+                          <thead>
+                            <tr>
+                              <th data-field="number">#</th>
+                              <th data-field="user_name">Item Name</th>
+                              <th data-field="item_name">Serial Number</th>
+                              <th data-field="description">Description</th>
+                              <th data-field="price">Price</th>
+                              <th data-field="request_date">Date Purchase</th>
+                              <th data-field="inventory_status">Category</th>
+                              <th data-field="edit"></th>
+                              <th data-field="delete"></th>
+                            </tr>
+                          </thead>
+                        </table>
                           <div class="row row-centered for-display">
                             <div class="col-centered">
                               <ul uib-pagination ng-change="inventory.pageRequestChanged()" total-items="inventory.requestTotalItems" ng-model="inventory.requestCurrentPage" max-size="inventory.paginateButtonMaxSize" class="pagination-md" num-pages="numPages" previous-text="‹" next-text="›" boundary-link-numbers='true' rotate='false'></ul>
@@ -116,6 +116,7 @@
     </div>
   </div>
 </div>
+
 <!-- Modal -->
 <div class="modal fade" id="listrequest" tabindex="-1" role="dialog" aria-labelledby="listrequest">
     <div class="modal-dialog" role="document">
@@ -129,45 +130,13 @@
             <div class="col-md-2">
               <b>สถานะ</b>
             </div>
-            <div class="col-md-10 pl-0">
-              <label class="checkbox-inline">
-                <input type="checkbox" id="inlineCheckbox1" value="option1"> All
-              </label>
-            </div>
-          </div>
-          <div class="row status mt-10">
-            <div class="col-md-4">
-              <label class="checkbox-inline">
-                <input type="checkbox" id="inlineCheckbox2" value="option1"> Pending
-              </label>
-            </div>
-            <div class="col-md-4">
-              <label class="checkbox-inline">
-                <input type="checkbox" id="inlineCheckbox3" value="option2"> Accept
-              </label>
-            </div>
-            <div class="col-md-4">
-              <label class="checkbox-inline">
-                <input type="checkbox" id="inlineCheckbox4" value="option3"> Reject
-              </label>
-            </div>
-          </div>
-          <div class="row status mt-10">
-            <div class="col-md-4">
-              <label class="checkbox-inline">
-                <input type="checkbox" id="inlineCheckbox5" value="option4"> Purchasing 
-              </label>
-            </div>
-            <div class="col-md-4">
-              <label class="checkbox-inline">
-                <input type="checkbox" id="inlineCheckbox6" value="option5"> Done
-              </label>
-            </div>
-            <div class="col-md-4">
-              <label class="checkbox-inline">
-                <input type="checkbox" id="inlineCheckbox7" value="option6"> Assigned 
-              </label>
-            </div>
+            <form id="slectionForm">
+              <input type="checkbox" ng-click="inventory.requestToggleAll()" ng-model="inventory.isAllRequsetSelected"> Select all
+              <br>
+              <div class="col-md-6 mt-10" ng-repeat="item in inventory.check_box_request">
+                  <input type="checkbox" ng-model="item.selected" ng-change="inventory.checkBoxRequestToggled()"> {{ item.value | translate }}
+              </div>
+            </form>
           </div>
           <div class="row mt-20">
             <div class="col-md-12">
@@ -178,9 +147,9 @@
             <div class="col-md-6"> จาก
               <div class="form-group">
                 <p class="input-group">
-                  <input id="date_purchase" type="text" class="form-control numberic" uib-datepicker-popup="dd/MM/yyyy" ng-model="inventory.datas.date_purchase" is-open="inventory.datePurchasePopup.opened" close-text="Close" required="true"/>
+                  <input id="date_purchase" type="text" class="form-control numberic" uib-datepicker-popup="dd/MM/yyyy" datepicker-options="{showWeeks:false}" ng-model="inventory.start_request_date" is-open="inventory.startDatePuchasingPopup.opened" close-text="Close" required="true"/>
                   <span class="input-group-btn">
-                    <button type="button" class="btn btn-default" ng-click="inventory.openDatePurchasePopup()"><i class="fa fa-calendar"></i></button>
+                    <button type="button" class="btn btn-default" ng-click="inventory.openStartDatePurchasingPopup()"><i class="fa fa-calendar"></i></button>
                   </span>
                 </p>
               </div>
@@ -188,9 +157,9 @@
             <div class="col-md-6">
                 <div class="form-group">ถึง
                   <p class="input-group">
-                    <input id="date_purchase" type="text" class="form-control numberic" uib-datepicker-popup="dd/MM/yyyy" ng-model="inventory.datas.date_purchase" is-open="inventory.datePurchasePopup.opened" close-text="Close" required="true"/>
+                    <input id="date_purchase" type="text" class="form-control numberic" uib-datepicker-popup="dd/MM/yyyy" datepicker-options="{showWeeks:false}" ng-model="inventory.end_request_date" is-open="inventory.endDatePurchasingPopup.opened" close-text="Close" required="true"/>
                     <span class="input-group-btn">
-                      <button type="button" class="btn btn-default" ng-click="inventory.openDatePurchasePopup()"><i class="fa fa-calendar"></i></button>
+                      <button type="button" class="btn btn-default" ng-click="inventory.openEndDatePurchasingPopup()"><i class="fa fa-calendar"></i></button>
                     </span>
                   </p>
                 </div>
@@ -205,9 +174,9 @@
             <div class="col-md-6"> จาก
               <div class="form-group">
                 <p class="input-group">
-                  <input id="date_purchase" type="text" class="form-control numberic" uib-datepicker-popup="dd/MM/yyyy" ng-model="inventory.datas.date_purchase" is-open="inventory.datePurchasePopup.opened" close-text="Close" required="true"/>
+                  <input id="date_purchase" type="text" class="form-control numberic" uib-datepicker-popup="dd/MM/yyyy" datepicker-options="{showWeeks:false}" ng-model="inventory.start_date_purchasing" is-open="inventory.startRequestDatePopup.opened" close-text="Close" required="true"/>
                   <span class="input-group-btn">
-                    <button type="button" class="btn btn-default" ng-click="inventory.openDatePurchasePopup()"><i class="fa fa-calendar"></i></button>
+                    <button type="button" class="btn btn-default" ng-click="inventory.openStartRequestDatePopup()"><i class="fa fa-calendar"></i></button>
                   </span>
                 </p>
               </div>
@@ -215,9 +184,9 @@
             <div class="col-md-6">
                 <div class="form-group">ถึง
                   <p class="input-group">
-                    <input id="date_purchase" type="text" class="form-control numberic" uib-datepicker-popup="dd/MM/yyyy" ng-model="inventory.datas.date_purchase" is-open="inventory.datePurchasePopup.opened" close-text="Close" required="true"/>
+                    <input id="date_purchase" type="text" class="form-control numberic" uib-datepicker-popup="dd/MM/yyyy" datepicker-options="{showWeeks:false}" ng-model="inventory.end_date_purchasing" is-open="inventory.endRequestDatePopup.opened" close-text="Close" required="true"/>
                     <span class="input-group-btn">
-                      <button type="button" class="btn btn-default" ng-click="inventory.openDatePurchasePopup()"><i class="fa fa-calendar"></i></button>
+                      <button type="button" class="btn btn-default" ng-click="inventory.openEndRequestDatePopup()"><i class="fa fa-calendar"></i></button>
                     </span>
                   </p>
                 </div>
@@ -225,7 +194,7 @@
           </div>
         </div>
         <div class="modal-footer">
-          <button type="button" class="btn btn-custom btn-blue ng-binding" ng-click="inventory.inventory_filter()">ตกลง</button>
+          <button type="button" class="btn btn-custom btn-blue ng-binding" ng-click="inventory.optionsRequestChange()" data-dismiss="modal">ตกลง</button>
           <button type="button" class="btn btn-custom btn-gray  ng-binding" data-dismiss="modal">ยกเลิก</button>
         </div>
       </div>
@@ -247,7 +216,7 @@
             <form id="slectionForm">
               <input type="checkbox" ng-click="inventory.toggleAll()" ng-model="inventory.isAllSelected"> Select all
               <br>
-              <div ng-repeat="item in inventory.check_box">
+              <div class="col-md-6 mt-10" ng-repeat="item in inventory.check_box">
                   <input type="checkbox" ng-model="item.selected" ng-change="inventory.checkBoxToggled()"> {{ item.value | translate }}
               </div>
             </form>
@@ -261,9 +230,9 @@
             <div class="col-md-6"> จาก
               <div class="form-group">
                 <p class="input-group">
-                  <input id="date_purchase" type="text" class="form-control numberic" uib-datepicker-popup="dd/MM/yyyy" ng-model="inventory.datas.date_purchase" is-open="inventory.datePurchasePopup.opened" close-text="Close" required="true"/>
+                  <input id="date_purchase" type="text" class="form-control numberic" uib-datepicker-popup="dd/MM/yyyy" datepicker-options="{showWeeks:false}" ng-model="inventory.start_date_purchase" is-open="inventory.startDatePuchasePopup.opened" close-text="Close" required="true"/>
                   <span class="input-group-btn">
-                    <button type="button" class="btn btn-default" ng-click="inventory.openDatePurchasePopup()"><i class="fa fa-calendar"></i></button>
+                    <button type="button" class="btn btn-default" ng-click="inventory.openStartDatePurchasePopup()"><i class="fa fa-calendar"></i></button>
                   </span>
                 </p>
               </div>
@@ -271,9 +240,9 @@
             <div class="col-md-6">
                 <div class="form-group">ถึง
                   <p class="input-group">
-                    <input id="date_purchase" type="text" class="form-control numberic" uib-datepicker-popup="dd/MM/yyyy" ng-model="inventory.datas.date_purchase" is-open="inventory.datePurchasePopup.opened" close-text="Close" required="true"/>
+                    <input id="date_purchase" type="text" class="form-control numberic" uib-datepicker-popup="dd/MM/yyyy" datepicker-options="{showWeeks:false}" ng-model="inventory.end_date_purchase" is-open="inventory.endDatePurchasePopup.opened" close-text="Close" required="true"/>
                     <span class="input-group-btn">
-                      <button type="button" class="btn btn-default" ng-click="inventory.openDatePurchasePopup()"><i class="fa fa-calendar"></i></button>
+                      <button type="button" class="btn btn-default" ng-click="inventory.openEndDatePurchasePopup()"><i class="fa fa-calendar"></i></button>
                     </span>
                   </p>
                 </div>
@@ -281,16 +250,16 @@
           </div>
           <div class="row mt-20">
             <div class="col-md-12">
-              <b>ช่วงวันที่จัดส่ง</b>
+              <b>ช่วงวันที่เพิ่ม</b>
             </div>
           </div>
           <div class="row mt-10">
             <div class="col-md-6"> จาก
               <div class="form-group">
                 <p class="input-group">
-                  <input id="date_purchase" type="text" class="form-control numberic" uib-datepicker-popup="dd/MM/yyyy" ng-model="inventory.datas.date_purchase" is-open="inventory.datePurchasePopup.opened" close-text="Close" required="true"/>
+                  <input id="date_purchase" type="text" class="form-control numberic" uib-datepicker-popup="dd/MM/yyyy" ng-model="inventory.start_date_add" is-open="inventory.startDateAddPopup.opened" close-text="Close" required="true"/>
                   <span class="input-group-btn">
-                    <button type="button" class="btn btn-default" ng-click="inventory.openDatePurchasePopup()"><i class="fa fa-calendar"></i></button>
+                    <button type="button" class="btn btn-default" ng-click="inventory.openStartDateAddPopup()"><i class="fa fa-calendar"></i></button>
                   </span>
                 </p>
               </div>
@@ -298,9 +267,9 @@
             <div class="col-md-6">
                 <div class="form-group">ถึง
                   <p class="input-group">
-                    <input id="date_purchase" type="text" class="form-control numberic" uib-datepicker-popup="dd/MM/yyyy" ng-model="inventory.datas.date_purchase" is-open="inventory.datePurchasePopup.opened" close-text="Close" required="true"/>
+                    <input id="date_purchase" type="text" class="form-control numberic" uib-datepicker-popup="dd/MM/yyyy" ng-model="inventory.end_date_add" is-open="inventory.endDateAddPopup.opened" close-text="Close" required="true"/>
                     <span class="input-group-btn">
-                      <button type="button" class="btn btn-default" ng-click="inventory.openDatePurchasePopup()"><i class="fa fa-calendar"></i></button>
+                      <button type="button" class="btn btn-default" ng-click="inventory.openEndDateAddPopup()"><i class="fa fa-calendar"></i></button>
                     </span>
                   </p>
                 </div>
@@ -308,10 +277,12 @@
           </div>
         </div>
         <div class="modal-footer">
-          <button type="button" class="btn btn-custom btn-blue ng-binding">ตกลง</button>
+          <button type="button" class="btn btn-custom btn-blue ng-binding" ng-click="inventory.optionsChange()" data-dismiss="modal">ตกลง</button>
           <button type="button" class="btn btn-custom btn-gray ng-binding" data-dismiss="modal">ยกเลิก</button>
         </div>
       </div>
     </div>
   </div>
+
+  <%= javascript_include_tag 'show_popover' %>
   

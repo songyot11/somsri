@@ -13,10 +13,12 @@
     };
 
     this.getEmployee = function(id, payroll_id) {
-      if(payroll_id){
-        return $http.get('/employees/' + id, { params: { payroll_id: payroll_id } });
-      } else {
-        return $http.get('/employees/' + id);
+      if (id != 0) {
+        if(payroll_id){
+          return $http.get('/employees/' + id, { params: { payroll_id: payroll_id } });
+        } else {
+          return $http.get('/employees/' + id);
+        }
       }
     };
 

@@ -33,7 +33,7 @@
           {name: "meeting_presentation_equipment", id: 8}
         ]
         ctrl.category_barcode_list = []
- 
+
         function initData() {
           if (!ctrl.real_id) { 
             return
@@ -91,7 +91,7 @@
             ctrl.category_barcode = value.categories.category_barcode
             ctrl.date_add = value.date_add
             ctrl.employee_id = value.employee_id
-            if (ctrl.employee_id) {
+            if (ctrl.employee_id && ctrl.employee_id != 0) {
               getEmployeeById(ctrl.employee_id)
             } else {
               ctrl.employee_name = "-"
@@ -110,14 +110,9 @@
 
         ctrl.save = function() {
           var changePrice = parseFloat(ctrl.price);
-          var changeDatePurchase = $filter('date')(new Date(ctrl.datas.date_purchase), 'yyyy-MM-ddTh:MM:ss')
-          var changeDateEndWarranty = ""
-          if (ctrl.datas.end_warranty) {
-            changeDateEndWarranty = $filter('date')(new Date(ctrl.datas.end_warranty), 'yyyy-MM-ddTh:MM:ss')
-          }
           
           if (!ctrl.real_id) {
-            ctrl.date_add = $filter('date')(new Date(Date()), 'dd/MM/yyyy')
+            ctrl.date_add = Date()
           }
 
           if (ctrl.category == translateFilter("select_category")) {
@@ -127,31 +122,33 @@
           generateCategoryBarcode(ctrl.category)
 
           if (ctrl.checkName) {
-            var data = {
-              first_name: ctrl.employee_name
-            }
-            if (ctrl.employee_name) {
-              employeesService.createEmployee(data).then(function(resp) {
-                ctrl.employee_id = resp.data.employee.id
-                beforeCreate(changePrice,changeDatePurchase,changeDateEndWarranty)
-              })
-            } else {
-              ctrl.employee_id = 0
-              beforeCreate(changePrice,changeDatePurchase,changeDateEndWarranty)
-            }
+            ctrl.employee_id = 0
+            beforeCreate(changePrice)
+            // var data = {
+            //   first_name: ctrl.employee_name,
+            //   email: "",
+            //   password: ""
+            // }
+            // if (ctrl.employee_name) {
+            //   employeesService.createEmployee(data).then(function(resp) {
+            //     ctrl.employee_id = resp.data.employee.id
+            //     beforeCreate(changePrice)
+            //   })
+            // } else {
+            //   ctrl.employee_id = 0
+            //   beforeCreate(changePrice)
+            // }
           } else {
             if (ctrl.employee_name) {
-              beforeCreate(changePrice,changeDatePurchase,changeDateEndWarranty)
+              beforeCreate(changePrice)
             } else {
               ctrl.employee_id = 0
-              beforeCreate(changePrice,changeDatePurchase,changeDateEndWarranty)
-            }
-            
+              beforeCreate(changePrice)
+            } 
           }
-
         };
 
-        function beforeCreate(changePrice,changeDatePurchase,changeDateEndWarranty) {
+        function beforeCreate(changePrice) {
 
           if (!ctrl.serial_number) {
             ctrl.serial_number = "-"
@@ -161,15 +158,23 @@
             ctrl.model = "-"
           }
 
+          if (!ctrl.description) {
+            ctrl.description = "-"
+          }
+
+          if (ctrl.employee_id == 0) {
+            ctrl.employee_name = ""
+          }
+
           var inventory_datas = {
             item_name: ctrl.name,
             serial_number: ctrl.serial_number,
             model: ctrl.model,
             description: ctrl.description,
             price: changePrice,
-            date_purchase: changeDatePurchase,
+            date_purchase: ctrl.datas.date_purchase,
             date_add: ctrl.date_add,
-            end_warranty: changeDateEndWarranty,
+            end_warranty: ctrl.datas.end_warranty,
             employee_id: ctrl.employee_id
           }
 
@@ -240,6 +245,7 @@
             for(var i = 0;i < ctrl.employee_lists.length; i++){
               if(data[0].id == ctrl.employee_lists[i].id){
                 ctrl.checkName = false
+                break
               } else {
                 ctrl.checkName = true
               }
@@ -289,9 +295,11 @@
         };
 
         function getEmployeeById(id) {
-          employeesService.getEmployee(id).then(function(resp) {
+          if (ctrl.employee_id != 0) {
+              employeesService.getEmployee(id).then(function(resp) {
               ctrl.employee_name = resp.data.employee_display_name
-          })
+            })
+          }
         }
 
         ctrl.openDatePurchasePopup = function() {

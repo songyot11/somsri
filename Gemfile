@@ -74,6 +74,10 @@ gem 'spreadsheet'
 gem 'bootstrap-sass', '~> 3.3.7'
 gem 'numbers_in_words'
 
+gem 'ckeditor'
+
+gem 'icalendar'
+
 group :development, :test do
   # Call 'byebug' anywhere in the code to stop execution and get a debugger console
   gem 'byebug', platform: :mri
