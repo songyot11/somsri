@@ -44,7 +44,7 @@
             </div>
             <div class="dropdown pull-right mr-20">
               <h4 id="semester-list" class="dropdown-label" data-toggle="dropdown">
-              <strong>{{ 'semester' | translate }}</strong> <span ng-bind="studentReport.currentSemesterString" ></span>
+              <strong>{{ 'semester' | translate }}</strong> <span ng-bind="studentReport.currentSemesterString"></span>
                 <i class="fa fa-angle-down" aria-hidden="true"></i>
               </h4>
               <ul class="dropdown-menu" aria-labelledby="semester-list">
@@ -54,7 +54,7 @@
                   </a>
                 </li>
                 <li>
-                  <a class="blue-highlight" ng-click="studentReport.switchSemester('other')">
+                  <a class="blue-highlight" ng-click="studentReport.switchSemester('all_semesters' | translate)">
                     {{ 'semester_nofix' | translate }}
                   </a>
                 </li>

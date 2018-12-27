@@ -234,7 +234,7 @@ en:
   remark: "Remark"
 
   semester: "Semester"
-  semester_nofix: "All semesters"
+  semester_nofix: "All"
   payment_status: "Payment status"
   number1: "Number"
   tuition_fee: "Tuition Fee"
@@ -242,6 +242,7 @@ en:
   year_paid_amount: "Annual paid Amount"
   total_paid: "Amount paid"
   paid_date: "Payment Date"
+  all_semesters: "All"
 
   show_invoices: "Display Invoices"
   chose_type: "Choose"
