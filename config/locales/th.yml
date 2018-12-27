@@ -234,7 +234,7 @@ th:
   remark: "หมายเหตุ"
 
   semester: "ภาคการศึกษา"
-  semester_nofix: "ไม่ระบุภาคการเรียน"
+  semester_nofix: "ทั้งหมด"
   payment_status: "สถานะการชำระ"
   number1: "เลขที่"
   tuition_fee: "ค่าธรรมเนียมการศึกษา"
@@ -242,6 +242,7 @@ th:
   year_paid_amount: "ยอดชำระทั้งปี"
   total_paid: "รวมยอดชำระทั้งหมด"
   paid_date: "วันที่ชำระ"
+  all_semesters: "ทั้งหมด"
 
   show_invoices: "แสดงรายการใบเสร็จ"
   chose_type: "เลือกประเภท"
