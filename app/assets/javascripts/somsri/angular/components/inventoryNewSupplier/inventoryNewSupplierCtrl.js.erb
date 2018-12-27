@@ -1,0 +1,37 @@
+(function() {
+  'use strict';
+    angular.module('somsri.somsri.inventory_supplier_new', [])
+    .controller('inventoryNewSupplierCtrl', ['$compile', '$scope', '$window', '$filter', '$rootScope', '$timeout', 'translateFilter', '$uibModal', 'Upload', '$state' ,'inventorySupplierService', function($compile, $scope, $window, $filter, $rootScope, $timeout, translateFilter, $uibModal, Upload, $state, service) {
+    $rootScope.menu = translateFilter("inventory_request")
+    var ctrl = this
+    var angularScopeRoot = 'angular.element(document.getElementById("angularCtrl")).scope().$root'
+    var angularScopeInventoryNew = 'angular.element(document.getElementById("angularCtrl")).scope().inventoryNewRequestCtrl'
+    var angularCtrlStr = 'angular.element(document.getElementById("angularCtrl")).scope().inventoryNewRequest'
+    ctrl.real_id = $state.params.id;
+    ctrl.name = ""
+    ctrl.address = ""
+    ctrl.phone_number = ""
+    ctrl.email = ""
+    ctrl.add_button = "add"
+
+    function initData() {
+      if (!ctrl.real_id) { 
+        return
+      }
+
+      ctrl.add_button = "edit"
+
+      service.show(ctrl.real_id).then(function(resp) {
+        var value = resp.data
+        ctrl.datas = resp.data
+        ctrl.name = value.name
+        ctrl.address = value.address
+        ctrl.phone_number = value.phone_number
+        ctrl.email = value.email
+      })
+    }
+
+    initData()
+
+  }]);
+})();

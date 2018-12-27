@@ -6,6 +6,7 @@
 		this.newInventoryRequest = function(data) {
 			return $http.post('/inventory_requests', data)
 		};
+
 		this.getInventoryRequest = function(page, search_keyword, start_request_date, end_request_date, get_request_selected, start_date_purchasing, end_date_purchasing) {
 			return $http.get('/inventory_requests',{
 				params: {
@@ -35,6 +36,7 @@
 							data: { inventories_request: data }
 						});
 		};
+		
 		//[:approve, :reject ,:pending, :accept, :purchasing, :done, :assinged]
 
 		this.approve = function(id) {

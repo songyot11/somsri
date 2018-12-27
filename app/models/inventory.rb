@@ -2,6 +2,7 @@ class Inventory < ApplicationRecord
 	# has_many :inventory_requestrak
 	belongs_to :employee
     has_one :category
+    belongs_to :supplier
 	validates :item_name, presence: true
 
     def categories

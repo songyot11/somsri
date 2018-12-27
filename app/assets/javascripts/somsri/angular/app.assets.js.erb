@@ -63,7 +63,8 @@
           files: [
             "<%= asset_path('somsri/angular/components/inventory/inventoryCtrl.js') %>",
             "<%= asset_path('somsri/angular/components/inventory/inventoryService.js') %>",
-            "<%= asset_path('somsri/angular/components/inventoryNewRequest/inventoryRequestService.js') %>"
+            "<%= asset_path('somsri/angular/components/inventoryNewRequest/inventoryRequestService.js') %>",
+            "<%= asset_path('somsri/angular/components/inventoryNewSupplier/inventorySupplierService.js') %>" 
           ]
         },
         'inventoryNew': {
@@ -114,6 +115,13 @@
             "<%= asset_path('somsri/angular/components/updateInventoryRequest/updateInventoryRequestStep5Ctrl.js') %>",
             "<%= asset_path('somsri/angular/components/inventoryNewRequest/inventoryRequestService.js') %>",
             "<%= asset_path('main/angular/components/setting/settingService.js') %>"
+          ]
+        },
+        'inventory_supplier': {
+          name: 'somsri.somsri.inventory_supplier',
+          files: [
+          "<%= asset_path('somsri/angular/components/inventoryNewSupplier/inventoryNewSupplierCtrl.js') %>",
+          "<%= asset_path('somsri/angular/components/inventoryNewSupplier/inventorySupplierService.js') %>" 
           ]
         },
         'inventory_new_request': {

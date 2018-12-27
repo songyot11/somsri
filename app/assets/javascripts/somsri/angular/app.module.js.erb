@@ -175,26 +175,14 @@
         }]
       }
     }).state({
-        url: '/vacation',
-        name: 'vacation_menu',
-        templateUrl: "<%= asset_path('somsri/angular/components/vacation/menu/menuView.html') %>",
-        controller: 'vacationMenuCtrl as menu',
-        resolve: {
-          resources: ['$ocLazyLoad', function($ocLazyLoad) {
-            return $ocLazyLoad.load([
-              ASSETS.somsri.somsri.vacation.menu
-            ]);
-          }]
-        }
-    }).state({
-      url: '/vacation/dashboard/:status',
-      name: 'vacation_dashboard',
-      templateUrl: "<%= asset_path('somsri/angular/components/vacation/dashboard/dashboardView.html') %>",
-      controller: 'vacationDashboardCtrl as dashboard',
+      url: '/inventory/new/request',
+      name: 'new_inventory_request',
+      templateUrl: "<%= asset_path('somsri/angular/components/inventoryNewRequest/inventoryNewRequestView.html') %>",
+      controller: 'inventoryNewRequestCtrl as inventory',
       resolve: {
         resources: ['$ocLazyLoad', function($ocLazyLoad) {
           return $ocLazyLoad.load([
-            ASSETS.somsri.somsri.vacation.dashboard
+            ASSETS.somsri.somsri.inventory_new_request
           ]);
         }]
       }
@@ -211,38 +199,38 @@
         }]
       }
     }).state({
-      url: '/vacation/calendar',
-      name: 'vacation_calendar',
-      templateUrl: "<%= asset_path('somsri/angular/components/vacation/calendar/calendarView.html') %>",
-      controller: 'vacationCalendarCtrl as calendar',
+      url: '/inventory/supplier/new',
+      name: 'inventory_supplier_new',
+      templateUrl: "<%= asset_path('somsri/angular/components/inventoryNewSupplier/inventoryNewSupplierView.html') %>",
+      controller: 'inventoryNewSupplierCtrl as inventory',
       resolve: {
         resources: ['$ocLazyLoad', function($ocLazyLoad) {
           return $ocLazyLoad.load([
-            ASSETS.somsri.somsri.vacation.calendar
+          ASSETS.somsri.somsri.inventory_supplier
           ]);
         }]
       }
     }).state({
-      url: '/inventory/new/request',
-      name: 'new_inventory_request',
-      templateUrl: "<%= asset_path('somsri/angular/components/inventoryNewRequest/inventoryNewRequestView.html') %>",
-      controller: 'inventoryNewRequestCtrl as inventory',
+      url: '/inventory/detail/supplier',
+      name: 'details_supplier',
+      templateUrl: "<%= asset_path('somsri/angular/components/inventoryNewSupplier/SupplierDetailsView.html') %>",
+      controller: 'inventoryNewSupplierCtrl as inventory',
       resolve: {
         resources: ['$ocLazyLoad', function($ocLazyLoad) {
           return $ocLazyLoad.load([
-            ASSETS.somsri.somsri.inventory_new_request
+          ASSETS.somsri.somsri.inventory_supplier
           ]);
         }]
       }
     }).state({
-      url: '/vacation/leave_rules',
-      name: 'vacation_leave_rules',
-      templateUrl: "<%= asset_path('somsri/angular/components/vacation/leave_rules/leaveRulesView.html') %>",
-      controller: 'vacationLeaveRulesCtrl as leaveRules',
+      url: '/inventory/supplier/:id',
+      name: 'update_suppliers',
+      templateUrl: "<%= asset_path('somsri/angular/components/inventoryNewSupplier/inventoryNewSupplierView.html') %>",
+      controller: 'inventoryNewSupplierCtrl as inventory',
       resolve: {
         resources: ['$ocLazyLoad', function($ocLazyLoad) {
           return $ocLazyLoad.load([
-            ASSETS.somsri.somsri.vacation.leave_rules
+          ASSETS.somsri.somsri.inventory_supplier
           ]);
         }]
       }
@@ -267,6 +255,54 @@
         resources: ['$ocLazyLoad', function($ocLazyLoad) {
           return $ocLazyLoad.load([
             ASSETS.somsri.somsri.vacation.setting
+          ]);
+        }]
+      }
+    }).state({
+      url: '/vacation/calendar',
+      name: 'vacation_calendar',
+      templateUrl: "<%= asset_path('somsri/angular/components/vacation/calendar/calendarView.html') %>",
+      controller: 'vacationCalendarCtrl as calendar',
+      resolve: {
+        resources: ['$ocLazyLoad', function($ocLazyLoad) {
+          return $ocLazyLoad.load([
+            ASSETS.somsri.somsri.vacation.calendar
+          ]);
+        }]
+      }
+    }).state({
+      url: '/vacation/leave_rules',
+      name: 'vacation_leave_rules',
+      templateUrl: "<%= asset_path('somsri/angular/components/vacation/leave_rules/leaveRulesView.html') %>",
+      controller: 'vacationLeaveRulesCtrl as leaveRules',
+      resolve: {
+        resources: ['$ocLazyLoad', function($ocLazyLoad) {
+          return $ocLazyLoad.load([
+            ASSETS.somsri.somsri.vacation.leave_rules
+          ]);
+        }]
+      }
+    }).state({
+        url: '/vacation',
+        name: 'vacation_menu',
+        templateUrl: "<%= asset_path('somsri/angular/components/vacation/menu/menuView.html') %>",
+        controller: 'vacationMenuCtrl as menu',
+        resolve: {
+          resources: ['$ocLazyLoad', function($ocLazyLoad) {
+            return $ocLazyLoad.load([
+              ASSETS.somsri.somsri.vacation.menu
+            ]);
+          }]
+        }
+    }).state({
+      url: '/vacation/dashboard/:status',
+      name: 'vacation_dashboard',
+      templateUrl: "<%= asset_path('somsri/angular/components/vacation/dashboard/dashboardView.html') %>",
+      controller: 'vacationDashboardCtrl as dashboard',
+      resolve: {
+        resources: ['$ocLazyLoad', function($ocLazyLoad) {
+          return $ocLazyLoad.load([
+            ASSETS.somsri.somsri.vacation.dashboard
           ]);
         }]
       }

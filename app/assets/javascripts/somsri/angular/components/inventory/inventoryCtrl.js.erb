@@ -1,8 +1,8 @@
 (function() {
   'use strict';
   angular.module('somsri.somsri.inventory', [])
-  .controller('inventoryCtrl', ['$compile', '$scope', '$window', '$filter', '$rootScope', '$timeout', 'translateFilter', '$uibModal', 'Upload', "inventoryService", "inventoryRequestService", '$state' ,'$location','dateFilter', 
-    function($compile, $scope, $window, $filter, $rootScope, $timeout, translateFilter, $uibModal, Upload, services, inventoryRequestService, $state, $location, dateFilter) {
+  .controller('inventoryCtrl', ['$compile', '$scope', '$window', '$filter', '$rootScope', '$timeout', 'translateFilter', '$uibModal', 'Upload', "inventoryService", "inventoryRequestService", '$state' ,'$location','dateFilter','inventorySupplierService', 
+    function($compile, $scope, $window, $filter, $rootScope, $timeout, translateFilter, $uibModal, Upload, services, inventoryRequestService, $state, $location, dateFilter, inventorySupplierService) {
     $rootScope.menu = translateFilter("inventory")
     var ctrl = this
     var angularScopeRoot = 'angular.element(document.getElementById("angularCtrl")).scope().$root'
@@ -14,6 +14,7 @@
   $rootScope.loadAndAuthorizeResource("inventory", function(){
     var inventory_table = $('#inventory-table');
     var inventory_request_table = $('#inventory-request-table');
+    var inventory_supplier_table = $('#inventory-supplier-table');
     ctrl.currentPage = 1;
     ctrl.requestCurrentPage = 1;
     ctrl.sort = 'inventories.id';
@@ -242,12 +243,16 @@
 
     ctrl.changeTab = function(str) {
       ctrl.selectTab = str
-      if (str === "add_inventory") {
-        ctrl.url_path = "somsri#/inventory/new"
-      } else {
-        ctrl.url_path = "somsri#/inventory/new/request"
+        if (str === "add_inventory") {
+          ctrl.url_path = "somsri#/inventory/new"
+          } else if (str === "add_request"){
+          ctrl.url_path = "somsri#/inventory/new/request"
+        } else {
+          console.log("urlpath")
+          ctrl.url_path = "somsri#/inventory/new/supplier"
+          console.log("urlpath", ctrl.url_path)
+        }
       }
-    }
 
     ctrl.pageChanged = function() {
       getInventory()
@@ -529,7 +534,118 @@
     };
 
     getInventoryRequest();
+    //getInventorySupplier();
 
+      var bootstrapTableOptionsInvetorySupplier = {
+      sortName: 'request_date',
+      sortOrder: 'asc',
+      columns : [{
+        field: 'id',
+        title: '#',
+        classes: 'text-right',
+        sortable: true,
+      },{
+        field: 'name',
+        title: translateFilter("supplier"),
+        sortable: true,
+        class: 'font-weight-bold '
+      },{
+        field: 'address',
+        title: translateFilter("addate"),
+        sortable: true,
+      },{
+        field: 'phone_number',
+        title: translateFilter("phone_number"),
+        sortable: true,
+      },{
+        field: 'email',
+        title: translateFilter("email"),
+        sortable: true,
+      },{
+        field: 'edit',
+        title: "",
+        sortable: false,
+        formatter : editSupplierFormatter
+      },{
+        field: 'delete',
+        title: "",
+        sortable: false,
+        formatter : deleteSupplierFormatter
+      }]
+    }
+
+    function editSupplierFormatter(value, row, index) {
+      return '<a id="editSuppliers' + row['id'] + '" onclick="' + angularCtrlStr + '.editSuppliers(' + row['id'] + ')"> <i class=\'fa fa-pencil-square-o fa-fw color-orange cursor-pointer \' ></i> </a>';
+    }
+
+    ctrl.editSuppliers = function(id) {
+      $rootScope.updateSuppliers(id)
+    }
+
+    function deleteSupplierFormatter(value, row, index) {
+      return '<a id="deleteSuppliers' + row['id'] + '" onclick="' + angularCtrlStr + '.deleteSuppliers(' + row['id'] + ')"> <i class=\'fa fa-trash color-red fa-fw cursor-pointer \'></i></i> </a>';
+    }
+
+    ctrl.deleteSuppliers = function(id) {
+      $rootScope.openConfirmationInventoryModal(translateFilter('delete_expense'), function(resp){
+        inventorySupplierService.removeSuppliers(id).then(function(resp) {
+          getSuppliers()
+          ctrl.message = translateFilter('supplier_delete_success')
+          ctrl.typeSuccess = true
+        }, function(e){
+          ctrl.message = translateFilter('supplier_delete_failed')
+          ctrl.typeSuccess = false
+        })
+      })   
+    }
+
+    inventory_supplier_table.bootstrapTable($.extend(bootstrapTableOptionsInvetorySupplier, {toolbar: "date-filter"}));
+
+    function getSuppliers() {
+      if(!ctrl.suppliersCurrentPage){ ctrl.suppliersCurrentPage = 1 }
+        inventorySupplierService.getSuppliers(ctrl.suppliersCurrentPage).then(function(resp) {
+          ctrl.datasSuppliersExport = [];
+          if (resp.data) {
+            ctrl.suppliersTotalItems = resp.data.total_records;
+            ctrl.suppliersCurrentPage = resp.data.current_page;
+            ctrl.datasSuppliersExport = resp.data.suppliers
+            console.log(resp.data)
+            var datas = []
+            var count = ctrl.datasSuppliersExport.length
+            for(var i = 0; i<count; i++) {
+              
+              if (ctrl.datasSuppliersExport[i].inventory_status != "delete_inventory") {
+                var status = ctrl.datasSuppliersExport[i].inventory_status
+                if (ctrl.datasSuppliersExport[i].inventory_status == "wait") {
+                  status = "-"
+                }
+                datas.push({
+                  number: ((ctrl.suppliersCurrentPage - 1) * 10) + i + 1,
+                  id: ctrl.datasSuppliersExport[i].id,
+                  name: ctrl.datasSuppliersExport[i].name,
+                  address: ctrl.datasSuppliersExport[i].address,
+                  phone_number: ctrl.datasSuppliersExport[i].phone_number,
+                  email: ctrl.datasSuppliersExport[i].email,
+                  created_at: ctrl.datasSuppliersExport[i].created_at,
+                  updated_at: ctrl.datasSuppliersExport[i].updated_at
+                })
+              }
+            }
+            ctrl.datasSuppliersExport = datas
+          } else {
+            ctrl.suppliersTotalItems = 0;
+            ctrl.suppliersCurrentPage = 0;
+          }
+          ctrl.paginateButtonMaxSize = 5;
+          inventory_supplier_table.bootstrapTable('load', ctrl.datasSuppliersExport);
+        });
+    }
+
+    ctrl.pageSuppliersChanged = function() {
+      getSuppliers()
+    };
+
+    getSuppliers()
 
   });
   }]);

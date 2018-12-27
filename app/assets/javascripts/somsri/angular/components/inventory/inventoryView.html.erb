@@ -108,6 +108,49 @@
                         </div>
                       </div>
                   </uib-tab>
+                  <uib-tab id="inventory_supplier_list" index="2" heading="{{ 'inventory_supplier' | translate }}" ng-click="inventory.changeTab('add_supplier')">
+                    <div class="col-md-12 panel-board">
+                      <!-- <div class="row pl-0">
+                        <div class="col-md-3">
+                          <div id="custom-search-input">
+                            <div class="col-md-12 input-group">
+                              <div class="row">
+                                <div class="col-md-2 pl-20">
+                                    <i class="glyphicon glyphicon-search"></i>
+                                </div>
+                                <div class="col-md-10">
+                                    <input type="text" class="col-md-3 form-control input-lg" placeholder="Search" />
+                                </div>
+                              </div>                        
+                            </div>
+                          </div>
+                        </div> 
+                        <div class="col-md-2">
+                          <button type="button" class="btn btn-custom btn-blue btn-block  ng-binding" data-toggle="modal" data-target="#listrequest"><i class="fa fa-filter"></i> Filter</button>
+                        </div>
+                      </div> -->
+                      <div class="row">
+                        <table id="inventory-supplier-table" >
+                          <thead>
+                            <tr>
+                              <th data-field="id">#</th>
+                              <th data-field="name">Supplier Name</th>
+                              <th data-field="address">Addate</th>
+                              <th data-field="phone_number">Phone number</th>
+                              <th data-field="email">E mail</th>
+                              <th data-field="edit"></th>
+                              <th data-field="delete"></th>
+                            </tr>
+                          </thead>
+                        </table>
+                        <div class="row row-centered for-display">
+                          <div class="col-centered">
+                            <ul uib-pagination ng-change="inventory.pageSuppliersChanged()" total-items="inventory.suppliersTotalItems" ng-model="inventory.suppliersCurrentPage" max-size="inventory.paginateButtonMaxSize" class="pagination-md" num-pages="numPages" previous-text="‹" next-text="›" boundary-link-numbers='true' rotate='false'></ul>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                </uib-tab>
                 </uib-tabset>  
               </li>
             </ul>

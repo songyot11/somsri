@@ -252,6 +252,10 @@
       $state.go('update_inventory_request_step5', { id: id})
     }
 
+    $rootScope.updateSuppliers = function(id) {
+      $state.go('update_suppliers',{id: id})
+    }
+
     $rootScope.openSuccessModal = function(message) {
       $scope.message = message;
       $uibModal.open({

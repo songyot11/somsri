@@ -609,6 +609,7 @@ th:
   date_purchase: "วันที่ซื้อ" 
   category: "ประเภท"
   date_add: "วันที่เพิ่ม"
+  inventory_data: "ข้อมูลพัสดุ"
   select_category: "เลือกประเภท"
   end_warranty: "วันสิ้นสุดการรับประกัน"
   office_furniture: "เฟอร์นิเจอร์สำนักงาน"
@@ -651,6 +652,14 @@ th:
   continue: "ต่อไป"
   completed: "เรียบร้อยแล้ว"
   send_the_package_to: "ได้ทำการส่งมอบพัสดุให้กับ"
+
+  #inventory supplier
+  inventory_supplier: "ร้านค้า"
+  list_supplier: "รายการร้านค้า"
+  add_supplier: "+ เพิ่มร้านค้า"
+  detal_supplier: "รายละเอียดร้านค้า"
+  supplier: "ชื่อร้านค้า"
+  addate: "ที่อยู่"
 
   # Rollcall
   monthly: ประจำเดือน

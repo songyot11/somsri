@@ -198,5 +198,7 @@ Rails.application.routes.draw do
     # POST: /inventories_requests/:inventories_request_id/manage_inventories_requests
     resources :manage_inventories_requests
   end
+
+  resources :suppliers
   
 end

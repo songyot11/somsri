@@ -456,6 +456,7 @@ en:
   electronic_office_equipment: "Electronic office equipment"
   paper_products: "Paper products"
   meeting_presentation_equipment: "Meeting and presentation equipment"
+  inventory_data: "Device"
   inventory_search: "Search form name, model, serial number, date purchase and user name"
   inventory_request_search: "Search form name, description ,request date and user name"
 
@@ -488,6 +489,12 @@ en:
   continue: "Continue"
   completed: "Completed"
   send_the_package_to: "Send the package to"
+
+  #inventory supplier
+  inventory_supplier: "Supplier"
+  list_supplier: "Supplier list"
+  add_supplier: "+ Add supplier"
+  detal_supplier: "Detal supplier"
 
   # Rollcall
   monthly: "Month"
