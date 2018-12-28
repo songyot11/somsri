@@ -609,6 +609,7 @@ th:
   date_purchase: "วันที่ซื้อ" 
   category: "ประเภท"
   date_add: "วันที่เพิ่ม"
+  inventory_data: "ข้อมูลพัสดุ"
   select_category: "เลือกประเภท"
   end_warranty: "วันสิ้นสุดการรับประกัน"
   office_furniture: "เฟอร์นิเจอร์สำนักงาน"
@@ -620,6 +621,7 @@ th:
   paper_products: "ผลิตภัณฑ์กระดาษ"
   meeting_presentation_equipment: "อุปกรณ์เพื่อการประชุมและนำเสนอ"
   inventory_search: "ค้นหาจากชื่อ รุ่น หมายเลขซีเรียล วันที่ซื้อ ชื่อคนใช้งาน"
+  inventory_request_search: "ค้นหาจากชื่อ วันที่ส่งคำขอ ชื่อคนใช้งาน"
 
    #InventoryRequest
   list_request: "รายการคำขอใช้พัสดุ"
@@ -634,13 +636,30 @@ th:
   done: "เสร็จ"
   assigned: "ได้รีบเรียบร้อย"
 
-  #EditRequest
-  title: "รายละเอียดคำขอใช้อุปกรณ์"
-  item_name: "ชื่อรายการ"
-  description: "ลักษณะ"
-  request_date: "วันที่ขอ"
-  price: "ราคา"
-  user_request: "ชื่อผู้ขอ"
+  #Update inventory request
+  details_inventory_request: "รายละเอียดคำขอใช้อุปกรณ์"
+  approve_request: "อนุมัติคำขอ"
+  inventory_purchase: "สั่งซื้อพัสดุ"
+  get_inventory: "รับพัสดุ"
+  dispatch_to_employees: "จัดส่งให้พนักงาน"
+  date_get_inventory: "วันที่ได้รับ"
+  date_purchase_inventory: "ได้ทำการสั่งซื้อวันที่"
+  date_send_inventory: "จัดส่งในวันที่"
+  save_by: "บันทึกโดย"
+  request_approval: "ได้ทำการอนุมัติคำขอ"
+  bath: "บาท"
+  receive_products_on_date: "ได้รับสินค้าในวันที่"
+  continue: "ต่อไป"
+  completed: "เรียบร้อยแล้ว"
+  send_the_package_to: "ได้ทำการส่งมอบพัสดุให้กับ"
+
+  #inventory supplier
+  inventory_supplier: "ร้านค้า"
+  list_supplier: "รายการร้านค้า"
+  add_supplier: "+ เพิ่มร้านค้า"
+  detal_supplier: "รายละเอียดร้านค้า"
+  supplier: "ชื่อร้านค้า"
+  addate: "ที่อยู่"
 
   # Rollcall
   monthly: ประจำเดือน

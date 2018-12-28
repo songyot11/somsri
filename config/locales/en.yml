@@ -456,7 +456,9 @@ en:
   electronic_office_equipment: "Electronic office equipment"
   paper_products: "Paper products"
   meeting_presentation_equipment: "Meeting and presentation equipment"
+  inventory_data: "Device"
   inventory_search: "Search form name, model, serial number, date purchase and user name"
+  inventory_request_search: "Search form name, description ,request date and user name"
 
   #Inventory Request
   list_request: "Request list"
@@ -470,6 +472,29 @@ en:
   purchasing: "Purchasing"
   done: "Done"
   assigned: "Assigned"
+
+  #Update inventory request
+  details_inventory_request: "Details Inventory Request"
+  approve_request: "Approve request"
+  inventory_purchase: "Inventory purchase"
+  get_inventory: "Get inventory"
+  dispatch_to_employees: "Dispatch to employees"
+  date_get_inventory: "Date get inventory"
+  date_purchase_inventory: "Date purchare inventory"
+  date_send_inventory: "Date send inventory"
+  save_by: "Save by"
+  request_approval: "Requested approval"
+  bath: "Bath"
+  receive_products_on_date: "Receive products on date"
+  continue: "Continue"
+  completed: "Completed"
+  send_the_package_to: "Send the package to"
+
+  #inventory supplier
+  inventory_supplier: "Supplier"
+  list_supplier: "Supplier list"
+  add_supplier: "+ Add supplier"
+  detal_supplier: "Detal supplier"
 
   # Rollcall
   monthly: "Month"

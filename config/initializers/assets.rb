@@ -28,6 +28,7 @@ Rails.application.config.assets.precompile += %w( search_student_button.js )
 Rails.application.config.assets.precompile += %w( search_parent_button.js )
 Rails.application.config.assets.precompile += %w( application_somsri.css )
 Rails.application.config.assets.precompile += %w( ckeditor/config.js )
+Rails.application.config.assets.precompile += %w( show_popover.js )
 
 # for web school
 Rails.application.config.assets.precompile += %w( application_webSchool.css )

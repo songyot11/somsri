@@ -3,7 +3,7 @@ class Employee < ApplicationRecord
   rolify
   # Include default devise modules. Others available are:
   # :registerable, :confirmable, :lockable, :timeoutable and :omniauthable
-  devise :database_authenticatable,:recoverable, :rememberable, :trackable, :validatable
+  devise :database_authenticatable,:recoverable, :rememberable, :trackable #, :validatable
 
   belongs_to :school
   has_many :emergency_calls, class_name: "Individual", foreign_key: 'emergency_call_id'
@@ -17,6 +17,7 @@ class Employee < ApplicationRecord
   has_many :employee_skills, dependent: :destroy
   has_many :employees, through: :employee_skills
   has_many :inventories
+  has_many :inventory_requests
   has_many :vacations, foreign_key: 'requester_id'
   has_one :taxReduction
 

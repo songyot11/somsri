@@ -83,7 +83,7 @@
       }
 
       ctrl.removeExpenses = function(id) {
-        openConfirmationModal(translateFilter('delete_expense'), function(){
+        $rootScope.openConfirmationInventoryModal(translateFilter('delete_expense'), function(){
           service.removeExpenses(id).then(function(resp) {
             getExpenses();
             ctrl.message = translateFilter('expense_delete_success');

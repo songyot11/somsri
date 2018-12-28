@@ -12,6 +12,7 @@ Rails.application.routes.draw do
   get "/main" => "menu#landing_main"
   get "/language" => "home#language"
   get "/locale" => "home#locale"
+  get 'holiday.ics' => 'holidays#share'
 
   resources :users, only: [] do
     collection do
@@ -178,7 +179,7 @@ Rails.application.routes.draw do
     resources :categories
   end
   
-  resources :inventories_requests do 
+  resources :inventory_requests do 
     collection do
     end
     
@@ -190,7 +191,14 @@ Rails.application.routes.draw do
       put 'purchasing'
       put 'done'
       put 'assigned'
+      put 'delete_inventory'
+      put 'wait'
     end
+
+    # POST: /inventories_requests/:inventories_request_id/manage_inventories_requests
+    resources :manage_inventories_requests
   end
+
+  resources :suppliers
   
 end
