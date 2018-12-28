@@ -14,6 +14,7 @@
   $rootScope.loadAndAuthorizeResource("inventory", function(){
     var inventory_table = $('#inventory-table');
     var inventory_request_table = $('#inventory-request-table');
+    var inventory_supplier_table = $('#inventory-supplier-table');
     var inventory_repair_table = $('#inventory-repair-table');
     ctrl.currentPage = 1;
     ctrl.requestCurrentPage = 1;
@@ -183,12 +184,16 @@
 
     ctrl.changeTab = function(str) {
       ctrl.selectTab = str
-      if (str === "add_inventory") {
-        ctrl.url_path = "somsri#/inventory/new"
-      } else {
-        ctrl.url_path = "somsri#/inventory/new/request"
+        if (str === "add_inventory") {
+          ctrl.url_path = "somsri#/inventory/new"
+          } else if (str === "add_request"){
+          ctrl.url_path = "somsri#/inventory/new/request"
+        } else {
+          console.log("urlpath")
+          ctrl.url_path = "somsri#/inventory/new/supplier"
+          console.log("urlpath", ctrl.url_path)
+        }
       }
-    }
 
     ctrl.pageChanged = function() {
       getInventory()
@@ -409,6 +414,111 @@
     }
 
     getInventoryRequest();
+    //getInventorySupplier();
+
+      var bootstrapTableOptionsInvetorySupplier = {
+      sortName: 'request_date',
+      sortOrder: 'asc',
+      columns : [{
+        field: 'id',
+        title: '#',
+        classes: 'text-right',
+        sortable: true,
+      },{
+        field: 'supplier_name',
+        title: translateFilter("supplier"),
+        sortable: true,
+        class: 'font-weight-bold '
+      },{
+        field: 'addate',
+        title: translateFilter("addate"),
+        sortable: true,
+      },{
+        field: 'phone_number',
+        title: translateFilter("phone_number"),
+        sortable: true,
+      },{
+        field: 'email',
+        title: translateFilter("email"),
+        sortable: true,
+      },{
+        field: 'edit',
+        title: "",
+        sortable: false,
+        //formatter : editInventorySupplierFormatter
+      },{
+        field: 'delete',
+        title: "",
+        sortable: false,
+        //formatter : deleteInventorySupplierFormatter
+      }]
+    }
+
+    inventory_supplier_table.bootstrapTable($.extend(bootstrapTableOptionsInvetorySupplier, {toolbar: "date-filter"}));
+
+
+    //getInventoryRepair();
+
+      var bootstrapTableOptionsInvetoryRepair = {
+      sortName: 'request_date',
+      sortOrder: 'asc',
+      columns : [{
+        field: 'id',
+        title: '#',
+        classes: 'text-right',
+        sortable: true,
+      },{
+        field: 'employee_name',
+        title: translateFilter("employee"),
+        sortable: true,
+        class: 'font-weight-bold '
+      },{
+        field: 'item_name',
+        title: translateFilter("item_name"),
+        sortable: true,
+      },{
+        field: 'serial_number',
+        title: translateFilter("serial_number"),
+        sortable: true,
+      },{
+        field: 'reason',
+        title: translateFilter("reason"),
+        sortable: true,
+      },{
+        field: 'sent_repair_date',
+        title: translateFilter("repair_date"),
+        sortable: true,
+      },{
+        field: 'return_date',
+        title: translateFilter("return_date"),
+        sortable: true,
+      },{
+        field: 'price',
+        title: translateFilter("price"),
+        sortable: true,
+      },{
+        field: 'bill',
+        title: translateFilter("bill"),
+        sortable: true,
+      },{
+        field: 'status',
+        title: translateFilter("status"),
+        sortable: true,
+      },{
+        field: 'edit',
+        title: "",
+        sortable: false,
+        //formatter : editInventoryRepairFormatter
+      },{
+        field: 'delete',
+        title: "",
+        sortable: false,
+        //formatter : deleteInventoryRepairFormatter
+      }]
+    }
+
+    inventory_repair_table.bootstrapTable($.extend(bootstrapTableOptionsInvetoryRepair, {toolbar: "date-filter"}));
+
 
   });
   }]);

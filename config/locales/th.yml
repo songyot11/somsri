@@ -481,6 +481,19 @@ th:
 
   #Repair
   list_repair: "แจ้งซ่อม"
+  employee_name: "พนักงาน"
+  reason: "เหตุผลที่ส่งซ่อม"
+  repair_date: "วันที่ส่งซ่อม"
+  return_date: "วันที่ซ่อมเสร็จ"
+  bill: "ใบเสร็จ"
+
+  #inventory supplier
+  inventory_supplier: "ร้านค้า"
+  list_supplier: "รายการร้านค้า"
+  add_supplier: "+ เพิ่มร้านค้า"
+  detal_supplier: "รายละเอียดร้านค้า"
+  supplier: "ชื่อร้านค้า"
+  addate: "ที่อยู่"
 
   # Rollcall
   monthly: ประจำเดือน
