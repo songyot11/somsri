@@ -31,7 +31,6 @@
     ctrl.real_id = $rootScope.index_id
 
     function activeTab() {
-      
       if (!ctrl.real_id) {
         ctrl.active = 0
         ctrl.selectTab = "add_inventory"
@@ -40,17 +39,32 @@
         ctrl.active = ctrl.real_id
         $rootScope.index_id = null
 
-        if (ctrl.real_id === 0) {
+        if (ctrl.real_id == 0) {
           ctrl.selectTab = "add_inventory"
           ctrl.url_path = "somsri#/inventory/new"
-        } else {
+        } else if (ctrl.real_id == 1){
           ctrl.selectTab = "add_request"
           ctrl.url_path = "somsri#/inventory/new/request"
+        } else if (ctrl.real_id == 2) {
+          ctrl.selectTab = "add_supplier"
+          ctrl.urlpath = "somsri#/inventory/supplier/new"
         }
       }
     }
   
     activeTab()
+
+    ctrl.changeTab = function(str) {
+      console.log(str)
+      ctrl.selectTab = str
+      if (str === "add_inventory") {
+        ctrl.url_path = "somsri#/inventory/new"
+      } else if (str === "add_request"){
+        ctrl.url_path = "somsri#/inventory/new/request"
+      } else {
+        ctrl.url_path = "somsri#/inventory/supplier/new"
+      }
+    }
 
     function cleanDate(date){
       if(!date || new Date(date) == "Invalid Date"){return;}
@@ -240,19 +254,6 @@
     ctrl.filterInventory = function() {
       
     }
-
-    ctrl.changeTab = function(str) {
-      ctrl.selectTab = str
-        if (str === "add_inventory") {
-          ctrl.url_path = "somsri#/inventory/new"
-          } else if (str === "add_request"){
-          ctrl.url_path = "somsri#/inventory/new/request"
-        } else {
-          console.log("urlpath")
-          ctrl.url_path = "somsri#/inventory/new/supplier"
-          console.log("urlpath", ctrl.url_path)
-        }
-      }
 
     ctrl.pageChanged = function() {
       getInventory()
