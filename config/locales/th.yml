@@ -479,6 +479,9 @@ th:
   price: "ราคา"
   user_request: "ชื่อผู้ขอ"
 
+  #Repair
+  list_repair: "แจ้งซ่อม"
+
   # Rollcall
   monthly: ประจำเดือน
   student_record: แบบบันทึกเวลาเรียนชั้นมัธยมศึกษาปีที่

@@ -14,6 +14,7 @@
   $rootScope.loadAndAuthorizeResource("inventory", function(){
     var inventory_table = $('#inventory-table');
     var inventory_request_table = $('#inventory-request-table');
+    var inventory_repair_table = $('#inventory-repair-table');
     ctrl.currentPage = 1;
     ctrl.requestCurrentPage = 1;
     ctrl.sort = 'inventories.id';
@@ -333,6 +334,8 @@
           inventory_request_table.bootstrapTable('load', ctrl.datasReuestExport);
         });
     }
+    
+
 
     ctrl.selectCategory = function(str) {
     }
