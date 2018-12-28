@@ -53,9 +53,7 @@
     }
   
     activeTab()
-
     ctrl.changeTab = function(str) {
-      console.log(str)
       ctrl.selectTab = str
       if (str === "add_inventory") {
         ctrl.url_path = "somsri#/inventory/new"
@@ -610,7 +608,6 @@
             ctrl.suppliersTotalItems = resp.data.total_records;
             ctrl.suppliersCurrentPage = resp.data.current_page;
             ctrl.datasSuppliersExport = resp.data.suppliers
-            console.log(resp.data)
             var datas = []
             var count = ctrl.datasSuppliersExport.length
             for(var i = 0; i<count; i++) {

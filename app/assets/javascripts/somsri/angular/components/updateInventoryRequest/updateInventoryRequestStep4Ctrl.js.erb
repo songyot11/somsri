@@ -92,7 +92,9 @@
         } else {
           ctrl.datas_step.request_date = null
         }
-        initIventoryData()
+        if (ctrl.inventory_id) {
+          initIventoryData()
+        }
         getEmployeeById(ctrl.employee_id_request)
         checkStep()
       })
@@ -283,7 +285,7 @@
         date_purchase: ctrl.datas.date_purchase,
         date_add: ctrl.date_add,
         end_warranty: ctrl.datas.end_warranty,
-        employee_id: ctrl.employee_id_request
+        employee_id: ctrl.employee_id
       }
 
       var category_datas = {
@@ -312,7 +314,6 @@
       })
     }
 
-
     function beforeUpdateInventoryRequest() {
 
       var changePrice = parseFloat(ctrl.price)
@@ -327,7 +328,7 @@
         description: ctrl.description,
         price: changePrice,
         request_date: checngeRequestDate,
-        employee_id: ctrl.employee_id
+        employee_id: ctrl.employee_id_request
       }
 
       if (ctrl.real_id) {
@@ -447,9 +448,12 @@
         //   ctrl.step.step4.send_to_employee_id = ctrl.employee_id
         // })
       }
-
-      beforeUpdateInventoryRequest()
-     
+      
+      if (ctrl.inventory_employee_id != ctrl.employee_id) {
+        beforeSave()
+      } else { 
+        beforeUpdateInventoryRequest()
+      }
     }
 
     function getSetting() {
@@ -465,7 +469,6 @@
     ctrl.requestDatePopup = {
       opened: false
     };
-
 
     ctrl.openEndWarrantyPopup = function() {
       ctrl.endWarrantyPopup.opened = true;
