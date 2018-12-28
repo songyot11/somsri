@@ -55,11 +55,11 @@
     activeTab()
     ctrl.changeTab = function(str) {
       ctrl.selectTab = str
-      if (str === "add_inventory") {
+      if (str == "add_inventory") {
         ctrl.url_path = "somsri#/inventory/new"
-      } else if (str === "add_request"){
+      } else if (str == "add_request") {
         ctrl.url_path = "somsri#/inventory/new/request"
-      } else {
+      } else if (str == "add_supplier") {
         ctrl.url_path = "somsri#/inventory/supplier/new"
       }
     }
