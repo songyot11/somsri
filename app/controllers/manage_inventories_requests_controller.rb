@@ -36,7 +36,8 @@ class ManageInventoriesRequestsController < ApplicationController
 				:save_by_step4,
 				:send_to_employee_name,
 				:send_to_employee_id,
-				:save_by_step5
+				:save_by_step5,
+				:inventory_id
 			)
 		end
 end

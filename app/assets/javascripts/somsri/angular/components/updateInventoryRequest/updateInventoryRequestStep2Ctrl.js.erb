@@ -30,11 +30,10 @@
     ctrl.continue = function() {
     	ctrl.step.step2.date_purchase = ctrl.date_purchase
     	ctrl.step.step2.date_send = ctrl.date_send
-    	ctrl.step.step2.price = ctrl.price_step2
+    	ctrl.step.step2.price = parseFloat(ctrl.price_step2)
     	ctrl.step.step2.save_by = ctrl.save_by_step2
-    	service.purchasing(ctrl.real_id).then(function(resp) {
-        $rootScope.updateInventoryRequestStep3(ctrl.step, ctrl.real_id)
-      })
+      ctrl.is_save = false
+      beforeSave()
     }
 
     ctrl.cancel = function() {
@@ -56,27 +55,35 @@
     }
 
     ctrl.save = function() {
+      ctrl.is_save = true
+      beforeSave()
+  	}
 
-  		var changePrice = parseFloat(ctrl.price)
-  		var checngeRequestDate = $filter('date')(new Date(ctrl.datas.request_date), 'yyyy-MM-ddTh:MM:ss')
+    function beforeSave() {
+      var changePrice = parseFloat(ctrl.price)
+      if (ctrl.price_step2) {
+        changePrice = parseFloat(ctrl.price_step2)
+      }
+      var checngeRequestDate = ctrl.datas.request_date// $filter('date')(new Date(ctrl.datas.request_date), 'yyyy-MM-ddTh:MM:ss')
 
-    	var inventory_datas = {
+      var inventory_datas = {
         user_name: ctrl.user_name,
         item_name: ctrl.name,
         description: ctrl.description,
         price: changePrice,
         request_date: checngeRequestDate,
         employee_id: ctrl.employee_id
-    	}
+      }
 
       if (ctrl.real_id) {
-        // service.accept(ctrl.real_id).then(function(resp) {
-        updateInventoryRequest(inventory_datas, ctrl.real_id)
-        // })
+        service.accept(ctrl.real_id).then(function(resp) {
+          updateInventoryRequest(inventory_datas, ctrl.real_id)
+        })
       } 
-  	}
+    }
 
     function updateInventoryRequest(inventory_datas, id) {
+      var changePrice = parseFloat(ctrl.price_step2)
       var data = {
         manage_inventories_requests: {
           step: 1,
@@ -85,13 +92,12 @@
           save_by_step2: ctrl.name_setting,
           date_purchase: ctrl.date_purchase,
           date_send: ctrl.date_send,
-          price: ctrl.price_step2
+          price: changePrice
         }
       }
       
     	service.updateInventoryRequest(inventory_datas, id).then(function(resp) {
     		if (!ctrl.manage_inventory_id) {
-           
     			updateManageInventory(data)
     		} else {
     			createManageInventory(data)
@@ -104,14 +110,24 @@
 
 	  function createManageInventory(data) {
       service.createManageInventoryRequest(data, ctrl.real_id).then(function(resp) {
-        $rootScope.openInventory(1)
+        isSave()
       })
     }
 
     function updateManageInventory(data) {
     	service.updateManageInventoryRequest(data, ctrl.real_id , ctrl.manage_inventory_id).then(function(resp) {
-        $rootScope.openInventory(1)
+        isSave()
     	})
+    }
+
+    function isSave() {
+      if (ctrl.is_save) {
+         $rootScope.openInventory(1)
+      } else {
+        service.purchasing(ctrl.real_id).then(function(resp) {
+          $rootScope.updateInventoryRequestStep3(ctrl.step, ctrl.real_id)
+        })
+      }
     }
 
   	function initData() {

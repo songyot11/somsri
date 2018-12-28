@@ -463,6 +463,7 @@ ActiveRecord::Schema.define(version: 20181227135623) do
     t.string   "save_by_step5"
     t.datetime "created_at",            null: false
     t.datetime "updated_at",            null: false
+    t.string   "inventory_id"
     t.index ["inventory_request_id"], name: "index_manage_inventory_requests_on_inventory_request_id", using: :btree
   end
 

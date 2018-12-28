@@ -94,7 +94,10 @@
 
 		ctrl.save = function() {
       var changePrice = parseFloat(ctrl.price)
-      var checngeRequestDate = $filter('date')(new Date(ctrl.datas.request_date), 'yyyy-MM-ddTh:MM:ss')
+      if (ctrl.price_step2) {
+        changePrice = parseFloat(ctrl.price_step2)
+      }
+      var checngeRequestDate = ctrl.datas.request_date//$filter('date')(new Date(ctrl.datas.request_date), 'yyyy-MM-ddTh:MM:ss')
 
       var inventory_datas = {
         user_name: ctrl.user_name,
@@ -146,8 +149,26 @@
       $rootScope.openInventory(1)
     }
 
+    function beforeBackToRootView() {
+      if (ctrl.step_to == 1) {
+        service.pending(ctrl.real_id).then(function(resp) {
+          $rootScope.openInventory(1)
+        })
+      } else if (ctrl.step_to == 2) {
+        service.purchasing(ctrl.real_id).then(function(resp) {
+          $rootScope.openInventory(1)
+        })
+      } else if (ctrl.step_to == 3) {
+        service.done(ctrl.real_id).then(function(resp) {
+          $rootScope.openInventory(1)
+        })
+      } else {
+        $rootScope.openInventory(1)
+      }
+    }
+
     ctrl.cancel = function() {
-      console.log("step", ctrl.step_to)
+      beforeBackToRootView()
       // $window.history.back();
     }
 

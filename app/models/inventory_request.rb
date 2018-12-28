@@ -8,6 +8,7 @@ class InventoryRequest < ApplicationRecord
 		{
 			step_id: step&.id,
 			step: step&.step,
+			inventory_id: step&.inventory_id,
 			"step1": {
 				accept: step&.accept,
 				save_by: step&.save_by

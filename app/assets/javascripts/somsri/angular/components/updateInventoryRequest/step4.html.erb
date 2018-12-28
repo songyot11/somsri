@@ -26,24 +26,6 @@
 										</div>
 									</div>
 								</div>
-								<div class="col-md-5">
-	                <div class="form-group">
-	                  <label class="control-label" for="serial_number">{{ "serial_number" | translate}} </label>
-	                  <div class="col-md-12">
-	                    <input class="form-control" autocomplete="off" type="text" id="inventory_serial_number" ng-model="inventory.serial_number">
-	                  </div>
-	                </div>
-              	</div>
-	              <div class="col-md-4">
-	                <div class="form-group">
-	                  <label class="control-label" for="model">{{ "model" | translate }}</label>
-	                  <div class="col-md-12">
-	                    <input class="form-control" autocomplete="off" type="text" id="inventory_model" ng-model="inventory.model">
-	                  </div>
-	                </div>
-	              </div>
-							</div>
-							<div class="row mt-20">
 								<div class="col-md-9">
 									<div class="form-group">
 										<label class="control-label" for="description">{{"description" | translate}}</label>
@@ -52,39 +34,28 @@
 										</div>
 									</div>
 								</div>
-								<div class="col-md-3">
-									<div class="form-group">
-										<label class="control-label" for="price">{{"price" | translate}}</label>
-										<div class="col-md-12">
-											<input class="form-control" autocomplete="off" type="number" id="inventory_price" ng-model="inventory.price" ng-validate="number" required="true">
-										</div>
-									</div>
-								</div>
 							</div>
 							<div class="row mt-20">
-								<div class="col-md-4">
-	                <div class="form-group ">
-	                  <label class="control-label" for="category">{{ "category" | translate }}</label>
-	                  <div class="col-md-12">
-	                    <select class="form-control" id="inventory_category" ng-model="inventory.category" ng-change="inventory.switchCategory()" required="true">
-	                      <option value="{{ 'select_category' | translate }}">{{ "select_category" | translate }}</option>
-	                      <option ng-repeat="item in inventory.item_catogery" value="{{item.name}}">{{ item.name | translate }}</option>
-	                    </select>
-	                  </div>
-	                </div>
-	              </div>
 								<div class="col-md-4">
 									<div class="form-group">
 										<label class="control-label" for="request_date">{{"request_date" | translate}}</label>
 										<p class="input-group">
-											<input id="request_date" type="text" class="form-control numberic" uib-datepicker-popup="dd/MM/yyyy" ng-model="inventory.datas.request_date" is-open="inventory.requestDatePopup.opened" close-text="Close" required="true"/>
+											<input id="request_date" type="text" class="form-control numberic" uib-datepicker-popup="dd/MM/yyyy" ng-model="inventory.datas_step.request_date" is-open="inventory.requestDatePopup.opened" close-text="Close" required="true"/>
 											<span class="input-group-btn">
 												<button type="button" class="btn btn-default" ng-click="inventory.openRequestDatePopup()" ><i class="fa fa-calendar"></i></button>
 											</span>
 										</p>
 									</div>
 								</div>
-								 <div class="col-md-4">
+								<div class="col-md-3">
+									<div class="form-group">
+										<label class="control-label" for="price">{{"price" | translate}}</label>
+										<div class="col-md-12">
+											<input class="form-control" autocomplete="off" type="number" id="inventory_price" ng-model="inventory.price" ng-validate="number" required="true" ng-pattern="/^[0-9]+(\.[0-9]{1,2})?$/" step="0.01" parseFloat>
+										</div>
+									</div>
+								</div>
+								 <div class="col-md-3">
 									<div class="form-group">
 										<label class="control-label" for="user_request">{{"user_request" | translate}}</label>
 										<div class="col-md-12">
@@ -133,25 +104,6 @@
 			            	<input type="text" class="form-control" id="employee_name" placeholder="{{ 'employee_name' | translate }}" ng-model="inventory.employee_name"  typeahead-on-select="inventory.onSelectEmployeeFullName($item)" ng-change="inventory.onChangeName()" uib-typeahead="inventory.name as inventory.name for inventory in inventory.employee_lists | filter:{name:$viewValue} | limitTo:8" required , autocomplete="off">
 			         		</div>
 			       		</div>
-								<!-- <div class="col-md-4">
-									<div class="dropdown">
-										<label class="control-label" for="employee">ส่งพัสดุให้</label>
-										<div class="form-control" style="padding-top: 0px;" >
-											<h4 id="employeeName" onclick="window.setTimeout(function(){ $('#employeeFilter').val('').trigger('change').focus()}, 10)" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="true">
-												<span ng-bind="inventory.displayName"></span>
-												<span class="fa fa-angle-down pull-right"></span>
-											</h4>
-											<ul class="dropdown-menu mn-inventory">              
-												<li ng-show="inventory.employee_lists.length > 0"><input class="employee-filter" id="employeeFilter" type="text" ng-model="inventory.filterKeyword" /></li>
-												<li ng-repeat="data in inventory.employee_lists | filter:inventory.filterKeyword">
-													<a class="py-5" ng-click="inventory.switchEmployee(data.name,data.id)" href="javascript:void(0)">
-														<span class="dropdown-employee-name" style="padding-left: 20px;" >{{data.name}}</span>
-													</a>
-												</li>
-											</ul>
-											</div>
-									</div>
-								</div> -->
 							</div>
 							<div class="row mt-20">
 								<div class="col-md-2">
