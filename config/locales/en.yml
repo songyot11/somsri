@@ -496,6 +496,14 @@ en:
   add_supplier: "+ Add supplier"
   detal_supplier: "Detal supplier"
 
+  #Repair
+  list_repair: "Repair list"
+  employee_name: "Employee name"
+  reason: "Eeason"
+  repair_date: "Repair date"
+  return_date: "Return_date"
+  bill: "Bill"
+
   # Rollcall
   monthly: "Month"
   student_record: "Attendance Record"

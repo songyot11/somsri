@@ -104,6 +104,9 @@
                         <div class="col-centered">
                           <ul uib-pagination ng-change="inventory.pageRequestChanged()" total-items="inventory.requestTotalItems" ng-model="inventory.requestCurrentPage" max-size="inventory.paginateButtonMaxSize" class="pagination-md" num-pages="numPages" previous-text="‹" next-text="›" boundary-link-numbers='true' rotate='false'></ul>
                         </div>
+                      </div> 
+                      <div class="col-md-2">
+                        <button type="button" class="btn btn-custom btn-blue btn-block  ng-binding" data-toggle="modal" data-target="#listrequest"><i class="fa fa-filter"></i> Filter</button>
                       </div>
                     </div>
                   </div>

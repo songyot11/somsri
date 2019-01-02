@@ -653,6 +653,14 @@ th:
   completed: "เรียบร้อยแล้ว"
   send_the_package_to: "ได้ทำการส่งมอบพัสดุให้กับ"
 
+  #Repair
+  list_repair: "แจ้งซ่อม"
+  employee_name: "พนักงาน"
+  reason: "เหตุผลที่ส่งซ่อม"
+  repair_date: "วันที่ส่งซ่อม"
+  return_date: "วันที่ซ่อมเสร็จ"
+  bill: "ใบเสร็จ"
+
   #inventory supplier
   inventory_supplier: "ร้านค้า"
   list_supplier: "รายการร้านค้า"
