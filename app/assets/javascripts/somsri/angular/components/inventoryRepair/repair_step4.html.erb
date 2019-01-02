@@ -63,25 +63,31 @@
 											{{ "repairs_completed" | translate }}
 										</a>
 									</li>
-									<li class="step-item">
+									<li class="step-item active">
 										<a href="#!" class="">
-											<i class="fa fa-check fa-2x icon-in-step-repair5"></i> 
-											<!-- <h3 class="text-in-step4 mt-0">4</h3> -->
+											<!-- <i class="fa fa-check fa-2x icon-in-step"></i>  -->
+											<h3 class="text-in-step4 mt-0">4</h3>
 											{{ "dispatch_to_employees" | translate }}    
 										</a>
 									</li>
 								</ul> 
-								<div class="row mt-20"  style="color: #B6B6B6;">
-									<p class="pl-20" >
-										{{ "request_approval" | translate }} ({{ "save_by" | translate }} {{ inventory.save_by }}) <br>
-										{{ "date_purchase_inventory" | translate }}:  {{ inventory.date_purchase }}  <br>
-										{{ "date_send_inventory" | translate }}:  {{ inventory.date_send }} <br>
-										{{ "price" | translate }}: {{ inventory.price_step2 }} {{ "bath" | translate }} ({{ "save_by" | translate }} {{ inventory.save_by_step2 }}) <br>
-										{{ "receive_products_on_date" | translate }}  {{ inventory.get_date }}   <br>
-										{{ "buy_slip" | translate }} {{ inventory.buy_slip }}   <br>
-										{{ "end_warranty" | translate }}  {{ inventory.end_warranty }} ({{ "save_by" | translate }} {{ inventory.save_by_step3 }}) <br>
-										{{ "send_the_package_to" | translate }} {{ inventory.employee_name }} {{ "completed" | translate }} ({{ "save_by" | translate }} {{ inventory.save_by_step4 }})
-									</p>
+								<div class="row mt-50">
+									<div class="col-md-4">
+										<div class="form-group">
+											<input type="text" class="form-control" id="employee_name" placeholder="{{ 'employee_name' | translate }}" ng-model="inventory.employee_name"  typeahead-on-select="inventory.onSelectEmployeeFullName($item)" ng-change="inventory.onChangeName()" uib-typeahead="inventory.name as inventory.name for inventory in inventory.employee_lists | filter:{name:$viewValue} | limitTo:8" required , autocomplete="off">
+											</div>
+										</div>
+								</div>
+								<div class="row mt-20">
+									<div class="col-md-2">
+										<button type="button" class="btn btn-custom btn-continue ng-binding btn-block  padding-left10" ng-click="inventory.continue()">{{ "continue" | translate }}</button>
+									</div>
+									<div class="col-md-2 pl-0">
+										<button type="button" class="btn btn-custom btn-gray ng-binding btn-block  padding-left10" ng-click="inventory.cancel()">{{ "cancel" | translate }}</button>
+									</div>
+								</div>
+								<div class="row mt-20">
+									<p class="pl-20" style="color: #B6B6B6;" >{{ "request_approval" | translate }} ({{ "save_by" | translate }} {{ inventory.save_by }})  </p>
 								</div>
 							</div>
 						</div>

@@ -660,6 +660,11 @@ th:
   repair_date: "วันที่ส่งซ่อม"
   return_date: "วันที่ซ่อมเสร็จ"
   bill: "ใบเสร็จ"
+  detal_repair: "รายละเอียดแจ้งซ่อม"
+  approve_repair: "ยืนยันการแจ้งซ่อม"
+  confirm_accept: "รับเรื่อง"
+  sent_repair: "ส่งซ่อม"
+  repairs_completed: "ซ่อมเสร็จ"
 
   #inventory supplier
   inventory_supplier: "ร้านค้า"

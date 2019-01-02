@@ -503,6 +503,11 @@ en:
   repair_date: "Repair date"
   return_date: "Return_date"
   bill: "Bill"
+  detal_repair: "Detal repair"
+  approve_repair: "Approve repair"
+  confirm_accept: "Confirm accept"
+  sent_repair: "Sent Repair"
+  repairs_completed: "repairs completed"
 
   # Rollcall
   monthly: "Month"

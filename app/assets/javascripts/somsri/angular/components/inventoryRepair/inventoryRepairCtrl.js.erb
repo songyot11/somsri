@@ -1,7 +1,7 @@
 (function() {
   'use strict';
     angular.module('somsri.somsri.inventory_edit_repair', [])
-    .controller('inventoryRepairCtrl', ['$compile', '$scope', '$window', '$filter', '$rootScope', '$timeout', 'translateFilter', '$uibModal', 'Upload', '$state' ,'inventoryNewSupplierService', function($compile, $scope, $window, $filter, $rootScope, $timeout, translateFilter, $uibModal, Upload, $state, service) {
+    .controller('inventoryRepairCtrl', ['$compile', '$scope', '$window', '$filter', '$rootScope', '$timeout', 'translateFilter', '$uibModal', 'Upload', '$state' , function($compile, $scope, $window, $filter, $rootScope, $timeout, translateFilter, $uibModal, Upload, $state) {
     $rootScope.menu = translateFilter("inventory_request")
     var ctrl = this
     var angularScopeRoot = 'angular.element(document.getElementById("angularCtrl")).scope().$root'
