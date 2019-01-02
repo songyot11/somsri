@@ -13,128 +13,175 @@
             <a class="btn btn-custom btn-orange" href="{{inventory.url_path}}">{{inventory.selectTab | translate }}</a>
           </div>
         </div>
-            <ul class="nav nav-tabs tabs-menu">
-              <li class="cyan col-md-12">
-                <uib-tabset class="mt-0" active="inventory.active">
-                  <uib-tab id="inventory_list" index="0" heading="{{ 'inventory' | translate }}" ng-click="inventory.changeTab('add_inventory') " > 
-                      <div class="col-md-12 panel-board">
-                        <div class="row pl-0">
-                          <div class="col-md-3">
-                            <div id="custom-search-input">
-                              <div class="col-md-12 input-group">
-                                <div class="row">
-                                  <div class="col-md-2 pl-20">
-                                      <i class="glyphicon glyphicon-search"></i>
-                                  </div>
-                                  <div class="col-md-10">
-                                       <input class="col-md-3 form-control input-lg" id="searchField" type="text" ng-model="inventory.searchKeyword" ng-change="inventory.searchInventory()" placeholder="{{ 'inventory_search' | translate }}" class="search-sp" />
-                                  </div>
-                                </div>                        
+          <ul class="nav nav-tabs tabs-menu">
+            <li class="cyan col-md-12">
+              <uib-tabset class="mt-0">
+                <uib-tab id="inventory_list" index="0" heading="{{ 'inventory' | translate }}" ng-click="inventory.changeTab('add_inventory') " > 
+                  <div class="col-md-12 panel-board">
+                    <div class="row pl-0">
+                      <div class="col-md-3">
+                        <div id="custom-search-input">
+                          <div class="col-md-12 input-group">
+                            <div class="row">
+                              <div class="col-md-2 pl-20">
+                                <i class="fa fa-search glyphicon-search"></i>
                               </div>
-                            </div>
-                          </div> 
-                          <div class="col-md-2">
-                            <button type="button" class="btn btn-custom btn-blue btn-block  ng-binding" data-toggle="modal" data-target="#myModal"><i class="fa fa-filter"></i> Filter</button>
-                          </div>
-                        </div>
-                        <div class="row mt-20">
-                          <table id="inventory-table" >
-                            <thead>
-                              <tr>
-                                <th data-field="number">#</th>
-                                <th data-field="item_name">Item Name</th>
-                                <th data-field="serial_number">Serial Number</th>
-                                <th data-field="model">Model</th>
-                                <th data-field="description">Description</th>
-                                <th data-field="price">Price</th>
-                                <th data-field="date_purchase">Date Purchase</th>
-                                <th data-field="category">Category</th>
-                                <th data-field="date_add">Date Add</th>
-                                <th data-field="edit"></th>
-                                <th data-field="delete"></th>
-                              </tr>
-                            </thead>
-                          </table>
-                          <div class="row row-centered for-display">
-                            <div class="col-centered">
-                              <ul uib-pagination ng-change="inventory.pageChanged()" total-items="inventory.totalItems" ng-model="inventory.currentPage" max-size="inventory.paginateButtonMaxSize" class="pagination-md" num-pages="numPages" previous-text="‹" next-text="›" boundary-link-numbers='true' rotate='false'></ul>
-                            </div>
-                          </div>
-                        </div>
-                      </div>
-                  </uib-tab>
-                  <uib-tab id="inventory_request_list" index="1" heading="{{ 'inventory_request' | translate }}" ng-click="inventory.changeTab('add_request')">
-                      <div class="col-md-12 panel-board">
-                        <div class="row pl-0">
-                          <div class="col-md-3">
-                            <div id="custom-search-input">
-                              <div class="col-md-12 input-group">
-                                <div class="row">
-                                  <div class="col-md-2 pl-20">
-                                      <i class="glyphicon glyphicon-search"></i>
-                                  </div>
-                                  <div class="col-md-10">
-                                      <input type="text" class="col-md-3 form-control input-lg" id="searchRequestField" ng-model="inventory.searchRequestKeyword" ng-change="inventory.searchInventoryRequest()" placeholder="{{ 'inventory_request_search' | translate }}" />
-                                  </div>
-                                </div>                        
+                              <div class="col-md-10">
+                                    <input class="col-md-3 form-control input-lg" id="searchField" type="text" ng-model="inventory.searchKeyword" ng-change="inventory.searchInventory()" placeholder="{{ 'inventory_search' | translate }}" class="search-sp" />
                               </div>
-                            </div>
-                          </div> 
-                          <div class="col-md-2">
-                            <button type="button" class="btn btn-custom btn-blue btn-block  ng-binding" data-toggle="modal" data-target="#listrequest"><i class="fa fa-filter"></i> Filter</button>
+                            </div>                        
                           </div>
                         </div>
-                      <div class="row">
-                        <table id="inventory-request-table" >
-                          <thead>
-                            <tr>
-                              <th data-field="number">#</th>
-                              <th data-field="user_name">Item Name</th>
-                              <th data-field="item_name">Serial Number</th>
-                              <th data-field="description">Description</th>
-                              <th data-field="price">Price</th>
-                              <th data-field="request_date">Date Purchase</th>
-                              <th data-field="inventory_status">Category</th>
-                              <th data-field="edit"></th>
-                              <th data-field="delete"></th>
-                            </tr>
-                          </thead>
-                        </table>
-                          <div class="row row-centered for-display">
-                            <div class="col-centered">
-                              <ul uib-pagination ng-change="inventory.pageRequestChanged()" total-items="inventory.requestTotalItems" ng-model="inventory.requestCurrentPage" max-size="inventory.paginateButtonMaxSize" class="pagination-md" num-pages="numPages" previous-text="‹" next-text="›" boundary-link-numbers='true' rotate='false'></ul>
-                            </div>
-                          </div>
-                        </div>
+                      </div> 
+                      <div class="col-md-2">
+                        <button type="button" class="btn btn-custom btn-blue btn-block  ng-binding" data-toggle="modal" data-target="#myModal"><i class="fa fa-filter"></i> Filter</button>
                       </div>
-                  </uib-tab>
-                  <uib-tab id="inventory_supplier_list" index="2" heading="{{ 'inventory_supplier' | translate }}" ng-click="inventory.changeTab('add_supplier')">
-                    <div class="col-md-12 panel-board">
-                      <div class="row">
-                        <table id="inventory-supplier-table" >
-                          <thead>
-                            <tr>
-                              <th data-field="id">#</th>
-                              <th data-field="name">Supplier Name</th>
-                              <th data-field="address">Addate</th>
-                              <th data-field="phone_number">Phone number</th>
-                              <th data-field="email">E mail</th>
-                              <th data-field="edit"></th>
-                              <th data-field="delete"></th>
-                            </tr>
-                          </thead>
-                        </table>
-                        <div class="row row-centered for-display">
-                          <div class="col-centered">
-                            <ul uib-pagination ng-change="inventory.pageSuppliersChanged()" total-items="inventory.suppliersTotalItems" ng-model="inventory.suppliersCurrentPage" max-size="inventory.paginateButtonMaxSize" class="pagination-md" num-pages="numPages" previous-text="‹" next-text="›" boundary-link-numbers='true' rotate='false'></ul>
-                          </div>
+                    </div>
+                    <div class="row mt-20">
+                      <table id="inventory-table" >
+                        <thead>
+                          <tr>
+                            <th data-field="id">#</th>
+                            <th data-field="item_name">Item Name</th>
+                            <th data-field="serial_number">Serial Number</th>
+                            <th data-field="model">Model</th>
+                            <th data-field="description">Description</th>
+                            <th data-field="price">Price</th>
+                            <th data-field="date_purchase">Date Purchase</th>
+                            <th data-field="category">Category</th>
+                            <th data-field="date_add">Date Add</th>
+                            <th data-field="edit "></th>
+                            <th data-field="delete"></th>
+                          </tr>
+                        </thead>
+                      </table>
+                      <div class="row row-centered for-display">
+                        <div class="col-centered">
+                          <ul uib-pagination ng-change="inventory.pageChanged()" total-items="inventory.totalItems" ng-model="inventory.currentPage" max-size="inventory.paginateButtonMaxSize" class="pagination-md" num-pages="numPages" previous-text="‹" next-text="›" boundary-link-numbers='true' rotate='false'></ul>
                         </div>
                       </div>
                     </div>
-                  </uib-tab>
-                </uib-tabset>  
-              </li>
-            </ul>
+                  </div>
+                </uib-tab>
+                <uib-tab id="inventory_request_list" index="1" heading="{{ 'inventory_request' | translate }}" ng-click="inventory.changeTab('add_request')">
+                  <div class="col-md-12 panel-board">
+                    <div class="row pl-0">
+                      <div class="col-md-3">
+                        <div id="custom-search-input">
+                          <div class="col-md-12 input-group">
+                            <div class="row">
+                              <div class="col-md-2 pl-20">
+                                <i class="fa fa-search glyphicon-search"></i>
+                              </div>
+                              <div class="col-md-10">
+                                  <input type="text" class="col-md-3 form-control input-lg" placeholder="Search" />
+                              </div>
+                            </div>                        
+                          </div>
+                        </div>
+                      </div> 
+                      <div class="col-md-2">
+                        <button type="button" class="btn btn-custom btn-blue btn-block  ng-binding" data-toggle="modal" data-target="#listrequest"><i class="fa fa-filter"></i> Filter</button>
+                      </div>
+                    </div>
+                    <div class="row">
+                      <table id="inventory-request-table" >
+                        <thead>
+                          <tr>
+                            <th data-field="id">#</th>
+                            <th data-field="user_name">Item Name</th>
+                            <th data-field="item_name">Serial Number</th>
+                            <th data-field="description">Description</th>
+                            <th data-field="price">Price</th>
+                            <th data-field="request_date">Date Purchase</th>
+                            <th data-field="inventory_status">Category</th>
+                            <th data-field="edit"></th>
+                            <th data-field="delete"></th>
+                          </tr>
+                        </thead>
+                      </table>
+                      <div class="row row-centered for-display">
+                        <div class="col-centered">
+                          <ul uib-pagination ng-change="inventory.pageRequestChanged()" total-items="inventory.requestTotalItems" ng-model="inventory.requestCurrentPage" max-size="inventory.paginateButtonMaxSize" class="pagination-md" num-pages="numPages" previous-text="‹" next-text="›" boundary-link-numbers='true' rotate='false'></ul>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </uib-tab>
+                <uib-tab id="inventory_repair_listrepair" index="2" heading="{{ 'list_repair' | translate }}" ng-click="inventory.changeTab('add_request')">
+                  <div class="col-md-12 panel-board">
+                    <div class="row">
+                      <table id="inventory-repair-table" >
+                        <thead>
+                          <tr>
+                            <th data-field="id">#</th>
+                            <th data-field="employee_name">Employee</th>
+                            <th data-field="item_name">Item Name</th>
+                            <th data-field="serial_number">Serial Number</th>
+                            <th data-field="reason">Reason</th>
+                            <th data-field="sent_repair_date">Repair Date</th>
+                            <th data-field="return_date">Return Date</th>
+                            <th data-field="Price">Price</th>
+                            <th data-field="bill">bill</th>
+                            <th data-field="status">status</th>
+                            <th data-field="edit"></th>
+                          </tr>
+                        </thead>
+                      </table>
+                      <div class="row row-centered for-display">
+                        <div class="col-centered">
+                          <ul uib-pagination ng-change="inventory.pageRepairChanged()" total-items="inventory.repairTotalItems" ng-model="inventory.repairCurrentPage" max-size="inventory.paginateButtonMaxSize" class="pagination-md" num-pages="numPages" previous-text="‹" next-text="›" boundary-link-numbers='true' rotate='false'></ul>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </uib-tab>
+                <uib-tab id="inventory_supplier_list" index="3" heading="{{ 'inventory_supplier' | translate }}" ng-click="inventory.changeTab('add_supplier')">
+                  <div class="col-md-12 panel-board">
+                    <!-- <div class="row pl-0">
+                      <div class="col-md-3">
+                        <div id="custom-search-input">
+                          <div class="col-md-12 input-group">
+                            <div class="row">
+                              <div class="col-md-2 pl-20">
+                                  <i class="glyphicon glyphicon-search"></i>
+                              </div>
+                              <div class="col-md-10">
+                                  <input type="text" class="col-md-3 form-control input-lg" placeholder="Search" />
+                              </div>
+                            </div>                        
+                          </div>
+                        </div>
+                      </div> 
+                      <div class="col-md-2">
+                        <button type="button" class="btn btn-custom btn-blue btn-block  ng-binding" data-toggle="modal" data-target="#listrequest"><i class="fa fa-filter"></i> Filter</button>
+                      </div>
+                    </div> -->
+                    <div class="row">
+                      <table id="inventory-supplier-table" >
+                        <thead>
+                          <tr>
+                            <th data-field="id">#</th>
+                            <th data-field="supplier_name">Supplier Name</th>
+                            <th data-field="addate">Addate</th>
+                            <th data-field="phone_number">Phone number</th>
+                            <th data-field="email">E mail</th>
+                            <th data-field="edit"></th>
+                            <th data-field="delete"></th>
+                          </tr>
+                        </thead>
+                      </table>
+                      <div class="row row-centered for-display">
+                        <div class="col-centered">
+                          <ul uib-pagination ng-change="inventory.pagesupplierChanged()" total-items="inventory.supplierTotalItems" ng-model="inventory.supplierCurrentPage" max-size="inventory.paginateButtonMaxSize" class="pagination-md" num-pages="numPages" previous-text="‹" next-text="›" boundary-link-numbers='true' rotate='false'></ul>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </uib-tab>
+              </uib-tabset>  
+            </li>
+          </ul>
         <table  id="tableForExport" data-toolbar="none" data-tableexport-display="always" style="display: none;"><table>
       </div>
     </div>
