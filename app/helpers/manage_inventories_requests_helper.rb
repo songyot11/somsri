@@ -1,0 +1,2 @@
+module ManageInventoriesRequestsHelper
+end

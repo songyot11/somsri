@@ -2,6 +2,7 @@ class Inventory < ApplicationRecord
 	# has_many :inventory_requestrak
 	belongs_to :employee
     has_one :category
+    belongs_to :supplier
 	validates :item_name, presence: true
 
     def categories
@@ -30,17 +31,6 @@ class Inventory < ApplicationRecord
         search: "%#{keyword}%")
     else 
 			self.all
-		end
-	end
-
-	def self.filter(keyword)
-		if keyword.present?
-			where(
-        "CAST(inventories.id AS TEXT) LIKE :search OR
-        category LIKE :search
-       ",
-        search: "%#{keyword}%")
-		else
 		end
 	end
 end

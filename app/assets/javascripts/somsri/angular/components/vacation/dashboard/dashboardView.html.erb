@@ -1,0 +1,214 @@
+<div class="container dashboard">
+  <div class="row mt-5">
+    <div class="col-md-12 heading">
+      {{ 'dashboard' | translate }}
+    </div>
+  </div>
+  <div class="row">
+    <div class="col-md-5ths">
+      <div class="dashboard-item orange">
+        <div class="row m-0">
+          <div class="col-md-12 p-0">
+            <h5 class="title">{{ 'remaining_day' | translate }}:</h5>
+            <div class="count orange">
+              {{ dashboard.vacation.remaining_day }}
+              <span class="quota m-0">/ {{ dashboard.vacation.leave_allowance }}</span>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="col-md-5ths">
+      <div class="dashboard-item purple">
+        <div class="row m-0">
+          <div class="col-md-9 p-0">
+            <h5 class="title">{{ 'sick_leave' | translate }}:</h5>
+            <div class="count purple">{{ dashboard.vacation.sick_leave }}</div>
+          </div>
+          <div class="col-md-3 pl-0 icon justify-content-center">
+            <i class='fa fa-hospital-o fa-2x color-purple' aria-hidden='true'></i>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="col-md-5ths">
+      <div class="dashboard-item blue">
+        <div class="row m-0">
+          <div class="col-md-9 p-0">
+            <h5 class="title">{{ 'vacation_leave' | translate }}:</h5>
+            <div class="count blue">{{ dashboard.vacation.vacation_leave }}</div>
+          </div>
+          <div class="col-md-3 pl-0 icon justify-content-center">
+            <i class='fa fa-suitcase fa-2x color-blue' aria-hidden='true'></i>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="col-md-5ths">
+      <div class="dashboard-item green">
+        <div class="row m-0">
+          <div class="col-md-9 p-0">
+            <h5 class="title">{{ 'switch_date' | translate }}:</h5>
+            <div class="count green">{{ dashboard.vacation.switch_date }}</div>
+          </div>
+          <div class="col-md-3 pl-0 icon justify-content-center">
+            <i class='fa fa-refresh fa-2x' aria-hidden='true'></i>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="col-md-5ths">
+      <div class="dashboard-item dark-gray">
+        <div class="row m-0">
+          <div class="col-md-9 p-0">
+            <h5 class="title">{{ 'work_at_home' | translate }}:</h5>
+            <div class="count dark-gray">{{ dashboard.vacation.work_at_home }}</div>
+          </div>
+          <div class="col-md-3 pl-0 icon justify-content-center">
+            <i class='fa fa-home fa-2x color-dark-gray' aria-hidden='true'></i>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="row mt-15">
+    <div class="col-md-6 p-5">
+      <div class="content-wrapper min-h-350 px-50 pt-20">
+        <div class="row">
+          <div class="col-md-6 p-0">
+            <h4 class="mb-5">{{ 'vcation_and_request_list' | translate }}</h4>
+          </div>
+          <div class="col-md-6 pr-0 justify-content-end">
+            <a class="btn btn-send" data-toggle="modal" data-target="#leaveSubmissionModal"><i class="fa fa-paper-plane" aria-hidden="true"></i> {{ 'send_request' | translate }}</a>
+          </div>
+        </div>
+        <div class="row">
+          <div class="col-md-12 p-0">
+              <hr class="mt-2" />
+          </div>
+        </div>
+        <div class="row" ng-repeat="vacation in dashboard.vacation.vacations">
+          <div class="col-md-9 p-0">
+            <b class="font-12 orange m-0"><span class="font-16 color-orange">{{ vacation.start_date }}</span> - {{ vacation.vacation_type.name }}</b>
+            <p class="color-gray mt-5 mb-0">{{ vacation.detail }}</p>
+          </div>
+          <div class="col-md-2 pr-0">
+            <span class="text-capitalize" ng-class="{'color-green': vacation.status == 'approved', 'color-red': vacation.status == 'rejected', 'color-blue': vacation.status == 'pending'}">{{ vacation.status }}</span>
+          </div>
+          <div class="col-md-1" ng-show="vacation.status == 'pending'">
+            <i class='fa fa-trash-o color-gray fa-lg' aria-hidden='true' ng-click="dashboard.deleteVacation(vacation.id)"></i>
+          </div>
+          <div class="row">
+            <div class="col-md-12 p-0">
+              <hr class="light m-5" />
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="col-md-6 p-5">
+      <div class="content-wrapper min-h-350 px-50 pt-20">
+        <div class="row">
+          <div class="row">
+            <div class="col-md-12 p-0">
+              <h4 class="mb-5">{{ 'holiday_list_in_this_week' | translate }}</h4>
+            </div>
+          </div>
+          <div class="row">
+          <div class="col-md-12 p-0">
+              <hr class="mt-2" />
+          </div>
+        </div>
+        </div>
+        <div class="row">
+          <div class="col-md-12 p-0">
+            <b class="orange m-0">
+              <span class="font-16 color-orange">23/11/2561</span>
+              <span class="font-14 color-gary">กมลกวรรณ ยอดใจ</span>
+              <span class="font-12 color-purple">- ลาป่วย</span>
+            </b>
+            <p class="color-gray mt-5 mb-5">เป็นไข้หวัดใหญ่สายพันธุ์ผสมระหว่างไข้หวัดนกกับไข้หวัดเป็ด</p>
+          </div>
+        </div>
+        <div class="row">
+          <div class="col-md-12 p-0">
+            <hr class="light mt-0" />
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- Modal -->
+<div class="modal" id="leaveSubmissionModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header pl-0 pb-5">
+        <button type="button" class="close" data-dismiss="modal" aria-hidden="true" ng-disabled="dashboard.isSaving">&times;</button>
+        <h4 class="modal-title font-21 color-green">{{ 'send_request' | translate }}</h4>
+      </div>
+      <div class="modal-body px-0">
+        <div class="row">
+          <div class="col-md-6">
+            <div class="form-group">
+              <label class="font-12" for="vacation_type">{{ 'vacation_type' | translate }}</label>
+              <select class="form-control dropdown" ng-change="dashboard.vacationTypeChanged(dashboard.selectedVacationType)" ng-model="dashboard.selectedVacationType" >
+                <option selected value="sick_leave" class="fa-align-left">{{ 'sick_leave' | translate }}</option>
+                <option value="vacation_leave">{{ 'vacation_leave' | translate }}</option>
+                <option value="switch_date">{{ 'switch_date' | translate }}</option>
+                <option value="work_at_home">{{ 'work_at_home' | translate }}</option>
+              </select>
+            </div>
+          </div>
+          <div class="col-md-6">
+            <div class="form-group" ng-show="dashboard.showVacationLeaveType">
+              <label class="font-12" for="vacation_leave_type">{{ 'vacation_leave_type' | translate }}</label>
+              <select class="form-control dropdown" ng-change="dashboard.vacationLeaveTypeChanged(dashboard.selectedVacationLeaveType)" ng-model="dashboard.selectedVacationLeaveType" ng-disabled="!dashboard.vacationConfig.can_leave_half_day">
+                <option selected value="vacation_leave_full_day">{{ 'full_day' | translate }}</option>
+                <option value="vacation_leave_half_day_morning">{{ 'half_day_morning' | translate }}</option>
+                <option value="vacation_leave_half_day_afternoon">{{ 'half_day_afternoon' | translate }}</option>
+              </select>
+            </div>
+          </div>
+        </div>
+        <hr class="dark mt-5" />
+        <div class="row">
+          <div class="col-md-6">
+            <div class="form-group">
+              <label class="font-12" for="start_date" ng-show="dashboard.selectedVacationType != 'switch_date'">{{ 'vacation_from_date' | translate }}</label>
+              <label class="font-12" for="start_date" ng-show="dashboard.selectedVacationType == 'switch_date'">{{ 'switch_from_date' | translate }}</label>
+              <input placeholder="&#61447;" id="start_date" type="text" class="form-control datepicker" uib-datepicker-popup="dd/MM/yyyy" datepicker-options="{showWeeks:false}" ng-model="dashboard.start_date" is-open="dashboard.startDatePopup.opened" close-text="Close" ng-change="dashboard.optionsChange()" ng-click="dashboard.openStartDatePopup()"/>
+              <span class="fa fa-calendar datepicker"></span>
+            </div>
+          </div>
+          <div class="col-md-6">
+            <div class="form-group">
+              <label class="font-12" for="end_date" ng-show="dashboard.selectedVacationType != 'switch_date'">{{ 'vacation_to_date' | translate }}</label>
+              <label class="font-12" for="end_date" ng-show="dashboard.selectedVacationType == 'switch_date'">{{ 'switch_to_date' | translate }}</label>
+              <input placeholder="&#61447;" id="end_date" type="text" class="form-control datepicker" uib-datepicker-popup="dd/MM/yyyy" datepicker-options="{showWeeks:false}" ng-model="dashboard.end_date" is-open="dashboard.endDatePopup.opened" close-text="Close" ng-change="dashboard.optionsChange()" ng-click="dashboard.openEndDatePopup()"/>
+              <span class="fa fa-calendar datepicker"></span>
+            </div>
+          </div>
+        </div>
+        <div class="row">
+          <div class="col-md-12">
+            <div class="form-group">
+              <label class="font-12" for="detail">เหตุผล</label>
+              <textarea class="form-control border no-resize" ng-model="dashboard.detail"></textarea>
+            </div>
+          </div>
+        </div>
+        <div class="row">
+          <div class="col-md-12">
+            <p class="color-red" data-ng-bind-html="dashboard.leaveHint"></p>
+          </div>
+        </div>
+      </div>
+      <div class="modal-footer">
+        <a class="btn btn-submit btn-light-green" ng-click="dashboard.submitLeaveRequest();" ng-disabled="dashboard.isSaving"><i class="fa fa-paper-plane" aria-hidden="true"></i> {{ 'send_request' | translate }}</a>
+        <button type="button" class="btn btn-cancel-outline" data-dismiss="modal" ng-disabled="dashboard.isSaving">{{ 'cancel' | translate }}</button>
+      </div>
+    </div>
+  </div>
+</div>

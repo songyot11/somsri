@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20181205033744) do
+ActiveRecord::Schema.define(version: 20181227135623) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -339,13 +339,39 @@ ActiveRecord::Schema.define(version: 20181205033744) do
     t.string   "model"
     t.string   "description"
     t.float    "price"
+<<<<<<< HEAD
     t.string   "date_purchase"
     t.string   "category"
     t.string   "date_add"
+=======
+    t.datetime "date_purchase"
+    t.datetime "date_add"
+    t.datetime "end_warranty"
+    t.integer  "employee_id"
+>>>>>>> 851b0cf3602cf3f797316ec9e0476871f4c43b4d
     t.datetime "created_at",    null: false
     t.datetime "updated_at",    null: false
+    t.integer  "supplier_id"
+    t.index ["supplier_id"], name: "index_inventories_on_supplier_id", using: :btree
   end
 
+<<<<<<< HEAD
+=======
+  create_table "inventory_requests", force: :cascade do |t|
+    t.string   "user_name"
+    t.string   "item_name"
+    t.string   "description"
+    t.float    "price"
+    t.datetime "request_date"
+    t.integer  "inventory_status"
+    t.datetime "created_at",       null: false
+    t.datetime "updated_at",       null: false
+    t.string   "comment"
+    t.integer  "employee_id"
+    t.index ["employee_id"], name: "index_inventory_requests_on_employee_id", using: :btree
+  end
+
+>>>>>>> 851b0cf3602cf3f797316ec9e0476871f4c43b4d
   create_table "invoice_statuses", force: :cascade do |t|
     t.string   "name"
     t.datetime "created_at", null: false
@@ -390,6 +416,32 @@ ActiveRecord::Schema.define(version: 20181205033744) do
     t.datetime "updated_at",              null: false
   end
 
+<<<<<<< HEAD
+=======
+  create_table "manage_inventory_requests", force: :cascade do |t|
+    t.integer  "inventory_request_id"
+    t.integer  "step"
+    t.string   "save_by"
+    t.string   "accept"
+    t.string   "save_by_step2"
+    t.datetime "date_purchase"
+    t.datetime "date_send"
+    t.string   "price"
+    t.string   "save_by_step3"
+    t.datetime "get_date"
+    t.string   "buy_slip"
+    t.datetime "end_warranty"
+    t.string   "save_by_step4"
+    t.string   "send_to_employee_name"
+    t.string   "send_to_employee_id"
+    t.string   "save_by_step5"
+    t.datetime "created_at",            null: false
+    t.datetime "updated_at",            null: false
+    t.string   "inventory_id"
+    t.index ["inventory_request_id"], name: "index_manage_inventory_requests_on_inventory_request_id", using: :btree
+  end
+
+>>>>>>> 851b0cf3602cf3f797316ec9e0476871f4c43b4d
   create_table "parents", force: :cascade do |t|
     t.string   "full_name"
     t.string   "full_name_english"
@@ -575,6 +627,15 @@ ActiveRecord::Schema.define(version: 20181205033744) do
     t.datetime "updated_at",      null: false
     t.datetime "deleted_at"
     t.index ["deleted_at"], name: "index_students_parents_on_deleted_at", using: :btree
+  end
+
+  create_table "suppliers", force: :cascade do |t|
+    t.string   "name"
+    t.string   "address"
+    t.string   "phone_number"
+    t.string   "email"
+    t.datetime "created_at",   null: false
+    t.datetime "updated_at",   null: false
   end
 
   create_table "tax_reductions", force: :cascade do |t|

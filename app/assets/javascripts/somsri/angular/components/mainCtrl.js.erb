@@ -4,15 +4,37 @@
   ])
   .controller('mainCtrl', ['$rootScope','$state', '$http', '$window', '$scope', '$uibModal', function($rootScope, $state, $http, $window, $scope, $uibModal) {
 
-    function checkAbility(model, success, fail){
-      if($rootScope.abilities.manage && $rootScope.abilities.manage.all){
+    function checkAbility(model, success, fail) {
+      if ($rootScope.abilities.manage && $rootScope.abilities.manage.all) {
         success();
-      }else if($rootScope.abilities.manage && $rootScope.abilities.manage[model]){
+      } else if ($rootScope.abilities.manage && $rootScope.abilities.manage[model]) {
         success();
-      }else{
-        if(fail){
+      } else {
+        if (fail) {
           fail();
-        }else{
+        } else {
+          $rootScope.openRoot();
+        }
+      }
+    }
+
+    function checkManage(model, callback) {
+      if ($rootScope.abilities.manage && $rootScope.abilities.manage.all) {
+        callback(true);
+      } else if ($rootScope.abilities.manage && $rootScope.abilities.manage[model]) {
+        callback(true);
+      } else {
+        callback(false);
+      }
+    }
+
+    function canUpdate(model, success, fail) {
+      if ($rootScope.abilities.update && $rootScope.abilities.update[model]) {
+        success();
+      } else {
+        if (fail) {
+          fail();
+        } else {
           $rootScope.openRoot();
         }
       }
@@ -39,6 +61,40 @@
       }
     };
 
+    $rootScope.canManage = function(model, callback) {
+      if ($rootScope.abilities && $rootScope.abilities.length > 0) {
+        checkManage(model, callback);
+      } else {
+        $http.get('/abilities').then(function(resp) {
+          if (resp.data.length > 0) {
+            $rootScope.abilities = resp.data[0];
+            checkManage(model, callback)
+          } else {
+            callback(true)
+          }
+        });
+      }
+    }
+
+    $rootScope.canUpdate = function(model, success, fail) {
+      if ($rootScope.abilities && $rootScope.abilities.length > 0) {
+        checkManage(model, callback);
+      } else {
+        $http.get('/abilities').then(function(resp) {
+          if (resp.data.length > 0) {
+            $rootScope.abilities = resp.data[0];
+            canUpdate(model, success, fail);
+          } else {
+            if (fail) {
+              fail();
+            } else {
+              $rootScope.openRoot();
+            }
+          }
+        });
+      }
+    }
+
     $rootScope.openRoot = function() {
       $window.location.href = "/";
     };
@@ -63,8 +119,29 @@
       $state.go('create_expenses')
     };
 
-    $rootScope.openConfirmationModal = function (message, success, dismiss) {
+    $rootScope.openVacationDashboard = function () {
+      $state.go('vacation_dashboard')
+    };
+
+    $rootScope.openVacationMenu = function () {
+      $state.go('vacation_menu')
+    };
+
+    $rootScope.openVacationCalendar = function () {
+      $state.go('vacation_calendar')
+    };
+
+    $rootScope.openVacationLeaveRules = function () {
+      $state.go('vacation_leave_rules')
+    };
+
+    $rootScope.openVacationSetting = function () {
+      $state.go('vacation_setting')
+    };
+
+    $rootScope.openConfirmationModal = function (message, detail, success, dismiss) {
       $scope.message = message;
+      $scope.detail = detail;
       $uibModal.open({
         animation: true,
         backdrop: 'static',
@@ -84,13 +161,67 @@
         if (isConfirm) {
           if(success){ success() }
         }else{
+        if(dismiss){ dismiss() }
+        }
+      });
+    }
+
+     $rootScope.openConfirmationInventoryModal = function(message, success, dismiss) {
+      $scope.message = message;
+      $uibModal.open({
+        animation: true,
+        backdrop: 'static',
+        keyboard: false,
+        scope: $scope,
+        templateUrl: "<%= asset_path('somsri/angular/components/modal/confirmInventory/confirmInventoryModalView.html') %>",
+        controller: 'confirmInventoryModalCtrl as confirm',
+        size: 'md',
+        resolve: {
+          resources: ['$ocLazyLoad', 'ASSETS', function($ocLazyLoad, ASSETS) {
+            return $ocLazyLoad.load([
+              ASSETS.somsri.somsri.confirm_inventory_modal
+            ]);
+          }]
+        }
+      }).result.then(function (result) {
+        if (result) {
+          if(success){ success() }
+        }else{
+          if(dismiss){ dismiss() }
+        }
+      });
+    }
+
+
+     $rootScope.openConfirmationInventoryRequestModal = function(message, success, dismiss) {
+      $scope.message = message;
+      $uibModal.open({
+        animation: true,
+        backdrop: 'static',
+        keyboard: false,
+        scope: $scope,
+        templateUrl: "<%= asset_path('somsri/angular/components/modal/confirmInventory/confirmInventoryRequestModalView.html') %>",
+        controller: 'confirmInventoryRequestModalCtrl as confirm',
+        size: 'md',
+        resolve: {
+          resources: ['$ocLazyLoad', 'ASSETS', function($ocLazyLoad, ASSETS) {
+            return $ocLazyLoad.load([
+              ASSETS.somsri.somsri.confirm_inventory_request_modal
+            ]);
+          }]
+        }
+      }).result.then(function (result) {
+        if (result) {
+          if(success){ success() }
+        }else{
           if(dismiss){ dismiss() }
         }
       });
     }
     
     $rootScope.openInventory = function(id) {
-      $state.go('inventory', { id: id })
+      $rootScope.index_id = id;
+      $state.go('inventory');
     };
 
     $rootScope.updateInventory = function(id) {
@@ -98,7 +229,163 @@
     }
 
     $rootScope.updateInventoryRequest = function(id) {
-      $state.go('new_inventory_request', { id: id })
+      $state.go('update_inventory_request', { id: id })
+    }
+
+    $rootScope.updateInventoryRequestStep2 = function(step, id) {
+      $rootScope.step = step
+      $state.go('update_inventory_request_step2', { id: id})
+    }
+
+    $rootScope.updateInventoryRequestStep3 = function(step, id) {
+      $rootScope.step = step
+      $state.go('update_inventory_request_step3', { id: id})
+    }
+
+    $rootScope.updateInventoryRequestStep4 = function(step, id) {
+      $rootScope.step = step
+      $state.go('update_inventory_request_step4', { id: id})
+    }
+
+    $rootScope.updateInventoryRequestStep5 = function(step, id) {
+      $rootScope.step = step
+      $state.go('update_inventory_request_step5', { id: id})
+    }
+
+    $rootScope.updateSuppliers = function(id) {
+      $state.go('update_suppliers',{id: id})
+    }
+
+    $rootScope.openSuccessModal = function(message) {
+      $scope.message = message;
+      $uibModal.open({
+        animation: true,
+        backdrop: 'static',
+        keyboard: false,
+        scope: $scope,
+        templateUrl: "<%= asset_path('somsri/angular/components/modal/success/successModalView.html') %>",
+        controller: 'successModalCtrl as success',
+        size: 'md',
+        resolve: {
+          resources: ['$ocLazyLoad', 'ASSETS', function($ocLazyLoad, ASSETS) {
+            return $ocLazyLoad.load([
+              ASSETS.somsri.somsri.success_modal
+            ]);
+          }]
+        }
+      });
+    }
+
+    $rootScope.openErrorModal = function(message, callback) {
+      $scope.message = message;
+      $uibModal.open({
+        animation: true,
+        backdrop: 'static',
+        keyboard: false,
+        scope: $scope,
+        templateUrl: "<%= asset_path('somsri/angular/components/modal/error/errorModalView.html') %>",
+        controller: 'errorModalCtrl as error',
+        size: 'md',
+        resolve: {
+          resources: ['$ocLazyLoad', 'ASSETS', function($ocLazyLoad, ASSETS) {
+            return $ocLazyLoad.load([
+              ASSETS.somsri.somsri.error_modal
+            ]);
+          }]
+        }
+      }).result.then(function() {
+          if (callback) {
+            callback();
+          }
+      });
+    }
+
+    $rootScope.openSuccessModal = function(message) {
+      $scope.message = message;
+      $uibModal.open({
+        animation: true,
+        backdrop: 'static',
+        keyboard: false,
+        scope: $scope,
+        templateUrl: "<%= asset_path('somsri/angular/components/modal/success/successModalView.html') %>",
+        controller: 'successModalCtrl as success',
+        size: 'md',
+        resolve: {
+          resources: ['$ocLazyLoad', 'ASSETS', function($ocLazyLoad, ASSETS) {
+            return $ocLazyLoad.load([
+              ASSETS.somsri.somsri.success_modal
+            ]);
+          }]
+        }
+      });
+    }
+
+    $rootScope.openErrorModal = function(message, callback) {
+      $scope.message = message;
+      $uibModal.open({
+        animation: true,
+        backdrop: 'static',
+        keyboard: false,
+        scope: $scope,
+        templateUrl: "<%= asset_path('somsri/angular/components/modal/error/errorModalView.html') %>",
+        controller: 'errorModalCtrl as error',
+        size: 'md',
+        resolve: {
+          resources: ['$ocLazyLoad', 'ASSETS', function($ocLazyLoad, ASSETS) {
+            return $ocLazyLoad.load([
+              ASSETS.somsri.somsri.error_modal
+            ]);
+          }]
+        }
+      }).result.then(function() {
+          if (callback) {
+            callback();
+          }
+      });
+    }
+
+    $rootScope.openSuccessModal = function(message) {
+      $scope.message = message;
+      $uibModal.open({
+        animation: true,
+        backdrop: 'static',
+        keyboard: false,
+        scope: $scope,
+        templateUrl: "<%= asset_path('somsri/angular/components/modal/success/successModalView.html') %>",
+        controller: 'successModalCtrl as success',
+        size: 'md',
+        resolve: {
+          resources: ['$ocLazyLoad', 'ASSETS', function($ocLazyLoad, ASSETS) {
+            return $ocLazyLoad.load([
+              ASSETS.somsri.somsri.success_modal
+            ]);
+          }]
+        }
+      });
+    }
+
+    $rootScope.openErrorModal = function(message, callback) {
+      $scope.message = message;
+      $uibModal.open({
+        animation: true,
+        backdrop: 'static',
+        keyboard: false,
+        scope: $scope,
+        templateUrl: "<%= asset_path('somsri/angular/components/modal/error/errorModalView.html') %>",
+        controller: 'errorModalCtrl as error',
+        size: 'md',
+        resolve: {
+          resources: ['$ocLazyLoad', 'ASSETS', function($ocLazyLoad, ASSETS) {
+            return $ocLazyLoad.load([
+              ASSETS.somsri.somsri.error_modal
+            ]);
+          }]
+        }
+      }).result.then(function() {
+          if (callback) {
+            callback();
+          }
+      });
     }
 
   }]);

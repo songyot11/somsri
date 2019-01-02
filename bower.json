@@ -28,7 +28,9 @@
     "angular-translate-loader-url": "",
     "angular-acl": "",
     "angular-ui-select": "",
-    "angular-ui-tree": ""
+    "angular-ui-tree": "",
+    "ng-ckeditor": "ng.ckeditor#^2.0.5",
+    "fullcalendar": "^3.9.0"
   },
   "resolutions": {
     "angular": "1.5.9"
