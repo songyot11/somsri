@@ -2,11 +2,11 @@
   'use strict';
     angular.module('somsri.somsri.inventory_supplier_new', [])
     .controller('inventoryNewSupplierCtrl', ['$compile', '$scope', '$window', '$filter', '$rootScope', '$timeout', 'translateFilter', '$uibModal', 'Upload', '$state' ,'inventorySupplierService', function($compile, $scope, $window, $filter, $rootScope, $timeout, translateFilter, $uibModal, Upload, $state, service) {
-    $rootScope.menu = translateFilter("inventory_request")
+    $rootScope.menu = translateFilter("inventory_supplier")
     var ctrl = this
     var angularScopeRoot = 'angular.element(document.getElementById("angularCtrl")).scope().$root'
-    var angularScopeInventoryNew = 'angular.element(document.getElementById("angularCtrl")).scope().inventoryNewRequestCtrl'
-    var angularCtrlStr = 'angular.element(document.getElementById("angularCtrl")).scope().inventoryNewRequest'
+    var angularScopeInventoryNew = 'angular.element(document.getElementById("angularCtrl")).scope().inventoryNewSupplierCtrl'
+    var angularCtrlStr = 'angular.element(document.getElementById("angularCtrl")).scope().inventoryNewSupplier'
     ctrl.real_id = $state.params.id;
     ctrl.name = ""
     ctrl.address = ""

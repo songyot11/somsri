@@ -202,19 +202,7 @@
       url: '/inventory/supplier/new',
       name: 'inventory_supplier_new',
       templateUrl: "<%= asset_path('somsri/angular/components/inventoryNewSupplier/inventoryNewSupplierView.html') %>",
-      controller: 'inventoryNewSupplierCtrl as inventory',
-      resolve: {
-        resources: ['$ocLazyLoad', function($ocLazyLoad) {
-          return $ocLazyLoad.load([
-          ASSETS.somsri.somsri.inventory_supplier
-          ]);
-        }]
-      }
-    }).state({
-      url: '/inventory/detail/supplier',
-      name: 'details_supplier',
-      templateUrl: "<%= asset_path('somsri/angular/components/inventoryNewSupplier/SupplierDetailsView.html') %>",
-      controller: 'inventoryNewSupplierCtrl as inventory',
+      controller: 'inventoryNewSupplierCtrl as supplier',
       resolve: {
         resources: ['$ocLazyLoad', function($ocLazyLoad) {
           return $ocLazyLoad.load([
@@ -226,11 +214,23 @@
       url: '/inventory/supplier/:id',
       name: 'update_suppliers',
       templateUrl: "<%= asset_path('somsri/angular/components/inventoryNewSupplier/inventoryNewSupplierView.html') %>",
-      controller: 'inventoryNewSupplierCtrl as inventory',
+      controller: 'inventoryNewSupplierCtrl as supplier',
       resolve: {
         resources: ['$ocLazyLoad', function($ocLazyLoad) {
           return $ocLazyLoad.load([
           ASSETS.somsri.somsri.inventory_supplier
+          ]);
+        }]
+      }
+    }).state({
+      url: '/inventory/supplier_details/:id',
+      name: 'inventory_supplier_details',
+      templateUrl: "<%= asset_path('somsri/angular/components/supplierDetails/supplierDetailsView.html') %>",
+      controller: 'supplierDetailsCtrl as supplier',
+      resolve: {
+        resources: ['$ocLazyLoad', function($ocLazyLoad) {
+          return $ocLazyLoad.load([
+          ASSETS.somsri.somsri.inventory_supplier_details
           ]);
         }]
       }

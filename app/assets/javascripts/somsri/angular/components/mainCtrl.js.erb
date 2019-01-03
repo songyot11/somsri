@@ -253,7 +253,11 @@
     }
 
     $rootScope.updateSuppliers = function(id) {
-      $state.go('update_suppliers',{id: id})
+      $state.go('update_suppliers',{ id: id })
+    }
+
+    $rootScope.openSupplierDetails = function(id) {
+      $state.go('inventory_supplier_details', { id: id })
     }
 
     $rootScope.openSuccessModal = function(message) {

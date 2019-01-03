@@ -16,8 +16,12 @@
 			})
 		}
 
-		this.show = function(id) {
-   	 return $http.get('/suppliers/' + id)
+		this.show = function(id, page) {
+   	 return $http.get('/suppliers/' + id, {
+   	 		params: {
+   	 			page: page,
+   	 		}
+   	 })
   	};
 
   	this.removeSuppliers = function(id) {
