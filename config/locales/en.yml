@@ -462,6 +462,7 @@ en:
 
   #Inventory Request
   list_request: "Request list"
+  detail_inventory: "Detail inventory"
   add_request: "+ Add Request"
   user_request: "User request"
   request_date: "Request date"

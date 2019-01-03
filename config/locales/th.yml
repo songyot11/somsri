@@ -598,6 +598,7 @@ th:
 
   #Inventory
   inventory_list: "รายการพัสดุ"
+  detail_inventory: "รายละเอียดพัสดุ"
   inventory_request: "คำขอใช้พัสดุ"
   add_inventory: "+ เพิ่มพัสดุ"
   inventory_request: "คำขอใช้พัสดุ"

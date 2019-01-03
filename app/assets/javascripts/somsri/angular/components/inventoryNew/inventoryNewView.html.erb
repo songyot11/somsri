@@ -1,21 +1,14 @@
 <div class="container" >
   <form ng-submit="inventory.save()">
-  <div class="row">
+  <div class="row mt-20">
     <div id="inventory">
       <div class="col-xs-12">
-        <div class="row mt-50">
+        <div class="row">
           <div class="col-xs-6 mb-20 pl-0">
-            <h1><h1>{{ "inventory_list" | translate }}</h1></h1>
+            <h1>{{ "detail_inventory" | translate }}</h1>
           </div>
         </div>
-        <div class="row">
-          <ul class="nav nav-tabs inventory col-md-12">
-            <li class="cyan active">
-              <a data-toggle="tab" class="ng-binding">{{ "inventory" | translate }}</a>
-            </li>
-          </ul>
-        </div>
-        <div class="row report-content container-fluid panel-board" style="height: 400px;">
+        <div class="row report-content container-fluid panel-board">
           <div class="tab-content">
             <div class="row">
               <div class="col-md-3">
