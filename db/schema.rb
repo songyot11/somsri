@@ -339,24 +339,16 @@ ActiveRecord::Schema.define(version: 20181227135623) do
     t.string   "model"
     t.string   "description"
     t.float    "price"
-<<<<<<< HEAD
-    t.string   "date_purchase"
-    t.string   "category"
-    t.string   "date_add"
-=======
     t.datetime "date_purchase"
     t.datetime "date_add"
     t.datetime "end_warranty"
     t.integer  "employee_id"
->>>>>>> 851b0cf3602cf3f797316ec9e0476871f4c43b4d
     t.datetime "created_at",    null: false
     t.datetime "updated_at",    null: false
     t.integer  "supplier_id"
     t.index ["supplier_id"], name: "index_inventories_on_supplier_id", using: :btree
   end
 
-<<<<<<< HEAD
-=======
   create_table "inventory_requests", force: :cascade do |t|
     t.string   "user_name"
     t.string   "item_name"
@@ -371,7 +363,6 @@ ActiveRecord::Schema.define(version: 20181227135623) do
     t.index ["employee_id"], name: "index_inventory_requests_on_employee_id", using: :btree
   end
 
->>>>>>> 851b0cf3602cf3f797316ec9e0476871f4c43b4d
   create_table "invoice_statuses", force: :cascade do |t|
     t.string   "name"
     t.datetime "created_at", null: false
@@ -416,8 +407,6 @@ ActiveRecord::Schema.define(version: 20181227135623) do
     t.datetime "updated_at",              null: false
   end
 
-<<<<<<< HEAD
-=======
   create_table "manage_inventory_requests", force: :cascade do |t|
     t.integer  "inventory_request_id"
     t.integer  "step"
@@ -441,7 +430,6 @@ ActiveRecord::Schema.define(version: 20181227135623) do
     t.index ["inventory_request_id"], name: "index_manage_inventory_requests_on_inventory_request_id", using: :btree
   end
 
->>>>>>> 851b0cf3602cf3f797316ec9e0476871f4c43b4d
   create_table "parents", force: :cascade do |t|
     t.string   "full_name"
     t.string   "full_name_english"
