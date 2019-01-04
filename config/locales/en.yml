@@ -483,8 +483,8 @@ en:
   edit_classroom: "Edit Classroom"
   up_grade_classroom: "Promote Students"
   up_grade_classroom2: "Promote"
-  no_of_teacher: "#Teacher"
-  no_of_student: "#Student"
+  no_of_teacher: "Teachers"
+  no_of_student: "Students"
   gradulated: Gradulated
   up_grade_classroom_all: "Do you want to promote all students?"
   current_grade_classroom: "Current Classroom"

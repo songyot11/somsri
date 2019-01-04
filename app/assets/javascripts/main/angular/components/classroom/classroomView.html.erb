@@ -17,7 +17,7 @@
           <span>{{ 'select_classroom' | translate }}</span>
           <span class="dropdown">
             <span id="grade-list" class="dropdown-label" data-toggle="dropdown">
-              <span ng-bind="classroom.grade_select.name || '{{ 'all' | translate }}'"></span>
+              <span>{{ classroom.grade_select.name || 'all' | translate }}</span>
               <i class="fa fa-angle-down" aria-hidden="true"></i>
             </span>
             <ul class="dropdown-menu" aria-labelledby="grade-list">
