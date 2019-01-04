@@ -17,9 +17,15 @@ RUN bundle install
 
 ADD . $APP_HOME/
 
+
 RUN cp config/application_sample.yml config/application.yml
 RUN cp config/database_sample.yml config/database.yml
 
-#RUN RAILS_GROUPS=assets bundle exec rake assets:precompile
+COPY package.json bower.json $APP_HOME/
+RUN npm install --only=prod && \
+    npm cache clean && \
+    bower install --allow-root
+    
+RUN RAILS_GROUPS=assets bundle exec rake assets:precompile
 
 CMD puma -C config/puma.rb

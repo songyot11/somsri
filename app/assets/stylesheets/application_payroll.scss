@@ -335,6 +335,16 @@ h2#month-list{
   }
 }
 
+.btn-cancel-outline {
+  background-color: white;
+  color: #9D9D9D;
+  border: 2px solid #9D9D9D;
+  font-size: 18px;
+  border-radius: 0px;
+  padding: 16px 32px;
+  transition: all 0.25s ease;
+}
+
 .btn-danger {
   border-radius: 0px
 }

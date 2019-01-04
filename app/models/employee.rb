@@ -1,5 +1,10 @@
 class Employee < ApplicationRecord
   include ActiveModel::Dirty
+  rolify
+  # Include default devise modules. Others available are:
+  # :registerable, :confirmable, :lockable, :timeoutable and :omniauthable
+  devise :database_authenticatable,:recoverable, :rememberable, :trackable #, :validatable
+
   belongs_to :school
   has_many :emergency_calls, class_name: "Individual", foreign_key: 'emergency_call_id'
   has_many :spouses, class_name: "Individual", foreign_key: 'spouse_id'
@@ -11,7 +16,9 @@ class Employee < ApplicationRecord
   has_many :teacher_attendance_lists
   has_many :employee_skills, dependent: :destroy
   has_many :employees, through: :employee_skills
-
+  has_many :inventories
+  has_many :inventory_requests
+  has_many :vacations, foreign_key: 'requester_id'
   has_one :taxReduction
 
   has_many :payrolls
@@ -25,6 +32,10 @@ class Employee < ApplicationRecord
 
   has_attached_file :img_url
   validates_attachment_content_type :img_url, content_type: /\Aimage\/.*\z/
+
+  def approver?
+    self.has_role? :approver
+  end
 
   def assign_pin
     self.pin = get_unique_pin if !pin
@@ -228,6 +239,28 @@ class Employee < ApplicationRecord
       end
     end
     return name_obj
+  end
+
+  def leave_remaining
+    self.vacations = self.vacations.this_year
+    sick_leave_count = self.vacations.sick_leave.map(&:deduce_days).inject(0, &:+)
+    full_day_leave_count = self.vacations.vacation_full_day.not_rejected.map(&:deduce_days).inject(0, &:+)
+    half_day_morning_leave_count = self.vacations.vacation_half_day_morning.not_rejected.map(&:deduce_days).inject(0, &:+)
+    half_day_afternoon_leave_count = self.vacations.vacation_half_day_afternoon.not_rejected.map(&:deduce_days).inject(0, &:+)
+    switch_date_count = self.vacations.switch_date.map(&:deduce_days).inject(0, &:+)
+    work_at_home_count = self.vacations.work_at_home.map(&:deduce_days).inject(0, &:+)
+
+    deduce_days = 0
+    deduce_days += sick_leave_count
+    deduce_days += full_day_leave_count
+    deduce_days += half_day_morning_leave_count
+    deduce_days += half_day_afternoon_leave_count
+    deduce_days += switch_date_count
+    deduce_days += work_at_home_count
+    remaining_day = self.leave_allowance - deduce_days
+
+    i, f = remaining_day.to_i, remaining_day.to_f
+    i == f ? i : f
   end
 
   private

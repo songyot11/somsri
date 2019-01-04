@@ -1,0 +1,13 @@
+(function() {
+  'use strict';
+  angular.module('somsri.somsri.success_modal', [
+  ])
+  .controller('successModalCtrl', ['$scope', '$uibModalInstance', function($scope, $uibModalInstance) {
+    this.message = $scope.message;
+
+    this.close = function () {
+      $uibModalInstance.close();
+    };
+
+  }]);
+})();

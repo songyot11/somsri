@@ -1,20 +1,73 @@
 pipeline:
+  restore-cache:
+    image: drillster/drone-volume-cache
+    restore: true
+    mount:
+      - ./bundler
+    volumes:
+      - /tmp/cache:/cache
   build:
+    image: bananacoding/ruby-nodejs:2.3.1
+    environment:
+    commands:
+      - apt-get update
+      - apt-get install --assume-yes pdftk
+      - cp config/database_sample.yml config/database.yml
+      - export PDFTK_PATH=/
+      - export SENDGRID_USERNAME=un
+      - export SENDGRID_PASSWORD=ps
+      - export ROLLCALL_APK_URL=apk
+      - export DB_HOST=database
+      - export DB_USER=postgres
+      - export DB_PASS=password
+      - export DB_PORT=5432
+      - bundle install --path=./bundler
+      - bower install --allow-root
+      - export RAILS_ENV=test
+      - bundle exec rake db:create
+      - bundle exec rake db:schema:load
+      - bundle exec rake db:migrate
+      - bundle exec rspec
+  rebuild-cache:
+    image: drillster/drone-volume-cache
+    rebuild: true
+    mount:
+      - ./bundler
+    volumes:
+      - /tmp/cache:/cache      
+  build-image:
     image: plugins/docker
-    repo: aong/app
+    repo: bananacoding/banana-inventory
     tags:
-      - 2.5
+      - 1.0.2
       - latest
     secrets: [ DOCKER_USERNAME, DOCKER_PASSWORD ]
-  kubectl:
-    image: komljen/drone-kubectl-helm
-    secrets: [ KUBERNETES_SERVER, KUBERNETES_CERT, KUBERNETES_TOKEN ]
-    kubectl: "get pods"
+    when:
+      branch: [ master ]
   deploy:
     image: sh4d1/drone-kubernetes
     kubernetes_template: deployment.yml
     kubernetes_namespace: default
     secrets: [ KUBERNETES_SERVER, KUBERNETES_CERT, KUBERNETES_TOKEN ]
+    when:
+      branch: [ master ]
+  notify:
+    image: drillster/drone-email
+    from: noreply-drone@bananacoding.com
+    host: $EMAIL_HOST
+    username: $EMAIL_USERNAME
+    password: $EMAIL_PASSWORD
+    recipients:
+      - kraiwut@bananacoding.com
+      - wiriya@bananacoding.com
+      - tawan@bananacoding.com
+      - jirapong@bananacoding.com
+      - manit@bananacoding.com
+      - sawakit@bananacoding.com
+    secrets: [ EMAIL_HOST, EMAIL_USERNAME, EMAIL_PASSWORD ]
+    when:
+      status: [ success, failure ]
+
 services:
   database:
     image: postgres

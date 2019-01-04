@@ -92,6 +92,9 @@ GEM
       rack (>= 1.0.0)
       rack-test (>= 0.5.4)
       xpath (~> 2.0)
+    ckeditor (4.2.4)
+      cocaine
+      orm_adapter (~> 0.5.0)
     climate_control (0.1.0)
     cliver (0.3.2)
     cocaine (0.5.8)
@@ -161,6 +164,9 @@ GEM
       nokogiri (>= 1.6.0)
       ruby_parser (~> 3.5)
     i18n (0.7.0)
+    icalendar (2.5.2)
+      ice_cube (~> 0.16)
+    ice_cube (0.16.3)
     jbuilder (2.6.1)
       activesupport (>= 3.0.0, < 5.1)
       multi_json (~> 1.2)
@@ -394,6 +400,7 @@ DEPENDENCIES
   capistrano-rvm
   capistrano3-unicorn
   capybara
+  ckeditor
   coffee-rails (~> 4.2)
   comfortable_mexican_sofa (~> 1.12.0)
   database_cleaner
@@ -403,6 +410,7 @@ DEPENDENCIES
   faker
   figaro
   font-awesome-rails
+  icalendar
   jbuilder (~> 2.5)
   jquery-rails
   listen (~> 3.0.5)
@@ -441,4 +449,4 @@ DEPENDENCIES
   wkhtmltopdf-binary
 
 BUNDLED WITH
-   1.16.0
+   1.17.2
