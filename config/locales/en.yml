@@ -42,6 +42,8 @@ en:
   employee_pvf: "PVF"
   employee_extra_etc: Extra etc.
   employee_fee_etc: Fee etc.
+  select_employee: "Select employee"
+  no_employee_selection: "No employee selection"
   ot: "OverTime"
   position_allowance: "Position Allowance"
   allowance: "Allowance"
@@ -73,6 +75,7 @@ en:
   log_in: "Log In"
   sign_out: "Sign Out"
   profile: "Profile"
+  company: "Company"
 
   mr: Mr.
   ms: Ms.
@@ -271,6 +274,8 @@ en:
   setting: 'Settings'
   class_management: "Grade Management"
   expense: "Expense"
+  inventory: "Inventory"
+  vacation: "Vacation"
 
 
   activerecord:
@@ -429,6 +434,68 @@ en:
   graduated_semester: "Graduation Semester"
   grade_classroom: "Level"
 
+ #Inventory
+  add_inventory: "+ Add inventory"
+  item_name: "Item name"
+  serial_number: "Serial number"
+  model: "Model"
+  description: "Description"
+  price: "Price"
+  date_purchase: "Date purchase" 
+  category: "Category"
+  date_add: "Date add"
+  inventory_list: "Inventory list"
+  inventory_request: "Inventory request"
+  select_category: "Select category"
+  end_warranty: "End of warranty"
+  office_furniture: "Office furniture"
+  equipment_computer: "Equipment computer "
+  office_supplies: "Office supplies"
+  maintenance_equipment: "Maintenance equipment"
+  cleaning_products: "Canteen and cleaning products"
+  electronic_office_equipment: "Electronic office equipment"
+  paper_products: "Paper products"
+  meeting_presentation_equipment: "Meeting and presentation equipment"
+  inventory_data: "Device"
+  inventory_search: "Search form name, model, serial number, date purchase and user name"
+  inventory_request_search: "Search form name, description ,request date and user name"
+
+  #Inventory Request
+  list_request: "Request list"
+  add_request: "+ Add Request"
+  user_request: "User request"
+  request_date: "Request date"
+  reject: "Reject"
+  approve: "Approveิ"
+  pending: "Pending"
+  accept: "Accept"
+  purchasing: "Purchasing"
+  done: "Done"
+  assigned: "Assigned"
+
+  #Update inventory request
+  details_inventory_request: "Details Inventory Request"
+  approve_request: "Approve request"
+  inventory_purchase: "Inventory purchase"
+  get_inventory: "Get inventory"
+  dispatch_to_employees: "Dispatch to employees"
+  date_get_inventory: "Date get inventory"
+  date_purchase_inventory: "Date purchare inventory"
+  date_send_inventory: "Date send inventory"
+  save_by: "Save by"
+  request_approval: "Requested approval"
+  bath: "Bath"
+  receive_products_on_date: "Receive products on date"
+  continue: "Continue"
+  completed: "Completed"
+  send_the_package_to: "Send the package to"
+
+  #inventory supplier
+  inventory_supplier: "Supplier"
+  list_supplier: "Supplier list"
+  add_supplier: "+ Add supplier"
+  detal_supplier: "Detal supplier"
+
   # Rollcall
   monthly: "Month"
   student_record: "Attendance Record"
@@ -519,6 +586,48 @@ en:
   print_expenses_payment_report: "Print expenses payment method report"
   expense_category_placeholder: "Category name"
   expense_category_already_used: "Cannot delete category that already used."
+
+  # Vacation
+  day: "Day"
+  dashboard: "Dashboard"
+  calendar: "Calendar"
+  leave_rules: "Leave Rules"
+  remaining_day: "Remaining day"
+  sick_leave: "Sick leave"
+  vacation_leave: "Vacation leave"
+  switch_date: "Switch date"
+  work_at_home: "Work at home"
+  full_day: "Full day"
+  half_day_morning: "Half day (morning)"
+  half_day_afternoon: "Half day (afternoon)"
+  vacation_type: "Vacation type"
+  vacation_leave_type: "Vacation leave type"
+  vcation_and_request_list: "Vacation and request list"
+  holiday_list_in_this_week: "Holiday list in this week"
+  send_request: "Send request"
+  vacation_from_date: "From date"
+  vacation_to_date: "To date"
+  switch_from_date: "Switch from date"
+  switch_to_date: "Switch to date"
+  pending: "Pending"
+  approved: "Approved"
+  rejected: "Rejected"
+  vacation_was_approved: "Vacation was approved"
+  vacation_was_rejected: "Vacation was rejected"
+  vacation_save_error: "Something went wrong, please try again"
+  vacation_saved_success: "Vacation saved successfully"
+  vacation_deleted_success: "Vacation deleted successfully"
+  confirm_delete_vacation: "Do you want to delete this vacation?"
+  updated_by: "Updated by:"
+  updated_at: "Updated at:"
+  holiday_calendar: "Holiday calendar"
+  holiday_of_year: "Holiday of year"
+  create_holiday: "Create holiday"
+  this_year: "This year"
+  every_year: "Every year"
+  confirm_delete_holiday: "Do you want to delete this holiday?"
+  holiday_delete_success: "Delete holiday successfully."
+  holiday_delete_failed: "Delete holiday failed."
 
   # All
   save_change_confirmation: "Do you want to save this change?"

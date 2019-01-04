@@ -1,0 +1,164 @@
+(function() {
+  'use strict';
+  angular.module('somsri.somsri.inventory_new_request', [])
+    .controller('inventoryNewRequestCtrl', ['$compile', '$scope', '$window', '$filter', '$rootScope', '$timeout', 'translateFilter', '$uibModal', 'Upload', '$state', "inventoryRequestService", "employeesService" , 
+      function($compile, $scope, $window, $filter, $rootScope, $timeout, translateFilter, $uibModal, Upload, $state, service, employeesService) {
+	$rootScope.menu = translateFilter("inventory_request")
+		var ctrl = this
+	 	var angularScopeRoot = 'angular.element(document.getElementById("angularCtrl")).scope().$root'
+    var angularScopeInventoryNew = 'angular.element(document.getElementById("angularCtrl")).scope().inventoryNewRequestCtrl'
+    var angularCtrlStr = 'angular.element(document.getElementById("angularCtrl")).scope().inventoryNewRequest'
+    ctrl.real_id = $state.params.id;
+    ctrl.name = ""
+    ctrl.description = ""
+    ctrl.price = ""
+    ctrl.user_name = ""
+    ctrl.add_button = "add"
+    ctrl.inventory_status = 0
+
+    function initData() {
+      if (!ctrl.real_id) { 
+        return
+      }
+
+      ctrl.add_button = "edit"
+
+      service.show(ctrl.real_id).then(function(resp) {
+        var value = resp.data
+        ctrl.datas = resp.data
+        ctrl.name = value.item_name
+        ctrl.description = value.description
+        ctrl.price = value.price
+        ctrl.user_name = value.user_name
+        ctrl.request_date = new Date(value.request_date)
+        if (value.request_date) {
+          ctrl.datas.request_date = new Date(ctrl.datas.request_date)
+        } else {
+          ctrl.datas.request_date = null
+        }
+      })
+    }
+
+    ctrl.save = function() {
+      // var data = {
+      //   first_name: ctrl.employee_name
+      // }
+      if (ctrl.checkName) {
+        // employeesService.createEmployee(data).then(function(resp) {
+          ctrl.employee_id = 0
+        // })
+      }
+
+    	var changePrice = parseFloat(ctrl.price)
+    	var checngeRequestDate = $filter('date')(new Date(ctrl.datas.request_date), 'yyyy-MM-ddTh:MM:ss')
+      if (!ctrl.real_id) {
+        ctrl.inventory_status = 2
+      }
+
+      if (!ctrl.description) {
+        ctrl.description = "-"
+      }
+
+    	var inventory_datas = {
+        inventories_request : {
+          user_name: ctrl.employee_name,
+          item_name: ctrl.name,
+          description: ctrl.description,
+          price: changePrice,
+          request_date: checngeRequestDate,
+          comment: "",
+          employee_id: ctrl.employee_id,
+        }
+    	}
+
+
+      if (!ctrl.real_id) {
+        createInventoryRequest(inventory_datas)
+      } 
+    }
+
+    function initDatas(){
+      if(!ctrl.datas) { ctrl.datas = {} }
+    }
+
+    function autoFillEmployee($item){
+      if($item.id){
+        for(var i = 0;i < ctrl.employee_lists.length; i++){
+          if($item.id == ctrl.employee_lists[i].id){
+            initDatas();
+            ctrl.checkName = false
+          }
+        }
+      }
+    }
+
+    function autoCheckName(data) {
+      if(data[0].id){
+        for(var i = 0;i < ctrl.employee_lists.length; i++){
+          if(data[0].id == ctrl.employee_lists[i].id){
+            ctrl.checkName = false
+            break
+          } else {
+            ctrl.checkName = true
+          }
+        }
+      }
+    }
+
+    ctrl.onChangeName = function() {
+      var data = []
+      data.push({
+        name: ctrl.employee_name,
+        id: 0
+      })
+      autoCheckName(data);
+    }
+    ctrl.onSelectEmployeeFullName = function($item) {
+      ctrl.employee_name = $item.name;
+      ctrl.employee_id = $item.id
+      autoFillEmployee($item);
+    };
+
+    function getEmployee(){
+      ctrl.employee_lists = []
+      employeesService.getAllEmployee().then(function(resp) {
+        if (resp.data.length > 0) {
+          for (var i = 0; i < resp.data.length; i++) {
+            var employees = resp.data[i]
+            if (employees.name !== ctrl.displayName) {
+              ctrl.employee_lists.push({
+                name: employees.name,
+                id: employees.id
+              })
+            }
+          }
+        }
+      });
+    };
+
+    function createInventoryRequest(inventory_data) {
+   		service.newInventoryRequest(inventory_data).then(function(resp) {
+        service.wait(resp.data.id).then(function(resp) {
+          $rootScope.openInventory(1)
+        })
+   		}, function(e) {
+
+    	})
+    }
+
+    ctrl.cancel = function() {
+      $rootScope.openInventory(1);
+    }
+
+    ctrl.openRequestDatePopup = function() {
+      ctrl.requestDatePopup.opened = true;
+    };
+
+    ctrl.requestDatePopup = {
+      opened: false
+    };      
+
+    getEmployee()
+
+  }]);
+})();

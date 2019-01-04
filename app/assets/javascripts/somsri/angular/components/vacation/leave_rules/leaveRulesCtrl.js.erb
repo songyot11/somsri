@@ -1,0 +1,36 @@
+(function() {
+  'use strict';
+  angular.module('somsri.somsri.vacation.leave_rules', [
+  ])
+  .controller('vacationLeaveRulesCtrl', ['$rootScope', '$sce', 'translateFilter', 'leaveRulesService', function ($rootScope, $sce, translateFilter, service) {
+    var ctrl = this;
+
+    $rootScope.menu = translateFilter('leave_rules');
+    $rootScope.canManage("all", function(canManange) {
+      ctrl.isAdmin = canManange
+    });
+
+    ctrl.updateLeaveRules = function() {
+      CKEDITOR.instances.editor2.setMode("wysiwyg");
+      $rootScope.canUpdate("vacation_leave_rules", function() {
+        ctrl.isSaving = true;
+        service.updateLeaveRules(ctrl.vacationLeaveRule.id, CKEDITOR.instances.editor2.getData()).then(function(response) {
+          ctrl.isSaving = false;
+          $rootScope.openSuccessModal(translateFilter('save_success'));
+        }, function(e) {
+          ctrl.isSaving = false;
+          $rootScope.openErrorModal(translateFilter('save_falied'));
+          console.log(e);
+        });
+      });
+    };
+
+    service.getLeaveRules().then(function(response) {
+      ctrl.vacationLeaveRule = response.data;
+      ctrl.leaveRulesText = ctrl.vacationLeaveRule.message;
+      ctrl.leaveRulesHtmlText = $sce.trustAsHtml(ctrl.leaveRulesText);
+    }, function(e) {
+      console.log(e);
+    })
+  }]);
+})();

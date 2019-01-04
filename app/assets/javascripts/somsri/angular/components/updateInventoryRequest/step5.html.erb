@@ -1,0 +1,135 @@
+<div class="container" >
+	<form ng-submit="inventory.save()">
+		<div class="row">
+			<div id="inventory">
+				<div class="col-xs-12">
+					<div class="row">
+						<div class="col-xs-6 mb-20">
+							<h1>{{ "details_inventory_request" | translate }}</h1>
+						</div>
+					</div>
+					<div class="row">
+						<ul class="col-md-12 nav nav-tabs inventory">
+							<li class="cyan active">
+								<a data-toggle="tab" class="ng-binding">{{ "inventory" | translate }}</a>
+							</li>
+						</ul>
+					</div>
+					<div class="row report-content container-fluid panel-board" style="height: 300px;">
+						<div class="tab-content">
+							<div class="row">
+								<div class="col-md-3">
+									<div class="form-group">
+										<label class="control-label" for="item_name">{{"item_name" | translate}}</label>
+	
+										<div class="col-md-12">
+											<input class="form-control" autocomplete="off" type="text" id="inventory_name" ng-model="inventory.name" required="true">
+										</div>
+									</div>
+								</div>
+								<div class="col-md-9">
+									<div class="form-group">
+										<label class="control-label" for="description">{{"description" | translate}}</label>
+										<div class="col-md-12">
+											<input class="form-control" autocomplete="off" type="text" id="inventory_description" ng-model="inventory.description" required="true">
+										</div>
+									</div>
+								</div>
+							</div>
+							<div class="row mt-20">
+								<div class="col-md-4">
+									<div class="form-group">
+										<label class="control-label" for="request_date">{{"request_date" | translate}}</label>
+										<p class="input-group">
+											<input id="request_date" type="text" class="form-control numberic" uib-datepicker-popup="dd/MM/yyyy" ng-model="inventory.datas.request_date" is-open="inventory.requestDatePopup.opened" close-text="Close" required="true"/>
+											<span class="input-group-btn">
+												<button type="button" class="btn btn-default" ng-click="inventory.openRequestDatePopup()" ><i class="fa fa-calendar"></i></button>
+											</span>
+										</p>
+									</div>
+								</div>
+								<div class="col-md-3">
+									<div class="form-group">
+										<label class="control-label" for="price">{{"price" | translate}}</label>
+										<div class="col-md-12">
+											<input class="form-control" autocomplete="off" type="number" id="inventory_price" ng-model="inventory.price" ng-validate="number" required="true" ng-pattern="/^[0-9]+(\.[0-9]{1,2})?$/" step="0.01" parseFloat>
+										</div>
+									</div>
+								</div>
+								<div class="col-md-3">
+										<div class="form-group">
+												<label class="control-label" for="user_request">{{"user_request" | translate}}</label>
+												<div class="col-md-12">
+														<input class="form-control" autocomplete="off" type="text" id="inventory_user" ng-model="inventory.user_name" required="true" >
+												</div>
+										</div>
+								</div>
+							</div>
+						</div>
+					</div>
+					<div class="row mt-20">
+						<div class="report-content container-fluid panel-board">
+							<ul class="step d-flex flex-nowrap">
+								<li class="step-item">
+									<a href="#!" class="">
+										<i class="fa fa-check fa-2x icon-in-step"></i>
+										<!-- <h3 class="text-in-step mt-0">1</h3>  -->
+										{{ "approve_request" | translate }}
+									</a>
+								</li>
+								<li class="step-item">
+									<a href="#!" class="">
+										<i class="fa fa-check fa-2x icon-in-step2"></i>
+										<!-- <h3 class="text-in-step2 mt-0">2</h3>  -->
+										{{ "inventory_purchase" | translate }}
+									</a>
+								</li>
+								<li class="step-item">
+									<a href="#!" class="">
+										<i class="fa fa-check fa-2x icon-in-step3"></i> 
+										<!-- <h3 class="text-in-step3 mt-0">3</h3> -->
+										{{ "get_inventory" | translate }}
+									</a>
+								</li>
+								<li class="step-item">
+									<a href="#!" class="">
+										<i class="fa fa-check fa-2x icon-in-step4"></i> 
+										<!-- <h3 class="text-in-step4 mt-0">4</h3> -->
+										{{ "dispatch_to_employees" | translate }}    
+									</a>
+								</li>
+							</ul> 
+							<div class="row mt-20"  style="color: #B6B6B6;">
+								<p class="pl-20" >
+									{{ "request_approval" | translate }} ({{ "save_by" | translate }} {{ inventory.save_by }}) <br>
+									{{ "date_purchase_inventory" | translate }}:  {{ inventory.date_purchase }}  <br>
+									{{ "date_send_inventory" | translate }}:  {{ inventory.date_send }} <br>
+									{{ "price" | translate }}: {{ inventory.price_step2 }} {{ "bath" | translate }} ({{ "save_by" | translate }} {{ inventory.save_by_step2 }}) <br>
+									{{ "receive_products_on_date" | translate }}  {{ inventory.get_date }}   <br>
+									{{ "buy_slip" | translate }} {{ inventory.buy_slip }}   <br>
+									{{ "end_warranty" | translate }}  {{ inventory.end_warranty }} ({{ "save_by" | translate }} {{ inventory.save_by_step3 }}) <br>
+									{{ "send_the_package_to" | translate }} {{ inventory.employee_name }} {{ "completed" | translate }} ({{ "save_by" | translate }} {{ inventory.save_by_step4 }})
+								</p>
+							</div>
+						</div>
+					</div>			
+				</div>
+			</div>
+		</div>
+		<div class="row">
+			<div class="footer-menu mt-20">
+				<div class="pull-right text-right padding-left10">
+					<button type="button" class="btn btn-custom btn-gray ng-binding" ng-click="inventory.backToRooView()">{{ "cancel" | translate }}</button>
+				</div>
+				<div class="pull-right text-right padding-left10">
+					<button type="submit" class="btn btn-custom btn-blue ng-binding">{{ "save" | translate }}</button>
+				</div>
+			</div>
+		</div>
+	</form>
+</div>
+
+			
+
+
+              
