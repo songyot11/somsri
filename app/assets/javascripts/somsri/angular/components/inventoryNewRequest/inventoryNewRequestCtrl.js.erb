@@ -39,6 +39,11 @@
       })
     }
 
+   function formatterDate(value) {
+      var date = new Date(value.getTime() - (60000 * value.getTimezoneOffset()));
+      return date;
+    };
+
     ctrl.save = function() {
       // var data = {
       //   first_name: ctrl.employee_name

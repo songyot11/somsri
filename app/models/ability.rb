@@ -11,7 +11,6 @@ class Ability
 
         can :manage, SiteConfig
         can :update, VacationLeaveRule
-        cannot :manage, InventoryRequest, inventory_status: [:delete_inventory]
 
       elsif  user.finance_officer?
         can :manage, :menu

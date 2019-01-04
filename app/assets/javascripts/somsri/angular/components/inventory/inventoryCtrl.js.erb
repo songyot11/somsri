@@ -314,6 +314,17 @@
       }
     }
 
+    ctrl.resetInventoryFilter = function() {
+      ctrl.getSelected = []
+      ctrl.isAllSelected = true
+      var toggleStatus = ctrl.isAllSelected
+      angular.forEach(ctrl.check_box, function(item){ item.selected = toggleStatus })
+      ctrl.start_date_purchase = null
+      ctrl.end_date_purchase = null
+      ctrl.start_date_add = null
+      ctrl.end_date_add = null
+    }
+
     //Inventory request
 
     var bootstrapTableOptionsInvetoryRequest = {
@@ -386,25 +397,25 @@
             var count = ctrl.datasReuestExport.length
             for(var i = 0; i<count; i++) {
               
-              if (ctrl.datasReuestExport[i].inventory_status != "delete_inventory") {
-                var status = ctrl.datasReuestExport[i].inventory_status
-                if (ctrl.datasReuestExport[i].inventory_status == "wait") {
-                  status = "-"
-                }
-                datas.push({
-                  number: ((ctrl.requestCurrentPage - 1) * 10) + i + 1,
-                  id: ctrl.datasReuestExport[i].id,
-                  user_name: ctrl.datasReuestExport[i].user_name,
-                  item_name: ctrl.datasReuestExport[i].item_name,
-                  description: ctrl.datasReuestExport[i].description,
-                  price: ctrl.datasReuestExport[i].price,
-                  request_date: ctrl.datasReuestExport[i].request_date,
-                  inventory_status: status,
-                  comment: ctrl.datasReuestExport[i].comment,
-                  created_at: ctrl.datasReuestExport[i].created_at,
-                  updated_at: ctrl.datasReuestExport[i].updated_at
-                })
+              var status = ctrl.datasReuestExport[i].inventory_status
+              if (ctrl.datasReuestExport[i].inventory_status == "wait") {
+                status = "-"
+              } else if (ctrl.datasReuestExport[i].inventory_status == "delete_inventory") {
+                status = "delete"
               }
+              datas.push({
+                number: ((ctrl.requestCurrentPage - 1) * 10) + i + 1,
+                id: ctrl.datasReuestExport[i].id,
+                user_name: ctrl.datasReuestExport[i].user_name,
+                item_name: ctrl.datasReuestExport[i].item_name,
+                description: ctrl.datasReuestExport[i].description,
+                price: ctrl.datasReuestExport[i].price,
+                request_date: ctrl.datasReuestExport[i].request_date,
+                inventory_status: status,
+                comment: ctrl.datasReuestExport[i].comment,
+                created_at: ctrl.datasReuestExport[i].created_at,
+                updated_at: ctrl.datasReuestExport[i].updated_at
+              })
             }
             ctrl.datasReuestExport = datas
           } else {
@@ -430,7 +441,7 @@
 
 
     function statusFormmatter(value, row, index) {
-      if (row['inventory_status'] == 'rejected') {
+      if (row['inventory_status'] == 'rejected' || row['inventory_status'] == "delete") {
         return '<span class="cursor-pointer" data-trigger="hover" data-container="body" data-toggle="popover" data-placement="top" title="Reason" data-content="' + row['comment'] + '">' +  row['inventory_status'] + '</span>' 
       } else {
         return row['inventory_status']
@@ -499,6 +510,17 @@
           ctrl.getRequestSelected.push(ctrl.check_box_request[i].id)
         }
       }
+    }
+
+    ctrl.resetInventoryRequestFilter = function() {
+      ctrl.getRequestSelected = []
+      ctrl.isAllRequsetSelected = true
+      var toggleStatus = ctrl.isAllRequsetSelected
+      angular.forEach(ctrl.check_box_request, function(item){ item.selected = toggleStatus })
+      ctrl.start_request_date = null
+      ctrl.end_request_date = null
+      ctrl.start_date_purchasing = null
+      ctrl.end_date_purchasing = null
     }
 
     ctrl.openStartDatePurchasingPopup = function() {

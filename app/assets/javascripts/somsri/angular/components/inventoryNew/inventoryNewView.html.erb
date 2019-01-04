@@ -78,7 +78,7 @@
                 <div class="form-group">
                   <label class="control-label" for="date_purchase">{{ "date_purchase" | translate }}</label>
                   <p class="input-group">
-                    <input id="date_purchase" type="text" class="form-control numberic" uib-datepicker-popup="dd/MM/yyyy" ng-model="inventory.datas.date_purchase" is-open="inventory.datePurchasePopup.opened" close-text="Close" required="true"/>
+                    <input id="date_purchase" type="text" class="form-control numberic" uib-datepicker-popup="dd/MM/yyyy" ng-model="inventory.datas.date_purchase" is-open="inventory.datePurchasePopup.opened" close-text="Close" required="true" data-date-language="th"/>
                     <span class="input-group-btn">
                       <button type="button" class="btn btn-default" ng-click="inventory.openDatePurchasePopup()"><i class="fa fa-calendar"></i></button>
                     </span>

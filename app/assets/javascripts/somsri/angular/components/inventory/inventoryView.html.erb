@@ -141,7 +141,7 @@
   </div>
 </div>
 
-<!-- Modal -->
+<!-- Modal inventory request -->
 <div class="modal fade" id="listrequest" tabindex="-1" role="dialog" aria-labelledby="listrequest">
     <div class="modal-dialog" role="document">
       <div class="modal-content">
@@ -219,12 +219,13 @@
         </div>
         <div class="modal-footer">
           <button type="button" class="btn btn-custom btn-blue ng-binding" ng-click="inventory.optionsRequestChange()" data-dismiss="modal">ตกลง</button>
+          <button type="button" class="btn btn-custom btn-orange ng-binding" ng-click="inventory.resetInventoryRequestFilter()"> รีเซ็ต </button>
           <button type="button" class="btn btn-custom btn-gray  ng-binding" data-dismiss="modal">ยกเลิก</button>
         </div>
       </div>
     </div>
   </div>
-  <!-- Modal filter request-->
+  <!-- Modal filter inventory-->
 <div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModal">
     <div class="modal-dialog" role="document">
       <div class="modal-content">
@@ -302,6 +303,7 @@
         </div>
         <div class="modal-footer">
           <button type="button" class="btn btn-custom btn-blue ng-binding" ng-click="inventory.optionsChange()" data-dismiss="modal">ตกลง</button>
+          <button type="button" class="btn btn-custom btn-orange ng-binding" ng-click="inventory.resetInventoryFilter()"> รีเซ็ต </button>
           <button type="button" class="btn btn-custom btn-gray ng-binding" data-dismiss="modal">ยกเลิก</button>
         </div>
       </div>

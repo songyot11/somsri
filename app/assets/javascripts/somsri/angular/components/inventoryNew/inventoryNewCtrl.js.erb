@@ -120,6 +120,11 @@
           return date
         }
 
+        function formatterDate(value) {
+          var date = new Date(value.getTime() - (60000 * value.getTimezoneOffset()));
+          return date;
+        };
+        
         ctrl.save = function() {
           var changePrice = parseFloat(ctrl.price);
           
@@ -181,13 +186,15 @@
             ctrl.employee_name = ""
           }
 
+          var changeDatePurchase = formatterDate(ctrl.datas.date_purchase)
+
           var inventory_datas = {
             item_name: ctrl.name,
             serial_number: ctrl.serial_number,
             model: ctrl.model,
             description: ctrl.description,
             price: changePrice,
-            date_purchase: ctrl.datas.date_purchase,
+            date_purchase: changeDatePurchase,
             date_add: ctrl.date_add,
             end_warranty: ctrl.datas.end_warranty,
             employee_id: ctrl.employee_id,
