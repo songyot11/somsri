@@ -494,7 +494,7 @@ en:
   inventory_supplier: "Supplier"
   list_supplier: "Supplier list"
   add_supplier: "+ Add supplier"
-  detal_supplier: "Detal supplier"
+  supplier_details: "Supplier Details"
 
   # Rollcall
   monthly: "Month"

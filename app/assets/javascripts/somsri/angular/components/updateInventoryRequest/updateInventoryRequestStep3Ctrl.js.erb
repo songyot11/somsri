@@ -1,7 +1,7 @@
 (function() {
 	angular.module('somsri.somsri.update_inventory_request_step3', [])
-    .controller('updateInventoryRequestStep3Ctrl', ['$compile', '$scope', '$window', '$filter', '$rootScope', '$timeout', 'translateFilter', '$uibModal', 'Upload', '$state', "inventoryRequestService", "settingService", 'inventoryService', 
-    	function($compile, $scope, $window, $filter, $rootScope, $timeout, translateFilter, $uibModal, Upload, $state, service, settingService, inventoryService) {
+    .controller('updateInventoryRequestStep3Ctrl', ['$compile', '$scope', '$window', '$filter', '$rootScope', '$timeout', 'translateFilter', '$uibModal', 'Upload', '$state', "inventoryRequestService", "settingService", 'inventoryService','inventorySupplierService', 
+    	function($compile, $scope, $window, $filter, $rootScope, $timeout, translateFilter, $uibModal, Upload, $state, service, settingService, inventoryService, inventorySupplierService) {
 	$rootScope.menu = translateFilter("inventory_request")
 		var ctrl = this
 		ctrl.real_id = $state.params.id;
@@ -67,12 +67,9 @@
         ctrl.price_step2 = ctrl.manage_inventory.step2.price
         //setp3
         ctrl.save_by_step3 = ctrl.manage_inventory.step3.save_by
-        ctrl.date_get_inventory = new Date(ctrl.manage_inventory.step3.get_date)
-        if (!ctrl.date_get_inventory) {
-          ctrl.date_get_inventory = null
-        }
+        ctrl.date_get_inventory = ctrl.manage_inventory.step3.get_date
         ctrl.buy_slip = ctrl.manage_inventory.step3.buy_slip
-        ctrl.end_warranty = new Date(ctrl.manage_inventory.step3.end_warranty)
+        ctrl.end_warranty = ctrl.manage_inventory.step3.end_warranty
       }
     }
 
@@ -99,7 +96,7 @@
 				ctrl.save_by_step3 = ctrl.step.step3.save_by
 				ctrl.date_get_inventory = new Date(ctrl.step.step3.get_date)
         if (!ctrl.step.step3.get_date) {
-          ctrl.date_get_inventory = null
+          ctrl.date_get_inventory = ""
         }
 				ctrl.buy_slip = ctrl.step.step3.buy_slip
 				ctrl.end_warranty = new Date(ctrl.step.step3.end_warranty)
@@ -191,7 +188,7 @@
         ctrl.description = "-"
       }
 
-      if (ctrl.employee_id == 0) {
+      if (!ctrl.employee_id || ctrl.employee_id == 0) {
         ctrl.employee_name = ""
       }
 
@@ -204,7 +201,8 @@
         date_purchase: ctrl.date_purchase_save,
         date_add: ctrl.date_add,
         end_warranty: ctrl.end_warranty,
-        employee_id: ctrl.employee_id
+        employee_id: ctrl.employee_id,
+        supplier_id: ctrl.supplier_id
       }
 
       var category_datas = {
@@ -407,6 +405,43 @@
       })
     }
 
+    function getSupplierList() {
+      ctrl.supplier_lists = []
+      inventorySupplierService.getAllSuppliers().then(function(resp) {
+        if (resp.data.length > 0){
+          for (var i = 0; i < resp.data.length; i++) {
+            var supplier = resp.data[i]
+            if (supplier.name != ctrl.supplierDisplayName) {
+              ctrl.supplier_lists.push({
+                name: supplier.name,
+                id: supplier.id
+              })
+            }
+          }
+        }
+      })
+    }
+
+    ctrl.onSelectSupplier = function($item) {
+      ctrl.supplier_name = $item.name;
+      ctrl.supplier_id = $item.id
+    };
+
+    ctrl.onChangeSupplier = function() {
+      ctrl.supplier_name = ctrl.supplier_name
+      ctrl.supplier_id = undefined
+    }
+
+    ctrl.openAddSupplierModal = function() {
+      $rootScope.appSupplierModal(translateFilter('add_supplier'), function(){
+        ctrl.supplier_id = $rootScope.supplier_id
+        ctrl.supplier_name = $rootScope.supplier_name
+        $rootScope.supplier_id = null
+        $rootScope.supplier_name = null
+      })
+    }
+    
+    getSupplierList()
     getInventoryList()
     getSetting()
     initData()

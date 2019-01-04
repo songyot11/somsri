@@ -657,9 +657,8 @@ th:
   inventory_supplier: "ร้านค้า"
   list_supplier: "รายการร้านค้า"
   add_supplier: "+ เพิ่มร้านค้า"
-  detal_supplier: "รายละเอียดร้านค้า"
+  supplier_details: "รายละเอียดร้านค้า"
   supplier: "ชื่อร้านค้า"
-  addate: "ที่อยู่"
 
   # Rollcall
   monthly: ประจำเดือน

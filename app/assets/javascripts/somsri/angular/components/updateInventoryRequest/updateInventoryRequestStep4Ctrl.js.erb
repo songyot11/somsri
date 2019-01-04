@@ -202,7 +202,7 @@
      };
 
     function getEmployeeById(id) {
-      if (ctrl.employee_id != 0) {
+      if (ctrl.employee_id && ctrl.employee_id != 0) {
         employeesService.getEmployee(id).then(function(resp) {
           ctrl.employee_name = resp.data.employee_display_name
           ctrl.employee_id = resp.data.employee.id
@@ -272,7 +272,7 @@
         ctrl.iventory_description = "-"
       }
 
-      if (ctrl.employee_id == 0) {
+      if (ctrl.employee_id || ctrl.employee_id == 0) {
         ctrl.employee_name = ""
       }
 
@@ -343,7 +343,7 @@
       // }
       if (ctrl.checkName) {
         // employeesService.createEmployee(data).then(function(resp) {
-        ctrl.employee_id = 0
+        ctrl.employee_id = undefined
         // })
       }
 
@@ -442,7 +442,7 @@
       // }
 
       if (ctrl.checkName) {
-        ctrl.employee_id = 0
+        ctrl.employee_id = undefined
         // employeesService.createEmployee(data).then(function(resp) {
         //   ctrl.employee_id = resp.data.employee.id
         //   ctrl.step.step4.send_to_employee_id = ctrl.employee_id

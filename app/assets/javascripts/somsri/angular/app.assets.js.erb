@@ -22,6 +22,13 @@
             "<%= asset_path('somsri/angular/components/modal/confirmInventory/confirmInventoryRequestModalCtrl.js') %>"
           ]
         },
+         'add_supplier_modal' : {
+          name: 'somsri.somsri.add_supplier_modal',
+          files: [
+            "<%= asset_path('somsri/angular/components/modal/addSupplier/addSupplierModalCtrl.js') %>",
+            "<%= asset_path('somsri/angular/components/inventoryNewSupplier/inventorySupplierService.js') %>" 
+          ]
+        },
         'success_modal': {
           name: 'somsri.somsri.sccess_modal',
           files: [
@@ -72,7 +79,8 @@
           files: [
             "<%= asset_path('somsri/angular/components/inventoryNew/inventoryNewCtrl.js') %>",
             "<%= asset_path('somsri/angular/components/inventory/inventoryService.js') %>",
-            "<%= asset_path('payroll/angular/components/employees/employeesService.js') %>"
+            "<%= asset_path('payroll/angular/components/employees/employeesService.js') %>",
+            "<%= asset_path('somsri/angular/components/inventoryNewSupplier/inventorySupplierService.js') %>" 
           ]
         },
          'update_inventory_request': {
@@ -97,7 +105,8 @@
             "<%= asset_path('somsri/angular/components/updateInventoryRequest/updateInventoryRequestStep3Ctrl.js') %>",
             "<%= asset_path('somsri/angular/components/inventoryNewRequest/inventoryRequestService.js') %>",
             "<%= asset_path('main/angular/components/setting/settingService.js') %>",
-            "<%= asset_path('somsri/angular/components/inventory/inventoryService.js') %>"
+            "<%= asset_path('somsri/angular/components/inventory/inventoryService.js') %>",
+            "<%= asset_path('somsri/angular/components/inventoryNewSupplier/inventorySupplierService.js') %>" 
           ]
         },
         'update_inventory_request_step4': {
@@ -121,10 +130,18 @@
         'inventory_supplier': {
           name: 'somsri.somsri.inventory_supplier',
           files: [
-          "<%= asset_path('somsri/angular/components/inventoryNewSupplier/inventoryNewSupplierCtrl.js') %>",
-          "<%= asset_path('somsri/angular/components/inventoryNewSupplier/inventorySupplierService.js') %>" 
+            "<%= asset_path('somsri/angular/components/inventoryNewSupplier/inventoryNewSupplierCtrl.js') %>",
+            "<%= asset_path('somsri/angular/components/inventoryNewSupplier/inventorySupplierService.js') %>" 
           ]
         },
+        'inventory_supplier_details' : {
+          name: 'somsri.somsri.inventory_supplier_details',
+          files: [
+            "<%= asset_path('somsri/angular/components/supplierDetails/supplierDetailsCtrl.js') %>",
+            "<%= asset_path('somsri/angular/components/inventoryNewSupplier/inventorySupplierService.js') %>" 
+          ]
+        }
+        ,
         'inventory_new_request': {
           name: 'somsri.somsri.inventory_new_request',
           files: [

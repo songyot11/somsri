@@ -24,6 +24,7 @@
     ctrl.searchKeyword = ''
     ctrl.searchRequestKeyword = ''
     ctrl.comment = ""
+ 
     // default last 7 days
     // ctrl.end_date_purchase = new Date();
     // ctrl.start_date_purchase = new Date(new Date().setMonth(new Date().getMonth() - 1));
@@ -535,11 +536,11 @@
     getInventoryRequest();
     //getInventorySupplier();
 
-      var bootstrapTableOptionsInvetorySupplier = {
-      sortName: 'request_date',
+    var bootstrapTableOptionsInvetorySupplier = {
+      sortName: 'updated_at',
       sortOrder: 'asc',
       columns : [{
-        field: 'id',
+        field: 'number',
         title: '#',
         classes: 'text-right',
         sortable: true,
@@ -547,7 +548,9 @@
         field: 'name',
         title: translateFilter("supplier"),
         sortable: true,
-        class: 'font-weight-bold '
+        formatter: nameSupplierFormatter,
+        align: 'left',
+        class: 'font-weight-bold'
       },{
         field: 'address',
         title: translateFilter("addate"),
@@ -571,6 +574,15 @@
         sortable: false,
         formatter : deleteSupplierFormatter
       }]
+    }
+
+    function nameSupplierFormatter(value, row, index) {
+      return '<button type="button" class="btn btn-link" onclick="' + angularCtrlStr + '.openSupplierDetail(' + row['id'] + ')" >'+row['name']+'</button>'
+    }
+
+    ctrl.openSupplierDetail = function(id) {
+      console.log("supplier",id)
+      $rootScope.openSupplierDetails(id)
     }
 
     function editSupplierFormatter(value, row, index) {
@@ -611,23 +623,16 @@
             var datas = []
             var count = ctrl.datasSuppliersExport.length
             for(var i = 0; i<count; i++) {
-              
-              if (ctrl.datasSuppliersExport[i].inventory_status != "delete_inventory") {
-                var status = ctrl.datasSuppliersExport[i].inventory_status
-                if (ctrl.datasSuppliersExport[i].inventory_status == "wait") {
-                  status = "-"
-                }
-                datas.push({
-                  number: ((ctrl.suppliersCurrentPage - 1) * 10) + i + 1,
-                  id: ctrl.datasSuppliersExport[i].id,
-                  name: ctrl.datasSuppliersExport[i].name,
-                  address: ctrl.datasSuppliersExport[i].address,
-                  phone_number: ctrl.datasSuppliersExport[i].phone_number,
-                  email: ctrl.datasSuppliersExport[i].email,
-                  created_at: ctrl.datasSuppliersExport[i].created_at,
-                  updated_at: ctrl.datasSuppliersExport[i].updated_at
-                })
-              }
+              datas.push({
+                number: ((ctrl.suppliersCurrentPage - 1) * 10) + i + 1,
+                id: ctrl.datasSuppliersExport[i].id,
+                name: ctrl.datasSuppliersExport[i].name,
+                address: ctrl.datasSuppliersExport[i].address,
+                phone_number: ctrl.datasSuppliersExport[i].phone_number,
+                email: ctrl.datasSuppliersExport[i].email,
+                created_at: ctrl.datasSuppliersExport[i].created_at,
+                updated_at: ctrl.datasSuppliersExport[i].updated_at
+              })
             }
             ctrl.datasSuppliersExport = datas
           } else {

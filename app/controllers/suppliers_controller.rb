@@ -3,27 +3,51 @@ class SuppliersController < ApplicationController
 
 		page = params[:page]
 
-		suppliers = Supplier.all
-		suppliers = suppliers.paginate(page: page, per_page: 10)
-		result = {}
-		if params[:bootstrap_table].to_s == "1" 
-			result = suppliers.as_json({ bootstrap_table: true })
-		else 
-			result = {
-				suppliers: suppliers.as_json({ index: true }) #(methods:[:inventories])
-			}
+		@suppliers = Supplier.all
+		@suppliers = @suppliers.paginate(page: page, per_page: 10)
+		@suppliers = @suppliers.order(updated_at: :desc)
 
-			if params[:page]
-				result[:current_page] = suppliers.current_page
-				result[:total_records] = suppliers.total_entries
+		result = {}
+		if page 
+			if params[:bootstrap_table].to_s == "1" 
+				result = @suppliers.as_json({ bootstrap_table: true })
+			else 
+				result = {
+					suppliers: @suppliers.as_json({ index: true }) #(methods:[:inventories])
+				}
+
+				if params[:page]
+					result[:current_page] = @suppliers.current_page
+					result[:total_records] = @suppliers.total_entries
+				end
 			end
+			render json: result ,status: :ok
+		else
+			suppliers = Supplier.all
+			render json: suppliers ,status: :ok
 		end
-		render json: result ,status: :ok
 	end
 
 	def show
-		suppliers = Supplier.find(params[:id])
-		render json: suppliers.as_json(methods:[:inventories]), status: :ok
+		page = params[:page]
+		@suppliers = Supplier.find(params[:id])
+		result = {}
+		if params[:bootstrap_table].to_s == "1"
+			result = @suppliers.as_json({ bootstrap_table: true })
+		else
+
+			result = {
+				suppliers: @suppliers,
+				inventories: @suppliers.inventories.paginate(page: page, per_page: 10)
+			}
+			@inventories = @suppliers.inventories.paginate(page: page, per_page: 10)
+
+			if page
+				result[:current_page] = @inventories.current_page
+				result[:total_records] = @inventories.total_entries
+			end
+		end
+		render json: result, status: :ok
 	end
 
 	def create

@@ -161,6 +161,19 @@
 	              </div>
 							</div>
 							<div class="row mt-20">
+	    					<div class="col-md-4">
+	                <div class="dropdown">
+	                  <label class="control-label" for="supplier">{{ "supplier" | translate }}</label>
+	                  <div class="form-group">
+	                    <input type="text" class="form-control" id="supplier_name" placeholder="{{ 'supplier' | translate }}" ng-model="inventory.supplier_name" ng-change="inventory.onChangeSupplier()" typeahead-on-select="inventory.onSelectSupplier($item)" uib-typeahead="inventory.name as inventory.name for inventory in inventory.supplier_lists | filter:{name:$viewValue} | limitTo:8" , autocomplete="off">
+	                  </div>
+	                </div>
+	              </div>
+	              <div class=" padding-left10">
+	                <button type="button" class="btn btn-custom btn-orange ng-binding" ng-click="inventory.openAddSupplierModal()" >{{ "add_supplier" | translate }}</button>
+	              </div>
+							</div>
+							<div class="row mt-20">
 								<div class="col-md-2">
 									<button type="button" class="btn btn-custom btn-continue ng-binding" ng-click="inventory.continue()">{{ "continue" | translate }}</button>
 								</div>

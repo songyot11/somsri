@@ -1,0 +1,63 @@
+<div>
+  <div class="modal-body" id="supplier-modal-body" tabindex="-1" role="dialog" aria-labelledby="supplier-modal-body">
+    <form ng-submit="supplier.addSupplier()"> 
+    <div class="row">
+      <div class="modal-header">
+        <h5 class="modal-title color-orange" id="supplier-modal">{{ "add_supplier" | translate }}</h5>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+    </div>
+ 
+    <div class="modal-body">
+      <div class="row">
+        <div class="col-md-4">
+          <div class="form-group">
+            <label class="control-label" for="supplier-modal">{{ "supplier" | translate }}</label>
+
+            <div class="col-md-12">
+              <input class="form-control" autocomplete="off" type="text" id="supplier-modal" ng-model="supplier.supplierName" required="true">
+            </div>
+          </div>
+        </div>
+        <div class="col-md-8">
+          <div class="form-group">
+            <label class="control-label" for="address">{{ "address" | translate }}</label>
+
+            <div class="col-md-12">
+              <input class="form-control" autocomplete="off" type="text" id="address" ng-model="supplier.address">
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="row mt-20">
+        <div class="col-md-4">
+          <div class="form-group">
+            <label class="control-label" for="phone">{{ "phone_number" | translate }}</label>
+
+            <div class="col-md-12">
+              <input class="form-control" autocomplete="off" type="text" id="phone" ng-model="supplier.phone_number" required="true">
+            </div>
+          </div>
+        </div>
+        <div class="col-md-8">
+          <div class="form-group">
+            <label class="control-label" for="email">{{ "email" | translate }}</label>
+
+            <div class="col-md-12">
+              <input class="form-control" autocomplete="off" type="text" id="email" ng-model="supplier.email" required="true">
+            </div>
+          </div>
+        </div>
+      </div>
+      </div>
+     <div class="row">
+      <div class="modal-footer">
+        <button type="submit" class="btn btn-custom btn-blue ng-binding" >{{ 'add' | translate}}</button>
+        <button type="button" class="btn btn-custom btn-gray ng-binding" ng-click="supplier.close()">{{ "cancel" | translate }}</button>
+      </div>
+     </div>
+     </form>
+  </div>
+</div>
