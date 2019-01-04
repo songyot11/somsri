@@ -251,6 +251,10 @@ en:
   unpaid: "Unpaid"
   ชำระแล้ว: "Paid"
   ยังไม่ได้ชำระ: "Unpaid"
+  เงินสด: "Cash"
+  เงินโอน: "Bank Transfer"
+  เช็คธนาคาร: "Cheque"
+  บัตรเครดิต: "Credit Card"
 
   example: "example"
   save: "Save"

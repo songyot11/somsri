@@ -165,6 +165,9 @@
                 ctrl.currentPage = 0;
               }
               ctrl.maxSize = 5;
+              for(var ele in ctrl.datasExport){
+                ctrl.datasExport[ele].payment_methods.payment_method = I18n.t(ctrl.datasExport[ele].payment_methods.payment_method)
+              }
               tableExport.bootstrapTable('load', ctrl.datasExport);
             });
           });
@@ -189,6 +192,9 @@
                 ctrl.currentPage = 0;
               }
               ctrl.maxSize = 5;
+              for(var ele in ctrl.datas){
+                ctrl.datas[ele].payment_methods.payment_method = I18n.t(ctrl.datas[ele].payment_methods.payment_method)
+              }
               main_table.bootstrapTable('load', ctrl.datas);
             });
           });

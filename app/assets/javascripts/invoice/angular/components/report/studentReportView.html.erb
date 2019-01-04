@@ -111,7 +111,7 @@
                 <td class="numberic">{{student.classroom_number}}</td>
                 <td>{{student.parent_names}}</td>
                 <td>{{student.active_invoice_status | translate}}</td>
-                <td>{{student.active_invoice_payment_method}}</td>
+                <td>{{student.active_invoice_payment_method | translate}}</td>
                 <td class="text-currency numberic">{{student.active_invoice_tuition_fee.toFixed(2) | number:2}}</td>
                 <td class="text-currency numberic">{{student.active_invoice_other_fee.toFixed(2) | number:2}}</td>
                 <td class="text-currency bold numberic">{{student.active_invoice_total_amount.toFixed(2) | number:2}}</td>
