@@ -1,18 +1,49 @@
 pipeline:
+  restore-cache:
+    image: drillster/drone-volume-cache
+    restore: true
+    mount:
+      - ./bundler
+    volumes:
+      - /tmp/cache:/cache
   build:
-    image: plugins/docker
-    repo: bananacoding/banana-inventory
-    tags:
-      - 1.0.2
-      - latest
-    secrets: [ DOCKER_USERNAME, DOCKER_PASSWORD ]
+    image: bananacoding/ruby-nodejs:2.3.1
+    environment:
+    commands:
+      - apt-get update
+      - apt-get install --assume-yes pdftk
+      - cp config/database_sample.yml config/database.yml
+      - export PDFTK_PATH=/
+      - export SENDGRID_USERNAME=un
+      - export SENDGRID_PASSWORD=ps
+      - export ROLLCALL_APK_URL=apk
+      - export DB_HOST=database
+      - export DB_USER=postgres
+      - export DB_PASS=password
+      - export DB_PORT=5432
+      - bundle install --path=./bundler
+      - bower install --allow-root
+      - export RAILS_ENV=test
+      - bundle exec rake db:create
+      - bundle exec rake db:schema:load
+      - bundle exec rake db:migrate
+      - bundle exec rspec
   rebuild-cache:
     image: drillster/drone-volume-cache
     rebuild: true
     mount:
       - ./bundler
     volumes:
-      - /tmp/cache:/cache
+      - /tmp/cache:/cache      
+  build-image:
+    image: plugins/docker
+    repo: bananacoding/banana-inventory
+    tags:
+      - 1.0.2
+      - latest
+    secrets: [ DOCKER_USERNAME, DOCKER_PASSWORD ]
+    when:
+      branch: [ master ]
   deploy:
     image: sh4d1/drone-kubernetes
     kubernetes_template: deployment.yml
