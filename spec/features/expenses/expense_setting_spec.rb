@@ -231,6 +231,7 @@ describe 'expense settings', js: true do
     find("#save-btn").click
     click_button("ตกลง")
     sleep(1)
+    save_screenshot('/Users/akiyama/Desktop/test1.jpg')
     expect(all('input[type="text"]')[0].value).to eq("car")
     expect(all('input[type="text"]')[1].value).to eq("ceo")
     expect(ExpenseTag.count).to eq(2)

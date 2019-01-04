@@ -1,2 +1,0 @@
-module SupplieriesHelper
-end

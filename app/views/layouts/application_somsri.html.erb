@@ -29,15 +29,14 @@
         <link href="https://fonts.googleapis.com/css?family=Maitree:400,700" rel="stylesheet">
         <%= stylesheet_link_tag 'application_main', media: 'all' %>
         <%= stylesheet_link_tag 'application_somsri', media: 'all' %>
-        <%= stylesheet_link_tag 'application_vacation', media: 'all' %>
         <%= javascript_include_tag 'application_somsri' %>
-        <%= javascript_include_tag Ckeditor.cdn_url %>
     </head>
-    <body ng-controller="mainCtrl as main" class="somsri-somsri">
+
+    <body ng-controller="mainCtrl as main">
       <header>
         <%= render 'layouts/navigation' %>
       </header>
       <div class="top-bar-space"></div>
-        <%= yield %>
+      <%= yield %>
     </body>
 </html>

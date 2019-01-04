@@ -29,7 +29,6 @@ Employee.blueprint do
   status { 'โสด' }
   email { Faker::Internet.email }
   employee_type { 'ลูกจ้างประจำ' }
-  password { 'password' }
 end
 
 Payroll.blueprint do

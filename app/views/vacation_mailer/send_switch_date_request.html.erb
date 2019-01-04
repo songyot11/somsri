@@ -1,9 +1,0 @@
-<%= @user.full_name %> ยื่นคำขอสลับวันทำงาน ชึ่งเคยยื่นคำขอสลับวันทำงานแล้ว <%= @user.vacations.switch_date.this_year.count %> วัน จากวันที่  <%= @vacation.start_date %> เป็นวันที่ <%= @vacation.end_date %>
-<br/><br/>
-ด้วยเหตุผล
-<br/>
-<%= @vacation.detail %>
-<br/><br/>
-ท่านสามารถอนุมัติหรือยกเลิก ได้ด้วยการกด <a href="<%= @approve_url %>">Approve</a> หรือ <a href="<%= @reject_url %>">Reject</a>
-<br/>
-หรือ ดูรายละเอียดเต็มที่ <a href="<%= @dashboard_url %>">Admin Dashboard</a>

@@ -1,6 +1,6 @@
 class HomeController < ApplicationController
   def index
-    if !current_user && !current_employee
+    if !current_user
       if SiteConfig.get_cache.web_cms
         redirect_to comfy_cms_render_page_path
       else

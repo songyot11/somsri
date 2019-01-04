@@ -1,7 +1,6 @@
 class AbilitiesController < ApplicationController
-  before_action :authenticate_authorizer!
-
+  before_action :authenticate_user!
   def index
-    render json: [Ability.new(current_authorizer)], status: :ok
+    render json: [Ability.new(current_user)], status: :ok
   end
 end

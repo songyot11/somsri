@@ -74,10 +74,9 @@ describe 'Student Promote', js: true do
     end
 
     it 'should go to next classroom management' do
-      save_screenshot('/Users/banana/Desktop/1.png')
+      
       click_button("เลื่อนชั้นเรียน")
       sleep(5)
-      save_screenshot('/Users/banana/Desktop/2.png')
       eventually { expect(page).to have_content("ระดับชั้นเรียน เดิม") }
       eventually { expect(page).to have_content("ระดับชั้นเรียนใหม่") }
     end

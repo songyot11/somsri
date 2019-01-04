@@ -25,8 +25,9 @@ describe EmployeesController do
   describe '#create' do
     it 'can create employee' do
       new_employee = Employee.make
+
       expect do
-        post :create, params: { employee: new_employee.attributes.merge(password: 'password') }
+        post :create, params: { employee: new_employee.attributes }
       end.to change{ Employee.count }.by 1
 
       created_employee = Employee.last

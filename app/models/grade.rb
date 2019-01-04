@@ -5,4 +5,5 @@ class Grade < ApplicationRecord
       {value: g.name}
     end
   end
+
 end
