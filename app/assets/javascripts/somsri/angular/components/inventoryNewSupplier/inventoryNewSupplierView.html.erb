@@ -1,9 +1,9 @@
 <div class="container" >
   <form ng-submit="inventory.save()">
-	  <div class="row">
+	  <div class="row mt-20">
 	    <div id="inventory">
 	      <div class="col-xs-12">
-	        <div class="row mt-50">
+	        <div class="row">
 	          <div class="col-xs-6 mb-20 pl-0">
 	            <h1><h1>{{ "detal_supplier" | translate }}</h1></h1>
 	          </div>
@@ -15,7 +15,7 @@
 									<div class="form-group">
 										<label class="control-label" for="supplier_name">{{ "supplier" | translate }}</label>
 										<div class="col-md-12">
-											<input class="form-control" autocomplete="off" type="text" id="supplier_name" ng-model="inventory.name" required="true">
+											<input class="form-control" autocomplete="off" type="text" id="supplier_name" ng-model="" required="true">
 										</div>
 									</div>
 								</div>
@@ -23,7 +23,7 @@
 									<div class="form-group">
 										<label class="control-label" for="addate">{{ "addate" | translate}} </label>
 										<div class="col-md-12">
-											<input class="form-control" autocomplete="off" type="text" id="address" ng-model="inventory.address">
+											<input class="form-control" autocomplete="off" type="text" id="address" ng-model="">
 										</div>
 									</div>
 								</div>
@@ -31,7 +31,7 @@
 									<div class="form-group">
 										<label class="control-label" for="phone_number">{{ "phone_number" | translate }}</label>
 										<div class="col-md-12">
-											<input class="form-control" autocomplete="off" type="text" id="phone_number" ng-model="inventory.phone_number">
+											<input class="form-control" autocomplete="off" type="text" id="phone_number" ng-model="">
 										</div>
 									</div>
 								</div>
@@ -46,16 +46,16 @@
 									</div>
 								</div>
 							</div>
-							<div class="footer-menu row mt-20">
-								<div class="pull-right text-right padding-left10">
-									<button type="button" class="btn btn-custom btn-gray ng-binding" ng-click="inventory.cancel()">{{ "cancel" | translate }}</button>
-								</div>
-								<div class="pull-right text-right padding-left10">
-									<button type="submit" class="btn btn-custom btn-green ng-binding">{{ inventory.add_button | translate}}</button>
-								</div>
-							</div>
 	      		</div>
-	    		</div>
+					</div>
+					<div class="footer-menu row mt-20">
+						<div class="pull-right text-right padding-left10">
+							<button type="button" class="btn btn-custom btn-gray ng-binding" ng-click="inventory.cancel()">{{ "cancel" | translate }}</button>
+						</div>
+						<div class="pull-right text-right padding-left10">
+							<button type="submit" class="btn btn-custom btn-green ng-binding">{{ inventory.add_button | translate}}</button>
+						</div>
+					</div>
 				</div>
 			</div>
 	  </div>
