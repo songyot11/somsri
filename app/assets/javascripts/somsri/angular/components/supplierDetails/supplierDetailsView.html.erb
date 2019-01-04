@@ -9,7 +9,7 @@
 							<i class="fa fa-arrow-left" style="font-size: 30px;" ng-click="supplier.cancel()"></i>
 						</div>
 						<div class="col-md-11">
-							<h1>ชื่อร้านค้า</h1>	
+							<h1>{{ "supplier_details" | translate }}</h1>	
 						</div>
           </div>
         </div>
@@ -66,13 +66,13 @@
   </div>
   </form>
 </div>
+
 <div class="row mt-20">
 	<div class="container">
 		<uib-tabset>
-			<div class="col-md-12 panel-board">
+			<div class="row report-content container-fluid panel-board">
 				<div class="row">
-					<table id="supplier-details-table" >
-					</table>
+					<table id="supplier-details-table" ></table>
 					<div class="row row-centered for-display">
 						<div class="col-centered">
 							<ul uib-pagination ng-change="supplier.pageSuppliersChanged()" total-items="supplier.suppliersTotalItems" ng-model="supplier.suppliersCurrentPage" max-size="supplier.paginateButtonMaxSize" class="pagination-md" num-pages="numPages" previous-text="‹" next-text="›" boundary-link-numbers='true' rotate='false'></ul>

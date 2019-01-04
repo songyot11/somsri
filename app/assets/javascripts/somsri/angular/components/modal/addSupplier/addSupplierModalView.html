@@ -1,11 +1,10 @@
-<div>
-  <div class="modal-body" id="supplier-modal-body" tabindex="-1" role="dialog" aria-labelledby="supplier-modal-body">
+  <div id="supplier-modal-body" tabindex="-1" role="dialog" aria-labelledby="supplier-modal-body">
     <form ng-submit="supplier.addSupplier()"> 
     <div class="row">
       <div class="modal-header">
         <h5 class="modal-title color-orange" id="supplier-modal">{{ "add_supplier" | translate }}</h5>
         <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-          <span aria-hidden="true">&times;</span>
+          <span aria-hidden="true" ng-click="supplier.close()">&times;</span>
         </button>
       </div>
     </div>
@@ -60,4 +59,3 @@
      </div>
      </form>
   </div>
-</div>

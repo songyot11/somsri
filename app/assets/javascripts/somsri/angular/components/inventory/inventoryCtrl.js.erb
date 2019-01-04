@@ -598,17 +598,18 @@
         field: 'edit',
         title: "",
         sortable: false,
-        formatter : editSupplierFormatter
+        align: 'right',
+        formatter: editSupplierFormatter
       },{
         field: 'delete',
         title: "",
         sortable: false,
-        formatter : deleteSupplierFormatter
+        formatter: deleteSupplierFormatter
       }]
     }
 
     function nameSupplierFormatter(value, row, index) {
-      return '<button type="button" class="btn btn-link" onclick="' + angularCtrlStr + '.openSupplierDetail(' + row['id'] + ')" >'+row['name']+'</button>'
+      return '<a type="button" class="cursor-pointer" onclick="' + angularCtrlStr + '.openSupplierDetail(' + row['id'] + ')" >'+row['name']+'</a>'
     }
 
     ctrl.openSupplierDetail = function(id) {
