@@ -13,7 +13,7 @@
     };
 
     this.getEmployee = function(id, payroll_id) {
-      if (id != 0) {
+      if (id && id != 0) {
         if(payroll_id){
           return $http.get('/employees/' + id, { params: { payroll_id: payroll_id } });
         } else {

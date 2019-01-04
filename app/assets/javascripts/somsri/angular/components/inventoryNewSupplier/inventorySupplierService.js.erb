@@ -8,6 +8,10 @@
 			return $http.post('/suppliers', data)
 		}
 
+		this.getAllSuppliers = function() {
+			return $http.get('/suppliers')
+		}
+
 		this.getSuppliers = function(page) {
 			return $http.get('/suppliers', {
 				params: {
@@ -17,11 +21,15 @@
 		}
 
 		this.show = function(id, page) {
-   	 return $http.get('/suppliers/' + id, {
-   	 		params: {
-   	 			page: page,
-   	 		}
-   	 })
+			if (page) {
+				 return $http.get('/suppliers/' + id, {
+	   	 		params: {
+	   	 			page: page,
+	   	 		}
+	   	 })
+			} else {
+				return $http.get('/suppliers/' + id)
+			}
   	};
 
   	this.removeSuppliers = function(id) {

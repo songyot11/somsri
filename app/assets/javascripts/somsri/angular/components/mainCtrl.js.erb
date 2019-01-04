@@ -218,6 +218,33 @@
         }
       });
     }
+
+    $rootScope.appSupplierModal = function(message, success, dismiss) {
+      $scope.message = message;
+      $uibModal.open({
+        animation: true,
+        backdrop: 'static',
+        keyboard: false,
+        scope: $scope,
+        templateUrl: "<%= asset_path('somsri/angular/components/modal/addSupplier/addSupplierModalView.html') %>",
+        controller: 'addSupplierModalCtrl as supplier',
+        size: 'md',
+        resolve: {
+          resources: ['$ocLazyLoad', 'ASSETS', function($ocLazyLoad, ASSETS) {
+            return $ocLazyLoad.load([
+              ASSETS.somsri.somsri.add_supplier_modal
+            ]);
+          }]
+        }
+      }).result.then(function (result) {
+        if (result) {
+          if(success){ success() }
+        }else{
+          if(dismiss){ dismiss() }
+        }
+      });
+    }
+
     
     $rootScope.openInventory = function(id) {
       $rootScope.index_id = id;

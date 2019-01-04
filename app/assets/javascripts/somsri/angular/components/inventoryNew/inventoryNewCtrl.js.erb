@@ -1,7 +1,8 @@
 (function() {
   'use strict';
   angular.module('somsri.somsri.inventory_new', [])
-    .controller('inventoryNewCtrl', ['$compile', '$scope', '$window', '$filter', '$rootScope', '$timeout', 'translateFilter', '$uibModal', 'Upload', "inventoryService", 'employeesService', '$state', function($compile, $scope, $window, $filter, $rootScope, $timeout, translateFilter, $uibModal, Upload, service, employeesService, $state) {
+    .controller('inventoryNewCtrl', ['$compile', '$scope', '$window', '$filter', '$rootScope', '$timeout', 'translateFilter', '$uibModal', 'Upload', "inventoryService", 'employeesService', '$state' , "inventorySupplierService", 
+      function($compile, $scope, $window, $filter, $rootScope, $timeout, translateFilter, $uibModal, Upload, service, employeesService, $state, inventorySupplierService) {
       $rootScope.menu = translateFilter("inventory")
         var ctrl = this
         var angularScopeRoot = 'angular.element(document.getElementById("angularCtrl")).scope().$root'
@@ -17,8 +18,13 @@
         ctrl.price = ""
         ctrl.category = translateFilter("select_category")
         ctrl.displayName = translateFilter("select_employee")
+        ctrl.supplierDisplayName = translateFilter("select_supllier")
         ctrl.add_button = "add"
         ctrl.filterKeyword = ''
+        ctrl.supplierName = ""
+        ctrl.address = ""
+        ctrl.phone_number = ""
+        ctrl.email = ""
         // default last 7 days
         ctrl.end_date = new Date();
         ctrl.start_date = new Date(new Date().setMonth(new Date().getMonth() - 1));
@@ -96,6 +102,12 @@
             } else {
               ctrl.employee_name = "-"
             }
+            ctrl.supplier_id = value.supplier_id
+            if (ctrl.supplier_id) {
+              getSupplierById(ctrl.supplier_id)
+            } else {
+              ctrl.supplier_name = "-"
+            }
           })
         }
 
@@ -122,7 +134,10 @@
           generateCategoryBarcode(ctrl.category)
 
           if (ctrl.checkName) {
-            ctrl.employee_id = 0
+            ctrl.employee_id = undefined
+            if (ctrl.checkSupplier) {
+
+            }
             beforeCreate(changePrice)
             // var data = {
             //   first_name: ctrl.employee_name,
@@ -142,7 +157,7 @@
             if (ctrl.employee_name) {
               beforeCreate(changePrice)
             } else {
-              ctrl.employee_id = 0
+              ctrl.employee_id = undefined
               beforeCreate(changePrice)
             } 
           }
@@ -175,7 +190,8 @@
             date_purchase: ctrl.datas.date_purchase,
             date_add: ctrl.date_add,
             end_warranty: ctrl.datas.end_warranty,
-            employee_id: ctrl.employee_id
+            employee_id: ctrl.employee_id,
+            supplier_id: ctrl.supplier_id
           }
 
           var category_datas = {
@@ -295,7 +311,7 @@
         };
 
         function getEmployeeById(id) {
-          if (ctrl.employee_id != 0) {
+          if (ctrl.employee_id && ctrl.employee_id != 0) {
               employeesService.getEmployee(id).then(function(resp) {
               ctrl.employee_name = resp.data.employee_display_name
             })
@@ -378,8 +394,52 @@
             }
           })
         }
-      
+
+        function getSupplierById(id) {
+          inventorySupplierService.show(id).then(function(resp) {
+            ctrl.supplier_name = resp.data.suppliers.name
+          })
+        }
+
+        function getSupplierList() {
+          ctrl.supplier_lists = []
+          inventorySupplierService.getAllSuppliers().then(function(resp) {
+            if (resp.data.length > 0){
+              for (var i = 0; i < resp.data.length; i++) {
+                var supplier = resp.data[i]
+                if (supplier.name != ctrl.supplierDisplayName) {
+                  ctrl.supplier_lists.push({
+                    name: supplier.name,
+                    id: supplier.id
+                  })
+                }
+              }
+            }
+          })
+        }
+
+        ctrl.onSelectSupplier = function($item) {
+          ctrl.supplier_name = $item.name;
+          ctrl.supplier_id = $item.id
+        };
+
+        ctrl.onChangeSupplier = function() {
+          ctrl.supplier_name = ctrl.supplier_name
+          ctrl.supplier_id = undefined
+        }
+
+        ctrl.openAddSupplierModal = function() {
+          $rootScope.appSupplierModal(translateFilter('add_supplier'), function(){
+            ctrl.supplier_id = $rootScope.supplier_id
+            ctrl.supplier_name = $rootScope.supplier_name
+            $rootScope.supplier_id = null
+            $rootScope.supplier_name = null
+          })
+        }
+
+
         getEmployee()
+        getSupplierList()
         getInventoryList()
         initData()
 
