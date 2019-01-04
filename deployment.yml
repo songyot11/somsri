@@ -1,0 +1,80 @@
+
+apiVersion: extensions/v1beta1
+kind: Deployment
+metadata:
+  annotations:
+    kompose.cmd: kompose convert
+    kompose.version: 1.13.0 (84fa826)
+  creationTimestamp: null
+  labels:
+    io.kompose.service: inventory
+  name: inventory
+spec:
+  replicas: 1
+  minReadySeconds: 5
+  strategy:
+    type: RollingUpdate
+    rollingUpdate:
+      maxSurge: 1
+      maxUnavailable: 1
+  strategy:
+    type: Recreate
+  template:
+    metadata:
+      creationTimestamp: null
+      labels:
+        io.kompose.service: inventory
+    spec:
+      containers:
+      - name: inventory
+        image: bananacoding/banana-inventory:1.0.2
+        imagePullPolicy: Always
+        env:
+        - name: DB_HOST
+          value: pg-inventory
+        - name: DB_PASS
+          valueFrom:
+            secretKeyRef:
+              name: "db-user-pass"
+              key: "password"
+        - name: DB_PORT
+          value: "5432"
+        - name: DB_USER
+          valueFrom:
+            secretKeyRef:
+              name: "db-user"
+              key: "username"
+        - name: PDFTK_PATH
+          value: ''''''
+        - name: SENDGRID_PASSWORD
+          value: ''''''
+        - name: SENDGRID_USERNAME
+          value: ''''''
+        - name: RAILS_ENV
+          value: "production"
+        - name: BIND_ON
+          value: 0.0.0.0:3000
+        - name: RAILS_MAX_THREADS
+          value: "1"
+        - name: WEB_CONCURRENCY
+          value: "1"
+        - name: SECRET_KEY_BASE
+          valueFrom:
+            secretKeyRef:
+              name: "secret-key-base"
+              key: "secret-key-base"
+        - name: RAILS_SERVE_STATIC_FILES
+          value: "true"
+        ports:
+        - containerPort: 3000
+        resources:
+          limits:
+            cpu: 800m
+            memory: 800Mi
+          requests:
+            cpu: 700m
+            memory: 700Mi
+      restartPolicy: Always
+      imagePullSecrets:
+        - name: myregistrykey
+status: {}

@@ -235,6 +235,18 @@
         }]
       }
     }).state({
+    url: '/inventory/edit/repair',
+    name: 'inventory_edit_repair',
+    templateUrl: "<%= asset_path('somsri/angular/components/inventoryRepair/inventoryRepairView.html') %>",
+    controller: 'inventoryRepairCtrl as inventory',
+    resolve: {
+      resources: ['$ocLazyLoad', function($ocLazyLoad) {
+        return $ocLazyLoad.load([
+        ASSETS.somsri.somsri.inventory_edit_repair
+        ]);
+      }]
+    }
+    }).state({
       url: '/inventory',
       name: 'inventory',
       templateUrl: "<%= asset_path('somsri/angular/components/inventory/inventoryView.html') %>",

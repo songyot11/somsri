@@ -598,6 +598,7 @@ th:
 
   #Inventory
   inventory_list: "รายการพัสดุ"
+  detail_inventory: "รายละเอียดพัสดุ"
   inventory_request: "คำขอใช้พัสดุ"
   add_inventory: "+ เพิ่มพัสดุ"
   inventory_request: "คำขอใช้พัสดุ"
@@ -652,6 +653,19 @@ th:
   continue: "ต่อไป"
   completed: "เรียบร้อยแล้ว"
   send_the_package_to: "ได้ทำการส่งมอบพัสดุให้กับ"
+
+  #Repair
+  list_repair: "แจ้งซ่อม"
+  employee_name: "พนักงาน"
+  reason: "เหตุผลที่ส่งซ่อม"
+  repair_date: "วันที่ส่งซ่อม"
+  return_date: "วันที่ซ่อมเสร็จ"
+  bill: "ใบเสร็จ"
+  detal_repair: "รายละเอียดแจ้งซ่อม"
+  approve_repair: "ยืนยันการแจ้งซ่อม"
+  confirm_accept: "รับเรื่อง"
+  sent_repair: "ส่งซ่อม"
+  repairs_completed: "ซ่อมเสร็จ"
 
   #inventory supplier
   inventory_supplier: "ร้านค้า"

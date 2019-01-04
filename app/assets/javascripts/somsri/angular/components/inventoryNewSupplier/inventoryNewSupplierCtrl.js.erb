@@ -24,8 +24,8 @@
       ctrl.add_button = "edit"
 
       service.show(ctrl.real_id).then(function(resp) {
-        var value = resp.data
-        ctrl.datas = resp.data
+        var value = resp.data.suppliers
+        ctrl.datas = resp.data.suppliers
         ctrl.name = value.name
         ctrl.address = value.address
         ctrl.phone_number = value.phone_number

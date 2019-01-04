@@ -34,14 +34,23 @@ pipeline:
     mount:
       - ./bundler
     volumes:
-      - /tmp/cache:/cache
-  publish:
-    image: mwallasch/docker-ruby-node
-    commands:
-      - /bin/bash deploy.drone.sh
+      - /tmp/cache:/cache      
+  build-image:
+    image: plugins/docker
+    repo: bananacoding/banana-inventory
+    tags:
+      - 1.0.2
+      - latest
+    secrets: [ DOCKER_USERNAME, DOCKER_PASSWORD ]
     when:
-      branch: develop
-    secrets: [ HEROKU_API_KEY, HEROKU_LOGIN, HEROKU_GIT_URL ]
+      branch: [ master ]
+  deploy:
+    image: sh4d1/drone-kubernetes
+    kubernetes_template: deployment.yml
+    kubernetes_namespace: default
+    secrets: [ KUBERNETES_SERVER, KUBERNETES_CERT, KUBERNETES_TOKEN ]
+    when:
+      branch: [ master ]
   notify:
     image: drillster/drone-email
     from: noreply-drone@bananacoding.com
