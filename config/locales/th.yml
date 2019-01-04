@@ -20,168 +20,6 @@
 # available at http://guides.rubyonrails.org/i18n.html.
 
 th:
-  date:
-    abbr_day_names:
-    - อา
-    - จ
-    - อ
-    - พ
-    - พฤ
-    - ศ
-    - ส
-    abbr_month_names:
-    -
-    - ม.ค.
-    - ก.พ.
-    - มี.ค.
-    - เม.ย.
-    - พ.ค.
-    - มิ.ย.
-    - ก.ค.
-    - ส.ค.
-    - ก.ย.
-    - ต.ค.
-    - พ.ย.
-    - ธ.ค.
-    day_names:
-    - อาทิตย์
-    - จันทร์
-    - อังคาร
-    - พุธ
-    - พฤหัสบดี
-    - ศุกร์
-    - เสาร์
-    formats:
-      default: "%d-%m-%Y"
-      long: "%d %B %Y"
-      short: "%d %b"
-    month_names:
-    -
-    - มกราคม
-    - กุมภาพันธ์
-    - มีนาคม
-    - เมษายน
-    - พฤษภาคม
-    - มิถุนายน
-    - กรกฎาคม
-    - สิงหาคม
-    - กันยายน
-    - ตุลาคม
-    - พฤศจิกายน
-    - ธันวาคม
-  datetime:
-    distance_in_words:
-      about_x_hours: ประมาณ %{count} ชั่วโมง
-      about_x_months: ประมาณ %{count} เดือน
-      about_x_years: ประมาณ %{count} ปี
-      almost_x_years: เกือบ %{count} ปี
-      half_a_minute: ครึ่งนาที
-      less_than_x_minutes: น้อยกว่า %{count} นาที
-      less_than_x_seconds: น้อยกว่า %{count} วินาที
-      over_x_years: มากกว่า %{count} ปี
-      x_days: "%{count} วัน"
-      x_minutes: "%{count} นาที"
-      x_months: "%{count} เดือน"
-      x_seconds: "%{count} วินาที"
-    prompts:
-      day: วัน
-      hour: ชั่วโมง
-      minute: นาที
-      month: เดือน
-      second: วินาที
-      year: ปี
-  errors:
-    format: "%{attribute} %{message}"
-    messages:
-      accepted: ต้องถูกยอมรับ
-      blank: ต้องไม่เว้นว่างเอาไว้
-      confirmation: ไม่ตรงกับการยืนยัน
-      empty: ต้องไม่เว้นว่างเอาไว้
-      equal_to: ต้องมีค่าเท่ากับ %{count}
-      even: ต้องเป็นจำนวนคู่
-      exclusion: ไม่ได้รับอนุญาตให้ใช้
-      greater_than: ต้องมากกว่า %{count}
-      greater_than_or_equal_to: ต้องมากกว่าหรือเท่ากับ %{count}
-      in_between: "ต้องอยู่ระหว่าง %{min} และ %{max}"
-      inclusion: ไม่ได้อยู่ในรายการ
-      invalid: ไม่ถูกต้อง
-      less_than: ต้องมีค่าน้อยกว่า %{count}
-      less_than_or_equal_to: ต้องมีค่าน้อยกว่าหรือเท่ากับ %{count}
-      not_a_number: ไม่ใช่ตัวเลข
-      not_an_integer: ไม่ใช่จำนวนเต็ม
-      odd: ต้องเป็นจำนวนคี่
-      taken: ถูกใช้ไปแล้ว
-      too_long: ยาวเกินไป (ต้องไม่เกิน %{count} ตัวอักษร)
-      too_short: สั้นเกินไป (ต้องยาวกว่า %{count} ตัวอักษร)
-      wrong_length: มีความยาวไม่ถูกต้อง (ต้องมีความยาว %{count} ตัวอักษร)
-    template:
-      body: 'โปรดตรวจสอบข้อมูลในช่องต่อไปนี้:'
-      header: พบข้อผิดพลาด %{count} ประการ ทำให้ไม่สามารถบันทึก%{model}ได้
-  helpers:
-    select:
-      prompt: โปรดเลือก
-    submit:
-      create: สร้าง%{model}
-      submit: บันทึก%{model}
-      update: ปรับปรุง%{model}
-  number:
-    currency:
-      format:
-        delimiter: ","
-        format: "%n %u"
-        precision: 2
-        separator: "."
-        significant: false
-        strip_insignificant_zeros: false
-        unit: บาท
-    format:
-      delimiter: ","
-      precision: 3
-      separator: "."
-      significant: false
-      strip_insignificant_zeros: false
-    human:
-      decimal_units:
-        format: "%n %u"
-        units:
-          billion: พันล้าน
-          million: ล้าน
-          quadrillion: พันล้านล้าน
-          thousand: พัน
-          trillion: ล้านล้าน
-          unit: ''
-      format:
-        delimiter: ''
-        precision: 3
-        significant: true
-        strip_insignificant_zeros: true
-      storage_units:
-        format: "%n %u"
-        units:
-          byte: ไบต์
-          gb: จิกะไบต์
-          kb: กิโลไบต์
-          mb: เมกะไบต์
-          tb: เทระไบต์
-    percentage:
-      format:
-        delimiter: ''
-    precision:
-      format:
-        delimiter: ''
-  support:
-    array:
-      last_word_connector: ", และ "
-      two_words_connector: " และ "
-      words_connector: ", "
-  time:
-    am: ก่อนเที่ยง
-    formats:
-      default: "%A %d %b %Y %H:%M"
-      long: "%d %B %Y %H:%M น."
-      short: "%d %b %H:%M น."
-    pm: หลังเที่ยง
-
   #Payroll
   export: Export
   salary: เงินเดือน
@@ -204,8 +42,6 @@ th:
   employee_pvf: "เงินสะสมเข้ากองทุนสงเคราะห์"
   employee_extra_etc: รายได้อื่นๆ
   employee_fee_etc: รายหักอื่นๆ
-  select_employee: "เลือกพนักงาน"
-  no_employee_selection: "ไม่เลือกพนักงาน"
   ot: "เงินสอนพิเศษ"
   position_allowance: "ค่าตำแหน่ง"
   allowance: "เบี้ยเลี้ยง"
@@ -237,7 +73,6 @@ th:
   log_in: "เข้าสู่ระบบ"
   sign_out: "ออกระบบ"
   profile: "ข้อมูลส่วนตัว"
-  company: "ข้อมูลองค์กร"
 
   mr: นาย
   ms: นาง
@@ -436,8 +271,6 @@ th:
   setting: 'การตั้งค่า'
   class_management: จัดการชั้นเรียน
   expense: "บันทึกค่าใช้จ่าย"
-  inventory: "พัสดุ"
-  vacation: "วันลา"
 
   activerecord:
     attributes:
@@ -596,84 +429,6 @@ th:
   graduated_semester: "ภาคเรียนที่"
   grade_classroom: "ระดับชั้นเรียน"
 
-  #Inventory
-  inventory_list: "รายการพัสดุ"
-  detail_inventory: "รายละเอียดพัสดุ"
-  inventory_request: "คำขอใช้พัสดุ"
-  add_inventory: "+ เพิ่มพัสดุ"
-  inventory_request: "คำขอใช้พัสดุ"
-  item_name: "ชื่อพัสดุ"
-  serial_number: "หมายเลขซีเรียล"
-  model: "รุ่น"
-  description: "ลักษณะ"
-  price: "ราคา"
-  date_purchase: "วันที่ซื้อ" 
-  category: "ประเภท"
-  date_add: "วันที่เพิ่ม"
-  inventory_data: "ข้อมูลพัสดุ"
-  select_category: "เลือกประเภท"
-  end_warranty: "วันสิ้นสุดการรับประกัน"
-  office_furniture: "เฟอร์นิเจอร์สำนักงาน"
-  equipment_computer: "อุปกรณ์คอมพิวเตอร์"
-  office_supplies: "อุปกรณ์สำนักงานเบ็ดเตล็ด"
-  maintenance_equipment: "อุปกรณ์ซ่อมบำรุง"
-  cleaning_products: "แคนทีนและผลิตภัณฑ์ทำความสะอาด"
-  electronic_office_equipment: "อุปกรณ์สำนักงานอิเล็กทรอนิกส์"
-  paper_products: "ผลิตภัณฑ์กระดาษ"
-  meeting_presentation_equipment: "อุปกรณ์เพื่อการประชุมและนำเสนอ"
-  inventory_search: "ค้นหาจากชื่อ รุ่น หมายเลขซีเรียล วันที่ซื้อ ชื่อคนใช้งาน"
-  inventory_request_search: "ค้นหาจากชื่อ วันที่ส่งคำขอ ชื่อคนใช้งาน"
-
-   #InventoryRequest
-  list_request: "รายการคำขอใช้พัสดุ"
-  add_request: "+ เพิ่มคำขอใช้พัสดุ"
-  user_request: "ชื่อผู้ขอ"
-  request_date: "วันที่ขอ"
-  reject: "ปฏิเสธ"
-  approve: "อนุมัติ"
-  pending: "รอการอนุมัติ"
-  accept: "ยอมรับ"
-  purchasing: "ทำการสั่งซื้อ"
-  done: "เสร็จ"
-  assigned: "ได้รีบเรียบร้อย"
-
-  #Update inventory request
-  details_inventory_request: "รายละเอียดคำขอใช้อุปกรณ์"
-  approve_request: "อนุมัติคำขอ"
-  inventory_purchase: "สั่งซื้อพัสดุ"
-  get_inventory: "รับพัสดุ"
-  dispatch_to_employees: "จัดส่งให้พนักงาน"
-  date_get_inventory: "วันที่ได้รับ"
-  date_purchase_inventory: "ได้ทำการสั่งซื้อวันที่"
-  date_send_inventory: "จัดส่งในวันที่"
-  save_by: "บันทึกโดย"
-  request_approval: "ได้ทำการอนุมัติคำขอ"
-  bath: "บาท"
-  receive_products_on_date: "ได้รับสินค้าในวันที่"
-  continue: "ต่อไป"
-  completed: "เรียบร้อยแล้ว"
-  send_the_package_to: "ได้ทำการส่งมอบพัสดุให้กับ"
-
-  #Repair
-  list_repair: "แจ้งซ่อม"
-  employee_name: "พนักงาน"
-  reason: "เหตุผลที่ส่งซ่อม"
-  repair_date: "วันที่ส่งซ่อม"
-  return_date: "วันที่ซ่อมเสร็จ"
-  bill: "ใบเสร็จ"
-  detal_repair: "รายละเอียดแจ้งซ่อม"
-  approve_repair: "ยืนยันการแจ้งซ่อม"
-  confirm_accept: "รับเรื่อง"
-  sent_repair: "ส่งซ่อม"
-  repairs_completed: "ซ่อมเสร็จ"
-
-  #inventory supplier
-  inventory_supplier: "ร้านค้า"
-  list_supplier: "รายการร้านค้า"
-  add_supplier: "+ เพิ่มร้านค้า"
-  supplier_details: "รายละเอียดร้านค้า"
-  supplier: "ชื่อร้านค้า"
-
   # Rollcall
   monthly: ประจำเดือน
   student_record: แบบบันทึกเวลาเรียนชั้นมัธยมศึกษาปีที่
@@ -764,48 +519,6 @@ th:
   print_expenses_payment_report: "พิมพ์รายงานค่าใช้จ่ายแยกตามการชำระเงิน"
   expense_category_placeholder: "ชื่อประเภทค่าใช้จ่าย"
   expense_category_already_used: "ไม่สามารถลบประเภทค่าใช้จ่ายที่ยังถูกใช้งานอยู่ได้"
-
-  # Vacation
-  day: "วัน"
-  dashboard: "ลางาน"
-  calendar: "ปฏิทิน"
-  leave_rules: "ระเบียบวันลา"
-  remaining_day: "วันหยุดคงเหลือ"
-  sick_leave: "ลาป่วย"
-  vacation_leave: "ลากิจ"
-  switch_date: "สลับวันทำงาน"
-  work_at_home: "ทำงานที่บ้าน"
-  full_day: "เต็มวัน"
-  half_day_morning: "ครึ่งวัน (ช่วงเช้า)"
-  half_day_afternoon: "ครึ่งวัน (ช่วงบ่าย)"
-  vacation_type: "ประเภทการลา"
-  vacation_leave_type: "แบบการลากิจ"
-  vcation_and_request_list: "รายการวันหยุดและคำขอ"
-  holiday_list_in_this_week: "รายการวันหยุดใน 7 วันข้างหน้า"
-  send_request: "ส่งคำขอ"
-  vacation_from_date: "จากวันที่"
-  vacation_to_date: "ถึงวันที่"
-  switch_from_date: "สลับจากวันหยุดที่"
-  switch_to_date: "มาเป็นวันที่"
-  pending: "รออนุมัติ"
-  approved: "อนุมัติแล้ว"
-  rejected: "ไม่อนุมัติ"
-  vacation_was_approved: "อนุมัติคำขอสำเร็จแล้ว"
-  vacation_was_rejected: "ยกเลิกคำขอสำเร็จแล้ว"
-  vacation_save_error: "เกิดข้อผิดพลาด กรุณาลองอีกครั้ง"
-  vacation_saved_success: "ส่งคำขอสำเร็จแล้ว"
-  vacation_deleted_success: "ลบคำขอสำเสร็จแล้ว"
-  confirm_delete_vacation: "คุณต้องการที่จะลบคำขอนี้?"
-  updated_by: "อัพเดทโดย:"
-  updated_at: "อัพเดทเมื่อ:"
-  holiday_calendar: "ปฏิทินวันหยุด"
-  holiday_of_year: "วันหยุดประจำปี"
-  create_holiday: "สร้างวันหยุด"
-  this_year: "เฉพาะปีนี้"
-  every_year: "ทุกปี"
-  confirm_delete_holiday: "คุณต้องการที่จะลบวันหยุดนี้?"
-  holiday_delete_success: "ลบวันหยุดสำเร็จ"
-  holiday_delete_failed: "ลบวันหยุดสำเร็จไม่สำเร็จ"
 
   # All
   save_change_confirmation: "คุณต้องการบันทึกการเปลี่ยนแปลงนี้หรือไม่"

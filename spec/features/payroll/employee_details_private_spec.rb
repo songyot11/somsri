@@ -9,7 +9,8 @@ describe 'Private Details', js: true do
       address: nil,
       tel: nil,
       birthdate: nil,
-      status: nil
+      status: nil,
+      email: nil
     })
   }
 

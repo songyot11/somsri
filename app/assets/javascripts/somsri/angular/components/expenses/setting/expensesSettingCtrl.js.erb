@@ -75,7 +75,7 @@
           result.lv = (maxLv + 1) - result.lv
         })
         var confirmationMessage = translateFilter('save_change_confirmation')
-        $rootScope.openConfirmationModal(confirmationMessage, '', function(){
+        $rootScope.openConfirmationModal(confirmationMessage, function(){
           service.saveExpenseSettings(results).then(function(resp){
             initData();
             displayFlashMessage(translateFilter('save_success'), true);
