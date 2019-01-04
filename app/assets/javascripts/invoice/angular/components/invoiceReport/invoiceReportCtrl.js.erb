@@ -166,7 +166,13 @@
               }
               ctrl.maxSize = 5;
               for(var ele in ctrl.datasExport){
-                ctrl.datasExport[ele].payment_methods.payment_method = I18n.t(ctrl.datasExport[ele].payment_methods.payment_method)
+                var str = []
+                var payment_method = ctrl.datasExport[ele].payment_methods.payment_method
+                var payments = payment_method.split(',')
+                for(var i = 0; i < payments.length ; i++){
+                  str.push(translateFilter(payments[i]))
+                }
+                ctrl.datasExport[ele].payment_methods.payment_method = str.join()
               }
               tableExport.bootstrapTable('load', ctrl.datasExport);
             });
@@ -193,7 +199,13 @@
               }
               ctrl.maxSize = 5;
               for(var ele in ctrl.datas){
-                ctrl.datas[ele].payment_methods.payment_method = I18n.t(ctrl.datas[ele].payment_methods.payment_method)
+                var str = []
+                var payment_method = ctrl.datas[ele].payment_methods.payment_method
+                var payments = payment_method.split(',')
+                for(var i = 0; i < payments.length ; i++){
+                  str.push(translateFilter(payments[i]))
+                }
+                ctrl.datas[ele].payment_methods.payment_method = str.join()
               }
               main_table.bootstrapTable('load', ctrl.datas);
             });
