@@ -7,10 +7,10 @@ metadata:
     kompose.version: 1.13.0 (84fa826)
   creationTimestamp: null
   labels:
-    io.kompose.service: app
-  name: app
+    io.kompose.service: inventory
+  name: inventory
 spec:
-  replicas: 2
+  replicas: 1
   minReadySeconds: 5
   strategy:
     type: RollingUpdate
@@ -23,14 +23,15 @@ spec:
     metadata:
       creationTimestamp: null
       labels:
-        io.kompose.service: app
+        io.kompose.service: inventory
     spec:
       containers:
-      - name: app
-        image: aong/app:2.4
+      - name: inventory
+        image: bananacoding/banana-inventory:1.0.2
+        imagePullPolicy: Always
         env:
         - name: DB_HOST
-          value: postgres
+          value: pg-inventory
         - name: DB_PASS
           valueFrom:
             secretKeyRef:
@@ -74,4 +75,6 @@ spec:
             cpu: 700m
             memory: 700Mi
       restartPolicy: Always
+      imagePullSecrets:
+        - name: myregistrykey
 status: {}
