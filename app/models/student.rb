@@ -82,12 +82,22 @@ class Student < ApplicationRecord
     title = "ด.ญ." if self.gender_id == 2
     thaiName = self.full_name.nil? ? "" : self.full_name
     engName = self.full_name_english.nil? ? "" : self.full_name_english
-    if !thaiName.blank?
-      return "#{title} #{thaiName}".strip
-    elsif thaiName.blank? && !engName.blank?
-      title = "Master" if self.gender_id == 1
-      title = "Miss" if self.gender_id == 2
-      return "#{title} #{engName}".strip
+    if I18n.locale == :en
+      if !engName.blank?
+        title = "Master" if self.gender_id == 1
+        title = "Miss" if self.gender_id == 2
+        return "#{title} #{engName}".strip
+      else
+        return "#{title} #{thaiName}".strip
+      end
+    else
+      if !thaiName.blank?
+        return "#{title} #{thaiName}".strip
+      else
+        title = "Master" if self.gender_id == 1
+        title = "Miss" if self.gender_id == 2
+        return "#{title} #{engName}".strip
+      end
     end
   end
 
@@ -429,7 +439,7 @@ class Student < ApplicationRecord
 
   def invoice_screen_full_name_display
     if nickname.to_s.strip != '' && !self.full_name.blank?
-        return full_name_with_title + ' (' + nickname.to_s.strip + ')'
+      return full_name_with_title + ' (' + nickname.to_s.strip + ')'
     elsif nickname_english.to_s.strip != '' && !self.full_name_english.blank?
       return full_name_with_title + ' (' + nickname_english.to_s.strip + ')'
     else
