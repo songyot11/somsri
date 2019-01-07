@@ -294,6 +294,7 @@ th:
         student_number: "เลขประจำตัวนักเรียน"
         national_id: "รหัสประจำตัวประชาชน"
         remark: "หมายเหตุ / remark"
+        nationality: "สัญชาติ"
       payroll:
         salary: "เงินเดือน / Salary"
         allowance: "เบี้ยเลี้ยง / Shift"

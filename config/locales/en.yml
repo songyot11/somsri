@@ -295,6 +295,7 @@ en:
         student_number: "Student No."
         national_id: "ID"
         remark: "Comment / remark"
+        nationality: "Nationality"
       payroll:
         salary: "เงินเดือน / Salary"
         allowance: "เบี้ยเลี้ยง / Shift"

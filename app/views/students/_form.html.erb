@@ -57,7 +57,7 @@
         </div>
       </div>
       <div class="row add-st-pr">
-        <div class="col-md-3">
+        <div class="col-md-4">
           <div class="form-group ">
             <%= f.label :gender_id, :class => 'control-label' %>
             <div class="col-md-12">
@@ -70,6 +70,14 @@
             <%= f.label :birthdate, :class => 'control-label' %>
             <div class="col-md-12">
               <%= f.date_field :birthdate, :class => 'form-control',:data => {:provide => :datepicker} %>
+            </div>
+          </div>
+        </div>
+        <div class="col-md-4">
+          <div class="form-group ">
+            <%= f.label :nationality, :class => 'control-label' %>
+            <div class="col-md-12">
+              <%= f.text_field :nationality, :class => 'form-control' , autocomplete: "off" %>
             </div>
           </div>
         </div>
