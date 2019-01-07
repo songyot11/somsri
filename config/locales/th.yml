@@ -140,9 +140,9 @@ th:
   confirm_delete_record: "คุณต้องการลบราการนี้หรือไม่?"
   first_name_thai: ชื่อจริง
   last_name_thai: นามสกุล
-  first_name_en: Name
-  middle_name_en: Middle Name
-  last_name_en: Surname
+  first_name_en: ชื่อ
+  middle_name_en: ชื่อกลาง
+  last_name_en: นามสกุล
 
   # tax
   other_deduction: "ค่าลดหย่อนอื่นๆ"
