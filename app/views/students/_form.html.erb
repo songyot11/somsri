@@ -211,13 +211,22 @@ function parentChanged(target){
 
   // autocomplete mobile
   var parentMobile = []
+  var parentEmail = []
   <% @parents.each do |ps| %>
-    parentMobile.push({id: '<%= ps.id %>', mobile: '<%= ps.mobile %>'})
+    parentMobile.push({id: '<%= ps.id %>', mobile: '<%= ps.mobile %>', email: '<%= ps.email %>'})
+  <% end %>
+  <% @parents.each do |ps| %>
+    parentEmail.push({id: '<%= ps.id %>', email: '<%= ps.email %>'})
   <% end %>
   var parentId = $(target).val()
-  for(var i = 0; i<parentMobile.length; i++){
+  for(var i = 0; i < parentMobile.length; i++){
     if(parentMobile[i]["id"] == parentId){
       $('#mobile' + index).val(parentMobile[i]["mobile"])
+    }
+  }
+  for(var i = 0; i < parentEmail.length; i++){
+    if(parentEmail[i]["id"] == parentId){
+      $('#email' + index).val(parentEmail[i]["email"])
     }
   }
 }
