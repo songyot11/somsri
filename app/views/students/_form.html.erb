@@ -202,9 +202,11 @@ function parentChanged(target){
   if($(target).val()){
     $("#relationship" + index).prop("disabled", false)
     $("#mobile" + index).prop("disabled", false)
+    $("#email" + index).prop("disabled", false)
   }else{
     $("#relationship" + index).prop("disabled", true)
     $("#mobile" + index).prop("disabled", true)
+    $("#email" + index).prop("disabled", true)
   }
 
   // autocomplete mobile
@@ -227,7 +229,7 @@ $(function() {
     $('#add-parent').append(
       '<div class="form-group" id="add-prn-'+round+'">\
         <div class="row add-st-pr">\
-          <div class="col-md-5" style="margin-left:15px;">\
+          <div class="col-md-4" style="margin-left:15px;">\
             <select id="parent'+round+'" name="parent[]" index="'+round+'" onchange="parentChanged(this)"  placeholder="Select parent...">\
               <option value="" disabled selected></option>\
               <% @parents.each do |p| %>\
@@ -242,8 +244,11 @@ $(function() {
               <% end %>\
             </select>\
           </div>\
-          <div class="col-md-3">\
+          <div class="col-md-2">\
             <input type="text" id="mobile'+round+'" placeholder="โทรศัพท์" name="mobile[]" class="form-control" disabled="true">\
+          </div>\
+          <div class="col-md-3">\
+            <input type="text" id="email'+round+'" placeholder="อีเมล์" name="email[]" class="form-control" disabled="true">\
           </div>\
           <div class="col-md-1">\
             <button type="button" class="btn btn-delete-sp" onclick="remove_parent('+round+')"><i class="fa fa-times"></i></button>\

@@ -50,7 +50,7 @@ class Parent < ApplicationRecord
 
   def studentFullname
     if self.respond_to?("student_name")
-      self.student_name.nil? ? student_link(self.students.first) : student_link_by_hash(self.student_name, self.student_id)
+      self.student_name.nil? ? student_link(self.students.first) : student_link_by_hash(self.student_name.empty? ? Student.find_by(id: self.student_id)&.full_name_english : self.student_name, self.student_id)
     else
       student_link(self.students.first)
     end
