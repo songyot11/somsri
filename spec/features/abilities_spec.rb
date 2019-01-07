@@ -246,105 +246,105 @@ describe 'Abilities', js: true do
       visit "/"
       sleep(1)
       expect(page).to have_current_path '/users/sign_in'
-      expect(page).to have_content 'Keep me signed in'
+      expect(page).to have_content 'ให้ฉันอยู่ในระบบต่อไป'
     end
 
     it 'cant goto payroll menu' do
       visit "/somsri_payroll"
       sleep(1)
       expect(page).to have_current_path '/users/sign_in'
-      expect(page).to have_content 'Keep me signed in'
+      expect(page).to have_content 'ให้ฉันอยู่ในระบบต่อไป'
     end
 
     it 'cant goto payroll' do
       visit "/somsri_payroll#/payroll"
       sleep(1)
       expect(page).to have_current_path '/users/sign_in'
-      expect(page).to have_content 'Keep me signed in'
+      expect(page).to have_content 'ให้ฉันอยู่ในระบบต่อไป'
     end
 
     it 'cant goto payroll report' do
       visit "/somsri_payroll#/report"
       sleep(1)
       expect(page).to have_current_path '/users/sign_in'
-      expect(page).to have_content 'Keep me signed in'
+      expect(page).to have_content 'ให้ฉันอยู่ในระบบต่อไป'
     end
 
     it 'cant goto profile' do
       visit "/main#/profile"
       sleep(1)
       expect(page).to have_current_path '/users/sign_in'
-      expect(page).to have_content 'Keep me signed in'
+      expect(page).to have_content 'ให้ฉันอยู่ในระบบต่อไป'
     end
 
     it 'cant goto profile' do
       visit "/main#/setting"
       sleep(1)
       expect(page).to have_current_path '/users/sign_in'
-      expect(page).to have_content 'Keep me signed in'
+      expect(page).to have_content 'ให้ฉันอยู่ในระบบต่อไป'
     end
 
     it 'cant goto invoice menu' do
       visit "/somsri_invoice"
       sleep(1)
       expect(page).to have_current_path '/users/sign_in'
-      expect(page).to have_content 'Keep me signed in'
+      expect(page).to have_content 'ให้ฉันอยู่ในระบบต่อไป'
     end
 
     it 'cant goto invoice create' do
       visit "/somsri_invoice#/invoice"
       sleep(1)
       expect(page).to have_current_path '/users/sign_in'
-      expect(page).to have_content 'Keep me signed in'
+      expect(page).to have_content 'ให้ฉันอยู่ในระบบต่อไป'
     end
 
     it 'cant goto invoice report menu' do
       visit "/somsri_invoice#/report"
       sleep(1)
       expect(page).to have_current_path '/users/sign_in'
-      expect(page).to have_content 'Keep me signed in'
+      expect(page).to have_content 'ให้ฉันอยู่ในระบบต่อไป'
     end
 
     it 'cant goto invoice student report' do
       visit "/somsri_invoice#/student_report"
       sleep(1)
       expect(page).to have_current_path '/users/sign_in'
-      expect(page).to have_content 'Keep me signed in'
+      expect(page).to have_content 'ให้ฉันอยู่ในระบบต่อไป'
     end
 
     it 'cant goto invoice daily report' do
       visit "/somsri_invoice#/daily_report"
       sleep(1)
       expect(page).to have_current_path '/users/sign_in'
-      expect(page).to have_content 'Keep me signed in'
+      expect(page).to have_content 'ให้ฉันอยู่ในระบบต่อไป'
     end
 
     it 'cant goto invoice report' do
       visit "/somsri_invoice#/invoice_report"
       sleep(1)
       expect(page).to have_current_path '/users/sign_in'
-      expect(page).to have_content 'Keep me signed in'
+      expect(page).to have_content 'ให้ฉันอยู่ในระบบต่อไป'
     end
 
     it 'cant goto employees' do
       visit "/somsri_payroll#/employees"
       sleep(1)
       expect(page).to have_current_path '/users/sign_in'
-      expect(page).to have_content 'Keep me signed in'
+      expect(page).to have_content 'ให้ฉันอยู่ในระบบต่อไป'
     end
 
     it 'cant goto parents' do
       visit "/parents"
       sleep(1)
       expect(page).to have_current_path '/users/sign_in'
-      expect(page).to have_content 'Keep me signed in'
+      expect(page).to have_content 'ให้ฉันอยู่ในระบบต่อไป'
     end
 
     it 'cant goto students' do
       visit "/students"
       sleep(1)
       expect(page).to have_current_path '/users/sign_in'
-      expect(page).to have_content 'Keep me signed in'
+      expect(page).to have_content 'ให้ฉันอยู่ในระบบต่อไป'
     end
 
   end

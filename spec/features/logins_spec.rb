@@ -72,22 +72,22 @@ describe 'Login', js: true do
   it 'should not go anywhere if user not authentication' do
     visit "/somsri_payroll#/employees"
     expect(page).to have_current_path '/users/sign_in'
-    expect(page).to have_button 'Sign in'
+    expect(page).to have_button 'เข้าสู่ระบบ'
 
     visit "/somsri_payroll#/reports"
     expect(page).to have_current_path '/users/sign_in'
-    expect(page).to have_button 'Sign in'
+    expect(page).to have_button 'เข้าสู่ระบบ'
 
     visit "/somsri_payroll#/employees/1"
     expect(page).to have_current_path '/users/sign_in'
-    expect(page).to have_button 'Sign in'
+    expect(page).to have_button 'เข้าสู่ระบบ'
   end
 
   it 'should able to authentication' do
     visit new_user_session_path
     find('#user_email').set(users[0].email)
     find('#user_password').set(users[0].password)
-    click_button('Sign in')
+    click_button('เข้าสู่ระบบ')
     expect(page).to have_current_path "/"
     expect(page).to have_content "#{users[0].name}"
   end
