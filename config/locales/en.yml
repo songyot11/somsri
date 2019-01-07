@@ -20,6 +20,11 @@
 # available at http://guides.rubyonrails.org/i18n.html.
 
 en:
+  user_name: User Name
+  password: Password
+  keep_me_signed_in: Keep me signed in
+  sign_in: Sign in
+  download_somsri_rollcall: Download Somsri Rollcall
   #Payroll
   roll_download : Download Rollcall
   switch_language : Switch language
