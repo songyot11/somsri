@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20181019103523) do
+ActiveRecord::Schema.define(version: 20190108102251) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -504,9 +504,10 @@ ActiveRecord::Schema.define(version: 20181019103523) do
     t.boolean "export_ktb_payroll",                   default: false
     t.boolean "outstanding_notification",             default: false
     t.boolean "slip_carbon",                          default: false
-    t.string  "default_locale"
+    t.string  "default_locale",                       default: "th"
     t.boolean "enable_expenses",                      default: false
     t.string  "expense_tag_tree"
+    t.boolean "export_kbank_payroll",                 default: false
   end
 
   create_table "skills", force: :cascade do |t|
@@ -549,6 +550,7 @@ ActiveRecord::Schema.define(version: 20181019103523) do
     t.integer  "img_url_file_size"
     t.datetime "img_url_updated_at"
     t.integer  "classroom_id"
+    t.string   "nationality"
     t.index ["classroom_id"], name: "index_students_on_classroom_id", using: :btree
     t.index ["deleted_at"], name: "index_students_on_deleted_at", using: :btree
     t.index ["school_id"], name: "index_students_on_school_id", using: :btree

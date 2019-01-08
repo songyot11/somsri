@@ -64,6 +64,7 @@ th:
   print_slip_carbon: "พิมพ์สลิปเงินเดือนทุกคนแบบคาร์บอน"
   print_social_insurance: "พิมพ์ประกันสังคม"
   export_ktb_payroll: "ไฟล์นำส่งเงินเดือน (KTB)"
+  export_kbank_payroll: "ไฟล์นำส่งเงินเดือน (K-Biz)"
   pay_date: "วันที่ออกเงินเดือน"
   cannot_pay_out: "ไม่สามารถออกเงินเดือนซ้ำได้"
   confirm_pay_out: "คุณต้องการออกเงินเดือนหรือไม่?"

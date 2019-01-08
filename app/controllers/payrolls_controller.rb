@@ -26,7 +26,8 @@ class PayrollsController < ApplicationController
         format.html do
           render json: {
             payrolls: payrolls.as_json("report"),
-            export_ktb_payroll: SiteConfig.get_cache.export_ktb_payroll
+            export_ktb_payroll: SiteConfig.get_cache.export_ktb_payroll,
+            export_kbank_payroll: SiteConfig.get_cache.export_kbank_payroll
           }, status: :ok
         end
         format.pdf do
