@@ -21,6 +21,10 @@ class PayrollsController < ApplicationController
       # generate KTB salary excel
       (tmp_path, filename) = generate_ktb_salary_xls(effective_date, payrolls)
       send_file(tmp_path + filename, filename: filename, :disposition => 'inline', :type => 'application/xls')
+    elsif params[:kbank_salary_txt] && effective_date
+        # generate K-Biz salary txt
+      (tmp_path, filename) = generate_kbiz_salary_txt(effective_date, payrolls)
+      send_file(tmp_path + filename, filename: filename, :disposition => 'inline', :type => 'application/text')
     else
       respond_to do |format|
         format.html do
@@ -385,5 +389,71 @@ class PayrollsController < ApplicationController
       book.write(tmp_path + filename)
 
       return [tmp_path, filename]
+    end
+
+    def generate_kbiz_salary_txt(effective_date, payrolls)
+      filename = "kbiz_salary_#{effective_date.strftime("%F")}.txt"
+      tmp_path = 'tmp/kbiz_salary/'
+
+      FileUtils.mkdir_p tmp_path unless File.directory?(tmp_path)
+
+      bank_code = "1234444444"
+      sum_salary = 0.0
+      i = 0
+      employee_salary = []
+
+      payrolls.each do |payroll|
+        if payroll.net_salary > 0
+          sum_salary += payroll.net_salary
+          account_number = payroll.employee.account_number
+          account_number.gsub!("-", "") if account_number
+          
+          net_salary = sprintf("%.2f", payroll.net_salary)
+          total = net_salary.split('.')[0]
+          decimal = net_salary.split('.')[1]
+
+          employee_salary << [
+            "D#{sprintf('%06d', (i + 1))}" + add_space(14),
+            "#{account_number} ",
+            "#{sprintf('%013d', total) + decimal} ",
+            "#{Date.today.strftime("%y%m%d")}" + add_space(25),
+            "#{payroll.employee.full_name.strip}" + add_space(46),
+            "#{effective_date.strftime("%y%m%d")}000000",
+            add_space(164) + "0000000000.000000000000.000000000000.00" + add_space(143)
+          ]
+          i += 1
+        end
+      end
+
+      number_total = sprintf("%.2f", sum_salary)
+      total = number_total.split('.')[0]
+      decimal = number_total.split('.')[1]
+
+      content = "HPCT" + add_space(4)
+      content += "import_516_2000000" + add_space(14)
+      content += "#{bank_code} "
+      content += "#{sprintf('%013d', total) + decimal} "
+      content += "#{Date.today.strftime("%y%m%d")}" + add_space(25)
+      content += "#{effective_date.strftime("%y%m%d")}" + add_space(25)
+      content += "#{School.first.name}" + add_space(37)
+      content += "#{effective_date.strftime("%y%m%d")}000000#{sprintf('%012d', i)}N" + add_space(5)
+      content += "\r\n"
+
+      employee_salary.each do |payroll|
+        content += payroll.join("")
+        content += "\r\n"
+      end
+
+      File.open(tmp_path + filename, "w+") do |f|
+        f.write(content)
+      end
+
+      return [tmp_path, filename]
+    end
+
+    def add_space(num)
+      str = ""
+      (1..num).each {|i| str += " "}
+      return str
     end
 end
