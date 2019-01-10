@@ -138,11 +138,11 @@ en:
   confirm_recovery_employee: "Do you want to restore employee"
   confirm_delete_employee: "Do you want to delete employee?"
   confirm_delete_record: "Do you want to delete?"
-  first_name_thai: "First Name"
-  last_name_thai: "Last Name"
-  first_name_en: "Name"
-  middle_name_en: "Middle Name"
-  last_name_en: "Last Name"
+  first_name_thai: "First Name (Thai)"
+  last_name_thai: "Last Name (Thai)"
+  first_name_en: "First Name (Eng)"
+  middle_name_en: "Middle Name (Eng)"
+  last_name_en: "Last Name (Eng)"
 
   # tax
   other_deduction: "Other"

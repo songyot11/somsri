@@ -138,11 +138,11 @@ th:
   confirm_recovery_employee: "คุณต้องการนำข้อมูลพนักงานกลับมาหรือไม่"
   confirm_delete_employee: "คุณต้องการลบข้อมูลพนักงานออกถาวรหรือไม่?"
   confirm_delete_record: "คุณต้องการลบราการนี้หรือไม่?"
-  first_name_thai: ชื่อจริง
-  last_name_thai: นามสกุล
-  first_name_en: ชื่อ
-  middle_name_en: ชื่อกลาง
-  last_name_en: นามสกุล
+  first_name_thai: ชื่อ (ไทย)
+  last_name_thai: นามสกุล (ไทย)
+  first_name_en: ชื่อ (อังกฤษ)
+  middle_name_en: ชื่อกลาง (อังกฤษ)
+  last_name_en: นามสกุล (อังกฤษ)
 
   # tax
   other_deduction: "ค่าลดหย่อนอื่นๆ"
