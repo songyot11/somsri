@@ -77,13 +77,13 @@ describe 'Classroom Create Teacher', js: true do
     click_button("+ เลือกนักเรียน")
     eventually { expect(page).to have_content("สมศรี4 ใบเสร็จ") }
     eventually { expect(page).to have_content("สมศรี5 ใบเสร็จ") }
-    click_button("+ สร้างนักเรียนใหม่")
-    eventually { expect(page).to have_content("สร้างนักเรียนใหม่") }
+    click_button("+ สร้าง นักเรียน")
+    eventually { expect(page).to have_content("สร้าง นักเรียน") }
   end
 
   it 'should create teacher' do
     within('div#create-member-modal') do
-      eventually { expect(page).to have_content("สร้างนักเรียนใหม่") }
+      eventually { expect(page).to have_content("สร้าง นักเรียน") }
       fill_in "ชื่อ - นามสกุล",  with: "สมเสร็จ ใบศรี"
       fill_in "ชื่อเล่น",  with: "สม"
       click_button('บันทึก')
