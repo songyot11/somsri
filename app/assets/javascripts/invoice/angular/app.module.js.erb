@@ -249,6 +249,19 @@
             ]);
           }]
         }
+      }).
+      state({
+        url: '/quotation',
+        name: 'quotation',
+        templateUrl: "<%= asset_path('invoice/angular/components/quotation/quotationView.html') %>",
+        controller: 'quotationCtrl as vm',
+        resolve: {
+          resources: ['$ocLazyLoad', function($ocLazyLoad) {
+            return $ocLazyLoad.load([
+              ASSETS.somsri.invoice.quotation
+            ]);
+          }]
+        }
       })
 
     $urlRouterProvider.when("", "/");

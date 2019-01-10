@@ -1,0 +1,19 @@
+(function() {
+  'use strict';
+  angular.module('somsri.invoice.quotation', [])
+    .controller('quotationCtrl', quotationCtrl);
+
+  quotationCtrl.$inject = ['$rootScope', 'translateFilter'];
+
+  function quotationCtrl($rootScope, translateFilter) {
+    var vm = this;
+    $rootScope.menu = translateFilter('quotation_link_nav')
+    $rootScope.loadAndAuthorizeResource("invoice", function() {
+      activate();
+    });
+
+    function activate() {
+
+    }
+  }
+})();

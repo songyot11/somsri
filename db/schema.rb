@@ -539,6 +539,7 @@ ActiveRecord::Schema.define(version: 20190111061608) do
     t.string  "default_locale"
     t.boolean "enable_expenses",                      default: false
     t.string  "expense_tag_tree"
+    t.boolean "enable_quotation",                     default: false
   end
 
   create_table "skills", force: :cascade do |t|
