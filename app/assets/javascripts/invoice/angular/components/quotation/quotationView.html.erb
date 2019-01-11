@@ -11,7 +11,7 @@
       <div class="row report-content container-fluid">
         <div class="col-xs-12 form-group fix-head-table for-display">
           <div class="col-xs-6">
-            <input id="searchField" type="text" ng-model="vm.params.keyword" ng-change="vm.search()" placeholder="{{ 'search_quotation_no' | translate }}" class="search-sp" />
+            <input id="searchField" type="text" ng-model="vm.params.keyword" ng-change="vm.getQuotations()" placeholder="{{ 'search_quotation_no' | translate }}" class="search-sp" />
           </div>
           <div class="col-xs-6">
             <div id="date-filter" class="row for-display">
@@ -22,7 +22,7 @@
                       <label for="start_date" class="text-status-date">{{ 'from' | translate }}</label>
                     </div>
                     <div class="col-xs-10">
-                      <input id="start_date" type="text" class="form-control" uib-datepicker-popup="dd/MM/yyyy" datepicker-options="{showWeeks:false}" ng-model="vm.params.start_date" is-open="vm.startDatePopup.opened" close-text="Close" ng-change="vm.optionsChange()"/>
+                      <input id="start_date" type="text" class="form-control" uib-datepicker-popup="dd/MM/yyyy" datepicker-options="{showWeeks:false}" ng-model="vm.params.start_date" is-open="vm.startDatePopup.opened" close-text="Close" ng-change="vm.getQuotations()"/>
                       <span class="input-group-btn" style="display: inherit;">
                         <button type="button" class="btn btn-default" ng-click="vm.openStartDatePopup()"><i class="fa fa-calendar"></i></button>
                       </span>
@@ -37,7 +37,7 @@
                       <label for="end_date" class="text-status-date">{{ 'to' | translate }}</label>
                     </div>
                     <div class="col-xs-10">
-                      <input id="end_date" type="text" class="form-control" uib-datepicker-popup="dd/MM/yyyy" datepicker-options="{showWeeks:false}" ng-model="vm.params.end_date" is-open="vm.endDatePopup.opened" close-text="Close" ng-change="vm.optionsChange()"/>
+                      <input id="end_date" type="text" class="form-control" uib-datepicker-popup="dd/MM/yyyy" datepicker-options="{showWeeks:false}" ng-model="vm.params.end_date" is-open="vm.endDatePopup.opened" close-text="Close" ng-change="vm.getQuotations()"/>
                       <span class="input-group-btn" style="display: inherit;">
                         <button type="button" class="btn btn-default" ng-click="vm.openEndDatePopup()"><i class="fa fa-calendar"></i></button>
                       </span>
@@ -53,7 +53,7 @@
 
         <div class="row row-centered for-display">
           <div class="col-centered">
-            <ul uib-pagination ng-change="vm.pageChanged()"
+            <ul uib-pagination ng-change="vm.getQuotations()"
                 total-items="vm.totalItems"
                 ng-model="vm.currentPage"
                 max-size="vm.maxSize"

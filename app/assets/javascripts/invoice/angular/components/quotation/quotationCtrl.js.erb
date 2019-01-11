@@ -30,38 +30,15 @@
       activate();
     });
 
-    vm.pageChanged = pageChanged;
-    vm.search = search;
-    vm.thisDay = thisDay;
-    vm.optionsChange = optionsChange;
     vm.openStartDatePopup = openStartDatePopup;
     vm.openEndDatePopup = openEndDatePopup;
+    vm.getQuotations = getQuotations;
 
     function activate() {
       loadBootstrapTableOptions();
       quotationsTable.bootstrapTable(vm.bootstrapTableOptions);
 
       getQuotations();
-    }
-
-    function pageChanged() {
-      getQuotations()
-    }
-
-    function search() {
-      getQuotations();
-    }
-
-    function thisDay(date) {
-      var today = new Date();
-      var d = new Date(date);
-      return today.toDateString() === d.toDateString();
-    }
-
-    function optionsChange() {
-      // check date incorrect input
-      if(vm.params.start_date === undefined || vm.params.end_date === undefined) { return; }
-      getQuotations()
     }
 
     function openStartDatePopup() {
@@ -71,7 +48,6 @@
     function openEndDatePopup() {
       vm.endDatePopup.opened = true;
     };
-
 
     function getQuotations() {
       vm.params.start_date = cleanDate(vm.params.start_date)
