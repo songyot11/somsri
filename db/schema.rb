@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20181019103523) do
+ActiveRecord::Schema.define(version: 20190111061608) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -45,6 +45,18 @@ ActiveRecord::Schema.define(version: 20181019103523) do
     t.datetime "created_at",         null: false
     t.datetime "updated_at",         null: false
     t.index ["student_id"], name: "index_alumnis_on_student_id", using: :btree
+  end
+
+  create_table "banks", force: :cascade do |t|
+    t.string   "image_file_name"
+    t.string   "image_content_type"
+    t.integer  "image_file_size"
+    t.datetime "image_updated_at"
+    t.string   "bank_name"
+    t.string   "bank_account"
+    t.string   "account_name"
+    t.datetime "created_at",         null: false
+    t.datetime "updated_at",         null: false
   end
 
   create_table "class_permisions", force: :cascade do |t|
@@ -366,8 +378,9 @@ ActiveRecord::Schema.define(version: 20181019103523) do
     t.string   "detail"
     t.float    "amount"
     t.integer  "invoice_id"
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
+    t.datetime "created_at",   null: false
+    t.datetime "updated_at",   null: false
+    t.integer  "quotation_id"
   end
 
   create_table "lists", force: :cascade do |t|
@@ -431,6 +444,26 @@ ActiveRecord::Schema.define(version: 20181019103523) do
     t.boolean  "closed"
     t.index ["deleted_at"], name: "index_payrolls_on_deleted_at", using: :btree
     t.index ["employee_id"], name: "index_payrolls_on_employee_id", using: :btree
+  end
+
+  create_table "quotations", force: :cascade do |t|
+    t.integer  "student_id"
+    t.integer  "parent_id"
+    t.integer  "user_id"
+    t.integer  "invoice_id"
+    t.string   "payment_method_id"
+    t.integer  "quotation_status"
+    t.text     "remark"
+    t.string   "school_year"
+    t.string   "semester"
+    t.string   "grade_name"
+    t.string   "student_name"
+    t.string   "parent_name"
+    t.string   "user_name"
+    t.date     "payment_date_start"
+    t.date     "payment_date_end"
+    t.datetime "created_at",         null: false
+    t.datetime "updated_at",         null: false
   end
 
   create_table "relationships", force: :cascade do |t|
