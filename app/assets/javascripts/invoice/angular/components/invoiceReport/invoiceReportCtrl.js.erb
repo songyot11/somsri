@@ -3,7 +3,7 @@
   angular.module('somsri.invoice.invoice_report', [
     ])
   .controller('invoiceReportCtrl', ['$compile', '$scope', '$window', '$filter', '$rootScope', 'invoiceReportService', '$timeout', 'translateFilter', function($compile, $scope, $window, $filter, $rootScope, service, $timeout, translateFilter) {
-    $rootScope.menu = translateFilter("receipt")
+    $rootScope.menu = I18n.t("receipt")
     var ctrl = this
     var angularScopeRoot = 'angular.element(document.getElementById("angularCtrl")).scope().$root'
     var angularScopeInvoice = 'angular.element(document.getElementById("angularCtrl")).scope().invoiceReport'
