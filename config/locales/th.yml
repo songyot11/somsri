@@ -258,6 +258,9 @@ th:
   select_all: เลือกทั้งหมด
   close_without_save: "คุณต้องการออกจากหน้านี้โดยไม่บันทึกค่าหรือไม่?"
 
+  # Quotation
+  quotation_link_nav: "ใบแจ้งการชำระเงินค่าเทอม"
+
   hello: "สวัสดีครับ"
 
   #Menu
@@ -271,6 +274,7 @@ th:
   setting: 'การตั้งค่า'
   class_management: จัดการชั้นเรียน
   expense: "บันทึกค่าใช้จ่าย"
+  quotation: 'วางบิล'
 
   activerecord:
     attributes:

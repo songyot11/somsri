@@ -258,6 +258,9 @@ en:
   select_all: Select All
   close_without_save: "Do you want to leave this screen?"
 
+  # Quotation
+  quotation_link_nav: "Quotation"
+
   hello: "Hello world"
 
   #Menu
@@ -271,7 +274,7 @@ en:
   setting: 'Settings'
   class_management: "Grade Management"
   expense: "Expense"
-
+  quotation: "Quotation"
 
   activerecord:
     attributes:
