@@ -76,6 +76,7 @@
     function getQuotations() {
       vm.params.start_date = cleanDate(vm.params.start_date)
       vm.params.end_date = cleanDate(vm.params.end_date)
+      vm.params.page = vm.currentPage
 
       quotationService .all(vm.params)
         .then(function(resp) {
@@ -166,13 +167,13 @@
     }
 
     function linkToInvoiceFormatter(value, row, index) {
-      var link = '<p><i class="fa fa-money" aria-hidden="true"></i> ' +
-                    translateFilter('quotation_unpaid') +'</p>';
+      var text = translateFilter('quotation_' + value)
+      var link = '<p><i class="fa fa-money" aria-hidden="true"></i> ' + text +'</p>';
       if (!value || value === 'active') { return link; }
 
       var onclickFunc = angularScopeRoot + ".openPage(\"invoice\");"
       link = "<a href='javascript:;' onclick='" +  onclickFunc + "'>" +
-                "<i class='fa fa-money' aria-hidden='true'></i> " + translateFilter(value) + "</a>";
+                "<i class='fa fa-money' aria-hidden='true'></i> " + text + "</a>";
 
       return link;
     }

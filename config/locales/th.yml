@@ -264,7 +264,8 @@ th:
   quotation_outstanding_balance: 'ยอดค้างชำระ'
   quotation_amount: 'ยอดเรียกเก็บ'
   quotation_printed_at: 'วันที่พิมพ์ใบชำระ'
-  quotation_unpaid: ชำระเงิน
+  quotation_unpaid: 'ชำระเงิน'
+  quotation_active: 'ชำระแล้ว'
   search_quotation_no: 'ค้นหาตามเลขที่ใบวางบิล'
 
   hello: "สวัสดีครับ"

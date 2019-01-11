@@ -1,92 +1,71 @@
-<style type="text/css" media="print">
-  @page {size: landscape;}
-</style>
-
 <div class="container-fluid">
   <div id="student-report" class="row ng-scope invoice_report">
     <div class="unused_for_print col-lg-12">
       <div class="row for-display">
-        <div class="col-md-6" style="padding-left: 0px;">
-          <div class="col-xs-2" style="margin-right:-20px;">
-            <h3>{{ 'level' | translate }}</h3>
+        <div class="col-md-12" style="padding-left: 0px;">
+          <div class="col-xs-12" style="margin-right:-20px;">
+            <h3>{{ 'quotation_link_nav' | translate }}</h3>
           </div>
-          <div class="col-xs-9">
-            <div class="dropdown">
-              <h4 id="grade-list" data-toggle="dropdown">
-                <span ng-bind="vm.currentGradeString" ></span>
-                <i class="fa fa-angle-down" aria-hidden="true"></i>
-              </h4>
-              <ul class="dropdown-menu" aria-labelledby="grade-list">
-                <li ng-repeat="grade in vm.grades">
-                  <a class="blue-highlight" ng-click="vm.switchGrade(grade.name)">
-                    {{ grade.name | translate }}
-                  </a>
-                </li>
-              </ul>
-            </div>
-          </div>
-        </div>
-        <div class="col-md-6 col-btn-print-report">
-
-          <button class="btn btn-custom btn-black mr-5" ng-click="vm.getStudentsForPrint()"><i class="fa fa-print"></i></button>
-
-          <button class="btn btn-custom btn-blue-sky" id="exportTable"><i class="fa fa-share-square-o" aria-hidden="true"></i> Export</button>
-
         </div>
       </div>
       <div class="row report-content container-fluid">
-      <div class="col-xs-12 form-group fix-head-table for-display">
-        <div class="col-xs-6">
-          <input id="searchField" type="text" ng-model="vm.params.keyword" ng-change="vm.search()" placeholder="{{ 'search_quotation_no' | translate }}" class="search-sp" />
-        </div>
-        <div class="col-xs-6 ">
-          <div id="date-filter" class="row for-display">
-            <div class="col-xs-6">
-              <div class="form-group">
-                <span class="input-group">
-                  <div class="col-xs-2">
-                    <label for="start_date" class="text-status-date">{{ 'from' | translate }}</label>
-                  </div>
-                  <div class="col-xs-10">
-                    <input id="start_date" type="text" class="form-control" uib-datepicker-popup="dd/MM/yyyy" datepicker-options="{showWeeks:false}" ng-model="vm.params.start_date" is-open="vm.startDatePopup.opened" close-text="Close" ng-change="vm.optionsChange()"/>
-                    <span class="input-group-btn" style="display: inherit;">
-                      <button type="button" class="btn btn-default" ng-click="vm.openStartDatePopup()"><i class="fa fa-calendar"></i></button>
-                    </span>
-                  </div>
-                </span>
+        <div class="col-xs-12 form-group fix-head-table for-display">
+          <div class="col-xs-6">
+            <input id="searchField" type="text" ng-model="vm.params.keyword" ng-change="vm.search()" placeholder="{{ 'search_quotation_no' | translate }}" class="search-sp" />
+          </div>
+          <div class="col-xs-6">
+            <div id="date-filter" class="row for-display">
+              <div class="col-xs-6">
+                <div class="form-group">
+                  <span class="input-group">
+                    <div class="col-xs-2">
+                      <label for="start_date" class="text-status-date">{{ 'from' | translate }}</label>
+                    </div>
+                    <div class="col-xs-10">
+                      <input id="start_date" type="text" class="form-control" uib-datepicker-popup="dd/MM/yyyy" datepicker-options="{showWeeks:false}" ng-model="vm.params.start_date" is-open="vm.startDatePopup.opened" close-text="Close" ng-change="vm.optionsChange()"/>
+                      <span class="input-group-btn" style="display: inherit;">
+                        <button type="button" class="btn btn-default" ng-click="vm.openStartDatePopup()"><i class="fa fa-calendar"></i></button>
+                      </span>
+                    </div>
+                  </span>
+                </div>
               </div>
-            </div>
-            <div class="col-xs-6">
-              <div class="form-group">
-                <span class="input-group">
-                  <div class="col-xs-2">
-                    <label for="end_date" class="text-status-date">{{ 'to' | translate }}</label>
-                  </div>
-                  <div class="col-xs-10">
-                    <input id="end_date" type="text" class="form-control" uib-datepicker-popup="dd/MM/yyyy" datepicker-options="{showWeeks:false}" ng-model="vm.params.end_date" is-open="vm.endDatePopup.opened" close-text="Close" ng-change="vm.optionsChange()"/>
-                    <span class="input-group-btn" style="display: inherit;">
-                      <button type="button" class="btn btn-default" ng-click="vm.openEndDatePopup()"><i class="fa fa-calendar"></i></button>
-                    </span>
-                  </div>
-                </span>
+              <div class="col-xs-6">
+                <div class="form-group">
+                  <span class="input-group">
+                    <div class="col-xs-2">
+                      <label for="end_date" class="text-status-date">{{ 'to' | translate }}</label>
+                    </div>
+                    <div class="col-xs-10">
+                      <input id="end_date" type="text" class="form-control" uib-datepicker-popup="dd/MM/yyyy" datepicker-options="{showWeeks:false}" ng-model="vm.params.end_date" is-open="vm.endDatePopup.opened" close-text="Close" ng-change="vm.optionsChange()"/>
+                      <span class="input-group-btn" style="display: inherit;">
+                        <button type="button" class="btn btn-default" ng-click="vm.openEndDatePopup()"><i class="fa fa-calendar"></i></button>
+                      </span>
+                    </div>
+                  </span>
+                </div>
               </div>
             </div>
           </div>
         </div>
-        </div>
+
         <table id="quotations-table" class="scrollable-header text-table-invoicereport for-display"></table>
-        <div class="text-title for-print">{{ 'level' | translate }} {{vm.grade_name}}</div>
-        <div class="text-title-date for-print"><b>{{ 'from' | translate }}</b> {{ vm.start_date | dateFormat }} <b>{{ 'to' | translate }}</b> {{ vm.end_date | dateFormat }}</div>
-        <table id="for-print-table" class="scrollable-header text-table-invoicereport for-print-table"></table>
+
         <div class="row row-centered for-display">
           <div class="col-centered">
-            <ul uib-pagination ng-change="vm.pageChanged()" total-items="vm.totalItems" ng-model="vm.currentPage" max-size="vm.maxSize" class="pagination-md" num-pages="numPages" previous-text="‹" next-text="›" boundary-link-numbers='true' rotate='false'></ul>
+            <ul uib-pagination ng-change="vm.pageChanged()"
+                total-items="vm.totalItems"
+                ng-model="vm.currentPage"
+                max-size="vm.maxSize"
+                class="pagination-md"
+                num-pages="numPages"
+                previous-text="‹"
+                next-text="›"
+                boundary-link-numbers='true'
+                rotate='false'></ul>
           </div>
         </div>
       </div>
     </div>
   </div>
 </div>
-
-
-<table  id="tableForExport" data-toolbar="none" data-tableexport-display="always" style="display: none;"><table>
