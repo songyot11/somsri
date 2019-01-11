@@ -451,7 +451,6 @@ ActiveRecord::Schema.define(version: 20190111061608) do
     t.integer  "parent_id"
     t.integer  "user_id"
     t.integer  "invoice_id"
-    t.string   "payment_method_id"
     t.integer  "quotation_status"
     t.text     "remark"
     t.string   "school_year"
