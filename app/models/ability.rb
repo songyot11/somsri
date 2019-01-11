@@ -23,6 +23,7 @@ class Ability
       can :manage, ExpenseTag
       can :manage, ExpenseTagItem
       can :manage, ExpenseItem
+      can :manage, Quotation
     end
   end
 

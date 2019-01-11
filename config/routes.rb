@@ -75,6 +75,7 @@ Rails.application.routes.draw do
       patch "cancel"
     end
   end
+  resources :quotations
 
   resources :parents do
     post 'restore'

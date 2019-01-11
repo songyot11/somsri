@@ -260,6 +260,12 @@ en:
 
   # Quotation
   quotation_link_nav: "Quotation"
+  quotation_no: 'Quotation #'
+  quotation_outstanding_balance: 'Outstanding'
+  quotation_amount: 'Amount'
+  quotation_printed_at: 'Printed at'
+  quotation_unpaid: 'Payment'
+  search_quotation_no: 'Search Quotation no.'
 
   hello: "Hello world"
 
