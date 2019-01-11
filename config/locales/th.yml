@@ -20,6 +20,11 @@
 # available at http://guides.rubyonrails.org/i18n.html.
 
 th:
+  user_name: ชื่อผู้ใช้
+  password: รหัสผ่าน
+  keep_me_signed_in: ให้ฉันอยู่ในระบบต่อไป
+  sign_in: เข้าสู่ระบบ
+  download_somsri_rollcall: ดาวน์โหลดโปรแกรมสมศรีสำหรับแอนดรอย
   #Payroll
   roll_download : ดาวน์โหลดโปรแกรมเช็คชื่อ
   switch_language : เปลี่ยนภาษา
