@@ -98,7 +98,7 @@
             <%= content_tag(:p, t('.expense', :default => t("expense")) ) %>
         </div>
       <% end %>
-      <% if (SiteConfig.get_cache.enable_quotation)%>
+      <% if SiteConfig.get_cache.enable_quotation && can? :manage, Quotation %>
         <div class="col-xs-4 col-centered menu-icon">
             <div class="<%= is_topbar ? 'dropdown-menu-btn' : 'menu-btn' %> quotation">
                 <a href="/somsri_invoice#/quotation">
