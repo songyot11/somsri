@@ -330,6 +330,10 @@ body {
   top: 45% !important;
 }
 
+.border-0 {
+  border-top: solid 0px !important;
+}
+
 .border-1 {
   border: solid 1px !important;
 }
@@ -368,6 +372,10 @@ body {
 
 .bg-light-gray {
   background-color: #ddd !important;
+}
+
+.bg-green{
+  background-color: #5bab67 !important;
 }
 
 .font-9 {

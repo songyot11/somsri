@@ -260,6 +260,12 @@ en:
 
   # Quotation
   quotation_link_nav: "Quotation"
+  can_payment: "Paid From"
+  can_payment_school: "Payment at School"
+  add_bank: "add Bank"
+  bank_account_number: "Bank Account"
+  account_name: "Bank Name"
+  add_quotation: "Add Quatation"
 
   hello: "Hello world"
 
