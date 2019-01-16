@@ -27,13 +27,17 @@
     quotationNew.getBank = function(){
       quotationNewService.getBank().then(function(resp) {
         quotationNew.banks = resp.data.banks
+        quotationNew.lt_banks = resp.data.lt_banks
+        quotationNew.bank_name = quotationNew.lt_banks[0].id
       });
     }
 
     quotationNew.createBank = function(){
-      quotationNew.params.bank_name = quotationNew.params.bank_name
-      quotationNew.params.account_name = quotationNew.params.account_name
-      quotationNew.params.bank_account = quotationNew.params.bank_account
+      quotationNew.params = {
+        bank_id: quotationNew.bank_name,
+        account_name: quotationNew.account_name,
+        bank_account: quotationNew.bank_account
+      }
 
       quotationNewService.createBank(quotationNew.params).then(function(resp){
         quotationNew.banks = resp.data.banks
@@ -72,9 +76,10 @@
     }
 
     quotationNew.save = function() {
-      console.log(quotationNew.datas)
       quotationNewService.create(quotationNew.datas).then(function(resp) {
-        window.location.reload();
+        if($rootScope.openQuotationSlip(resp.data.id)) {
+            window.location.reload();
+          }
       })
     }
 

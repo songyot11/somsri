@@ -267,6 +267,12 @@ en:
   account_name: "Bank Name"
   add_quotation: "Add Quatation"
 
+  # Quotation bill
+  quotation_receipt: "ใบแจ้งการชำระเงิน"
+  payment_method: "ช่องทางการชำระเงิน *หมายเหตุ สามารถชำระเงินได้ "
+  date_start: "ตั้งแต่วันที่ "
+  date_last: "ถึงวันที่ "
+
   hello: "Hello world"
 
   #Menu

@@ -267,6 +267,12 @@ th:
   account_name: "ชื่อบัญชี"
   add_quotation: "เพิ่มใบวางบิล"
 
+  # Quotation bill
+  quotation_receipt: "ใบแจ้งการชำระเงิน"
+  payment_method: "ช่องทางการชำระเงิน *หมายเหตุ สามารถชำระเงินได้ "
+  date_start: "ตั้งแต่วันที่ "
+  date_last: "ถึงวันที่ "
+
   hello: "สวัสดีครับ"
 
   #Menu

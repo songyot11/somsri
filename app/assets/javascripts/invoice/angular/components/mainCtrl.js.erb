@@ -73,6 +73,10 @@
       return openInNewTab("/invoices/" + id + "/slip.pdf")
     };
 
+    $rootScope.openQuotationSlip = function (id, page) {
+      return openInNewTab("/quotation/" + id + "/bill.pdf")
+    };
+
     $rootScope.openDailyReportPreview = function (id) {
       $state.go('daily_report_preview',{id: id})
     };

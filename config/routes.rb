@@ -148,6 +148,9 @@ Rails.application.routes.draw do
   end
 
   resources :quotation do
+    member do
+      get "bill"
+    end
   end
 
   resources :banks
