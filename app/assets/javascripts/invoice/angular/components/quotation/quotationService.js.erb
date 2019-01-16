@@ -1,0 +1,21 @@
+(function () {
+  'use strict';
+
+  angular
+    .module('somsri.invoice.quotation.service', [])
+    .service('quotationService', quotationService);
+
+  quotationService.$inject = ['$http'];
+
+  function quotationService($http) {
+    var service = {
+      all: all
+    };
+
+    function all(params) {
+      return $http.get('/quotations', { params: params });
+    }
+
+    return service;
+  }
+}());
