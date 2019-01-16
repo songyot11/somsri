@@ -1,1 +1,71 @@
-<h1>Quotation</h1>
+<div class="container-fluid">
+  <div id="student-report" class="row ng-scope invoice_report">
+    <div class="unused_for_print col-lg-12">
+      <div class="row for-display">
+        <div class="col-md-12" style="padding-left: 0px;">
+          <div class="col-xs-12" style="margin-right:-20px;">
+            <h3>{{ 'quotation_link_nav' | translate }}</h3>
+          </div>
+        </div>
+      </div>
+      <div class="row report-content container-fluid">
+        <div class="col-xs-12 form-group fix-head-table for-display">
+          <div class="col-xs-6">
+            <input id="searchField" type="text" ng-model="vm.params.keyword" ng-change="vm.getQuotations()" placeholder="{{ 'search_quotation_no' | translate }}" class="search-sp" />
+          </div>
+          <div class="col-xs-6">
+            <div id="date-filter" class="row for-display">
+              <div class="col-xs-6">
+                <div class="form-group">
+                  <span class="input-group">
+                    <div class="col-xs-2">
+                      <label for="start_date" class="text-status-date">{{ 'from' | translate }}</label>
+                    </div>
+                    <div class="col-xs-10">
+                      <input id="start_date" type="text" class="form-control" uib-datepicker-popup="dd/MM/yyyy" datepicker-options="{showWeeks:false}" ng-model="vm.params.start_date" is-open="vm.startDatePopup.opened" close-text="Close" ng-change="vm.getQuotations()"/>
+                      <span class="input-group-btn" style="display: inherit;">
+                        <button type="button" class="btn btn-default" ng-click="vm.openStartDatePopup()"><i class="fa fa-calendar"></i></button>
+                      </span>
+                    </div>
+                  </span>
+                </div>
+              </div>
+              <div class="col-xs-6">
+                <div class="form-group">
+                  <span class="input-group">
+                    <div class="col-xs-2">
+                      <label for="end_date" class="text-status-date">{{ 'to' | translate }}</label>
+                    </div>
+                    <div class="col-xs-10">
+                      <input id="end_date" type="text" class="form-control" uib-datepicker-popup="dd/MM/yyyy" datepicker-options="{showWeeks:false}" ng-model="vm.params.end_date" is-open="vm.endDatePopup.opened" close-text="Close" ng-change="vm.getQuotations()"/>
+                      <span class="input-group-btn" style="display: inherit;">
+                        <button type="button" class="btn btn-default" ng-click="vm.openEndDatePopup()"><i class="fa fa-calendar"></i></button>
+                      </span>
+                    </div>
+                  </span>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <table id="quotations-table" class="scrollable-header text-table-invoicereport for-display"></table>
+
+        <div class="row row-centered for-display">
+          <div class="col-centered">
+            <ul uib-pagination ng-change="vm.getQuotations()"
+                total-items="vm.totalItems"
+                ng-model="vm.currentPage"
+                max-size="vm.maxSize"
+                class="pagination-md"
+                num-pages="numPages"
+                previous-text="‹"
+                next-text="›"
+                boundary-link-numbers='true'
+                rotate='false'></ul>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

@@ -260,6 +260,13 @@ th:
 
   # Quotation
   quotation_link_nav: "ใบแจ้งการชำระเงินค่าเทอม"
+   quotation_no: 'เลขใบวางบิล #'
+  quotation_outstanding_balance: 'ยอดค้างชำระ'
+  quotation_amount: 'ยอดเรียกเก็บ'
+  quotation_printed_at: 'วันที่พิมพ์ใบชำระ'
+  quotation_unpaid: 'ชำระเงิน'
+  quotation_active: 'ชำระแล้ว'
+  search_quotation_no: 'ค้นหาตามเลขที่ใบวางบิล'
   can_payment: "สามารถชำระได้ตั้งแต่วันที่"
   can_payment_school: "สามารถชำระเงินได้ที่โรงเรียน"
   add_bank: "เพิ่มธนาคาร"
