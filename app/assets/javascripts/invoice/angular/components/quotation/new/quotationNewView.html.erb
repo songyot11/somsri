@@ -3,7 +3,7 @@
   <form name="createQuotationForm" ng-submit="quotationNew.save()">
     <div class="row">
       <div class="col-md-6 heading">
-        {{ 'quotation_link_nav' | translate }}
+        {{ 'quotation_receipt' | translate }}
       </div>
       <div class="col-md-6 branding">
         <div class="invoice-number-container">
@@ -33,7 +33,8 @@
       <div class="row form-1_2">
         <div class="col-md-3">
           <div class="form-group">
-            <select id="grade" class="btn btn-grades" ng-model="quotationNew.datas.quotations.grade_name" ng-init="quotationNew.datas.quotations.grade_name = quotationNew.grades[0]" ng-options=" obj.value for obj in quotationNew.grades">
+            <select id="grade" class="btn btn-grades" ng-model="quotationNew.datas.quotations.grade_name" ng-options=" obj.value for obj in quotationNew.grades"  required="required">
+              <option value>{{ 'choose_level' | translate }}</option>
             </select>
           </div>
         </div>

@@ -67,7 +67,6 @@
         quotationNew.datas.payment_method.is_transfer = resp.data.default_transfer_payment_method;
         quotationNew.datas.payment_method.is_cheque = resp.data.default_cheque_payment_method;
         quotationNew.datas.quotations.school_year = resp.data.school_year;
-        quotationNew.datas.quotations.grade_name = resp.data.grades[0];
 
         quotationNew.date_display = nowDate.getDate() + "/" + (nowDate.getMonth() + 1) + "/" + (nowDate.getFullYear() + 543);
         quotationNew.availableCurrencies = Currency.all();

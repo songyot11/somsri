@@ -273,6 +273,7 @@ en:
   bank_account_number: "Bank Account"
   account_name: "Bank Name"
   add_quotation: "Add Quatation"
+  choose_level: "Choose Level"
 
   # Quotation bill
   quotation_receipt: "ใบแจ้งการชำระเงิน"
