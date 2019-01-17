@@ -397,7 +397,7 @@ class PayrollsController < ApplicationController
 
       FileUtils.mkdir_p tmp_path unless File.directory?(tmp_path)
 
-      bank_code = "1234444444"
+      bank_code = SiteConfig.get_cache.bank_account
       sum_salary = 0.0
       i = 0
       employee_salary = []
@@ -411,13 +411,14 @@ class PayrollsController < ApplicationController
           net_salary = sprintf("%.2f", payroll.net_salary)
           total = net_salary.split('.')[0]
           decimal = net_salary.split('.')[1]
+          length_name = payroll.employee.full_name.strip.mb_chars.length
 
           employee_salary << [
             "D#{sprintf('%06d', (i + 1))}" + add_space(14),
             "#{account_number} ",
             "#{sprintf('%013d', total) + decimal} ",
             "#{Date.today.strftime("%y%m%d")}" + add_space(25),
-            "#{payroll.employee.full_name.strip}" + add_space(46),
+            "#{payroll.employee.full_name.strip}" + add_space(50 - length_name),
             "#{effective_date.strftime("%y%m%d")}000000",
             add_space(164) + "0000000000.000000000000.000000000000.00" + add_space(143)
           ]
@@ -428,14 +429,14 @@ class PayrollsController < ApplicationController
       number_total = sprintf("%.2f", sum_salary)
       total = number_total.split('.')[0]
       decimal = number_total.split('.')[1]
+      length_school = School.first.name.mb_chars.length
 
-      content = "HPCT" + add_space(4)
-      content += "import_516_2000000" + add_space(14)
+      content = "HPCT" + add_space(3)
+      content += "import_" + effective_date.strftime("%d%m%y") + "000000" + add_space(14)
       content += "#{bank_code} "
       content += "#{sprintf('%013d', total) + decimal} "
-      content += "#{Date.today.strftime("%y%m%d")}" + add_space(25)
       content += "#{effective_date.strftime("%y%m%d")}" + add_space(25)
-      content += "#{School.first.name}" + add_space(37)
+      content += "#{School.first.name}" + add_space(50 - length_school)
       content += "#{effective_date.strftime("%y%m%d")}000000#{sprintf('%012d', i)}N" + add_space(5)
       content += "\r\n"
 
