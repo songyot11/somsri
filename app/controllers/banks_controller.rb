@@ -8,7 +8,7 @@ class BanksController < ApplicationController
         bank_name: bank.bank_name,
         bank_account: bank.bank_account,
         account_name: bank.account_name,
-        image: bank&.lt_bank.image&.url(:thumb)
+        image: bank&.lt_bank&.image_path
       }
     end
     

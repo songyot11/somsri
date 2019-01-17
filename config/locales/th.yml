@@ -260,7 +260,8 @@ th:
 
   # Quotation
   quotation_link_nav: "ใบแจ้งการชำระเงินค่าเทอม"
-   quotation_no: 'เลขใบวางบิล #'
+  quotation_new: "ออกใบวางบิล"
+  quotation_no: 'เลขใบวางบิล #'
   quotation_outstanding_balance: 'ยอดค้างชำระ'
   quotation_amount: 'ยอดเรียกเก็บ'
   quotation_printed_at: 'วันที่พิมพ์ใบชำระ'

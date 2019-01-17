@@ -260,6 +260,7 @@ en:
 
   # Quotation
   quotation_link_nav: "Quotation"
+  quotation_new: "New Quotation"
   quotation_no: 'Quotation #'
   quotation_outstanding_balance: 'Outstanding'
   quotation_amount: 'Amount'

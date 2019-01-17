@@ -327,6 +327,14 @@ User.find(3).add_role "finance_officer" if !User.find(3).has_any_role?
 User.find(4).add_role "finance_officer" if !User.find(4).has_any_role?
 User.find(5).add_role "admin" if !User.find(5).has_any_role?
 
+if LtBank.count == 0
+  LtBank.create!([
+   {name: "ธนาคารกรุงไทย", image_path: "/bank/ktb.png"},
+   {name: "ธนาคารกสิกร", image_path: "/bank/kbank.png"},
+   {name: "ธนาคารกรุงเทพ", image_path: "/bank/bkk.png"}
+  ])
+end
+
 school = School.first
 if school
   if !school.invoice_header

@@ -20,8 +20,8 @@
     $rootScope.menu = translateFilter('quotation_link_nav')
     $rootScope.loadAndAuthorizeResource("quotation", function() {
       quotationNew.datas = defaultDatas
-      quotationNew.getQuatationDatas()
       quotationNew.getBank()
+      quotationNew.getQuatationDatas()
     });
 
     quotationNew.getBank = function(){
