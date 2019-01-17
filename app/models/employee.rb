@@ -61,6 +61,14 @@ class Employee < ApplicationRecord
     end
   end
 
+  def full_name_or_id
+    if !self.first_name.blank? && !self.last_name.blank?
+      [self.prefix, self.first_name, self.middle_name, self.last_name].join(" ")
+    else
+      "Employee" + self.id.to_s
+    end
+  end
+
   def full_name_with_nickname
     if self.nickname
       return self.full_name + " (#{self.nickname})"

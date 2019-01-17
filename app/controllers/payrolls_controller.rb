@@ -411,14 +411,14 @@ class PayrollsController < ApplicationController
           net_salary = sprintf("%.2f", payroll.net_salary)
           total = net_salary.split('.')[0]
           decimal = net_salary.split('.')[1]
-          length_name = payroll.employee.full_name.strip.mb_chars.length
+          length_name = payroll.employee.full_name_or_id.mb_chars.length
 
           employee_salary << [
             "D#{sprintf('%06d', (i + 1))}" + add_space(14),
             "#{account_number} ",
             "#{sprintf('%013d', total) + decimal} ",
             "#{Date.today.strftime("%y%m%d")}" + add_space(25),
-            "#{payroll.employee.full_name.strip}" + add_space(50 - length_name),
+            "#{payroll.employee.full_name_or_id}" + add_space(50 - length_name),
             "#{effective_date.strftime("%y%m%d")}000000",
             add_space(164) + "0000000000.000000000000.000000000000.00" + add_space(143)
           ]
@@ -435,7 +435,7 @@ class PayrollsController < ApplicationController
       content += "import_" + effective_date.strftime("%d%m%y") + "000000" + add_space(14)
       content += "#{bank_code} "
       content += "#{sprintf('%013d', total) + decimal} "
-      content += "#{effective_date.strftime("%y%m%d")}" + add_space(25)
+      content += "#{Date.today.strftime("%y%m%d")}" + add_space(25)
       content += "#{School.first.name}" + add_space(50 - length_school)
       content += "#{effective_date.strftime("%y%m%d")}000000#{sprintf('%012d', i)}N" + add_space(5)
       content += "\r\n"
