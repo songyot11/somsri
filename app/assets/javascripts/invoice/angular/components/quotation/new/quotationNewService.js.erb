@@ -1,0 +1,36 @@
+(function () {
+  'use strict';
+
+  angular
+    .module('somsri.invoice.quotation_new.service', [])
+    .service('quotationNewService', quotationNewService);
+
+  quotationNewService.$inject = ['$http'];
+
+  function quotationNewService($http) {
+    var service = {
+      create: create,
+      getData: getData,
+      getBank: getBank,
+      createBank: createBank
+    };
+
+    function create(params) {
+      return $http.post('/quotation', params);
+    }
+
+    function getData() {
+      return $http.get('/invoices/new');
+    }
+
+    function getBank() {
+      return $http.get('/banks');
+    }
+
+    function createBank(params) {
+      return $http.post('/banks', { params: params });
+    }
+
+    return service;
+  }
+}());

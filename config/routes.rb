@@ -148,6 +148,14 @@ Rails.application.routes.draw do
     end
   end
 
+  resources :quotation do
+    member do
+      get "bill"
+    end
+  end
+
+  resources :banks
+
   devise_scope :user do
     get "/sign_in" => "devise/sessions#new"
   end

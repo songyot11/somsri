@@ -69,8 +69,16 @@
       $state.go('grouping_report2')
     };
 
+    $rootScope.openQuotationNew = function () {
+      $state.go('quotation_new')
+    };
+
     $rootScope.openSlip = function (id, page) {
       return openInNewTab("/invoices/" + id + "/slip.pdf")
+    };
+
+    $rootScope.openQuotationSlip = function (id, page) {
+      return openInNewTab("/quotation/" + id + "/bill.pdf")
     };
 
     $rootScope.openDailyReportPreview = function (id) {

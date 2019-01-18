@@ -1,4 +1,3 @@
 class Bank < ApplicationRecord
-  has_attached_file :image
-  validates_attachment_content_type :image, content_type: /\Aimage\/.*\z/
+  belongs_to :lt_bank, class_name: "LtBank", foreign_key: "bank_id"
 end

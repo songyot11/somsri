@@ -262,6 +262,19 @@
             ]);
           }]
         }
+      }).
+      state({
+        url: '/quotation_new',
+        name: 'quotation_new',
+        templateUrl: "<%= asset_path('invoice/angular/components/quotation/new/quotationNewView.html') %>",
+        controller: 'quotationNewCtrl as quotationNew',
+        resolve: {
+          resources: ['$ocLazyLoad', function($ocLazyLoad) {
+            return $ocLazyLoad.load([
+              ASSETS.somsri.invoice.quotation_new
+            ]);
+          }]
+        }
       })
 
     $urlRouterProvider.when("", "/");

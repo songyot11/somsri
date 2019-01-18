@@ -260,12 +260,26 @@ en:
 
   # Quotation
   quotation_link_nav: "Quotation"
+  quotation_new: "New Quotation"
   quotation_no: 'Quotation #'
   quotation_outstanding_balance: 'Outstanding'
   quotation_amount: 'Amount'
   quotation_printed_at: 'Printed at'
   quotation_unpaid: 'Payment'
   search_quotation_no: 'Search Quotation no.'
+  can_payment: "Paid From"
+  can_payment_school: "Payment at School"
+  add_bank: "add Bank"
+  bank_account_number: "Bank Account"
+  account_name: "Bank Name"
+  add_quotation: "Add Quatation"
+  choose_level: "Choose Level"
+
+  # Quotation bill
+  quotation_receipt: "ใบแจ้งการชำระเงิน"
+  payment_method: "ช่องทางการชำระเงิน *หมายเหตุ สามารถชำระเงินได้ "
+  date_start: "ตั้งแต่วันที่ "
+  date_last: "ถึงวันที่ "
 
   hello: "Hello world"
 
