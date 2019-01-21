@@ -147,8 +147,7 @@
       var link = '<p><i class="fa fa-money" aria-hidden="true"></i> ' + text +'</p>';
       if (!value || value === 'active') { return link; }
 
-      var onclickFunc = angularScopeRoot + '.openInvoicePaid("' + row.id + '");'
-      link = "<a href='javascript:;' onclick='" +  onclickFunc + "'>" +
+      link = "<a href='/somsri_invoice#/invoice/" + row.id + "'>" +
                 "<i class='fa fa-money' aria-hidden='true'></i> " + text + "</a>";
 
       return link;
