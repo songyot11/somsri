@@ -78,7 +78,11 @@
     };
 
     $rootScope.openQuotationSlip = function (id, page) {
-      return openInNewTab("/quotation/" + id + "/bill.pdf")
+      return openInNewTab("/quotations/" + id + "/bill.pdf")
+    };
+
+    $rootScope.openInvoicePaid = function (id, page) {
+      return openInNewTab("/somsri_invoice#/invoice/" + id)
     };
 
     $rootScope.openDailyReportPreview = function (id) {

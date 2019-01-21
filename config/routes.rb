@@ -75,7 +75,6 @@ Rails.application.routes.draw do
       patch "cancel"
     end
   end
-  resources :quotations
 
   resources :parents do
     post 'restore'
@@ -148,7 +147,7 @@ Rails.application.routes.draw do
     end
   end
 
-  resources :quotation do
+  resources :quotations do
     member do
       get "bill"
     end

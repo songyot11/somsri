@@ -191,6 +191,7 @@ en:
   item: "Item"
   add_item: "Add Item"
   net: "Total"
+  outstanding: "Outstanding"
   payment_channel: "Payment method"
   cash: "Cash"
   pay_error: "Amount of the payment methods are mismatched."

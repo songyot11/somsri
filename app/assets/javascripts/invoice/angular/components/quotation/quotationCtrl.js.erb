@@ -136,7 +136,7 @@
 
     function linkToQuotationDetailFormatter(value, row, index) {
       if (!value) { return '-' }
-      var onclickFunc = angularScopeRoot + '.openMenu();'
+      var onclickFunc = angularScopeRoot + '.openQuotationSlip("' + value + '");'
       var link = "<a href='javascript:;' onclick='" + onclickFunc + "'>" + value +"</a>";
 
       return link;
@@ -147,7 +147,7 @@
       var link = '<p><i class="fa fa-money" aria-hidden="true"></i> ' + text +'</p>';
       if (!value || value === 'active') { return link; }
 
-      var onclickFunc = angularScopeRoot + ".openPage(\"invoice\");"
+      var onclickFunc = angularScopeRoot + '.openInvoicePaid("' + row.id + '");'
       link = "<a href='javascript:;' onclick='" +  onclickFunc + "'>" +
                 "<i class='fa fa-money' aria-hidden='true'></i> " + text + "</a>";
 

@@ -9,14 +9,19 @@
 
   function quotationNewService($http) {
     var service = {
+      get: get,
       create: create,
       getData: getData,
       getBank: getBank,
       createBank: createBank
     };
 
+    function get(id) {
+      return $http.get('/quotations/' + id);
+    }
+
     function create(params) {
-      return $http.post('/quotation', params);
+      return $http.post('/quotations', params);
     }
 
     function getData() {
