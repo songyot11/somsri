@@ -228,8 +228,13 @@ class InvoicesController < ApplicationController
       invoice.save
       
       unless params['quotation'].blank? 
+        quotation_param = params['quotation']
+        
+        @quotation = Quotation.find(quotation_param['id'])
+        @quotation.update({quotation_status: 1}) if quotation_param['amount'] >= quotation_param['outstanding']
+        
         QuotationInvoice.create({
-          quotation_id: params['quotation']['id'],
+          quotation_id: quotation_param['id'],
           invoice_id: invoice.id
         })
       end

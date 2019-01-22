@@ -152,7 +152,7 @@ class QuotationsController < ApplicationController
 
     line_items = []
     total = 0
-    @quotation.line_items.each do |line_item|
+    @quotation.line_item_quotations.each do |line_item|
       total += line_item.amount
       line_items << {
         detail: line_item.detail,
