@@ -16,18 +16,22 @@ class QuotationsController < ApplicationController
   end
 
   def show
-    @lineItems = LineItem.where(quotation_id: params[:id])
+    @lineItems = LineItemQuotation.where(quotation_id: params[:id])
     @student = @quotation&.student
     @parent = @quotation&.parent
-    @payment_date_start =  @quotation&.payment_date_start&.strftime("%Y/%m/%d")
-    @payment_date_end =  @quotation&.payment_date_end&.strftime("%Y/%m/%d")
+    outstanding = @quotation&.outstanding_balance
+    payment_date_start =  @quotation&.payment_date_start&.strftime("%Y/%m/%d")
+    payment_date_end =  @quotation&.payment_date_end&.strftime("%Y/%m/%d")
+
     render json: {
       quotation: @quotation,
       lineItems: @lineItems,
       student: @student,
       parent: @parent,
-      payment_date_start: @payment_date_start,
-      payment_date_end: @payment_date_end
+      payment_date_start: payment_date_start,
+      payment_date_end: payment_date_end,
+      grades: Grade.names,
+      outstanding: outstanding
     }
   end
 
@@ -106,7 +110,7 @@ class QuotationsController < ApplicationController
       quotation_new.quotation_status = 0
 
       line_item_params.to_h[:items].each do |item|
-        quotation_new.line_items << LineItem.new(item)
+        quotation_new.line_items << LineItemQuotation.new(item)
       end
 
       quotation_new.save

@@ -73,6 +73,10 @@
       $state.go('quotation_new')
     };
 
+    $rootScope.openQuotation = function () {
+      $state.go('quotation')
+    };
+
     $rootScope.openSlip = function (id, page) {
       return openInNewTab("/invoices/" + id + "/slip.pdf")
     };

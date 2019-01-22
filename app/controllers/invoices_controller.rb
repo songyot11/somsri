@@ -226,6 +226,14 @@ class InvoicesController < ApplicationController
         }) if pm[:is_cheque]
 
       invoice.save
+      
+      unless params['quotation'].blank? 
+        QuotationInvoice.create({
+          quotation_id: params['quotation']['id'],
+          invoice_id: invoice.id
+        })
+      end
+
       render json: { id: invoice.id }, status: :ok
     end
   end

@@ -5,6 +5,7 @@ class Invoice < ApplicationRecord
   belongs_to :invoice_status
   has_many :line_items
   has_many :payment_methods
+  has_many :quotation_invoices
 
   self.per_page = 10
 

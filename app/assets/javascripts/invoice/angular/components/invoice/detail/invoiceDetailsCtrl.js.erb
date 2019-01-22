@@ -26,6 +26,40 @@
     $rootScope.loadAndAuthorizeResource("invoice", function(){
       var quotationId = $state.params.id;
       ctrl.title = 'Invoice';
+
+      service.newInvoice().then(function(resp) {
+        ctrl.invoice_number = resp.data.last_invoice_id + 1;
+        ctrl.student_info = resp.data.student_info;
+        ctrl.parent_info = resp.data.parent_info;
+        ctrl.line_items_info = resp.data.line_items_info;
+
+        var nowDate = new Date();
+        // Clone to prevent the reset value
+        ctrl.date_display = nowDate.getDate() + "/" + (nowDate.getMonth() + 1) + "/" + (nowDate.getFullYear() + 543);
+        ctrl.availableCurrencies = Currency.all();
+        ctrl.invoiceTotal();
+      });
+
+      quotationNewService.get(quotationId).then(function(resp) {
+        ctrl.datas = defaultInvoice
+        ctrl.datas.invoice = resp.data.quotation
+        ctrl.datas.invoice.items = resp.data.lineItems
+        ctrl.datas.student = resp.data.student
+        ctrl.datas.parent = resp.data.parent
+        ctrl.datas.quotation.id = quotationId
+        ctrl.grades = resp.data.grades;
+        ctrl.outstanding = resp.data.outstanding * -1
+
+        ctrl.datas.invoice.payment_date_start =  new Date(resp.data.payment_date_start)
+        ctrl.datas.invoice.payment_date_end =  new Date(resp.data.payment_date_end)
+
+        angular.forEach(ctrl.grades, function(item, key){
+          if( item.value == ctrl.datas.invoice.grade_name )
+            ctrl.datas.invoice.grade_name = item
+        });
+
+      });
+      
       function isPaymentMethodMoreThanOne(){
         var count = 0;
         if(ctrl.datas.payment_method.is_cash){ count += 1; }
@@ -96,7 +130,7 @@
           // Reset Value
           ctrl.datas = defaultInvoice
           if($rootScope.openSlip(resp.data.id)) {
-            window.location.reload();
+            $rootScope.openQuotation()
           }
         },function(resp) {
 
@@ -172,14 +206,14 @@
 
       ctrl.selectDate = function(selected_date){
         selected_date = moment(selected_date, "DD/MM/YYYY").toDate()
-        ctrl.datas.quotation.payment_date_start = cleanDate(selected_date)
-        ctrl.datas.quotation.payment_date_end = ctrl.datas.quotation.payment_date_start
+        ctrl.datas.invoice.payment_date_start = cleanDate(selected_date)
+        ctrl.datas.invoice.payment_date_end = ctrl.datas.invoice.payment_date_start
         ctrl.optionsChange()
       }
 
       ctrl.optionsChange = function() {
         // check date incorrect input
-        if(ctrl.datas.quotation.payment_date_start === undefined || ctrl.datas.quotation.payment_date_end === undefined){return}
+        if(ctrl.datas.invoice.payment_date_start === undefined || ctrl.datas.invoice.payment_date_end === undefined){return}
       }
 
       ctrl.openStartDatePopup = function() {
@@ -197,41 +231,6 @@
       ctrl.endDatePopup = {
         opened: false
       };
-
-      (function init() {
-        // Attempt to load invoice from local storage
-        service.newInvoice().then(function(resp) {
-          ctrl.invoice_number = resp.data.last_invoice_id + 1;
-          ctrl.student_info = resp.data.student_info;
-          ctrl.parent_info = resp.data.parent_info;
-          ctrl.line_items_info = resp.data.line_items_info;
-          ctrl.grades = resp.data.grades;
-
-          var nowDate = new Date();
-          ctrl.datas = defaultInvoice
-          // Clone to prevent the reset value
-          ctrl.date_display = nowDate.getDate() + "/" + (nowDate.getMonth() + 1) + "/" + (nowDate.getFullYear() + 543);
-          ctrl.availableCurrencies = Currency.all();
-          ctrl.invoiceTotal();
-
-          quotationNewService.get(quotationId).then(function(resp) {
-            ctrl.datas.invoice.items = resp.data.lineItems
-            ctrl.datas.student = resp.data.student
-            ctrl.datas.quotation = resp.data.quotation
-            ctrl.datas.parent = resp.data.parent
-
-            ctrl.datas.quotation.payment_date_start =  new Date(resp.data.payment_date_start)
-            ctrl.datas.quotation.payment_date_end =  new Date(resp.data.payment_date_end)
-
-            angular.forEach(ctrl.grades, function(item, key){
-              if( item.value == ctrl.datas.quotation.grade_name )
-                ctrl.datas.quotation.grade_name = item
-            });
-
-          });
-        });
-      })()
-
       // Runs on document.ready
       angular.element(document).ready(function () {
         // Set focus
