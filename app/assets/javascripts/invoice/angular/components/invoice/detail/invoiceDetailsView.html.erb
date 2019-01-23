@@ -158,7 +158,8 @@
         <div class="col-md-4">
           <button type="button" class="btn btn-custom btn-red" ng-click="invoiceDetails.reject()"  ng-if="invoiceDetails.datas.quotation.outstanding > 0">{{ 'cancel' | translate }}</button>
         </div>
-        <div class="col-md-5 col-md-offset-3 text-right">
+        <div class="col-md-8 text-right">
+          <button type="button" class="btn btn-custom btn-green" ng-click="invoiceDetails.print()" ng-if="invoiceDetails.datas.quotation.outstanding > 0">{{ 'quotation_print' | translate }}</button>
           <a href="/somsri_invoice#/invoice/{{ invoiceDetails.quotationId }}" class="btn btn-custom btn-blue" ng-if="invoiceDetails.datas.quotation.outstanding > 0">{{ 'pay' | translate }}</a>
           <a href="/somsri_invoice#/quotation" class="btn btn-custom btn-gray" ng-click="invoiceDetails.cancel()">{{ 'close' | translate }}</a>
         </div>

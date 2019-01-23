@@ -279,6 +279,7 @@ th:
   account_name: "ชื่อบัญชี"
   add_quotation: "เพิ่มใบวางบิล"
   choose_level: "ระบุชั้นเรียน"
+  quotation_print: "พิมพ์ใบวางบิล"
 
   # Quotation bill
   quotation_receipt: "ใบแจ้งการชำระเงิน"
