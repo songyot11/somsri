@@ -270,6 +270,7 @@ en:
   quotation_amount: 'Amount'
   quotation_printed_at: 'Printed at'
   quotation_unpaid: 'Payment'
+  quotation_active: 'Paid'
   search_quotation_no: 'Search Quotation no.'
   can_payment: "Paid From"
   can_payment_school: "Payment at School"

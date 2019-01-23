@@ -240,7 +240,7 @@
       state({
         url: '/invoice/:id',
         name: 'invoice_details',
-        templateUrl: "<%= asset_path('invoice/angular/components/invoice/detail/invoiceDetailsView.html') %>",
+        templateUrl: "<%= asset_path('invoice/angular/components/invoice/detail/invoiceDetailsEdit.html') %>",
         controller: 'invoiceDetailsCtrl as invoiceDetails',
         resolve: {
           resources: ['$ocLazyLoad', function($ocLazyLoad) {
