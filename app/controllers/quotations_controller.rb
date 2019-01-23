@@ -19,6 +19,7 @@ class QuotationsController < ApplicationController
     @lineItems = LineItemQuotation.where(quotation_id: params[:id])
     @student = @quotation&.student
     @parent = @quotation&.parent
+    @invoices = @quotation.invoice_line_items
     outstanding = @quotation&.outstanding_balance
     payment_date_start =  @quotation&.payment_date_start&.strftime("%Y/%m/%d")
     payment_date_end =  @quotation&.payment_date_end&.strftime("%Y/%m/%d")
@@ -31,7 +32,8 @@ class QuotationsController < ApplicationController
       payment_date_start: payment_date_start,
       payment_date_end: payment_date_end,
       grades: Grade.names,
-      outstanding: outstanding
+      outstanding: outstanding,
+      invoices: @invoices
     }
   end
 
@@ -110,7 +112,7 @@ class QuotationsController < ApplicationController
       quotation_new.quotation_status = 0
 
       line_item_params.to_h[:items].each do |item|
-        quotation_new.line_items << LineItemQuotation.new(item)
+        quotation_new.line_item_quotations << LineItemQuotation.new(item)
       end
 
       quotation_new.save
@@ -176,6 +178,11 @@ class QuotationsController < ApplicationController
                 show_as_html: params[:show_as_html].present?
       end
     end
+  end
+
+  def destroy
+    @quotation.destroy
+    render json: { head: :no_content }, status: :ok
   end
 
   private

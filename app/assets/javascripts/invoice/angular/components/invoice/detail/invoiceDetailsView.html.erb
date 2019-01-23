@@ -1,196 +1,254 @@
-  <div class="container" id="invoice" style="width: 960px;">
-    <form name="createProjectForm" ng-submit="invoiceDetails.save()">
-      <div class="row">
-        <div class="col-md-6 heading">
-          {{ 'invoice_form' | translate }}
+<div class="container" id="invoice" style="width: 960px;">
+  <form name="createProjectForm" ng-submit="invoiceDetails.save()">
+    <div class="row">
+      <div class="col-md-6 heading">
+        {{ 'invoice_form' | translate }}
+      </div>
+      <div class="col-md-6 branding">
+        <div class="invoice-number-container">
+          <label>{{ 'date1' | translate }}&nbsp;{{ invoiceDetails.date_display }}&nbsp;&nbsp;</label>
         </div>
-        <div class="col-md-6 branding">
-          <div class="invoice-number-container">
-            <label>{{ 'date1' | translate }}&nbsp;{{ invoiceDetails.date_display }}&nbsp;&nbsp;</label>
+      </div>
+    </div>
+    <div class="form_1">
+      <div class="row">
+        <div class="col-md-2">
+          <div class="form-group">
+            <input type="text" class="form-control" id="student_code" placeholder="{{ 'student_id1' | translate }}" ng-model="invoiceDetails.datas.student.student_number" typeahead-on-select="invoiceDetails.onSelectStudentNumber($item)" uib-typeahead="student.student_number as student.student_number_display for student in invoiceDetails.student_info | filter:{student_number:$viewValue} | limitTo:8"  autocomplete="off">
+          </div>
+        </div>
+        <div class="col-md-4">
+          <div class="form-group">
+            <input type="text" class="form-control" id="student_name" placeholder="{{ 'student_name' | translate }}" ng-model="invoiceDetails.datas.invoice.student_name" typeahead-on-select="invoiceDetails.onSelectStudentFullName($item)" uib-typeahead="student.full_name as student.full_name_display for student in invoiceDetails.student_info | filter:{full_name_display:$viewValue} | limitTo:8" required , autocomplete="off">
+          </div>
+        </div>
+        <div class="col-md-6">
+          <div class="form-group">
+            <input type="text" class="form-control" id="parent_name" placeholder="{{ 'parent_name' | translate }}" ng-model="invoiceDetails.datas.parent.full_name" typeahead-on-select="invoiceDetails.onSelectParent($item)" uib-typeahead="parent.full_name as parent.full_name_display for parent in invoiceDetails.parent_info | filter:{full_name_display:$viewValue} | limitTo:8" required , autocomplete="off">
           </div>
         </div>
       </div>
-      <div class="form_1">
-        <div class="row">
-          <div class="col-md-2">
-            <div class="form-group">
-              <input type="text" class="form-control" id="student_code" placeholder="{{ 'student_id1' | translate }}" ng-model="invoiceDetails.datas.student.student_number" typeahead-on-select="invoiceDetails.onSelectStudentNumber($item)" uib-typeahead="student.student_number as student.student_number_display for student in invoiceDetails.student_info | filter:{student_number:$viewValue} | limitTo:8"  autocomplete="off">
+
+      <div class="row form-1_2">
+        <div class="col-md-3">
+          <div class="form-group">
+            <!-- <select class="btn btn-grades" ng-model="invoiceDetails.datas.invoiceDetails.grade_name" ng-init="invoiceDetails.datas.invoiceDetails.grade_name = invoiceDetails.grades[0]" ng-options=" obj.value for obj in invoiceDetails.grades">
+            </select> -->
+            <select id="grade" class="btn btn-grades" ng-model="invoiceDetails.datas.invoice.grade_name" ng-options=" obj.value for obj in invoiceDetails.grades">
+            </select>
+          </div>
+        </div>
+        <div class="col-md-2">
+          <div class="form-group inline-block">
+            {{ 'term' | translate }} <input type="text" class="form-control" id="semester" placeholder="{{ 'term' | translate }}" ng-model="invoiceDetails.datas.invoice.semester">
+          </div>
+        </div>
+        <div class="col-md-2">
+          <div class="form-group inline-block">
+            {{ 'school_year' | translate }} <input type="text" class="form-control" id="school_year" placeholder="{{ 'school_year' | translate }}" ng-model="invoiceDetails.datas.invoice.school_year">
+          </div>
+        </div>
+      </div>
+
+      <div class="row form-1_2">
+        <div class="col-md-5 date-for-print">
+          <div class="form-group">
+            <span class="input-group">
+              <div class="col-md-7 mt-10">
+                <label for="start_date" class="text-status-date">{{ 'can_payment' | translate }}</label>
+              </div>
+              <div class="col-md-5">
+                <input id="start_date" type="text" class="form-control" uib-datepicker-popup="dd/MM/yyyy" datepicker-options="{showWeeks:false}" ng-model="invoiceDetails.datas.invoice.payment_date_start" is-open="invoiceDetails.startDatePopup.opened" close-text="Close" ng-change="invoiceDetails.optionsChange()"/>
+                <span class="input-group-btn" style="display: inherit;">
+                  <button type="button" class="btn btn-default" ng-click="invoiceDetails.openStartDatePopup()"><i class="fa fa-calendar"></i></button>
+                </span>
+              </div>
+            </span>
+          </div>
+        </div>
+        <div class="col-md-5 date-for-print">
+          <div class="form-group">
+            <span class="input-group">
+              <div class="col-md-2">
+                <label for="end_date" class="text-status-date">{{ 'ถึง' | translate }}</label>
+              </div>
+              <div class="col-md-7">
+                <input id="end_date" type="text" class="form-control" uib-datepicker-popup="dd/MM/yyyy" datepicker-options="{showWeeks:false}" ng-model="invoiceDetails.datas.invoice.payment_date_end" is-open="invoiceDetails.endDatePopup.opened" close-text="Close" ng-change="invoiceDetails.optionsChange()"/>
+                <span class="input-group-btn" style="display: inherit;">
+                  <button type="button" class="btn btn-default" ng-click="invoiceDetails.openEndDatePopup()"><i class="fa fa-calendar"></i></button>
+                </span>
+              </div>
+            </span>
+          </div>
+        </div>
+      </div>
+      
+    </div>
+    <div class="form_2">
+      <div class="row">
+        <div class="col-md-6">
+          <div class="title-htable">{{ 'invoice_list' | translate }}</div>
+        </div>
+      </div>
+
+      <div class="items-table">
+        <div class="row header">
+          <div class="col-md-1 text-center"></div>
+          <div class="col-md-1 text-center">#</div>
+          <div class="col-md-8">{{ 'item' | translate }}</div>
+          <div class="col-md-2 text-right-htable">{{ 'price' | translate }}</div>
+        </div>
+
+        <div class="row invoice-item" ng-repeat="item in invoiceDetails.datas.invoice.items" ng-animate="'slide-down'">
+          <div class="col-md-1 remove-item-container">
+            <a href ng-hide="printMode" ng-click="invoiceDetails.removeItem(item)" class="btn pl-10"><span class="fa fa-times-circle"></span></a>
+          </div>
+          <div class="col-md-1">
+            {{ $index + 1 }}
+          </div>
+          <div class="col-md-8">
+            <div class="form-group form-list">
+              <input type="text" placeholder="{{ 'item' | translate }}" class="form-control grop-table" ng-model="item.detail" typeahead-on-select="invoiceDetails.onSelectLineItem($item, item)" uib-typeahead="item.detail as item.line_item_display for item in invoiceDetails.line_items_info | filter:{detail:$viewValue} | limitTo:8">
             </div>
+          </div>
+          <div class="col-md-2">
+            <div class="form-group form-price">
+              <input type="text" value="0.00" ng-required min="-100000" step="1000" ng-validate="number" placeholder="{{ 'price' | translate }}" class="form-control table-price" ng-model="item.amount" ng-change="invoiceDetails.invoiceTotal()" ui-number-mask="2" ui-negative-number>
+            </div>
+          </div>
+        </div>
+
+        <div class="row invoice-item add-invoice-item">
+          <div class="col-md-12 add-item-container">
+            <a class="btn btn-custom sm btn-green" href ng-click="invoiceDetails.addItem()">+ {{ 'add_item' | translate }}</a>
+          </div>
+        </div>
+        <div class="row col-total-1">
+          <div class="col-md-8 text-note">
+            <div class="col-md-2"> {{ 'note' | translate }}</div>
+            <div class="col-md-6"><textarea type="textarea" rows="3" class="form-control textarea-note" ng-model="invoiceDetails.datas.invoice.remark"></textarea></div>
+          </div>
+
+          <div class="col-md-4">
+            <div class="row">
+              <div class="col-md-6 mt-0 text-right-total-invoice">{{ 'net' | translate }}: </div>
+              <div class="col-md-6 mt-0 text-right-total-invoice">{{ invoiceDetails.total.toFixed(2) | number:2 }}</div>
+
+              <div class="col-md-6"><label>{{ 'outstanding' | translate }}: </label></div>
+              <div class="col-md-6 text-right"><label>{{ invoiceDetails.datas.quotation.outstanding.toFixed(2) | number:2 }}</label></div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="row col-total-2" ng-if="invoiceDetails.quotationState != 'view'">
+        <div class="col-md-12">
+        <p class="text-hradio">{{ 'payment_channel' | translate }}</p>
+          <div class="checkbox">
+            <label><input type="checkbox" ng-true-value="true" ng-false-value="false" ng-required="!invoiceDetails.validatePaymentMethod()" ng-model="invoiceDetails.datas.payment_method.is_cash">&nbsp;&nbsp;{{ 'cash' | translate }}</label>
+          </div>
+          <div class="checkbox">
+            <label><input type="checkbox" ng-true-value="true" ng-false-value="false" ng-required="!invoiceDetails.validatePaymentMethod()" ng-model="invoiceDetails.datas.payment_method.is_credit_card">&nbsp;&nbsp;{{ 'credit_card' | translate }}</label>
+          </div>
+          <div class="checkbox row">
+            <div class="col-md-2" style="margin-right:20px;">
+              <label><input type="checkbox" ng-true-value="true" ng-false-value="false" ng-model="invoiceDetails.datas.payment_method.is_cheque">&nbsp;&nbsp;{{ 'bank_check' | translate }}</label>
+            </div>
+            <div class="input-bank">
+              <div class="col-md-3 col-payment">
+                <input type="text" placeholder="{{ 'bank_name' | translate }}" class="form-control" ng-model="invoiceDetails.datas.payment_method.cheque_bank_name">
+              </div>
+              <div class="col-md-3">
+                <input type="text" placeholder="{{ 'bank_check_id' | translate }}" class="form-control" ng-model="invoiceDetails.datas.payment_method.cheque_number">
+              </div>
+              <div class="col-md-3">
+                <input type="text" placeholder="{{ 'bank_check_date' | translate }}" class="form-control" ng-model="invoiceDetails.datas.payment_method.cheque_date">
+              </div>
+            </div>
+          </div>
+          <div class="checkbox row">
+            <div class="col-md-2">
+              <label><input type="checkbox" ng-true-value="true" ng-false-value="false" ng-model="invoiceDetails.datas.payment_method.is_transfer">&nbsp;&nbsp;{{ 'bank_transfer' | translate }}</label>
+            </div>
+            <div class="input-bank">
+              <div class="col-md-3 col-payment">
+                <input type="text" placeholder="{{ 'bank_name' | translate }}" class="form-control" ng-model="invoiceDetails.datas.payment_method.transfer_bank_name">
+              </div>
+              <div class="col-md-3">
+                <input type="text" placeholder="{{ 'bank_check_date' | translate }}" class="form-control" ng-model="invoiceDetails.datas.payment_method.transfer_date">
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="row mt-50" ng-if="invoiceDetails.quotationState == 'view'">
+        <div class="col-md-6">
+          <div class="title-htable">{{ 'list_invoices' | translate }}</div>
+        </div>
+      </div>
+
+      <div class="items-table" ng-if="invoiceDetails.quotationState == 'view'">
+        <div class="row header">
+          <div class="col-md-3 col-md-offset-1">เลขที่ใบวางบิล #</div>
+          <div class="col-md-4">ยอดที่ชำระ</div>
+          <div class="col-md-2 col-md-offset-2">วันที่ชำระ</div>
+        </div>
+
+        <div class="row invoice-item" ng-repeat="invoice in invoiceDetails.invoices" ng-animate="'slide-down'">
+          <div class="col-md-3 col-md-offset-1">
+            {{ invoice.id }}
           </div>
           <div class="col-md-4">
-            <div class="form-group">
-              <input type="text" class="form-control" id="student_name" placeholder="{{ 'student_name' | translate }}" ng-model="invoiceDetails.datas.invoice.student_name" typeahead-on-select="invoiceDetails.onSelectStudentFullName($item)" uib-typeahead="student.full_name as student.full_name_display for student in invoiceDetails.student_info | filter:{full_name_display:$viewValue} | limitTo:8" required , autocomplete="off">
-            </div>
+            {{ invoice.amount.toFixed(2) | number:2 }}
           </div>
-          <div class="col-md-6">
-            <div class="form-group">
-              <input type="text" class="form-control" id="parent_name" placeholder="{{ 'parent_name' | translate }}" ng-model="invoiceDetails.datas.parent.full_name" typeahead-on-select="invoiceDetails.onSelectParent($item)" uib-typeahead="parent.full_name as parent.full_name_display for parent in invoiceDetails.parent_info | filter:{full_name_display:$viewValue} | limitTo:8" required , autocomplete="off">
-            </div>
+          <div class="col-md-2 col-md-offset-2">
+            {{ invoice.created_at }}
           </div>
         </div>
-
-        <div class="row form-1_2">
-          <div class="col-md-3">
-            <div class="form-group">
-              <!-- <select class="btn btn-grades" ng-model="invoiceDetails.datas.invoiceDetails.grade_name" ng-init="invoiceDetails.datas.invoiceDetails.grade_name = invoiceDetails.grades[0]" ng-options=" obj.value for obj in invoiceDetails.grades">
-              </select> -->
-              <select id="grade" class="btn btn-grades" ng-model="invoiceDetails.datas.invoice.grade_name" ng-options=" obj.value for obj in invoiceDetails.grades">
-              </select>
-            </div>
-          </div>
-          <div class="col-md-2">
-            <div class="form-group inline-block">
-              {{ 'term' | translate }} <input type="text" class="form-control" id="semester" placeholder="{{ 'term' | translate }}" ng-model="invoiceDetails.datas.invoice.semester">
-            </div>
-          </div>
-          <div class="col-md-2">
-            <div class="form-group inline-block">
-              {{ 'school_year' | translate }} <input type="text" class="form-control" id="school_year" placeholder="{{ 'school_year' | translate }}" ng-model="invoiceDetails.datas.invoice.school_year">
-            </div>
-          </div>
-        </div>
-
-        <div class="row form-1_2">
-          <div class="col-md-5 date-for-print">
-            <div class="form-group">
-              <span class="input-group">
-                <div class="col-md-7 mt-10">
-                  <label for="start_date" class="text-status-date">{{ 'can_payment' | translate }}</label>
-                </div>
-                <div class="col-md-5">
-                  <input id="start_date" type="text" class="form-control" uib-datepicker-popup="dd/MM/yyyy" datepicker-options="{showWeeks:false}" ng-model="invoiceDetails.datas.invoice.payment_date_start" is-open="invoiceDetails.startDatePopup.opened" close-text="Close" ng-change="invoiceDetails.optionsChange()"/>
-                  <span class="input-group-btn" style="display: inherit;">
-                    <button type="button" class="btn btn-default" ng-click="invoiceDetails.openStartDatePopup()"><i class="fa fa-calendar"></i></button>
-                  </span>
-                </div>
-              </span>
-            </div>
-          </div>
-          <div class="col-md-5 date-for-print">
-            <div class="form-group">
-              <span class="input-group">
-                <div class="col-md-2">
-                  <label for="end_date" class="text-status-date">{{ 'ถึง' | translate }}</label>
-                </div>
-                <div class="col-md-7">
-                  <input id="end_date" type="text" class="form-control" uib-datepicker-popup="dd/MM/yyyy" datepicker-options="{showWeeks:false}" ng-model="invoiceDetails.datas.invoice.payment_date_end" is-open="invoiceDetails.endDatePopup.opened" close-text="Close" ng-change="invoiceDetails.optionsChange()"/>
-                  <span class="input-group-btn" style="display: inherit;">
-                    <button type="button" class="btn btn-default" ng-click="invoiceDetails.openEndDatePopup()"><i class="fa fa-calendar"></i></button>
-                  </span>
-                </div>
-              </span>
-            </div>
-          </div>
-        </div>
-        
       </div>
-      <div class="form_2">
+
+      <div class="row noPrint actions" ng-if="invoiceDetails.quotationState == 'view'">
+        <div class="col-md-4">
+          <button type="button" class="btn btn-custom btn-red" ng-click="invoiceDetails.reject()">{{ 'cancel' | translate }}</button>
+        </div>
+        <div class="col-md-5 col-md-offset-3 text-right">
+          <a href="/somsri_invoice#/invoice/{{ invoiceDetails.quotationId }}" class="btn btn-custom btn-blue">{{ 'pay' | translate }}</a>
+          <a href="/somsri_invoice#/quotation" class="btn btn-custom btn-gray" ng-click="invoiceDetails.cancel()">{{ 'cancel' | translate }}</a>
+        </div>
+      </div>
+
+      <div class="row noPrint actions" ng-if="invoiceDetails.quotationState != 'view'">
+        <div class="col-md-12 text-right-htable">
+          <button id="submit" type="submit" class="btn btn-custom btn-blue mr-5" >{{ 'pay' | translate }}</button>
+          <a href="/somsri_invoice#/quotation" class="btn btn-custom btn-gray" ng-click="invoiceDetails.cancel()">{{ 'cancel' | translate }}</a>
+        </div>
+      <div>
+    </div>
+  </form>
+</div>
+
+<!-- Modal Cancle -->
+<div class="modal" id="cancle-modal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content p-0 m-20">
+      <div class="modal-header bg-red">
+        <i class="fa fa-close pull-right" data-dismiss="modal"></i>
+        <h3 class="modal-title pull-left text-white">{{ "cancle_quotation" | translate }}</h3>
+      </div>
+      <div class="modal-body">
         <div class="row">
-          <div class="col-md-6">
-            <div class="title-htable">{{ 'invoice_list' | translate }}</div>
-          </div>
-        </div>
-
-        <div class="items-table">
-          <div class="row header">
-            <div class="col-md-1 text-center"></div>
-            <div class="col-md-1 text-center">#</div>
-            <div class="col-md-8">{{ 'item' | translate }}</div>
-            <div class="col-md-2 text-right-htable">{{ 'price' | translate }}</div>
-          </div>
-
-          <div class="row invoice-item" ng-repeat="item in invoiceDetails.datas.invoice.items" ng-animate="'slide-down'">
-            <div class="col-md-1 remove-item-container">
-              <a href ng-hide="printMode" ng-click="invoiceDetails.removeItem(item)" class="btn pl-10"><span class="fa fa-times-circle"></span></a>
-            </div>
-            <div class="col-md-1">
-              {{ $index + 1 }}
-            </div>
-            <div class="col-md-8">
-              <div class="form-group form-list">
-                <input type="text" placeholder="{{ 'item' | translate }}" class="form-control grop-table" ng-model="item.detail" typeahead-on-select="invoiceDetails.onSelectLineItem($item, item)" uib-typeahead="item.detail as item.line_item_display for item in invoiceDetails.line_items_info | filter:{detail:$viewValue} | limitTo:8">
-              </div>
-            </div>
-            <div class="col-md-2">
-              <div class="form-group form-price">
-                <input type="text" value="0.00" ng-required min="-100000" step="1000" ng-validate="number" placeholder="{{ 'price' | translate }}" class="form-control table-price" ng-model="item.amount" ng-change="invoiceDetails.invoiceTotal()" ui-number-mask="2" ui-negative-number>
-              </div>
-            </div>
-          </div>
-
-          <div class="row invoice-item add-invoice-item">
-            <div class="col-md-12 add-item-container">
-              <a class="btn btn-custom sm btn-green" href ng-click="invoiceDetails.addItem()">+ {{ 'add_item' | translate }}</a>
-            </div>
-          </div>
-          <div class="row col-total-1">
-            <div class="col-md-8 text-note">
-              <div class="col-md-2"> {{ 'note' | translate }}</div>
-              <div class="col-md-6"><textarea type="textarea" rows="3" class="form-control textarea-note" ng-model="invoiceDetails.datas.invoice.remark"></textarea></div>
-            </div>
-
-            <div class="col-md-4">
-              <div class="row">
-                <div class="col-md-6 mt-0 text-right-total-invoice">{{ 'net' | translate }}: </div>
-                <div class="col-md-6 mt-0 text-right-total-invoice">{{ invoiceDetails.total.toFixed(2) | number:2 }}</div>
-
-                <div class="col-md-6"><label>{{ 'outstanding' | translate }}: </label></div>
-                <div class="col-md-6 text-right"><label>{{ invoiceDetails.outstanding.toFixed(2) | number:2 }}</label></div>
-              </div>
-            </div>
-          </div>
-        </div>
-
-        <div class="row col-total-2">
-          <div class="col-md-12">
-          <p class="text-hradio">{{ 'payment_channel' | translate }}</p>
-            <div class="checkbox">
-              <label><input type="checkbox" ng-true-value="true" ng-false-value="false" ng-required="!invoiceDetails.validatePaymentMethod()" ng-model="invoiceDetails.datas.payment_method.is_cash">&nbsp;&nbsp;{{ 'cash' | translate }}</label>
-            </div>
-            <div class="checkbox">
-              <label><input type="checkbox" ng-true-value="true" ng-false-value="false" ng-required="!invoiceDetails.validatePaymentMethod()" ng-model="invoiceDetails.datas.payment_method.is_credit_card">&nbsp;&nbsp;{{ 'credit_card' | translate }}</label>
-            </div>
-            <div class="checkbox row">
-              <div class="col-md-2" style="margin-right:20px;">
-                <label><input type="checkbox" ng-true-value="true" ng-false-value="false" ng-model="invoiceDetails.datas.payment_method.is_cheque">&nbsp;&nbsp;{{ 'bank_check' | translate }}</label>
-              </div>
-              <div class="input-bank">
-                <div class="col-md-3 col-payment">
-                  <input type="text" placeholder="{{ 'bank_name' | translate }}" class="form-control" ng-model="invoiceDetails.datas.payment_method.cheque_bank_name">
-                </div>
-                <div class="col-md-3">
-                  <input type="text" placeholder="{{ 'bank_check_id' | translate }}" class="form-control" ng-model="invoiceDetails.datas.payment_method.cheque_number">
-                </div>
-                <div class="col-md-3">
-                  <input type="text" placeholder="{{ 'bank_check_date' | translate }}" class="form-control" ng-model="invoiceDetails.datas.payment_method.cheque_date">
-                </div>
-              </div>
-            </div>
-            <div class="checkbox row">
-              <div class="col-md-2">
-                <label><input type="checkbox" ng-true-value="true" ng-false-value="false" ng-model="invoiceDetails.datas.payment_method.is_transfer">&nbsp;&nbsp;{{ 'bank_transfer' | translate }}</label>
-              </div>
-              <div class="input-bank">
-                <div class="col-md-3 col-payment">
-                  <input type="text" placeholder="{{ 'bank_name' | translate }}" class="form-control" ng-model="invoiceDetails.datas.payment_method.transfer_bank_name">
-                </div>
-                <div class="col-md-3">
-                  <input type="text" placeholder="{{ 'bank_check_date' | translate }}" class="form-control" ng-model="invoiceDetails.datas.payment_method.transfer_date">
-                </div>
-              </div>
-            </div>
-          </div>
-        </div>
-
-        <div class="row noPrint actions">
-          <div class="col-md-12 text-right-htable">
-            <button id="submit" type="submit" class="btn btn-custom btn-blue mr-5" >{{ 'pay' | translate }}</button>
-            <a href="/somsri_invoice#/quotation" class="btn btn-custom btn-gray" ng-click="invoiceDetails.cancel()">{{ 'cancel' | translate }}</a>
+          <div class="col-md-12 text-center">
+            <h4 class="m-20">{{ 'cancle_quotation_detail' | translate }}</h4>
           </div>
         </div>
       </div>
-    </form>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-custom btn-red" ng-click="invoiceDetails.removeQuotation()">{{ 'ok' | translate }}</button>
+        <button type="button" class="btn btn-cancel" data-dismiss="modal">{{ 'cancel' | translate }}</button>
+      </div>
   </div>
+</div>
 
 <!-- Modal -->
 <div class="modal" id="amount-modal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">

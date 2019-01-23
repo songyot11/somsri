@@ -251,6 +251,19 @@
         }
       }).
       state({
+        url: '/invoice/:state/:id',
+        name: 'invoice_strate_details',
+        templateUrl: "<%= asset_path('invoice/angular/components/invoice/detail/invoiceDetailsView.html') %>",
+        controller: 'invoiceDetailsCtrl as invoiceDetails',
+        resolve: {
+          resources: ['$ocLazyLoad', function($ocLazyLoad) {
+            return $ocLazyLoad.load([
+              ASSETS.somsri.invoice.invoice_details
+            ]);
+          }]
+        }
+      }).
+      state({
         url: '/alumni',
         name: 'alumni',
         templateUrl: "<%= asset_path('invoice/angular/components/alumni/alumniView.html') %>",

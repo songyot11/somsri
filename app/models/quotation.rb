@@ -3,7 +3,7 @@ class Quotation < ApplicationRecord
   belongs_to :student
   belongs_to :parent
   has_many :line_items
-  has_many :line_item_quotations
+  has_many :line_item_quotations , dependent: :destroy
 
   has_many :quotation_invoices, dependent: :destroy
   has_many :invoices, through: :quotation_invoices
@@ -36,5 +36,17 @@ class Quotation < ApplicationRecord
       total += invoice&.line_items&.sum(&:amount) || 0
     end
     return total - total_amount
+  end
+
+  def invoice_line_items
+    invoice_line_item = []
+    invoices.each do |invoice|
+      invoice_line_item << {
+        id: invoice.id,
+        amount: invoice&.line_items&.sum(&:amount),
+        created_at: invoice&.created_at&.strftime("%d/%m/%Y")
+      }
+    end
+    return invoice_line_item
   end
 end

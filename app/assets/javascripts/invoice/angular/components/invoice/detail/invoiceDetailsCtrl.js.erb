@@ -18,13 +18,13 @@
         is_credit_card: false,
         is_transfer: false
       },
-      quotation: { },
-      amount: 0
+      quotation: { }
     }
 
     $rootScope.menu = translateFilter('invoice_form');
     $rootScope.loadAndAuthorizeResource("invoice", function(){
-      var quotationId = $state.params.id;
+      ctrl.quotationId = $state.params.id;
+      ctrl.quotationState = $state.params.state;
       ctrl.title = 'Invoice';
 
       service.newInvoice().then(function(resp) {
@@ -40,15 +40,16 @@
         ctrl.invoiceTotal();
       });
 
-      quotationNewService.get(quotationId).then(function(resp) {
+      quotationNewService.get(ctrl.quotationId).then(function(resp) {
         ctrl.datas = defaultInvoice
         ctrl.datas.invoice = resp.data.quotation
         ctrl.datas.invoice.items = resp.data.lineItems
         ctrl.datas.student = resp.data.student
         ctrl.datas.parent = resp.data.parent
-        ctrl.datas.quotation.id = quotationId
+        ctrl.datas.quotation.id = ctrl.quotationId
         ctrl.grades = resp.data.grades;
-        ctrl.outstanding = resp.data.outstanding * -1
+        ctrl.datas.quotation.outstanding = resp.data.outstanding * -1
+        ctrl.invoices = resp.data.invoices
 
         ctrl.datas.invoice.payment_date_start =  new Date(resp.data.payment_date_start)
         ctrl.datas.invoice.payment_date_end =  new Date(resp.data.payment_date_end)
@@ -193,6 +194,7 @@
           total += item.amount;
         });
         ctrl.total = total;
+        ctrl.datas.quotation.amount = total
       };
 
       ctrl.validatePaymentMethod = function(){
@@ -231,6 +233,17 @@
       ctrl.endDatePopup = {
         opened: false
       };
+
+      ctrl.reject = function() {
+        $("#cancle-modal").modal('show')
+      }
+
+      ctrl.removeQuotation = function() {
+        quotationNewService.remove(ctrl.quotationId).then(function(resp) {
+          $("#cancle-modal").modal('hide')
+          $rootScope.openQuotation()
+        })
+      }
       // Runs on document.ready
       angular.element(document).ready(function () {
         // Set focus
