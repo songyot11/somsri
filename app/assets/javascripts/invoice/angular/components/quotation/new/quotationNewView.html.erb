@@ -157,12 +157,12 @@
             </div>
           </div>
           <div class="row p-10" ng-repeat="bank in quotationNew.banks" >
-            <div class="col-md-2 col-md-offset-1 text-right">
+            <div class="col-md-2 text-right">
               <i class="fa fa-square-o"></i>
               <img src="{{ bank.image }}" width="40px">
             </div>
             <div class="col-md-3 mt-5"><label>{{ bank.bank_name }}</label></div>
-            <div class="col-md-3 mt-5"><label>{{ 'bank_account_number' | translate }} {{ bank.bank_account }}</label></div>
+            <div class="col-md-4 mt-5"><label>{{ 'bank_account_number' | translate }} {{ bank.bank_account }}</label></div>
             <div class="col-md-3 mt-5"><label>{{ 'account_name' | translate }} {{ bank.account_name }}</label></div>
           </div>
           <div class="row mt-20">

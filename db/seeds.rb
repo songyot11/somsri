@@ -329,9 +329,9 @@ User.find(5).add_role "admin" if !User.find(5).has_any_role?
 
 if LtBank.count == 0
   LtBank.create!([
-    {name: "ธนาคารกรุงไทย", image_path: "/bank/ktb.png"},
-    {name: "ธนาคารกสิกร", image_path: "/bank/kbank.png"},
-    {name: "ธนาคารกรุงเทพ", image_path: "/bank/bkk.png"},
+    {name: "ธนาคารกรุงไทย", image_path: "/bank/ktb1.png"},
+    {name: "ธนาคารกสิกร", image_path: "/bank/kbank1.png"},
+    {name: "ธนาคารกรุงเทพ", image_path: "/bank/bkk1.png"},
     {name: "ธนาคารเพื่อการเกษตรและสหกรณ์การเกษตร", image_path: "/bank/baac.png"},
     {name: "ธนาคารซีไอเอ็มบีไทย", image_path: "/bank/cimb.png"},
     {name: "ธนาคารซิตี้แบงค์", image_path: "/bank/citi.png"},
