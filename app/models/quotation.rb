@@ -35,7 +35,7 @@ class Quotation < ApplicationRecord
     invoices.each do |invoice|
       total += invoice&.line_items&.sum(&:amount) || 0
     end
-    return total - total_amount
+    return total_amount - total
   end
 
   def invoice_line_items

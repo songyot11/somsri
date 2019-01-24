@@ -5,6 +5,7 @@
   .controller('invoiceDetailsCtrl', ['$scope', '$http', '$state', 'DEFAULT_LOGO', 'LocalStorage', 'Currency', 'invoiceService', '$rootScope', 'translateFilter', 'quotationNewService', 
     function($scope, $http, $state, DEFAULT_LOGO, LocalStorage, Currency, service, $rootScope, translateFilter, quotationNewService) 
   {
+    $rootScope.menu = translateFilter('invoice_form');
     var ctrl = this;
     var defaultInvoice = {
       invoice: {
@@ -21,7 +22,6 @@
       quotation: { }
     }
 
-    $rootScope.menu = translateFilter('invoice_form');
     $rootScope.loadAndAuthorizeResource("invoice", function(){
       ctrl.quotationId = $state.params.id;
       ctrl.quotationState = $state.params.state;
@@ -48,7 +48,7 @@
         ctrl.datas.parent = resp.data.parent
         ctrl.datas.quotation.id = ctrl.quotationId
         ctrl.grades = resp.data.grades;
-        ctrl.datas.quotation.outstanding = resp.data.outstanding * -1
+        ctrl.datas.quotation.outstanding = resp.data.outstanding
         ctrl.invoices = resp.data.invoices
 
         ctrl.datas.invoice.payment_date_start =  new Date(resp.data.payment_date_start)

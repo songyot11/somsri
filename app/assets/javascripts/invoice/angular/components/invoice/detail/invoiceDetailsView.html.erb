@@ -143,7 +143,7 @@
 
         <div class="row invoice-item" ng-repeat="invoice in invoiceDetails.invoices" ng-animate="'slide-down'">
           <div class="col-md-3 col-md-offset-1">
-            {{ invoice.id }}
+            <a href="/invoices/{{ invoice.id }}/slip.pdf">{{ invoice.id }}</a>
           </div>
           <div class="col-md-4">
             {{ invoice.amount.toFixed(2) | number:2 }}
