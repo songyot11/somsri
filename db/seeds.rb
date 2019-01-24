@@ -329,9 +329,28 @@ User.find(5).add_role "admin" if !User.find(5).has_any_role?
 
 if LtBank.count == 0
   LtBank.create!([
-   {name: "ธนาคารกรุงไทย", image_path: "/bank/ktb.png"},
-   {name: "ธนาคารกสิกร", image_path: "/bank/kbank.png"},
-   {name: "ธนาคารกรุงเทพ", image_path: "/bank/bkk.png"}
+    {name: "ธนาคารกรุงไทย", image_path: "/bank/ktb.png"},
+    {name: "ธนาคารกสิกร", image_path: "/bank/kbank.png"},
+    {name: "ธนาคารกรุงเทพ", image_path: "/bank/bkk.png"},
+    {name: "ธนาคารเพื่อการเกษตรและสหกรณ์การเกษตร", image_path: "/bank/baac.png"},
+    {name: "ธนาคารซีไอเอ็มบีไทย", image_path: "/bank/cimb.png"},
+    {name: "ธนาคารซิตี้แบงค์", image_path: "/bank/citi.png"},
+    {name: "ธนาคารอาคารสงเคราะห์", image_path: "/bank/ghbank.png"},
+    {name: "ธนาคารออมสิน", image_path: "/bank/gsb.png"},
+    {name: "ธนาคารเอชเอสบีซี", image_path: "/bank/hsbc.png"},
+    {name: "ธนาคารไอซีบีซี", image_path: "/bank/icbc.png"},
+    {name: "ธนาคารเกียรตินาคิน", image_path: "/bank/kk.png"},
+    {name: "ธนาคารกรุงศรี", image_path: "/bank/krungsri.png"},
+    {name: "ธนาคารแลนด์ แอนด์ เฮ้าส์", image_path: "/bank/lhbank.png"},
+    {name: "ธนาคารมิซูโฮ ", image_path: "/bank/mhcb.png"},
+    {name: "ธนาคารไทยพาณิชย์", image_path: "/bank/scb.png"},
+    {name: "ธนาคารสแตนดาร์ดชาร์เตอร์ด", image_path: "/bank/scbt.png"},
+    {name: "ธนาคารซูมิโตโมมิตซุย", image_path: "/bank/smbc.png"},
+    {name: "ธนาคารธนชาต", image_path: "/bank/tbank.png"},
+    {name: "ธนาคารไทยเครดิต", image_path: "/bank/tcrb.png"},
+    {name: "ธนาคารทหารไทย", image_path: "/bank/tmb.png"},
+    {name: "ธนาคารทิสโก้", image_path: "/bank/tsco.png"},
+    {name: "ธนาคารยูโอบี", image_path: "/bank/uob.png"}
   ])
 end
 
