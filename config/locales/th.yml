@@ -275,6 +275,7 @@ th:
   can_payment: "สามารถชำระได้ตั้งแต่วันที่"
   can_payment_school: "สามารถชำระเงินได้ที่โรงเรียน"
   add_bank: "เพิ่มธนาคาร"
+  add_bank_account: "เพิ่มบัญชีธนาคาร"
   bank_account_number: "เลขที่บัญชี"
   account_name: "ชื่อบัญชี"
   add_quotation: "เพิ่มใบวางบิล"

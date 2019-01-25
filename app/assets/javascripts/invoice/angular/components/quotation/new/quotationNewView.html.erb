@@ -157,12 +157,12 @@
             </div>
           </div>
           <div class="row p-10" ng-repeat="bank in quotationNew.banks" >
-            <div class="col-md-2 col-md-offset-1 text-right">
+            <div class="col-md-2 text-right">
               <i class="fa fa-square-o"></i>
               <img src="{{ bank.image }}" width="40px">
             </div>
             <div class="col-md-3 mt-5"><label>{{ bank.bank_name }}</label></div>
-            <div class="col-md-3 mt-5"><label>{{ 'bank_account_number' | translate }} {{ bank.bank_account }}</label></div>
+            <div class="col-md-4 mt-5"><label>{{ 'bank_account_number' | translate }} {{ bank.bank_account }}</label></div>
             <div class="col-md-3 mt-5"><label>{{ 'account_name' | translate }} {{ bank.account_name }}</label></div>
           </div>
           <div class="row mt-20">
@@ -189,14 +189,14 @@
     <div class="modal-content p-0">
       <div class="modal-header bg-green">
         <i class="fa fa-close pull-right" data-dismiss="modal"></i>
-        <h3 class="modal-title pull-left text-white">{{ "add_bank" | translate }}</h3>
+        <h3 class="modal-title pull-left text-white">{{ "add_bank_account" | translate }}</h3>
       </div>
       <div class="modal-body">
         <div class="row mt-10">
           <div class="col-md-3 mt-10">
             <label for="bank_name">{{ 'bank_name' | translate }}:</label>
           </div>
-          <div class="col-md-9">
+          <div class="col-md-9 mt-10">
             <select id="bank_name" class="btn btn-grades" ng-model="quotationNew.bank_name" ng-options="obj.id as obj.name for obj in quotationNew.lt_banks">
             </select>
           </div>
