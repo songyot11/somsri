@@ -191,10 +191,14 @@ en:
   item: "Item"
   add_item: "Add Item"
   net: "Total"
+  outstanding: "Outstanding"
   payment_channel: "Payment method"
   cash: "Cash"
   pay_error: "Amount of the payment methods are mismatched."
   sum: "sum"
+  list_invoices: "List Invoices"
+  cancle_quotation: "Cancle Quotation"
+  cancle_quotation_detail: "Do you want to cancel quotation?"
 
   receipt_search: "Search by Receipt, Invoice, Student's name, Parent's name"
   receipt_report: "Report"
@@ -266,6 +270,7 @@ en:
   quotation_amount: 'Amount'
   quotation_printed_at: 'Printed at'
   quotation_unpaid: 'Payment'
+  quotation_active: 'Paid'
   search_quotation_no: 'Search Quotation no.'
   can_payment: "Paid From"
   can_payment_school: "Payment at School"
@@ -274,6 +279,7 @@ en:
   account_name: "Bank Name"
   add_quotation: "Add Quatation"
   choose_level: "Choose Level"
+  quotation_print: "Print Quotation"
 
   # Quotation bill
   quotation_receipt: "ใบแจ้งการชำระเงิน"

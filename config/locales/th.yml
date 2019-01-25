@@ -191,10 +191,14 @@ th:
   item: "รายการ"
   add_item: "เพิ่มรายการ"
   net: "ยอดรวมสุทธิ"
+  outstanding: "ยอดค้างชำระ"
   payment_channel: "ชำระเงินโดย"
   cash: "เงินสด"
   pay_error: "ผลรวมของจำนวนเงินแต่ละประเภทไม่ตรงกับจำนวนเงินสุทธิ"
   sum: "ยอดรวม"
+  list_invoices: "รายการใบเสร็จรับเงิน"
+  cancle_quotation: "ยกเลิกใบแจ้งชำระเงิน"
+  cancle_quotation_detail: "ต้องการยกเลิกใบแจ้งชำระเงิน"
 
   receipt_search: "ค้นหาตามเลขที่ใบเสร็จ, ชื่อนักเรียน, ชื่อผู้ปกครอง"
   receipt_report: "รายงานใบเสร็จ"
@@ -275,6 +279,7 @@ th:
   account_name: "ชื่อบัญชี"
   add_quotation: "เพิ่มใบวางบิล"
   choose_level: "ระบุชั้นเรียน"
+  quotation_print: "พิมพ์ใบวางบิล"
 
   # Quotation bill
   quotation_receipt: "ใบแจ้งการชำระเงิน"

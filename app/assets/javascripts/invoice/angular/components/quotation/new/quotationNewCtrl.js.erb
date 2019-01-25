@@ -6,6 +6,7 @@
   quotationNewCtrl.$inject = ['$rootScope', 'translateFilter', 'quotationNewService', 'Currency'];
 
   function quotationNewCtrl($rootScope, translateFilter, quotationNewService, Currency) {
+    $rootScope.menu = translateFilter('quotation_link_nav')
     var quotationNew = this;
     var defaultDatas = {
       quotations: {
@@ -16,8 +17,6 @@
         payment_date_start: new Date()
       }
     }
-
-    $rootScope.menu = translateFilter('quotation_link_nav')
     $rootScope.loadAndAuthorizeResource("quotation", function() {
       quotationNew.datas = defaultDatas
       quotationNew.getBank()
