@@ -261,6 +261,10 @@ th:
   'yes': "ใช่"
   'no': "ไม่ใช่"
   from: "จาก"
+  from_date: "ตั้งแต่วันที่"
+  to_date: "จนถึงวันที่"
+  this_date: "วันที่"
+  from_all: "จากทั้งหมด"
   to: "ถึง"
   back: "ย้อนกลับ"
   order: "ลำดับที่"
@@ -292,6 +296,7 @@ th:
   employee: "บุคลากร"
   setting: 'การตั้งค่า'
   class_management: จัดการชั้นเรียน
+  expense: "บันทึกค่าใช้จ่าย"
 
   activerecord:
     attributes:
@@ -502,6 +507,7 @@ th:
   skill: ทักษะ
   score: คะแนน
   add: เพิ่ม
+  
   confirm_delete: คุณต้องการลบห้องเรียนใช่หรือไม่? (การลบห้องเรียนจะไม่ทำให้นักเรียนและคุณครูที่อยู่ในห้องหายไป)
   bringback: นำกลับเข้าระบบ
   # Option menu
@@ -519,3 +525,49 @@ th:
   back_to_menu: กลับสู่การใช้งาน
   sorry_to_pay: สมศรี ขออภัยหากท่านชำระค่าบริการดังกล่าวแล้ว
   application_issue: หากพบปัญหาในการใช้งาน somsri.io สามารถติดต่อได้ที่เบอร์
+
+  # Expenses
+  create_new_expenses: "เพิ่มรายการค่าใช้จ่าย"
+  edit_expenses: "แก้ไขรายการค่าใช้จ่าย"
+  buy_slip: "เลขที่ใบเสร็จ"
+  detail: "รายละเอียด"
+  upload_photo: "อัพโหลดรูปใบเสร็จ"
+  unit_price: "ราคาต่อหน่วย"
+  total_cost: "ราคารวม"
+  item_name: "ชื่อรายการ"
+  total_price: "ราคารวมทั้งหมด"
+  expense_create_success: "บันทึกรายการค่าใช้จ่ายสำเร็จ"
+  search: "ค้นหา"
+  choose_file: "เลือกไฟล์"
+
+  #expense
+  expense_delete_success: "ลบข้อมูลใบเสร็จเรียบร้อยแล้ว"
+  delete_expense: "คุณต้องการลบรายการที่เลือกใช่หรือไม่"
+  expense_date: "วันที่ออกใบเสร็จ"
+  expense_detail: "รายละเอียด"
+  input_total_price: "กรุณากรอกราคารวม"
+  check_total_price: "กรุณาตรวจสอบราคารวม"
+  check_line_item_or_total_price: "กรุณาตรวจสอบรายการหรือราคารวม\nราคาหรือจำนวนอาจผิดพลาด"
+  check_line_item: "กรุณาตรวจสอบรายการ\nราคาหรือจำนวนอาจผิดพลาด"
+  can_not_save: "ไม่สามารถบัทึกได้ กรุณาตรวจสอบข้อมูล\nราคาหรือจำนวนอาจผิดพลาด"
+  expense_edit_success: "แก้ไขรายการค่าใช้จ่ายเรียบร้อยเเล้ว"
+  expenses_create_failed: "ไม่สามารถบันทึกรายการค่าใช้จ่ายได้"
+  expenses_edit_failed: "ไม่สามารถแก้ไขรายการค่าใช้จ่ายได้"
+  expenses_delete_failed: "ไม่สามารถลบรายการค่าใช้จ่ายได้"
+  expense_list: 'รายการสั่งซื้อ'
+  tag: "แท็ก"
+  tag_desciption: "รายละเอียดแท็ก"
+  expenses_category_required_name: "กรุณาใส่ข้อมูลชื่อของประเภท"
+  expenses_category_setting: "ตั้งค่าประเภทค่าใช้จ่าย"
+  print_classification_report: "พิมพ์รายงานค่าใช้จ่ายแยกตามประเภท"
+  expenses_classification_report: "รายงานค่าใช้จ่ายแยกตามประเภท"
+  category: "ประเภท"
+  expenses_payment_report: "รายงานค่าใช้จ่ายแยกตามการชำระเงิน"
+  print_expenses_payment_report: "พิมพ์รายงานค่าใช้จ่ายแยกตามการชำระเงิน"
+  expense_category_placeholder: "ชื่อประเภทค่าใช้จ่าย"
+  expense_category_already_used: "ไม่สามารถลบประเภทค่าใช้จ่ายที่ยังถูกใช้งานอยู่ได้"
+
+  # All
+  save_change_confirmation: "คุณต้องการบันทึกการเปลี่ยนแปลงนี้หรือไม่"
+  save_success: "บันทึกข้อมูลเรียบร้อยแล้ว"
+  save_falied: "ไม่สามารถบันทึกข้อมูลได้"

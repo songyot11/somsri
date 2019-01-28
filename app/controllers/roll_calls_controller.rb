@@ -136,7 +136,7 @@ class RollCallsController < ApplicationController
       render json: { errors: "Invalid token or user not registered" }, status: 422 and return
     end
   end
-
+  
   private
   def add_round_property(datas, round)
     datas.each do |d|

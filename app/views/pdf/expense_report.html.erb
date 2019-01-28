@@ -1,0 +1,32 @@
+<div>
+  <h3 class="pt-10"><%= I18n.t('expense_list') %></h3>
+  <hr class="my-5">
+  <%= @date_time_string %>
+</div>
+<table class="font-12 header-table-page">
+  <tbody>
+    <thead class="bg-light-gray" display: table-row-group>
+      <td class="border-bottom-1 p-5 min-w-150 text-left"><b><%= I18n.t('date1') %></b></td>
+      <td class="border-bottom-1 p-5 min-w-150 text-left"><b><%= I18n.t('buy_slip') %></b></td>
+      <td class="border-bottom-1 p-5 min-w-300 text-left"><b><%= I18n.t('detail') %></b></td>
+      <td class="border-bottom-1 p-5 min-w-150 text-right"><b><%= I18n.t('total_cost') %></b></td>
+    </thead>
+    <% @results.each do |result| %>
+      <tr>
+        <td class="border-bottom-1 text-left p-5"><%= I18n.l(result.effective_date, format: '%d/%m/%Y')  %></td>
+        <td class="border-bottom-1 text-left p-5 font-roboto">
+        <% if (result.expenses_id == nil) %>
+          -
+        <% else %>
+          <%= result.expenses_id %>
+        <% end %>
+        </td>
+        <td class="border-bottom-1 text-left p-5 font-roboto"><%= result.detail %></td>
+        <td class="border-bottom-1 text-right p-5 font-roboto"><%= result.total_cost %></td>
+      </tr>
+    <% end %>
+  </tbody>
+</table>
+<div class="text-right pt-20">
+  <label class="text-currency numberic"><%= I18n.t('total_price') %> : <%= @total_price.round(2) %></label>
+</div>

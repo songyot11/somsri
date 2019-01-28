@@ -82,12 +82,22 @@ class Student < ApplicationRecord
     title = "ด.ญ." if self.gender_id == 2
     thaiName = self.full_name.nil? ? "" : self.full_name
     engName = self.full_name_english.nil? ? "" : self.full_name_english
-    if !thaiName.blank?
-      return "#{title} #{thaiName}".strip
-    elsif thaiName.blank? && !engName.blank?
-      title = "Master" if self.gender_id == 1
-      title = "Miss" if self.gender_id == 2
-      return "#{title} #{engName}".strip
+    if I18n.locale == :en
+      if !engName.blank?
+        title = "Master" if self.gender_id == 1
+        title = "Miss" if self.gender_id == 2
+        return "#{title} #{engName}".strip
+      else
+        return "#{title} #{thaiName}".strip
+      end
+    else
+      if !thaiName.blank?
+        return "#{title} #{thaiName}".strip
+      else
+        title = "Master" if self.gender_id == 1
+        title = "Miss" if self.gender_id == 2
+        return "#{title} #{engName}".strip
+      end
     end
   end
 
@@ -326,7 +336,15 @@ class Student < ApplicationRecord
   end
 
   def first_name
-    self.full_name.gsub(/\s+/m, ' ').strip.split(" ")[0]
+    self.full_name.present? ? self.full_name.gsub(/\s+/m, ' ').strip.split(" ")[0] : ""
+  end
+
+  def first_name_eng
+    self.full_name_english.present? ? self.full_name_english.gsub(/\s+/m, ' ').strip.split(" ")[0] : ""
+  end
+
+  def first_name_thai_or_eng
+    self.first_name.present? ? self.first_name : self.first_name_eng
   end
 
   def first_name=(value)
@@ -340,18 +358,17 @@ class Student < ApplicationRecord
   end
 
   def last_name
-    name_a = self.full_name.gsub(/\s+/m, ' ').strip.split(" ")
-    if name_a.size > 2
-      last_name_a = Array.new
-      name_a.each_with_index do |n, index|
-        if index > 0
-          last_name_a.push(n)
-        end
-      end
-      return "#{last_name_a.join(' ')}"
-    else
-      return "#{name_a[1]}"
-    end
+    return "" unless self.full_name
+    return self.full_name.gsub(/\s+/m, ' ').strip.split(" ").drop(1).join(' ')
+  end
+
+  def last_name_eng
+    return "" unless self.full_name_english
+    return self.full_name_english.gsub(/\s+/m, ' ').strip.split(" ").drop(1).join(' ')
+  end
+
+  def last_name_thai_or_eng
+    self.last_name.present? ? self.last_name : self.last_name_eng
   end
 
   def last_name=(value)
@@ -422,7 +439,7 @@ class Student < ApplicationRecord
 
   def invoice_screen_full_name_display
     if nickname.to_s.strip != '' && !self.full_name.blank?
-        return full_name_with_title + ' (' + nickname.to_s.strip + ')'
+      return full_name_with_title + ' (' + nickname.to_s.strip + ')'
     elsif nickname_english.to_s.strip != '' && !self.full_name_english.blank?
       return full_name_with_title + ' (' + nickname_english.to_s.strip + ')'
     else
@@ -512,7 +529,7 @@ class Student < ApplicationRecord
   end
 
   def img_medium
-    self.img_url.exists? ? self.img_url.url(:medium) : ''
+    self.img_url.exists? ? self.img_url.expiring_url(10, :medium) : ''
   end
 
   def as_json(options={})
@@ -520,13 +537,13 @@ class Student < ApplicationRecord
       return {
         img_url: self.img_medium,
         full_name: self.full_name_eng_thai_with_title,
-        nickname: self.nickname_eng_thai,
+        nickname: self.nickname.nil? ? "" : self.nickname_eng_thai,
         grade_id: self.grade.nil? ? "" : self.grade.name,
         classroom_id: self.classroom ? self.classroom.name : "",
-        classroom_number: self.classroom_number,
+        classroom_number: self.classroom_number.nil? ? "" : self.classroom_number,
         student_number: self.student_number,
         gender_id: self.gender.nil? ? "" : I18n.t(self.gender.name),
-        birthdate: self.birthdate.nil? ? '' : self.birthdate.strftime('%d/%m/%Y'),
+        birthdate: self.birthdate.nil? ? "" : self.birthdate.strftime('%d/%m/%Y'),
         id: self.id
       }
 

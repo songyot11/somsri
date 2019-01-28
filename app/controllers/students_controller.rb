@@ -173,7 +173,7 @@ class StudentsController < ApplicationController
         student_img_url = ""
         if student.img_url.exists?
           if Paperclip::Attachment.default_options[:storage] == :s3
-            student_img_url = student.img_url.url(:medium)
+            student_img_url = student.img_url.expiring_url(10, :medium)
           elsif Paperclip::Attachment.default_options[:storage] == :filesystem
             student_img_url = student.img_url.path(:medium)
           end
@@ -483,7 +483,7 @@ class StudentsController < ApplicationController
     })
 
     result = {
-      img: student.img_url.exists? ? student.img_url.url(:medium) : nil,
+      img: student.img_url.exists? ? student.img_url.expiring_url(10, :medium) : nil,
       name: student.invoice_screen_full_name_display,
       id: student.id
     }

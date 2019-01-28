@@ -54,10 +54,7 @@
 
       function cleanDate(date){
         if(!date || new Date(date) == "Invalid Date"){return;}
-        var cleanedDate = new Date()
-        cleanedDate.setDate(date.getDate())
-        cleanedDate.setMonth(date.getMonth())
-        cleanedDate.setYear(date.getFullYear())
+        var cleanedDate = new Date(date)
         return cleanedDate
       }
 

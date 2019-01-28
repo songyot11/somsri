@@ -409,7 +409,8 @@ textarea {
 }
 
 .form-slip-forslip-copy,
-.for-print{
+.for-print,
+.for-print-table{
   display: none;
 }
 
@@ -1094,7 +1095,7 @@ th.table-foot-top,td.table-foot-top{
 .nav-for-print-report{
   height: 80px;
   margin-left: -15px;
-  margin-top: -100px;
+  margin-top: -105px;
   width: 100%;
   background-color: #3fa1e6;
   position: fixed;
@@ -1714,6 +1715,11 @@ label.img-default{
   .for-print{
     display: block;
   }
+
+  .for-print-table{
+    display: table;
+  }
+  
   .container.form-slip-forslip.ng-scope, main.form-slip-forslip.ng-scope{
     margin-top: 150px !important;
   }

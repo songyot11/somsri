@@ -135,7 +135,7 @@ class Employee < ApplicationRecord
         salary: has_last_closed_payroll ? self.last_closed_payroll.salary.to_f : 0,
         extra_fee: has_last_closed_payroll ? self.last_closed_payroll.extra_fee.to_f : 0,
         extra_pay: has_last_closed_payroll ? self.last_closed_payroll.extra_pay.to_f : 0,
-        img: self.img_url.exists? ? self.img_url.url(:medium) : nil,
+        img: self.img_url.exists? ? self.img_url.expiring_url(10, :medium) : nil,
         deleted_at: self.deleted_at
       }
     else

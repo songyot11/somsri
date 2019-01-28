@@ -19,6 +19,10 @@ class Ability
       can :manage, Classroom
       can :manage, Alumni
       can :read, SiteConfig
+      can :manage, Expense
+      can :manage, ExpenseTag
+      can :manage, ExpenseTagItem
+      can :manage, ExpenseItem
     end
   end
 
@@ -29,6 +33,7 @@ class Ability
     manage[:invoice] = true if self.can? :manage, Invoice
     manage[:daily_report] = true if self.can? :manage, DailyReport
     manage[:roll_call] = true if self.can? :manage, RollCall
+    manage[:expense] = true if self.can? :manage, Expense
     manage[:report_roll_call] = true if self.can? :manage, :report_roll_call
     manage[:student] = true if self.can? :manage, Student
     manage[:parent] = true if self.can? :manage, Parent

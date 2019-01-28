@@ -7,9 +7,17 @@ Rails.application.routes.draw do
   get "/somsri_invoice" => "menu#landing_invoice"
   get "/somsri_payroll" => "menu#landing_payroll"
   get "/somsri_rollcall" => "menu#landing_rollcall"
+  get "/somsri" => "menu#landing_somsri"
   get "/main" => "menu#landing_main"
   get "/language" => "home#language"
   get "/locale" => "home#locale"
+
+  resources :users, only: [] do
+    collection do
+      get "me"
+      get "site_config"
+    end
+  end
 
   resources :payrolls, only: [:index, :update, :create] do
     collection do
@@ -25,6 +33,20 @@ Rails.application.routes.draw do
     end
   end
 
+  resources :expenses, only: [:index, :create, :destroy, :show, :update] do
+    member do
+      patch 'upload_photo'
+    end
+    collection do
+      get "report_by_tag"
+      get "report_by_payment"
+    end
+  end
+  resources :expense_tags, only: [:index] do
+    collection do
+      post 'save'
+    end
+  end
   resources :skills, only: [:index, :create]
   resources :employees, only: [:index, :create, :show, :update, :destroy]  do
     resources :employee_skills, except: %i[show new edit]

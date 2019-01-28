@@ -15,9 +15,21 @@ describe 'Abilities', js: true do
     SiteConfig.make!({ enable_rollcall: true })
   end
 
+  let(:expenses) do
+    [
+      Expense.make!(
+        effective_date: DateTime.now,
+        expenses_id:'vanz114214',
+        detail:'ค่ารถตู้ใหม่ผอ.',
+        total_cost: 7500000
+      )
+    ]
+  end
+
   before do
     users[0].add_role :admin
     users[1].add_role :finance_officer
+    expenses
   end
 
   describe 'Admin abilities' do
@@ -133,6 +145,30 @@ describe 'Abilities', js: true do
       expect(page).to have_content 'นักเรียน'
     end
 
+    it 'can goto setting expense tags' do
+      visit "/somsri#/expenses/setting"
+      sleep(1)
+      expect(page).to have_content 'ตั้งค่าประเภทค่าใช้จ่าย'
+    end
+
+    it 'can goto expenses list' do
+      visit "/somsri#/expenses"
+      sleep(1)
+      expect(page).to have_content 'บันทึกค่าใช้จ่าย'
+    end
+
+    it 'can goto create expenses' do
+      visit "/somsri#/expenses/new"
+      sleep(1)
+      expect(page).to have_content 'เพิ่มรายการค่าใช้จ่าย'
+    end
+
+    it 'can goto edit expenses' do
+      visit "/somsri#/expenses/1"
+      sleep(1)
+      expect(page).to have_content 'แก้ไขรายการค่าใช้จ่าย'
+    end
+
   end
 
   describe 'Finance Officer abilities' do
@@ -237,6 +273,30 @@ describe 'Abilities', js: true do
       visit "/admin"
       sleep(1)
       expect(page).to have_current_path '/'
+    end
+
+    it 'can goto setting expense tags' do
+      visit "/somsri#/expenses/setting"
+      sleep(1)
+      expect(page).to have_current_path '/'
+    end
+
+    it 'can goto expenses list' do
+      visit "/somsri#/expenses"
+      sleep(1)
+      expect(page).to have_content 'บันทึกค่าใช้จ่าย'
+    end
+
+    it 'can goto create expenses' do
+      visit "/somsri#/expenses/new"
+      sleep(1)
+      expect(page).to have_content 'เพิ่มรายการค่าใช้จ่าย'
+    end
+
+    it 'can goto edit expenses' do
+      visit "/somsri#/expenses/1"
+      sleep(1)
+      expect(page).to have_content 'แก้ไขรายการค่าใช้จ่าย'
     end
   end
 
@@ -345,6 +405,34 @@ describe 'Abilities', js: true do
       sleep(1)
       expect(page).to have_current_path '/users/sign_in'
       expect(page).to have_content 'ให้ฉันอยู่ในระบบต่อไป'
+    end
+
+    it 'can goto setting expense tags' do
+      visit "/somsri#/setting/expenses_tag"
+      sleep(1)
+      expect(page).to have_current_path '/users/sign_in'
+      expect(page).to have_content 'Keep me signed in'
+    end
+
+    it 'can goto expenses list' do
+      visit "/somsri#/expenses"
+      sleep(1)
+      expect(page).to have_current_path '/users/sign_in'
+      expect(page).to have_content 'Keep me signed in'
+    end
+
+    it 'can goto create expenses' do
+      visit "/somsri#/expenses/new"
+      sleep(1)
+      expect(page).to have_current_path '/users/sign_in'
+      expect(page).to have_content 'Keep me signed in'
+    end
+
+    it 'can goto edit expenses' do
+      visit "/somsri#/expenses/1"
+      sleep(1)
+      expect(page).to have_current_path '/users/sign_in'
+      expect(page).to have_content 'Keep me signed in'
     end
 
   end

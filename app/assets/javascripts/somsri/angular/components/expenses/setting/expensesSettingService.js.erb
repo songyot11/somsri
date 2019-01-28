@@ -1,0 +1,29 @@
+(function() {
+  'use strict';
+
+  angular.module('somsri.somsri.expenses_setting.service', [
+  ])
+  .service('expensesSettingService', ['$http', '$q', function($http, $q) {
+
+    var getExpenseSettingsCanceler = $q.defer()
+    this.getExpenseSettings = function(params) {
+      getExpenseSettingsCanceler.resolve()
+      getExpenseSettingsCanceler = $q.defer()
+      return $http.get('/expense_tags/', {
+        timeout: getExpenseSettingsCanceler.promise,
+        params: params
+      })
+    }
+
+    var saveExpenseSettingsCanceler = $q.defer()
+    this.saveExpenseSettings = function(data) {
+      saveExpenseSettingsCanceler.resolve()
+      saveExpenseSettingsCanceler = $q.defer()
+      return $http.post('/expense_tags/save', {
+        timeout: saveExpenseSettingsCanceler.promise,
+        data: data
+      })
+    }
+
+  }]);
+})();

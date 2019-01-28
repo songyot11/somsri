@@ -64,8 +64,8 @@ class RollCall < ApplicationRecord
       st = Student.where(id: student_id).first if self.student.blank?
       {
         code: st.code,
-        first_name: st.first_name,
-        last_name: st.last_name,
+        first_name: st.first_name_thai_or_eng,
+        last_name: st.last_name_thai_or_eng,
         prefix: st.prefix,
         number: st.number,
         status: self.status,

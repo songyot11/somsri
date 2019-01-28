@@ -13,6 +13,7 @@
  *= require bootstrap/dist/css/bootstrap.min.css
  *= require angular-xeditable/dist/css/xeditable
  *= require font-awesome
+ *= require bootstrap-table
  *= require_self
  */
 
@@ -382,4 +383,10 @@ td.status_rollcall_data{
     color: #5B5B5B;
     border: 2px solid #5B5B5B;
   }
+}
+.somsri-rollcall .modal-content flash-message-content .alert{
+  position: absolute;
+  width: 90%;
+  top: 15px;
+  left: 40px;
 }

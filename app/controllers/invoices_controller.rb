@@ -270,15 +270,16 @@ class InvoicesController < ApplicationController
 
     school = School.first
     slip_info = {
-      header: school.invoice_header,
+      header: school.invoice_header_with_logo,
       footer: school.invoice_footer,
-      logo: school.logo.url(:medium),
+      logo: school.logo_url,
       slip_id: @invoice.id,
       thai_now_date: I18n.l(@invoice.created_at, format: "%d %B #{@invoice.created_at.year + 543}"),
       eng_now_date: @invoice.created_at.strftime("%d %B %Y"),
       semester: @invoice.semester,
       school_year: @invoice.school_year,
       school_year_en: (@invoice.school_year.to_i - 543).to_s,
+      create_year: @invoice.created_at.year + 543,
       payment_methods: [],
       remark: @invoice.remark,
       grade_name: grade_name,

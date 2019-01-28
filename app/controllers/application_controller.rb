@@ -30,7 +30,7 @@ class ApplicationController < ActionController::Base
 
   def qry_date_range(qry, data_field, start_date, end_date)
     if start_date && end_date
-      qry = qry.where(created_at: start_date..end_date)
+      qry = qry.where(data_field.between(start_date..end_date))
     elsif start_date
       qry = qry.where(data_field.gt(start_date))
     elsif end_date
@@ -48,6 +48,22 @@ class ApplicationController < ActionController::Base
   def flash_message_list(message_list)
     html = message_list.collect { |obj| "<li>#{obj}</li>" }.join('')
     return "<u>#{html}</u>"
+  end
+
+  def start_end_date_to_string_display(start_date, end_date)
+    if start_date && end_date
+      if start_date.to_date == end_date.to_date
+        return I18n.t('this_date') + " " + I18n.l(start_date, format: '%d/%m/%Y')
+      else
+        return I18n.t('from') + " " + I18n.l(start_date, format: '%d/%m/%Y') + " " + I18n.t('to') + " " + I18n.l(end_date, format: '%d/%m/%Y')
+      end
+    elsif start_date && !end_date
+      return I18n.t('from_date') + " " + I18n.l(start_date, format: '%d/%m/%Y')
+    elsif !start_date && end_date
+      return I18n.t('to_date') + " " + I18n.l(end_date, format: '%d/%m/%Y')
+    else
+      return I18n.t('from_all')
+    end
   end
 
   protected
