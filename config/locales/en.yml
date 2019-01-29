@@ -203,6 +203,7 @@ en:
   grade: "Grade"
   item_no: "No."
   item_desc: "Description"
+  choose_level: "Choose Level"
 
   invoice_form: "Invoice"
   date1: "Date"
@@ -326,6 +327,7 @@ en:
         student_number: "Student No."
         national_id: "ID"
         remark: "Comment / remark"
+        nationality: "Nationality"
       payroll:
         salary: "Salary "
         allowance: "Allowance"

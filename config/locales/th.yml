@@ -203,6 +203,7 @@ th:
   grade: "ชั้น"
   item_no: "ลำดับที่"
   item_desc: "รายการ"
+  choose_level: "ระบุชั้นเรียน"
 
   invoice_form: "แบบชำระเงิน"
   date1: "วันที่"
@@ -320,6 +321,7 @@ th:
         student_number: "เลขประจำตัวนักเรียน"
         national_id: "รหัสประจำตัวประชาชน"
         remark: "หมายเหตุ / remark"
+        nationality: "สัญชาติ"
       payroll:
         salary: "เงินเดือน"
         allowance: "เบี้ยเลี้ยง"

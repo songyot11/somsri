@@ -99,7 +99,7 @@
           <tfoot class="font-18">
             <tr>
               <td colspan="3" class="text-currency font-weight-bold">{{ 'total_price' | translate }} : </td>
-              <td class="numberic text-right font-weight-bold">{{ expenses.total_all_price.toFixed(2) }}</td>
+              <td class="numberic text-right font-weight-bold">{{ expenses.total_all_price.toFixed(2) | number:2 }}</td>
               <td></td>
             </tr>
           </tfoot>

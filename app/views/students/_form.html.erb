@@ -57,7 +57,7 @@
         </div>
       </div>
       <div class="row add-st-pr">
-        <div class="col-md-3">
+        <div class="col-md-4">
           <div class="form-group ">
             <%= f.label :gender_id, :class => 'control-label' %>
             <div class="col-md-12">
@@ -70,6 +70,14 @@
             <%= f.label :birthdate, :class => 'control-label' %>
             <div class="col-md-12">
               <%= f.date_field :birthdate, :class => 'form-control',:data => {:provide => :datepicker} %>
+            </div>
+          </div>
+        </div>
+        <div class="col-md-4">
+          <div class="form-group ">
+            <%= f.label :nationality, :class => 'control-label' %>
+            <div class="col-md-12">
+              <%= f.text_field :nationality, :class => 'form-control' , autocomplete: "off" %>
             </div>
           </div>
         </div>
@@ -202,20 +210,31 @@ function parentChanged(target){
   if($(target).val()){
     $("#relationship" + index).prop("disabled", false)
     $("#mobile" + index).prop("disabled", false)
+    $("#email" + index).prop("disabled", false)
   }else{
     $("#relationship" + index).prop("disabled", true)
     $("#mobile" + index).prop("disabled", true)
+    $("#email" + index).prop("disabled", true)
   }
 
   // autocomplete mobile
   var parentMobile = []
+  var parentEmail = []
   <% @parents.each do |ps| %>
-    parentMobile.push({id: '<%= ps.id %>', mobile: '<%= ps.mobile %>'})
+    parentMobile.push({id: '<%= ps.id %>', mobile: '<%= ps.mobile %>', email: '<%= ps.email %>'})
+  <% end %>
+  <% @parents.each do |ps| %>
+    parentEmail.push({id: '<%= ps.id %>', email: '<%= ps.email %>'})
   <% end %>
   var parentId = $(target).val()
-  for(var i = 0; i<parentMobile.length; i++){
+  for(var i = 0; i < parentMobile.length; i++){
     if(parentMobile[i]["id"] == parentId){
       $('#mobile' + index).val(parentMobile[i]["mobile"])
+    }
+  }
+  for(var i = 0; i < parentEmail.length; i++){
+    if(parentEmail[i]["id"] == parentId){
+      $('#email' + index).val(parentEmail[i]["email"])
     }
   }
 }
@@ -242,8 +261,11 @@ $(function() {
               <% end %>\
             </select>\
           </div>\
-          <div class="col-md-3">\
+          <div class="col-md-2">\
             <input type="text" id="mobile'+round+'" placeholder="โทรศัพท์" name="mobile[]" class="form-control" disabled="true">\
+          </div>\
+          <div class="col-md-3">\
+            <input type="text" id="email'+round+'" placeholder="อีเมล์" name="email[]" class="form-control" disabled="true">\
           </div>\
           <div class="col-md-1">\
             <button type="button" class="btn btn-delete-sp" onclick="remove_parent('+round+')"><i class="fa fa-times"></i></button>\
