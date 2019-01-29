@@ -163,15 +163,15 @@
         <%= @results[:footer].html_safe if @results[:footer] %>
       </div>
     </div>
-    <div class="col-xs-6 mt-80 ml-60p">
-      <div class="row">
-        <div class="col-xs-12">&nbsp;&nbsp;&nbsp;&nbsp;<%= I18n.t('sign') %>...........................................................<%= I18n.t('receiver') %></div>
-      </div>
-      <div class="row">
-        <div class="col-xs-1"> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;( </div>
-        <div class="col-xs-6 text-center"><%= @results[:receiver_name] %></div>
-        <div class="col-xs-1"> )</div>
-      </div>
+  </div>
+  <div class="col-xs-6 mt-80 ml-60p">
+    <div class="row">
+      <div class="col-xs-12"><%= I18n.t('sign') %>........................................................................<%= I18n.t('receiver') %></div>
+    </div>
+    <div class="row">
+      <div class="col-xs-1">( </div>
+      <div class="col-xs-7 text-center"><%= @results[:receiver_name] %></div>
+      <div class="col-xs-1"> )</div>
     </div>
   </div>
   <div class="page-break"></div>

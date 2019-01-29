@@ -159,6 +159,9 @@
       reportService.getMonths().then(function(resp) {
         if (resp.data.length > 0) {
           ctrl.effectiveDates = resp.data
+          if (I18n.currentLocale() == 'en'){
+            changeYear(ctrl.effectiveDates)
+          }
           var current = ctrl.effectiveDates[0]
           if(effectiveDateParm){
             for(var i = 0; i < ctrl.effectiveDates.length; i++){
@@ -179,6 +182,15 @@
           });
         }
       });
+    }
+
+    function changeYear(effectiveDates){
+      for(var i = 0; i < effectiveDates.length; i++){
+        if (i != 0){
+          var year = effectiveDates[i]["date_string"].split(" ")[2]
+          ctrl.effectiveDates[i]["date_string"] = effectiveDates[i]["date_string"].replace(year, year - 543);
+        }
+      }
     }
 
     function checkIfLastedPayroll(){
@@ -216,16 +228,16 @@
     ctrl.employeeTypeFilter = function (){
       var mode = [];
       if(ctrl.employeeTypeMode.normal){
-        mode.push(translateFilter("employee_full_time"));
+        mode.push("ลูกจ้างประจำ");
       }
       if(ctrl.employeeTypeMode.temporary){
-        mode.push(translateFilter("employee_part_time"));
+        mode.push("ลูกจ้างชั่วคราว");
       }
       if(ctrl.employeeTypeMode.probationary){
-        mode.push(translateFilter("employee_probation"));
+        mode.push("ลูกจ้างทดลองงาน");
       }
       if(ctrl.employeeTypeMode.daily){
-        mode.push(translateFilter("employee_daily"));
+        mode.push("ลูกจ้างรายวัน");
       }
       var employees = JSON.parse(JSON.stringify(ctrl.employees_origin));
       for(var i = 0; i < employees.length; i++){

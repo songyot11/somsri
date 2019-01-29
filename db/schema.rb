@@ -504,7 +504,7 @@ ActiveRecord::Schema.define(version: 20190107080841) do
     t.boolean "export_ktb_payroll",                   default: false
     t.boolean "outstanding_notification",             default: false
     t.boolean "slip_carbon",                          default: false
-    t.string  "default_locale"
+    t.string  "default_locale",                       default: "th"
     t.boolean "enable_expenses",                      default: false
     t.string  "expense_tag_tree"
   end

@@ -20,7 +20,18 @@
 # available at http://guides.rubyonrails.org/i18n.html.
 
 en:
+  user_name: User Name
+  password: Password
+  keep_me_signed_in: Keep me signed in
+  sign_in: Sign in
+  download_somsri_rollcall: Download Somsri Rollcall
   #Payroll
+  roll_download : Download Rollcall
+  switch_language : Switch language
+  emp_name : Name
+  current_month : Current Month
+  find : Search
+  title : Somsri - Management system for school
   export: Export
   salary: Salary
   current_payroll: "Wage / Salary"
@@ -36,7 +47,7 @@ en:
   payroll_table: "Payroll"
   income_list: "Income"
   outcome_list: "Outcome"
-  employee_code: "Employee Id"
+  employee_code: "ID"
   employee_name: "Fullname"
   employee_allowance: "Allowance"
   employee_pvf: "PVF"
@@ -78,6 +89,16 @@ en:
   ms: Ms.
   miss: Miss.
 
+  signature: "Signature"
+  private_teacher_fund: "Private Teacher Aid fund"
+  acc_social: "Acc. Social fund"
+  acc_tax: "Acc. Tax"
+  acc_income: "Acc. Income"
+  net_income: "Net Income"
+  day_month_year: Day / Month / Year
+  total_deduction: "Total Deduction"
+  total_income: "Total Income"
+  deduction: "Deduction"
   add_new_employee: "Add Employee"
   full_name: "Full Name"
   position: "Position"
@@ -122,11 +143,11 @@ en:
   confirm_recovery_employee: "Do you want to restore employee"
   confirm_delete_employee: "Do you want to delete employee?"
   confirm_delete_record: "Do you want to delete?"
-  first_name_thai: "First Name"
-  last_name_thai: "Last Name"
-  first_name_en: "Name"
-  middle_name_en: "Middle Name"
-  last_name_en: "Last Name"
+  first_name_thai: "First Name (Thai)"
+  last_name_thai: "Last Name (Thai)"
+  first_name_en: "First Name (Eng)"
+  middle_name_en: "Middle Name (Eng)"
+  last_name_en: "Last Name (Eng)"
 
   # tax
   other_deduction: "Other"
@@ -177,7 +198,8 @@ en:
   print_receipt: "Print"
   delivery_note: "Daily Report"
   payment_report: "Payment Report"
-  classification_report: "Detailed Payment Report"
+  classification_report_1: "Detailed Payment Report 1"
+  classification_report_2: "Detailed Payment Report 2"
   grade: "Grade"
   item_no: "No."
   item_desc: "Description"
@@ -195,7 +217,8 @@ en:
   payment_channel: "Payment method"
   cash: "Cash"
   pay_error: "Amount of the payment methods are mismatched."
-  sum: "sum"
+  sum: "Sum"
+  no_data: "Data not found"
 
   receipt_search: "Search by Receipt, Invoice, Student's name, Parent's name"
   receipt_report: "Report"
@@ -217,7 +240,7 @@ en:
   remark: "Remark"
 
   semester: "Semester"
-  semester_nofix: "All semesters"
+  semester_nofix: "All"
   payment_status: "Payment status"
   number1: "Number"
   tuition_fee: "Tuition Fee"
@@ -225,12 +248,19 @@ en:
   year_paid_amount: "Annual paid Amount"
   total_paid: "Amount paid"
   paid_date: "Payment Date"
+  all_semesters: "All"
 
   show_invoices: "Display Invoices"
   chose_type: "Choose"
   student_report_filename: "student_payment_"
   paid: "Paid"
   unpaid: "Unpaid"
+  ชำระแล้ว: "Paid"
+  ยังไม่ได้ชำระ: "Unpaid"
+  เงินสด: "Cash"
+  เงินโอน: "Bank Transfer"
+  เช็คธนาคาร: "Cheque"
+  บัตรเครดิต: "Credit Card"
 
   example: "example"
   save: "Save"
@@ -258,8 +288,10 @@ en:
   select: Select
   select_all: Select All
   close_without_save: "Do you want to leave this screen?"
+  save_data: "Do you want to save this change?"
 
   hello: "Hello world"
+  print_delivery_money: "Print Delivery Money"
 
   #Menu
   payroll: "Payroll"
@@ -272,7 +304,6 @@ en:
   setting: 'Settings'
   class_management: "Grade Management"
   expense: "Expense"
-
 
   activerecord:
     attributes:
@@ -298,33 +329,26 @@ en:
         remark: "Comment / remark"
         nationality: "Nationality"
       payroll:
-        salary: "เงินเดือน / Salary"
-        allowance: "เบี้ยเลี้ยง / Shift"
-        attendance_bonus: "เบี้ยขยัน / Attendance Bonus"
-        ot: "เงินสอนพิเศษ / After School Class"
-        bonus: "โบนัส / Bonus"
-        position_allowance: "ค่าตำแหน่ง / Posticion"
-        extra_etc: "รายได้อื่นๆ / Etc."
-        absence: "ขาดงาน / Absence"
-        late: "สาย / Late"
-        tax: "ภาษี / Tax"
-        social_insurance: "ประกันสังคม / Social Sec."
-        fee_etc: "หักอื่นๆ / Etc."
-        pvf: "เงินสะสมกองทุนสงเคราะห์ / Private Teacher Aid fund"
-        advance_payment: "เบิกล่วงหน้า / Adv. Payment"
+        salary: "Salary "
+        allowance: "Allowance"
+        attendance_bonus: "Attendance Bonus"
+        ot: "After School Class"
+        bonus: "Bonus"
+        position_allowance: "Position Allowance"
+        extra_etc: "Etc."
+        absence: "Absence"
+        late: "Late"
+        tax: "Tax"
+        social_insurance: "Social Sec."
+        fee_etc: "Etc."
+        pvf: "Private Teacher Aid fund"
+        advance_payment: "Adv. Payment"
 
   date:
     month_names: [~, January, February, March, April, May, June, July, August, September, October, November, December]
     abbr_month_names: [~, Jan, Feb, Mar, Apr, May, Jun, Jul, Aug, Sep, Oct, Nov, Dec]
 
-  #Grade
-  Preschool: "Preschool"
-  Kindergarten1: "K.1"
-  Kindergarten2: "K.2"
-  Kindergarten3: "K.3"
-  Kindergarten 1: "K.1"
-  Kindergarten 2: "K.2"
-  Kindergarten 3: "K.3"
+
 
   #Gender
   Male: "Male"
@@ -385,6 +409,8 @@ en:
   parent_info_cannot_save: "Cannot save parent information : "
   parent_info_success_save: "Parent save successfully"
   parent_delete_success: "Parent delete successfully"
+  search_parent: "Search name parent"
+  select_parent: "Select parent..."
 
   #Students
   add_parent: "+ Add parent"
@@ -424,12 +450,19 @@ en:
   birthday_1: "Birthdate"
   student_male: "Master"
   student_female: "Miss"
+  topic: "Student list   Level .......................................... Semester ..../"
+  select_gender: "Select Gender"
+  select_grade: "Select Grade"
+  select_class: "Select Class"
+  search_student: "Search name student"
+  select_students: "Select student..."
 
   #Alumni
   year_of_graduation: "Graduation Year"
   status: "Status"
   graduated_semester: "Graduation Semester"
   grade_classroom: "Level"
+  locale: "en"
 
   # Rollcall
   monthly: "Month"
@@ -466,20 +499,40 @@ en:
   edit_classroom: "Edit Classroom"
   up_grade_classroom: "Promote Students"
   up_grade_classroom2: "Promote"
-  no_of_teacher: "#Teacher"
-  no_of_student: "#Student"
+  no_of_teacher: "Teachers"
+  no_of_student: "Students"
   gradulated: Gradulated
   up_grade_classroom_all: "Do you want to promote all students?"
   current_grade_classroom: "Current Classroom"
-  select_student: "+ Choose student"
-  select_teacher: "+ Choose teacher"
+  select_student: "+ Choose Student"
+  select_teacher: "+ Choose Teacher"
   teacher: "Teacher"
   student: "Student"
-  classroom_is_exist: "*This classroom is exist."
+  classroom_is_exist: "* This classroom is exist."
+  next_classroom: "Next Classroom"
 
+  social_insurance_pdf: "No employees have to pay Social Security."
   skill: Skill
   score: Score
   add: Add
+  
+  confirm_delete: Do you want to delete the classroom? (Deleting a classroom will not cause the student and teacher in the room to disappear.)
+  bringback: Bring back to system
+  # Option menu
+  choice: "Choice"
+  edit: "Edit"
+  resign: "Resing from school"
+  delete: "Delete"
+  del_student: "Do you want to delete this student yes or no ?"
+  change_status_student_graduated: 'Would you like to change this student status "graduated" yes or no ?'
+  change_status_student_resign: 'Would you like to change this student status "resign" yes or no ?'
+  del_parent: "Do you want to delete this parent yes or no ?"
+
+  #Alert Payment
+  alertpayment: Please check your outstanding charges
+  back_to_menu: Back to the main menu
+  sorry_to_pay: Somsri sorry, if you pay for the service
+  application_issue: If you have problems using the somsri.io an be contacted at number
 
     # Expenses
   create_new_expenses: "New Expenses"

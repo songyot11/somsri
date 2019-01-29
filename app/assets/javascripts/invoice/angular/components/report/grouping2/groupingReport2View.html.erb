@@ -7,12 +7,12 @@
     <div class="row head-menu">
       <div class="col-xs-6">
         <h1 class="text-h-print">
-          {{ 'classification_report' | translate }}
+          {{ 'classification_report_2' | translate }}
         </h1>
       </div>
       <div class="col-xs-6 text-right">
         <a href="#/grouping_report" class="btn btn-custom btn-black" onclick="window.print()"><i class='fa fa-print'></i> {{ 'print_report' | translate }}</a>
-        <button class="btn btn-custom btn-blue-sky" ng-click="groupingReport2.exportExcel()"><i class="fa fa-share-square-o" aria-hidden="true"></i> Export</button>
+        <button class="btn btn-custom btn-blue-sky" ng-click="groupingReport2.exportExcel()"><i class="fa fa-share-square-o" aria-hidden="true"></i>  {{ 'export' | translate }}</button>
       </div>
      </div>
     <div class="unused_for_print col-xs-12">
@@ -120,38 +120,38 @@
               <thead ng-if="groupingReport2.getReportMode() == 'per_student'">
                <tr>
                  <th>Invoice</th>
-                 <th class="first-column-th">ชื่อ</th>
-                 <th class="first-column-classroom">ชั้น</th>
+                 <th class="first-column-th">{{ 'emp_name' | translate }}</th>
+                 <th class="first-column-classroom">{{ 'grade' | translate }}</th>
                  <th ng-repeat="header in groupingReport2.datas.header track by $index"class="another-column-th">{{ header }}</th>
                </tr>
               </thead>
               <thead ng-if="groupingReport2.getReportMode() == 'per_invoice'">
                <tr>
                  <th>Invoice</th>
-                 <th class="min-w-50">วันที่</th>
-                 <th class="first-column-th">ชื่อ</th>
-                 <th class="first-column-classroom">ชั้น</th>
+                 <th class="min-w-50">{{ 'today' | translate }}</th>
+                 <th class="first-column-th">{{ 'emp_name' | translate }}</th>
+                 <th class="first-column-classroom">{{ 'grade' | translate }}</th>
                  <th ng-repeat="header in groupingReport2.datas.header track by $index"class="another-column-th">{{ header }}</th>
                </tr>
               </thead>
               <thead ng-if="groupingReport2.getReportMode() == 'per_day'">
                <tr>
-                 <th class="min-w-50">วันที่</th>
+                 <th class="min-w-50">{{ 'today' | translate }}</th>
                  <th ng-repeat="header in groupingReport2.datas.header track by $index"class="another-column-th">{{ header }}</th>
                </tr>
               </thead>
               <tbody>
                 <tr>
                   <td class="border-1" colspan="99">
-                    <div class="color-gray top-45p">ไม่พบข้อมูล</div>
+                    <div class="color-gray top-45p">{{ 'no_data' | translate }}</div>
                   </td>
                 </tr>
               </tbody>
               <tfoot>
                 <tr>
-                  <td ng-show="groupingReport2.getReportMode() == 'per_student'" colspan="3" class="text-center">รวมทั้งหมด</td>
-                  <td ng-show="groupingReport2.getReportMode() == 'per_invoice'" colspan="4" class="text-center">รวมทั้งหมด</td>
-                  <td ng-show="groupingReport2.getReportMode() == 'per_day'" class="text-center">รวมทั้งหมด</td>
+                  <td ng-show="groupingReport2.getReportMode() == 'per_student'" colspan="3" class="text-center">{{ 'total' | translate }}</td>
+                  <td ng-show="groupingReport2.getReportMode() == 'per_invoice'" colspan="4" class="text-center">{{ 'total' | translate }}</td>
+                  <td ng-show="groupingReport2.getReportMode() == 'per_day'" class="text-center">{{ 'total' | translate }}</td>
                   <td ng-repeat="total in groupingReport2.datas.total track by $index" class="text-currency numberic">{{total.toFixed(2) | number:2}}</td>
                 </tr>
               </tfoot>

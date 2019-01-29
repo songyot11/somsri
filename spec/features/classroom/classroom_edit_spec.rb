@@ -140,10 +140,8 @@ describe 'Classroom Edit', js: true do
 
   it 'should display all student in classroom' do
     visit "/main#/classroom/#{classrooms[0].id}"
-    sleep(1)
+    sleep(4)
     click_link("นักเรียน")
-    sleep(1)
-    eventually { expect(page).to have_content("สมศรี3 ใบเสร็จ สมศรี2 ใบเสร็จ สมศรี1 ใบเสร็จ") }
     eventually { expect(page).to have_content("จำนวน 3 คน") }
   end
 
@@ -157,10 +155,10 @@ describe 'Classroom Edit', js: true do
     sleep(1)
     eventually { expect(page).to have_content("นาย สมจิตร เป็นนักมวย") }
     eventually { expect(page).to have_content("นาง สมใจ เป็นคน") }
-    click_button("+ สร้างคุณครูใหม่")
+    click_button("+ สร้าง คุณครู")
     sleep(1)
     within('div#create-member-modal') do
-      eventually { expect(page).to have_content("สร้างคุณครูใหม่") }
+      eventually { expect(page).to have_content("สร้าง คุณครู") }
       fill_in "ชื่อ - นามสกุล",  with: "นางสาว ครูใหม่ ไฟแรง"
       fill_in "ชื่อเล่น",  with: "ไฟแรงๆ"
       click_button('บันทึก')
@@ -209,8 +207,8 @@ describe 'Classroom Edit', js: true do
       click_button("+ เลือกนักเรียน")
       eventually { expect(page).to have_content("สมศรี3 ใบเสร็จ") }
       eventually { expect(page).to have_content("สมศรี4 ใบเสร็จ") }
-      click_button("+ สร้างนักเรียนใหม่")
-      eventually { expect(page).to have_content("สร้างนักเรียนใหม่") }
+      click_button("+ สร้าง นักเรียน")
+      eventually { expect(page).to have_content("สร้าง นักเรียน") }
       sleep(1)
       within('div#create-member-modal') do
         fill_in "ชื่อ - นามสกุล",  with: "สมเสร็จ ใบศรี"

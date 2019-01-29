@@ -125,18 +125,13 @@
                 </div>
               </div>
             </div>
+
             <div class="checkbox row">
-              <div class="col-md-2">
-                <label><input type="checkbox" ng-true-value="true" ng-false-value="false" ng-model="invoice.datas.payment_method.is_transfer">&nbsp;&nbsp;{{ 'bank_transfer' | translate }}</label>
-              </div>
-              <div class="input-bank">
-                <div class="col-md-3 col-payment">
-                  <input type="text" placeholder="{{ 'bank_name' | translate }}" class="form-control" ng-model="invoice.datas.payment_method.transfer_bank_name">
-                </div>
-                <div class="col-md-3">
-                  <input type="text" placeholder="{{ 'bank_check_date' | translate }}" class="form-control" ng-model="invoice.datas.payment_method.transfer_date">
-                </div>
-              </div>
+                <div class="col-md-9">
+                    <label><input type="checkbox" ng-true-value="true" ng-false-value="false" ng-model="invoice.datas.payment_method.is_transfer">&nbsp;&nbsp;{{ 'bank_transfer' | translate }}</label>
+                    <input type="text" placeholder="{{ 'bank_name' | translate }}" class="form-control w-30p d-inline-block ml-20" ng-model="invoice.datas.payment_method.transfer_bank_name">
+                    <input type="text" placeholder="{{ 'bank_check_date' | translate }}" class="form-control w-30p d-inline-block ml-20" ng-model="invoice.datas.payment_method.transfer_date">
+                  </div>
             </div>
           </div>
         </div>

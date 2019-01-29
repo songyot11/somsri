@@ -61,7 +61,7 @@
           <div class="form-group ">
             <%= f.label :gender_id, :class => 'control-label' %>
             <div class="col-md-12">
-              <%= f.collection_select :gender_id, Gender.all_cached, :id, :name, {prompt: "โปรดเลือกเพศ"}, {class: "form-control"}%>
+              <%= f.collection_select :gender_id, Gender.all_cached, :id, :translated_gender, {prompt: t('select_gender')}, {class: "form-control"}%>
             </div>
           </div>
         </div>
@@ -112,7 +112,7 @@
       <div class="form-group ">
         <%= f.label :grade_id, :class => 'control-label' %>
         <div class="col-md-12">
-          <%= f.collection_select :grade_id, Grade.all, :id, :name, {prompt: "โปรดเลือกระดับชั้น"}, {class: "form-control"} %>
+          <%= f.collection_select :grade_id, Grade.all, :id, :name, {prompt: t('select_grade')}, {class: "form-control"} %>
         </div>
       </div>
     </div>
@@ -120,7 +120,7 @@
       <div class="form-group">
         <%= f.label :classroom_id, :class => 'control-label' %>
         <div class="col-md-12">
-          <%= f.collection_select :classroom_id, Classroom.all, :id, :name, {prompt: "โปรดเลือกห้อง"}, {class: "form-control"} %>
+          <%= f.collection_select :classroom_id, Classroom.all, :id, :name, {prompt: t('select_class')}, {class: "form-control"} %>
         </div>
       </div>
     </div>
@@ -183,7 +183,7 @@
   </div>
 
   <div class="form-group somsri-invoice" style="margin-top: 25px; text-align:center">
-    <%= f.submit 'บันทึก', :class => 'btn btn-submit' %>
+    <%= f.submit t('save'), :class => 'btn btn-submit' %>
     <%= link_to t('.cancel', :default => t("helpers.links.cancel")),
                 "", onclick: "goToUrl('#{students_path}')", :class => 'btn btn-cancel' %>
   </div>
@@ -246,8 +246,8 @@ $(function() {
     $('#add-parent').append(
       '<div class="form-group" id="add-prn-'+round+'">\
         <div class="row add-st-pr">\
-          <div class="col-md-4" style="margin-left:15px;">\
-            <select id="parent'+round+'" name="parent[]" index="'+round+'" onchange="parentChanged(this)"  placeholder="Select parent...">\
+          <div class="col-md-5" style="margin-left:15px;">\
+            <select id="parent'+round+'" name="parent[]" index="'+round+'" onchange="parentChanged(this)"  placeholder="<%=t('select_parent')%>">\
               <option value="" disabled selected></option>\
               <% @parents.each do |p| %>\
                 <option value="<%= p.id %>"><%= p.full_name %></option>\

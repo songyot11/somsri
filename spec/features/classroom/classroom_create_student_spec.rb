@@ -77,13 +77,13 @@ describe 'Classroom Create Teacher', js: true do
     click_button("+ เลือกนักเรียน")
     eventually { expect(page).to have_content("สมศรี4 ใบเสร็จ") }
     eventually { expect(page).to have_content("สมศรี5 ใบเสร็จ") }
-    click_button("+ สร้างนักเรียนใหม่")
-    eventually { expect(page).to have_content("สร้างนักเรียนใหม่") }
+    click_button("+ สร้าง นักเรียน")
+    eventually { expect(page).to have_content("สร้าง นักเรียน") }
   end
 
   it 'should create teacher' do
     within('div#create-member-modal') do
-      eventually { expect(page).to have_content("สร้างนักเรียนใหม่") }
+      eventually { expect(page).to have_content("สร้าง นักเรียน") }
       fill_in "ชื่อ - นามสกุล",  with: "สมเสร็จ ใบศรี"
       fill_in "ชื่อเล่น",  with: "สม"
       click_button('บันทึก')
@@ -104,5 +104,31 @@ describe 'Classroom Create Teacher', js: true do
     eventually { expect(page).to_not have_content("ชื่อเล่น") }
   end
 
+  it 'should traslate table page student classroom when locale=th' do
+    visit "/main#/classroom/#{classrooms[0].id}"
+    sleep(1)
+    click_link("นักเรียน")
+    sleep(1)
+    find('button.btn-primary').click
+    sleep(1)
+    find('input[placeholder="ค้นหา"]').set("หาห้องเรียนไม่เจอหรอก")
+    eventually { expect(page).to have_content("ไม่พบรายการที่ค้นหา !") }
+  end
 
+  it 'should traslate table page student classroom when locale=en' do
+    visit "/main#/classroom/#{classrooms[0].id}"
+    sleep(1)
+    find("#navbarDropdownMenuLink").click
+    find('.fa-commenting-o').hover
+    find("a", :text => "English").click
+    sleep(1)
+    visit "/main#/classroom/#{classrooms[0].id}"
+    sleep(1)
+    click_link("Student")
+    sleep(1)
+    find('button.btn-primary').click
+    sleep(1)
+    find('input[placeholder="Search"]').set("หาห้องเรียนไม่เจอหรอก")
+    eventually { expect(page).to have_content("No matching records found") }
+  end
 end

@@ -17,8 +17,7 @@
         </ul>
       </span>
 
-      <%= link_to ('<i class="fa fa-share-square-o" aria-hidden="true"></i> Export').html_safe, "#", :class => 'btn btn-custom btn-blue-sky float-right mr-5', :onclick => 'exportTable("students")' %>
-
+    <a class="btn btn-custom btn-blue-sky float-right mr-5" href="#" onclick='exportTable("students")'><i class="fa fa-share-square-o" aria-hidden="true"></i> <%= t('export') %></a>
       <%= link_to t('.addstudent', :default => t("helpers.links.addstudent")),
       new_student_path,
       :class => 'btn btn-custom btn-blue float-right' %>
@@ -30,7 +29,7 @@
       <div class="col-xs-6">
         <div class="search">
           <i class="fa fa-search" aria-hidden="true"></i>
-          <input class="form-control" id="search" type="text" placeholder="ค้นหา" onchange="search()" onkeyup="this.onchange()">
+          <input class="form-control" id="search" type="text" placeholder=<%= t('find') %> onchange="search()" onkeyup="this.onchange()">
         </div>
       </div>
       <div class="col-xs-6 select-filter">
@@ -56,11 +55,14 @@
       data-toggle="table"
       data-pagination="true"
       data-pagination-loop="false"
+      data-pagination-pre-text="&#xf104;"
+      data-pagination-next-text="&#xf105;"
       data-url="/students.json"
       data-side-pagination="server"
       data-sort-name="classroom_id, classroom_number"
       data-sort-order="asc"
-      data-query-params="queryParams">
+      data-query-params="queryParams"
+      data-locale="<%= I18n.locale %>">
         <thead>
           <tr>
             <th data-field="classroom_number" data-sortable="true" data-cell-style="cellStyle"><%= t('number') %></th>

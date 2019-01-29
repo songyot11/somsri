@@ -30,7 +30,7 @@
 
           <button class="btn btn-custom btn-black mr-5" ng-click="invoiceReport.getStudentsForPrint()"><i class="fa fa-print"></i></button>
 
-          <button class="btn btn-custom btn-blue-sky" id="exportTable"><i class="fa fa-share-square-o" aria-hidden="true"></i> Export</button>
+          <button class="btn btn-custom btn-blue-sky" id="exportTable"><i class="fa fa-share-square-o" aria-hidden="true"></i>  {{ 'export' | translate }}</button>
 
         </div>
       </div>
@@ -74,14 +74,19 @@
           </div>
         </div>
         </div>
-        <table id="invoice-table" class="scrollable-header text-table-invoicereport for-display"></table>
-        <div class="text-title for-print">{{ 'level' | translate }} {{invoiceReport.grade_name}}</div>
+        <table id="invoice-table" class="scrollable-header text-table-invoicereport for-display" data-locale="{{ 'locale' | translate }}"></table>
+        <div class="text-title for-print">{{ 'level' | translate }}</div>
         <div class="text-title-date for-print"><b>{{ 'from' | translate }}</b> {{ invoiceReport.start_date | dateFormat }} <b>{{ 'to' | translate }}</b> {{ invoiceReport.end_date | dateFormat }}</div>
         <table id="for-print-table" class="scrollable-header text-table-invoicereport for-print-table"></table>
         <div class="row row-centered for-display">
           <div class="col-centered">
-            <ul uib-pagination ng-change="invoiceReport.pageChanged()" total-items="invoiceReport.totalItems" ng-model="invoiceReport.currentPage" max-size="invoiceReport.maxSize" class="pagination-md" num-pages="numPages" previous-text="‹" next-text="›" boundary-link-numbers='true' rotate='false'></ul>
-          </div>
+            <ul uib-pagination ng-change="invoiceReport.pageChanged()" total-items="invoiceReport.totalItems" ng-model="invoiceReport.currentPage" max-size="invoiceReport.maxSize" class="pagination-md icon-pagination"
+            boundary-link-numbers="true"
+            num-pages="numPages"
+            rotate="false"
+            previous-text="&#xf104;"
+            next-text="&#xf105;"></ul>
+            </div>
         </div>
       </div>
     </div>

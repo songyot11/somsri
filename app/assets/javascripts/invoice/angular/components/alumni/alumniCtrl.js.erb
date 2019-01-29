@@ -35,7 +35,7 @@
 
       function bringBackFormatter(value, row, index){
         var alumni = "angular.element(document.getElementById('angularCtrl')).scope().alumni"
-        return '<a id="bringBack' + row['student_id'] + '" onclick="' + alumni + '.bringBack(' + row['student_id'] + ')" class="light-blue-color"><i class="fa fa-undo" aria-hidden="true"></i> นำกลับเข้าระบบ</a>'
+        return '<a id="bringBack' + row['student_id'] + '" onclick="' + alumni + '.bringBack(' + row['student_id'] + ')" class="light-blue-color"><i class="fa fa-undo" aria-hidden="true"></i>'+ " " +I18n.t("bringback") +'</a>'
       }
 
       var pageSize = 10

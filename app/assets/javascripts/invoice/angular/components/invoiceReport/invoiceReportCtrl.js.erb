@@ -3,7 +3,7 @@
   angular.module('somsri.invoice.invoice_report', [
     ])
   .controller('invoiceReportCtrl', ['$compile', '$scope', '$window', '$filter', '$rootScope', 'invoiceReportService', '$timeout', 'translateFilter', function($compile, $scope, $window, $filter, $rootScope, service, $timeout, translateFilter) {
-    $rootScope.menu = translateFilter("receipt")
+    $rootScope.menu = I18n.t("receipt")
     var ctrl = this
     var angularScopeRoot = 'angular.element(document.getElementById("angularCtrl")).scope().$root'
     var angularScopeInvoice = 'angular.element(document.getElementById("angularCtrl")).scope().invoiceReport'
@@ -165,6 +165,15 @@
                 ctrl.currentPage = 0;
               }
               ctrl.maxSize = 5;
+              for(var ele in ctrl.datasExport){
+                var str = []
+                var payment_method = ctrl.datasExport[ele].payment_methods.payment_method
+                var payments = payment_method.split(',')
+                for(var i = 0; i < payments.length ; i++){
+                  str.push(translateFilter(payments[i]))
+                }
+                ctrl.datasExport[ele].payment_methods.payment_method = str.join()
+              }
               tableExport.bootstrapTable('load', ctrl.datasExport);
             });
           });
@@ -189,6 +198,15 @@
                 ctrl.currentPage = 0;
               }
               ctrl.maxSize = 5;
+              for(var ele in ctrl.datas){
+                var str = []
+                var payment_method = ctrl.datas[ele].payment_methods.payment_method
+                var payments = payment_method.split(',')
+                for(var i = 0; i < payments.length ; i++){
+                  str.push(translateFilter(payments[i]))
+                }
+                ctrl.datas[ele].payment_methods.payment_method = str.join()
+              }
               main_table.bootstrapTable('load', ctrl.datas);
             });
           });

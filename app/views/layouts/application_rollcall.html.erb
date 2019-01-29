@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html ng-app="somsri.rollcall" lang="<%= @locale %>">
     <head>
-        <title>สมศรี - ระบบบริหารโรงเรียน 4.0</title>
+        <title><%= t('title') %></title>
         <%= csrf_meta_tags %>
 
         <%= favicon_link_tag 'apple-touch-icon-57x57.png', rel: 'apple-touch-icon-precomposed', type: 'image/png', size: '57x57' %>
@@ -30,6 +30,8 @@
         <%= stylesheet_link_tag    'application_rollcall', media: 'all' %>
         <%= stylesheet_link_tag 'application_somsri', media: 'all' %>
         <%= javascript_include_tag 'application_rollcall' %>
+        <%= render 'layouts/translates' %>
+        <%= javascript_include_tag 'application_translates' %> 
     </head>
     <body ng-controller="mainCtrl as main" class="somsri-rollcall">
       <header>

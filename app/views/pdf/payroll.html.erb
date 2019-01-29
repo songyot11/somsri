@@ -1,31 +1,31 @@
-<h3>ตารางเงินเดือน: <%= @effective_date_str %></h3>
+<h3><%= t('payroll_table') %> : <%= @effective_date_str %></h3>  
 <hr>
 <table class="font-12">
   <thead>
     <tr>
       <td colspan="2"></td>
-      <td class="border-1 p-5 text-center" colspan="7">รายการได้</td>
-      <td class="border-1 p-5 text-center" colspan="7">รายการหัก</td>
+      <td class="border-1 p-5 text-center" colspan="7"><%= t('income_list') %></td>
+      <td class="border-1 p-5 text-center" colspan="7"><%= t('outcome_list') %></td>
       <td></td>
     </tr>
     <tr>
-      <td class="border-1 p-5 min-w-20 text-center">รหัส</td>
-      <td class="border-1 p-5 min-w-200 text-center">ชื่อ</td>
-      <td class="border-1 p-5 min-w-80 text-center">เงินเดือน</td>
-      <td class="border-1 p-5 min-w-80 text-center">เงินสอนพิเศษ</td>
-      <td class="border-1 p-5 min-w-80 text-center">ค่าตำแหน่ง</td>
-      <td class="border-1 p-5 min-w-80 text-center">เบี้ยเลี้ยง</td>
-      <td class="border-1 p-5 min-w-80 text-center">เบี้ยขยัน</td>
-      <td class="border-1 p-5 min-w-80 text-center">โบนัส</td>
-      <td class="border-1 p-5 min-w-80 text-center">อื่นๆ</td>
-      <td class="border-1 p-5 min-w-80 text-center">ขาดงาน</td>
-      <td class="border-1 p-5 min-w-80 text-center">สาย</td>
-      <td class="border-1 p-5 min-w-80 text-center">ภาษี</td>
-      <td class="border-1 p-5 min-w-50 text-center">ประกันสังคม</td>
-      <td class="border-1 p-5 min-w-50 text-center">เงินสะสม</td>
-      <td class="border-1 p-5 min-w-80 text-center">เบิกล่วงหน้า</td>
-      <td class="border-1 p-5 min-w-80 text-center">อื่นๆ</td>
-      <td class="border-1 p-5 min-w-80 text-center">เงินเดือนสุทธิ</td>
+      <td class="border-1 p-5 min-w-20 text-center"><%= t('employee_code') %> </td>
+      <td class="border-1 p-5 min-w-200 text-center"><%= t('emp_name') %> </td>
+      <td class="border-1 p-5 min-w-80 text-center"><%= t('salary') %> </td>
+      <td class="border-1 p-5 min-w-80 text-center"><%= t('ot') %> </td>
+      <td class="border-1 p-5 min-w-80 text-center"><%= t('position_allowance') %> </td>
+      <td class="border-1 p-5 min-w-80 text-center"><%= t('allowance') %> </td>
+      <td class="border-1 p-5 min-w-80 text-center"><%= t('attendance_bonus') %> </td>
+      <td class="border-1 p-5 min-w-80 text-center"><%= t('bonus') %> </td>
+      <td class="border-1 p-5 min-w-80 text-center"><%= t('extra_etc') %> </td>
+      <td class="border-1 p-5 min-w-80 text-center"><%= t('absence') %> </td>
+      <td class="border-1 p-5 min-w-80 text-center"><%= t('late') %> </td>
+      <td class="border-1 p-5 min-w-80 text-center"><%= t('tax') %> </td>
+      <td class="border-1 p-5 min-w-50 text-center"><%= t('social_insurance') %> </td>
+      <td class="border-1 p-5 min-w-50 text-center"><%= t('pvf') %> </td>
+      <td class="border-1 p-5 min-w-80 text-center"><%= t('advance_payment') %> </td>
+      <td class="border-1 p-5 min-w-80 text-center"><%= t('fee_etc') %> </td>
+      <td class="border-1 p-5 min-w-80 text-center"><%= t('net_salary') %> </td>
     </tr>
   </thead>
   <tbody>
@@ -51,7 +51,7 @@
     </tr>
     <% end %>
     <tr>
-      <td class="border-1 text-right p-5" colspan="2">รวมทั้งหมด</td>
+      <td class="border-1 text-right p-5" colspan="2"><%= t('total') %></td>
       <td class="border-1 text-right p-5 font-roboto"><%= number_with_precision(@total[:salary], precision: 2, delimiter: ',') %></td>
       <td class="border-1 text-right p-5 font-roboto"><%= number_with_precision(@total[:ot], precision: 2, delimiter: ',') %></td>
       <td class="border-1 text-right p-5 font-roboto"><%= number_with_precision(@total[:position_allowance], precision: 2, delimiter: ',') %></td>

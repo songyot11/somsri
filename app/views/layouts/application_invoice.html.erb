@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html ng-app='somsri.invoice' lang="<%= @locale %>">
     <head>
-      <title>สมศรี - ระบบบริหารโรงเรียน 4.0</title>
+      <title><%= t('title') %></title>
       <%= csrf_meta_tags %>
 
       <%= favicon_link_tag 'apple-touch-icon-57x57.png', rel: 'apple-touch-icon-precomposed', type: 'image/png', size: '57x57' %>
@@ -31,6 +31,10 @@
       <%= stylesheet_link_tag 'application_somsri', media: 'all' %>
       <%= javascript_include_tag 'application_invoice' %>
       <script src="//rawgit.com/hhurz/tableExport.jquery.plugin/master/tableExport.js"></script>
+      <%= render 'layouts/translates' %>
+      <%= javascript_include_tag 'application_translates' %>
+      <%= javascript_include_tag 'bootstrap-table-en-US' %>
+      <%= javascript_include_tag 'bootstrap-table-th-TH' %> 
     </head>
     <body ng-controller="mainCtrl as main">
       <header>

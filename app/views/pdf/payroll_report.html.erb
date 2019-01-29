@@ -2,9 +2,9 @@
   <table class="font-12"> 
     <tbody>
       <tr class="bg-light-gray">
-        <td class="border-bottom-1 p-5 min-w-300 text-left"><b>ชื่อ</b></td>
-        <td class="border-bottom-1 p-5 min-w-150 text-right"><b>เลขบัญชี</b></td>
-        <td class="border-bottom-1 p-5 min-w-250 text-right"><b>เงินเดือนสุทธิ</b></td>
+        <td class="border-bottom-1 p-5 min-w-300 text-left"><b><%=t('emp_name')%></b></td>
+        <td class="border-bottom-1 p-5 min-w-150 text-right"><b><%=t('bank_account2')%></b></td>
+        <td class="border-bottom-1 p-5 min-w-250 text-right"><b><%=t('net_salary')%></b></td>
       </tr>
       <% results.each do |result| %>
         <tr class="page-break">
@@ -15,7 +15,7 @@
       <% end %>
       <tr>
         <td class="border-bottom-1 p-5"></td>
-        <td class="border-bottom-1 text-right p-5"><b>รวมทั้งหมด</b></td>
+        <td class="border-bottom-1 text-right p-5"><b><%=t('net')%></b></td>
         <td class="border-bottom-1 text-right p-5 font-roboto"><b><%= number_with_precision(@total[:net_salary], precision: 2, delimiter: ',') %></b></td>
       </tr>
     </tbody>
