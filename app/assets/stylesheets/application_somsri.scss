@@ -67,6 +67,10 @@ body {
   width: 20px !important;
 }
 
+.w-30p {
+  width: 30% !important;
+}
+
 .w-50 {
   width: 50px !important;
 }
@@ -684,6 +688,14 @@ ul.dropdown-menu.display-top{
 .color-blue-link {
   color: #337ab7 !important;
 }
+
+.icon-pagination {
+  font-family: Helvetica, FontAwesome;
+}
+.fixed-table-pagination{
+  a{font-family: Helvetica, FontAwesome;}
+}
+
 .max-h-200 {
   max-height: 200px !important;
 }
@@ -720,6 +732,7 @@ ul.dropdown-menu.display-top{
 .d-inline-block {
   display: inline-block;
 }
+
 .panel-board{
   background-color: #fff;
   box-shadow: 0 5px 13px 0 rgba(0, 0, 0, 0.3);

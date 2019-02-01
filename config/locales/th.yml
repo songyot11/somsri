@@ -20,8 +20,19 @@
 # available at http://guides.rubyonrails.org/i18n.html.
 
 th:
+  user_name: ชื่อผู้ใช้
+  password: รหัสผ่าน
+  keep_me_signed_in: ให้ฉันอยู่ในระบบต่อไป
+  sign_in: เข้าสู่ระบบ
+  download_somsri_rollcall: ดาวน์โหลดโปรแกรมสมศรีสำหรับแอนดรอย
   #Payroll
-  export: Export
+  roll_download : ดาวน์โหลดโปรแกรมเช็คชื่อ
+  switch_language : เปลี่ยนภาษา
+  emp_name : ชื่อ
+  find : ค้นหา
+  current_month : เดือนปัจจุบัน
+  title : สมศรี - ระบบบริหารโรงเรียน 4.0
+  export: นำข้อมูลออก
   salary: เงินเดือน
   current_payroll: "ค่าแรง / เงินเดือนปัจจุบัน"
   edit: "แก้ไข"
@@ -78,6 +89,16 @@ th:
   ms: นาง
   miss: นางสาว
 
+  signature: "ผู้มีอํานาจลงนาม"
+  private_teacher_fund: "เงินสะสมกองทุนสงเคราะห์"
+  acc_social: "เงินประกันสังคมสะสมต่อปี"
+  acc_tax: "ภาษีสะสมต่อปี"
+  acc_income: "รายได้สะสมต่อปี"
+  net_income: "เงินรับสุทธิ"
+  day_month_year: วัน / เดือน / ปี
+  total_deduction: "รวมรายการหัก"
+  total_income: "รวมรายได้"
+  deduction: "รายการเงินหัก"
   add_new_employee: "เพิ่มพนักงานใหม่"
   full_name: "ชื่อ-นามสกุล"
   position: "ตำแหน่ง"
@@ -122,11 +143,11 @@ th:
   confirm_recovery_employee: "คุณต้องการนำข้อมูลพนักงานกลับมาหรือไม่"
   confirm_delete_employee: "คุณต้องการลบข้อมูลพนักงานออกถาวรหรือไม่?"
   confirm_delete_record: "คุณต้องการลบราการนี้หรือไม่?"
-  first_name_thai: ชื่อจริง
-  last_name_thai: นามสกุล
-  first_name_en: Name
-  middle_name_en: Middle Name
-  last_name_en: Surname
+  first_name_thai: ชื่อ (ไทย)
+  last_name_thai: นามสกุล (ไทย)
+  first_name_en: ชื่อ (อังกฤษ)
+  middle_name_en: ชื่อกลาง (อังกฤษ)
+  last_name_en: นามสกุล (อังกฤษ)
 
   # tax
   other_deduction: "ค่าลดหย่อนอื่นๆ"
@@ -177,10 +198,12 @@ th:
   print_receipt: "พิมพ์ใบเสร็จ"
   delivery_note: "นำส่งเงิน"
   payment_report: "รายงานการชำระ"
-  classification_report: "รายงานแยกตามประเภท"
+  classification_report_1: "รายงานแยกตามประเภท 1"
+  classification_report_2: "รายงานแยกตามประเภท 2"
   grade: "ชั้น"
   item_no: "ลำดับที่"
   item_desc: "รายการ"
+  choose_level: "ระบุชั้นเรียน"
 
   invoice_form: "แบบชำระเงิน"
   date1: "วันที่"
@@ -199,6 +222,7 @@ th:
   list_invoices: "รายการใบเสร็จรับเงิน"
   cancle_quotation: "ยกเลิกใบแจ้งชำระเงิน"
   cancle_quotation_detail: "ต้องการยกเลิกใบแจ้งชำระเงิน"
+  no_data: "ไม่พบข้อมูล"
 
   receipt_search: "ค้นหาตามเลขที่ใบเสร็จ, ชื่อนักเรียน, ชื่อผู้ปกครอง"
   receipt_report: "รายงานใบเสร็จ"
@@ -220,7 +244,7 @@ th:
   remark: "หมายเหตุ"
 
   semester: "ภาคการศึกษา"
-  semester_nofix: "ไม่ระบุภาคการเรียน"
+  semester_nofix: "ทั้งหมด"
   payment_status: "สถานะการชำระ"
   number1: "เลขที่"
   tuition_fee: "ค่าธรรมเนียมการศึกษา"
@@ -228,6 +252,7 @@ th:
   year_paid_amount: "ยอดชำระทั้งปี"
   total_paid: "รวมยอดชำระทั้งหมด"
   paid_date: "วันที่ชำระ"
+  all_semesters: "ทั้งหมด"
 
   show_invoices: "แสดงรายการใบเสร็จ"
   chose_type: "เลือกประเภท"
@@ -261,6 +286,7 @@ th:
   select: เลือก
   select_all: เลือกทั้งหมด
   close_without_save: "คุณต้องการออกจากหน้านี้โดยไม่บันทึกค่าหรือไม่?"
+  save_data: "คุณต้องการบันทึกการเปลี่ยนแปลงนี้หรือไม่?"
 
   # Quotation
   quotation_link_nav: "ใบแจ้งการชำระเงินค่าเทอม"
@@ -289,6 +315,7 @@ th:
   date_last: "ถึงวันที่ "
 
   hello: "สวัสดีครับ"
+  print_delivery_money: "พิมพ์ใบนำส่งเงิน"
 
   #Menu
   payroll: "เงินเดือน"
@@ -325,34 +352,27 @@ th:
         student_number: "เลขประจำตัวนักเรียน"
         national_id: "รหัสประจำตัวประชาชน"
         remark: "หมายเหตุ / remark"
+        nationality: "สัญชาติ"
       payroll:
-        salary: "เงินเดือน / Salary"
-        allowance: "เบี้ยเลี้ยง / Shift"
-        attendance_bonus: "เบี้ยขยัน / Attendance Bonus"
-        ot: "เงินสอนพิเศษ / After School Class"
-        bonus: "โบนัส / Bonus"
-        position_allowance: "ค่าตำแหน่ง / Posticion"
-        extra_etc: "รายได้อื่นๆ / Etc."
-        absence: "ขาดงาน / Absence"
-        late: "สาย / Late"
-        tax: "ภาษี / Tax"
-        social_insurance: "ประกันสังคม / Social Sec."
-        fee_etc: "หักอื่นๆ / Etc."
-        pvf: "เงินสะสมกองทุนสงเคราะห์ / Private Teacher Aid fund"
-        advance_payment: "เบิกล่วงหน้า / Adv. Payment"
+        salary: "เงินเดือน"
+        allowance: "เบี้ยเลี้ยง"
+        attendance_bonus: "เบี้ยขยัน"
+        ot: "เงินสอนพิเศษ"
+        bonus: "โบนัส"
+        position_allowance: "ค่าตำแหน่ง"
+        extra_etc: "รายได้อื่นๆ"
+        absence: "ขาดงาน"
+        late: "สาย"
+        tax: "ภาษี"
+        social_insurance: "ประกันสังคม"
+        fee_etc: "หักอื่นๆ"
+        pvf: "เงินสะสมกองทุนสงเคราะห์"
+        advance_payment: "เบิกล่วงหน้า"
 
   date:
     month_names: [~, มกราคม, กุมภาพันธ์, มีนาคม, เมษายน, พฤษภาคม, มิถุนายน, กรกฎาคม, สิงหาคม, กันยายน, ตุลาคม, พฤศจิกายน, ธันวาคม]
     abbr_month_names: [~, ม.ค., ก.พ., มี.ค., เม.ย., พ.ค., มิ.ย., ก.ค., ส.ค., ก.ย., ต.ค., พ.ย., ธ.ค.]
 
-  #Grade
-  Preschool: "เตรียมอนุบาล"
-  Kindergarten1: "อ.1"
-  Kindergarten2: "อ.2"
-  Kindergarten3: "อ.3"
-  Kindergarten 1: "อ.1"
-  Kindergarten 2: "อ.2"
-  Kindergarten 3: "อ.3"
 
   #Gender
   Male: "ชาย"
@@ -414,6 +434,8 @@ th:
   parent_info_cannot_save: "ข้อมูลของผู้ปกครองไม่สามารถบันทึกได้ : "
   parent_info_success_save: "บันทึกผู้ปกครองสำเร็จ"
   parent_delete_success: "ลบผู้ปกครองสำเร็จ"
+  search_parent: "ค้นหาชื่อผู้ปกครอง"
+  select_parent: "เลือกผู้ปกครอง..."
 
   #Students
   add_parent: "+ เพิ่มชื่อผู้ปกครอง"
@@ -453,12 +475,19 @@ th:
   birthday_1: "วันเดือนปีเกิด"
   student_male: "ด.ช."
   student_female: "ด.ญ."
+  topic: "บัญชีรายชื่อนักเรียน  ชั้น .......................................... ภาคเรียนที่ ..../"
+  select_gender: "โปรดเลือกเพศ"
+  select_grade: "โปรดเลือกระดับชั้น"
+  select_class: "โปรดเลือกห้อง"
+  search_student: "ค้นหาชื่อนักเรียน"
+  select_students: "เลือกนักเรียน..."
 
   #Alumni
   year_of_graduation: "จบปีการศึกษา"
   status: "สถานะ"
   graduated_semester: "ภาคเรียนที่"
   grade_classroom: "ระดับชั้นเรียน"
+  locale: "th"
 
   # Rollcall
   monthly: ประจำเดือน
@@ -504,11 +533,31 @@ th:
   select_teacher: "+ เลือกคุณครู"
   teacher: คุณครู
   student: นักเรียน
-  classroom_is_exist: "*มีห้องเรียนนี้ในระบบแล้ว"
+  classroom_is_exist: "* มีห้องเรียนนี้ในระบบแล้ว"
+  next_classroom: "ระดับชั้นเรียนใหม่"
 
+  social_insurance_pdf: "ไม่มีพนักงานที่ต้องเสียค่าประกันสังคม"
   skill: ทักษะ
   score: คะแนน
   add: เพิ่ม
+  
+  confirm_delete: คุณต้องการลบห้องเรียนใช่หรือไม่? (การลบห้องเรียนจะไม่ทำให้นักเรียนและคุณครูที่อยู่ในห้องหายไป)
+  bringback: นำกลับเข้าระบบ
+  # Option menu
+  choice: "ตัวเลือก"
+  edit: "แก้ไข"
+  resign: "ลาออกจากโรงเรียน"
+  delete: "ลบข้อมูล"
+  del_student: "คุณต้องการลบนักเรียนคนนี้ใช่หรือไม่?"
+  change_status_student_graduated: 'คุณต้องการเปลี่ยนสถานะนักเรียนคนนี้เป็น "จบการศึกษา" ใช่หรือไม่?'
+  change_status_student_resign: 'คุณต้องการเปลี่ยนสถานะนักเรียนคนนี้เป็น "ลาออก" ใช่หรือไม่?'
+  del_parent: "คุณต้องการลบผู้ปกครองคนนี้ใช่หรือไม่?"
+
+  #Alert Payment
+  alertpayment: โปรดตรวจสอบค่าบริการที่ค้างชำระของท่าน
+  back_to_menu: กลับสู่การใช้งาน
+  sorry_to_pay: สมศรี ขออภัยหากท่านชำระค่าบริการดังกล่าวแล้ว
+  application_issue: หากพบปัญหาในการใช้งาน somsri.io สามารถติดต่อได้ที่เบอร์
 
   # Expenses
   create_new_expenses: "เพิ่มรายการค่าใช้จ่าย"

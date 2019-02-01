@@ -34,7 +34,7 @@
     }
 
     ctrl.removeClassroom = function(id){
-      openConfirmationModal("คุณต้องการลบห้องเรียนใช่หรือไม่? (การลบห้องเรียนจะไม่ทำให้นักเรียนและคุณครูที่อยู่ในห้องหายไป)", function(){
+      openConfirmationModal(translateFilter('confirm_delete'), function(){
         service.removeClassroom(id).then(function(resp) {
           $window.location.reload();
         });

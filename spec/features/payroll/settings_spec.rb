@@ -62,7 +62,7 @@ describe 'Profile', js: true do
     visit "/"
     find('#user_email').set(user.email)
     find('#user_password').set('valid_password')
-    click_button('Sign in')
+    click_button('เข้าสู่ระบบ')
     visit "/somsri_payroll#"
     expect(page).to have_css('.main-menu')
   end

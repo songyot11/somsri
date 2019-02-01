@@ -3,7 +3,7 @@
   angular.module('somsri.invoice.studentReport', [
   ])
   .controller('studentReportCtrl', ['$compile', '$scope', '$window', '$filter', '$rootScope', 'studentReportService', '$timeout', 'CSV', 'translateFilter', function($compile, $scope, $window, $filter, $rootScope, studentReportService, $timeout, CSV, translateFilter) {
-    $rootScope.menu = translateFilter('chose_type') + ' ' + translateFilter('payment_report');
+    $rootScope.menu = I18n.t('chose_type') + ' ' + I18n.t('payment_report');
     var ctrl = this
 
     $rootScope.loadAndAuthorizeResource("invoice", function(){

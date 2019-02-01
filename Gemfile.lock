@@ -50,6 +50,7 @@ GEM
     arel (7.1.4)
     autoprefixer-rails (7.1.1)
       execjs
+    awesome_print (1.8.0)
     aws-sdk (2.3.12)
       aws-sdk-resources (= 2.3.12)
     aws-sdk-core (2.3.12)
@@ -161,6 +162,8 @@ GEM
       nokogiri (>= 1.6.0)
       ruby_parser (~> 3.5)
     i18n (0.7.0)
+    i18n-js (3.0.5)
+      i18n (>= 0.6.6, < 2)
     jbuilder (2.6.1)
       activesupport (>= 3.0.0, < 5.1)
       multi_json (~> 1.2)
@@ -380,6 +383,7 @@ PLATFORMS
 
 DEPENDENCIES
   activerecord-import
+  awesome_print
   aws-sdk
   bootstrap-sass (~> 3.3.7)
   bootstrap-select-rails
@@ -403,6 +407,7 @@ DEPENDENCIES
   faker
   figaro
   font-awesome-rails
+  i18n-js
   jbuilder (~> 2.5)
   jquery-rails
   listen (~> 3.0.5)
@@ -441,4 +446,4 @@ DEPENDENCIES
   wkhtmltopdf-binary
 
 BUNDLED WITH
-   1.16.0
+   1.17.2

@@ -76,10 +76,10 @@ describe 'Classroom Create Teacher', js: true do
     click_button("+ เลือกคุณครู")
     eventually { expect(page).to have_content("นาย สมจิตร เป็นนักมวย") }
     eventually { expect(page).to have_content("นาง สมใจ เป็นคน") }
-    click_button("+ สร้างคุณครูใหม่")
+    click_button("+ สร้าง คุณครู")
     sleep(1.5)
     within('div#create-member-modal') do
-      eventually { expect(page).to have_content("สร้างคุณครูใหม่") }
+      eventually { expect(page).to have_content("สร้าง คุณครู") }
       fill_in "ชื่อ - นามสกุล",  with: "นางสาว ครูใหม่ ไฟแรง"
       fill_in "ชื่อเล่น",  with: "ไฟแรงๆ"
       click_button('บันทึก')
@@ -101,15 +101,37 @@ describe 'Classroom Create Teacher', js: true do
     click_button("+ เลือกคุณครู")
     eventually { expect(page).to have_content("นาย สมจิตร เป็นนักมวย") }
     eventually { expect(page).to have_content("นาง สมใจ เป็นคน") }
-    click_button("+ สร้างคุณครูใหม่")
+    click_button("+ สร้าง คุณครู")
     sleep(1)
     within('div#create-member-modal') do
-      eventually { expect(page).to have_content("สร้างคุณครูใหม่") }
+      eventually { expect(page).to have_content("สร้าง คุณครู") }
       click_button('ยกเลิก')
     end
     sleep(1)
     eventually { expect(page).to_not have_content("ชื่อเล่น") }
   end
 
+  it 'should traslate table page teacher classroom when locale=th' do
+    visit "/main#/classroom/#{classrooms[0].id}"
+    sleep(1)
+    find('button.btn-primary').click
+    sleep(1)
+    find('input[placeholder="ค้นหา"]').set("หาห้องเรียนไม่เจอหรอก")
+    eventually { expect(page).to have_content("ไม่พบรายการที่ค้นหา !") }
+  end
 
+  it 'should traslate table page teacher classroom when locale=en' do
+    visit "/main#/classroom/#{classrooms[0].id}"
+    sleep(1)
+    find("#navbarDropdownMenuLink").click
+    find('.fa-commenting-o').hover
+    find("a", :text => "English").click
+    sleep(1)
+    visit "/main#/classroom/#{classrooms[0].id}"
+    sleep(1)
+    find('button.btn-primary').click
+    sleep(1)
+    find('input[placeholder="Search"]').set("หาห้องเรียนไม่เจอหรอก")
+    eventually { expect(page).to have_content("No matching records found") }
+  end
 end

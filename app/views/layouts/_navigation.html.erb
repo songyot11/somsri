@@ -33,16 +33,16 @@
             <div class="dropdown-menu on-nav-bar" aria-labelledby="navbarDropdownMenuLink">
               <% if (SiteConfig.get_cache.enable_rollcall) && (Figaro.env.ROLLCALL_APK_URL) %>
                 <li><a class="dropdown-item" href="<%= Figaro.env.ROLLCALL_APK_URL %>" target="_blank">
-                <i class="fa fa-download"></i> Download Rollcall</a></li>
+                <i class="fa fa-download"></i> <%= t("roll_download")%> </a></li>
                 <li class="divider"></li>
               <% end %>
 
               <li class="dropdown-submenu">
-                <a tabindex="-1" class="cursor-pointer"><i class="fa fa-commenting-o"></i> Switch language</a>
+                <a tabindex="-1"><i class="fa fa-commenting-o"></i> <%= t("switch_language")%></a>
                 <ul class="dropdown-menu">
-                  <li><a onclick="switch_language('th')" class="cursor-pointer"><img src="/switch_language/flag-thailand.png" alt="flag-thailand">&nbsp;&nbsp; ภาษาไทย</a></li>
+                  <li><a onclick="localeTH()"><img src="/switch_language/flag-thailand.png" alt="flag-thailand">&nbsp;&nbsp; ภาษาไทย</a></li>
                   <li class="divider"></li>
-                  <li><a onclick="switch_language('en')" class="cursor-pointer"><img src="/switch_language/flag-united-kingdom.png" alt="flag-thailand">&nbsp;&nbsp; English</a></li>
+                  <li><a onclick="localeEN()"><img src="/switch_language/flag-united-kingdom.png" alt="flag-thailand">&nbsp;&nbsp; English</a></li>
                 </ul>
               </li>
               <li class="divider"></li>
@@ -65,7 +65,10 @@
   </div>
 </nav>
 <script>
-  function switch_language(language){
-    window.location = "/language?locale=" + language + "&redirect=" + encodeURIComponent(window.location.href)
+  function localeTH() {
+    location = "/language?locale=th&weburl="+location.href;
   }
-</script>
+  function localeEN() {
+    location = "/language?locale=en&weburl="+location.href;
+  }
+</script> 

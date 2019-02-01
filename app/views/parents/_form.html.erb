@@ -117,7 +117,7 @@
  <div class="row">
    <div class="col-md-12">
      <div class="form-group somsri-invoice" style="margin-top: 25px; text-align:center">
-       <%= f.submit 'บันทึก', :class => 'btn btn-submit' %>
+       <%= f.submit t('save'), :class => 'btn btn-submit' %>
        <%= link_to t('.cancel', :default => t("helpers.links.cancel")),
                    "", onclick: "goToUrl('#{parents_path}')", :class => 'btn btn-cancel' %>
       </div>
@@ -161,7 +161,7 @@ function gen_selectize(round) {
         '<div class="form-group" id="add-std-'+round+'">\
           <div class="row">\
             <div class="col-md-5" style="margin-left:15px;">\
-              <select id="student'+round+'" name="student[]" index="'+round+'" placeholder="เลือกนักเรียน..." onchange="studentChange(this)">\
+              <select id="student'+round+'" name="student[]" index="'+round+'" placeholder="<%=t('select_students')%>" onchange="studentChange(this)">\
                 <option value="" disabled selected></option>\
                 <% @students.each do |s| %>\
                   <option value="<%= s.id %>"><%= s.full_name_with_title %></option>\

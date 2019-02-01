@@ -125,12 +125,12 @@ describe 'Private Details', js: true do
       click_link('+ เพิ่มข้อมูล')
       sleep(1)
       find("label", text: 'นางสาว').click()
-      fill_in 'ชื่อจริง', with: 'กาไก่'
-      fill_in 'นามสกุล', with: 'ขาไข่'
+      fill_in 'ชื่อ (ไทย)', with: 'กาไก่'
+      fill_in 'นามสกุล (ไทย)', with: 'ขาไข่'
       fill_in 'ความสัมพันธ์', with: 'โศก'
-      fill_in 'Name', with: 'gargai'
-      fill_in 'Middle Name', with: 'ooo'
-      fill_in 'Surname', with: 'karkai'
+      fill_in 'ชื่อ (อังกฤษ)', with: 'gargai'
+      fill_in 'ชื่อกลาง (อังกฤษ)', with: 'ooo'
+      fill_in 'นามสกุล (อังกฤษ)', with: 'karkai'
       fill_in 'หมายเลขโทรศัพท์', with: '1111-41-0--000'
       find(:css, ".modal-body input[id$='email']").set('test@test.com')
       find(:css, ".modal-body button[type='submit']").click()
@@ -145,12 +145,12 @@ describe 'Private Details', js: true do
       click_link(individual_name)
       sleep(1)
       find("label", text: 'นางสาว').click()
-      fill_in 'ชื่อจริง', with: 'กาไก่'
-      fill_in 'นามสกุล', with: 'ขาไข่'
+      fill_in 'ชื่อ (ไทย)', with: 'กาไก่'
+      fill_in 'นามสกุล (ไทย)', with: 'ขาไข่'
       fill_in 'ความสัมพันธ์', with: 'โศก'
-      fill_in 'Name', with: 'gargai'
-      fill_in 'Middle Name', with: 'ooo'
-      fill_in 'Surname', with: 'karkai'
+      fill_in 'ชื่อ (อังกฤษ)', with: 'gargai'
+      fill_in 'ชื่อกลาง (อังกฤษ)', with: 'ooo'
+      fill_in 'นามสกุล (อังกฤษ)', with: 'karkai'
       fill_in 'หมายเลขโทรศัพท์', with: '1111-41-0--000'
       find(:css, ".modal-body input[id$='email']").set('test@test.com')
       find(:css, ".modal-body button[type='submit']").click()

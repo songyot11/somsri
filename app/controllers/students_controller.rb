@@ -498,7 +498,7 @@ class StudentsController < ApplicationController
 
     # Never trust parameters from the scary internet, only allow the white list through.
     def student_params
-      params.require(:student).permit(:full_name, :full_name_english, :nickname, :nickname_english, :gender_id, :birthdate, :grade_id, :classroom_id, :classroom_number, :student_number, :national_id, :remark , :status, :img_url)
+      params.require(:student).permit(:full_name, :full_name_english, :nickname, :nickname_english, :gender_id, :birthdate, :grade_id, :classroom_id, :classroom_number, :student_number, :national_id, :remark , :status, :img_url, :nationality)
     end
 
     def relation_assign
@@ -514,6 +514,7 @@ class StudentsController < ApplicationController
     def parent_assign
       parent_params = params[:parent]
       mobile = params[:mobile]
+      email = params[:email]
       relation_params = params[:relationship]
       @parents = Array.new
       @relationships = Array.new
@@ -539,9 +540,13 @@ class StudentsController < ApplicationController
               prn.mobile = mobile[index]
               prn.save
             end
+            if email
+              prn.email = email[index]
+              prn.save
+            end
             @parents.push(prn)
           elsif p.length > 0 && p.to_i == 0
-            new_prn = Parent.find_or_create_by(full_name: parent_params[index])
+            new_prn = Parent.find_or_create_by(full_name: parent_params[index], mobile: mobile[index], email: email[index])
             @parents.push(new_prn)
           end
         end

@@ -54,10 +54,18 @@ class Employee < ApplicationRecord
   end
 
   def full_name
-    if !self.first_name_thai.blank? && !self.last_name_thai.blank?
-      [self.prefix_thai, self.first_name_thai, self.last_name_thai].join(" ")
+    if I18n.locale == :en
+      unless self.first_name.blank? && self.last_name.blank?
+        [self.prefix, self.first_name, self.last_name].join(" ")
+      else
+        [self.prefix_thai, self.first_name_thai, self.last_name_thai].join(" ")
+      end
     else
-      [self.prefix, self.first_name, self.middle_name, self.last_name].join(" ")
+      unless self.first_name_thai.blank? && self.last_name_thai.blank?
+        [self.prefix_thai, self.first_name_thai, self.last_name_thai].join(" ")
+      else
+        [self.prefix, self.first_name, self.last_name].join(" ")
+      end
     end
   end
 

@@ -125,8 +125,27 @@
         ctrl.currentDateString = monthInfo["date_string"];
         ctrl.effectiveDatesDisplay = JSON.parse(JSON.stringify(ctrl.effectiveDates));
         for(var i = 0; i < ctrl.effectiveDatesDisplay.length; i++){
-          if(ctrl.effectiveDatesDisplay[i]["date_string"] == monthInfo["date_string"]){
-            ctrl.effectiveDatesDisplay.splice(i, 1);
+          if (I18n.currentLocale() == 'en'){
+            changeYear(ctrl.effectiveDatesDisplay, i)
+          }
+          // if(ctrl.effectiveDatesDisplay[i]["date_string"] == monthInfo["date_string"]){
+          //   ctrl.effectiveDatesDisplay.splice(i, 1);
+          // }
+        }
+      }
+
+      function changeYear(effectiveDatesDisplay, i){
+        if (i != 0){
+          var year = effectiveDatesDisplay[i]["date_string"].split(" ")[2]
+          ctrl.effectiveDatesDisplay[i]["date_string"] = effectiveDatesDisplay[i]["date_string"].replace(year, year - 543);
+        }
+      }
+
+      function changeHistoryYear(employeePayrolls){
+        for(var i = 0; i < employeePayrolls.length; i++){
+          if (i != 0){
+            var year = employeePayrolls[i]["date"].split(" ")[1]
+            ctrl.employeePayrolls[i]["date"] = employeePayrolls[i]["date"].replace(year, year - 543);
           }
         }
       }
@@ -316,7 +335,7 @@
           ctrl.isSubmit = true
           if (ctrl.isEdit) {
             if(isDataChange()){
-              openConfirmationModal(translateFilter("close_without_save"), function(){
+              openConfirmationModal(translateFilter("save_data"), function(){
                 var datas_result = $.extend(true, {}, ctrl.datas);
                 service.saveEmployee(ctrl.datas.employee.id, datas_result).then(function(resp) {
                   ctrl.isSubmit = false;
@@ -415,12 +434,10 @@
 
       ctrl.getAllPayroll = function(id) {
         service.getEmployeePayrolls(id).then(function(resp) {
-          var checkcurrent = resp.data
-          if (checkcurrent[0].date == "เดือนปัจจุบัน"){
-            resp.data.shift()
-            ctrl.employeePayrolls = resp.data
-          } else { 
-            ctrl.employeePayrolls = resp.data
+          ctrl.employeePayrolls = resp.data
+          if (I18n.currentLocale() == 'en'){
+            ctrl.employeePayrolls[0]["date"] = 'Current Month'
+            changeHistoryYear(ctrl.employeePayrolls)
           }
         })
       }
