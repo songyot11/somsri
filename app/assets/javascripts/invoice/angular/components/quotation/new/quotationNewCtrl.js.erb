@@ -1,0 +1,173 @@
+(function() {
+  'use strict';
+  angular.module('somsri.invoice.quotation_new', [])
+    .controller('quotationNewCtrl', quotationNewCtrl);
+
+  quotationNewCtrl.$inject = ['$rootScope', 'translateFilter', 'quotationNewService', 'Currency'];
+
+  function quotationNewCtrl($rootScope, translateFilter, quotationNewService, Currency) {
+    $rootScope.menu = translateFilter('quotation_link_nav')
+    var quotationNew = this;
+    var defaultDatas = {
+      quotations: {
+        items: [
+          { detail: translateFilter('tuition_fee'), amount: 48900.0 }
+        ],
+        payment_date_end: new Date(),
+        payment_date_start: new Date()
+      }
+    }
+    $rootScope.loadAndAuthorizeResource("quotation", function() {
+      quotationNew.datas = defaultDatas
+      quotationNew.getBank()
+      quotationNew.getQuatationDatas()
+    });
+
+    quotationNew.getBank = function(){
+      quotationNewService.getBank().then(function(resp) {
+        quotationNew.banks = resp.data.banks
+        quotationNew.lt_banks = resp.data.lt_banks
+        quotationNew.bank_name = quotationNew.lt_banks[0].id
+      });
+    }
+
+    quotationNew.createBank = function(){
+      quotationNew.params = {
+        bank_id: quotationNew.bank_name,
+        account_name: quotationNew.account_name,
+        bank_account: quotationNew.bank_account
+      }
+
+      quotationNewService.createBank(quotationNew.params).then(function(resp){
+        quotationNew.banks = resp.data.banks
+        $("#add-bank-modal").modal("toggle")
+      });
+    }
+
+    quotationNew.addBankModal = function(){
+      $("#add-bank-modal").modal("toggle")
+    }
+
+    quotationNew.getQuatationDatas = function(){
+      quotationNewService.getData().then(function(resp) {
+        quotationNew.invoice_number = resp.data.last_invoice_id + 1;
+        quotationNew.student_info = resp.data.student_info;
+        quotationNew.parent_info = resp.data.parent_info;
+        quotationNew.line_items_info = resp.data.line_items_info;
+        quotationNew.grades = resp.data.grades;
+
+        var nowDate = new Date();
+        // Clone to prevent the reset value
+        quotationNew.datas = defaultDatas
+        quotationNew.datas.quotations.semester = resp.data.current_semester;
+        quotationNew.datas.payment_method = {};
+        quotationNew.datas.payment_method.is_cash = resp.data.default_cash_payment_method;
+        quotationNew.datas.payment_method.is_credit_card = resp.data.default_credit_card_payment_method;
+        quotationNew.datas.payment_method.is_transfer = resp.data.default_transfer_payment_method;
+        quotationNew.datas.payment_method.is_cheque = resp.data.default_cheque_payment_method;
+        quotationNew.datas.quotations.school_year = resp.data.school_year;
+
+        quotationNew.date_display = nowDate.getDate() + "/" + (nowDate.getMonth() + 1) + "/" + (nowDate.getFullYear() + 543);
+        quotationNew.availableCurrencies = Currency.all();
+        quotationNew.calculateTotal();
+      });
+    }
+
+    quotationNew.save = function() {
+      quotationNewService.create(quotationNew.datas).then(function(resp) {
+        if($rootScope.openQuotationSlip(resp.data.id)) {
+            window.location.reload();
+          }
+      })
+    }
+
+    quotationNew.selectDate = function(selected_date){
+      selected_date = moment(selected_date, "DD/MM/YYYY").toDate()
+      quotationNew.datas.quotations.payment_date_start = cleanDate(selected_date)
+      quotationNew.datas.quotations.payment_date_end = quotationNew.datas.quotations.payment_date_start
+      quotationNew.optionsChange()
+    }
+
+    quotationNew.optionsChange = function() {
+      // check date incorrect input
+      if(quotationNew.datas.quotations.payment_date_start === undefined || quotationNew.datas.quotations.payment_date_end === undefined){return}
+    }
+
+    quotationNew.openStartDatePopup = function() {
+      quotationNew.startDatePopup.opened = true;
+    };
+
+    quotationNew.startDatePopup = {
+      opened: false
+    };
+
+    quotationNew.openEndDatePopup = function() {
+      quotationNew.endDatePopup.opened = true;
+    };
+
+    quotationNew.endDatePopup = {
+      opened: false
+    };
+
+    quotationNew.removeItem = function(item) {
+      quotationNew.datas.quotations.items.splice(quotationNew.datas.quotations.items.indexOf(item), 1);
+      quotationNew.calculateTotal();
+    };
+
+    // Calculates the sub total of the invoice
+    // Adds an item to the invoice's items
+    quotationNew.addItem = function() {
+      quotationNew.datas.quotations.items.push({ amount:0, detail:"" });
+      quotationNew.calculateTotal();
+    }
+
+    quotationNew.calculateTotal = function() {
+      var total = 0.00;
+      angular.forEach(quotationNew.datas.quotations.items, function(item, key){
+        total += item.amount;
+      });
+      quotationNew.total = total;
+    };
+
+    quotationNew.onSelectParent = function ($item) {
+      autoFillStudent($item);
+    };
+
+    quotationNew.onSelectStudentNumber = function ($item) {
+      quotationNew.datas.student.full_name = $item.full_name;
+      autoFillParent($item);
+    };
+
+    quotationNew.onSelectStudentFullName = function ($item) {
+      quotationNew.datas.student.student_number = $item.student_number;
+      autoFillParent($item);
+    };
+
+    function autoFillParent($item){
+        if($item.parent_id){
+          for(var i = 0;i < quotationNew.parent_info.length; i++){
+            if($item.parent_id == quotationNew.parent_info[i].id){
+              if(!quotationNew.datas.parent.full_name){
+                quotationNew.datas.parent.full_name = quotationNew.parent_info[i].full_name;
+              }
+            }
+          }
+        }
+      }
+
+      function autoFillStudent($item){
+        if($item.student_id){
+          for(var i = 0;i < quotationNew.student_info.length; i++){
+            if($item.student_id == quotationNew.student_info[i].id){
+              if(!quotationNew.datas.student.full_name){
+                quotationNew.datas.student.full_name = quotationNew.student_info[i].full_name;
+              }
+              if(!quotationNew.datas.student.student_number){
+                quotationNew.datas.student.student_number = quotationNew.student_info[i].student_number;
+              }
+            }
+          }
+        }
+      }
+  }
+})();

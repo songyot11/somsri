@@ -214,9 +214,13 @@ en:
   item: "Item"
   add_item: "Add Item"
   net: "Total"
+  outstanding: "Outstanding"
   payment_channel: "Payment method"
   cash: "Cash"
   pay_error: "Amount of the payment methods are mismatched."
+  list_invoices: "List Invoices"
+  cancle_quotation: "Cancle Quotation"
+  cancle_quotation_detail: "Do you want to cancel quotation?"
   sum: "Sum"
   no_data: "Data not found"
 
@@ -290,6 +294,32 @@ en:
   close_without_save: "Do you want to leave this screen?"
   save_data: "Do you want to save this change?"
 
+  # Quotation
+  quotation_link_nav: "Quotation"
+  quotation_new: "New Quotation"
+  quotation_no: 'Quotation #'
+  quotation_outstanding_balance: 'Outstanding'
+  quotation_amount: 'Amount'
+  quotation_printed_at: 'Printed at'
+  quotation_unpaid: 'Payment'
+  quotation_active: 'Paid'
+  search_quotation_no: 'Search Quotation no.'
+  can_payment: "Paid From"
+  can_payment_school: "Payment at School"
+  add_bank: "add Bank"
+  add_bank_account: "Add Bank Account"
+  bank_account_number: "Account"
+  account_name: "Name"
+  add_quotation: "Add Quatation"
+  choose_level: "Choose Level"
+  quotation_print: "Print Quotation"
+
+  # Quotation bill
+  quotation_receipt: "ใบแจ้งการชำระเงิน"
+  payment_method: "ช่องทางการชำระเงิน *หมายเหตุ สามารถชำระเงินได้ "
+  date_start: "ตั้งแต่วันที่ "
+  date_last: "ถึงวันที่ "
+
   hello: "Hello world"
   print_delivery_money: "Print Delivery Money"
 
@@ -304,6 +334,7 @@ en:
   setting: 'Settings'
   class_management: "Grade Management"
   expense: "Expense"
+  quotation: "Quotation"
 
   activerecord:
     attributes:

@@ -73,11 +73,33 @@
             "<%= asset_path('invoice/angular/components/invoiceReport/invoiceReportService.js') %>"
           ]
         },
+        'invoice_details': {
+          name: 'somsri.invoice.invoice_details',
+          files: [
+            "<%= asset_path('invoice/angular/components/invoice/detail/invoiceDetailsCtrl.js') %>",
+            "<%= asset_path('invoice/angular/components/invoice/invoiceService.js') %>",
+            "<%= asset_path('invoice/angular/components/quotation/new/quotationNewService.js') %>"
+          ]
+        },
         'alumni': {
           name: 'somsri.invoice.alumni',
           files: [
             "<%= asset_path('invoice/angular/components/alumni/alumniCtrl.js') %>",
             "<%= asset_path('invoice/angular/components/alumni/alumniService.js') %>"
+          ]
+        },
+        'quotation': {
+          name: 'somsri.invoice.quotation',
+          files: [
+            "<%= asset_path('invoice/angular/components/quotation/quotationCtrl.js') %>",
+            "<%= asset_path('invoice/angular/components/quotation/quotationService.js') %>"
+          ]
+        },
+        'quotation_new': {
+          name: 'somsri.invoice.quotation_new',
+          files: [
+            "<%= asset_path('invoice/angular/components/quotation/new/quotationNewCtrl.js') %>",
+            "<%= asset_path('invoice/angular/components/quotation/new/quotationNewService.js') %>"
           ]
         }
       }

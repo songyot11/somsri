@@ -1,0 +1,165 @@
+(function() {
+  'use strict';
+  angular.module('somsri.invoice.quotation', [])
+    .controller('quotationCtrl', quotationCtrl);
+
+  quotationCtrl.$inject = ['$rootScope', 'translateFilter', 'quotationService', '$filter'];
+
+  function quotationCtrl($rootScope, translateFilter, quotationService, $filter) {
+    var vm = this;
+    var quotationsTable = $('#quotations-table');
+    var angularScopeRoot = 'angular.element(document.getElementById("angularCtrl")).scope().$root';
+
+    $rootScope.menu = translateFilter('quotation_link_nav')
+    $rootScope.loadAndAuthorizeResource("invoice", function() {
+      vm.currentPage = 1;
+      vm.quotations = []
+      vm.totalItems = 0
+      vm.bootstrapTableOptions = {};
+
+      var startDate = new Date();
+      startDate.setMonth(startDate.getMonth() - 3);
+      vm.params = {
+        start_date: startDate,
+        end_date: new Date(),
+      };
+
+      vm.startDatePopup = { opened: false };
+      vm.endDatePopup = { opened: false };
+
+      activate();
+    });
+
+    vm.openStartDatePopup = openStartDatePopup;
+    vm.openEndDatePopup = openEndDatePopup;
+    vm.getQuotations = getQuotations;
+
+    function activate() {
+      loadBootstrapTableOptions();
+      quotationsTable.bootstrapTable(vm.bootstrapTableOptions);
+
+      getQuotations();
+    }
+
+    function openStartDatePopup() {
+      vm.startDatePopup.opened = true;
+    };
+
+    function openEndDatePopup() {
+      vm.endDatePopup.opened = true;
+    };
+
+    function getQuotations() {
+      vm.params.start_date = cleanDate(vm.params.start_date)
+      vm.params.end_date = cleanDate(vm.params.end_date)
+      vm.params.page = vm.currentPage
+
+      quotationService .all(vm.params)
+        .then(function(resp) {
+          vm.quotations = [];
+          if (resp.data && resp.data.quotations) {
+            vm.quotations = resp.data.quotations
+            vm.totalItems = resp.data.total_records;
+            vm.currentPage = resp.data.current_page;
+          } else {
+            vm.totalItems = 0;
+            vm.currentPage = 0;
+          }
+          vm.maxSize = 5;
+          quotationsTable.bootstrapTable('load', vm.quotations);
+        });
+    }
+
+    function loadBootstrapTableOptions() {
+      vm.bootstrapTableOptions = {
+        onSort: function(name, order) {
+          vm.params.sort = name;
+          vm.params.order = order;
+          getQuotations()
+        },
+        customSort: function() { },
+        columns: [{
+          field: 'id',
+          title: translateFilter('quotation_no'),
+          sortable: true,
+          formatter: linkToQuotationDetailFormatter
+        }, {
+          field: 'student_name',
+          title: translateFilter("student_name"),
+          sortable: true,
+         },{
+          field: 'grade_name',
+          title: translateFilter("level"),
+          sortable: true,
+        }, {
+          field: 'quotator_name',
+          title: translateFilter("receiver"),
+          sortable: true,
+        }, {
+          field: 'created_at',
+          title: translateFilter("quotation_printed_at"),
+          sortable: true,
+          formatter: dateFormatter
+        }, {
+          field: 'paid_at',
+          title: translateFilter("payment_date"),
+          sortable: true,
+          formatter: dateFormatter
+        }, {
+          field: 'total_amount',
+          title: translateFilter("paid_amount"),
+          class: 'text-currency',
+          formatter: filterCurrency
+        }, {
+          field: 'outstanding_balance',
+          title: translateFilter("quotation_outstanding_balance"),
+          class: 'text-currency',
+          formatter: filterCurrency
+        }, {
+          field: 'quotation_status',
+          title: '',
+          class: 'text-right',
+          formatter: linkToInvoiceFormatter
+        }]
+      }
+    }
+
+    function dateFormatter(value, row, index) {
+      if (!value) { return '-' }
+      return $filter('date')(value, 'd/MM/yyyy hh:mm');
+    }
+
+    function filterCurrency(value, row, index) {
+      if (!value) { value = 0 }
+      return $filter('number')(value.toFixed(2), 2);
+    }
+
+    function linkToQuotationDetailFormatter(value, row, index) {
+      if (!value) { return '-' }
+      var link = "<a href='/somsri_invoice#/invoice/view/" + row.id + "'>" + value + "</a>";
+
+      return link;
+    }
+
+    function linkToInvoiceFormatter(value, row, index) {
+      var text = translateFilter('quotation_' + value)
+      var link = '<p><i class="fa fa-money" aria-hidden="true"></i> ' + text +'</p>';
+
+      if (!value || value === 'active') { return link; }
+
+      link = "<a href='/somsri_invoice#/invoice/" + row.id + "'>" +
+                "<i class='fa fa-money' aria-hidden='true'></i> " + text + "</a>";
+
+      return link;
+    }
+
+    function cleanDate(date){
+      if (!date || new Date(date) == "Invalid Date") { return; }
+      var nowDate = new Date()
+      date.setHours(nowDate.getHours())
+      date.setMinutes(nowDate.getMinutes())
+      date.setSeconds(nowDate.getSeconds())
+      return date
+    }
+  }
+})();

@@ -238,6 +238,32 @@
         }
       }).
       state({
+        url: '/invoice/:id',
+        name: 'invoice_details',
+        templateUrl: "<%= asset_path('invoice/angular/components/invoice/detail/invoiceDetailsEdit.html') %>",
+        controller: 'invoiceDetailsCtrl as invoiceDetails',
+        resolve: {
+          resources: ['$ocLazyLoad', function($ocLazyLoad) {
+            return $ocLazyLoad.load([
+              ASSETS.somsri.invoice.invoice_details
+            ]);
+          }]
+        }
+      }).
+      state({
+        url: '/invoice/:state/:id',
+        name: 'invoice_strate_details',
+        templateUrl: "<%= asset_path('invoice/angular/components/invoice/detail/invoiceDetailsView.html') %>",
+        controller: 'invoiceDetailsCtrl as invoiceDetails',
+        resolve: {
+          resources: ['$ocLazyLoad', function($ocLazyLoad) {
+            return $ocLazyLoad.load([
+              ASSETS.somsri.invoice.invoice_details
+            ]);
+          }]
+        }
+      }).
+      state({
         url: '/alumni',
         name: 'alumni',
         templateUrl: "<%= asset_path('invoice/angular/components/alumni/alumniView.html') %>",
@@ -246,6 +272,32 @@
           resources: ['$ocLazyLoad', function($ocLazyLoad) {
             return $ocLazyLoad.load([
               ASSETS.somsri.invoice.alumni
+            ]);
+          }]
+        }
+      }).
+      state({
+        url: '/quotation',
+        name: 'quotation',
+        templateUrl: "<%= asset_path('invoice/angular/components/quotation/quotationView.html') %>",
+        controller: 'quotationCtrl as vm',
+        resolve: {
+          resources: ['$ocLazyLoad', function($ocLazyLoad) {
+            return $ocLazyLoad.load([
+              ASSETS.somsri.invoice.quotation
+            ]);
+          }]
+        }
+      }).
+      state({
+        url: '/quotation_new',
+        name: 'quotation_new',
+        templateUrl: "<%= asset_path('invoice/angular/components/quotation/new/quotationNewView.html') %>",
+        controller: 'quotationNewCtrl as quotationNew',
+        resolve: {
+          resources: ['$ocLazyLoad', function($ocLazyLoad) {
+            return $ocLazyLoad.load([
+              ASSETS.somsri.invoice.quotation_new
             ]);
           }]
         }

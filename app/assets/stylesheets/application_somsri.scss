@@ -155,7 +155,7 @@ body {
 }
 
 .p-10 {
-  padding: 5px;
+  padding: 10px;
 }
 
 .p-50 {
@@ -232,6 +232,10 @@ body {
   margin: 10px !important;
 }
 
+.m-20 {
+  margin: 20px !important;
+}
+
 .ml-5 {
   margin-left: 5px !important;
 }
@@ -290,6 +294,10 @@ body {
   margin-top: 0px !important;
 }
 
+.mt-5 {
+  margin-top: 5px !important;
+}
+
 .mt-10 {
   margin-top: 10px !important;
 }
@@ -334,6 +342,10 @@ body {
   top: 45% !important;
 }
 
+.border-0 {
+  border-top: solid 0px !important;
+}
+
 .border-1 {
   border: solid 1px !important;
 }
@@ -372,6 +384,14 @@ body {
 
 .bg-light-gray {
   background-color: #ddd !important;
+}
+
+.bg-green{
+  background-color: #5bab67 !important;
+}
+
+.bg-red{
+  background-color: #DC5B2B !important;
 }
 
 .font-9 {

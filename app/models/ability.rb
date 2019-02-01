@@ -7,6 +7,8 @@ class Ability
       can :dashboard
       can :manage, :all
       can :manage, SiteConfig
+      can :manage, Bank
+      can :manage, Quotation
     elsif  user && user.finance_officer?
       can :manage, :menu
       can :manage, Invoice
@@ -23,6 +25,8 @@ class Ability
       can :manage, ExpenseTag
       can :manage, ExpenseTagItem
       can :manage, ExpenseItem
+      can :manage, Bank
+      can :manage, Quotation
     end
   end
 

@@ -1,0 +1,254 @@
+<div class="container" id="invoice" style="width: 960px;">
+  <form name="createProjectForm" ng-submit="invoiceDetails.save()">
+    <div class="row">
+      <div class="col-md-6 heading">
+        {{ 'quotation_link_nav' | translate }}
+      </div>
+      <div class="col-md-6 branding">
+        <div class="invoice-number-container">
+          <label>{{ 'date1' | translate }}&nbsp;{{ invoiceDetails.date_display }}&nbsp;&nbsp;</label>
+        </div>
+      </div>
+    </div>
+    <div class="form_1">
+      <div class="row">
+        <div class="col-md-2">
+          <div class="form-group">
+            <input type="text" class="form-control" id="student_code" placeholder="{{ 'student_id1' | translate }}" ng-model="invoiceDetails.datas.student.student_number" disabled>
+          </div>
+        </div>
+        <div class="col-md-4">
+          <div class="form-group">
+            <input type="text" class="form-control" id="student_name" placeholder="{{ 'student_name' | translate }}" ng-model="invoiceDetails.datas.invoice.student_name" disabled>
+          </div>
+        </div>
+        <div class="col-md-6">
+          <div class="form-group">
+            <input type="text" class="form-control" id="parent_name" placeholder="{{ 'parent_name' | translate }}" ng-model="invoiceDetails.datas.parent.full_name" disabled>
+          </div>
+        </div>
+      </div>
+
+      <div class="row form-1_2">
+        <div class="col-md-3">
+          <div class="form-group">
+            <select id="grade" class="btn btn-grades" ng-model="invoiceDetails.datas.invoice.grade_name" ng-options=" obj.value for obj in invoiceDetails.grades" disabled>
+            </select>
+          </div>
+        </div>
+        <div class="col-md-2">
+          <div class="form-group inline-block">
+            {{ 'term' | translate }} <input type="text" class="form-control" id="semester" placeholder="{{ 'term' | translate }}" ng-model="invoiceDetails.datas.invoice.semester" disabled>
+          </div>
+        </div>
+        <div class="col-md-2">
+          <div class="form-group inline-block">
+            {{ 'school_year' | translate }} <input type="text" class="form-control" id="school_year" placeholder="{{ 'school_year' | translate }}" ng-model="invoiceDetails.datas.invoice.school_year" disabled>
+          </div>
+        </div>
+      </div>
+
+      <div class="row form-1_2">
+        <div class="col-md-5 date-for-print">
+          <div class="form-group">
+            <span class="input-group">
+              <div class="col-md-7 mt-10">
+                <label for="start_date" class="text-status-date">{{ 'can_payment' | translate }}</label>
+              </div>
+              <div class="col-md-5">
+                <input id="start_date" type="text" class="form-control" uib-datepicker-popup="dd/MM/yyyy" datepicker-options="{showWeeks:false}" ng-model="invoiceDetails.datas.invoice.payment_date_start" is-open="invoiceDetails.startDatePopup.opened" close-text="Close"  disabled/>
+                <span class="input-group-btn" style="display: inherit;">
+                  <button type="button" class="btn btn-default"><i class="fa fa-calendar"></i></button>
+                </span>
+              </div>
+            </span>
+          </div>
+        </div>
+        <div class="col-md-5 date-for-print">
+          <div class="form-group">
+            <span class="input-group">
+              <div class="col-md-2">
+                <label for="end_date" class="text-status-date">{{ 'ถึง' | translate }}</label>
+              </div>
+              <div class="col-md-7">
+                <input id="end_date" type="text" class="form-control" uib-datepicker-popup="dd/MM/yyyy" datepicker-options="{showWeeks:false}" ng-model="invoiceDetails.datas.invoice.payment_date_end" is-open="invoiceDetails.endDatePopup.opened" close-text="Close"  disabled/>
+                <span class="input-group-btn" style="display: inherit;">
+                  <button type="button" class="btn btn-default"><i class="fa fa-calendar"></i></button>
+                </span>
+              </div>
+            </span>
+          </div>
+        </div>
+      </div>
+      
+    </div>
+    <div class="form_2">
+      <div class="row">
+        <div class="col-md-6">
+          <div class="title-htable">{{ 'invoice_list' | translate }}</div>
+        </div>
+      </div>
+
+      <div class="items-table">
+        <div class="row header">
+          <div class="col-md-1 text-center"></div>
+          <div class="col-md-1 text-center">#</div>
+          <div class="col-md-8">{{ 'item' | translate }}</div>
+          <div class="col-md-2 text-right-htable">{{ 'price' | translate }}</div>
+        </div>
+
+        <div class="row invoice-item" ng-repeat="item in invoiceDetails.datas.invoice.items" ng-animate="'slide-down'">
+          <div class="col-md-1 remove-item-container"></div>
+          <div class="col-md-1">
+            {{ $index + 1 }}
+          </div>
+          <div class="col-md-8 mt-5">
+            {{ item.detail }}
+          </div>
+          <div class="col-md-2 text-right-htable">
+            {{ item.amount.toFixed(2) | number:2 }}
+          </div>
+        </div>
+
+        <div class="row col-total-1 mt-50">
+          <div class="col-md-8 text-note">
+            <div class="col-md-2"> {{ 'note' | translate }}</div>
+            {{ invoiceDetails.datas.invoice.remark }}
+          </div>
+
+          <div class="col-md-4">
+            <div class="row">
+              <div class="col-md-6 mt-0 text-right-total-invoice">{{ 'net' | translate }}: </div>
+              <div class="col-md-6 mt-0 text-right-total-invoice">{{ invoiceDetails.total.toFixed(2) | number:2 }}</div>
+
+              <div class="col-md-6"><label>{{ 'outstanding' | translate }}: </label></div>
+              <div class="col-md-6 text-right"><label>{{ invoiceDetails.datas.quotation.outstanding.toFixed(2) | number:2 }}</label></div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="row mt-50">
+        <div class="col-md-6">
+          <div class="title-htable">{{ 'list_invoices' | translate }}</div>
+        </div>
+      </div>
+
+      <div class="items-table">
+        <div class="row header">
+          <div class="col-md-3 col-md-offset-1">เลขที่ใบวางบิล #</div>
+          <div class="col-md-4">ยอดที่ชำระ</div>
+          <div class="col-md-2 col-md-offset-2">วันที่ชำระ</div>
+        </div>
+
+        <div class="row invoice-item" ng-repeat="invoice in invoiceDetails.invoices" ng-animate="'slide-down'">
+          <div class="col-md-3 col-md-offset-1">
+            <a href="/invoices/{{ invoice.id }}/slip.pdf">{{ invoice.id }}</a>
+          </div>
+          <div class="col-md-4">
+            {{ invoice.amount.toFixed(2) | number:2 }}
+          </div>
+          <div class="col-md-2 col-md-offset-2">
+            {{ invoice.created_at }}
+          </div>
+        </div>
+      </div>
+
+      <div class="row noPrint actions">
+        <div class="col-md-4">
+          <button type="button" class="btn btn-custom btn-red" ng-click="invoiceDetails.reject()"  ng-if="invoiceDetails.datas.quotation.outstanding > 0">{{ 'cancel' | translate }}</button>
+        </div>
+        <div class="col-md-8 text-right">
+          <button type="button" class="btn btn-custom btn-green" ng-click="invoiceDetails.print()" ng-if="invoiceDetails.datas.quotation.outstanding > 0">{{ 'quotation_print' | translate }}</button>
+          <a href="/somsri_invoice#/invoice/{{ invoiceDetails.quotationId }}" class="btn btn-custom btn-blue" ng-if="invoiceDetails.datas.quotation.outstanding > 0">{{ 'pay' | translate }}</a>
+          <a href="/somsri_invoice#/quotation" class="btn btn-custom btn-gray" ng-click="invoiceDetails.cancel()">{{ 'close' | translate }}</a>
+        </div>
+      </div>
+    </div>
+  </form>
+</div>
+
+<!-- Modal Cancle -->
+<div class="modal" id="cancle-modal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content p-0 m-20">
+      <div class="modal-header bg-red">
+        <i class="fa fa-close pull-right" data-dismiss="modal"></i>
+        <h3 class="modal-title pull-left text-white">{{ "cancle_quotation" | translate }}</h3>
+      </div>
+      <div class="modal-body">
+        <div class="row">
+          <div class="col-md-12 text-center">
+            <h4 class="m-20">{{ 'cancle_quotation_detail' | translate }}</h4>
+          </div>
+        </div>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-custom btn-red" ng-click="invoiceDetails.removeQuotation()">{{ 'ok' | translate }}</button>
+        <button type="button" class="btn btn-cancel" data-dismiss="modal">{{ 'cancel' | translate }}</button>
+      </div>
+  </div>
+</div>
+
+<!-- Modal -->
+<div class="modal" id="amount-modal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content content-amount">
+      <div class="modal-body">
+        <div class="row" ng-show="invoiceDetails.datas.payment_method.is_cash">
+          <div class="col-md-3 titel-modal-pay">
+            <label class="pull-right">{{ 'cash' | translate }} : </label>
+          </div>
+          <div class="col-md-9">
+            <input type="text" value="0.00" ng-required min="-100000" step="1000" ng-validate="number" placeholder="{{ 'amount' | translate }}" class="form-control table-price price-pay" ng-model="invoiceDetails.datas.payment_method.cash_amount" ui-number-mask="2" ui-negative-number>
+          </div>
+        </div>
+        <div class="row" ng-show="invoiceDetails.datas.payment_method.is_credit_card">
+          <div class="col-md-3 titel-modal-pay">
+            <label class="pull-right">{{ 'credit_card' | translate }} : </label>
+          </div>
+          <div class="col-md-9">
+            <input type="text" value="0.00" ng-required min="-100000" step="1000" ng-validate="number" placeholder="{{ 'amount' | translate }}" class="form-control table-price price-pay" ng-model="invoiceDetails.datas.payment_method.credit_card_amount" ui-number-mask="2" ui-negative-number>
+          </div>
+        </div>
+        <div class="row" ng-show="invoiceDetails.datas.payment_method.is_cheque">
+          <div class="col-md-3 titel-modal-pay">
+            <label class="pull-right">{{ 'bank_check' | translate }} : </label>
+          </div>
+          <div class="col-md-9">
+            <input type="text" value="0.00" ng-required min="-100000" step="1000" ng-validate="number" placeholder="{{ 'amount' | translate }}" class="form-control table-price price-pay" ng-model="invoiceDetails.datas.payment_method.cheque_amount" ui-number-mask="2" ui-negative-number>
+          </div>
+        </div>
+        <div class="row" ng-show="invoiceDetails.datas.payment_method.is_transfer">
+          <div class="col-md-3 titel-modal-pay">
+            <label class="pull-right">{{ 'bank_transfer' | translate }} : </label>
+          </div>
+          <div class="col-md-9">
+            <input type="text" value="0.00" ng-required min="-100000" step="1000" ng-validate="number" placeholder="{{ 'amount' | translate }}" class="form-control table-price price-pay" ng-model="invoiceDetails.datas.payment_method.transfer_amount" ui-number-mask="2" ui-negative-number>
+          </div>
+        </div>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-submit" ng-click="invoiceDetails.submitAmountModal();">{{ 'save' | translate }}</button>
+        <button type="button" class="btn btn-cancel" data-dismiss="modal">{{ 'cancel' | translate }}</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- Modal -->
+<div class="modal" id="confirm-amount-modal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content content-no-amount">
+      <div class="modal-body">
+        <div class="row">
+          <div class="col-md-12">
+            <p>*** {{ 'pay_error' | translate }} ***</p>
+          </div>
+        </div>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-cancel" data-dismiss="modal">{{ 'cancel' | translate }}</button>
+      </div>
+  </div>
+</div>

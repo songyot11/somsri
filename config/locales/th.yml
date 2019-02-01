@@ -214,10 +214,14 @@ th:
   item: "รายการ"
   add_item: "เพิ่มรายการ"
   net: "ยอดรวมสุทธิ"
+  outstanding: "ยอดค้างชำระ"
   payment_channel: "ชำระเงินโดย"
   cash: "เงินสด"
   pay_error: "ผลรวมของจำนวนเงินแต่ละประเภทไม่ตรงกับจำนวนเงินสุทธิ"
   sum: "ยอดรวม"
+  list_invoices: "รายการใบเสร็จรับเงิน"
+  cancle_quotation: "ยกเลิกใบแจ้งชำระเงิน"
+  cancle_quotation_detail: "ต้องการยกเลิกใบแจ้งชำระเงิน"
   no_data: "ไม่พบข้อมูล"
 
   receipt_search: "ค้นหาตามเลขที่ใบเสร็จ, ชื่อนักเรียน, ชื่อผู้ปกครอง"
@@ -284,6 +288,32 @@ th:
   close_without_save: "คุณต้องการออกจากหน้านี้โดยไม่บันทึกค่าหรือไม่?"
   save_data: "คุณต้องการบันทึกการเปลี่ยนแปลงนี้หรือไม่?"
 
+  # Quotation
+  quotation_link_nav: "ใบแจ้งการชำระเงินค่าเทอม"
+  quotation_new: "ออกใบวางบิล"
+  quotation_no: 'เลขใบวางบิล #'
+  quotation_outstanding_balance: 'ยอดค้างชำระ'
+  quotation_amount: 'ยอดเรียกเก็บ'
+  quotation_printed_at: 'วันที่พิมพ์ใบชำระ'
+  quotation_unpaid: 'ชำระเงิน'
+  quotation_active: 'ชำระแล้ว'
+  search_quotation_no: 'ค้นหาตามเลขที่ใบวางบิล'
+  can_payment: "สามารถชำระได้ตั้งแต่วันที่"
+  can_payment_school: "สามารถชำระเงินได้ที่โรงเรียน"
+  add_bank: "เพิ่มธนาคาร"
+  add_bank_account: "เพิ่มบัญชีธนาคาร"
+  bank_account_number: "เลขที่บัญชี"
+  account_name: "ชื่อบัญชี"
+  add_quotation: "เพิ่มใบวางบิล"
+  choose_level: "ระบุชั้นเรียน"
+  quotation_print: "พิมพ์ใบวางบิล"
+
+  # Quotation bill
+  quotation_receipt: "ใบแจ้งการชำระเงิน"
+  payment_method: "ช่องทางการชำระเงิน *หมายเหตุ สามารถชำระเงินได้ "
+  date_start: "ตั้งแต่วันที่ "
+  date_last: "ถึงวันที่ "
+
   hello: "สวัสดีครับ"
   print_delivery_money: "พิมพ์ใบนำส่งเงิน"
 
@@ -298,6 +328,7 @@ th:
   setting: 'การตั้งค่า'
   class_management: จัดการชั้นเรียน
   expense: "บันทึกค่าใช้จ่าย"
+  quotation: 'วางบิล'
 
   activerecord:
     attributes:

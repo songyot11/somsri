@@ -6,7 +6,7 @@
       </div>
       <div class="col-xs-2 font-9">
         <div class="row">
-          <span><%= I18n.t('receipt_no') %> &nbsp;<%= @results[:slip_id] %>/<%= @results[:create_year] %></span>
+          <span><%= I18n.t('number1') %> &nbsp;<%= @results[:slip_id] %>/<%= @results[:create_year] %></span>
         </div>
         <div class="row mt-10">
           <%= I18n.t('date1') %> <%= I18n.locale == :th ? @results[:thai_now_date] : @results[:eng_now_date] %>
@@ -15,7 +15,7 @@
     </div>
     <div class="row mt-10">
       <div class="col-xs-4">
-        <div class="row"><span class="font-24"><%= I18n.t('payment_receipt') %></div>
+        <div class="row"><span class="font-24"><%= I18n.t('quotation_receipt') %></div>
         <div class="row"><%= title %></div>
       </div>
       <div class="col-xs-3 col-xs-offset-5">
@@ -97,82 +97,37 @@
           </div>
         </div>
       <% end %>
-      <div class="sec-payment font-14 ">
-        <div class="row text-slip3-payment mt-10"><b><%= I18n.t('payment_channel') %></b></div>
-        <div class="row text-slip2-payment mt-10 ml-20">
-          <% if @results[:is_cash] %>
-            <div class="row">
-              <div class="col-xs-9">
-                <span><%= I18n.t('cash') %></span>
-              </div>
-              <div class="col-xs-3">
-                <span class="pull-right">
-               <%= cleanNumber(number_with_precision(@results[:cash_amount], precision: 2, delimiter: ',')) %> <%= I18n.t('baht') %>
-                </span>
-              </div>
-            </div>
-          <% end %>
-          <% if @results[:is_credit_card] %>
-            <div class="row">
-              <div class="col-xs-9">
-                <span>
-                  <%= I18n.t('credit_card') %>
-                </span>
-              </div>
-              <div class="col-xs-3">
-                <span class="pull-right">
-                 <%= cleanNumber(number_with_precision(@results[:credit_card_amount], precision: 2, delimiter: ',')) %> <%= I18n.t('baht') %>
-                </span>
-              </div>
-            </div>
-          <% end %>
-          <% if @results[:is_cheque] %>
-            <div class="row">
-              <div class="col-xs-9">
-                <span>
-                  <%= I18n.t('bank_check') %> :&nbsp; <U><%= @results[:cheque_bank_name] || '.................' %></U>&nbsp;
-                  <%= I18n.t('bank_check_id') %> :&nbsp; <U><%= @results[:cheque_number] || '.................' %></U>&nbsp;
-                  <%= I18n.t('bank_check_date') %> : &nbsp;<U><%= @results[:cheque_date] || '.......' %></U>&nbsp;
-                </span>
-              </div>
-              <div class="col-xs-3">
-                <span class="pull-right">
-                <%= cleanNumber(number_with_precision(@results[:cheque_amount], precision: 2, delimiter: ',')) %> <%= I18n.t('baht') %>
-                </span>
-              </div>
-            </div>
-          <% end %>
-          <% if @results[:is_transfer] %>
-            <div class="row">
-              <div class="col-xs-9">
-                <span>
-                  <%= I18n.t('bank_transfer') %> :&nbsp; <U><%= @results[:transfer_bank_name] || '.................' %></U>&nbsp;
-                  <%= I18n.t('bank_check_date') %>:&nbsp; <U><%= @results[:transfer_date] || '.......' %></U>
-                </span>
-              </div>
-              <div class="col-xs-3">
-                <span class="pull-right">
-                <%= cleanNumber(number_with_precision(@results[:transfer_amount], precision: 2, delimiter: ',')) %> <%= I18n.t('baht') %>
-                </span>
-              </div>
-            </div>
-          <% end %>
+      <div class="row">
+        <div class="col-xs-12">
+          <h6><b><%= I18n.t('payment_method') %> <%= I18n.t('date_start') %> <%= @results[:payment_date_start] %> <%= I18n.t('date_last') %>  <%= @results[:payment_date_end] %></b></h6>
+        </div>
+        <div class="col-xs-12">
+          <label><i class="fa fa-square-o"></i>  <%= I18n.t('cash') %> (<%= I18n.t('can_payment_school') %>)</label>
+        </div>
+        <div class="col-xs-12">
+          <label><i class="fa fa-square-o"></i>  <%= I18n.t('credit_card') %> (<%= I18n.t('can_payment_school') %>)</label>
+        </div>
+        <div class="col-xs-12">
+          <label><i class="fa fa-square-o"></i>  <%= I18n.t('bank_check') %></label>
+        </div>
+        <div class="col-xs-12">
+          <label><i class="fa fa-square-o"></i>  <%= I18n.t('bank_transfer') %></label>
         </div>
       </div>
-      <div class="mt-10">
-        <%= @results[:footer].html_safe if @results[:footer] %>
-      </div>
-    </div>
-    <div class="col-xs-6 mt-50 ml-60p">
-      <div class="row">
-        <div class="col-xs-12">&nbsp;&nbsp;&nbsp;&nbsp;<%= I18n.t('sign') %>...........................................................<%= I18n.t('receiver') %></div>
-      </div>
-      <div class="row">
-        <div class="col-xs-1"> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;( </div>
-        <div class="col-xs-6 text-center"><%= @results[:receiver_name] %></div>
-        <div class="col-xs-1"> )</div>
-      </div>
-    </div>
+
+      <% if !@results[:banks].blank? %>
+        <% for bank in @results[:banks] %>
+          <div class="row">
+            <div class="col-xs-2 text-right">
+              <i class="fa fa-square-o"></i>
+              <%= wicked_pdf_image_tag bank.lt_bank.image_path, width: "40px", height: "30px"  %>
+            </div>
+            <div class="col-xs-2 pt-10"><label><%= bank.bank_name %></label></div>
+            <div class="col-xs-3 pt-10"><label><%= I18n.t('bank_account_number') %> <%= bank.bank_account %></label></div>
+            <div class="col-xs-3 pt-10"><label><%= I18n.t('account_name') %> <%= bank.account_name %></label></div>
+          </div>
+        <% end %>
+      <% end %>
   </div>
   <div class="page-break"></div>
   <% end %>

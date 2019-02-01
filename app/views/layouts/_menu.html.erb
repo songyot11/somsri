@@ -98,5 +98,17 @@
             <%= content_tag(:p, t('.expense', :default => t("expense")) ) %>
         </div>
       <% end %>
+      <% if SiteConfig.get_cache.enable_quotation && can?(:manage, Quotation) %>
+        <div class="col-xs-4 col-centered menu-icon">
+            <div class="<%= is_topbar ? 'dropdown-menu-btn' : 'menu-btn' %> quotation">
+                <a href="/somsri_invoice#/quotation">
+                  <div class="wraptocenter">
+                    <%= image_tag 'quotation-icon.png', class: (is_topbar ? 'img-menu-nav' : ''), width: is_topbar ? 50 : 70 %>
+                  </div>
+                </a>
+            </div>
+            <%= content_tag(:p, t('.quotation', :default => t("quotation")) ) %>
+        </div>
+      <% end %>
   </div>
 </div>
