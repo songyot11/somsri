@@ -1,0 +1,33 @@
+<div class="modal-body" id="modal-body">
+  <form name="createPayrollsForm" ng-submit="createPayrolls.submit()" autocomplete="off">
+    <div class="row">
+      <div class="col-md-12 text-center">
+        <h2 class="modal-title" id="modal-title"><b>{{ 'pay_out' | translate }}</b></h2>
+      </div>
+    </div>
+    <div class="space20"></div>
+    <div class="row">
+      <div class="col-md-12">
+        <div class="form-group">
+          <label for="effective_date">{{ "pay_date" | translate }}</label>
+          <p class="input-group">
+            <input id="effective_date" type="text" class="form-control" uib-datepicker-popup="dd/MM/yyyy" datepicker-options="{showWeeks:false}" ng-model="createPayrolls.effective_date" is-open="createPayrolls.effectiveDatePopup.opened" close-text="Close" required />
+            <span class="input-group-btn">
+              <button type="button" class="btn btn-default" ng-click="createPayrolls.openEffectiveDatePopup()"><i class="fa fa-calendar"></i></button>
+            </span>
+            <div><font color="#bbb"><i>* {{ "example" | translate }}: 31/01/2017</i></font></div>
+          </p>
+        </div>
+      </div>
+    </div>
+    <div class="space20"></div>
+    <div class="row">
+      <div class="col-md-6 text-center">
+        <button type="submit" ng-disabled="createPayrolls.isSaving" ng-class="{'btn-green': !createPayrolls.isSaving, 'btn-gray': createPayrolls.isSaving}" class="btn btn-custom btn-block">{{ "save" | translate }} <i ng-show="createPayrolls.isSaving" class="fa fa-spinner fa-spin" aria-hidden="true"></i></button>
+      </div>
+      <div class="col-md-6 text-center">
+        <button type="button" ng-disabled="createPayrolls.isSaving" class="btn btn-custom btn-gray btn-block" ng-click="createPayrolls.cancel()">{{ "cancel" | translate }}</button>
+      </div>
+    </div>
+  </form>
+</div>

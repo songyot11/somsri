@@ -1,0 +1,153 @@
+(function() {
+  'use strict';
+  angular.module('somsri.payroll.report.directive', [
+    'somsri.translate'
+    ])
+  .directive('reportContent', ['$timeout','$filter', 'translateFilter', function ($timeout, $filter, translateFilter) {
+
+    return {
+      restrict: 'E',
+      scope: {
+        report: '=model',
+        class: '@class'
+      },
+      templateUrl: "<%= asset_path('payroll/angular/components/shared/report/reportView.html') %>",
+      link: link
+    };
+
+    function link(scope, element, attrs) {
+      angular.extend(scope.report, {
+        reportTableInit: reportTableInit,
+        reportTableLoadData: function(data) {
+          $('.table').bootstrapTable('load', data);
+        }
+      });
+    }
+
+    function reportTableInit(data) {
+      var $table = $('.table');
+      var angularScopeReport = "angular.element(document.getElementById('angularCtrl')).scope().report";
+
+      function filterCode(value, row, index){
+        if (value) {
+          return '<div class="numberic">'+value+'</div>';
+        }
+        return '<div class="numberic"></div>';
+      }
+
+      function filterAccountNumber(value, row, index){
+        if (value) {
+          return '<div class="numberic">'+value+'</div>';
+        }
+        return '<div class="numberic"></div>';
+      }
+
+      function filterSalary(value, row, index){
+        if (value) {
+          return '<div class="numberic" style="text-align: right;">'+$filter('currency')(value, '')+'</div>';
+        }
+        return '<div class="numberic" style="text-align: right;">'+$filter('currency')(0, '')+'</div>';
+      }
+
+      function filterExtraPay(value, row, index){
+        if (value) {
+          return '<div class="text-green numberic" style="text-align: right;" >'+$filter('currency')(value, '')+'</div>';
+        }
+        return '<div class="text-green numberic" style="text-align: right;">'+$filter('currency')(0, '')+'</div>';
+      }
+
+      function filterExtraFee(value, row, index){
+        if (value) {
+          return '<div class="text-red numberic" style="text-align: right;">'+$filter('currency')(value, '')+'</div>';
+        }
+        return '<div class="text-red numberic" style="text-align: right;">'+$filter('currency')(0, '')+'</div>';
+      }
+
+      function filterNetSalary(value, row, index){
+        if (value) {
+          return '<div class="text-green numberic" style="text-align: right;">'+$filter('currency')(value, '')+'</div>';
+        }
+        return '<div class="text-green numberic" style="text-align: right;">'+$filter('currency')(0, '')+'</div>';
+      }
+
+      function linkName(value, row, index){
+        if(value){
+          if(row.deleted){
+            return '<strong>'+value+'</strong>'
+          }else{
+            return '<a href="somsri_payroll#/employees/'+row.code+'?payroll_id='+row.payroll_id+'"><strong>'+value+'</strong><a>'
+          }
+        }
+        return '-';
+      }
+
+      function printSlip(value, row, index){
+        if(row){
+          return '<a target="_blank" href="/employees/slips.pdf?payroll_ids%5B%5D=' + row.payroll_id + '" > <i class="fa fa-print"></i> </a>';
+        }
+        return '-';
+      }
+
+      $table.bootstrapTable({
+        showFooter: true,
+        columns: [{
+          field: 'code',
+          title: translateFilter('employee_code'),
+          sortable: true,
+          formatter: filterCode,
+          class: 'report_for_print_hide',
+        },{
+          field: 'name',
+          title: translateFilter('employee_name'),
+          sortable: true,
+          formatter: linkName,
+          class: 'forprint-h_table print_name',
+        },{
+          field: 'account_number',
+          title: translateFilter('bank_account2'),
+          sortable: true,
+          align: 'right',
+          formatter: filterAccountNumber,
+          class: 'text-center forprint-h_table forprint_table this_account',
+        },{
+          field: 'salary',
+          title: translateFilter('salary'),
+          sortable: true,
+          formatter: filterSalary,
+          align: 'right',
+          class: 'report_for_print_hide',
+        },{
+          field: 'extra_pay',
+          title: translateFilter('extra_money'),
+          sortable: true,
+          formatter: filterExtraPay,
+          align: 'right',
+          class: 'report_for_print_hide',
+        },{
+          field: 'extra_fee',
+          title: translateFilter('deduct_money'),
+          sortable: true,
+          formatter: filterExtraFee,
+          align: 'right',
+          class: 'report_for_print_hide',
+        },{
+          field: 'net_salary',
+          title: translateFilter('net_salary'),
+          sortable: true,
+          formatter: filterNetSalary,
+          align: 'right',
+          class: 'text-right forprint-h_table for-print-NetSalary',
+        },{
+          field: '',
+          title: '',
+          class: 'report_for_print_hide',
+          align: 'center',
+          formatter: printSlip,
+        }],
+        data: data
+      });
+
+    }
+
+  }]);
+})();

@@ -1,0 +1,111 @@
+(function() {
+  'use strict';
+  angular.module('somsri.main.classroom', [
+    ])
+  .controller('classroomCtrl', ['$rootScope','classroomService','$scope', '$uibModal', '$window', 'translateFilter', function($rootScope, service, $scope, $uibModal, $window, translateFilter) {
+    $rootScope.menu = translateFilter('setting')
+    var ctrl = this
+    ctrl.grade_select = null
+
+    function openConfirmationModal(message, success, dismiss) {
+      $scope.message = message;
+      $uibModal.open({
+        animation: true,
+        backdrop: 'static',
+        keyboard: false,
+        scope: $scope,
+        templateUrl: "<%= asset_path('main/angular/components/modal/confirm/confirmModalView.html') %>",
+        controller: 'confirmModalCtrl as confirm',
+        size: 'md',
+        resolve: {
+          resources: ['$ocLazyLoad', 'ASSETS', function($ocLazyLoad, ASSETS) {
+            return $ocLazyLoad.load([
+              ASSETS.somsri.main.confirm_modal
+            ]);
+          }]
+        }
+      }).result.then(function (isConfirm) {
+        if (isConfirm) {
+          if(success){ success() }
+        }else{
+          if(dismiss){ dismiss() }
+        }
+      });
+    }
+
+    ctrl.removeClassroom = function(id){
+      openConfirmationModal("คุณต้องการลบห้องเรียนใช่หรือไม่? (การลบห้องเรียนจะไม่ทำให้นักเรียนและคุณครูที่อยู่ในห้องหายไป)", function(){
+        service.removeClassroom(id).then(function(resp) {
+          $window.location.reload();
+        });
+      })
+    }
+
+    var angularCtrlStr = "angular.element(document.getElementById('angularCtrl')).scope().classroom"
+    function editBtnFormatter(index, row, element){
+      var html = '<a href="/main#/classroom/' + row.classroom_id + '"><i class="fa fa-pencil" aria-hidden="true"></i>' + translateFilter('edit') + '</a>&nbsp;&nbsp;&nbsp;';
+      html += '<a class="color-red hover" onclick="' + angularCtrlStr + '.removeClassroom(' + row.classroom_id + ')"><i class="fa fa-times" aria-hidden="true"></i>' + translateFilter('delete') + '</a>';
+      return html;
+    }
+
+    function initBootstrapTable(){
+      var tableColumnSetting = [
+        { field: 'grade', sortable: true, title: translateFilter('grade_classroom') },
+        { field: 'classroom', sortable: true, title: translateFilter('classroom')},
+        { field: 'teacher_count', sortable: true, title: translateFilter('no_of_teacher')},
+        { field: 'student_count', sortable: true, title: translateFilter('no_of_student')},
+        { field: 'link', class: "text-right", formatter: editBtnFormatter}
+      ]
+      $('#classroom-list').bootstrapTable({
+        url: "/classrooms/classroom_list",
+        columns: tableColumnSetting
+      })
+    }
+
+    $rootScope.loadAndAuthorizeResource("school", function(){
+
+      ctrl.createClassroom = function() {
+        $uibModal.open({
+          animation: true,
+          backdrop: 'static',
+          keyboard: false,
+          scope: $scope,
+          templateUrl: "<%= asset_path('main/angular/components/modal/createClassroom/createClassroomModalView.html') %>",
+          controller: 'createClassroomModalCtrl as create',
+          size: 'md',
+          resolve: {
+            resources: ['$ocLazyLoad', 'ASSETS', function($ocLazyLoad, ASSETS) {
+              return $ocLazyLoad.load([
+                ASSETS.somsri.main.create_classroom_modal
+              ]);
+            }]
+          }
+        }).result.then(function (isConfirm) {
+          if (isConfirm) {
+            $window.location.reload()
+          }
+        });
+      }
+
+      service.getGrades().then(function(resp) {
+        ctrl.grades = []
+        resp.data.forEach(function(grade) {
+          if(grade.id > -1){ ctrl.grades.push(grade) }
+        });
+      });
+      ctrl.gradeFilter = function(grade){
+        ctrl.grade_select = grade
+        if(grade){
+          $('#classroom-list').bootstrapTable('filterBy', {grade: ctrl.grade_select.name});
+        }else{
+          $('#classroom-list').bootstrapTable('filterBy', {});
+        }
+      }
+      ctrl.studentPromote = function(){
+        $rootScope.openNextClassroomList();
+      }
+      initBootstrapTable()
+    });
+
+  }]);
+})();

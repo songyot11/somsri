@@ -1,0 +1,20 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title><%= (cms_block_render(:header) rescue 'สมศรี') %></title>
+    <%= csrf_meta_tags %>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/3.5.2/animate.min.css">
+    <%= stylesheet_link_tag    'application_webSchool', media: 'all', 'data-turbolinks-track': 'reload' %>
+    <%= javascript_include_tag 'modernizr.custom.63321', 'data-turbolinks-track': 'reload' %>
+    <%= javascript_include_tag 'application_webSchool', 'data-turbolinks-track': 'reload' %>
+
+  </head>
+
+  <body>
+    <%= yield %>
+
+    <%= javascript_include_tag 'calendario.min', 'data-turbolinks-track': 'reload' %>
+  </body>
+</html>

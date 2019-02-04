@@ -1,0 +1,89 @@
+
+  <div class="container" id="dailyReport" >
+    <div class="row">
+      <div class="col-md-6 heading">
+        {{ 'transfer_money' | translate }}
+      </div>
+    </div>
+    <div class="content-dailyReport">
+      <form name="dailyReportForm" ng-submit="dailyReport.submit()" autocomplete="off">
+        <div class="row">
+          <div class="col-md-12 pull-right">
+            <div class="row">
+              <div class="col-md-4 topic-right-report">{{ 'init_cash' | translate }}</div>
+              <div class="col-md-4 input-num-center">
+                <div class="form-group">
+                  <input id="startCash" type="text" value="0.00" ng-required min="-100000" step="1000" placeholder="{{ 'input_amount' | translate }}" placeholder="{{ 'price' | translate }}" class="form-control numberic" ng-model="dailyReport.datas.real_start_cash" ng-change="dailyReport.total()" ui-number-mask="2" ui-negative-number  required>
+                </div>
+              </div>
+              <div class="col-md-2 number-report-right numberic">
+                0.00
+              </div>
+            </div>
+            <div class="row">
+              <div class="col-md-4 topic-right-report">{{ 'cash' | translate }}</div>
+              <div class="col-md-4 input-num-center">
+                <div class="form-group">
+                  <input type="text" ng-model="dailyReport.datas.real_cash" value="0.00" ng-required min="-100000" step="1000" placeholder="{{ 'input_amount' | translate }}" placeholder="{{ 'price' | translate }}" class="form-control numberic" ng-change="dailyReport.total()" ui-number-mask="2" ui-negative-number required id="{{ 'cash' | translate }}">
+                </div>
+              </div>
+              <div class="col-md-2 number-report-right numberic">
+                {{ dailyReport.datas.cash.toFixed(2) | number:2 }}
+              </div>
+            </div>
+            <div class="row">
+              <div class="col-md-4 topic-right-report">{{ 'credit_card' | translate }}</div>
+              <div class="col-md-4 input-num-center">
+                <div class="form-group">
+                  <input type="text" ng-model="dailyReport.datas.real_credit_card" value="0.00" ng-required min="-100000" step="1000" placeholder="{{ 'input_amount' | translate }}" placeholder="{{ 'price' | translate }}" class="form-control numberic" ng-change="dailyReport.total()" ui-number-mask="2" ui-negative-number required id="{{ 'credit_card' | translate }}">
+                </div>
+              </div>
+              <div class="col-md-2 number-report-right numberic">
+                {{ dailyReport.datas.credit_card.toFixed(2) | number:2 }}
+              </div>
+            </div>
+            <div class="row">
+              <div class="col-md-4 topic-right-report">{{ 'bank_check' | translate }}</div>
+              <div class="col-md-4 input-num-center">
+                <div class="form-group">
+                  <input type="text" ng-model="dailyReport.datas.real_cheque" value="0.00" ng-required min="-100000" step="1000" placeholder="{{ 'input_amount' | translate }}" placeholder="{{ 'price' | translate }}" class="form-control numberic" ng-change="dailyReport.total()" ui-number-mask="2" ui-negative-number required id="{{ 'bank_check' | translate }}">
+                </div>
+              </div>
+              <div class="col-md-2 number-report-right numberic">
+                {{ dailyReport.datas.cheque.toFixed(2) | number:2 }}
+              </div>
+            </div>
+            <div class="row">
+              <div class="col-md-4 topic-right-report">{{ 'bank_transfer' | translate }}</div>
+              <div class="col-md-4 input-num-center">
+                <div class="form-group">
+                  <input type="text" ng-model="dailyReport.datas.real_tranfers" value="0.00" ng-required min="-100000" step="1000" placeholder="{{ 'input_amount' | translate }}" placeholder="{{ 'price' | translate }}" class="form-control numberic" ng-change="dailyReport.total()" ui-number-mask="2" ui-negative-number required id="{{ 'bank_transfer' | translate }}">
+                </div>
+              </div>
+              <div class="col-md-2 number-report-right numberic" style="border-bottom:2px solid">
+                {{ dailyReport.datas.tranfers.toFixed(2) | number:2 }}
+              </div>
+            </div>
+            <div class="row">
+              <div class="col-md-4 topic-right-report">{{ 'transfer_amount' | translate }}</div>
+              <div class="col-md-4 input-num-center numberic" style="margin-top:5px;">
+                {{ dailyReport.datas.real_total.toFixed(2) | number:2 }}
+              </div>
+              <div class="col-md-2 number-report-right numberic">
+                {{ dailyReport.datas.total.toFixed(2) | number:2 }}
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="space20"></div>
+        <div class="row button-reportdairy">
+          <div class="col-md-3 col-xs-offset-3 text-center">
+            <button type="submit" class="btn btn-custom btn-blue btn-block">{{ 'save' | translate }}</button>
+          </div>
+          <div class="col-md-3 text-center">
+            <button type="button" class="btn btn-custom btn-gray btn-block" ng-click="dailyReport.cancel()">{{ 'cancel' | translate }}</button>
+          </div>
+        </div>
+      </form>
+    </div>
+  </div>

@@ -1,0 +1,186 @@
+(function() {
+  'use strict';
+  angular.module('somsri.payroll.add_inventory_request', [])
+  .controller('employeeAddRequestCtrl', ['$compile', '$scope', '$window', '$filter', '$rootScope', '$timeout', 'translateFilter', '$uibModal', 'Upload', '$state' ,'inventoryRequestService','employeesService','inventoryService', 
+    function($compile, $scope, $window, $filter, $rootScope, $timeout, translateFilter, $uibModal, Upload, $state, inventoryRequestService, employeesService, inventoryService) {
+    $rootScope.menu = translateFilter("inventory_request")
+    var ctrl = this
+    var angularScopeRoot = 'angular.element(document.getElementById("angularCtrl")).scope().$root'
+    var angularScopeInventoryNew = 'angular.element(document.getElementById("angularCtrl")).scope().employeeAddRequestCtrl'
+    var angularCtrlStr = 'angular.element(document.getElementById("angularCtrl")).scope().employeeAddRequest'
+    $rootScope.loadAndAuthorizeResource("employee", function(){
+      ctrl.item_name = ""
+      ctrl.description = ""
+      ctrl.add_request_date = undefined
+      ctrl.price = "-"
+      ctrl.employee_id = $state.params.id;
+      ctrl.inventory_id = undefined
+      ctrl.inventoryDisplayName = translateFilter("employee")
+
+      getEmployeeById(ctrl.employee_id)
+      getAllInventory()
+
+      function getEmployeeById(id) {
+        if (ctrl.employee_id && ctrl.employee_id != 0) {
+            employeesService.getEmployee(id).then(function(resp) {
+            ctrl.employee_name = resp.data.employee_display_name
+          })
+        }
+      }
+
+      function getAllInventory() {
+        ctrl.inventory_lists = []
+        inventoryService.getAllInventory().then(function(resp) {
+          if (resp.data.inventories.length > 0) {
+            for(var i = 0; i < resp.data.inventories.length; i++) {
+              var inventory = resp.data.inventories[i]
+              if (inventory.item_name != ctrl.inventoryDisplayName) {
+                if (inventory.inventory_requests.length != 0) {
+                  var check = true
+                  for (var j = 0; j < inventory.inventory_requests.length; j++) {
+                    var value = inventory.inventory_requests[j]
+                    if (value.inventory_status == "assigned" || value.inventory_status == "repair") {
+                      check = false
+                      break
+                    }
+                  }
+                  if (check) {
+                    ctrl.inventory_lists.push({
+                      name: inventory.item_name,
+                      id: inventory.id,
+                      description: inventory.description,
+                      price: inventory.price
+                    })
+                  }
+                } else {
+                  ctrl.inventory_lists.push({
+                    name: inventory.item_name,
+                    id: inventory.id,
+                    description: inventory.description,
+                    price: inventory.price
+                  })
+                }
+              }
+            }
+          }
+        })
+      }
+
+      ctrl.onSelectInventory = function($item) {
+        ctrl.inventory_name = $item.name;
+        ctrl.inventory_id = $item.id
+        ctrl.description = $item.description
+        ctrl.price = $item.price
+      };
+
+      ctrl.onChangeInventory = function() {
+        ctrl.inventory_name = ctrl.inventory_name
+        ctrl.price = undefined
+        ctrl.description = undefined
+        ctrl.inventory_id = undefined
+      }
+
+      ctrl.cancel = function() {
+        $rootScope.activeTab = "inventory"
+        $window.history.back();
+      }
+
+      ctrl.new = function() {
+        ctrl.request_date = undefined
+        ctrl.return_date = undefined
+        ctrl.request_count = undefined
+        ctrl.inventory_id = undefined
+        addSave("new")
+      }
+
+      ctrl.request = function() {
+        addSave("request")
+      }
+
+      function addSave(str) {
+
+        if (ctrl.add_request_date) {
+          ctrl.add_request_date = formatterDate(ctrl.add_request_date)
+        }
+        
+        if (ctrl.request_date) {
+          ctrl.add_request_date = formatterDate(ctrl.request_date)
+        }
+
+        if (ctrl.return_date) {
+          ctrl.return_date = formatterDate(ctrl.return_date)
+        }
+
+        if (ctrl.inventory_name) {
+          ctrl.item_name = ctrl.inventory_name
+        }
+
+        if (!ctrl.description) {
+          ctrl.description = "-"
+        }
+
+        if (!ctrl.price) {
+          ctrl.price = "-"
+        }
+
+        var inventory_datas = {
+          inventories_request : {
+            user_name: ctrl.employee_name,
+            item_name: ctrl.item_name,
+            description: ctrl.description,
+            price: ctrl.price,
+            request_date: ctrl.add_request_date,
+            comment: "-",
+            employee_id: ctrl.employee_id,
+            inventory_id: ctrl.inventory_id,
+            return_date: undefined,
+            request_count: ctrl.request_count,
+            request_type: str
+          }
+        }
+
+        createInventoryRequest(inventory_datas)
+      }    
+
+      function formatterDate(value) {
+        var date = new Date(value.getTime() - (60000 * value.getTimezoneOffset()));
+        return date;
+      };
+
+      function createInventoryRequest(inventory_data) {
+        inventoryRequestService.newInventoryRequest(inventory_data).then(function(resp) {
+          inventoryRequestService.wait(resp.data.id).then(function(resp) {
+            $rootScope.activeTab = "inventory"
+            $window.history.back();
+          })
+        }, function(e) {
+
+        })
+      }
+      
+      ctrl.openRequestDatePopup = function() {
+        ctrl.requestDatePopup.opened = true;
+      };
+
+      ctrl.requestDatePopup = {
+        opened: false
+      };
+
+      ctrl.openReturnDatePopup = function() {
+        ctrl.returnDatePopup.opened = true;
+      };
+
+      ctrl.returnDatePopup = {
+        opened: false
+      };
+
+      ctrl.openAddRequestDatePopup = function() {
+        ctrl.addRequestDatePopup.opened = true;
+      };
+
+      ctrl.addRequestDatePopup = {
+        opened: false
+      };
+    })
+  }]);
+})();

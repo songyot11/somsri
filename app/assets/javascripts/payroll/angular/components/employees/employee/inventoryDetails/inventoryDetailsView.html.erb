@@ -1,0 +1,85 @@
+<div class="container" >
+  <form ng-submit="inventory.save()">
+  <div class="row">
+    <div id="inventory">
+      <div class="col-xs-12">
+        <div class="row mt-50">
+          <div class="col-xs-6 mb-20 pl-0">
+            <h1><h1>{{ "inventory_details" | translate }}</h1></h1>
+          </div>
+        </div>
+        <div class="row report-content container-fluid panel-board" >
+          <div class="tab-content">
+            <div class="row">
+              <div class="col-md-3">
+                <div class="form-group">
+                  <label class="control-label" for="item_name">{{ "item_name" | translate }}</label>
+
+                  <div class="col-md-12">
+                    <input class="form-control" autocomplete="off" type="text" id="inventory_name" ng-model="inventory.name" required="true">
+                  </div>
+                </div>
+              </div>
+              <div class="col-md-5">
+                <div class="form-group">
+                  <label class="control-label" for="serial_number">{{ "serial_number" | translate}} </label>
+                  <div class="col-md-12">
+                    <input class="form-control" autocomplete="off" type="text" id="inventory_serial_number" ng-model="inventory.serial_number">
+                  </div>
+                </div>
+              </div>
+              <div class="col-md-4">
+                <div class="form-group">
+                  <label class="control-label" for="model">{{ "model" | translate }}</label>
+                  <div class="col-md-12">
+                    <input class="form-control" autocomplete="off" type="text" id="inventory_model" ng-model="inventory.model">
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div class="row mt-20">
+              <div class="col-md-8">
+                <div class="form-group">
+                  <label class="control-label" for="description">{{ "description" | translate }}</label>
+                  <div class="col-md-12">
+                    <input class="form-control" autocomplete="off" type="text" id="inventory_description" ng-model="inventory.description">
+                  </div>
+                </div>
+              </div>
+              <div class="col-md-4">
+								<div class="form-group">
+                  <label class="control-label" for="request_date">{{ "request_date" | translate }}</label>
+                  <p class="input-group">
+                    <input id="request_date" type="text" class="form-control numberic" uib-datepicker-popup="dd/MM/yyyy" ng-model="inventory.request_date" is-open="inventory.requestDatePopup.opened" close-text="Close" required="true"/>
+                    <span class="input-group-btn">
+                      <button type="button" class="btn btn-default" ng-click="inventory.openRequestDatePopup()" ><i class="fa fa-calendar"></i></button>
+                    </span>
+                  </p>
+                </div>
+							</div>
+            </div>
+          </div>
+        </div>
+        <div class="footer-menu row mt-20">
+					<div class="col-md-2 pl-0">
+						<div class="pull-left padding-left10">
+							<button type="button" class="btn btn-custom btn-orange ng-binding" ng-click="inventory.repairInventory()" ng-show="inventory.repair_buuton"><i class="fa fa-wrench"></i> {{ "repair" | translate }}</button>
+						</div>
+					</div>
+					<div class="col-md-10">
+						<div class="pull-right text-right padding-left10">
+							<button type="button" class="btn btn-custom btn-red ng-binding" ng-click="inventory.deleteInventory()" ng-show="inventory.delete_button">{{"delete" | translate}} </button>
+						</div>
+						<div class="pull-right text-right padding-left10">
+							<button type="button" class="btn btn-custom btn-gray ng-binding" ng-click="inventory.cancel()">{{ "cancel" | translate }}</button>
+						</div>
+						<div class="pull-right text-right padding-left10">
+							<button type="submit" class="btn btn-custom btn-green ng-binding">{{"add_button" | translate}}</button>
+						</div>
+					</div>  
+        </div>
+      </div>
+    </div>
+  </div>
+  </form>
+</div>

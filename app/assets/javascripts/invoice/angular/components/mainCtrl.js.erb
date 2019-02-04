@@ -1,0 +1,88 @@
+(function() {
+  'use strict';
+  angular.module('somsri.invoice.main', [
+  ])
+  .controller('mainCtrl', ['$rootScope','$state', '$http', function($rootScope, $state, $http) {
+
+    function checkAbility(model, callback){
+      if($rootScope.abilities.manage && $rootScope.abilities.manage.all){
+        callback();
+      }else if($rootScope.abilities.manage && $rootScope.abilities.manage[model]){
+        callback();
+      }else{
+        $state.go('menu');
+      }
+    }
+
+    function openInNewTab(url) {
+      var win = window.open(url, '_blank');
+      if(win){
+        win.focus();
+        return true;
+      }else{
+        // window.open not working in safari
+        window.location = url;
+        return false;
+      }
+    }
+
+    $rootScope.loadAndAuthorizeResource = function(model, callback) {
+      if($rootScope.abilities && $rootScope.abilities.length > 0){
+        checkAbility(model, callback);
+      }else{
+        // load ability
+        $http.get('/abilities').then(function(resp) {
+          $rootScope.abilities = [];
+          if (resp.data.length > 0) {
+            $rootScope.abilities = resp.data[0];
+            checkAbility(model, callback);
+          }else{
+            $state.go('menu');
+          }
+        });
+      }
+    };
+
+    $rootScope.openPayment = function () {
+      $state.go('invoice')
+    };
+
+    $('body').addClass('somsri-invoice');
+
+    $rootScope.openMenu = function () {
+      $state.go('menu')
+    };
+
+    $rootScope.openStudentReport = function () {
+      $state.go('studentReport')
+    };
+
+    $rootScope.openDailyReport = function () {
+      $state.go('daily_report')
+    };
+
+    $rootScope.openGroupingReport = function () {
+      $state.go('grouping_report')
+    };
+
+    $rootScope.openGroupingReport2 = function () {
+      $state.go('grouping_report2')
+    };
+
+    $rootScope.openSlip = function (id, page) {
+      return openInNewTab("/invoices/" + id + "/slip.pdf")
+    };
+
+    $rootScope.openDailyReportPreview = function (id) {
+      $state.go('daily_report_preview',{id: id})
+    };
+
+    $rootScope.openInvoiceReport = function () {
+      $state.go('invoice_report')
+    };
+
+    $rootScope.openPage = function (page) {
+      $state.go(page)
+    };
+  }]);
+})();

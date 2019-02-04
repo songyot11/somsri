@@ -1,0 +1,130 @@
+(function() {
+  'use strict';
+
+  angular.module('somsri.payroll.employee_skill.directive', [])
+    .directive('employeeSkill', employeeSkill);
+
+  function employeeSkill() {
+    var directive = {
+      restrict: 'E',
+      scope: {
+        employee: '=employee',
+      },
+      templateUrl: "<%= asset_path('payroll/angular/components/employees/skill/employeeSkill.view.html') %>",
+      replace: true,
+      controller: EmployeeSkillController,
+      controllerAs: 'vm',
+      bindToController: true,
+    };
+
+    return directive;
+  }
+
+  EmployeeSkillController.$inject = ['skillService', 'employeeSkillService', '$state'];
+
+  function EmployeeSkillController(skillService, employeeSkillService, $state) {
+    var vm = this;
+    var employeeId = $state.params.id;
+
+    vm.skill = { name: null, score: null };
+    vm.skillNames = [];
+    vm.skills = [];
+    vm.employeeSkills = [];
+
+    vm.submitEmployeeSkill = submitEmployeeSkill;
+    vm.removeEmployeeSkill = removeEmployeeSkill;
+    vm.getScoreColor = getScoreColor;
+
+    activate();
+    function activate() {
+      loadSkills();
+      loadEmployeeSkill();
+    }
+
+    function loadSkills() {
+      skillService.all()
+        .then(function(resp) {
+          vm.skills = resp.data;
+          vm.skillNames = vm.skills.map(function(s) {
+            return s.name;
+          });
+          $('input#name').richAutocomplete({
+            items: vm.skillNames
+          });
+        });
+    }
+
+    function loadEmployeeSkill() {
+      if(employeeId && employeeId > 0) {
+        employeeSkillService.all(employeeId)
+        .then(function(resp) {
+          vm.employeeSkills = resp.data;
+        });
+      }
+    }
+
+    function submitEmployeeSkill(skill) {
+      var skillText = $('input#name').val();
+
+      if (vm.skillNames.indexOf(skillText) !== -1) {
+        var skillSelected = vm.skills.filter(function(s) {
+          return s.name === skillText;
+        });
+
+        var params = {employee_skill: { skill_id: skillSelected[0].id, score: skill.score }};
+        createEmployeeSkill(params);
+      } else {
+        createSkill(skill);
+      }
+    }
+
+    function createSkill(skill) {
+      skillService.create(skill)
+        .then(function(resp) {
+          var _skill = resp.data;
+          vm.skills.push(_skill);
+          vm.skillNames.push(_skill.name);
+          vm.skillNames = vm.skillNames.sort();
+
+          _skill.score = skill.score;
+          submitEmployeeSkill(_skill);
+        });
+    }
+
+    function createEmployeeSkill(employeeSkill) {
+      employeeSkillService.create(employeeId, employeeSkill)
+        .then(function(resp) {
+          vm.employeeSkills.push(resp.data);
+          vm.skill = { name: null, score: null };
+        });
+    }
+
+    function removeEmployeeSkill(id, index) {
+      var confirmed = confirm('คุณต้องการลบทักษะนี้');
+      if (!confirmed) { return; }
+      employeeSkillService.remove(employeeId, id)
+        .then(function(resp) {
+          vm.employeeSkills.splice(index, 1);
+        });
+    }
+
+    function getScoreColor(score) {
+      if (score <= 2) {
+        return '#e74c3c';
+
+      } else if (score <= 4) {
+        return '#f39c12';
+
+      } else if (score === 5) {
+        return '#7f8c8d';
+
+      } else if (score <= 7) {
+        return '#2ecc71';
+
+      } else {
+        return '#27ae60';
+
+      }
+    }
+  }
+})();

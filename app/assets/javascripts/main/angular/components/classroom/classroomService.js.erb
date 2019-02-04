@@ -1,0 +1,32 @@
+(function() {
+  'use strict';
+
+  angular.module('somsri.main.classroom.service', [
+  ])
+  .service('classroomService', ['$http', function($http) {
+    this.getGrades = function() {
+      return $http.get('/grades')
+    }
+
+    this.studentPromote = function(classroomOrder) {
+      var url = '/classrooms/student_promote';
+      if(classroomOrder){
+        return $http.patch(url, {
+          classroomOrder: JSON.stringify(classroomOrder)
+        })
+      }else{
+        return $http.patch(url)
+      }
+    }
+
+    this.removeClassroom = function(id) {
+      return $http.delete('/classrooms/' + id)
+    }
+
+    this.getClassroomWithNextClassroom = function(id) {
+      return $http.get('/classrooms/',{
+        params: { next: true }
+      })
+    }
+  }]);
+})();

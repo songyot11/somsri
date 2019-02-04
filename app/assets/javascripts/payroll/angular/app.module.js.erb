@@ -1,0 +1,134 @@
+(function() {
+  'use strict';
+  var app = angular.module('somsri.payroll', [
+    'somsri.payroll.assets',
+    'oc.lazyLoad',
+    'ui.router.stateHelper',
+    'ui.bootstrap',
+    'somsri.payroll.main',
+    'angularMoment',
+    'somsri.payroll.filters',
+    'xeditable',
+    'angularMoment',
+    'angular-redactor',
+    'ngSanitize',
+    'ngFileUpload',
+    'somsri.translate'
+  ]);
+
+  app.config(['stateHelperProvider', 'ASSETS', '$urlRouterProvider', function(stateHelperProvider, ASSETS, $urlRouterProvider) {
+
+    stateHelperProvider.
+      state({
+        url: '/',
+        name: 'home',
+        templateUrl: "<%= asset_path('payroll/angular/components/home/homeView.html') %>",
+        controller: 'homeCtrl as home',
+        resolve: {
+          resources: ['$ocLazyLoad', function($ocLazyLoad) {
+            return $ocLazyLoad.load([
+              ASSETS.somsri.payroll.home
+            ]);
+          }]
+        }
+      }).
+      state({
+        url: '/employees',
+        name: 'employees',
+        templateUrl: "<%= asset_path('payroll/angular/components/employees/employeesView.html') %>",
+        controller: 'employeesCtrl as employees',
+        resolve: {
+          resources: ['$ocLazyLoad', function($ocLazyLoad) {
+            return $ocLazyLoad.load([
+              ASSETS.somsri.payroll.employees
+            ]);
+          }]
+        }
+      }).
+      state({
+        url: '/employees/:id',
+        name: 'employee_details',
+        templateUrl: "<%= asset_path('payroll/angular/components/employees/employee/employeeDetailsView.html') %>",
+        controller: 'employeeDetailsCtrl as employee',
+        resolve: {
+          resources: ['$ocLazyLoad', function($ocLazyLoad) {
+            return $ocLazyLoad.load([
+              ASSETS.somsri.payroll.employee_details
+            ]);
+          }]
+        }
+      }).
+      state({
+        url: '/employees/me',
+        name: 'employee_me',
+        templateUrl: "<%= asset_path('payroll/angular/components/employees/employee/employeeDetailsView.html') %>",
+        controller: 'employeeDetailsCtrl as employee',
+        resolve: {
+          resources: ['$ocLazyLoad', function($ocLazyLoad) {
+            return $ocLazyLoad.load([
+              ASSETS.somsri.payroll.employee_details
+            ]);
+          }]
+        }
+      }).
+      state({
+        url: '/employees/:id/add_inventory_request',
+        name: 'add_inventory_request',
+        templateUrl: "<%= asset_path('payroll/angular/components/employees/employee/addInventory/employeeAddRequestView.html') %>",
+        controller: 'employeeAddRequestCtrl as inventory',
+        resolve: {
+          resources: ['$ocLazyLoad', function($ocLazyLoad) {
+            return $ocLazyLoad.load([
+              ASSETS.somsri.payroll.add_inventory_request
+            ]);
+          }]
+        }
+      }).
+      state({
+        url: '/employees/:id/inventory_details/:inventory_id',
+        name: 'employee_inventory_details',
+        templateUrl: "<%= asset_path('payroll/angular/components/employees/employee/inventoryDetails/inventoryDetailsView.html') %>",
+        controller: 'inventoryDetailsCtrl as inventory',
+        resolve: {
+          resources: ['$ocLazyLoad', function($ocLazyLoad) {
+            return $ocLazyLoad.load([
+              ASSETS.somsri.payroll.employee_inventory_details
+            ]);
+          }]
+        }
+      }).
+      state({
+        url: '/report',
+        name: 'report',
+        templateUrl: "<%= asset_path('payroll/angular/components/report/reportView.html') %>",
+        controller: 'reportCtrl as report',
+        resolve: {
+          resources: ['$ocLazyLoad', function($ocLazyLoad) {
+            return $ocLazyLoad.load([
+              ASSETS.somsri.payroll.report
+            ]);
+          }]
+        }
+      }).
+      state({
+        url: '/payroll?effective_date',
+        name: 'payroll',
+        templateUrl: "<%= asset_path('payroll/angular/components/payroll/payrollView.html') %>",
+        controller: 'payrollCtrl as payroll',
+        resolve: {
+          resources: ['$ocLazyLoad', function($ocLazyLoad) {
+            return $ocLazyLoad.load([
+              ASSETS.somsri.payroll.payroll
+            ]);
+          }]
+        }
+      })
+
+    $urlRouterProvider.when("", "/");
+  }]);
+
+  app.run(['editableOptions', function(editableOptions) {
+    editableOptions.theme = 'bs3';
+    editableOptions.icon_set = "font-awesome"
+  }]);
+})();

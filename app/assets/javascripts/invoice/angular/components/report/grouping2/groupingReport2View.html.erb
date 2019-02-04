@@ -1,0 +1,165 @@
+<style type="text/css" media="print">
+  @page {size: landscape;}
+</style>
+
+<div class="container-fluid">
+  <div id="invoice_grouping_report" class="row ng-scope">
+    <div class="row head-menu">
+      <div class="col-xs-6">
+        <h1 class="text-h-print">
+          {{ 'classification_report' | translate }}
+        </h1>
+      </div>
+      <div class="col-xs-6 text-right">
+        <a href="#/grouping_report" class="btn btn-custom btn-black" onclick="window.print()"><i class='fa fa-print'></i> {{ 'print_report' | translate }}</a>
+        <button class="btn btn-custom btn-blue-sky" ng-click="groupingReport2.exportExcel()"><i class="fa fa-share-square-o" aria-hidden="true"></i> Export</button>
+      </div>
+     </div>
+    <div class="unused_for_print col-xs-12">
+      <div class="row report-content container-fluid">
+        <div class="row">
+          <div class="dropdown-filter">
+            <div class="row">
+              <div class="col-xs-4 col-lg-6 for-display">
+                <div class="form-check pt-10 pl-30">
+                  <input type="checkbox" class="form-check-input" id="per-student-mode" ng-model="groupingReport2.forcePerInvoice" ng-change="groupingReport2.loadData()">
+                  <label class="form-check-label font-16" for="per-student-mode">{{ 'show_invoices' | translate }}</label>
+                </div>
+              </div>
+              <div class="col-xs-3 col-lg-2 date-for-print">
+                <div class="form-group">
+                  <span class="input-group">
+                    <div class="col-xs-2">
+                      <label for="start_date" class="text-status-date">{{ 'from' | translate }}</label>
+                    </div>
+                    <div class="col-xs-10">
+                      <input id="start_date" type="text" class="form-control" uib-datepicker-popup="dd/MM/yyyy" datepicker-options="{showWeeks:false}" ng-model="groupingReport2.start_date" is-open="groupingReport2.startDatePopup.opened" close-text="Close" ng-change="groupingReport2.optionsChange()"/>
+                      <span class="input-group-btn" style="display: inherit;">
+                        <button type="button" class="btn btn-default" ng-click="groupingReport2.openStartDatePopup()"><i class="fa fa-calendar"></i></button>
+                      </span>
+                    </div>
+                  </span>
+                </div>
+              </div>
+              <div class="col-xs-3 col-lg-2">
+                <div class="form-group">
+                  <span class="input-group">
+                    <div class="col-xs-2">
+                      <label for="end_date" class="text-status-date">{{ 'to' | translate }}</label>
+                    </div>
+                    <div class="col-xs-10">
+                      <input id="end_date" type="text" class="form-control" uib-datepicker-popup="dd/MM/yyyy" datepicker-options="{showWeeks:false}" ng-model="groupingReport2.end_date" is-open="groupingReport2.endDatePopup.opened" close-text="Close" ng-change="groupingReport2.optionsChange()"/>
+                      <span class="input-group-btn" style="display: inherit;">
+                        <button type="button" class="btn btn-default" ng-click="groupingReport2.openEndDatePopup()"><i class="fa fa-calendar"></i></button>
+                      </span>
+                    </div>
+                  </span>
+                </div>
+              </div>
+              <div class="col-xs-2 col-lg-2" style="text-align:center;">
+                <div class="dropdown invoice-items-list">
+                  <h4 id="groupingReport-list" data-toggle="dropdown">
+                    <span>{{ 'chose_type' | translate }}</span>
+                    <i class="fa fa-angle-down" aria-hidden="true"></i>
+                  </h4>
+                  <ul class="dropdown-menu">
+                    <li ng-repeat="option in groupingReport2.options track by $index">
+                      <label class="text-select-invoice"><input type="checkbox" class="select-item-invoice" ng-model="option.value" ng-checked="option.value" ng-change="groupingReport2.loadData()">{{option.name}}</label>
+                    </li>
+                    <li>
+                      <label class="text-select-invoice"><input type="checkbox" class="select-item-invoice" ng-model="groupingReport2.etc_checked" ng-checked="groupingReport2.etc_checked" ng-change="groupingReport2.loadData()">{{ 'other' | translate }}</label>
+                    </li>
+                  </ul>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="table-responsive" ng-hide="groupingReport2.isNoData()">
+          <div class="col-xs-12 dropdown-filter">
+            <table id="tableHeader" class="table scrollable-header grop-items-invoice">
+              <thead>
+               <tr>
+                 <th ng-show="groupingReport2.isDisplay('header_row_invoice_id')">Invoice</th>
+                 <th ng-show="groupingReport2.isDisplay('header_row_date')">{{ 'date1' | translate }}</th>
+                 <th ng-show="groupingReport2.isDisplay('header_row_name')" class="first-column-th">{{ 'name' | translate }}</th>
+                 <th ng-show="groupingReport2.isDisplay('header_row_classroom')" class="first-column-classroom">{{ 'level' | translate }}</th>
+                 <th ng-repeat="header in groupingReport2.datas.header track by $index"class="another-column-th">{{ header }}</th>
+               </tr>
+              </thead>
+              <tbody>
+                <tr ng-repeat="row in groupingReport2.datas.rows track by $index">
+                  <td ng-show="groupingReport2.isDisplay('header_row_invoice_id')" class="text-center">
+                    <a href="/invoices/{{row.header_row_invoice_id}}/slip.pdf" target="_blank">{{row.header_row_invoice_id}}</a>
+                  </td>
+                  <td ng-show="groupingReport2.isDisplay('header_row_date')">
+                    <a href="javascript:void(0)" ng-click="groupingReport2.selectDate(row.header_row_date)" class="text-center date_gropping numberic">{{row.header_row_date}}</a>
+                  </td>
+                  <td ng-show="groupingReport2.isDisplay('header_row_name')">
+                    <div ng-show="row.url == null">{{row.header_row_name}}</div>
+                    <a ng-href="{{row.url}}" ng-show="row.url != null">{{row.header_row_name}}</a>
+                  </td>
+                  <td ng-show="groupingReport2.isDisplay('header_row_classroom')">{{row.header_row_classroom}}</td>
+                  <td class="text-right numberic" ng-repeat="data in row.datas track by $index">{{data.toFixed(2) | number:2}}</td>
+                </tr>
+              </tbody>
+              <tfoot>
+                <tr>
+                  <td ng-show="groupingReport2.getReportMode() == 'per_student'" colspan="3" class="text-center">{{ 'total' | translate }}</td>
+                  <td ng-show="groupingReport2.getReportMode() == 'per_invoice'" colspan="4" class="text-center">{{ 'total' | translate }}</td>
+                  <td ng-show="groupingReport2.getReportMode() == 'per_day'" class="text-center">{{ 'total' | translate }}</td>
+                  <td ng-repeat="total in groupingReport2.datas.total track by $index" class="text-currency numberic">{{total.toFixed(2) | number:2}}</td>
+                </tr>
+              </tfoot>
+            </table>
+          </div>
+        </div>
+        <div class="table-responsive overflow-hidden" ng-show="groupingReport2.isNoData()">
+          <div class="col-xs-12 dropdown-filter">
+            <table id="nodata-table" class="table scrollable-header grop-items-invoice">
+              <thead ng-if="groupingReport2.getReportMode() == 'per_student'">
+               <tr>
+                 <th>Invoice</th>
+                 <th class="first-column-th">ชื่อ</th>
+                 <th class="first-column-classroom">ชั้น</th>
+                 <th ng-repeat="header in groupingReport2.datas.header track by $index"class="another-column-th">{{ header }}</th>
+               </tr>
+              </thead>
+              <thead ng-if="groupingReport2.getReportMode() == 'per_invoice'">
+               <tr>
+                 <th>Invoice</th>
+                 <th class="min-w-50">วันที่</th>
+                 <th class="first-column-th">ชื่อ</th>
+                 <th class="first-column-classroom">ชั้น</th>
+                 <th ng-repeat="header in groupingReport2.datas.header track by $index"class="another-column-th">{{ header }}</th>
+               </tr>
+              </thead>
+              <thead ng-if="groupingReport2.getReportMode() == 'per_day'">
+               <tr>
+                 <th class="min-w-50">วันที่</th>
+                 <th ng-repeat="header in groupingReport2.datas.header track by $index"class="another-column-th">{{ header }}</th>
+               </tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td class="border-1" colspan="99">
+                    <div class="color-gray top-45p">ไม่พบข้อมูล</div>
+                  </td>
+                </tr>
+              </tbody>
+              <tfoot>
+                <tr>
+                  <td ng-show="groupingReport2.getReportMode() == 'per_student'" colspan="3" class="text-center">รวมทั้งหมด</td>
+                  <td ng-show="groupingReport2.getReportMode() == 'per_invoice'" colspan="4" class="text-center">รวมทั้งหมด</td>
+                  <td ng-show="groupingReport2.getReportMode() == 'per_day'" class="text-center">รวมทั้งหมด</td>
+                  <td ng-repeat="total in groupingReport2.datas.total track by $index" class="text-currency numberic">{{total.toFixed(2) | number:2}}</td>
+                </tr>
+              </tfoot>
+            </table>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+<div id="export-excel" style="display: none"></div>

@@ -1,0 +1,47 @@
+<%= javascript_include_tag 'classroom_bootstrap_table' %>
+<div class="container" style="width: 960px;">
+  <div class="space20"></div>
+  <div class="row">
+    <div class="col-xs-12">
+      <div class="pull-right">
+        <button class="btn btn-custom btn-blue mr-5" ng-click="classroom.createClassroom()">{{ 'create_classroom' | translate }}</button>
+        <button class="btn btn-custom btn-blue-sky" ng-click="classroom.studentPromote()">{{ 'up_grade_classroom' | translate }}</button>
+      </div>
+    </div>
+  </div>
+  <div class="space20"></div>
+  <div class="content-box">
+    <div class="row">
+      <div class="col-xs-12">
+        <div class="pull-right">
+          <span>{{ 'select_classroom' | translate }}</span>
+          <span class="dropdown">
+            <span id="grade-list" class="dropdown-label" data-toggle="dropdown">
+              <span ng-bind="classroom.grade_select.name || 'ทั้งหมด'"></span>
+              <i class="fa fa-angle-down" aria-hidden="true"></i>
+            </span>
+            <ul class="dropdown-menu" aria-labelledby="grade-list">
+              <li>
+                <a class="blue-highlight" ng-click="classroom.gradeFilter()">
+                  {{ 'all' | translate }}
+                </a>
+              </li>
+              <li ng-repeat="grade in classroom.grades">
+                <a class="blue-highlight" ng-click="classroom.gradeFilter(grade)">
+                  {{ grade.name }}
+                </a>
+              </li>
+            </ul>
+          </span>
+        </div>
+      </div>
+    </div>
+    <div class="row">
+      <div class="col-xs-12">
+        <div class="row">
+          <table id="classroom-list"></table>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

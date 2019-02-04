@@ -1,0 +1,236 @@
+(function() {
+  'use strict';
+  angular.module('somsri.somsri.update_expenses', [
+  ])
+.controller('updateExpensesCtrl', ['$state', '$log', 'expensesService', 'translateFilter', '$rootScope', function($state, $log, service, translateFilter, $rootScope) {
+  $rootScope.menu = translateFilter("receipt")
+  var ctrl = this;
+  ctrl.message = '';
+  ctrl.total = 0.00;
+  ctrl.change_img = false;
+  ctrl.real_id = $state.params.id;
+  ctrl.effective_date = new Date();
+  ctrl.items = [];
+
+  function initData() {
+    if (!ctrl.real_id) {
+      service.getExpenseTags({ autocomplete: true }).then(function(resp){
+        ctrl.itemTypes = resp.data;
+        ctrl.lvMax = ctrl.itemTypes[0].lv;
+        ctrl.payment_method = "เงินสด";
+        ctrl.itemTypes.unshift({ name: "-", lv: ctrl.lvMax, ids: [], id: null, is_leaf: true });
+        addItem();
+      });
+      return;
+    }
+    service.show(ctrl.real_id).then(function(resp){
+      var value = resp.data;
+      ctrl.detail = value.detail;
+      ctrl.total_cost = value.total_cost;
+      ctrl.effective_date = new Date(value.effective_date);
+      ctrl.items = value.expense_items;
+      ctrl.payment_method = value.payment_method;
+      ctrl.cheque_bank_name = value.cheque_bank_name;
+      ctrl.cheque_number = value.cheque_number;
+      ctrl.cheque_date = value.cheque_date;
+      ctrl.transfer_bank_name = value.transfer_bank_name;
+      ctrl.transfer_date = value.transfer_date;
+      ctrl.expensesTotal();
+      ctrl.imgDisplay = value.img;
+      ctrl.expenses_id = value.expenses_id;
+      service.getExpenseTags({ autocomplete: true }).then(function(resp){
+        ctrl.itemTypes = resp.data;
+        ctrl.lvMax = ctrl.itemTypes[0].lv;
+        ctrl.itemTypes.unshift({ name: "-", lv: ctrl.lvMax, ids: [], id: null, is_leaf: true });
+        if(ctrl.items){
+          ctrl.items.forEach(function(item){
+            var selected = ctrl.itemTypes[0];
+            if(item.tags){
+              item.tags.forEach(function(tag){
+                if(tag.is_leaf){
+                  selected = tag;
+                }
+              });
+            }
+            item.tags = selected;
+          });
+        }
+        addItem();
+      })
+    })
+  }
+
+  ctrl.addWhiteSpace = function(times) {
+    var whiteSpace = ""
+    for(var i = 0; i < times; i++){
+      whiteSpace += "&nbsp;	"
+    }
+    return whiteSpace
+  };
+
+  //add item and remove item
+  ctrl.addNewItem = function() {
+    addItem();
+  };
+
+  ctrl.removeNewItem = function(item) {
+    ctrl.items.splice(item, 1);
+    ctrl.expensesTotal();
+    if (ctrl.items.length == 0){
+      addItem();
+    }
+  };
+
+  function addItem() {
+    ctrl.items.push({amount:0, detail:"", cost:0.00, total_price:0.00, tags: ctrl.itemTypes[0]});
+  }
+
+  // Calculates the sub total of the expenses
+  ctrl.expensesTotal = function() {
+    var total = 0.00;
+    angular.forEach(ctrl.items, function(item){
+      if (!item.amount){ item.amount = 0 }
+      if (!item.cost){ item.cost = 0 }
+      item.total_price = item.amount * item.cost;
+      total += item.total_price;
+    });
+    ctrl.total = total;
+  };
+
+  function cleanDate(date){
+    if(!date || new Date(date) == "Invalid Date"){return;}
+    var nowDate = new Date()
+    date.setHours(nowDate.getHours())
+    date.setMinutes(nowDate.getMinutes())
+    date.setSeconds(nowDate.getSeconds())
+    return date
+  }
+
+  //ctrl.total = item sum total price
+  ctrl.save = function(){
+    if (isValidateBeforSave()) {
+      ctrl.message = "";
+      ctrl.expense_items = ctrl.items.filter(function(item) {
+        return item.detail || item.amount || item.cost
+      });
+      var effective_date = cleanDate(new Date(ctrl.effective_date))
+      ctrl.expense_items.forEach(function(item){
+        var tags = []
+        if(item.tags.ids){
+          item.tags.ids.forEach(function(id){
+            tags.push({id: id });
+          })
+          item.tags = tags
+        }
+      });
+      var expense_datas = {
+        payment_method: ctrl.payment_method,
+        cheque_bank_name: ctrl.cheque_bank_name,
+        cheque_number: ctrl.cheque_number,
+        cheque_date: ctrl.cheque_date,
+        transfer_bank_name: ctrl.transfer_bank_name,
+        transfer_date: ctrl.transfer_date,
+        effective_date: effective_date,
+        expenses_id: ctrl.expenses_id,
+        detail: ctrl.detail,
+        total_cost: ctrl.total_cost,
+        expense_items_attributes: ctrl.expense_items,
+        img_url: ctrl.imgUploadData
+      }
+
+      if (!ctrl.real_id) {
+        createExpenses(expense_datas);
+      }else{
+        updateExpenses(expense_datas, ctrl.real_id);
+      }
+    }
+  };
+
+  function createExpenses(expense_datas){
+    service.createExpenses(expense_datas).then(function(resp) {
+      ctrl.message = translateFilter('expense_create_success');
+      ctrl.typeSuccess = true;
+      $rootScope.openExpenses();
+    }, function(e){
+      ctrl.message = translateFilter('expenses_create_failed');
+      ctrl.typeSuccess = false;
+    });
+  }
+
+  function updateExpenses(expense_datas, id){
+    service.updateExpenses(expense_datas, id).then(function(resp) {
+      ctrl.message = translateFilter('expense_edit_success');
+      ctrl.typeSuccess = true;
+      $rootScope.openExpenses();
+    }, function(e){
+      ctrl.message = translateFilter('expenses_edit_failed');
+      ctrl.typeSuccess = false;
+    });
+  }
+
+  ctrl.cancel = function () {
+    $rootScope.openExpenses();
+  };
+
+  ctrl.readUrl = function($event) {
+    if ($event.target.files && $event.target.files[0]) {
+      var reader = new FileReader();
+      reader.onload = function(e) {
+        $('#img-display').attr('src', e.target.result);
+      }
+      reader.readAsDataURL($event.target.files[0]);
+    }
+  }
+
+  function isValidateBeforSave() {
+    //Don't want item was not entered.
+    var items_found = ctrl.items.filter(function(item) { return item.detail || item.amount || item.cost });
+
+    if (!ctrl.total_cost){
+      ctrl.message = translateFilter('input_total_price');
+      ctrl.typeSuccess = false;
+      return false;
+    } else if (items_found.length == 0) {
+      ctrl.message = "";
+      return true;
+    } else if (isValidExpenseItem(items_found)) {
+      if (ctrl.total_cost < 0 || ctrl.total < 0){
+        ctrl.message = translateFilter('check_total_price');
+        ctrl.typeSuccess = false;
+        return false;
+      } else if (parseFloat(ctrl.total.toFixed(2)) == parseFloat(ctrl.total_cost)){
+        ctrl.message = "";
+        return true;
+      } else {
+        ctrl.message = translateFilter('check_line_item_or_total_price');
+        ctrl.typeSuccess = false;
+        return false;
+      }
+    }else {
+      ctrl.message = translateFilter('can_not_save')
+      ctrl.typeSuccess = false;
+      return false;
+    }
+  };
+
+  function isValidExpenseItem(items) {
+    for (var i = 0; i < items.length ; i++){
+      if (!items[i].detail || !items[i].amount || !items[i].cost || items[i].amount < 0 || items[i].cost < 0){
+        return false;
+      }
+    }
+    return true;
+  };
+
+  ctrl.openNewDatePopup = function() {
+    ctrl.newDatePopup.opened = true;
+  };
+
+  ctrl.newDatePopup = {
+    opened: false
+  };
+
+  initData();
+
+  }]);
+})();

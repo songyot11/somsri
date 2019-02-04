@@ -1,0 +1,103 @@
+<form name="passwordForm" ng-submit="setting.submit(setting.datas)">
+  <div class="container setting" style="width: 960px;">
+    <div class="row paragraph bg-setting">
+      <div class="col-md-12">
+        <div class="row">
+          <div class="col-md-4">
+            <div class="form-group">
+              <label for="name">{{ 'employee_name' | translate }}</label>
+              <input type="text" class="form-control" id="username" ng-model="setting.datas.user.name">
+            </div>
+          </div>
+          <div class="col-md-4">
+            <div class="form-group">
+              <label for="email">{{ 'email' | translate }}</label>
+              <input type="text" class="form-control" id="useremail" ng-model="setting.datas.user.email">
+            </div>
+          </div>
+        </div>
+        <div class="row">
+          <div class="col-md-4">
+            <div class="form-group">
+              <label for="password">{{ 'password' | translate }}</label>
+              <input type="password" class="form-control white-bg" id="password" ng-model="setting.datas.password" ng-disabled="true">
+            </div>
+          </div>
+        </div>
+        <div class="space20"></div>
+        <div class="row">
+          <div class="col-md-4">
+            <div class="form-group">
+              <button type="button" class="btn btn-custom btn-green btn-block" ng-click="setting.changePassword()">{{ 'change_password' | translate }}</button>
+            </div>
+          </div>
+        </div>
+        <div class="space20"></div>
+        <div ng-show="setting.canUpdateSchool">
+          <div class="row">
+            <div class="col-md-4">
+              <div class="form-group">
+                <label for="name">{{ 'school_name' | translate }}</label>
+                <input type="text" class="form-control white-bg" id="name" ng-model="setting.datas.school.name">
+              </div>
+            </div>
+            <div class="col-md-4">
+              <div class="form-group">
+                <label for="schoolTaxId">{{ 'tax_number' | translate}}</label>
+                <input type="text" class="form-control white-bg" id="schoolTaxId" ng-model="setting.datas.school.tax_id">
+              </div>
+            </div>
+          </div>
+          <div class="space20"></div>
+          <div class="row">
+            <div class="col-md-8">
+              <div class="form-group">
+                <label for="address">{{ 'address' | translate }}</label>
+                <input type="text" class="form-control white-bg" id="address" ng-model="setting.datas.school.address">
+              </div>
+            </div>
+            <div class="col-md-4">
+              <div class="form-group">
+                <label for="zipcode">{{ 'zipcode' | translate }}</label>
+                <input type="text" class="form-control white-bg" id="zipcode" ng-model="setting.datas.school.zip_code">
+              </div>
+            </div>
+          </div>
+          <div class="space20"></div>
+          <div class="row">
+            <div class="col-md-4">
+              <div class="form-group">
+                <label for="email">{{ 'school_email' | translate }}</label>
+                <input type="text" class="form-control white-bg" id="emailSchool" ng-model="setting.datas.school.email">
+              </div>
+            </div>
+            <div class="col-md-4">
+              <div class="form-group">
+                <label for="phone">{{ 'phone' | translate }}</label>
+                <input type="text" class="form-control white-bg" id="phone" ng-model="setting.datas.school.phone">
+              </div>
+            </div>
+            <div class="col-md-4">
+              <div class="form-group">
+                <label for="fax">{{ 'fax' | translate }}</label>
+                <input type="text" class="form-control white-bg" id="fax" ng-model="setting.datas.school.fax">
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="footer-menu row" style="margin-right: -30px;">
+      <div class="col-md-offset-8 col-md-2 text-right">
+        <button type="submit" class="btn btn-custom btn-green btn-block">{{ 'save' | translate }}</button>
+      </div>
+      <div class="col-md-2 text-right">
+        <button type="button" class="btn btn-custom btn-gray btn-block" ng-click="openRoot()">{{ 'cancel' | translate }}</button>
+      </div>
+    </div>
+    <!-- <div class="row paragraph cyan">
+      <div class="col-md-12"``>
+      </div>
+    </div> -->
+  </div>
+</form>

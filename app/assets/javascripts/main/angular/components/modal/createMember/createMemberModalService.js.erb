@@ -1,0 +1,17 @@
+(function() {
+  'use strict';
+
+  angular.module('somsri.main.create_member_modal.service', [
+  ])
+  .service('createMemberModalService', ['$http', '$log', function($http, $log) {
+    return {
+      createMember: function(data, type) {
+        if(type == "student"){
+          return $http.post('/students/create_by_name', data);
+        }else{
+          return $http.post('/employees/create_by_name', data);
+        }
+      }
+    };
+  }]);
+})();

@@ -1,0 +1,56 @@
+(function() {
+  'use strict';
+
+  var app = angular.module('somsri.rollcall', [
+    'somsri.rollcall.assets',
+    'oc.lazyLoad',
+    'ui.router.stateHelper',
+    'ui.bootstrap',
+    'somsri.rollcall.main',
+    'angularMoment',
+    'ui.utils.masks',
+    'ngSanitize',
+    'somsri.translate'
+  ]);
+
+  app.config(['stateHelperProvider', 'ASSETS', '$urlRouterProvider', '$httpProvider', function(stateHelperProvider, ASSETS, $urlRouterProvider, $httpProvider) {
+
+    // Default as JSON Format
+    $httpProvider.defaults.headers.post['Accept'] = 'application/json, text/javascript';
+    $httpProvider.defaults.headers.post['Content-Type'] = 'application/json; charset=utf-8';
+    $httpProvider.defaults.headers.common['Accept'] = 'application/json, text/javascript';
+    $httpProvider.defaults.headers.common['Content-Type'] = 'application/json; charset=utf-8';
+
+    stateHelperProvider.
+      state({
+        url: '/',
+        name: 'menu',
+        templateUrl: "<%= asset_path('rollcall/angular/components/menu/menuView.html') %>",
+        controller: 'menuCtrl as menu',
+        resolve: {
+          resources: ['$ocLazyLoad', function($ocLazyLoad) {
+            return $ocLazyLoad.load([
+              ASSETS.somsri.rollcall.menu
+            ]);
+          }]
+        }
+      }).
+      state({
+        url: '/report',
+        name: 'report',
+        templateUrl: "<%= asset_path('rollcall/angular/components/report/reportView.html') %>",
+        controller: 'reportCtrl as report',
+        resolve: {
+          resources: ['$ocLazyLoad', function($ocLazyLoad) {
+            return $ocLazyLoad.load([
+              ASSETS.somsri.rollcall.report
+            ]);
+          }]
+        }
+      })
+
+    $urlRouterProvider.when("", "/");
+  }]);
+
+  app.run();
+})();

@@ -1,0 +1,213 @@
+(function() {
+  'use strict';
+  angular.module('somsri.payroll.employees', [
+    ])
+  .controller('employeesCtrl', ['employeesService','$log', '$rootScope', 'translateFilter', 
+    function(employeeService, $log, $rootScope, translateFilter) {
+    $rootScope.menu = translateFilter('employee')
+    var ctrl = this
+    $rootScope.loadAndAuthorizeResource("employee", function(){
+      var dateNow = new Date();
+      var $table = $('#employeesTable')
+      var displayMode = 'grid';
+      var initDisplay = true;
+
+      getPayroll(dateNow.getMonth() + 1, dateNow.getFullYear());
+      function getPayroll(month, year){
+        employeeService.getAllEmployee().then(function(resp) {
+          ctrl.datas = resp.data;
+          ctrl.display_datas = [];
+          for(var i = 0; i < ctrl.datas.length; i++) {
+            var data = ctrl.datas[i];
+            if (data['id']) {
+              ctrl.display_datas.push({
+                full_name: data['name'],
+                id: data['id'],
+                position: data['position'],
+                salary: data['salary'],
+                fee: data['extra_fee'],
+                extra: data['extra_pay'],
+                imgUrl: data['img'],
+                deleted_at: data['deleted_at']
+              });
+            }
+          }
+          $table.bootstrapTable('load', ctrl.display_datas);
+        });
+      }
+
+      ctrl.openEmployeeDetails = function(id){
+        $rootScope.openEmployeeDetails(id);
+      }
+
+      function salary(value, row, index){
+        if (value) {
+          return '<div class="text-blue text-right" ><span class="numberic">'+ value.toLocaleString() +'</span> ' + translateFilter("baht") + '</div>';
+        }
+        return '<div class="text-blue text-right" ><span class="numberic">0</span> ' + translateFilter("baht") + '</div>';
+      }
+
+      function extra(value, row, index){
+        if (value) {
+          return '<div class="text-green text-right" ><span class="numberic">'+ value.toLocaleString() +'</span> ' + translateFilter("baht") + '</div>';
+        }
+        return '<div class="text-green text-right" ><span class="numberic">0</span> ' + translateFilter("baht") + '</div>';
+      }
+
+      function fee(value, row, index){
+        if (value) {
+          return '<div class="text-red text-right" ><span class="numberic">'+ value.toLocaleString() +'</span> ' + translateFilter("baht") + '</div>';
+        }
+        return '<div class="text-red text-right" ><span class="numberic">0</span> ' + translateFilter("baht") + '</div>';
+      }
+
+      var angularScopeEmployees = "angular.element(document.getElementById('angularCtrl')).scope().employees";
+
+      function edit(value, row, index){
+        if (row) {
+          return '<a href="javascript:void(0)" class="td-edit-employee-link text-center" onclick="'+ angularScopeEmployees +'.openEmployeeDetails('+row.id+')"><i class="fa fa-pencil-square-o"></i>' + translateFilter("edit") + '</a>';
+        }
+      }
+
+      function linkName(value, row, index){
+        if (value) {
+          return '<a href="javascript:void(0)" class="td-edit-employee-link text-center" onclick="'+ angularScopeEmployees +'.openEmployeeDetails('+row.id+')">'+ value +'</a>';
+        }
+        return '-'
+      }
+
+      function imgTag(value, row, index){
+        if (value) {
+          return '<div class="img-bg circle" style="background: url('+ value +')"></div>';
+        }
+        return '<div class="img-bg bg-light-gray circle"><i class="fa fa-user icon-default-img" aria-hidden="true"></i></div>'
+        //return '<span class="fa-stack fa-lg"><i class="fa fa-circle fa-stack-2x"></i><i class="fa fa-camera fa-stack-1x fa-inverse"></i></span>'
+      }
+
+      function cardViewToggle(cardView){
+        if(cardView){
+          $('#employeesTable > tbody').addClass('bootstrapCardView');
+          $('#employeesTable > tbody > tr').addClass('col-xs-2 card-employees card cursor-pointer');
+          $('#angularCtrl > div:nth-child(2) > div > div').addClass('cardViewEmployees')
+          $('#employeesTable > tbody > tr > td > div > div').addClass('row')
+          $('#employeesTable > tbody > tr > td > div > div:nth-child(n+4) > span.title').addClass('col-md-4 padding0')
+          $('#employeesTable > tbody > tr > td > div > div:nth-child(n+4) > span.value').addClass('col-md-8')
+          $('#employeesTable > tbody > tr > td > div > div:nth-child(1) > span.value').addClass('col-md-12')
+          $('#employeesTable > tbody').removeClass('bootstrapListView');
+          $('#angularCtrl > div:nth-child(2) > div > div.col-md-12 > div').removeClass('list-view');
+        }else{
+          $('#employeesTable > tbody').addClass('bootstrapListView');
+          $('#angularCtrl > div:nth-child(2) > div > div.col-md-12 > div').addClass('list-view')
+          $('#angularCtrl > div:nth-child(2) > div > div').removeClass('cardViewEmployees')
+          $('#employeesTable > tbody').removeClass('bootstrapCardView');
+        }
+      }
+
+      $table.bootstrapTable({
+        onToggle: cardViewToggle,
+        sortName: 'full_name',
+        sortOrder: 'asc',
+        columns: [{
+          title: '',
+          field: 'imgUrl',
+          formatter: imgTag,
+        },{
+          title: translateFilter("full_name"),
+          field: 'full_name',
+          sortable: true,
+          formatter: linkName,
+        },{
+          title: translateFilter("position"),
+          field: 'position',
+          sortable: true,
+        },{
+          title: translateFilter("payroll"),
+          field: 'salary',
+          align: 'right',
+          formatter: salary,
+          sortable: true,
+        },{
+          title: translateFilter("extra_money"),
+          field: 'extra',
+          align: 'right',
+          formatter: extra,
+          sortable: true,
+        },{
+          title: translateFilter("deduct_money"),
+          field: 'fee',
+          align: 'right',
+          formatter: fee,
+          sortable: true,
+        },{
+          title: '',
+          field: 'edit',
+          formatter: edit,
+        }],
+        onPostBody: function(data){
+          if(data && initDisplay){
+            initDisplayMode()
+          }
+        },
+        onClickRow: function(row, $element, field){
+          angular.element(document.getElementById('angularCtrl')).scope().employees.openEmployeeDetails(row.id);
+        }
+      })
+    
+      function gridClick() {
+        $table.bootstrapTable('toggleView');
+        $("#grid").addClass('active')
+        $("#list").removeClass('active')
+        displayMode = 'grid'
+      }
+
+      function listClick() {
+        $table.bootstrapTable('toggleView');
+        $("#list").addClass('active')
+        $("#grid").removeClass('active')
+        displayMode = 'list'
+      }
+
+      $("#list").on('click',function(){
+        if(displayMode!='list'){
+          listClick()
+        }
+      });
+
+      $("#grid").on('click',function(){
+        if(displayMode!='grid' || initDisplay){
+          initDisplay = false;
+          gridClick()
+        }
+      });
+
+      function initDisplayMode(){
+        if(displayMode=='list'){
+          $("#list").addClass('active')
+          initDisplay = false;
+        }else{
+          $("#grid").addClass('active')
+          $("#grid").click();
+        }
+      }
+
+      $('#exportTable').on('click',function(){
+        if(displayMode!='list'){
+          listClick()
+          $table = $('#employeesTable')
+          $table.bootstrapTable('hideColumn', 'imgUrl');
+          $table.bootstrapTable('hideColumn', 'edit');
+          $table.tableExport({type:'excel'});
+          $table.bootstrapTable('showColumn', 'imgUrl');
+          $table.bootstrapTable('showColumn', 'edit');
+        }else{
+          $table = $('#employeesTable')
+          $table.bootstrapTable('hideColumn', 'imgUrl');
+          $table.bootstrapTable('hideColumn', 'edit');
+          $table.tableExport({type:'excel'});
+          $table.bootstrapTable('showColumn', 'imgUrl');
+          $table.bootstrapTable('showColumn', 'edit');
+        }
+      })  
+    })
+  }]);
+})();

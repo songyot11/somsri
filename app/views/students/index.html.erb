@@ -1,0 +1,131 @@
+<%- model_class = Student -%>
+<%= render 'layouts/messages' %>
+<div id="student-list-for-print" class="container only-print"></div>
+<div id="student-index" class="only-view">
+  <div class="row head-sp">
+    <div class="col-xs-6 mb-20">
+      <h1><%= t('student') %></h1>
+    </div>
+    <div class="col-xs-6 px-0 mt-15" style="text-align: right;">
+      <span class="dropdown float-right">
+        <span div data-toggle="dropdown" class="btn btn-custom btn-black mr-5" id="print-student-list">
+          <%= t('print_list') %> <i class='fa fa-chevron-down'></i>
+        </span>
+        <ul class="dropdown-menu mt-15" aria-labelledby="print-student-list">
+          <li><a target="_blank" id="print-student-list-with-image" href="/students.pdf?for_print=true"><%= t('show_photo') %></a></li>
+          <li><a href="#" onclick='printStudent()'><%= t('disable_photo') %></a></li>
+        </ul>
+      </span>
+
+      <%= link_to ('<i class="fa fa-share-square-o" aria-hidden="true"></i> Export').html_safe, "#", :class => 'btn btn-custom btn-blue-sky float-right mr-5', :onclick => 'exportTable("students")' %>
+
+      <%= link_to t('.addstudent', :default => t("helpers.links.addstudent")),
+      new_student_path,
+      :class => 'btn btn-custom btn-blue float-right' %>
+    </div>
+  </div>
+
+  <div class="content-student-parent">
+    <div class="row toolbar-student-parent">
+      <div class="col-xs-6">
+        <div class="search">
+          <i class="fa fa-search" aria-hidden="true"></i>
+          <input class="form-control" id="search" type="text" placeholder="ค้นหา" onchange="search()" onkeyup="this.onchange()">
+        </div>
+      </div>
+      <div class="col-xs-6 select-filter">
+        <span class="text-label"><%= t('select_classroom') %></span>
+        <select name="grade_select" id="grade_select" class="btn-grades selectpicker" onchange="filter()">
+          <option value='all'><%= t('all_class') %></option>
+          <% Grade.all.each do |grade| %>
+          <option name="grade" value="<%= grade.name %>"<%= @filter_grade.to_s == grade.name.to_s ? "selected" : "" %>> <%= grade.name %> </option>
+          <% end %>
+        </select>
+
+        <span class="text-label"><%= t('select_rooms') %></span>
+        <select name="class_select" id="class_select" class="btn-grades selectpicker" onchange="filter()">
+          <option value='all'><%= t('all_room') %></option>
+          <% @class_display.each do |classroom| %>
+          <option value="<%= classroom %>"<%= @filter_class == classroom ? "selected" : "" %>> <%= classroom %> </option>
+          <% end %>
+        </select>
+      </div>
+    </div>
+    <div class="overflow-table">
+      <table id="table"
+      data-toggle="table"
+      data-pagination="true"
+      data-pagination-loop="false"
+      data-url="/students.json"
+      data-side-pagination="server"
+      data-sort-name="classroom_id, classroom_number"
+      data-sort-order="asc"
+      data-query-params="queryParams">
+        <thead>
+          <tr>
+            <th data-field="classroom_number" data-sortable="true" data-cell-style="cellStyle"><%= t('number') %></th>
+            <th data-field="img_url" data-formatter="imgTag"></th>
+            <th data-field="full_name" data-formatter="linkToStudentEditFormatter" data-sortable="true"><%= t('full_name') %></th>
+            <th data-field="nickname" data-sortable="true"><%= t('nick_name') %></th>
+            <th data-field="grade_id" data-sortable="true"><%= t('level') %></th>
+            <th data-field="classroom_id" data-sortable="true"><%= t('classroom') %></th>
+            <th data-field="student_number" data-sortable="true"><%= t('student_id') %></th>
+            <th data-field="gender_id" data-sortable="true"><%= t('sex') %></th>
+            <th data-field="birthdate" data-sortable="true"><%= t('birthday') %></th>
+            <th data-field="student_options" data-formatter="selectionStudentFormatter"></th>
+          </tr>
+        </thead>
+      </table>
+    </div>
+  </div>
+</div>
+
+<table id="tableForExport"
+  data-toggle="table"
+  data-side-pagination="server"
+  data-tableexport-display="always"
+  style="display: none;">
+  <thead>
+    <tr>
+      <th data-field="classroom_number" data-sortable="true" data-cell-style="cellStyle"><%= t('number') %></th>
+      <th data-field="full_name" ><%= t('full_name') %></th>
+      <th data-field="nickname" ><%= t('nick_name') %></th>
+      <th data-field="grade_id" ><%= t('level') %></th>
+      <th data-field="classroom_id" ><%= t('classroom') %></th>
+      <th data-field="student_number" ><%= t('student_id') %></th>
+      <th data-field="gender_id" ><%= t('sex') %></th>
+      <th data-field="birthdate" ><%= t('birthday') %></th>
+    </tr>
+  </thead>
+</table>
+
+<!-- Modal -->
+<div id="warningModal" class="modal fade" role="dialog">
+  <div class="modal-dialog">
+    <!-- Modal content-->
+    <div class="modal-content">
+      <div class="modal-body" id="modal-body">
+        <div class="row">
+          <div class="col-md-12">
+            <h4 class="modal-title" id="modal-title"></h4>
+          </div>
+        </div>
+        <div class="space20"></div>
+        <div class="space20"></div>
+        <div class="space20"></div>
+        <div class="row">
+          <div class="col-md-3 pull-right">
+            <button class="btn btn-custom btn-gray" data-dismiss="modal"><%= t('cancel') %></button>
+          </div>
+          <div class="col-md-3 pull-right">
+            <%= form_tag("", id:"actionModalForm") do %>
+              <a class="btn btn-custom btn-red submit" onclick="document.getElementById('actionModalForm').submit();"><%= t('ok') %></a>
+            <% end %>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+<%= javascript_include_tag 'print_student_list' %>
+<%= javascript_include_tag 'custom_bootstrap_table' %>

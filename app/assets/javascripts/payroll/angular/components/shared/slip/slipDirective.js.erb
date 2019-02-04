@@ -1,0 +1,17 @@
+(function() {
+  'use strict';
+  angular.module('somsri.payroll.slip.directive', [])
+    .directive('slipContent', slipContent);
+
+  function slipContent() {
+    return {
+      restrict: 'E',
+      scope: {
+        slipInfo: '=info',
+        slipTitle: '@title'
+      },
+      templateUrl: "<%= asset_path('payroll/angular/components/shared/slip/slipView.html') %>",
+    };
+  }
+
+})();

@@ -1,0 +1,209 @@
+(function() {
+  'use strict';
+  angular.module('somsri.payroll.report', [
+  ])
+  .controller('reportCtrl', ['$compile', '$scope', '$window', '$filter', '$rootScope', 'reportService', 'slipService', '$timeout', '$sce', 'translateFilter', function($compile, $scope, $window, $filter, $rootScope, reportService, slipService, $timeout, $sce, translateFilter) {
+    $rootScope.menu = translateFilter("report");
+    var ctrl = this
+    $rootScope.loadAndAuthorizeResource("payroll", function() {
+      ctrl.total = 0
+      ctrl.employees
+      ctrl.effectiveDates = []
+      ctrl.currentDateString = ""
+      ctrl.slipsUrl = "?"
+
+      ctrl.slip_carbon = false
+      $rootScope.getSiteConfig("slip_carbon").then(function(resp) {
+        ctrl.slip_carbon = resp.data
+      });
+
+      ctrl.employeeTypeMode = {
+        normal: true,
+        temporary: true,
+        probationary: true,
+        daily: true
+      }
+
+      ctrl.getNetSalary = function(employee) {
+        return employee.salary - employee.extra_fee + employee.extra_pay;
+      }
+
+      function getTotalSalary(employees)  {
+        var totalSalary = 0
+        var totalExtraFee = 0
+        var totalExtraPay = 0
+
+        employees.forEach(function(employee) {
+          totalSalary += employee.salary
+          totalExtraFee += employee.extra_fee
+          totalExtraPay += employee.extra_pay
+        })
+
+        return {
+          salary: totalSalary,
+          extraFee: totalExtraFee,
+          extraPay: totalExtraPay,
+          netSalary: totalSalary - totalExtraFee + totalExtraPay
+        }
+      }
+
+      ctrl.switchMonth = function(effectiveDate) {
+        reportService.getPayroll(effectiveDate['date_time']).then(function(resp) {
+          ctrl.employees = resp.data.payrolls
+          ctrl.export_ktb_payroll = resp.data.export_ktb_payroll
+          ctrl.export_kbank_payroll = resp.data.export_kbank_payroll
+          ctrl.employees_origin = JSON.parse(JSON.stringify(ctrl.employees));
+          ctrl.total = getTotalSalary(ctrl.employees);
+          ctrl.currentDateString = effectiveDate["date_string"];
+          ctrl.currentEffectiveDate = effectiveDate
+          ctrl.employeeTypeFilter();
+        });
+      }
+
+      ctrl.printSlip = function(id, payroll_id) {
+        beforePrintSlip();
+        var containerDiv = $('#payroll-report')
+        ctrl.employee_slips = []
+        slipService.employeeSlip(id, payroll_id).then(function(resp) {
+          ctrl.employee_slips = [resp.data]
+          ctrl.employee_slips[0].header = $sce.trustAsHtml(ctrl.employee_slips[0].header);
+          if($window.navigator.userAgent.indexOf('Chrome') == -1) {
+            var slipForSchool = $compile('<slip-content info=report title="สำหรับโรงเรียน" class="for_print safari"/>');
+            var slipForEmployee = $compile('<slip-content info=report title="" class="for_print safari"/>');
+          } else {
+            var slipForSchool = $compile('<slip-content info=report title="สำหรับโรงเรียน" class="for_print"/>');
+            var slipForEmployee = $compile('<slip-content info=report title="" class="for_print"/>');
+          }
+
+          // var slipSchoolDiv = slipForSchool($scope);
+          var slipEmployeeDiv = slipForEmployee($scope);
+
+          // angular.element(containerDiv).append(slipSchoolDiv);
+          // angular.element(containerDiv).append('<div class="separate for_print"></div>');
+          angular.element(containerDiv).append(slipEmployeeDiv);
+
+          setTimeout(function() {
+            window.print();
+            afterPrintSlip();
+          }, 500);
+        })
+      }
+
+      ctrl.printSlips = function() {
+        beforePrintSlip();
+        var containerDiv = $('#payroll-report')
+        ctrl.employee_slips = []
+        var payroll_ids = []
+
+        for(var i = 0; i < ctrl.employees.length; i++ ){
+          payroll_ids.push(ctrl.employees[i].payroll_id);
+        }
+        slipService.employeeSlips(payroll_ids).then(function(resp) {
+          ctrl.employee_slips = []
+          for(var i = 0; i < resp.data.employees.length; i+=2 ){
+            var pair = []
+            pair.push(resp.data.employees[i]);
+            if(i + 1 < resp.data.employees.length){
+              pair.push(resp.data.employees[i+1]);
+            }
+            ctrl.employee_slips.push(pair);
+          }
+          ctrl.onePerPage = resp.data.one_per_page
+          for(var i = 0; i < ctrl.employee_slips.length; i++){
+            ctrl.employee_slips[i].header = $sce.trustAsHtml(ctrl.employee_slips[i].header);
+          }
+          if($window.navigator.userAgent.indexOf('Chrome') == -1) {
+            var slipForSchool = $compile('<slip-content info=report title="สำหรับโรงเรียน" class="for_print safari"/>');
+            var slipForEmployee = $compile('<slip-content info=report title="" class="for_print safari"/>');
+          } else {
+            var slipForSchool = $compile('<slip-content info=report title="สำหรับโรงเรียน" class="for_print"/>');
+            var slipForEmployee = $compile('<slip-content info=report title="" class="for_print"/>');
+          }
+          var slipEmployeeDiv = slipForEmployee($scope);
+          angular.element(containerDiv).append(slipEmployeeDiv);
+
+          setTimeout(function() {
+            window.print();
+            afterPrintSlip();
+          }, 500);
+        })
+      }
+
+      function beforePrintSlip(){
+        $('slip-all-content').remove();
+        $('slip-content').remove();
+        $('report-content.for_print').remove();
+        $('div.fixed-table-footer').remove();
+        $('report-content').removeClass('display-block');
+        $('report-content').addClass('for-display');
+      }
+
+      function afterPrintSlip(){
+        $("slip-content").remove()
+        $(".separate").remove()
+        $('report-content').addClass('display-block');
+        $('report-content').removeClass('for-display');
+      }
+
+      function getPayrolls() {
+        reportService.getMonthsOnlyClosed().then(function(resp) {
+          if (resp.data.length > 0) {
+            ctrl.effectiveDates = resp.data
+            var current = ctrl.effectiveDates[0]
+            reportService.getPayroll(current['date_time']).then(function(resp) {
+              ctrl.employees = resp.data.payrolls
+              ctrl.export_ktb_payroll = resp.data.export_ktb_payroll
+              ctrl.export_kbank_payroll = resp.data.export_kbank_payroll
+              ctrl.employees_origin = JSON.parse(JSON.stringify(ctrl.employees));
+              ctrl.total = getTotalSalary(ctrl.employees);
+              getTotalSalary(ctrl.employees)
+              ctrl.currentDateString = current['date_string']
+              ctrl.currentEffectiveDate = current
+              $scope.report.employees = ctrl.employees
+              $scope.report.reportTableInit(ctrl.employees);
+
+              // prepare data for print all slips
+              for(var i = 0; i < ctrl.employees.length; i++ ){
+                ctrl.slipsUrl += "payroll_ids%5B%5D=" + ctrl.employees[i].payroll_id + "&";
+              }
+            });
+          }
+        });
+      }
+
+      ctrl.employeeTypeFilter = function (){
+        var mode = [];
+        if(ctrl.employeeTypeMode.normal){
+          mode.push(translateFilter('employee_full_time'));
+        }
+        if(ctrl.employeeTypeMode.temporary){
+          mode.push(translateFilter('employee_part_time'));
+        }
+        if(ctrl.employeeTypeMode.probationary){
+          mode.push(translateFilter('employee_probation'));
+        }
+        if(ctrl.employeeTypeMode.daily){
+          mode.push(translateFilter('employee_daily'));
+        }
+        var employees = JSON.parse(JSON.stringify(ctrl.employees_origin));
+        for(var i = 0; i < employees.length; i++){
+          if(mode.indexOf(employees[i].employee_type) < 0){
+            employees[i] = null;
+          }
+        }
+        var newArray = new Array();
+        for (var i = 0; i < employees.length; i++) {
+          if (employees[i]) {
+            newArray.push(employees[i]);
+          }
+        }
+        ctrl.employees = newArray;
+        $scope.report.reportTableLoadData(ctrl.employees);
+
+        ctrl.total = getTotalSalary(ctrl.employees);
+        getTotalSalary(ctrl.employees);
+      }
+      getPayrolls();
+    });
+  }]);
+})();

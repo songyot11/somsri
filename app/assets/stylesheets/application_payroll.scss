@@ -1,0 +1,2016 @@
+/*
+ * This is a manifest file that'll be compiled into application.css, which will include all the files
+ * listed below.
+ *
+ * Any CSS and SCSS file within this directory, lib/assets/stylesheets, vendor/assets/stylesheets,
+ * or any plugin's vendor/assets/stylesheets directory can be referenced here using a relative path.
+ *
+ * You're free to add application-wide styles to this file and they'll appear at the bottom of the
+ * compiled file so the styles you add here take precedence over styles defined in any other CSS/SCSS
+ * files in this directory. Styles in this file should be added after the last require_* statement.
+ * It is generally better to create a new file per style scope.
+ *
+ *= require bootstrap/dist/css/bootstrap.min.css
+ *= require angular-xeditable/dist/css/xeditable
+ *= require rich-autocomplete/dist/richAutocomplete.min.css
+ *= require redactor/redactor.min.css
+ *= require font-awesome
+ *= require_self
+ *= require bootstrap-table
+ */
+ @import "navigation_menu";
+ @import url('https://fonts.googleapis.com/css?family=Roboto');
+ body {
+  font-family: 'Maitree', serif;
+  color: #595959;
+  -webkit-print-color-adjust: exact !important;
+  margin-bottom: 60px;
+  background-color: #FFFFFF;
+}
+
+.employee-filter {
+  width: calc(100% - 40px);
+  margin: 3px 20px 3px 20px;
+}
+
+.navbar-custom {
+  background-color: #ffffff;
+  box-shadow: 0 2px 4px 0 rgba(0, 0, 0, 0.3);
+  padding-top: 0;
+  padding-bottom: 0;
+  height: 90px;
+
+  .logo {
+    width: 180px;
+    height: 91px;
+    margin-left: -15px;
+    background-color: #ffab04;
+
+    a {
+      margin-top: 15px;
+      margin-left: 50px !important;
+    }
+  }
+}
+.avatar {
+ .img-avatar {
+   margin-top: -11px;
+   margin-bottom: -10px;
+   padding-left: 3px;
+ }
+
+ .img-avatar {
+   border: 1px solid #fff;
+   border-radius: 30px;
+   padding: 10px;
+ }
+}
+a.nav-user,a.nav-user:focus{
+  color: #7d7d7d;
+  padding: 10px;
+    // border-right: 2px solid #3fa1e6;
+    letter-spacing: 2px;
+    text-decoration: none;
+  }
+  a.nav-user:hover{
+   text-decoration: none;
+   color: #3e3e3e;
+ }
+ ul.nav.navbar-nav.navbar-right.dropdown{
+  margin-top: 35px;
+}
+.help-invoice,.help-invoice:focus{
+  color: #7d7d7d;
+  font-size: 21px;
+  font-weight: bold;
+  padding-top: 5px;
+  padding-left: 20px;
+  margin-right: 20px;
+}
+.help-invoice:hover{
+  color: #3e3e3e;
+}
+.navbar-brand {
+  height: 100%;
+  padding: 0px;
+}
+img {
+  max-width: 100%;
+  height: auto;
+  margin: 0 auto;
+}
+.navbar-brand>img {
+  display: block;
+}
+
+.navbar .dropdown-toggle {
+  height: 60px;
+  line-height: 50px;
+}
+
+#payroll-report .report-content {
+  padding: 25px;
+  background-color: #fff;
+  margin-top: 10px;
+  box-shadow: 0 5px 13px 0 rgba(0, 0, 0, 0.3);
+}
+
+#payroll-report .report-content .btn-group.pull-right{
+  margin: 10px 0px 30px 0px;
+}
+
+#payroll-report tfoot {
+  border-bottom: 2px solid #ddd;
+  font-size: 17px;
+  font-weight: bold;
+}
+
+#payroll-report #month-list {
+  cursor: pointer;
+}
+h2#month-list{
+  margin-top: 10px;
+}
+#payroll-report .dropdown-menu button {
+  background-color: transparent;
+  border: 0px;
+}
+
+.text-green {
+  color: #28a745 !important;
+}
+
+.text-red {
+  color: #E70A0E !important;
+}
+
+.text-blue{
+  color: #4DABE9 !important;
+}
+
+.text-grey{
+  color: #A0A0A0 !important;
+}
+
+.no-click{
+  cursor: default !important;
+}
+
+.text-yellow {
+  color: #FFAA00;
+}
+
+.text-white {
+  color: #fff;
+}
+
+.text-cyan{
+  color: #62C4CC;
+}
+
+.main-menu {
+  margin-top: calc(50vh - 200px);
+}
+
+.main-menu .main-menu-box {
+  text-align: center;
+}
+
+.main-menu-item:focus {
+  outline: none;
+}
+
+.main-menu {
+  margin-top: calc(50vh - 100px);
+
+  .menu-btn {
+    width: 119px;
+    height: 119px;
+    border-radius: 6px;
+    background-color: #f2f2f2;
+    box-shadow: 0 2px 4px 0 rgba(0, 0, 0, 0.3);
+    margin: 0 auto;
+    cursor: pointer;
+    transition: all 0.25s ease;
+
+    &:hover {
+      box-shadow: 0 2px 10px 0 rgba(0, 0, 0, 0.5);
+    }
+
+    .wraptocenter {
+      display: table-cell;
+      text-align: center;
+      vertical-align: middle;
+      width: 119px;
+      height: 119px;
+    }
+
+    .wraptocenter * {
+      vertical-align: middle;
+    }
+  }
+
+  p {
+    font-family: 'Maitree', serif;
+    font-size: 18px;
+    font-weight: 500;
+    font-style: normal;
+    font-stretch: normal;
+    line-height: normal;
+    letter-spacing: normal;
+    text-align: center;
+    color: #5b5b5b;
+    margin-top: 10px;
+  }
+}
+.bg-light-gray {
+  background-color: #DDD;
+}
+
+.bg-gray {
+  background-color: #4A4A4A;
+  color: #fff;
+}
+
+.btn-gray-payroll-history,.btn-gray-payroll-history:focus{
+  background-color: #4A4A4A;
+  color: #fff;
+  border: 2px solid #4A4A4A;
+  font-size: 18px;
+  padding: 8px 32px;
+  width: 100%;
+  border-radius: 0px;
+  transition: all 0.25s ease;
+
+  &:hover{
+    background-color: transparent;
+    color: #4A4A4A;
+    border: 2px solid #4A4A4A;
+  }
+}
+
+.btn-yellow {
+  background-color: #FFAB04;
+  font-size: 18px;
+  color: #fff;
+  border: 2px solid #FFAB04;
+  border-radius: 0px;
+  padding: 16px 32px;
+  transition: all 0.25s ease;
+
+  &:hover{
+    background-color: transparent;
+    color: #FFAB04;
+  }
+}
+
+.bg-blue {
+  background-color: #00AAFF;
+  color: #fff;
+  border-radius: 0px
+}
+
+.btn-payroll{
+  background-color: #32CDD3;
+  border: 2px solid #32CDD3;
+  border-radius: inherit;
+  color: #fff;
+  padding: 12px 32px;
+  font-size: 14px;
+  transition: all 0.25s ease;
+
+  &:hover{
+    color: #32CDD3;
+    border: 2px solid #32CDD3;
+    background-color: transparent;
+  }
+}
+.btn-payroll-starts,
+.btn-payroll-starts:focus{
+  background-color: #FFAB04;
+  border: 2px solid #FFAB04;
+  border-radius: inherit;
+  color: #fff;
+  padding: 16px 32px;
+  font-size: 16px;
+  transition: all 0.25s ease;
+
+  &:hover{
+    color: #FFAB04;
+    border: 2px solid #FFAB04;
+    background-color: transparent;
+  }
+}
+
+.btn-submit,.btn-submit:focus{
+  background-color: #5BAB67;
+  color: #FFFFFF;
+  border: 2px solid #5BAB67;
+  font-size: 18px;
+  padding: 16px 32px;
+  border-radius: 0px;
+  transition: all 0.25s ease;
+
+  &:hover{
+    background-color: transparent;
+    color: #5BAB67;
+    border: 2px solid #5BAB67;
+  }
+
+}
+
+.btn-cancel,.btn-cancel:focus {
+  background-color: #9D9D9D;
+  color: #FFFFFF;
+  border: 2px solid #9D9D9D;
+  font-size: 18px;
+  border-radius: 0px;
+  padding: 16px 32px;
+  transition: all 0.25s ease;
+
+  &:hover{
+    background-color: transparent;
+    color: #9D9D9D;
+    border: 2px solid #9D9D9D;
+  }
+}
+
+.btn-cancel-outline {
+  background-color: white;
+  color: #9D9D9D;
+  border: 2px solid #9D9D9D;
+  font-size: 18px;
+  border-radius: 0px;
+  padding: 16px 32px;
+  transition: all 0.25s ease;
+}
+
+.btn-danger {
+  border-radius: 0px
+}
+
+.btn-memo {
+  background-color: #fff;
+  border: 2px solid #4893DC;
+  color: #4893DC;
+  border-radius: 0px
+}
+
+.btn-prefix {
+  background-color: transparent;
+  color: #000;
+  border: 1px solid #000;
+  border-radius: 0px
+}
+input.btn-prefix {
+  border-top: 1px solid #000 !important;
+  border-right: 1px solid #000 !important;
+  border-bottom: 1px solid #000 !important;
+  border-left: 0px !important;
+  outline: none !important;
+}
+input.btn-prefix::-webkit-input-placeholder { /* Chrome/Opera/Safari */
+  color: #000;
+}
+input.btn-prefix::-moz-placeholder { /* Firefox 19+ */
+  color: #000;
+}
+input.btn-prefix:-ms-input-placeholder { /* IE 10+ */
+  color: #000;
+}
+input.btn-prefix:-moz-placeholder { /* Firefox 18- */
+  color: #000;
+}
+
+input.btn-prefix.active::-webkit-input-placeholder { /* Chrome/Opera/Safari */
+  color: #fff;
+}
+input.btn-prefix.active::-moz-placeholder { /* Firefox 19+ */
+  color: #fff;
+}
+input.btn-prefix.active:-ms-input-placeholder { /* IE 10+ */
+  color: #fff;
+}
+input.btn-prefix.active:-moz-placeholder { /* Firefox 18- */
+  color: #fff;
+}
+
+.btn-prefix.active, .btn-prefix:active{
+  background-color: #1cc5db;
+  color: #fff !important;
+  border: 1px solid #1cc5db !important;
+}
+
+.btn-prefix:hover {
+  color: #1cc5db;
+}
+
+.img-bg {
+  width: 100%;
+  padding-bottom: 100%;
+  background-size: 100% !important;
+  background-repeat: no-repeat !important;
+  background-position: center top !important;
+}
+
+.circle {
+  border-radius: 50%;
+}
+
+.line-space5{
+  padding-top: 5px;
+  padding-bottom: 5px;
+}
+
+.btn-add-employee-list{
+  margin-top: 20px;
+  margin-bottom: 10px;
+}
+
+.employees-list .card {
+  margin: 15px 11px;
+  background-color: #FFF;
+  padding-left: 20px;
+  padding-right: 20px;
+  padding-top: 15px;
+  padding-bottom: 15px;
+  border-bottom: 5px solid #1cc5db;
+  margin-top: 15px;
+  margin-bottom: 15px;
+  height: 100%;
+  box-shadow: 0 2px 4px 0 rgba(0, 0, 0, 0.3);
+  transition: all 0.25s ease;
+
+  &:hover {
+    box-shadow: 0 2px 10px 0 rgba(0, 0, 0, 0.5);
+  }
+}
+
+.center {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+}
+
+.container-fluid.employees-list{
+  max-width: 95%;
+}
+
+.employees-list .img-profile {
+  position: relative;
+}
+
+.font-size-icon {
+  font-size: 7em;
+}
+
+.font-white {
+  color: #FFF;
+}
+
+.font-light-gray {
+  color: #AAA;
+}
+
+.padding0{
+  padding: 0px !important;
+}
+
+.row.same-height {
+  display: -webkit-box;
+  display: -webkit-flex;
+  display: -ms-flexbox;
+  display: flex;
+  flex-wrap: wrap;
+}
+.row.same-height > [class*='col-'] {
+  display: flex;
+  flex-direction: column;
+}
+
+#payroll-slip .btn-print,
+#payroll-slip .btn-print:focus {
+  background-color: #5B5B5B;
+  color: #ffffff;
+  border: 2px solid #5B5B5B;
+  padding: 12px 32px;
+  margin: 20px -15px 20px 0px;
+  border-radius: 0px;
+  transition: all 0.25s ease;
+
+  &:hover{
+    background-color: transparent;
+    color: #5B5B5B;
+    border: 2px solid #5B5B5B;
+  }
+}
+
+.btn-print,
+.btn-print:focus {
+  background-color: #5B5B5B;
+  color: #ffffff;
+  border: 2px solid #5B5B5B;
+  padding: 12px 32px;
+  font-size: 20px;
+  border-radius: 0px;
+  transition: all 0.25s ease;
+
+  &:hover{
+    background-color: transparent;
+    color: #5B5B5B;
+    border: 2px solid #5B5B5B;
+  }
+}
+
+a.text-mane-back,a.text-mane-back:focus{
+  color: #5B5B5B;
+  text-decoration: none;
+}
+
+#payroll-slip .slip-content {
+  background-color: #fff;
+  padding: 30px 0px 20px 0px;
+  box-shadow: 0 2px 4px 0 rgba(0, 0, 0, 0.5);
+}
+
+#payroll-slip thead {
+  background-color: #4A4A4A !important;
+  color: #fff;
+}
+
+#payroll-slip td,
+#payroll-slip th {
+  vertical-align: middle;
+  border-color: #4A4A4A;
+}
+
+#payroll-slip td.big {
+  height: 50px
+}
+
+#payroll-slip #order tbody td {
+  border-bottom: 0px;
+  border-top: 0px;
+  height: 250px;
+  vertical-align: top !important;
+}
+
+#payroll-slip #order thead th {
+  padding: 15px 20px;
+}
+
+#payroll-slip #date_table {
+  margin-bottom: 163px;
+}
+
+#payroll-report .signature,
+#payroll-slip .signature {
+  margin-top: 100px;
+  border-top: 1px solid;
+  text-align: center;
+}
+
+#payroll-report .for_print,
+#payroll-slip .for_print,
+#payroll .for_print,
+.text-h-payroll {
+  display: none;
+}
+
+.row.tool-top-payroll {
+  margin-bottom: 15px;
+}
+
+#payroll-report .separate,
+#payroll-slip .separate {
+  margin-top: 5px;
+  margin-bottom: 5px;
+  border: 0;
+  border-top: 1px dashed #000 !important;
+}
+
+.slip-content .school-name {
+  font-size: 24px;
+}
+
+#payroll-report #slipLogo,
+#payroll-slip #slipLogo {
+  height: 100px;
+}
+
+.slip-content .school-name{
+  padding-top: 36px;
+}
+
+@print {
+  size: A4;
+}
+
+.form-group input, .form-group div{
+  border-left: 0 !important;
+  border-right: 0 !important;
+  border-top: 0 !important;
+  box-shadow: none !important;
+  border-radius: 0px;
+}
+
+.paragraph {
+  background-color: white;
+  padding: 60px 40px 40px 40px;
+  margin-top: 30px;
+  margin-bottom: 30px;
+}
+
+.paragraph.tab-content {
+  margin-top: 0px;
+}
+
+.paragraph.cyan,
+#bird-eye .modal-content.cyan,
+.paragraph.shadow {
+  box-shadow: 0 2px 4px 0 rgba(0, 0, 0, 0.3);
+}
+
+.paragraph.orange{
+  border-left: 5px solid;
+  border-left-color: #F59C0B;
+}
+
+.paragraph.grey{
+  border-left: 5px solid;
+  border-left-color: #EDF3F7;
+}
+
+.employee-details .img-profile{
+  position: relative;
+  width: 245px;
+  float: right;
+}
+
+.employee-details .img-bg {
+  margin-top: 10px;
+}
+
+.tab-content{
+  margin-top: 35px;
+}
+.employee-details h1#employeeName {
+  margin-top: 0px !important;
+}
+
+.employee-details .dropdown small,.employee-pin>small {
+  color: #A6A6A7;
+}
+
+.space20{
+  height: 20px;
+}
+
+.cursor-pointer {
+  cursor: pointer;
+}
+
+#payroll {
+  margin: 20px 10px 0px 10px;
+}
+
+#payroll .payroll-content {
+  padding: 15px;
+  background-color: #fff;
+  max-height: 630px;
+  padding-bottom: 30px;
+  margin-top: 10px;
+  box-shadow: 0 5px 13px 0 rgba(0, 0, 0, 0.3);
+}
+
+#payroll th,
+#payroll td {
+  vertical-align: middle;
+}
+
+#payroll tfoot td.text-green,
+#payroll tfoot td.text-center,
+#payroll tfoot td.bordered {
+  border-bottom: 2px solid #FFAA00;
+}
+
+#payroll .dropdown-menu button {
+  background-color: transparent;
+  border: 0px;
+}
+
+#payroll th.income {
+  border-top: 1px solid #C8C8C8;
+  border-right: 1px solid #C8C8C8;
+}
+#payroll th.outcome {
+  border-top: 1px solid #C8C8C8;
+  border-left: 1px solid #C8C8C8;
+}
+
+#payroll th.bordered,
+#payroll td.bordered {
+  border: 1px solid #C8C8C8;
+}
+
+.popover-wrapper .editable-buttons .btn-primary {
+  background-color: #A3F185 !important;
+  border-color: #A3F185 !important;
+}
+
+.popover-wrapper .editable-buttons .btn-default {
+  background-color: #fff !important;
+  border-color: #E50000 !important;
+  color: #E50000 !important;
+}
+
+
+/* Fixed TAble Header */
+table#payroll-history-table {
+  display: flex;
+  flex-direction: column;
+}
+#payroll-history-table tr {
+  display: flex;
+}
+#payroll-history-table thead, tbody {
+  overflow-y: scroll;
+}
+#payroll-history-table tbody {
+  min-height: 250px;
+}
+
+.white-bg {
+  background-color: white !important;
+}
+
+.modal-content {
+  background-color: white;
+  padding: 20px;
+  margin-top: 30px;
+  margin-bottom: 30px;
+  border: 0px solid;
+  border-radius: 0px;
+}
+
+.employee-details.employee-menu {
+  padding-top: 120px;
+  background-color: #fff;
+}
+
+.employee-details.employee-menu-space {
+  padding-top: 100px;
+}
+.z-index-lv-1{
+  z-index: 999;
+}
+
+.z-index-lv-2{
+  z-index: 998;
+}
+
+.scrollable-menu {
+  height: auto;
+  max-height: 400px;
+  overflow-x: hidden;
+}
+
+.top-bar-space{
+  height: 94px;
+}
+
+table.scrollable-header {
+  /*table-layout:fixed;*/
+  margin-bottom: -1px !important;
+}
+
+.scrollable-content {
+  overflow-y:auto;
+  overflow-x:hidden;
+}
+
+.scrollable-content::-webkit-scrollbar {
+  display: none;
+}
+.nav-tabs.main > li > a {
+  padding: 20px 40px 20px 40px;
+}
+
+.nav-tabs.main > li > a {
+  font-size: 22px;
+}
+
+.nav-tabs.main {
+  margin-left: 15px;
+  margin-right: 15px;
+}
+
+.nav-tabs.main > li.cyan > a {
+  color: #62C4CC;
+}
+
+.nav-tabs.main > li.orange > a {
+  color: #F59C0B;
+}
+
+.nav-tabs.main > li.active.cyan > a,
+.nav-tabs.main > li.active.orange > a {
+  color: #333;
+}
+
+.nav-tabs.main > li.active > a,
+.nav-tabs.main > li.active > a:hover,
+.nav-tabs.main > li.active > a:focus {
+  margin-top: 2px;
+  background-color: white;
+}
+
+.nav-tabs.main > li > a {
+  margin-top: 2px;
+  transition: all 0.25s ease;
+
+  &:hover{
+    background-color: #f1f1f1;
+  }
+}
+
+.employee-details .paragraph.private {
+  padding-left: 30px;
+  padding-top: 35px;
+}
+
+.employee-details .paragraph .sub-menu {
+  padding-right: 0px;
+}
+
+.employee-details .paragraph ul.tabs-left {
+  list-style-type: none;
+  padding-left: 0px;
+  border-bottom: none;
+}
+
+.employee-details .paragraph ul.tabs-left li {
+  padding-top: 2px;
+  font-size: 16px;
+  width: 100%;
+}
+
+.employee-details .paragraph ul.tabs-left li.active {
+  border: 2px solid #FFAB04;
+  background-color: #FFAB04;
+}
+
+.employee-details .paragraph ul.tabs-left li a {
+  color: #333;
+  border: none;
+}
+
+.employee-details .paragraph ul.tabs-left li.active a {
+  color: #FFFFFF;
+  border: none;
+  background-color: #FFAB04;
+}
+
+.employee-details .paragraph ul.tabs-left li a:hover {
+  background-color: transparent;
+  border: none;
+}
+
+.employee-details .private .tab-content {
+  height: 100%;
+  border-left: 2px solid #FFAB04;
+  margin-top: 0px;
+  padding: 0px 40px;
+}
+
+.employee-details .panel-default a {
+  color: #333;
+  border: none;
+  text-decoration: none !important;
+}
+
+.employee-details .panel-default.ng-scope.ng-isolate-scope.panel {
+  box-shadow: none;
+  border: none;
+}
+
+.employee-details .panel-default>.panel-heading{
+  background: none;
+  border-bottom: 1px solid #ddd;
+}
+
+.employee-details .accordion-selected {
+  color: #F59C0B !important;
+}
+
+.somsri-select {
+  border-top: none;
+  border-left: none;
+  border-right: none;
+  box-shadow: none;
+}
+
+.checkbox-group td:nth-child(1) {
+  width: 30px;
+}
+
+.child {
+  width: 50px !important;
+}
+
+.checkbox-group label {
+  padding-top: 9px;
+}
+
+.popover-wrapper.bottom-popup form {
+  margin-top: 90px !important;
+}
+
+.popover-wrapper.bottom-popup form:before {
+  content: "";
+  width: 0;
+  height: 0;
+  border-left: 10px solid transparent;
+  border-right: 10px solid transparent;
+  border-bottom: 10px solid #AAA;
+  border-top: 0px !important;
+  position: absolute;
+  top: -10px !important;
+}
+
+.popover-wrapper.bottom-popup form:after {
+  content: "";
+  width: 0;
+  height: 0;
+  border-left: 9px solid transparent;
+  border-right: 9px solid transparent;
+  border-bottom: 9px solid #FFF;
+  position: absolute;
+  top: -9px !important;
+  border-top: 0px !important;
+}
+
+.popover-wrapper.right-popup form {
+  margin-left: -40px;
+}
+
+.popover-wrapper.right-popup form:before {
+  content: "";
+  width: 0;
+  height: 0;
+  border-left: 10px solid transparent;
+  border-right: 10px solid transparent;
+  border-top: 10px solid #AAA;
+  position: absolute;
+  bottom: -10px;
+  margin-left: -70px;
+}
+
+.popover-wrapper.right-popup form:after {
+  content: "";
+  width: 0;
+  height: 0;
+  border-left: 9px solid transparent;
+  border-right: 9px solid transparent;
+  border-top: 9px solid #FFF;
+  position: absolute;
+  bottom: -9px;
+  margin-left: -70px;
+}
+
+.popover {
+  background: AntiqueWhite;
+}
+
+.btn.employee-type {
+  background-color: transparent;
+  border-color: #9d9d9d;
+  box-shadow: none;
+  color: #9d9d9d;
+  border: 2px solid #9d9d9d;
+  padding: 4px 16px;
+  margin-left: 5px !important;
+  transition: all 0.25s ease;
+
+  &:before{
+    content: "✖";
+    font-size: 15px;
+    margin-right: 5px;
+  }
+}
+
+.btn.employee-type.active {
+  background-color: #00D2D7;
+  color: #fff;
+  border: 2px solid #00D2D7;
+
+  &:hover{
+    background-color: #0b999c;
+    border: 2px solid #0b999c;
+    color: #fff;
+  }
+
+  &:before{
+    content: "✔";
+    font-size: 15px;
+    margin-right: 5px;
+  }
+}
+.btn.employee-print,.btn.employee-print:focus {
+  background-color: #4d4d4d;
+  border:2px solid #4d4d4d;
+  box-shadow: none;
+  font-size: 16px;
+  color: #fff;
+  border-radius: 0px;
+  padding: 12px 32px;
+  transition: all 0.25s ease;
+
+  &:hover{
+    background-color: transparent;
+    border-color: #4d4d4d;
+    color: #4d4d4d;
+  }
+}
+
+#payroll .dropdown-menu, #payroll-report .dropdown-menu {
+  max-height: calc(100vh - 170px);
+  overflow-y: scroll;
+}
+
+.employee-details .dropdown-menu {
+  max-height: calc(100vh - 200px);
+  overflow-y: scroll;
+}
+.card-employees{
+  width: 18% !important;
+}
+
+@-moz-document url-prefix(){
+  .card-employees{
+    margin-bottom: 25px;
+  }
+}
+.dropdown-menu.on-nav-bar {
+  padding: 10px 10px;
+  width: 80%;
+  border-radius: 0px;
+}
+a.dropdown-item{
+  color: #555;
+  &:hover {
+    text-decoration: none;
+    color: #000;
+  }
+}
+
+.slip-content .page-space{
+  height: 20px;
+}
+
+.slip-content .new-page{
+  page-break-after: always;
+}
+
+.disabled {
+  cursor: not-allowed !important;
+}
+.hide {
+  display: none;
+}
+
+.row-centered {
+  text-align:center;
+}
+
+.col-centered {
+  display:inline-block;
+  float:none;
+    /* reset the text-align */
+    text-align:left;
+    /* inline-block space fix */
+    margin-right:-4px;
+  }
+
+  #tableData tr:hover{
+    background-color: AntiqueWhite !important;
+  }
+
+/** Test CSS **/
+.fix-column {
+  float: left;
+}
+.thead {
+  height: 40px;
+  white-space: nowrap;
+}
+.thead > span {
+  display: inline-block;
+  width: 115px;
+  line-height: 40px;
+  text-align: center;
+  border-top: 1px solid #cccccc;
+}
+
+.theadtop {
+  height: 40px;
+  white-space: nowrap;
+}
+.theadtop > span {
+  display: inline-block;
+  width: 120px;
+  line-height: 40px;
+  text-align: center;
+  border-top: 1px solid #cccccc;
+  font-weight: 600;
+}
+
+.theadtop > span.income {
+  width: 798px;
+  border-right: 1px solid #cccccc;
+}
+
+.theadtop > span.expenses {
+  width: 990px;
+}
+
+.theadtop > span.total {
+  width: 120px;
+  border-top: 1px solid #fff;
+}
+
+.thead > span.code {
+  width: 50px;
+}
+
+.thead > span.name {
+  width: 320px;
+}
+.trow.tfoot> span{
+  border-bottom: 2px solid #9d9d9d;
+  background-color: #fdfdfd;
+}
+.trow.tfoot> span.free-space-table{
+  border: none;
+}
+.thead > span.gap {
+  width: 150px;
+  border-top: 1px solid #fff;
+  border-bottom: 1px solid #fff;
+}
+
+.trow {
+  white-space: nowrap;
+}
+.hilight{
+  background-color: AntiqueWhite !important;
+}
+.trow > span {
+  display: inline-block;
+  width: 115px;
+  border-right: 1px solid #cccccc;
+  border-bottom: 1px solid #cccccc;
+  border-left: 1px solid #cccccc;
+  line-height: 40px;
+  height: 40px;
+  text-align: center;
+  margin-right: -5px;
+}
+
+.trow > span.code {
+  width: 50px;
+}
+
+.trow > span.name {
+  width: 320px;
+  text-align: left;
+  padding-left: 10px;
+}
+
+.trow > span.salary {
+  margin-left: -1px;
+  text-align: right;
+  padding-right: 10px;
+  cursor: text;
+}
+.net_salary.number_table{
+  font-weight: bold;
+  color: #28a745;
+}
+
+.editable-click, a.editable-click{
+  text-decoration: none;
+  border-bottom: solid 1px;
+  cursor: text;
+}
+
+.trow > span.number_table,
+.number_table {
+  text-align: right;
+  padding-right: 10px;
+  cursor: text;
+}
+.trow > span.total_salary {
+  margin-left: -1px;
+}
+.tbody {
+  max-height: 450px;
+  overflow: scroll;
+  -moz-box-sizing: border-box;
+  box-sizing: border-box;
+}
+.fix-column{
+  .top{
+    border-bottom: 1px solid #ccc;
+  }
+
+  .top > span{
+    border-right: 1px solid #ccc;
+    border-left: 1px solid #ccc;
+    font-weight: 600;
+    margin-right: -5px;
+  }
+}
+.fix-column > .thead {
+  width: 370px;
+}
+
+.fix-column > .tbody {
+  overflow: hidden;
+  width: 370px;
+    /*padding-bottom: 50px;*/
+  }
+/*.fix-column > .tbody > .trow:last-child {margin-bottom: 50px;}*/
+
+.fix-column > .tbody > .trow {
+    // margin-top: -50px;
+    // margin-bottom: 50px;
+  }
+  .fix-column > .tbody > .trow:first-child {
+    margin-top: 0px;
+  }
+
+  .rest-columns {
+    /*width: 350px;*/
+    max-width: calc(100vw);
+
+    .top{
+      border-bottom: 1px solid #ccc;
+    }
+
+    .top > span{
+      border-right: 1px solid #ccc;
+      font-weight: 600;
+      margin-right: -5px;
+    }
+  }
+  .rest-columns > .thead {
+    /*padding-right: 50px;*/
+    overflow: hidden;
+  }
+/*.rest-columns > .thead > :last-child {margin-right: 50px;}*/
+.rest-columns > .thead > span {
+  margin-right: 50px;
+  margin-left: -55px;
+}
+.rest-columns > .thead > :first-child {margin-left: -1px;}
+
+.rest-columns > .theadtop {
+    /*padding-right: 50px;*/
+    overflow: hidden;
+  }
+
+  .filter-btn {
+    padding: 20px 0px;
+  }
+  .pin-char {
+    font-family: 'Roboto', sans-serif;
+    background-color: #00D2D7;
+    border-radius: 4px;
+    padding: 0px 10px;
+    font-size: 24px;
+    font-weight: bold;
+    margin-right: 2px;
+    margin-bottom: 3px;
+    color: #fff;
+  }
+  .employee-archive{
+    color: #000000 ;
+    opacity: 0.3;
+    filter: grayscale(100%);
+  }
+  .btn-restore{
+    background-color: #5bc0de;
+    border:2px solid #5bc0de;
+    padding: 16px 32px;
+    border-radius: 0px ;
+    font-size: 18px;
+    color: #FFFFFF;
+    transition: all 0.25s ease;
+
+    &:hover{
+      color: #5bc0de;
+      background-color: transparent;
+      border:2px solid #5bc0de;
+    }
+  }
+
+  .btn-delete,.btn-delete:focus{
+    background-color: #DD5A2B;
+    color: #FFFFFF;
+    border: 2px solid #DD5A2B;
+    font-size: 18px;
+    padding: 16px 32px;
+    border-radius: 0px;
+    transition: all 0.25s ease;
+
+    &:hover{
+      background-color: transparent;
+      color: #DD5A2B;
+      border: 2px solid #DD5A2B;
+    }
+  }
+
+  .btn-archive,.btn-archive:focus{
+    background-color: #e9b633;
+    color: #FFFFFF;
+    border: 2px solid #e9b633;
+    font-size: 18px;
+    padding: 16px 32px;
+    border-radius: 0px;
+    transition: all 0.25s ease;
+
+    &:hover{
+      background-color: transparent;
+      color: #e9b633;
+      border: 2px solid #e9b633;
+    }
+  }
+
+  .sort-report, .sort-report:hover, .sort-report:focus{
+    color: #333 ;
+    text-decoration: none ;
+  }
+
+  .employee-view-icon {
+    color: #9D9D9D;
+    font-size: 22px;
+    margin-right: 6px;
+    margin-top: 6px;
+    cursor: pointer;
+  }
+
+  .employee-view-icon.active, .employee-view-icon:hover {
+    color: #FFAB04;
+  }
+
+  .employees-list .list-view {
+    background-color: white;
+    padding: 20px 25px;
+    box-shadow: 0 2px 4px 0 rgba(0, 0, 0, 0.3);
+    font-size: 1.2em;
+  }
+
+  .employees-list .table td.td-edit-employee-link a{
+    cursor: pointer;
+    text-decoration: none;
+  }
+
+  .employees-list .table td>.blue {
+    cursor: pointer;
+    text-decoration: none;
+  }
+
+  .employees-list .icons {
+    margin-top: 23px;
+  }
+
+  #scrollbar-payroll::-webkit-scrollbar-track
+  {
+   -webkit-box-shadow: inset 0 0 6px rgba(0,0,0,0.1);
+   border-radius: 0px;
+   background-color: #FdFdFd;
+ }
+
+ #scrollbar-payroll::-webkit-scrollbar
+ {
+   width: 12px;
+   height: 12px;
+   background-color: #fdFdFd;
+ }
+
+ #scrollbar-payroll::-webkit-scrollbar-thumb
+ {
+   border-radius: 5px;
+   background-color: #5b5b5b;
+ }
+
+ .tbody#scrollbar-payroll{
+  font-family: 'Roboto', sans-serif;
+  font-size: 16px;
+}
+
+.employee-details .dropdown-menu>li>a,
+.employee-details .dropdown-menu>li>a:focus,
+#payroll .dropdown-menu>li>a,
+#payroll .dropdown-menu>li>a:focus,
+#payroll-report .dropdown-menu>li>a,
+#payroll-report .dropdown-menu>li>a:focus{
+  display: block;
+  padding: 3px 20px;
+  clear: both;
+  font-weight: 400;
+  line-height: 1.42857143;
+  color: #333;
+  white-space: nowrap;
+
+  &:hover{
+    background-color: #ffab04 !important;
+    color: #fff !important;
+  }
+}
+
+button.btn.btn-sm.btn-info.uib-datepicker-current,
+button.btn.btn-sm.btn-info.uib-datepicker-current:focus{
+  border-radius: 0px;
+  color: #fff;
+  background-color: #3fa1e6;
+  border: 1px solid #3fa1e6;
+  transition: all 0.25s ease;
+
+  &:hover{
+    background-color: transparent;
+    border: 1px solid #3fa1e6;
+    color: #3fa1e6;
+  }
+}
+
+button.btn.btn-sm.btn-danger.uib-clear,
+button.btn.btn-sm.btn-danger.uib-clear:focus{
+  border-radius: 0px;
+  color: #fff;
+  background-color: #DD5A2B;
+  border: 1px solid #DD5A2B;
+  transition: all 0.25s ease;
+
+  &:hover{
+    background-color: transparent;
+    border: 1px solid #DD5A2B;
+    color: #DD5A2B;
+  }
+}
+
+button.btn.btn-sm.btn-success.pull-right.uib-close,
+button.btn.btn-sm.btn-success.pull-right.uib-close:focus{
+  border-radius: 0px;
+  color: #fff;
+  background-color: #5BAB67;
+  border: 1px solid #5BAB67;
+  transition: all 0.25s ease;
+
+  &:hover{
+    background-color: transparent;
+    border: 1px solid #5BAB67;
+    color: #5BAB67;
+  }
+}
+
+.uib-button-bar {
+  padding: 10px 0px 2px !important;
+}
+
+ul.uib-datepicker-popup.dropdown-menu {
+  padding: 10px;
+}
+
+.uib-day button, .uib-month button, .uib-year button{
+  border-radius: 0px;
+  border: inherit;
+}
+
+.numberic{
+  font-family: 'Roboto', sans-serif;
+  font-size: 1.1em;
+}
+.fixed-table-container tbody td {
+  border-left: 0px solid #dddddd !important;
+}
+.bootstrap-table .table > thead > tr > th {
+  border-bottom: 2px solid #ddd !important;
+  border-left: 0px;
+}
+.fixed-table-container {
+  border: 0px solid #dddddd !important;
+}
+.btn.btn-note-bell,
+.btn.btn-note-bell:focus{
+  float: right;
+  border: none;
+  color: #FFAB04;
+  font-size: 16px;
+  padding-top: 10px;
+  background: transparent;
+
+  &:hover{
+    background: transparent;
+    color: #FFAB04;
+  }
+}
+.note-popover{
+  background: #fff;
+  padding: 5px 10px 5px 10px;
+
+  .popover-title{
+    padding: 8px 0;
+    font-size: 18px;
+    font-weight: 500;
+    background: transparent;
+    border-bottom: 1px solid #333;
+  }
+  .popover-content{
+    padding: 8px 0;
+  }
+}
+
+.display-block {
+  display: block !important;
+}
+
+.for-display {
+  display: block !important;
+}
+
+@media print {
+
+  .for-display {
+    display: none !important;
+  }
+
+  .display-block {
+    display: block !important;
+  }
+
+  #payroll-report report-content thead th{
+    padding:0px !important;
+    border-bottom: 2px solid #333 !important;
+    border-top: none !important;
+  }
+
+  .fixed-table-container thead th .th-inner{
+    padding:2px 8px !important;
+  }
+  .fixed-table-container tbody td .th-inner {
+    display: block;
+  }
+  .fixed-table-container tbody td.for-print-NetSalary .th-inner{
+    text-align: left;
+    margin-left: 70px;
+  }
+
+  body {
+    margin: 0px;
+  }
+
+  a[href]:after {
+    content: none !important;
+  }
+  .no_display_print{
+    display: none;
+  }
+  #payroll-report .report-content{
+    border: none;
+    padding: 0px;
+    box-shadow: none;
+  }
+  .scrollable-content{
+    overflow-y: inherit !important;
+    overflow-x: inherit !important;
+  }
+  .report_for_print_hide{
+    display: none;
+  }
+  .fa.fa-sort{
+    display: none;
+  }
+  th.forprint-h_table{
+    background: none !important;
+  }
+  td.text-left.forprint_table.this_name{
+    min-width: 30px;
+  }
+  td.text-center.forprint_table.this_account{
+    min-width: 200px;
+  }
+  td.text-green.forprint_table.this_netsalary{
+    min-width: 200px;
+  }
+  td.text-center.forprint-h_table,
+  th.text-center.forprint-h_table,
+  th.text-right.forprint-h_table {
+    text-align: right;
+  }
+  th.forprint-h_table.print_name{
+    width: 300px !important;
+  }
+  th.text-center.forprint-h_table.forprint_table.this_account{
+    width: 184px !important;
+  }
+  .top-bar-space{
+    height: 0px !important;
+  }
+  #payroll-report.row {
+    margin-right: 0px !important;
+    margin-left: 0px !important;
+  }
+
+  #payroll-report tfoot {
+   border-bottom: unset;
+ }
+
+ #payroll-report .for_print{
+  display: block;
+  }
+  .text-h-payroll{
+    display: block;
+  }
+  .row.tool-top-payroll {
+    border-bottom: 1px solid #ccc;
+    margin-bottom: 30px;
+  }
+  .fa-angle-down{
+    display: none;
+  }
+  .inline{
+    display: inline-block;
+  }
+  #payroll-report .unused_for_print,
+  #payroll-slip .unused_for_print {
+    display: none;
+  }
+  #payroll-slip p,
+  #payroll-slip th,
+  #payroll-slip td,
+  #payroll-report th,
+  #payroll-report td,
+  #payroll-report p{
+    font-size: 10px;
+  }
+
+  #payroll-report #date_table,
+  #payroll-slip #date_table {
+    margin-bottom: 70px;
+  }
+
+  #payroll-report td,
+  #payroll-report th,
+  #payroll-slip td,
+  #payroll-slip th {
+    vertical-align: middle;
+    border-color: #000;
+  }
+
+  #payroll-report thead th,
+  #payroll-slip thead th {
+    padding: 5px 10px;
+    background-color: #dadada !important;
+  }
+
+  #payroll-report #order tbody td,
+  #payroll-slip #order tbody td {
+    border-bottom: 0px;
+    border-top: 0px;
+    height: 170px;
+    vertical-align: top !important;
+  }
+
+  #payroll-report .slip-content,
+  #payroll-slip .slip-content {
+    padding: 0px;
+  }
+
+  #payroll-report .for_print,
+  #payroll-slip .for_print,
+  #payroll .for_print {
+    display: block !important;
+  }
+
+  #payroll-report #slipLogo,
+  #payroll-slip #slipLogo {
+    height: 50px;
+  }
+
+  .slip-content .school-name {
+    font-size: 16px;
+  }
+
+  .slip-content .school-name{
+    padding-top: 10px;
+  }
+
+  #payroll-report td.big,
+  #payroll-slip td.big {
+    height: 45px
+  }
+
+  #payroll-report .signature,
+  #payroll-slip .signature {
+    margin-top: 85px;
+  }
+
+  #payroll-report p,
+  #payroll-slip p {
+    margin: 0px 0 6px;
+  }
+
+  /* For Safari */
+  #payroll-slip .safari td.big {
+    height: auto
+  }
+
+  #payroll-slip .safari p,
+  #payroll-slip .safari th,
+  #payroll-slip .safari td {
+    font-size: 9px;
+  }
+
+  #payroll-slip .safari #date_table {
+    margin-bottom: 100px;
+  }
+
+  #payroll-slip .safari #order tbody td {
+    border-bottom: 0px;
+    border-top: 0px;
+    height: 170px;
+    vertical-align: top !important;
+  }
+
+  #payroll-slip .safari .signature {
+    margin-top: 75px;
+  }
+
+  #payroll-slip .safari #order thead th {
+    padding: 5px 10px;
+  }
+  .pagebreak { page-break-before: always; }
+
+  #payroll-slip tfoot th,
+  #payroll-report tfoot th{
+    display: block;
+    background-color: #dadada !important;
+    border-bottom: #dadada !important;
+  }
+  .text-green {
+    color: #000 !important;
+  }
+  #payroll{
+    margin: inherit;
+    .container-fluid{
+      padding: 0;
+    }
+  }
+  #payroll .payroll-content,
+  #payroll .tbody#scrollbar-payroll{
+    font-size: 12px !important;
+  }
+  #payroll .payroll-content{
+    padding: 0;
+    margin: 0px;
+  }
+  #payroll .fix-column > .tbody,
+  .rest-columns > .theadtop,
+  .rest-columns > .thead{
+    overflow: inherit;
+  }
+  #payroll .tbody{
+    overflow: inherit;
+    max-height: inherit;
+  }
+  #payroll .thead.top{
+    height: 35px;
+  }
+  #payroll .thead > span{
+    line-height: 35px;
+  }
+  #payroll .trow > span.code,{
+    width: 35px !important;
+    border-left: 1px solid #cccccc;
+  }
+  #payroll .thead > span.code{
+    width: 35px !important;
+  }
+  #payroll .trow > span{
+    height: 35px;
+    width: 89px;
+    line-height: 35px;
+    border-left: none;
+  }
+  #payroll .fix-column > .tbody,
+  #payroll .fix-column > .thead,{
+    width: 264px;
+  }
+  #payroll .trow.tfoot > span.text_total_tfoot{
+    width: 263px;
+    border-left: 1px solid #cccccc;
+  }
+  #payroll .thead > span{
+    width: 88.6px;
+  }
+  #payroll .thead > span.name,
+  #payroll .trow > span.name{
+    width: 230px;
+  }
+
+  #payroll .trow > span.name{
+    border-right: 1px solid #cccccc;
+  }
+  #payroll .theadtop > span.income{
+    width: 610px;
+  }
+  #payroll .trow > span.salary,
+  #payroll .trow > span.number_table, .number_table{
+    padding-right: 5px;
+  }
+  #payroll .hilight{
+    background-color: transparent !important;
+  }
+  #payroll .trow > span.salary {
+    background-color: #fff !important;
+}
+}
+.trow.tfoot > span.text_total_tfoot{
+  width: 369px;
+}
+.table>tbody>tr.card>td{
+  border-top: 0px solid #ddd !important;
+}
+#employeesTable > tbody > tr > td:nth-child(1){
+  width: 50px
+}
+.bootstrapCardView{
+  display: flex;
+  flex-wrap: wrap;
+  font-size: 14px;
+  margin-right:-10px;
+
+  .icon-default-img{
+    font-size: 8em;
+    position: absolute;
+    transform: translate(-50%,-50%);
+    margin: 40% auto auto auto;
+    color: #fff;
+  }
+
+  tr > td > div > div:nth-child(1) > span > div{
+    margin-bottom: 20px;
+  }
+
+  tr > td > div > div:nth-child(2) .title,
+  tr > td > div > div:nth-child(3),
+  tr > td > div > div:nth-child(7){
+    display: none !important;
+  }
+
+  tr > td:nth-child(1){
+    width: 100% !important;
+    text-align: center;
+  }
+
+  tr > td > div > div:nth-child(n+4){
+    display: inline-flex;
+    width: 100%;
+    margin: 2px auto;
+  }
+   
+  tr > td > div > div:nth-child(n+4) > span.value{
+    padding-left: 10px;
+  }
+
+  tr > td > div > div:nth-child(n+5) .title,
+  tr> td > div > div:nth-child(n+5) > span.value > div{
+    color: #AAA !important;
+  }
+
+  tr> td > div > div:nth-child(4) > span.value > div,
+  tr > td > div > div:nth-child(2) > span.value > a{
+    color: #595959 !important;
+  }
+  tr > td > div > div:nth-child(n+4) > span.title{
+    font-weight: normal;
+  }
+
+  tr > td > div > div:nth-child(n+4) > span.value.col-md-8{
+    white-space: nowrap !important;
+  }
+
+  tr > td > div > div:nth-child(n+4) > span.title.col-md-4.padding0{
+    text-align: right !important;
+  }
+
+}
+.bootstrapListView {
+
+  .icon-default-img{
+    position: absolute;
+    margin: 1.45% auto auto 1.45%;
+    transform: translate(-50%,-50%);
+    color:#fff;
+  }
+}
+.cardViewEmployees{
+  padding-left:5px;
+  padding-right:5px;
+}
+.btn-export {
+  background-color: #00D2D7;
+  font-size: 18px;
+  color: #fff;
+  border: 2px solid #00D2D7;
+  border-radius: 0px;
+  padding: 16px 32px;
+  transition: all 0.25s ease;
+  margin-right: 3px;
+
+  &:hover{
+    background-color: transparent;
+    color: #00D2D7;
+  }
+}
+
+.padding-left10{
+  padding-left: 10px;
+}
+
+.redactor-toolbar {
+  display: none;
+}
+
+.redactor-editor[contenteditable="false"] {
+  background-color: #eee;
+  cursor: not-allowed;
+  border: 1px solid #ccc;
+}
+.note-employees .redactor-editor{
+  border: 1px solid #ccc;
+}
+.between-height{
+  margin-top: 50px;
+}
+.mr-10{
+  margin-right: 10px;
+}
+.py-5{
+  padding-top: 5px !important;
+  padding-bottom: 5px !important;
+}
+.img-employee-dropdown{
+  display: inline-block;
+  vertical-align: middle;
+
+  .bg-light-gray{
+    display: block;
+    width: 30px;
+    height: 30px;
+  }
+  .fa-user{
+    position: absolute;
+    padding: 8px 10px;
+  }
+}
+.dropdown-employee-name{
+  vertical-align: middle;
+}
+.bg-img-dropdown{
+  vertical-align: middle;
+  display: inline-block;
+  width: 30px;
+  height: 30px;
+  background-size: cover !important;
+  background-repeat: no-repeat !important;
+  background-position: center top !important;
+}
+
+// dropdown-submenu
+.dropdown-submenu {
+  position: relative;
+}
+
+.dropdown-submenu>.dropdown-menu {
+  top: 0;
+  right: 100%;
+  margin-top: -6px;
+  margin-left: -1px;
+  -webkit-border-radius: 0px;
+  -moz-border-radius: 0px;
+  border-radius: 0px;
+  padding: 10px;
+}
+
+.dropdown-submenu:hover>.dropdown-menu {
+  display: block;
+}
+
+.dropdown-submenu>.dropdown-menu>li>a>img{
+  width: 20%;
+  margin-left: -10px;
+}

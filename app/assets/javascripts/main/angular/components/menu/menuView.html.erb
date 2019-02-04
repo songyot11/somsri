@@ -1,0 +1,20 @@
+<div class="container main-menu main">
+  <div class="row justify-content-center">
+    <div class="col-xs-3">
+      <div class="menu-btn create-payment" ng-click="openClassroomList()">
+          <div class="wraptocenter">
+              <%= image_tag 'add_class_setting.png', class: "" %>
+          </div>
+      </div>
+      <p>{{ 'class_management' | translate }}</p>
+    </div>
+    <div class="col-xs-3" ng-show="menu.enable_expenses" >
+      <div class="menu-btn create-payment" ng-click="openExpensesSetting()">
+          <div class="wraptocenter">
+              <%= image_tag 'logo_setting.png', class: "" %>
+          </div>
+      </div>
+      <p>{{ 'expenses_category_setting' | translate }}</p>
+    </div>
+  </div>
+</div>

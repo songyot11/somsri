@@ -1,0 +1,14 @@
+(function() {
+  'use strict';
+  angular.module('somsri.main.setting_menu', [
+  ])
+  .controller('menuCtrl', ['$rootScope', 'translateFilter', 'settingService', function($rootScope, translateFilter, service) {
+    $rootScope.menu = translateFilter('setting')
+    $rootScope.loadAndAuthorizeResource("school", function(){});
+    var ctrl = this
+
+    service.getSiteConfig().then(function(resp) {
+      ctrl.enable_expenses = resp.data.enable_expenses
+    });
+  }]);
+})();

@@ -1,0 +1,79 @@
+(function() {
+  'use strict';
+  angular.module('somsri.main.assets', []).
+  constant('ASSETS', {
+    'somsri': {
+      'main': {
+        'setting': {
+          name: 'somsri.main.setting',
+          files: [
+            "<%= asset_path('main/angular/components/setting/settingCtrl.js') %>",
+            "<%= asset_path('main/angular/components/setting/settingService.js') %>"
+          ]
+        },
+        'password_modal': {
+          name: 'somsri.main.password_modal',
+          files: [
+            "<%= asset_path('main/angular/components/modal/password/passwordModalCtrl.js') %>",
+            "<%= asset_path('main/angular/components/modal/password/passwordModalService.js') %>"
+          ]
+        },
+        'classroom': {
+          name: 'somsri.main.classroom',
+          files: [
+            "<%= asset_path('main/angular/components/classroom/classroomCtrl.js') %>",
+            "<%= asset_path('main/angular/components/classroom/classroomService.js') %>"
+          ]
+        },
+        'classroom_edit': {
+          name: 'somsri.main.classroom_edit',
+          files: [
+            "<%= asset_path('main/angular/components/classroom/edit/classroomEditCtrl.js') %>",
+            "<%= asset_path('main/angular/components/classroom/edit/classroomEditService.js') %>"
+          ]
+        },
+        'next_classroom': {
+          name: 'somsri.main.next_classroom',
+          files: [
+            "<%= asset_path('main/angular/components/classroom/nextClassroom/nextClassroomCtrl.js') %>",
+            "<%= asset_path('main/angular/components/classroom/classroomService.js') %>"
+          ]
+        },
+        'select_member_modal': {
+          name: 'somsri.main.select_member_modal',
+          files: [
+            "<%= asset_path('main/angular/components/modal/selectMember/selectMemberModalCtrl.js') %>",
+            "<%= asset_path('main/angular/components/modal/selectMember/selectMemberModalService.js') %>"
+          ]
+        },
+        'create_member_modal': {
+          name: 'somsri.main.create_member_modal',
+          files: [
+            "<%= asset_path('main/angular/components/modal/createMember/createMemberModalCtrl.js') %>",
+            "<%= asset_path('main/angular/components/modal/createMember/createMemberModalService.js') %>"
+          ]
+        },
+        'create_classroom_modal': {
+          name: 'somsri.main.create_classroom_modal',
+          files: [
+            "<%= asset_path('main/angular/components/modal/createClassroom/createClassroomModalCtrl.js') %>",
+            "<%= asset_path('main/angular/components/modal/createClassroom/createClassroomModalService.js') %>"
+          ]
+        },
+        'confirm_modal': {
+          name: 'somsri.main.confirm_modal',
+          files: [
+            "<%= asset_path('main/angular/components/modal/confirm/confirmModalCtrl.js') %>"
+          ]
+        },
+        'setting_menu': {
+          name: 'somsri.main.setting_menu',
+          files: [
+            "<%= asset_path('main/angular/components/menu/menuCtrl.js') %>",
+            "<%= asset_path('main/angular/components/setting/settingService.js') %>"
+          ]
+        }
+      }
+    }
+  });
+})();

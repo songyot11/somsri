@@ -1,0 +1,250 @@
+(function() {
+  'use strict';
+  angular.module('somsri.payroll.payroll', [
+  ])
+  .controller('payrollCtrl', ['$filter', 'reportService', 'payrollService', 'employeesService', '$rootScope', '$state', '$uibModal', '$scope', 'translateFilter', function($filter, reportService, payrollService, employeesService, $rootScope, $state, $uibModal, $scope, translateFilter) {
+    $rootScope.menu = translateFilter("payroll")
+    var ctrl = this
+    ctrl.total = 0
+    ctrl.employees = []
+    ctrl.effectiveDates = []
+    ctrl.currentDateString = ""
+    ctrl.total = {}
+
+    ctrl.employeeTypeMode = {
+      normal: true,
+      temporary: true,
+      probationary: true,
+      daily: true
+    }
+
+    $scope.sel=0;
+    $scope.hoverIn = function(i){
+        $scope.sel=i;
+    };
+    $scope.$on('$viewContentLoaded', function() {
+      var fcBody = document.querySelector(".fix-column > .tbody"),
+      rcBody = document.querySelector(".rest-columns > .tbody"),
+      rcHead = document.querySelector(".rest-columns > .thead"),
+      rcHeadTop = document.querySelector(".rest-columns > .theadtop");
+      rcBody.addEventListener("scroll", function() {
+          fcBody.scrollTop = this.scrollTop;
+          rcHead.scrollLeft = this.scrollLeft;
+          rcHeadTop.scrollLeft = this.scrollLeft;
+      });
+    });
+
+    var effectiveDateParm = $state.params.effective_date;
+
+    ctrl.selectValue = function($event){
+      if($event && !$event.target){
+        return;
+      }
+      $($event.target).select();
+    }
+
+    function getTotalSalary(employees)  {
+      var totalSalary = 0
+      var totalNetSalary = 0
+      var totalOt = 0
+      var totalPositionAllowance = 0
+      var totalAllowance = 0
+      var totalAttendanceBonus = 0
+      var totalBonus = 0
+      var totalExtra_etc = 0
+      var totalTax = 0
+      var totalSocialInsurance = 0
+      var totalAbsence = 0
+      var totalLate = 0
+      var totalAdvancePayment = 0
+      var totalFee_etc = 0
+      var totalPvf = 0
+
+      employees.forEach(function(employee) {
+        totalSalary += employee.salary
+        totalNetSalary += employee.net_salary
+        totalOt += employee.ot
+        totalPositionAllowance += employee.position_allowance
+        totalAllowance += employee.allowance
+        totalAttendanceBonus += employee.attendance_bonus
+        totalBonus += employee.bonus
+        totalExtra_etc += employee.extra_etc
+        totalTax += employee.tax
+        totalSocialInsurance += employee.social_insurance
+        totalAbsence += employee.absence
+        totalLate += employee.late
+        totalAdvancePayment += employee.advance_payment
+        totalFee_etc += employee.fee_etc
+        totalPvf += employee.pvf
+      })
+
+      ctrl.total =  {
+        salary: totalSalary,
+        net_salary: totalNetSalary,
+        ot: totalOt,
+        position_allowance: totalPositionAllowance,
+        allowance: totalAllowance,
+        attendance_bonus: totalAttendanceBonus,
+        bonus: totalBonus,
+        extra_etc: totalExtra_etc,
+        tax: totalTax,
+        social_insurance: totalSocialInsurance,
+        absence: totalAbsence,
+        late: totalLate,
+        advance_payment: totalAdvancePayment,
+        fee_etc: totalFee_etc,
+        pvf: totalPvf,
+      }
+    }
+
+    ctrl.switchMonth = function(effectiveDate) {
+      reportService.getPayroll(effectiveDate["date_time"]).then(function(resp) {
+        ctrl.employees = resp.data.payrolls
+        ctrl.employees_origin = JSON.parse(JSON.stringify(ctrl.employees));
+        getTotalSalary(ctrl.employees)
+        ctrl.currentDateString = effectiveDate["date_string"];
+        ctrl.currentEffectiveDate = effectiveDate;
+        checkIfLastedPayroll();
+        setPrintPayrollUrl()
+      });
+    }
+
+    ctrl.updatePayroll = function(index, id, value, field) {
+      // Selected Current field
+      var old_value = ctrl.employees[index][field]
+      var old_deduction = ctrl.employees[index]["tax"] + ctrl.employees[index]["pvf"] + ctrl.employees[index]["social_insurance"]
+      if (value == null) {
+        value = 0.00
+      }
+
+      payrollService.showEmployee(ctrl.employees[index].code, ctrl.employees[index].payroll_id).then(function(resp) {
+        resp.data.payroll[field]=value;
+        employeesService.getEmployeeDeduction(resp.data.employee.id, resp.data.payroll.id , resp.data).then(function(resp2) {
+          ctrl.employees[index]["tax"] = resp2.data.tax;
+          ctrl.employees[index]["pvf"] = resp2.data.pvf;
+          ctrl.employees[index]["social_insurance"] = resp2.data.social_insurance;
+
+          resp.data.payroll.tax = resp2.data.tax;
+          resp.data.payroll.pvf = resp2.data.pvf;
+          resp.data.payroll.social_insurance = resp2.data.social_insurance;
+
+          delete resp.data.payroll["id"];
+          delete resp.data.payroll["employee_id"];
+          delete resp.data.payroll["created_at"];
+          delete resp.data.payroll["effective_date"];
+          delete resp.data.payroll["updated_at"];
+
+          reportService.updatePayroll(id, { payroll: resp.data.payroll }).then(function(resp3) {
+            // Calculate Net Salary
+            var field_selector = $("a#" + index + "-" + field)
+
+            if (field_selector.attr("class").indexOf("text-green") == 0) {
+              ctrl.employees[index]["net_salary"] -= (old_value - value)
+            } else if (field_selector.attr("class").indexOf("text-red") == 0) {
+              ctrl.employees[index]["net_salary"] += (old_value - value)
+            }
+            ctrl.employees[index]["net_salary"] += (old_deduction - (resp2.data.tax + resp2.data.pvf + resp2.data.social_insurance))
+            getTotalSalary(ctrl.employees);
+            ctrl.employees_origin = JSON.parse(JSON.stringify(ctrl.employees));
+          })
+        }, function(resp) {  })
+      })
+    }
+
+    function setPrintPayrollUrl() {
+      $('#print-payroll').attr("href", "/payrolls.pdf?effective_date=" + encodeURIComponent(ctrl.currentEffectiveDate['date_time']));
+    }
+
+    function getAll() {
+      reportService.getMonths().then(function(resp) {
+        if (resp.data.length > 0) {
+          ctrl.effectiveDates = resp.data
+          var current = ctrl.effectiveDates[0]
+          if(effectiveDateParm){
+            for(var i = 0; i < ctrl.effectiveDates.length; i++){
+              if(new Date(ctrl.effectiveDates[i]['date_time']).getTime() == new Date(effectiveDateParm).getTime()){
+                current = ctrl.effectiveDates[i];
+              }
+            }
+          }
+          reportService.getPayroll(current['date_time']).then(function(resp) {
+            ctrl.employees = resp.data.payrolls
+            ctrl.employees_origin = JSON.parse(JSON.stringify(ctrl.employees));
+
+            getTotalSalary(ctrl.employees)
+            ctrl.currentDateString = current['date_string'];
+            ctrl.currentEffectiveDate = current;
+            checkIfLastedPayroll()
+            setPrintPayrollUrl()
+          });
+        }
+      });
+    }
+
+    function checkIfLastedPayroll(){
+      if(ctrl.currentEffectiveDate['date_time'] == "lasted"){
+        ctrl.isClosedPayroll = false
+      }else{
+        ctrl.isClosedPayroll = true
+      }
+    }
+
+    ctrl.createPayrolls = function(){
+      $scope.effectiveDates = ctrl.effectiveDates
+      $uibModal.open({
+        animation: true,
+        backdrop: 'static',
+        keyboard: false,
+        scope: $scope,
+        templateUrl: "<%= asset_path('payroll/angular/components/modal/createPayrolls/createPayrollsModalView.html') %>",
+        controller: 'createPayrollsModalCtrl as createPayrolls',
+        size: 'md',
+        resolve: {
+          resources: ['$ocLazyLoad', 'ASSETS', function($ocLazyLoad, ASSETS) {
+            return $ocLazyLoad.load([
+              ASSETS.somsri.payroll.create_payrolls_modal
+            ]);
+          }]
+        }
+      }).result.then(function (effective_date) {
+        if (effective_date) {
+          $rootScope.openPayroll(effective_date);
+        }
+      });
+    }
+
+    ctrl.employeeTypeFilter = function (){
+      var mode = [];
+      if(ctrl.employeeTypeMode.normal){
+        mode.push(translateFilter("employee_full_time"));
+      }
+      if(ctrl.employeeTypeMode.temporary){
+        mode.push(translateFilter("employee_part_time"));
+      }
+      if(ctrl.employeeTypeMode.probationary){
+        mode.push(translateFilter("employee_probation"));
+      }
+      if(ctrl.employeeTypeMode.daily){
+        mode.push(translateFilter("employee_daily"));
+      }
+      var employees = JSON.parse(JSON.stringify(ctrl.employees_origin));
+      for(var i = 0; i < employees.length; i++){
+        if(mode.indexOf(employees[i].employee_type) < 0){
+          employees[i] = null;
+        }
+      }
+      var newArray = new Array();
+      for (var i = 0; i < employees.length; i++) {
+        if (employees[i]) {
+          newArray.push(employees[i]);
+        }
+      }
+      ctrl.employees = newArray;
+
+      ctrl.total = getTotalSalary(ctrl.employees);
+      getTotalSalary(ctrl.employees);
+    }
+
+    getAll()
+  }]);
+})();

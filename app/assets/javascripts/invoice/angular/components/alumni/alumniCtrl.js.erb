@@ -1,0 +1,98 @@
+(function() {
+  'use strict';
+  angular.module('somsri.invoice.alumni', [
+  ])
+  .controller('alumniCtrl', ['$scope', '$http', 'DEFAULT_LOGO', 'LocalStorage', 'Currency', 'alumniService', '$rootScope', 'translateFilter', function($scope, $http, DEFAULT_LOGO, LocalStorage, Currency, service, $rootScope, translateFilter) {
+    var ctrl = this;
+    ctrl.alumnis = []
+    ctrl.graduated_year = [translateFilter('all')]
+    ctrl.graduated_status = [translateFilter('all')]
+    ctrl.year = ""
+    ctrl.status = ""
+    $rootScope.menu = translateFilter('alumni')
+    $rootScope.loadAndAuthorizeResource("invoice", function(){
+      ctrl.bringBack = function(id){
+        service.restore(id).then(function(resp) {
+          alumniTable.bootstrapTable("refresh")
+        });
+      }
+
+      ctrl.switchYear = function(year){
+        ctrl.selected_year = year
+        alumniTable.bootstrapTable("refresh")
+      }
+
+      ctrl.switchStatus = function(status){
+        ctrl.selected_status = status
+        alumniTable.bootstrapTable("refresh")
+      }
+
+      function alumniQueryParams(params){
+        params["year"] = ctrl.selected_year
+        params["status"] = ctrl.selected_status
+        return params
+      }
+
+      function bringBackFormatter(value, row, index){
+        var alumni = "angular.element(document.getElementById('angularCtrl')).scope().alumni"
+        return '<a id="bringBack' + row['student_id'] + '" onclick="' + alumni + '.bringBack(' + row['student_id'] + ')" class="light-blue-color"><i class="fa fa-undo" aria-hidden="true"></i> นำกลับเข้าระบบ</a>'
+      }
+
+      var pageSize = 10
+      var alumniTable = $('#alumni-table')
+      var alumniTableOptions = {
+        sidePagination: "server",
+        pageSize: pageSize,
+        pagination: true,
+        search: true,
+        toolbar: ".toolbar",
+        url: "/alumnis",
+        uniqueId: "student_id",
+        queryParams: alumniQueryParams,
+        columns: [{
+          field: 'name',
+          title: translateFilter("full_name_1"),
+          sortable: true
+        },{
+          field: 'nickname',
+          title: translateFilter("nick_name"),
+          sortable: true
+        },{
+          field: 'student_number',
+          title: translateFilter("student_number"),
+          sortable: true
+        },{
+          field: 'graduated_year',
+          title: translateFilter("year_of_graduation"),
+          sortable: true
+        },{
+          field: 'graduated_semester',
+          title: translateFilter("graduated_semester"),
+          sortable: true
+        },{
+          field: 'grade_classroom',
+          title: translateFilter("grade_classroom"),
+          sortable: true
+        },{
+          field: 'status',
+          title: translateFilter("status"),
+          sortable: true
+        },{
+          field: 'bring_back',
+          formatter: bringBackFormatter
+        }]
+      }
+      alumniTable.bootstrapTable(alumniTableOptions)
+
+      service.getAlumniYears().then(function(resp) {
+        ctrl.graduated_year = ctrl.graduated_year.concat(resp.data)
+        ctrl.selected_year = translateFilter('all')
+      });
+
+      service.getAlumniStatus().then(function(resp) {
+        ctrl.graduated_status = ctrl.graduated_status.concat(resp.data)
+        ctrl.selected_status = translateFilter('all')
+      });
+    })
+  }]);
+})();

@@ -1,0 +1,11 @@
+(function() {
+  'use strict';
+
+  angular.module('somsri.payroll.payroll.service', [
+  ])
+  .service('payrollService', ['$http', function($http) {
+    this.showEmployee = function(employee_id, payroll_id) {
+      return $http.get('/employees/' + employee_id, payroll_id);
+    }
+  }]);
+})();

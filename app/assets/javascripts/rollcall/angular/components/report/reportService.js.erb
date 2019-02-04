@@ -1,0 +1,40 @@
+(function() {
+  'use strict';
+
+  angular.module('somsri.rollcall.report.service', [
+
+  ])
+  .service('reportService', ['$http','$rootScope', '$q', function($http , $rootScope, $q) {
+
+    var getRollCallCanceler = $q.defer()
+    this.getRollCall = function(listId, date) {
+      getRollCallCanceler.resolve()
+      getRollCallCanceler = $q.defer()
+      return $http.get('/report_roll_calls/report', {
+        timeout: getRollCallCanceler.promise,
+        params: {
+          list_id: listId, date: date
+        }
+      });
+    }
+
+    var getDateInMonthCanceler = $q.defer()
+    this.getDateInMonth = function(date) {
+      getDateInMonthCanceler.resolve()
+      getDateInMonthCanceler = $q.defer()
+      return $http.get('/report_roll_calls/date_in_month', {
+        timeout: getDateInMonthCanceler.promise,
+        params: { date: date }
+      });
+    }
+
+    this.getLists = function() {
+      return $http.get('/report_roll_calls/lists');
+    }
+
+    this.getMonths = function() {
+      return $http.get('/report_roll_calls/months');
+    }
+
+  }]);
+})();

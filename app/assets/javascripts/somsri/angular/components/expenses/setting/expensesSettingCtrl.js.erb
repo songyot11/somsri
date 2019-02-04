@@ -1,0 +1,117 @@
+(function() {
+  'use strict';
+  angular.module('somsri.somsri.expenses_setting', [
+    ])
+  .controller('expensesSettingCtrl', ['$rootScope','expensesSettingService','$scope', 'translateFilter', '$window', function($rootScope, service, $scope, translateFilter, $window) {
+    $rootScope.menu = translateFilter('setting')
+    var ctrl = this;
+    ctrl.categories = [];
+    ctrl.categoryCount = 0;
+
+    function datasToTree(datas, results, currentLv, i){
+      for(; i < datas.length; i++){
+        var data = datas[i];
+        if(currentLv == data.lv){
+          results.push({ "name": data.name, "id": data.id, "nodes": [] });
+        }else if(currentLv > data.lv){
+          i = datasToTree(datas, results[results.length - 1].nodes, data.lv, i);
+        }else if(currentLv < data.lv){
+          return i - 1;
+        }
+      }
+    }
+
+    function findMaxLv(datas){
+      var maxLv = 0
+      datas.forEach(function(data){
+        if(maxLv < data.lv){ maxLv = data.lv }
+      })
+      return maxLv
+    }
+
+    function updateTree(){
+      ctrl.categories = [];
+      ctrl.categoryCount = ctrl.datas.length;
+      datasToTree(
+        ctrl.datas,
+        ctrl.categories,
+        findMaxLv(ctrl.datas),
+        0
+      );
+      if(ctrl.categoryCount == 0){ ctrl.addNewItem() }
+    }
+
+    function initData(){
+      service.getExpenseSettings().then(function(resp) {
+        ctrl.datas = resp.data;
+        updateTree();
+      });
+    }
+
+    function displayFlashMessage(message, typeSuccess){
+      ctrl.message = message;
+      ctrl.typeSuccess = typeSuccess;
+      $window.scrollTo(0, 0);
+    }
+
+    function treeToDatas(trees, results, currentLv){
+      for(var i = 0; i < trees.length; i++){
+        var tree = trees[i];
+        if(!tree.name && tree.nodes.length > 0){
+          displayFlashMessage(translateFilter('expenses_category_required_name'), false)
+          return false
+        }
+        results.push({ "name": tree.name, "id": tree.id, "lv": currentLv });
+        if(!treeToDatas(tree.nodes, results, currentLv + 1)){ return false }
+      }
+      return true
+    }
+
+    ctrl.save = function(){
+      var results = []
+      if(treeToDatas(ctrl.categories, results, 1)){
+        var maxLv = findMaxLv(results)
+        results.forEach(function(result){
+          result.lv = (maxLv + 1) - result.lv
+        })
+        var confirmationMessage = translateFilter('save_change_confirmation')
+        $rootScope.openConfirmationModal(confirmationMessage, '', function(){
+          service.saveExpenseSettings(results).then(function(resp){
+            initData();
+            displayFlashMessage(translateFilter('save_success'), true);
+          },function(error){
+            if(error.data && error.data.message){
+              displayFlashMessage(error.data.message, false);
+            }else{
+              displayFlashMessage(translateFilter('save_falied'), false);
+            }
+          });
+        });
+      }
+    };
+
+    function newItem(){
+      return { "name": null, "id": null, "nodes": []}
+    }
+
+    ctrl.addNewItem = function(){
+      ctrl.categories.push(newItem())
+      ctrl.categoryCount += 1
+    };
+
+    ctrl.newSubItem = function(scope){
+      var nodeData = scope.$modelValue;
+      nodeData.nodes.push(newItem());
+    };
+
+    ctrl.removeItem = function(scope){
+      scope.remove();
+    };
+
+    ctrl.toggle = function (scope) {
+      scope.toggle();
+    };
+
+    initData();
+  }]);
+})();

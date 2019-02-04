@@ -1,0 +1,8 @@
+(function() {
+  'use strict';
+  angular.module('somsri.invoice.menu', [
+  ])
+  .controller('menuCtrl', ['$rootScope', 'translateFilter', function($rootScope, translateFilter) {
+    $rootScope.menu = translateFilter("rollcall")
+  }]);
+})();

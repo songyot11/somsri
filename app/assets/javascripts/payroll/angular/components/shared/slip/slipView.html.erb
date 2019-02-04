@@ -1,0 +1,202 @@
+<style>
+.space1 {
+  padding-top: 1px;
+}
+
+.slip-page {
+  position: relative;
+  font-size: 10px;
+}
+
+.slip {
+  top: 0.05cm;
+  padding-top: 50% !important;
+  padding-bottom: 20% !important;
+  width: 100%;
+  position: absolute;
+  font-size: 10px;
+}
+
+.slip-margin {
+  top: 14cm;
+}
+
+.page-break {
+  page-break-after:always;
+}
+
+#national_id {
+  position: absolute;
+  top: 16.44%;
+  left:68.96%;
+}
+
+#code {
+  position: absolute;
+  top: 21.79%;
+  left:8.37%;
+}
+
+#name {
+  position: absolute;
+  top: 21.79%;
+  left:27.09%;
+}
+
+#position {
+  position: absolute;
+  top: 21.79%;
+  left:64.03%;
+}
+
+#item_name {
+  position: absolute;
+  top: 34.52%;
+  left:4.92%;
+}
+
+#item_earning {
+  width: 2.5cm;
+  position: absolute;
+  top: 34.52%;
+  left:29.55%;
+}
+
+#item_tax {
+  width: 1.7cm;
+  position: absolute;
+  top: 34.52%;
+  left:44.33%;
+}
+
+#item_social_insurance {
+  width: 1.9cm;
+  position: absolute;
+  top: 34.52%;
+  left:55.66%;
+}
+
+#item_amount {
+  width: 2.3cm;
+  position: absolute;
+  top: 34.52%;
+  left: 67.98%;
+}
+
+#date {
+  position: absolute;
+  top: 36.61%;
+  left: 86.24%;
+}
+
+#net_pay {
+  width: 3.3cm;
+  position: absolute;
+  top: 62.95%;
+  left: 82.24%;
+}
+
+#acc_income {
+  width: 3.5cm;
+  position: absolute;
+  top: 81.09%;
+  left:4.92%;
+}
+
+#acc_tax {
+  width: 3.5cm;
+  position: absolute;
+  top: 81.09%;
+  left: 22.33%;
+}
+
+#acc_social {
+  width: 3.5cm;
+  position: absolute;
+  top: 81.09%;
+  left: 39.67%;
+}
+
+#total_earn {
+  width: 2.5cm;
+  position: absolute;
+  top: 65.87%;
+  left: 29.55%;
+}
+
+#total_deduct {
+  width: 2.3cm;
+  position: absolute;
+  top: 65.87%;
+  left: 67.98%;
+}
+
+@media print {
+  .container-fluid {
+    padding-top: 1px;
+    padding-bottom: 0px;
+    padding-right: 0px;
+    padding-left: 0px;
+    margin: 0px !important;
+  }
+  .report-content {
+    padding: 0px !important;
+    margin: 0px !important;
+  }
+}
+</style>
+
+<div ng-repeat="employee_pairs in slipInfo.employee_slips">
+  <div class="slip-page">
+    <div class="slip" ng-class="{'slip-margin': $odd}" ng-repeat="employee in employee_pairs">
+      <div id="national_id">{{ employee.personal_id }}</div>
+      <div id="code">{{ employee.code }}</div>
+      <div id="name">{{ employee.name }}</div>
+      <div id="position">{{ employee.position }}</div>
+      <div id="item_name">
+        <div ng-repeat="pay in employee.payroll.pay_orders">
+          {{ pay.name }}
+        </div>
+      </div>
+      <div id="item_earning">
+        <div class="text-right" ng-repeat="pay in employee.payroll.pay_orders">
+          {{ pay.value | currency: "" }}
+        </div>
+      </div>
+      <div id="item_tax">
+        <div class="text-right">{{ employee.payroll.fee_orders.tax.value | currency: "" }}</div>
+      </div>
+      <div id="item_social_insurance">
+        <div class="text-right">{{ employee.payroll.fee_orders.social_insurance.value | currency: "" }}</div>
+      </div>
+      <div id="item_amount">
+        <div class="text-right">{{ (employee.payroll.fee_orders.tax.value + employee.payroll.fee_orders.social_insurance.value) | currency: "" }}</div>
+      </div>
+      <div id="date">
+        <div>{{ employee.payroll.date | dateThai }}</div>
+      </div>
+      <div id="total_earn">
+        <div class="text-right">{{ employee.extra_pay | currency: "" }}</div>
+      </div>
+      <div id="total_deduct">
+        <div class="text-right">{{ employee.extra_fee | currency: "" }}</div>
+      </div>
+      <div id="net_pay">
+        <div class="text-center">{{ employee.extra_pay - employee.extra_fee | currency: "" }}</div>
+      </div>
+      <div id="acc_income">
+        <div class="text-center">{{ employee.annual_income_outcome.total_salary | currency: "" }}</div>
+      </div>
+      <div id="acc_tax">
+        <div class="text-center">{{ employee.annual_income_outcome.total_tax | currency: "" }}</div>
+      </div>
+      <div id="acc_social">
+        <div class="text-center">{{ employee.annual_income_outcome.total_social_insurance | currency: "" }}</div>
+      </div>
+    </div>
+  </div>
+  <div ng-show="!$last">
+    <div class="page-break"></div>
+    <div class="space1"></div>
+  </div>
+</div>

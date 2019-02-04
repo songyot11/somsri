@@ -1,0 +1,874 @@
+<nav class="navbar navbar-fixed-top employee-menu employee-details z-index-lv-2">
+  <div class="container">
+    <input type="hidden" id="time_zone">
+    <div class="row">
+      <div class="col-md-12">
+        <div class="row" ng-show="employee.isEdit">
+          <div class="col-md-6">
+            <div class="dropdown" >
+              <small>Select employee</small>
+              <h1 id="employeeName" onclick="window.setTimeout(function(){ $('#employeeFilter').val('').trigger('change').focus()}, 100)" class="dropdown-toggle" ng-class="{ 'disabled' : employee.current_employee }" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="true">
+                <span ng-bind="employee.displayName"></span>
+                <span class="fa fa-angle-down" ng-hide="employee.current_employee" ></span>
+              </h1>
+              <ul class="dropdown-menu" ng-disabled="employee.disabled_dropdown">
+                <li ng-show="employee.employee_lists.length > 0"><input class="employee-filter" id="employeeFilter" type="text" ng-model="employee.filterKeyword" /></li>
+                <li ng-repeat="data in employee.employee_lists | filter:employee.filterKeyword">
+                  <a class="py-5" ng-click="employee.slectDropDown(data.id)" href="javascript:void(0)">
+
+                    <span ng-show="data.img != null" class="bg-img-dropdown mr-10 circle" style="background: url('{{ data.img }}')"></span>
+                    <span class="img-employee-dropdown mr-10" ng-show="data.img == null">
+                      <i class="fa fa-user font-white" aria-hidden="true"></i>
+                      <span class="bg-light-gray circle"></span>
+                    </span>
+                    <span class="dropdown-employee-name">{{data.id}}: {{data.name}}</span>
+                  </a>
+                </li>
+              </ul>
+            </div>
+          </div>
+          <div class="col-md-3 employee-pin">
+            <div ng-show="employee.datas.enable_rollcall">
+              <small ng-show="employee.pinChars.length > 0">PIN Number</small><br>
+              <span class="pin-char" ng-show="employee.pinChars.length > 0" ng-repeat="pinChar in employee.pinChars track by $index">{{pinChar}}</span>
+            </div>
+          </div>
+          
+            <div class="col-md-3" style="margin-top:10px;">
+              <a ng-click="employee.openEmployeeDetails(0)" ng-show="employee.showButton" href="javascript:void(0)" class="btn btn-custom btn-orange pull-right">
+                + {{ employee.add_button | translate }}
+              </a>
+            </div>
+        </div>
+        <div class="row">
+          <ul class="nav nav-tabs main">
+            <li class="cyan" ng-class="{ 'active' : employee.activeTab === 'general' }">
+              <a data-toggle="tab" ng-click="employee.activeTab = 'general'; employee.selectTab('general')" href="javascript:void(0)">{{ "general_data" | translate }}</a>
+            </li>
+            <li class="cyan" ng-class="{ 'active' : employee.activeTab === 'salary' }" ng-show="employee.hasPayroll && employee.isEdit">
+              <a data-toggle="tab" ng-click="employee.activeTab = 'salary'; employee.selectTab('salary'); employee.calTotal();" href="javascript:void(0)">{{ "salary" | translate }}</a>
+            </li>
+            <li class="orange" ng-class="{ 'active' : employee.activeTab === 'private' }" ng-show="employee.isEdit">
+              <a data-toggle="tab" ng-click="employee.activeTab = 'private'; employee.selectTab('private')" href="javascript:void(0)">{{ "personal_data" | translate }}</a>
+            </li>
+            <li class="cyan" ng-class="{ 'active' : employee.activeTab === 'inventory' }" ng-show="employee.isEdit">
+              <a data-toggle="tab" ng-click="employee.activeTab = 'inventory'; employee.selectTab('inventory')" href="">{{ "inventory_data" | translate }}</a>
+            </li>
+          </ul>
+        </div>
+      </div>
+    </div>
+  </div>
+</nav>
+
+<div class="container employee-details" ng-class="{'employee-menu-space': employee.isEdit}">
+  <form name="createProjectForm" ng-submit="employee.submit(employee.datas)">
+    <div class="tab-content">
+      <div ng-class="{ 'in active' : employee.activeTab === 'general' }" id="generalInfo" class="tab-pane fade">
+        <div class="paragraph cyan tab-content employee">
+          <div class="row">
+            <div class="col-md-8">
+              <br>
+              <div class="row">
+                <div class="col-md-2">
+                  <div class="form-group">
+                    <label for="prefix_thai">{{ "pre_name" | translate }}</label>
+                    <input type="text" class="form-control" id="prefix_thai" ng-model="employee.datas.employee.prefix_thai" ng-blur="employee.calTotal()">
+                  </div>
+                </div>
+                <div class="col-md-5">
+                  <div class="form-group">
+                    <label for="first_name_thai">{{ "name" | translate }}</label>
+                    <input type="text" class="form-control" id="first_name_thai" ng-model="employee.datas.employee.first_name_thai">
+                  </div>
+                </div>
+                <div class="col-md-5">
+                  <div class="form-group">
+                    <label for="last_name_thai">{{ "last_name" | translate }}</label>
+                    <input type="text" class="form-control" id="last_name_thai" ng-model="employee.datas.employee.last_name_thai">
+                  </div>
+                </div>
+              </div>
+              <div class="row">
+                <div class="col-md-2">
+                  <div class="form-group">
+                    <label for="prefix">Prefix</label>
+                    <input type="text" class="form-control" id="prefix" ng-model="employee.datas.employee.prefix">
+                  </div>
+                </div>
+                <div class="col-md-3">
+                  <div class="form-group">
+                    <label for="first_name">First Name</label>
+                    <input type="text" class="form-control" id="first_name" ng-model="employee.datas.employee.first_name">
+                  </div>
+                </div>
+                <div class="col-md-3">
+                  <div class="form-group">
+                    <label for="middle_name">Middle Name</label>
+                    <input type="text" class="form-control" id="middle_name" ng-model="employee.datas.employee.middle_name">
+                  </div>
+                </div>
+                <div class="col-md-4">
+                  <div class="form-group">
+                    <label for="last_name">Surname</label>
+                    <input type="text" class="form-control" id="last_name" ng-model="employee.datas.employee.last_name">
+                  </div>
+                </div>
+              </div>
+              <div class="row">
+                <div class="col-md-6">
+                  <div class="form-group">
+                    <label for="personal_id">{{ "personal_id" | translate }}</label>
+                    <input type="text" class="form-control numberic" id="personal_id" ng-model="employee.datas.employee.personal_id">
+                  </div>
+                </div>
+                <div class="col-md-6">
+                  <div class="form-group">
+                    <label for="passport_number">{{ "passport" | translate }}</label>
+                    <input type="text" class="form-control numberic" id="passport_number" ng-model="employee.datas.employee.passport_number">
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div class="col-md-4">
+              <div class="img-profile cursor-pointer" ngf-select="employee.uploadPhoto($file)">
+                <div ng-switch on="employee.datas.img_url.length > 0">
+                  <div ng-switch-when="true">
+                    <div class="img-bg circle" style="background: url('{{ employee.datas.img_url }}')"></div>
+                  </div>
+                  <div ng-switch-default>
+                    <i class="fa fa-user center font-size-icon font-white" aria-hidden="true"></i>
+                    <div class="img-bg bg-light-gray circle"></div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="row">
+            <div class="col-md-4">
+              <div class="form-group">
+                <label for="nickname">{{ "nick_name" | translate }}</label>
+                <input type="text" class="form-control" id="nickname" ng-model="employee.datas.employee.nickname">
+              </div>
+            </div>
+            <div class="col-md-4">
+              <div class="form-group">
+                <label for="start_date">{{ " start_date" | translate }}</label>
+                <p class="input-group">
+                  <input id="start_date" type="text" class="form-control numberic" uib-datepicker-popup="dd/MM/yyyy" ng-model="employee.datas.employee.start_date" is-open="employee.startDatePopup.opened" close-text="Close"/>
+                  <span class="input-group-btn">
+                    <button type="button" class="btn btn-default" ng-click="employee.openStartDatePopup()"><i class="fa fa-calendar"></i></button>
+                  </span>
+                </p>
+              </div>
+            </div>
+            <div class="col-md-4">
+              <div class="form-group">
+                <label for="position">{{ "position" | translate }}</label>
+                <input type="text" class="form-control" id="position" ng-model="employee.datas.employee.position">
+              </div>
+            </div>
+          </div>
+          <div class="row">
+            <div class="col-md-4">
+              <div class="form-group">
+                <label for="race">{{ "race" | translate }}</label>
+                <input type="text" class="form-control" id="race" ng-model="employee.datas.employee.race">
+              </div>
+            </div>
+            <div class="col-md-4">
+              <div class="form-group">
+                <label for="nationality">{{ "nation" | translate }}</label>
+                <input type="text" class="form-control" id="nationality" ng-model="employee.datas.employee.nationality">
+              </div>
+            </div>
+            <div class="col-md-4">
+              <div class="form-group">
+                <label for="employeetype">{{ "employee_type" | translate }}</label>
+                <select class="form-control somsri-select" id="employeetype" ng-model="employee.datas.employee.employee_type" ng-blur="employee.calTotal()">
+                  <option value="ลูกจ้างประจำ">{{ "employee_full_time" | translate }}</option>
+                  <option value="ลูกจ้างชั่วคราว">{{ "employee_part_time" | translate }}</option>
+                  <option value="ลูกจ้างทดลองงาน">{{ "employee_probation" | translate }}</option>
+                  <option value="ลูกจ้างรายวัน">{{ "employee_daily" | translate }}</option>
+                </select>
+              </div>
+            </div>
+          </div>
+          <div class="row">
+            <div class="col-md-4">
+              <div class="form-group">
+                <label for="grade_id">{{ "level" | translate }}</label>
+                <select class="form-control somsri-select" ng-options="item.id as item.name for item in employee.grades" id="grade_id" ng-model="employee.datas.employee.grade_id">
+                </select>
+              </div>
+            </div>
+            <div class="col-md-4">
+              <div class="form-group">
+                <label for="classroom_id">{{ "room" | translate }}</label>
+                <select class="form-control somsri-select" ng-options="item.id as item.name for item in employee.classrooms" id="classroom_id" ng-model="employee.datas.employee.classroom_id">
+                </select>
+              </div>
+            </div>
+          </div>
+          <div class="row">
+            <div class="col-md-4">
+              <div class="form-group">
+                <label for="bank_name">{{ "bank" | translate }}</label>
+                <input type="text" class="form-control" id="bank_name" ng-model="employee.datas.employee.bank_name">
+              </div>
+            </div>
+            <div class="col-md-4">
+              <div class="form-group">
+                <label for="bank_branch">{{ "branch" | translate }}</label>
+                <input type="text" class="form-control" id="bank_branch" ng-model="employee.datas.employee.bank_branch">
+              </div>
+            </div>
+            <div class="col-md-4">
+              <div class="form-group">
+                <label for="account_number">{{ "bank_account" | translate }}</label>
+                <input type="text" class="form-control numberic" id="account_number" ng-model="employee.datas.employee.account_number">
+              </div>
+            </div>
+          </div>
+          <div class="row">
+            <div class="col-md-4">
+              <div class="form-group">
+                <table class="checkbox-group">
+                  <tr>
+                    <td>
+                      <input type="checkbox" class="form-control cbox numberic" id="pay_social_insurance" ng-model="employee.datas.employee.pay_social_insurance" ng-change="employee.calTotal()"/>
+                    </td>
+                    <td>
+                      <label for="pay_social_insurance">{{ "pay_social_insurance" | translate }}</label>
+                    </td>
+                  </tr>
+                </table>
+              </div>
+            </div>
+            <div class="col-md-4">
+              <div class="form-group">
+                <table class="checkbox-group">
+                  <tr>
+                    <td>
+                      <input type="checkbox" class="form-control cbox numberic" id="pay_pvf" ng-model="employee.datas.employee.pay_pvf" ng-change="employee.calTotal()"/>
+                    </td>
+                    <td>
+                      <label for="pay_pvf">{{ "pay_pvf" | translate }}</label>
+                    </td>
+                  </tr>
+                </table>
+              </div>
+            </div>
+          </div>
+          <div class="row mt-20" ng-show="employee.show_note_and_comment">
+            <div class="col-md-6">
+              <div class="form-group">
+                <label for="note">{{ "note" | translate }}</label>
+                <input type="text" class="form-control" id="note" ng-model="employee.datas.employee.note">
+              </div>
+            </div>
+            <div class="col-md-6">
+              <div class="form-group">
+                <label for="comment">{{ "comment" | translate }}</label>
+                <input type="text" class="form-control" id="comment" ng-model="employee.datas.employee.comment">
+              </div>
+            </div>        
+          </div>
+        </div>
+      </div>
+      <div ng-class="{ 'in active' : employee.activeTab === 'private' }" id="privateInfo" class="tab-pane fade">
+        <div class="paragraph tab-content shadow employee private">
+          <br><br>
+          <div class="row">
+            <div class="col-md-3 sub-menu">
+              <ul class="nav nav-tabs tabs-left">
+                <li ng-class="{ 'active' : employee.activeTabPrivate === 'basic' }">
+                  <a data-toggle="tab" ng-click="employee.activeTabPrivate = 'basic'" href="javascript:void(0)">
+                    {{ "contact_geeneral_data" | translate }}
+                  </a>
+                </li>
+                <li ng-class="{ 'active' : employee.activeTabPrivate === 'family' }">
+                  <a data-toggle="tab" ng-click="employee.activeTabPrivate = 'family'" href="javascript:void(0)">
+                    {{ "family" | translate }}
+                  </a>
+                </li>
+                <li ng-class="{ 'active' : employee.activeTabPrivate === 'education' }">
+                  <a data-toggle="tab" ng-click="employee.activeTabPrivate = 'education'" href="javascript:void(0)">
+                    {{ "work_education" | translate }}
+                  </a>
+                </li>
+                <li ng-class="{ 'active' : employee.activeTabPrivate === 'tax' }">
+                  <a data-toggle="tab" ng-click="employee.activeTabPrivate = 'tax'" href="javascript:void(0)">
+                    {{ "tax_deduction" | translate }}
+                  </a>
+                </li>
+                <li ng-class="{ 'active' : employee.activeTabPrivate === 'skill' }">
+                  <a data-toggle="tab" ng-click="employee.activeTabPrivate = 'skill'" href="javascript:void(0)">
+                    {{ "skill" | translate }}
+                  </a>
+                </li>
+              </ul>
+            </div>
+            <div class="col-md-9 tab-content">
+              <div ng-class="{ 'in active' : employee.activeTabPrivate === 'basic' }" class="tab-pane fade">
+                <div class="row">
+                  <div class="col-md-12">
+                    <div class="form-group">
+                      <label for="address">{{ "current_address" | translate }}</label>
+                      <input type="text" class="form-control" id="address" ng-model="employee.datas.employee.address">
+                    </div>
+                  </div>
+                </div>
+                <div class="row">
+                  <div class="col-md-5">
+                    <div class="form-group">
+                      <label for="tel">{{ "phone" | translate }}</label>
+                      <input type="text" class="form-control" id="tel" ng-model="employee.datas.employee.tel">
+                    </div>
+                  </div>
+                  <div class="col-md-5">
+                    <div class="form-group">
+                      <label for="birthdate">{{ "birthday" | translate }}</label>
+                      <p class="input-group">
+                        <input id="birthdate" type="text" class="form-control" uib-datepicker-popup="dd/MM/yyyy" datepicker-options="{showWeeks:false}" ng-model="employee.datas.employee.birthdate" is-open="employee.birthdatePopup.opened" close-text="Close"/>
+                        <span class="input-group-btn">
+                          <button type="button" class="btn btn-default" ng-click="employee.openBirthdatePopup()"><i class="fa fa-calendar"></i></button>
+                        </span>
+                      </p>
+                    </div>
+                  </div>
+                </div>
+                <div class="row">
+                  <div class="col-md-5">
+                    <div class="form-group">
+                      <label for="status">{{ "status" | translate }}</label>
+                      <select class="form-control somsri-select" id="status" ng-model="employee.datas.employee.status">
+                        <option value="โสด">{{ "single" | translate }}</option>
+                        <option value="สมรส">{{ "marry" | translate }}</option>
+                        <option value="หม้าย">{{ "widow" | translate }}</option>
+                        <option value="หย่าร้าง">{{ "divorce" | translate }}</option>
+                      </select><br>
+                    </div>
+                  </div>
+                </div>
+                <div class="row">
+                  <div class="col-md-5">
+                    <div class="form-group">
+                      <label for="email">{{ "email" | translate }}</label>
+                      <input type="text" class="form-control" id="email" ng-model="employee.datas.employee.email">
+                    </div>
+                  </div>
+                </div>
+
+                <div class="row">
+                  <div class="col-md-10">
+                    <div class="form-group">
+
+                      <label for="emergency_call">{{ "emergency_contact" | translate }}</label>
+                      <div class="row" ng-repeat="emergency_call in employee.individuals.emergency_calls">
+                        <div id="emergency_call" class="col-md-12">
+                          <a ng-click="employee.deleteEmergencyCall(emergency_call.id)" href="javascript:void(0)" class="text-red">
+                            <span class="fa fa-times"></span>
+                          </a>
+                          <a ng-click="employee.editEmergencyCall(emergency_call)" href="javascript:void(0)" class="text-cyan">
+                            {{ emergency_call.full_name }}
+                          </a>
+                        </div>
+                      </div>
+                      <div class="row">
+                        <div class="col-md-12">
+                          <a ng-click="employee.addEmergencyCall()" href="javascript:void(0)" class="text-cyan">
+                            + {{ "add_data" | translate }}
+                          </a>
+                        </div>
+                      </div>
+
+                    </div>
+                  </div>
+                </div>
+              </div>
+
+              <div ng-class="{ 'in active' : employee.activeTabPrivate === 'tax' }" class="tab-pane fade">
+                <div class="row" ng-controller="TaxReductionCtrl">
+                  <uib-accordion close-others="true">
+                    <div uib-accordion-group class="panel-default" is-open="status.tab1">
+                      <uib-accordion-heading>
+                        <a ng-class="{'accordion-selected': status.tab1}">{{ "personal_deduction" | translate }}</a><i class="pull-right fa" ng-class="{'fa-angle-down': status.tab1, 'fa-angle-right': !status.tab1}"></i>
+                      </uib-accordion-heading>
+                      <div class="col-md-6">
+                        <div class="form-group">
+                          <label for="expenses">{{ "personal_payment" | translate }}</label> <i class="fa fa-info-circle" popover-trigger="'mouseenter'" uib-popover-html="expenses"></i>
+                          <input string-to-number
+                          class="form-control numberic" id="expenses" ng-model="employee.datas.tax_reduction.expenses" disabled />
+                        </div>
+                        <div class="form-group">
+                          <table class="checkbox-group">
+                            <tr>
+                              <td><input type="checkbox" class="form-control cbox" id="cbox_no_income_spouse" ng-model="cbox_no_income_spouse" ng-change="set_no_income_spouse(this.cbox_no_income_spouse)" /></td>
+                              <td><label for="no_income_spouse">{{ "no_income_spouse" | translate }}</label> <i class="fa fa-info-circle" popover-trigger="'mouseenter'" uib-popover-html="no_income_spouse"></i>
+                              <input string-to-number
+                          class="form-control numberic" id="no_income_spouse" ng-model="employee.datas.tax_reduction.no_income_spouse" disabled />
+                              </td>
+                            </tr>
+                          </table>
+                        </div>
+                      </div>
+                    </div>
+
+                    <div uib-accordion-group class="panel-default" is-open="status.tab2">
+                      <uib-accordion-heading>
+                        <a ng-class="{'accordion-selected': status.tab2}">{{ "parent_deduction" | translate }}</a><i class="pull-right fa" ng-class="{'fa-angle-down': status.tab2, 'fa-angle-right': !status.tab2}"></i>
+                      </uib-accordion-heading>
+                      <div class="col-md-6">
+                        <div class="form-group">
+                          <table class="checkbox-group">
+                            <tr>
+                              <td>
+                                <input type="checkbox" class="form-control cbox" id="cbox_father_alimony" ng-model="cbox_father_alimony" ng-change="set_father_alimony(this.cbox_father_alimony)" />
+                              </td>
+                              <td>
+                                <label for="father_alimony">{{ "father_alimony" | translate }}</label> <i class="fa fa-info-circle" popover-trigger="'mouseenter'" uib-popover-html="parent_alimony"></i>
+                                <input string-to-number
+                          class="form-control numberic" id="father_alimony" ng-model="employee.datas.tax_reduction.father_alimony" disabled />
+                              </td>
+                            </tr>
+                            <tr>
+                              <td>
+                                <input type="checkbox" class="form-control cbox" id="cbox_mother_alimony" ng-model="cbox_mother_alimony" ng-change="set_mother_alimony(this.cbox_mother_alimony)" />
+                              </td>
+                              <td>
+                                <label for="mother_alimony">{{ "mother_alimony" | translate }}</label> <i class="fa fa-info-circle" popover-trigger="'mouseenter'" uib-popover-html="parent_alimony"></i>
+                                <input string-to-number
+                          class="form-control numberic" id="mother_alimony" ng-model="employee.datas.tax_reduction.mother_alimony" disabled />
+                              </td>
+                            </tr>
+                            </tr>
+                            <tr>
+                              <td>
+                              </td>
+                              <td>
+                                <label for="child">{{ "child" | translate }}</label> <i class="fa fa-info-circle" popover-trigger="'mouseenter'" uib-popover-html="child"></i>
+                                <table>
+                                  <tr>
+                                    <td class="child"><input step="1" type="number" class="form-control cbox numberic" id="numchild" ng-model="numchild" ng-change="set_child(this.numchild)" min="0" /></td>
+                                    <td><label for="child">{{ "person_unit" | translate }}</label></td>
+                                    <td><input string-to-number
+                          class="form-control numberic" id="child" ng-model="employee.datas.tax_reduction.child" disabled /></td>
+                                  </tr>
+                                </table>
+                              </td>
+                            </tr>
+                          </table>
+                        </div>
+                      </div>
+                      <div class="col-md-6">
+                        <div class="form-group">
+                          <table class="checkbox-group">
+                            <tr>
+                              <td>
+                                <input type="checkbox" class="form-control cbox" id="cbox_spouse_father_alimony" ng-model="cbox_spouse_father_alimony" ng-change="set_spouse_father_alimony(this.cbox_spouse_father_alimony)" />
+                              </td>
+                              <td>
+                                <label for="spouse_father_alimony">{{ "spouse_father_alimony" | translate }}</label> <i class="fa fa-info-circle" popover-trigger="'mouseenter'" uib-popover-html="parent_alimony"></i>
+                                <input string-to-number
+                          class="form-control numberic" id="spouse_father_alimony" ng-model="employee.datas.tax_reduction.spouse_father_alimony" disabled />
+                              </td>
+                            </tr>
+                            <tr>
+                              <td>
+                                <input type="checkbox" class="form-control cbox" id="cbox_spouse_mother_alimony" ng-model="cbox_spouse_mother_alimony" ng-change="set_spouse_mother_alimony(this.cbox_spouse_mother_alimony)" />
+                              </td>
+                              <td>
+                                <label for="spouse_mother_alimony">{{ "spouse_mother_alimony" | translate }}</label> <i class="fa fa-info-circle" popover-trigger="'mouseenter'" uib-popover-html="parent_alimony"></i>
+                                <input string-to-number
+                          class="form-control numberic" id="spouse_mother_alimony" ng-model="employee.datas.tax_reduction.spouse_mother_alimony" disabled />
+                              </td>
+                            </tr>
+                            <tr>
+                              <td>
+                              </td>
+                              <td>
+                                <label for="cripple_alimony">{{ "cripple_alimony" | translate }}</label> <i class="fa fa-info-circle" popover-trigger="'mouseenter'" uib-popover-html="cripple_alimony"></i>
+                                <table>
+                                  <tr>
+                                    <td class="child"><input step="1" type="number" class="form-control cbox numberic" id="numcripple_alimony" ng-model="numcripple_alimony" ng-change="set_cripple_alimony(this.numcripple_alimony)" min="0" /></td>
+                                    <td><label for="cripple_alimony">{{ "person_unit" | translate }}</label></td>
+                                    <td><input string-to-number
+                          class="form-control numberic" id="cripple_alimony" ng-model="employee.datas.tax_reduction.cripple_alimony" disabled /></td>
+                                  </tr>
+                                </table>
+                              </td>
+                            </tr>
+                          </table>
+                        </div>
+                      </div>
+                    </div>
+
+                    <div uib-accordion-group class="panel-default" is-open="status.tab3">
+                      <uib-accordion-heading>
+                        <a ng-class="{'accordion-selected': status.tab3}">{{ "fund_insurance" | translate }}</a><i class="pull-right fa" ng-class="{'fa-angle-down': status.tab3, 'fa-angle-right': !status.tab3}"></i>
+                      </uib-accordion-heading>
+                      <div class="col-md-6">
+                        <div class="form-group">
+                          <label for="insurance">{{ "insurance" | translate }}</label> <i class="fa fa-info-circle" popover-trigger="'mouseenter'" uib-popover-html="insurance"></i>
+                          <input step="any" type="number" string-to-number
+                          class="form-control numberic" id="insurance" ng-model="employee.datas.tax_reduction.insurance" min="0" max="100000" ng-blur="check_not_null('insurance')" />
+                          <label for="retirement_mutual_fund">{{ "rmf" | translate }}</label> <i class="fa fa-info-circle" popover-trigger="'mouseenter'" uib-popover-html="retirement_mutual_fund"></i>
+                          <input step="any" type="number" string-to-number
+                          class="form-control numberic" id="retirement_mutual_fund" ng-model="employee.datas.tax_reduction.retirement_mutual_fund" min="0" ng-blur="check_not_null('retirement_mutual_fund')" />
+                        </div>
+                      </div>
+                      <div class="col-md-6">
+                        <div class="form-group">
+                          <label for="pension_insurance">{{ "pension_insurance" | translate }}</label> <i class="fa fa-info-circle" popover-trigger="'mouseenter'" uib-popover-html="pension_insurance"></i>
+                          <input step="any" type="number" string-to-number
+                          class="form-control numberic" id="pension_insurance" ng-model="employee.datas.tax_reduction.pension_insurance" min="0" ng-change="employee.checkInsurance()" ng-blur="check_not_null('pension_insurance')" />
+                          <label for="long_term_equity_fund">{{ "ltf" | translate }}</label> <i class="fa fa-info-circle" popover-trigger="'mouseenter'" uib-popover-html="long_term_equity_fund"></i>
+                          <input step="any" type="number" string-to-number
+                          class="form-control numberic" id="long_term_equity_fund" ng-model="employee.datas.tax_reduction.long_term_equity_fund" min="0" ng-blur="check_not_null('long_term_equity_fund')" />
+                        </div>
+                      </div>
+                      <div class="col-md-6">
+                        <div class="form-group">
+                          <label for="national_savings_fund">{{ "nsf" | translate }}</label> <i class="fa fa-info-circle" popover-trigger="'mouseenter'" uib-popover-html="national_savings_fund"></i>
+                          <input step="any" type="number" string-to-number
+                          class="form-control numberic" id="national_savings_fund" ng-model="employee.datas.tax_reduction.national_savings_fund" min="0" ng-blur="check_not_null('national_savings_fund')" />
+                        </div>
+                      </div>
+                    </div>
+
+                    <div uib-accordion-group class="panel-default" is-open="status.tab4">
+                      <uib-accordion-heading>
+                        <a ng-class="{'accordion-selected': status.tab4}">{{ "social_insurance" | translate }}</a><i class="pull-right fa" ng-class="{'fa-angle-down': status.tab4, 'fa-angle-right': !status.tab4}"></i>
+                      </uib-accordion-heading>
+                      <div class="col-md-6">
+                        <div class="form-group">
+                          <label for="social_insurance">{{ "year_social_insurance" | translate }}</label> <i class="fa fa-info-circle" popover-trigger="'mouseenter'" uib-popover-html="social_insurance"></i>
+                          <input step="any" type="number" string-to-number
+                          class="form-control numberic" id="social_insurance" ng-model="employee.datas.tax_reduction.social_insurance" min="0" max="9000" ng-blur="check_not_null('social_insurance')" />
+                        </div>
+                      </div>
+                    </div>
+
+                    <div uib-accordion-group class="panel-default" is-open="status.tab5">
+                      <uib-accordion-heading>
+                        <a ng-class="{'accordion-selected': status.tab5}">{{ "other_fund" | translate }}</a><i class="pull-right fa" ng-class="{'fa-angle-down': status.tab5, 'fa-angle-right': !status.tab5}"></i>
+                      </uib-accordion-heading>
+                      <div class="col-md-6">
+                        <div class="form-group">
+                          <label for="pension_fund">{{ "pension_fund" | translate }}</label> <i class="fa fa-info-circle" popover-trigger="'mouseenter'" uib-popover-html="pension_fund"></i>
+                          <input step="any" type="number" string-to-number
+                          class="form-control numberic" id="pension_fund" ng-model="employee.datas.tax_reduction.pension_fund" min="0" ng-blur="check_not_null('pension_fund')" />
+                          <label for="government_pension_fund">{{ "gpf" | translate }}</label> <i class="fa fa-info-circle" popover-trigger="'mouseenter'" uib-popover-html="government_pension_fund"></i>
+                          <input step="any" type="number" string-to-number
+                          class="form-control numberic" id="government_pension_fund" ng-model="employee.datas.tax_reduction.government_pension_fund" min="0" ng-blur="check_not_null('government_pension_fund')" />
+                          <label for="private_teacher_aid_fund">{{ "ptaf" | translate }}</label> <i class="fa fa-info-circle" popover-trigger="'mouseenter'" uib-popover-html="private_teacher_aid_fund"></i>
+                          <input step="any" type="number" string-to-number
+                          class="form-control numberic" id="private_teacher_aid_fund" ng-model="employee.datas.tax_reduction.private_teacher_aid_fund" min="0" ng-blur="check_not_null('private_teacher_aid_fund')" />
+                        </div>
+                      </div>
+                    </div>
+
+                    <div uib-accordion-group class="panel-default" is-open="status.tab6">
+                      <uib-accordion-heading>
+                        <a ng-class="{'accordion-selected': status.tab6}">{{ "house_loan_interest" | translate }}</a><i class="pull-right fa" ng-class="{'fa-angle-down': status.tab6, 'fa-angle-right': !status.tab6}"></i>
+                      </uib-accordion-heading>
+                      <div class="col-md-6">
+                        <div class="form-group">
+                          <label for="house_loan_interest">{{ "house_loan_interest" | translate }}</label> <i class="fa fa-info-circle" popover-trigger="'mouseenter'" uib-popover-html="house_loan_interest"></i>
+                          <input step="any" type="number" string-to-number
+                          class="form-control numberic" id="house_loan_interest" ng-model="employee.datas.tax_reduction.house_loan_interest" min="0" max="100000" ng-blur="check_not_null('house_loan_interest')" />
+                        </div>
+                      </div>
+                    </div>
+
+                    <div uib-accordion-group class="panel-default" is-open="status.tab7">
+                      <uib-accordion-heading>
+                        <a ng-class="{'accordion-selected': status.tab7}">{{ "other_benefit" | translate }}</a><i class="pull-right fa" ng-class="{'fa-angle-down': status.tab7, 'fa-angle-right': !status.tab7}"></i>
+                      </uib-accordion-heading>
+                      <div class="col-md-6">
+                        <div class="form-group">
+                          <label for="father_insurance">{{ "father_insurance" | translate }}</label> <i class="fa fa-info-circle" popover-trigger="'mouseenter'" uib-popover-html="parent_insurance"></i>
+                          <input step="any" type="number" string-to-number
+                          class="form-control numberic" id="father_insurance" ng-model="employee.datas.tax_reduction.father_insurance" min="0" max="15000" ng-blur="check_not_null('father_insurance')" />
+                          <label for="mother_insurance">{{ "mother_insurance" | translate }}</label> <i class="fa fa-info-circle" popover-trigger="'mouseenter'" uib-popover-html="parent_insurance"></i>
+                          <input step="any" type="number" string-to-number
+                          class="form-control numberic" id="mother_insurance" ng-model="employee.datas.tax_reduction.mother_insurance" min="0" max="15000" ng-blur="check_not_null('mother_insurance')" />
+                          <label for="spouse_father_insurance">{{ "spouse_father_insurance" | translate }}</label> <i class="fa fa-info-circle" popover-trigger="'mouseenter'" uib-popover-html="parent_insurance"></i>
+                          <input step="any" type="number" string-to-number
+                          class="form-control numberic" id="spouse_father_insurance" ng-model="employee.datas.tax_reduction.spouse_father_insurance" min="0" max="15000" ng-blur="check_not_null('spouse_father_insurance')" />
+                          <label for="spouse_mother_insurance">{{ "spouse_mother_insurance" | translate }}</label> <i class="fa fa-info-circle" popover-trigger="'mouseenter'" uib-popover-html="parent_insurance"></i>
+                          <input step="any" type="number" string-to-number
+                          class="form-control numberic" id="spouse_mother_insurance" ng-model="employee.datas.tax_reduction.spouse_mother_insurance" min="0" max="15000" ng-blur="check_not_null('spouse_mother_insurance')" />
+                          <label for="double_donation">{{ "double_donation" | translate }}</label> <i class="fa fa-info-circle" popover-trigger="'mouseenter'" uib-popover-html="double_donation"></i>
+                          <input step="any" type="number" string-to-number
+                          class="form-control numberic" id="double_donation" ng-model="employee.datas.tax_reduction.double_donation" min="0" ng-blur="check_not_null('double_donation')" />
+                          <label for="donation">{{ "donation" | translate }}</label> <i class="fa fa-info-circle" popover-trigger="'mouseenter'" uib-popover-html="donation"></i>
+                          <input step="any" type="number" string-to-number
+                          class="form-control numberic" id="donation" ng-model="employee.datas.tax_reduction.donation" min="0" ng-blur="check_not_null('donation')" />
+                          <label for="other">{{ "other_deduction" | translate }}</label> <i class="fa fa-info-circle" popover-trigger="'mouseenter'" uib-popover-html="other"></i>
+                          <input step="any" type="number" string-to-number
+                          class="form-control numberic" id="other" ng-model="employee.datas.tax_reduction.other" min="0" ng-blur="check_not_null('other')" />
+                        </div>
+                      </div>
+                    </div>
+                  </uib-accordion>
+                </div>
+              </div>
+
+              <div ng-class="{ 'in active' : employee.activeTabPrivate === 'family' }" class="tab-pane fade">
+              </div>
+
+              <div ng-class="{ 'in active' : employee.activeTabPrivate === 'education' }" class="tab-pane fade">
+              </div>
+
+              <div ng-class="{ 'in active' : employee.activeTabPrivate === 'skill' }" class="tab-pane fade">
+                <employee-skill employee="employee"></employee-skill>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div ng-class="{ 'in active' : employee.activeTab === 'salary' }" id="salaryInfo" class="tab-pane fade">
+        <div class="paragraph cyan tab-content salary" ng-show="employee.isEdit && employee.hasPayroll">
+          <div ng-switch="employee.effectiveDatesDisplay.length > 0">
+            <div ng-switch-when="true">
+              <div class="dropdown">
+                <h3 id="month-list" data-toggle="dropdown">
+                  <span ng-bind="employee.currentDateString" role="button"></span>
+                  <span class="fa fa-angle-down"></span>
+                </h3>
+                <ul class="dropdown-menu" aria-labelledby="month-list">
+                  <li ng-repeat="effectiveDate in employee.effectiveDatesDisplay">
+                    <a ng-click="employee.switchMonth(effectiveDate)">
+                      {{ effectiveDate["date_string"] }}
+                    </a>
+                  </li>
+                </ul>
+              </div>
+            </div>
+            <div ng-switch-default>
+              <h3 data-toggle="dropdown">
+                <span ng-bind="employee.currentDateString" ></span>
+              </h3>
+            </div>
+          </div>
+          <div class="row">
+            <div class="col-md-4"><h3>{{ "income_list" | translate }}</h3></div>
+            <div class="col-md-4"><h3>{{ "outcome_list" | translate }}</h3></div>
+            <div class="col-md-4"><h3>{{ "total" | translate }}</h3></div>
+          </div>
+          <div class="space20"></div>
+          <div class="row">
+            <div class="col-md-4">
+              <div class="form-group">
+                <label for="salary">{{ "current_payroll" | translate }}</label>
+                <input step="0.01" ng-disabled="employee.payroll_closed" type="number" class="form-control text-green numberic" id="salary" ng-model="employee.datas.payroll.salary" ng-blur="employee.calTotal(); employee.changeSalary()">
+              </div>
+            </div>
+            <div class="col-md-4">
+              <div class="form-group">
+                <label for="absence">{{ "absence" | translate }}</label>
+                <input step="0.01" ng-disabled="employee.payroll_closed" type="number" class="form-control text-red numberic" id="absence" ng-model="employee.datas.payroll.absence" ng-blur="employee.calTotal()">
+              </div>
+            </div>
+            <div class="col-md-4">
+              <div class="form-group">
+                <label for="total">{{ "net_salary" | translate }}</label>
+                <div class="form-control text-green numberic">{{ employee.total.toFixed(2) }}</div>
+              </div>
+            </div>
+          </div>
+          <div class="row">
+            <div class="col-md-4">
+              <div class="form-group">
+                <label for="ot">{{ "ot" | translate }}</label>
+                <input step="0.01" ng-disabled="employee.payroll_closed" type="number" class="form-control text-green numberic" id="ot" ng-model="employee.datas.payroll.ot" ng-blur="employee.calTotal()">
+              </div>
+            </div>
+            <div class="col-md-4">
+              <div class="form-group">
+                <label for="late">{{ "late" | translate }}</label>
+                <input step="0.01" ng-disabled="employee.payroll_closed" type="number" class="form-control text-red numberic" id="late" ng-model="employee.datas.payroll.late" ng-blur="employee.calTotal()">
+              </div>
+            </div>
+            <div class="col-md-4">
+              <div class="row">
+                <div class="col-md-8">
+                  <button type="button" class="btn btn-custom btn-black" data-toggle="modal" data-target="#bird-eye" ng-click="employee.getAllPayroll(employee.empId)">
+                    {{ "payroll_history" | translate }}
+                  </button>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="row">
+            <div class="col-md-4">
+              <div class="form-group">
+                <label for="position_allowance">{{ "position_allowance" | translate }}</label>
+                <input step="0.01" ng-disabled="employee.payroll_closed" type="number" class="form-control text-green numberic" id="position_allowance" ng-model="employee.datas.payroll.position_allowance" ng-blur="employee.calTotal()">
+              </div>
+            </div>
+            <div class="col-md-4">
+              <div class="form-group">
+                <label for="tax">{{employee.datas.employee.employee_type=='ลูกจ้างประจำ' ?  "income_tax": "withholding_tax" | translate }}</label>
+                <input class="form-control text-red numberic" id="tax" ng-model="employee.datas.payroll.tax" disabled>
+              </div>
+            </div>
+          </div>
+          <div class="row">
+            <div class="col-md-4">
+              <div class="form-group">
+                <label for="allowance">{{ "employee_allowance" | translate }}</label>
+                <input step="0.01" ng-disabled="employee.payroll_closed" type="number" class="form-control text-green numberic" id="allowance" ng-model="employee.datas.payroll.allowance" ng-blur="employee.calTotal()">
+              </div>
+            </div>
+            <div class="col-md-4">
+              <div class="form-group">
+                <label for="social_insurance">{{ "social_insurance" | translate }}</label>
+                <input class="form-control text-red numberic" id="social_insurance" ng-model="employee.datas.payroll.social_insurance" disabled>
+              </div>
+            </div>
+          </div>
+          <div class="row">
+            <div class="col-md-4">
+              <div class="form-group">
+                <label for="attendace_bonus">{{ "attendance_bonus" | translate }}</label>
+                <input step="0.01" ng-disabled="employee.payroll_closed" type="number" class="form-control text-green numberic" id="attendace_bonus" ng-model="employee.datas.payroll.attendance_bonus" ng-blur="employee.calTotal()">
+              </div>
+            </div>
+            <div class="col-md-4">
+              <div class="form-group">
+                <label for="pvf">{{ "employee_pvf" | translate }}</label>
+                <input class="form-control text-red numberic" id="pvf" ng-model="employee.datas.payroll.pvf" disabled>
+              </div>
+            </div>
+          </div>
+          <div class="row">
+            <div class="col-md-4">
+              <div class="form-group">
+                <label for="bonus">{{ "bonus" | translate }}</label>
+                <input step="0.01" ng-disabled="employee.payroll_closed" type="number" class="form-control text-green numberic" id="bonus" ng-model="employee.datas.payroll.bonus" ng-blur="employee.calTotal()">
+              </div>
+            </div>
+            <div class="col-md-4">
+              <div class="form-group">
+                <label for="advance_payment">{{ "advance_payment" | translate }}</label>
+                <input step="0.01" ng-disabled="employee.payroll_closed" type="number" class="form-control text-red numberic" id="advance_payment" ng-model="employee.datas.payroll.advance_payment" ng-blur="employee.calTotal()">
+              </div>
+            </div>
+          </div>
+          <div class="row">
+            <div class="col-md-4">
+              <div class="form-group">
+                <label for="extra_etc">{{ "employee_extra_etc" | translate }}</label>
+                <input step="0.01" ng-disabled="employee.payroll_closed" type="number" class="form-control text-green numberic" id="extra_etc" ng-model="employee.datas.payroll.extra_etc" ng-blur="employee.calTotal()">
+              </div>
+            </div>
+            <div class="col-md-4">
+              <div class="form-group">
+                <label for="fee_etc">{{ "employee_fee_etc" | translate }}</label>
+                <input step="0.01" ng-disabled="employee.payroll_closed" type="number" class="form-control text-red numberic" id="fee_etc" ng-model="employee.datas.payroll.fee_etc" ng-blur="employee.calTotal()">
+              </div>
+            </div>
+          </div>
+          <div class="row">
+            <div class="col-md-8 note-employees">
+              <label for="comment">{{ "remind_note" | translate }}</label>
+              <textarea id="comment" ng-hide="employee.payroll_closed" rows="5" ng-model="employee.datas.payroll.note" contenteditable="false" redactor></textarea>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div ng-class="{ 'in active' : employee.activeTab === 'inventory' }" id="inventoryInfo" class="tab-pane fade">
+        <div class="paragraph cyan tab-content inventory">
+          <div class="row mt-50" >
+            <table class="table" id="employee-inventory-table">
+              <thead>
+                <tr>
+                  <th data-field="invetory_id">#</th>
+                  <th data-field="item_name">Device</th>
+                  <th data-field="serial_number">Serial Number</th>
+                  <th data-field="model">Model</th>
+                  <th data-field="description">Description</th>
+                  <th data-field="status">status</th>
+                  <th data-field="search"> <i class="fa fa-search-plus color-blue"> </th>
+                </tr>
+              </thead>
+            </table>
+              <div class="row row-centered for-display">
+                <div class="col-centered">
+                  <ul uib-pagination ng-change="employee.pageRequestChanged()" total-items="employee.requestTotalItems" ng-model="employee.requestCurrentPage" max-size="employee.paginateButtonMaxSize" class="pagination-md" num-pages="numPages" previous-text="‹" next-text="›" boundary-link-numbers='true' rotate='false'></ul>
+                </div>
+              </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="footer-menu row">
+      <div class="col-md-4">
+        <a target="_blank" ng-show="employee.isEdit && employee.hasPayroll && employee.payroll_closed" class="btn btn-custom btn-orange" ng-href="/employees/slips.pdf?payroll_ids%5B%5D={{ employee.datas.payroll.id }}">
+          <i class="fa fa-print"></i> {{ "print_payroll_slip" | translate }}
+        </a>
+      </div>
+
+      <div class="col-md-8">
+        <div ng-if="employee.datas.employee.deleted_at != nil">
+          <div ng-show="employee.isEdit" class="col-md-3 pull-right">
+            <button type="button" class="btn btn-restore" ng-click="employee.restoreEmployees(employee.empId)">{{ "rollback" | translate }}</button>
+          </div>
+        </div>
+
+        <div ng-if="employee.datas.employee.deleted_at == nil">
+          <div ng-show="employee.isEdit" class="pull-right text-right padding-left10">
+            <button type="button" class="btn btn-custom btn-red" ng-show="employee.showDeleteButton" ng-click="employee.archiveEmployee(employee.empId)"><i class="fa fa-trash"></i> {{ "delete" | translate }}</button>
+          </div>
+        </div>
+
+        <div class="pull-right text-right padding-left10">
+          <button type="button" class="btn btn-custom btn-gray" ng-show="employee.showCancelButton" ng-click="employee.cancel()">{{ "cancel" | translate }}</button>
+        </div>
+
+        <div class="pull-right text-right padding-left10">
+          <button type="submit" class="btn btn-custom btn-green" ng-show="employee.showSaveButton" ng-disabled="employee.isSubmit">{{ "save" | translate }}</button>
+        </div>
+      </div>
+    </div>
+  </form>
+</div>
+
+<div class="modal fade " id="bird-eye" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content cyan">
+      <div class="modal-header">
+        <i class="fa fa-close fa-2x pull-right" data-dismiss="modal"></i>
+        <h3 class="modal-title" id="myModalLabel">{{ "payroll_history" | translate }}</h3>
+      </div>
+      <div class="modal-body">
+        <table id="payroll-history-table" class="table text-right">
+          <thead>
+            <th width="40%">{{ "month" | translate }}</th>
+            <th class="text-center" width="20%">{{ "salary" | translate }}</th>
+            <th class="text-center" width="20%">{{ "income_list" | translate }}</th>
+            <th class="text-center" width="20%">{{ "outcome_list" | translate }}</th>
+          </thead>
+          <tbody>
+            <tr ng-repeat="payroll in employee.employeePayrolls">
+              <td width="40%" class="text-left">{{payroll.date}}</td>
+              <td width="20%" class="numberic">{{payroll.salary | currency: ""}}</td>
+              <td width="20%" class="text-green numberic">{{payroll.extra_pay | currency: ""}}</td>
+              <td width="20%" class="text-red numberic">{{payroll.extra_fee | currency: ""}}</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+      <div class="modal-footer">
+        <div class="row">
+          <div class="col-md-4 col-md-offset-4">
+            <button type="button" class="btn btn-block btn-custom btn-gray" data-dismiss="modal">{{ "close" | translate }}</button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

@@ -1,0 +1,221 @@
+(function() {
+  'use strict';
+  angular.module('somsri.payroll.main', [
+  ])
+  .controller('mainCtrl', ['$rootScope', '$state', '$scope', '$uibModal', '$filter', '$http', '$window', '$q', function($rootScope, $state, $scope, $uibModal, $filter, $http, $window, $q) {
+
+    function checkAbility(model, callback){
+      if($rootScope.abilities.manage && $rootScope.abilities.manage.all){
+        callback();
+      } else if ($rootScope.abilities.manage.employee_me) { 
+        callback();
+      }else if($rootScope.abilities.manage && $rootScope.abilities.manage[model]){
+        callback();
+      }else{
+        $state.go('home');
+      }
+    }
+
+    $rootScope.openConfirmationModal = function(message, success, dismiss) {
+      $scope.message = message;
+      $uibModal.open({
+        animation: true,
+        backdrop: 'static',
+        keyboard: false,
+        scope: $scope,
+        templateUrl: "<%= asset_path('payroll/angular/components/modal/confirm/confirmModalView.html') %>",
+        controller: 'confirmModalCtrl as confirm',
+        size: 'md',
+        resolve: {
+          resources: ['$ocLazyLoad', 'ASSETS', function($ocLazyLoad, ASSETS) {
+            return $ocLazyLoad.load([
+              ASSETS.somsri.payroll.confirm_modal
+            ]);
+          }]
+        }
+      }).result.then(function (isConfirm) {
+        if (isConfirm) {
+          if(success){ success() }
+        }else{
+          if(dismiss){ dismiss() }
+        }
+      });
+    }
+
+    $rootScope.openDeleteModal = function(message, success, dismiss) {
+      $scope.message = message;
+      $uibModal.open({
+        animation: true,
+        backdrop: 'static',
+        keyboard: false,
+        scope: $scope,
+        templateUrl: "<%= asset_path('payroll/angular/components/modal/delete/deleteModalView.html') %>",
+        controller: 'deleteModalCtrl as confirm',
+        size: 'md',
+        resolve: {
+          resources: ['$ocLazyLoad', 'ASSETS', function($ocLazyLoad, ASSETS) {
+            return $ocLazyLoad.load([
+              ASSETS.somsri.payroll.delete_modal
+            ]);
+          }]
+        }
+      }).result.then(function (isConfirm) {
+        if (isConfirm) {
+          if(success){ success() }
+        }else{
+          if(dismiss){ dismiss() }
+        }
+      });
+    }
+
+    $rootScope.openRepairModal = function(message, success, dismiss) {
+      $scope.message = message;
+      $uibModal.open({
+        animation: true,
+        backdrop: 'static',
+        keyboard: false,
+        scope: $scope,
+        templateUrl: "<%= asset_path('payroll/angular/components/modal/repair/repairModalView.html') %>",
+        controller: 'repairModalCtrl as inventory',
+        size: 'md',
+        resolve: {
+          resources: ['$ocLazyLoad', 'ASSETS', function($ocLazyLoad, ASSETS) {
+            return $ocLazyLoad.load([
+              ASSETS.somsri.payroll.repair_modal
+            ]);
+          }]
+        }
+      }).result.then(function (isConfirm) {
+        if (isConfirm) {
+          if(success){ success() }
+        }else{
+          if(dismiss){ dismiss() }
+        }
+      });
+    }
+
+    $rootScope.openWarningModal = function(message) {
+      $scope.message = message;
+      $uibModal.open({
+        animation: true,
+        backdrop: 'static',
+        keyboard: false,
+        scope: $scope,
+        templateUrl: "<%= asset_path('payroll/angular/components/modal/warning/warningModalView.html') %>",
+        controller: 'warningModalCtrl as warning',
+        size: 'md',
+        resolve: {
+          resources: ['$ocLazyLoad', 'ASSETS', function($ocLazyLoad, ASSETS) {
+            return $ocLazyLoad.load([
+              ASSETS.somsri.payroll.warning_modal
+            ]);
+          }]
+        }
+      });
+    }
+
+    var getSiteConfigCanceler = $q.defer()
+    $rootScope.getSiteConfig = function(name) {
+      getSiteConfigCanceler.resolve()
+      getSiteConfigCanceler = $q.defer()
+      return $http.get('/site_configs', {
+        timeout: getSiteConfigCanceler.promise,
+        params: {
+          name: name
+        }
+      });
+    }
+
+    $rootScope.loadAndAuthorizeResource = function(model, callback) {
+      if($rootScope.abilities && $rootScope.abilities.length > 0){
+        checkAbility(model, callback);
+      }else{
+        // load ability
+        $http.get('/abilities').then(function(resp) {
+          $rootScope.abilities = [];
+          if (resp.data.length > 0) {
+            $rootScope.abilities = resp.data[0];
+            checkAbility(model, callback);
+          }else{
+            $state.go('home');
+          }
+        });
+      }
+    };
+
+    $rootScope.openReport = function() {
+      $state.go('report')
+    };
+
+    $rootScope.openRoot = function() {
+      $window.location.href = "/";
+    };
+    $('body').addClass('somsri-payroll');
+
+    $rootScope.openEmployees = function () {
+      $state.go('employees')
+    };
+
+    $rootScope.openPayroll = function (effectiveDate) {
+      if(effectiveDate){
+        if($state.is('payroll', { effective_date: effectiveDate })){
+          $window.location.reload();
+        }else{
+          $state.go('payroll',{ effective_date: effectiveDate });
+        }
+      }else{
+        if($state.is('payroll')){
+          $window.location.reload();
+        }else{
+          $state.go('payroll');
+        }
+      }
+    };
+
+    $rootScope.openEmployeeDetails = function (id) {
+      $state.go('employee_details',{ id: id });
+    };
+
+    $rootScope.openMyProfile = function() {
+      $state.go('employee_me')
+    }
+
+    $rootScope.openAddInventoryRequest = function (id) {
+      $state.go('add_inventory_request',{ id: id });
+    };
+
+    $rootScope.openInventoryDetails = function(id, inventory_id) {
+      $state.go('employee_inventory_details',{ 
+        id: id,
+        inventory_id: inventory_id 
+      });
+    }
+
+    $rootScope.openConfirmationModal = function (message, success, dismiss) {
+      $scope.message = message;
+      $uibModal.open({
+        animation: true,
+        backdrop: 'static',
+        keyboard: false,
+        scope: $scope,
+        templateUrl: "<%= asset_path('payroll/angular/components/modal/confirm/confirmModalView.html') %>",
+        controller: 'confirmModalCtrl as confirm',
+        size: 'md',
+        resolve: {
+          resources: ['$ocLazyLoad', 'ASSETS', function($ocLazyLoad, ASSETS) {
+            return $ocLazyLoad.load([
+              ASSETS.somsri.payroll.confirm_modal
+            ]);
+          }]
+        }
+      }).result.then(function (isConfirm) {
+        if (isConfirm) {
+          if(success){ success() }
+        }else{
+          if(dismiss){ dismiss() }
+        }
+      });
+    }
+
+  }]);
+})();

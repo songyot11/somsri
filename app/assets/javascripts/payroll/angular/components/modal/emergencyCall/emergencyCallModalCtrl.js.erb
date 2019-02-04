@@ -1,0 +1,73 @@
+(function() {
+  'use strict';
+  angular.module('somsri.payroll.emergency_call_modal', [
+  ])
+  .controller('emergencyCallModalCtrl', ['$uibModalInstance', '$state', '$log', 'individualsService', '$scope', '$rootScope', function($uibModalInstance, $state, $log, service, $scope, $rootScope) {
+    var ctrl = this;
+    $rootScope.loadAndAuthorizeResource("employee", function(){
+
+      ctrl.datas = {};
+      ctrl.datas.prefix = 'Mr.';
+      var params = $scope.addEmergencyCallModalParams
+
+      function initForPrefixOther(){
+        var prefixs = ['Mr.', 'Ms.', 'Miss.']
+        var thai_prefixs = ['นาย', 'นาง', 'นางสาว']
+        if(ctrl.datas.prefix && prefixs.indexOf(ctrl.datas.prefix) < 0){
+          ctrl.otherPrefix = ctrl.datas.prefix
+        }else if(ctrl.datas.prefix_thai && thai_prefixs.indexOf(ctrl.datas.prefix_thai) < 0){
+          ctrl.otherPrefix = ctrl.datas.prefix
+        }else{
+          ctrl.otherPrefix = ""
+        }
+      }
+
+      function setPrefixThai(){
+        if(ctrl.datas.prefix == 'Mr.'){ ctrl.datas.prefix_thai = 'นาย'; }
+        else if(ctrl.datas.prefix == 'Ms.'){ ctrl.datas.prefix_thai = 'นาง'; }
+        else if(ctrl.datas.prefix == 'Miss.'){ ctrl.datas.prefix_thai = 'นางสาว'; }
+        else if(ctrl.datas.prefix){ ctrl.datas.prefix_thai = ctrl.datas.prefix; }
+      }
+
+      function setPrefix(){
+        if(ctrl.datas.prefix_thai = 'นาย'){ ctrl.datas.prefix == 'Mr.'; }
+        else if(ctrl.datas.prefix_thai == 'นาง'){ ctrl.datas.prefix = 'Ms.'; }
+        else if(ctrl.datas.prefix_thai == 'นางสาว'){ ctrl.datas.prefix = 'Miss.'; }
+        else if(ctrl.datas.prefix_thai){ ctrl.datas.prefix = ctrl.datas.prefix_thai; }
+      }
+
+      ctrl.submit = function(){
+        setPrefixThai();
+        ctrl.datas.emergency_call_id = params.employeeId;
+
+        if(params.individual){
+          service.editIndividual({ individual: ctrl.datas }).then(function(res) {
+            $uibModalInstance.close(res.data);
+          },function(res) {
+          });
+        }else{
+          service.createIndividual({ individual: ctrl.datas }).then(function(res) {
+            $uibModalInstance.close(res.data);
+          },function(res) {
+          });
+        }
+      }
+
+      ctrl.cancel = function () {
+        $uibModalInstance.close();
+      };
+
+      ctrl.requireOtherPrefix = function(required){
+        $("#otherPrefix").prop('required', required);
+      }
+
+      if(params.individual){
+        ctrl.datas = params.individual
+        if(!ctrl.datas.prefix){
+          setPrefix();
+        }
+        initForPrefixOther();
+      }
+    });
+  }]);
+})();

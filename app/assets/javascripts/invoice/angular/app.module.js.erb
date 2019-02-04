@@ -1,0 +1,343 @@
+(function() {
+  'use strict';
+  var appInvoice = angular.module('somsri.invoice', [
+    'somsri.invoice.assets',
+    'somsri.ng.key.enter',
+    'oc.lazyLoad',
+    'ui.router.stateHelper',
+    'ui.bootstrap',
+    'somsri.invoice.filters',
+    'somsri.invoice.main',
+    'angularMoment',
+    'ui.utils.masks',
+    'ui.bootstrap.fontawesome',
+    'ngSanitize',
+    'ngCsv',
+    'somsri.translate'
+  ]);
+
+  appInvoice.constant('DEFAULT_LOGO', 'images/metaware_logo.png');
+
+  // Service for accessing local storage
+  appInvoice.service('LocalStorage', [function() {
+    var Service = {};
+
+    // Returns true if there is a logo stored
+    var hasLogo = function() {
+      return !!localStorage['logo'];
+    };
+
+    // Returns a stored logo (false if none is stored)
+    Service.getLogo = function() {
+      if (hasLogo()) {
+        return localStorage['logo'];
+      } else {
+        return false;
+      }
+    };
+
+    Service.setLogo = function(logo) {
+      localStorage['logo'] = logo;
+    };
+
+    // Checks to see if an invoice is stored
+    var hasInvoice = function() {
+        return !(localStorage['invoice'] == '' || localStorage['invoice'] == null);
+    };
+
+    // Returns a stored invoice (false if none is stored)
+    Service.getInvoice = function() {
+      if (hasInvoice()) {
+        return JSON.parse(localStorage['invoice']);
+      } else {
+        return false;
+      }
+    };
+
+    Service.setInvoice = function(invoice) {
+      localStorage['invoice'] = JSON.stringify(invoice);
+    };
+
+    // Clears a stored logo
+    Service.clearLogo = function() {
+      localStorage['logo'] = '';
+    };
+
+    // Clears a stored invoice
+    Service.clearinvoice = function() {
+      localStorage['invoice'] = '';
+    };
+
+    // Clears all local storage
+    Service.clear = function() {
+      localStorage['invoice'] = '';
+      Service.clearLogo();
+    };
+
+    return Service;
+
+  }]);
+
+  appInvoice.service('Currency', [function(){
+      var service = {};
+
+      service.all = function() {
+        return [
+          {
+            name: 'British Pound (£)',
+            symbol: '£'
+          },
+          {
+            name: 'US Dollar ($)',
+            symbol: '$'
+          }
+        ]
+      }
+
+      return service;
+
+  }]);
+
+  appInvoice.config(['stateHelperProvider', 'ASSETS', '$urlRouterProvider', '$httpProvider', function(stateHelperProvider, ASSETS, $urlRouterProvider, $httpProvider) {
+
+    // Default as JSON Format
+    $httpProvider.defaults.headers.post['Accept'] = 'application/json, text/javascript';
+    $httpProvider.defaults.headers.post['Content-Type'] = 'application/json; charset=utf-8';
+    $httpProvider.defaults.headers.common['Accept'] = 'application/json, text/javascript';
+    $httpProvider.defaults.headers.common['Content-Type'] = 'application/json; charset=utf-8';
+
+    stateHelperProvider.
+      state({
+        url: '/',
+        name: 'menu',
+        templateUrl: "<%= asset_path('invoice/angular/components/menu/menuView.html') %>",
+        controller: 'menuCtrl as menu',
+        resolve: {
+          resources: ['$ocLazyLoad', function($ocLazyLoad) {
+            return $ocLazyLoad.load([
+              ASSETS.somsri.invoice.menu
+            ]);
+          }]
+        }
+      }).
+      state({
+        url: '/invoice',
+        name: 'invoice',
+        templateUrl: "<%= asset_path('invoice/angular/components/invoice/invoiceView.html') %>",
+        controller: 'invoiceCtrl as invoice',
+        resolve: {
+          resources: ['$ocLazyLoad', function($ocLazyLoad) {
+            return $ocLazyLoad.load([
+              ASSETS.somsri.invoice.invoice
+            ]);
+          }]
+        }
+      }).
+      state({
+        url: '/report',
+        name: 'report',
+        templateUrl: "<%= asset_path('invoice/angular/components/report/reportView.html') %>",
+        controller: 'reportCtrl as report',
+        resolve: {
+          resources: ['$ocLazyLoad', function($ocLazyLoad) {
+            return $ocLazyLoad.load([
+              ASSETS.somsri.invoice.report
+            ]);
+          }]
+        }
+      }).
+      state({
+        url: '/daily_report',
+        name: 'daily_report',
+        templateUrl: "<%= asset_path('invoice/angular/components/dailyReport/dailyReportView.html') %>",
+        controller: 'dailyReportCtrl as dailyReport',
+        resolve: {
+          resources: ['$ocLazyLoad', function($ocLazyLoad) {
+            return $ocLazyLoad.load([
+              ASSETS.somsri.invoice.daily_report
+            ]);
+          }]
+        }
+      }).
+      state({
+        url: '/student_report',
+        name: 'studentReport',
+        templateUrl: "<%= asset_path('invoice/angular/components/report/studentReportView.html') %>",
+        controller: 'studentReportCtrl as studentReport',
+        resolve: {
+          resources: ['$ocLazyLoad', function($ocLazyLoad) {
+            return $ocLazyLoad.load([
+              ASSETS.somsri.invoice.studentReport
+            ]);
+          }]
+        }
+      }).
+      state({
+        url: '/grouping_report',
+        name: 'grouping_report',
+        templateUrl: "<%= asset_path('invoice/angular/components/report/grouping/groupingReportView.html') %>",
+        controller: 'groupingReportCtrl as groupingReport',
+        resolve: {
+          resources: ['$ocLazyLoad', function($ocLazyLoad) {
+            return $ocLazyLoad.load([
+              ASSETS.somsri.invoice.groupingReport
+            ]);
+          }]
+        }
+      }).
+      state({
+        url: '/grouping_report2',
+        name: 'grouping_report2',
+        templateUrl: "<%= asset_path('invoice/angular/components/report/grouping2/groupingReport2View.html') %>",
+        controller: 'groupingReport2Ctrl as groupingReport2',
+        resolve: {
+          resources: ['$ocLazyLoad', function($ocLazyLoad) {
+            return $ocLazyLoad.load([
+              ASSETS.somsri.invoice.groupingReport2
+            ]);
+          }]
+        }
+      }).
+      state({
+        url: '/daily_report/:id',
+        name: 'daily_report_preview',
+        templateUrl: "<%= asset_path('invoice/angular/components/dailyReport/preview/previewView.html') %>",
+        controller: 'dailyReportPreviewCtrl as dailyReportPreview',
+        resolve: {
+          resources: ['$ocLazyLoad', function($ocLazyLoad) {
+            return $ocLazyLoad.load([
+              ASSETS.somsri.invoice.daily_report_preview
+            ]);
+          }]
+        }
+      }).
+      state({
+        url: '/invoice/:id/slip?page',
+        name: 'invoice_slip',
+        templateUrl: "<%= asset_path('invoice/angular/components/invoice/slip/invoiceSlipView.html') %>",
+        controller: 'invoiceSlipCtrl as slip',
+        resolve: {
+          resources: ['$ocLazyLoad', function($ocLazyLoad) {
+            return $ocLazyLoad.load([
+              ASSETS.somsri.invoice.invoice_slip
+            ]);
+          }]
+        }
+      }).
+      state({
+        url: '/invoice_report',
+        name: 'invoice_report',
+        templateUrl: "<%= asset_path('invoice/angular/components/invoiceReport/invoiceReportView.html') %>",
+        controller: 'invoiceReportCtrl as invoiceReport',
+        resolve: {
+          resources: ['$ocLazyLoad', function($ocLazyLoad) {
+            return $ocLazyLoad.load([
+              ASSETS.somsri.invoice.invoice_report
+            ]);
+          }]
+        }
+      }).
+      state({
+        url: '/alumni',
+        name: 'alumni',
+        templateUrl: "<%= asset_path('invoice/angular/components/alumni/alumniView.html') %>",
+        controller: 'alumniCtrl as alumni',
+        resolve: {
+          resources: ['$ocLazyLoad', function($ocLazyLoad) {
+            return $ocLazyLoad.load([
+              ASSETS.somsri.invoice.alumni
+            ]);
+          }]
+        }
+      });
+
+    $urlRouterProvider.when("", "/");
+  }]);
+
+  appInvoice.filter('numberFixedLen', function () {
+    return function(a,b){
+      return(1e4+""+a).slice(-b);
+    };
+  });
+
+  appInvoice.filter('thaiBaht', function () {
+    return function(Number){
+      //ตัดสิ่งที่ไม่ต้องการทิ้งลงโถส้วม
+      if(!Number){
+        return "";
+      }
+      for (var i = 0; Number && i < Number.length; i++) {
+          Number = Number.replace(",", ""); //ไม่ต้องการเครื่องหมายคอมมาร์
+          Number = Number.replace(" ", ""); //ไม่ต้องการช่องว่าง
+          Number = Number.replace("บาท", ""); //ไม่ต้องการตัวหนังสือ บาท
+          Number = Number.replace("฿", ""); //ไม่ต้องการสัญลักษณ์สกุลเงินบาท
+      }
+      //สร้างอะเรย์เก็บค่าที่ต้องการใช้เอาไว้
+      var TxtNumArr = new Array("ศูนย์", "หนึ่ง", "สอง", "สาม", "สี่", "ห้า", "หก", "เจ็ด", "แปด", "เก้า", "สิบ");
+      var TxtDigitArr = new Array("", "สิบ", "ร้อย", "พัน", "หมื่น", "แสน", "ล้าน");
+      var BahtText = "";
+      //ตรวจสอบดูซะหน่อยว่าใช่ตัวเลขที่ถูกต้องหรือเปล่า ด้วย isNaN == true ถ้าเป็นข้อความ == false ถ้าเป็นตัวเลข
+      if (isNaN(Number)) {
+          return "";
+      } else {
+          //ตรวสอบอีกสักครั้งว่าตัวเลขมากเกินความต้องการหรือเปล่า
+          if ((Number - 0) > 9999999.9999) {
+              return "ข้อมูลนำเข้าเกินขอบเขตที่ตั้งไว้";
+          } else {
+              //พรากทศนิยม กับจำนวนเต็มออกจากกัน (บาปหรือเปล่าหนอเรา พรากคู่เขา)
+              Number = Number.split(".");
+              //ขั้นตอนต่อไปนี้เป็นการประมวลผลดูกันเอาเองครับ แบบว่าขี้เกียจจะจิ้มดีดแล้ว อิอิอิ
+              if (Number.length > 1 && Number[1].length > 0) {
+                  Number[1] = Number[1].substring(0, 2);
+              }
+              var NumberLen = Number[0].length - 0;
+              for (var i = 0; i < NumberLen; i++) {
+                  var tmp = Number[0].substring(i, i + 1) - 0;
+                  if (tmp != 0) {
+                      if ((i == (NumberLen - 1)) && (tmp == 1)) {
+                          BahtText += "เอ็ด";
+                      } else
+                      if ((i == (NumberLen - 2)) && (tmp == 2)) {
+                          BahtText += "ยี่";
+                      } else
+                      if ((i == (NumberLen - 2)) && (tmp == 1)) {
+                          BahtText += "";
+                      } else {
+                          BahtText += TxtNumArr[tmp];
+                      }
+                      BahtText += TxtDigitArr[NumberLen - i - 1];
+                  }
+              }
+              BahtText += "บาท";
+              if ((Number[1] == "0") || (Number[1] == "00")) {
+                  BahtText += "ถ้วน";
+              } else {
+                if(Number.length > 1){
+                  var DecimalLen = Number[1].length - 0;
+                  for (var i = 0; i < DecimalLen; i++) {
+                      var tmp = Number[1].substring(i, i + 1) - 0;
+                      if (tmp != 0) {
+                          if ((i == (DecimalLen - 1)) && (tmp == 1)) {
+                              BahtText += "เอ็ด";
+                          } else
+                          if ((i == (DecimalLen - 2)) && (tmp == 2)) {
+                              BahtText += "ยี่";
+                          } else
+                          if ((i == (DecimalLen - 2)) && (tmp == 1)) {
+                              BahtText += "";
+                          } else {
+                              BahtText += TxtNumArr[tmp];
+                          }
+                          BahtText += TxtDigitArr[DecimalLen - i - 1];
+                      }
+                  }
+                  BahtText += "สตางค์";
+                }
+              }
+              return BahtText;
+          }
+      }
+    };
+  });
+  appInvoice.run();
+})();

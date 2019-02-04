@@ -1,0 +1,58 @@
+<div class="container main-menu main">
+
+      <div class="col-xs-4">
+          <div class="menu-btn create-payment" ng-click="openPayment()">
+              <div class="wraptocenter">
+                  <%= image_tag 'payment.png', class: "" %>
+              </div>
+          </div>
+          <p>{{ 'pay' | translate }}</p>
+      </div>
+
+      <div class="col-xs-4">
+          <div class="menu-btn slip" ng-click="openInvoiceReport()">
+              <div class="wraptocenter">
+                  <%= image_tag 'invoice-icon.png', class: "" %>
+              </div>
+          </div>
+          <p>{{ 'receipt' | translate }}</p>
+      </div>
+
+      <div class="col-xs-4">
+          <div class="menu-btn" ng-click="openDailyReport()">
+              <div class="wraptocenter">
+                  <%= image_tag 'send_money.png', class: "" %>
+              </div>
+          </div>
+          <p>{{ 'delivery_note' | translate }}</p>
+      </div>
+
+      <div class="col-xs-12 free-space"></div>
+
+      <div class="col-xs-4">
+          <div class="menu-btn" ng-click="openStudentReport()">
+              <div class="wraptocenter">
+                  <%= image_tag 'report-invoice.png', class: "" %>
+              </div>
+          </div>
+          <p>{{ 'payment_report' | translate }}</p>
+      </div>
+
+      <div class="col-xs-4">
+          <div class="menu-btn" ng-click="openGroupingReport()">
+              <div class="wraptocenter">
+                  <%= image_tag 'report-invoice.png', class: "" %>
+              </div>
+          </div>
+          <p>{{ 'classification_report' | translate }} 1</p>
+      </div>
+      <div class="col-xs-4">
+          <div class="menu-btn" ng-click="openGroupingReport2()">
+              <div class="wraptocenter">
+                  <%= image_tag 'report-invoice.png', class: "" %>
+              </div>
+          </div>
+          <p>{{ 'classification_report' | translate }} 2</p>
+      </div>
+      
+</div>

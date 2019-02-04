@@ -1,0 +1,51 @@
+(function() {
+  'use strict';
+  angular.module('somsri.main.setting', [
+    ])
+  .controller('settingCtrl', ['$rootScope','settingService','$scope', '$uibModal', function($rootScope, service, $scope, $uibModal) {
+    $rootScope.menu = "ตั้งค่า"
+    var ctrl = this
+    $rootScope.loadAndAuthorizeResource("setting", function(){
+      service.getSetting().then(function(resp) {
+        ctrl.datas = resp.data;
+        ctrl.datas.password = "password";
+      });
+
+      $rootScope.loadAndAuthorizeResource("school", function(){
+        ctrl.canUpdateSchool = true;
+      },function(){});
+
+      ctrl.submit = function(parm){
+        service.saveSetting(parm).then(function(resp) {
+          $rootScope.openRoot();
+        });
+      }
+
+      ctrl.changePassword = function(){
+        $uibModal.open({
+          animation: true,
+          backdrop: 'static',
+          keyboard: false,
+          scope: $scope,
+          templateUrl: "<%= asset_path('main/angular/components/modal/password/passwordModalView.html') %>",
+          controller: 'passwordModalCtrl as password',
+          size: 'md',
+          resolve: {
+            resources: ['$ocLazyLoad', 'ASSETS', function($ocLazyLoad, ASSETS) {
+              return $ocLazyLoad.load([
+                ASSETS.somsri.main.password_modal
+                ]);
+            }]
+          }
+        }).result.then(function (isSuccess) {
+          if (isSuccess) {
+            $rootScope.openRoot();
+          }
+        });
+      }
+
+    });
+
+
+  }]);
+})();

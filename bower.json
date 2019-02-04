@@ -1,0 +1,38 @@
+{
+  "name": "somsri-payroll",
+  "version": "0.0.1",
+  "authors": [
+    "Kraiwut Arayangkura <kraiwut@bananacoding.com>"
+  ],
+  "ignore": [],
+  "dependencies": {
+    "angular": "1.5.9",
+    "angular-ui-router.stateHelper": "",
+    "ocLazyLoad": "",
+    "tether": "",
+    "bootstrap": "3.3.7",
+    "angular-bootstrap": "2.4.0",
+    "angular-moment": "",
+    "angular-xeditable": "",
+    "angular-scrollable-table": "",
+    "moment": "",
+    "angular-input-masks": "",
+    "angular-sanitize": "1.5.9",
+    "ng-csv": "",
+    "ng-file-upload-shim": "",
+    "bootstrap-select": "",
+    "angular-ui-bootstrap-fontawesome": "",
+    "animate.css": "^3.5.2",
+    "rich-autocomplete": "",
+    "angular-translate": "",
+    "angular-translate-loader-url": "",
+    "angular-acl": "",
+    "angular-ui-select": "",
+    "angular-ui-tree": "",
+    "ng-ckeditor": "ng.ckeditor#^2.0.5",
+    "fullcalendar": "^3.9.0"
+  },
+  "resolutions": {
+    "angular": "1.5.9"
+  }
+}

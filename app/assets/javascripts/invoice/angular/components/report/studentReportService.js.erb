@@ -1,0 +1,37 @@
+(function() {
+  'use strict';
+  angular.module('somsri.invoice.studentReport.service', [
+  ])
+  .service('studentReportService', ['$http', '$q', function($http, $q) {
+
+    var getStudentsCanceler = $q.defer()
+    this.getStudents = function(grade_name, page, year, semester, status) {
+      getStudentsCanceler.resolve()
+      getStudentsCanceler = $q.defer()
+      return $http.get('/student_report', { timeout: getStudentsCanceler.promise, params: { grade_select: grade_name, page: page, year_select: year, semester_select: semester, status: status } })
+    }
+
+    var getStudentsWithoutPaginationCanceler = $q.defer()
+    this.getStudentsWithoutPagination = function(grade_name, year, semester, status) {
+      getStudentsWithoutPaginationCanceler.resolve()
+      getStudentsWithoutPaginationCanceler = $q.defer()
+      return $http.get('/student_report', {  timeout: getStudentsWithoutPaginationCanceler.promise, params: { grade_select: grade_name, all: true, year_select: year, semester_select: semester, status: status } })
+    }
+
+    this.getGrades = function() {
+      return $http.get('/grades')
+    }
+
+    this.getClassrooms = function() {
+      return $http.get('/classrooms')
+    }
+
+    this.getYears = function() {
+      return $http.get('/invoice_years')
+    }
+
+    this.getSemesters = function() {
+      return $http.get('/invoice_semesters')
+    }
+  }]);
+})();

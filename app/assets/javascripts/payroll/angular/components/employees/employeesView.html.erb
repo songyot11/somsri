@@ -1,0 +1,27 @@
+<div class="container-fluid employees-list btn-add-employee-list">
+  <div class="row">
+    <div class="col-md-6 icons">
+      <i class="fa fa-th-large employee-view-icon" id="grid"></i>
+      <i class="fa fa-list-ul employee-view-icon" id="list"></i>
+    </div>
+    <div class="col-md-6 text-right">
+      <a href="javascript:void(0)" id="exportTable" class="btn btn-custom btn-blue-sky mr-10">
+        <i class="fa fa-share-square-o" aria-hidden="true"></i> {{ 'export' | translate }}
+      </a>
+
+      <a ng-click="employees.openEmployeeDetails(0)" href="javascript:void(0)" class="btn btn-custom btn-orange pull-right">
+        + {{ "add_new_employee" | translate }}
+      </a>
+    </div>
+  </div>
+</div>
+
+<div class="container-fluid employees-list">
+  <div class="row same-height">
+    <div class="col-md-12">
+      <div class="list-view">
+        <table id="employeesTable"></table>
+      </div>
+    </div>
+  </div>
+</div>

@@ -1,0 +1,51 @@
+<div id="create-member-modal">
+  <div class="modal-header col-xs-12">
+    <h3>{{ 'create_new_classroom' | translate }}</h3>
+  </div>
+  <div class="modal-body" id="validateForm">
+    <div class="row">
+      <div class="col-xs-6">
+        <div class="form-group">
+          <label for="grade-select" class="control-label m-bottom-15">{{ 'select_classroom' | translate }}</label>
+          <div class="dropdown">
+            <span id="grade-select" class="dropdown-label" data-toggle="dropdown">
+              <span ng-bind="create.grade_select.name"></span>
+              <i class="fa fa-angle-down" aria-hidden="true"></i>
+            </span>
+            <ul class="dropdown-menu" aria-labelledby="grade-list">
+              <li ng-repeat="grade in create.grades">
+                <a class="blue-highlight" ng-click="create.switchGrade(grade)">
+                  {{ grade.name }}
+                </a>
+              </li>
+            </ul>
+          </div>
+        </div>
+      </div>
+      <div class="col-xs-6">
+        <div class="form-group">
+          <div class="row">
+            <div class="col-xs-12">
+              <label for="classroom" class="control-label">{{ 'classroom' | translate }}</label>
+            </div>
+          </div>
+          <div class="row">
+            <div class="col-xs-12">
+              <input id="classroom" class="form-control" ng-model="create.classroom_name">
+              <div id="dupplicate-warning" class="color-red"></div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="space30"></div>
+    <div class="row">
+      <div class="col-xs-6">
+        <button ng-click="create.submit()" class="btn btn-custom btn-blue pull-right">{{ 'save' | translate }}</button>
+      </div>
+      <div class="col-xs-6">
+        <button ng-click="create.cancel()" class="btn btn-white">{{ 'cancel' | translate }}</button>
+      </div>
+    </div>
+  </div>
+</div>

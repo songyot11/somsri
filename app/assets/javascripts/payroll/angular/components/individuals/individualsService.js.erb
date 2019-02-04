@@ -1,0 +1,29 @@
+(function() {
+  'use strict';
+
+  angular.module('somsri.payroll.individuals.service', [
+  ])
+  .service('individualsService', ['$http', '$log', function($http, $log) {
+
+    this.createIndividual = function(data) {
+      return $http.post('/individuals', data);
+    };
+
+    this.editIndividual = function(data) {
+      return $http.patch('/individuals/' + data["individual"]["id"], data);
+    };
+
+    this.getIndividuals = function(employee_id) {
+      if(employee_id){
+        return $http.get('/individuals', { params: { employee_id: employee_id } });
+      }
+    };
+
+    this.deleteIndividuals = function(id) {
+      if(id){
+        return $http.delete('/individuals/' + id);
+      }
+    };
+
+  }]);
+})();

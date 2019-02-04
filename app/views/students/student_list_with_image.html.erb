@@ -1,0 +1,55 @@
+<% @results[:dataPerPages].each_with_index do |dataPerPage, page_index| %>
+  <div class="student-list-with-img">
+    <div class="header-list">
+      <div class="row">
+        <div class="col-xs-6">
+          <div class="title"><b><%= t('student_list') %></b></div>
+        </div>
+        <div class="col-xs-6">
+          <div class="pull-right school-year"><b><%= t('school_year') %></b> <%= @results[:school_year] %></div>
+        </div>
+      </div>
+      <hr />
+      <div class="row">
+        <div class="col-xs-12 grade">
+          <div><b><%= t('level') %></b> <%= @filter_grade %> <b><%= t('room') %></b> <%= @filter_class %></div>
+        </div>
+      </div>
+    </div>
+    <div class="body-list">
+      <% dataPerPage.each_with_index do |data, i| %>
+        <% if i%2 == 0 %>
+          <div class="row row-list">
+        <% end %>
+            <div class="col-xs-6 nopadding">
+              <div class="row item-list nopadding">
+                <div class="col-xs-4 nopadding">
+                  <div class="padding-profile">
+                    <% if !data[:img_url].blank? %>
+                      <div class="circular-portrait" style="background-image: url('<%= data[:img_url]%>');"></div>
+                    <% else %>
+                      <div class="img-bg bg-light-gray circle"><i class="fa fa-user icon-default-img" aria-hidden="true"></i></div>
+                    <% end %>
+                  </div>
+                </div>
+                <div class="col-xs-8 nopadding">
+                  <div><%= t('student_number') %> : <%= data[:student_number].blank? ? "-" : data[:student_number] %></div>
+                  <div><%= t('full_name_1') %> : <%= data[:full_name].blank? ? "-" : data[:full_name] %></div>
+                  <div><%= t('nick_name') %> : <%= data[:nickname].blank? ? "-" : data[:nickname] %></div>
+                  <div><%= t('birthday_1') %> : <%= data[:birthdate].blank? ? "-" : data[:birthdate] %></div>
+                  <% data[:parents].each do |parent, i| %>
+                    <div>ชื่อ<%= I18n.t(parent[:relationship_name]) %> : <%= parent[:parent_name] %></div>
+                  <% end %>
+                </div>
+              </div>
+            </div>
+        <% if i%2 == 1 %>
+          </div>
+        <% end %>
+      <% end %>
+    </div>
+    <% if page_index < @results[:dataPerPages].length - 1 %>
+      <div class='pagebreak'></div>
+    <% end %>
+  </div>
+<% end %>

@@ -1,0 +1,825 @@
+(function() {
+  'use strict';
+  angular.module('somsri.payroll.employee_details', [])
+  .controller('employeeDetailsCtrl', ['employeesService', 'studentReportService', '$log', '$state', '$rootScope','$scope', '$uibModal', 'reportService', '$filter', '$location', 'individualsService', 'Upload', 'translateFilter','inventoryRequestService', 
+    function(service, studentReportService, $log, $state, $rootScope, $scope, $uibModal, reportService, $filter, $location, individualsService, Upload, translateFilter, inventoryRequestService) {
+    $rootScope.menu = translateFilter('employee');
+    var ctrl = this;
+    var angularScopeRoot = 'angular.element(document.getElementById("angularCtrl")).scope().$root'
+    var angularScopeInventory = 'angular.element(document.getElementById("angularCtrl")).scope().employeeDetailsCtrl'
+    var angularCtrlStr = "angular.element(document.getElementById('angularCtrl')).scope().employee"
+
+    $rootScope.loadAndAuthorizeResource("employee", function(){
+
+      var dateNow = new Date();
+      var employeeId = $state.params.id;
+      ctrl.currentEffectiveDate = "";
+      ctrl.empId = employeeId;
+      ctrl.isEdit = employeeId > 0 ? true : false
+      ctrl.grades = []
+      ctrl.datas = { employee: { grade_id: 0 }};
+      ctrl.isSubmit = false;
+      ctrl.activeTab = 'general';
+      ctrl.activeTabPrivate = 'basic';
+      ctrl.hasPayroll =  ctrl.isEdit ? true : false;
+      ctrl.pinChars = [];
+      ctrl.filterKeyword = '';
+      ctrl.total = '';
+      ctrl.add_button = "add_new_employee"
+      var employee_inventory_table = $('#employee-inventory-table');
+      ctrl.getActiveTab = $rootScope.activeTab
+      ctrl.show_note_and_comment = true
+      $rootScope.activeTab = null
+
+      if (!ctrl.getActiveTab) {
+        ctrl.activeTab = 'general'
+        ctrl.add_button = "add_new_employee"
+      } else {
+        ctrl.activeTab = ctrl.getActiveTab
+        if (ctrl.activeTab == 'inventory') {
+          ctrl.add_button = "add_request_employee"
+        } else {
+          ctrl.add_button = "add_new_employee"
+        }
+      }
+
+      ctrl.selectTab = function(str) {
+        settingButton()
+        if (str == 'inventory') {
+          ctrl.add_button = "add_request_employee"
+        } else {
+          ctrl.add_button = "add_new_employee"
+        }
+      }
+
+      studentReportService.getGrades().then(function(grade_resp) {
+        // remove option 'All'
+        var allIndex = -1;
+        for(var i = 0; i < grade_resp.data.length; i++) {
+          var option = grade_resp.data[i];
+          if (option.name === 'All') {
+            allIndex = i;
+            break;
+          }
+        }
+        if(allIndex > -1) {
+          grade_resp.data.splice(allIndex, 1);
+        }
+        ctrl.grades = grade_resp.data
+      });
+
+      studentReportService.getClassrooms().then(function(classroom_resp) {
+        ctrl.classrooms = classroom_resp.data
+      });
+
+      function openConfirmationModal(message, success, dismiss) {
+        $scope.message = message;
+        $uibModal.open({
+          animation: true,
+          backdrop: 'static',
+          keyboard: false,
+          scope: $scope,
+          templateUrl: "<%= asset_path('payroll/angular/components/modal/confirm/confirmModalView.html') %>",
+          controller: 'confirmModalCtrl as confirm',
+          size: 'md',
+          resolve: {
+            resources: ['$ocLazyLoad', 'ASSETS', function($ocLazyLoad, ASSETS) {
+              return $ocLazyLoad.load([
+                ASSETS.somsri.payroll.confirm_modal
+              ]);
+            }]
+          }
+        }).result.then(function (isConfirm) {
+          if (isConfirm) {
+            if(success){ success() }
+          }else{
+            if(dismiss){ dismiss() }
+          }
+        });
+      }
+
+      function cleanData(str) {
+        if(str){
+          return str.toString().replace(/[\n\r]+/g, '') //remove newline
+        }else{
+          return ""
+        }
+      }
+
+      function isPayrollChange(){
+        var skip = ['deleted_at', 'tax', 'social_insurance', 'pvf', 'closed']
+        if(ctrl.hasPayroll){
+          var keys = Object.keys(ctrl.datas_original.payroll)
+          for(var i = 1; i < keys.length; i++){
+            var isMatchData = cleanData(ctrl.datas.payroll[keys[i]]) != cleanData(ctrl.datas_original.payroll[keys[i]])
+            var isSkip = skip.indexOf(keys[i]) < 0
+            if(isMatchData && isSkip ){
+              return true
+            }
+          }
+        }
+        return false;
+      }
+
+      function isEmployeeChange(){
+        var keys = Object.keys(ctrl.datas_original.employee)
+        for(var i = 1; i < keys.length; i++){
+          if(ctrl.datas.employee[keys[i]] != ctrl.datas_original.employee[keys[i]]){ return true }
+        }
+        return false;
+      }
+
+      function isTaxReductionChange(){
+        var keys = Object.keys(ctrl.datas_original.tax_reduction)
+        for(var i = 1; i < keys.length; i++){
+          if(ctrl.datas.tax_reduction[keys[i]] != ctrl.datas_original.tax_reduction[keys[i]]){ return true }
+        }
+        return false;
+      }
+
+      function isDataChange(){
+        return ctrl.isEdit && (isPayrollChange() || isEmployeeChange() || isTaxReductionChange());
+      }
+
+      // convert string to float
+      function payrollToFloat(){
+        var skips = ["id", "created_at", "updated_at", "effective_date", "note", "closed"];
+        var keys = Object.keys(ctrl.datas.payroll);
+        for(var i = 1; i < keys.length; i++){
+          if(!(skips.indexOf(keys[i]) > -1)){
+            ctrl.datas.payroll[keys[i]] = parseFloat(ctrl.datas.payroll[keys[i]]);
+          }
+        }
+      }
+
+      function displayEffectiveDate(monthInfo){
+        ctrl.currentDateString = monthInfo["date_string"];
+        ctrl.effectiveDatesDisplay = JSON.parse(JSON.stringify(ctrl.effectiveDates));
+        for(var i = 0; i < ctrl.effectiveDatesDisplay.length; i++){
+          if(ctrl.effectiveDatesDisplay[i]["date_string"] == monthInfo["date_string"]){
+            ctrl.effectiveDatesDisplay.splice(i, 1);
+          }
+        }
+      }
+
+      function disableRedactorIfNeeded(){
+        if(ctrl.payroll_closed ){
+          $('.redactor-editor').attr('contenteditable', 'false');
+        }else{
+          $('.redactor-editor').attr('contenteditable', 'true');
+        }
+      }
+
+      function getEmployee(id){
+        var payroll_id = null
+        if($location.search().payroll_id) {
+          payroll_id = $location.search().payroll_id
+        }
+        reportService.getMonths(id).then(function(resp) {
+          if (resp.data.length > 0) {
+            ctrl.effectiveDates = resp.data;
+            ctrl.currentEffectiveDate = ctrl.effectiveDates[0];
+            if (payroll_id) {
+              for (var i = 0; i < ctrl.effectiveDates.length; i++) {
+                var effectiveDate = ctrl.effectiveDates[i];
+                if (effectiveDate.payroll_id == payroll_id) {
+                  ctrl.currentEffectiveDate = effectiveDate;
+                  break;
+                }
+              }
+            }
+            displayEffectiveDate(ctrl.currentEffectiveDate);
+          }
+        });
+
+        service.getEmployee(id, payroll_id).then(function(resp) {
+          ctrl.datas = resp.data;
+          if(ctrl.datas.payroll){
+            ctrl.hasPayroll = true;
+            ctrl.payroll_closed = ctrl.datas.payroll.closed;
+            disableRedactorIfNeeded();
+            payrollToFloat();
+          }else{
+            ctrl.hasPayroll = false;
+          }
+
+          var e = resp.data.employee;
+          ctrl.datas.salary = parseFloat(ctrl.datas.employee.salary);
+
+          if(e.start_date){
+            ctrl.datas.employee.start_date = new Date(ctrl.datas.employee.start_date);
+          }else{
+            ctrl.datas.employee.start_date = null;
+          }
+
+          if(ctrl.datas.employee.birthdate){
+            ctrl.datas.employee.birthdate = new Date(ctrl.datas.employee.birthdate);
+          }else{
+            ctrl.datas.employee.birthdate = null;
+          }
+
+          ctrl.datas_original = $.extend(true, {}, ctrl.datas);
+          if(ctrl.hasPayroll){
+            ctrl.calTotal();
+          }
+
+          // transform pin number
+          var pin = e.pin;
+          if (pin) {
+            ctrl.pinChars = pin.split('');
+          } else {
+            ctrl.pinChars = []
+          }
+
+          if (!ctrl.datas.employee.note) {
+            ctrl.datas.employee.note = "-"
+          }
+
+          if (!ctrl.datas.employee.comment) {
+            ctrl.datas.employee.comment = "-"
+          }
+
+
+          ctrl.current_employee = ctrl.datas.current_employee
+          ctrl.current_user = ctrl.datas.current_user
+          if (ctrl.current_user) {
+            ctrl.show_note_and_comment = true
+            // ctrl.disabled_dropdown = true
+            // document.getElementById("employeeName").disabled=true
+            // console.log("admin")
+          } else {
+            ctrl.show_note_and_comment = false
+            // document.getElementById("employeeName").disabled=false
+            // ctrl.disabled_dropdown = false
+            // console.log("employee")
+          }
+
+          settingButton()
+          ctrl.displayName = e.id + ': ' + ctrl.datas.employee_display_name;
+
+          // init tax reduction default
+          if(ctrl.datas.tax_reduction.no_income_spouse > 0)
+            $scope.cbox_no_income_spouse = true;
+          if(ctrl.datas.tax_reduction.father_alimony > 0)
+            $scope.cbox_father_alimony = true;
+          if(ctrl.datas.tax_reduction.mother_alimony > 0)
+            $scope.cbox_mother_alimony = true;
+          if(ctrl.datas.tax_reduction.spouse_father_alimony > 0)
+            $scope.cbox_spouse_father_alimony = true;
+          if(ctrl.datas.tax_reduction.spouse_mother_alimony > 0)
+            $scope.cbox_spouse_mother_alimony = true;
+          if(ctrl.datas.tax_reduction.child > 0)
+            $scope.numchild = (ctrl.datas.tax_reduction.child/30000);
+          if(ctrl.datas.tax_reduction.cripple_alimony > 0)
+            $scope.numcripple_alimony = (ctrl.datas.tax_reduction.cripple_alimony/60000);
+
+          // get others employee
+          service.getAllEmployee().then(function(resp) {
+            if (resp.data.length > 0) {
+              ctrl.employee_lists = []; //resp.data
+              for(var i = 0; i < resp.data.length; i++){
+                var employee = resp.data[i];
+                if (employee.id + ': ' + employee.name !== ctrl.displayName) {
+                  // ctrl.employee_lists.splice(i, 1);
+                  ctrl.employee_lists.push({
+                    img: employee.img, name: employee.name,
+                    id: employee.id
+                  });
+                }
+              }
+            }
+          });
+        });
+      }
+
+      function settingButton() {
+        if (ctrl.current_user) {
+          ctrl.showButton = true
+          ctrl.showDeleteButton = true
+          ctrl.showCancelButton = true
+          ctrl.showSaveButton = true
+        } else if (ctrl.current_employee && ctrl.activeTab == 'inventory') {
+          ctrl.showButton = true
+          ctrl.showSaveButton = false
+        } else if (ctrl.current_employee && ctrl.activeTab == 'private'){
+          ctrl.showDeleteButton = false
+          ctrl.showCancelButton = false
+          ctrl.showSaveButton = true
+          ctrl.showButton = false
+        } else {
+          ctrl.showDeleteButton = false
+          ctrl.showCancelButton = false
+          ctrl.showSaveButton = false
+          ctrl.showButton = false
+        }
+      }
+
+      function switchMonth(effectiveDate) {
+        var payroll_id = effectiveDate.payroll_id;
+        service.getEmployee(employeeId, payroll_id).then(function(resp) {
+          ctrl.currentEffectiveDate = effectiveDate;
+          ctrl.datas.employee.salary = ctrl.datas_original.employee.salary;
+          ctrl.datas.payroll = $.extend(true, {}, resp.data.payroll);
+          ctrl.payroll_closed = ctrl.datas.payroll.closed;
+          payrollToFloat();
+          ctrl.calTotal();
+          ctrl.datas_original.payroll = $.extend(true, {}, ctrl.datas.payroll);
+          displayEffectiveDate(effectiveDate);
+          disableRedactorIfNeeded();
+        });
+      }
+
+      ctrl.slectDropDown = function(id) {
+        if(isDataChange()){
+          openConfirmationModal(translateFilter("close_without_save"), function(){
+            $rootScope.openEmployeeDetails(id);
+          }, function(){
+            $log.info("DISMISS!!");
+          })
+        }else{
+          $rootScope.openEmployeeDetails(id);
+        }
+      }
+
+      ctrl.openEmployeeDetails = function(id){
+        if (ctrl.add_button == "add_request_employee") { 
+          $rootScope.openAddInventoryRequest(ctrl.empId);
+        } else {
+          ctrl.slectDropDown(id)
+        }
+      }
+
+      ctrl.changeSalary = function(){
+        ctrl.datas.employee.salary = ctrl.datas.payroll.salary;
+      }
+
+      ctrl.cancel = function(){
+        if (ctrl.isEdit) {
+          if(isDataChange()){
+            openConfirmationModal(translateFilter("close_without_save"), function(){
+              $rootScope.openEmployees();
+            }, function(){
+              $log.info("DISMISS!!");
+            })
+          }else{
+            $rootScope.openEmployees();
+          }
+        } else {
+          $rootScope.openEmployees();
+        }
+      }
+
+      ctrl.uploadPhoto = function(file) {
+        Upload.upload({
+            url: '/employees/' + ctrl.datas.employee.id + '/upload_photo',
+            method: 'PATCH',
+            data: { employee: {
+                file: file
+              }
+            }
+        }).then(function (resp) {
+          ctrl.datas.img_url = resp.data[0].url
+        });
+      };
+
+      ctrl.submit = function(parm){
+        var isValid = true
+        if (isValid) {
+          ctrl.isSubmit = true
+          if (ctrl.isEdit) {
+            if(isDataChange()){
+              openConfirmationModal(translateFilter("close_with_save"), function(){
+                var datas_result = $.extend(true, {}, ctrl.datas);
+                service.saveEmployee(ctrl.datas.employee.id, datas_result).then(function(resp) {
+                  ctrl.isSubmit = false;
+                  ctrl.datas_original = $.extend(true, {}, ctrl.datas);
+                });
+              }, function(){
+                ctrl.isSubmit = false
+              });
+            }else{
+              ctrl.isSubmit = false
+            }
+          } else {
+            service.createEmployee(parm).then(function(resp) {
+              ctrl.isSubmit = false
+              $rootScope.openEmployees();
+            });
+          }
+        }
+      }
+
+      ctrl.calTotal = function(){
+        if ( ctrl.isEdit && (isDataChange() || ctrl.total=='')) {
+          var p = ctrl.datas.payroll;
+          var datas_result = $.extend(true, {}, ctrl.datas);
+          service.getEmployeeDeduction(ctrl.datas.employee.id, p.id , datas_result).then(function(resp) {
+            p.tax = resp.data.tax;
+            p.pvf = resp.data.pvf;
+            p.social_insurance = resp.data.social_insurance;
+            ctrl.total = 0;
+            if(p.salary){ ctrl.total += p.salary }
+            if(p.ot){ ctrl.total += p.ot }
+            if(p.position_allowance){ ctrl.total += p.position_allowance }
+            if(p.allowance ){ ctrl.total += p.allowance }
+            if(p.attendance_bonus){ ctrl.total += p.attendance_bonus}
+            if(p.bonus){ ctrl.total += p.bonus}
+            if(p.extra_etc){ ctrl.total += p.extra_etc}
+            if(p.tax){ ctrl.total -= p.tax}
+            if(p.pvf){ ctrl.total -= p.pvf}
+            if(p.absence){ ctrl.total -= p.absence}
+            if(p.late){ ctrl.total -= p.late}
+            if(p.advance_payment){ ctrl.total -= p.advance_payment}
+            if(p.fee_etc){ ctrl.total -= p.fee_etc}
+            if(p.social_insurance){ ctrl.total -= p.social_insurance}
+          });
+        }
+      }
+
+      ctrl.checkInsurance = function() {
+        if(Number(ctrl.datas.tax_reduction.insurance)<100000) {
+          ctrl.datas.tax_reduction.pension_insurance = 0;
+          alert("ท่านไม่สามารถบันทึกเบี้ยประกันชีวิตของผู้มีเงินได้แบบบำนาญได้ เนื่องจากเบี้ยประกันชีวิตมีค่าไม่ถึง 100,000 บาท หากไม่มีเบี้ยประกันชีวิต ให้นำเบี้ยประกันแบบบำนาญบันทึก ที่ช่องเบี้ยประกันชีวิตแทนจนครบ 100,000 บาท จึงจะสามารถนำส่วนที่เหลือมาบันทึกที่ช่องเบี้ยประกันแบบบำนาญ")
+        }
+      }
+
+      ctrl.archiveEmployee = function(id) {
+        openConfirmationModal(translateFilter("confirm_remove_employee"), function() {
+          service.archiveEmployee(id).then(function(resp) {
+            $rootScope.openEmployees();
+          })
+        }, function(){
+          // $log.info("DISMISS!!");
+        })
+      }
+
+      ctrl.restoreEmployees = function(id) {
+        openConfirmationModal(translateFilter("confirm_recovery_employee"), function() {
+          service.restoreEmployees(id).then(function(resp) {
+            $rootScope.openEmployees();
+          })
+        }, function(){
+          // $log.info("DISMISS!!");
+        })
+      }
+
+      ctrl.destroyEmployees = function(id) {
+        openConfirmationModal(translateFilter("confirm_delete_employee"), function() {
+          service.destroyEmployees(id).then(function(resp) {
+            $rootScope.openEmployees();
+          })
+        }, function(){
+          // $log.info("DISMISS!!");
+        })
+      }
+
+      ctrl.switchMonth = function(monthInfo) {
+        if (isPayrollChange()) {
+          openConfirmationModal(translateFilter("close_without_save"), function() {
+            switchMonth(monthInfo);
+          }, function() {
+            // $log.info("DISMISS!!");
+          })
+        } else {
+          switchMonth(monthInfo);
+        }
+      }
+
+      ctrl.getAllPayroll = function(id) {
+        service.getEmployeePayrolls(id).then(function(resp) {
+          var checkcurrent = resp.data
+          if (checkcurrent[0].date == "เดือนปัจจุบัน"){
+            resp.data.shift()
+            ctrl.employeePayrolls = resp.data
+          } else { 
+            ctrl.employeePayrolls = resp.data
+          }
+        })
+      }
+
+      if (ctrl.isEdit) {
+        getEmployee(employeeId);
+      }else{
+        // set defualt value for create employee page
+        ctrl.datas = {};
+        ctrl.datas.employee = {};
+        ctrl.datas.employee.employee_type = "ลูกจ้างประจำ";
+        ctrl.datas.employee.start_date = new Date();
+      }
+
+      ctrl.openStartDatePopup = function() {
+        ctrl.startDatePopup.opened = true;
+      };
+
+      ctrl.startDatePopup = {
+        opened: false
+      };
+
+      ctrl.openBirthdatePopup = function() {
+        ctrl.birthdatePopup.opened = true;
+      };
+
+      ctrl.birthdatePopup = {
+        opened: false
+      };
+
+      ctrl.addEmergencyCall = function(){
+        $scope.addEmergencyCallModalParams = {
+          employeeId: employeeId
+        };
+        openEmergencyCallModal();
+      }
+
+      ctrl.editEmergencyCall = function(individual){
+        $scope.addEmergencyCallModalParams = {
+          employeeId: employeeId,
+          individual: individual
+        };
+        openEmergencyCallModal();
+      }
+
+      ctrl.deleteEmergencyCall = function(id){
+        openConfirmationModal(translateFilter("confirm_delete_record"), function(){
+          individualsService.deleteIndividuals(id).then(function(resp) {
+            for(var i = 0; i < ctrl.individuals.emergency_calls.length; i++){
+              if(ctrl.individuals.emergency_calls[i].id == id){
+                ctrl.individuals.emergency_calls.splice(i, 1);
+              }
+            }
+          });
+        }, function(){
+          $log.info("DISMISS!!");
+        })
+      }
+
+      function openEmergencyCallModal(){
+        $uibModal.open({
+          animation: true,
+          backdrop: 'static',
+          keyboard: false,
+          scope: $scope,
+          templateUrl: "<%= asset_path('payroll/angular/components/modal/emergencyCall/emergencyCallModalView.html') %>",
+          controller: 'emergencyCallModalCtrl as emergencyCall',
+          size: 'lg',
+          resolve: {
+            resources: ['$ocLazyLoad', 'ASSETS', function($ocLazyLoad, ASSETS) {
+              return $ocLazyLoad.load([
+                ASSETS.somsri.payroll.emergency_call_modal
+              ]);
+            }]
+          }
+        }).result.then(function (data) {
+          if(data){
+            if($scope.addEmergencyCallModalParams.individual){
+              // update
+              for(var i = 0; i < ctrl.individuals.emergency_calls.length; i++){
+                if(ctrl.individuals.emergency_calls[i].id == data.id){
+                  ctrl.individuals.emergency_calls[i] = data;
+                }
+              }
+            }else{
+              // create
+              ctrl.individuals.emergency_calls.push(data);
+            }
+          }
+        });
+      }
+
+      individualsService.getIndividuals(employeeId).then(function(resp) {
+        ctrl.individuals = resp.data;
+        ctrl.individuals.emergency_calls.reverse();
+      });
+
+      $scope.check_not_null = function(e) {
+        if(ctrl.datas.tax_reduction[e]==null) ctrl.datas.tax_reduction[e] = 0
+      }
+
+      $scope.set_no_income_spouse = function(value) {
+        if(value)
+          ctrl.datas.tax_reduction.no_income_spouse = 60000;
+        else
+          ctrl.datas.tax_reduction.no_income_spouse = 0;
+      };
+
+      $scope.set_father_alimony = function(value) {
+        if(value)
+          ctrl.datas.tax_reduction.father_alimony = 30000;
+        else
+          ctrl.datas.tax_reduction.father_alimony = 0;
+      };
+      $scope.set_mother_alimony = function(value) {
+        if(value)
+          ctrl.datas.tax_reduction.mother_alimony = 30000;
+        else
+          ctrl.datas.tax_reduction.mother_alimony = 0;
+      };
+      $scope.set_spouse_father_alimony = function(value) {
+        if(value)
+          ctrl.datas.tax_reduction.spouse_father_alimony = 30000;
+        else
+          ctrl.datas.tax_reduction.spouse_father_alimony = 0;
+      };
+      $scope.set_spouse_mother_alimony = function(value) {
+        if(value)
+          ctrl.datas.tax_reduction.spouse_mother_alimony = 30000;
+        else
+          ctrl.datas.tax_reduction.spouse_mother_alimony = 0;
+      };
+      $scope.set_child = function(value) {
+        ctrl.datas.tax_reduction.child = 30000*value;
+      };
+      $scope.set_cripple_alimony = function(value) {
+        ctrl.datas.tax_reduction.cripple_alimony = 60000*value;
+      };
+
+      function filterDate(value, row, index) {
+        if (value) {
+          return $filter('date')(Date.parse(value), 'dd/MM/yyyy');
+        }
+        return "-";
+      }
+
+      function formatePrice(value, row, index) {
+        if (value) {
+            return $filter('number')(value.toFixed(2), 2);
+        }
+        return "-"
+      }
+      var bootstrapTableOptionsInvetoryRequest = {
+        sortName: 'updated_at',
+        sortOrder: 'desc',
+        columns : [{
+          field: 'number',
+          title: '#',
+          classes: 'text-right',
+          sortable: true,
+        },{
+          field: 'item_name',
+          title: translateFilter("item_name"),
+          sortable: true,
+        },{
+          field: 'serial_number',
+          title: translateFilter("serial_number"),
+          sortable: true,
+          class: 'font-weight-bold'
+        },{
+          field: 'model',
+          title: translateFilter("model"),
+          class: 'text-currency',
+          align: 'right',
+          sortable: true,
+        },{
+          field: 'description',
+          title: translateFilter("description"),
+          sortable: true,
+        },{
+          field: 'inventory_status',
+          title: translateFilter("status"),
+          align: 'center',
+          formatter: statusFormmatter,
+          sortable: true,
+          class: 'font-weight-bold',
+        },{
+          field: 'edit',
+          title: "",
+          class: 'text-right',
+          sortable: false,
+          formatter : editInventoryRequestFormatter
+        }]
+      }
+
+      function editInventoryRequestFormatter(value, row, index) {
+        return '<a id="editInventory' + row['id'] + '" onclick="' + angularCtrlStr + '.editInventory(' + row['id'] + ')"> <i class=\'fa fa-pencil-square-o fa-fw color-orange cursor-pointer\'></i> </a>';
+      } 
+
+      ctrl.editInventory = function(inventory_id) {
+        $rootScope.openInventoryDetails(ctrl.empId,inventory_id)
+      }
+
+      function statusFormmatter(value, row, index) {
+        var color = ""
+        if (row['inventory_status'] == "delete") {
+          color = "color-red"
+        } else if (row['inventory_status'] == "waiting repair") {
+          color = "color-orange"
+        }
+
+        if (row['inventory_status'] == 'rejected' || row['inventory_status'] == "delete") {
+          return '<span class="cursor-pointer" data-trigger="hover" data-container="body" data-toggle="popover" data-placement="top" title="Reason" data-content="' + row['comment'] + '">' +  row['inventory_status'] + '</span>' 
+        } else {
+          return '<span class="'+ color + '" tyep="text">' + row['inventory_status'] + '</span>'
+        }
+      }
+
+      employee_inventory_table.bootstrapTable($.extend(bootstrapTableOptionsInvetoryRequest, {toolbar: "date-filter"}));
+
+      function getInventoryRequest() {
+        if(!ctrl.requestCurrentPage){ ctrl.requestCurrentPage = 1 }
+          inventoryRequestService.getInventoryRequest(ctrl.requestCurrentPage, ctrl.empId).then(function(resp) {
+            
+            ctrl.datasReuestExport = [];
+            if (resp.data) {
+              ctrl.requestTotalItems = resp.data.total_records;
+              ctrl.requestCurrentPage = resp.data.current_page;
+              ctrl.datasReuestExport = resp.data.inventories_requests
+              var datas = []
+              var count = ctrl.datasReuestExport.length
+              for(var i = 0; i<count; i++) {
+                var status = ctrl.datasReuestExport[i].inventory_status
+                if (ctrl.datasReuestExport[i].inventory_status == "wait") {
+                  status = "-"
+                } else if (ctrl.datasReuestExport[i].inventory_status == "delete_inventory") {
+                  status = "delete"
+                } else if (ctrl.datasReuestExport[i].inventory_status == "repair") {
+                  status = "waiting repair"
+                }
+
+                var serial_number = "-"
+                var model = "-"
+                var description = ctrl.datasReuestExport[i].description
+                if (ctrl.datasReuestExport[i].inventory) {
+                  if (ctrl.datasReuestExport[i].inventory.serial_number) {
+                    serial_number = ctrl.datasReuestExport[i].inventory.serial_number
+                  }
+                
+                  if (ctrl.datasReuestExport[i].inventory.model) {
+                    model = ctrl.datasReuestExport[i].inventory.model
+                  }
+                  if (ctrl.datasReuestExport[i].inventory.description) {
+                    description = ctrl.datasReuestExport[i].inventory.description
+                  }
+                }
+
+                datas.push({
+                  number: ((ctrl.requestCurrentPage - 1) * 10) + i + 1,
+                  id: ctrl.datasReuestExport[i].id,
+                  item_name: ctrl.datasReuestExport[i].item_name,
+                  serial_number: serial_number,
+                  model: model,
+                  description: description,
+                  inventory_status: status,
+                  comment: ctrl.datasReuestExport[i].comment,
+                  created_at: ctrl.datasReuestExport[i].created_at,
+                  updated_at: ctrl.datasReuestExport[i].updated_at
+                })
+              }
+              ctrl.datasReuestExport = datas
+            } else {
+              ctrl.requestTotalItems = 0;
+              ctrl.requestCurrentPage = 0;
+            }
+            ctrl.paginateButtonMaxSize = 5;
+            employee_inventory_table.bootstrapTable('load', ctrl.datasReuestExport);
+          });
+      }
+
+      ctrl.pageRequestChanged = function() {
+        getInventoryRequest()
+      };
+
+      getInventoryRequest()
+
+    });
+  }])
+  .directive('stringToNumber', function() {
+    return {
+      require: 'ngModel',
+      link: function(scope, element, attrs, ngModel) {
+        ngModel.$parsers.push(function(value) {
+          return '' + value;
+        });
+        ngModel.$formatters.push(function(value) {
+          return parseFloat(value);
+        });
+      }
+    };
+  });
+
+  angular.module('somsri.payroll.employee_details').controller('TaxReductionCtrl', ['$scope', '$sce', function ($scope, $sce) {
+    $scope.expenses = $sce.trustAsHtml('หักลดหย่อนได้ 60,000 บาท (ไม่ว่าจะอยู่ในประเทศไทยถึง 180 วัน หรือไม่ก็ตาม)');
+    $scope.no_income_spouse = $sce.trustAsHtml('หักลดหย่อนได้ 60,000 บาท<br>(1) สามีหรือภริยาของผู้มีเงินได้ที่มีสิทธิหักลดหย่อน จะต้องเป็นสามีหรือภริยาชอบด้วยกฎหมาย การสมรสไม่ครบปีภาษีก็มีสิทธิหักลดหย่อนได้ เช่น จดทะเบียนสมรสระหว่างปีภาษี หรือตายในระหว่างปีภาษีก็มีสิทธิหักลดหย่อนได้ 60,000 บาท<br>(2) สามีหรือภริยาของผู้มีเงินได้ที่จะนำมาหักลดหย่อนจะต้องไม่มีเงินได้พึงประเมินหรือมีแต่ไม่ได้แยกคำนวณภาษี ตัวอย่าง สามีภริยาแต่งงานครบปีภาษีและต่างฝ่ายต่างมีเงินได้ประเภทที่ 1 กรณีดังกล่าว ภริยาสามารถแยกคำนวณภาษีต่างหากจากสามีได้โดยชอบ ทั้งสามีภริยาจึงไม่มีสิทธินำคู่สมรสมาหักลดหย่อนได้ แต่หากสามีหรือภริยาเลือกนำเงินได้ทั้งหมดของคู่สมรสอีกฝ่ายหนึ่ง มารวมคำนวณ สามีหรือภริยาย่อมมีสิทธินำคู่สมรสนั้นมาหักลดหย่อนได้');
+
+    $scope.parent_alimony = $sce.trustAsHtml('- หักลดหย่อนได้คนละ 30,000 บาท<br>- บิดา/มารดาต้องมีอายุตั้งแต่ 60 ปีขึ้นไป (การคำนวณอายุ ให้นำปีภาษี หักด้วย พ.ศ. เกิดของบิดา/มารดา)<br> - บิดา/มารดา ต้องมีเลขประจำตัวประชาชนตามกฎหมายว่าด้วยการทะเบียนราษฎร<br> - อยู่ในความอุปการะเลี้ยงดูของผู้มีเงินได้<br> - หากภริยาแยกยื่นแบบเสียภาษี ให้ต่างฝ่ายต่างหักบิดา/มารดาของตน<br> - บิดา/มารดาต้องไม่มีเงินได้ในปีภาษีนั้นเกิน 30,000 บาท<br> - ผู้มีเงินได้หรือคู่สมรสต้องเป็นบุตรชอบด้วยกฎหมาย<br> - บุตรบุญธรรมไม่มีสิทธิหักลดหย่อน<br> - บุตรหลายคนอุปการะบิดา/มารดา ให้บุตรเพียงคนเดียวที่มีหลักฐาน (ล.ย.03) เป็นผู้มีสิทธิหักลดหย่อน<br>');
+    $scope.child = $sce.trustAsHtml('- หักลดหย่อนได้คนละ 30,000 บาท โดยไม่จากัดจานวนบุตร<br> - บุตรชอบด้วยกฎหมายของผู้มีเงินได้ หรือของคู่สมรส<br> - บุตรบุญธรรมของผู้มีเงินได้<br> - บุตรต้องไม่มีเงินได้ในปีภาษีนั้น ตั้งแต่ 15,000 บาทขึ้นไป ยกเว้น เงินได้จากเงินปันผล<br> - บุตรต้องอยู่ในความอุปการะเลี้ยงดูของผู้มีเงินได้<br> - เป็นผู้เยาว์ (อายุไม่ถึง 20 ปี) หรือผู้มีอายุไม่เกิน 25 ปี และยังศึกษา อยู่ในมหาวิทยาลัย (ปริญญาตรี โท เอก ในประเทศ) หรือชั้นอุดมศึกษา (ปวส) หรือเป็นผู้ที่ศาลสั่งให้เป็นคนไร้ความสามารถหรือเสมือนไร้ความสามารถ<br>');
+    $scope.cripple_alimony = $sce.trustAsHtml('- หักลดหย่อนได้คนละ 60,000 บาท<br> - คนพิการต้องมีบัตรประจำตัวตามกฎหมายว่าด้วยการส่งเสริมและ พัฒนาคุณภาพชีวิตคนพิการ<br> - ผู้ใช้สิทธิต้องมีชื่อเป็นผู้ดูแลในบัตรประจำตัวของคนพิการ<br> - คนทุพพลภาพต้องเป็นกรณีที่แพทย์ได้ตรวจและมีความเห็นว่า ทุพพลภาพมาแล้วไม่น้อยกว่า 180 วัน<br> - คนพิการ/ทุพพลภาพต้องมีเงินได้ไม่เกิน 30,000 บาท<br> - การหักลดหย่อนต้องมีหนังสือรับรอง (ล.ย.04-กรณีคนพิการ, ล.ย.04.1-กรณีคนทุพพลภาพ)<br>');
+
+    $scope.insurance = $sce.trustAsHtml('- หักเป็นค่าลดหย่อนตามจำนวนที่จ่ายจริงแต่ไม่เกิน 10,000 บาท สำหรับเบี้ยประกันส่วนที่เกิน 10,000 แต่ไม่เกิน 90,000 บาท หักเป็นรายการยกเว้น ซึ่งต้องไม่เกินจากจำนวนเงินได้เมื่อหัก ค่าใช้จ่ายแล้ว (มีผลเท่ากับว่าเบี้ยประกันชีวิตให้หักลดหย่อนได้ ตามจำนวนที่จ่ายจริงแต่ไม่เกิน 100,000 บาท)<br> - กรณีคู่สมรสไม่มีเงินได้ แต่มีการประกันชีวิตไว้ หากความเป็นสามี ภริยามีอยู่ตลอดปีภาษี ให้ผู้มีเงินได้หักลดหย่อนเบี้ยประกันชีวิต ของคู่สมรสได้ตามที่จ่ายจริงแต่ไม่เกิน 10,000 บาท<br> - เป็นการประกันชีวิต ที่กรมธรรม์มีกำหนดเวลา 10 ปีขึ้นไป<br> - หากมีผลประโยชน์ตอบแทนคืนทุกปี (ไม่รวมเงินปันผลตามกรมธรรม์) ต้องไม่เกินร้อยละ 20 ของเบี้ยประกันชีวิตรายปี<br>');
+    $scope.retirement_mutual_fund = $sce.trustAsHtml('ให้หักเป็นรายการยกเว้นในอัตราไม่เกินร้อยละ 15 ของเงินได้ แต่ไม่เกิน 500,000 บาท');
+    $scope.pension_insurance = $sce.trustAsHtml('- ให้ใช้สิทธิลดหย่อนเบี้ยประกันชีวิตก่อน หากเบี้ยประกันชีวิต ยังไม่เกิน 100,000 บาท ให้นำเบี้ยประกันแบบบำนาญไปหัก ให้เต็มจำนวน 100,000 บาท<br> - เฉพาะเบี้ยประกันแบบบำนาญหักเป็นรายการยกเว้นได้ไม่เกิน ร้อยละ 15 ของเงินได้ แต่ไม่เกิน 200,000 บาท<br>');
+    $scope.long_term_equity_fund = $sce.trustAsHtml('- ให้หักเป็นรายการยกเว้นไม่เกินร้อยละ 15 ของเงินได้ แต่ไม่เกิน 500,000 บาท<br> - ผู้ได้รับสิทธิยกเว้นเงินได้คือบุคคลธรรมดา ไม่รวมถึงห้างหุ้นส่วนสามัญ หรือคณะบุคคลที่มิใช่นิติบุคคล และกองมรดกที่ยังไม่ได้แบ่ง<br> - ต้องถือต่อเนื่องกันเป็นเวลาไม่น้อยกว่า 7 ปีปฏิทิน สำหรับเงินได้พึงประเมินที่ได้รับตั้งแต่วันที่ 1 มกราคม 2559 ถึง 31 ธันวาคม 2562 หากขายหน่วยลงทุน ก่อนกำหนด ต้องยื่นแบบเพิ่มเติมพร้อมรับผิดเงินเพิ่ม<br>');
+    $scope.national_savings_fund = $sce.trustAsHtml('หักได้ตามที่จ่ายจริง แต่ไม่เกิน 13,200 บาท โดยหักเป็นรายการยกเว้นเงินได้<br>');
+    $scope.social_insurance = $sce.trustAsHtml('หักลดหย่อนได้ตามที่จ่ายจริง ตามกฎหมายว่าด้วยการประกันสังคม');
+
+    $scope.pension_fund = $sce.trustAsHtml('หักได้ตามที่จ่ายจริงแต่ไม่เกิน 15% ของค่าจ้าง โดย 10,000 บาทแรก หักเป็นรายการลดหย่อน ส่วนที่เกิน 10,000 บาท แต่ไม่เกิน 490,000 บาท หักเป็นรายการยกเว้นเงินได้');
+    $scope.government_pension_fund = $sce.trustAsHtml('หักได้ตามที่จ่ายจริง แต่ไม่เกิน 500,000 บาท โดยหักเป็นรายการยกเว้นเงินได้');
+    $scope.private_teacher_aid_fund = $sce.trustAsHtml('หักได้ตามที่จ่ายจริง แต่ไม่เกิน 500,000 บาท โดยหักเป็นรายการยกเว้นเงินได้');
+
+    $scope.house_loan_interest = $sce.trustAsHtml('- ได้รับลดหย่อนและยกเว้นภาษีตามจำนวนที่จ่ายจริงแต่ไม่เกิน 100,000 บาท<br> - เป็นดอกเบี้ยเงินกู้ยืมตามสัญญากู้ยืมเงินเพื่อซื้อ เช่าซื้ออาคาร อาคารพร้อมที่ดิน หรือห้องชุด หรือสร้างอาคารใช้อยู่อาศัย บนที่ดินของตน<br> - ต้องจำนองอาคารที่ซื้อหรือสร้างนั้นเป็นประกันการกู้ยืม<br> - หากผู้มีเงินได้มีอาคารหรือห้องชุดหลายแห่ง ให้ใช้สิทธิได้ทุกแห่ง รวมกันตามจำนวนที่จ่ายจริงแต่ไม่เกิน 100,000 บาท<br> - หลายคนร่วมกันกู้ยืม (กู้ร่วม) ให้เฉลี่ยดอกเบี้ยเงินกู้ยืมนั้นตามจำนวน ผู้กู้ร่วม โดยใช้จำนวนดอกเบี้ยฯ ที่จ่ายจริง ซึ่งไม่เกิน 100,000 บาท<br> - กรณีสามีภริยาร่วมกันกู้โดยสามีหรือภริยามีเงินได้ฝ่ายเดียว ให้ผู้มีเงินได้ ใช้สิทธิเต็มตามจำนวนที่จ่ายจริง แต่ไม่เกิน 100,000 บาท หากคู่สมรส ไม่มีเงินได้ แต่มีชื่อเป็นผู้กู้ หักลดหย่อนดอกเบี้ยเงินกู้ยืมไม่ได้<br> - กรณีกู้เพิ่มเติมจากสัญญาเดิมไม่ได้รับสิทธิให้นำมาหักลดหย่อน<br> - ต้องมีหนังสือรับรองตามแบบที่อธิบดีกำหนด<br>');
+
+    $scope.parent_insurance = $sce.trustAsHtml('- ผู้มีเงินได้จ่ายค่าเบี้ยประกันให้บิดา/มารดาของตน และบิดา/มารดา ของคู่สมรสที่ไม่มีเงินได้ ให้ได้รับยกเว้นตามจำนวนที่จ่ายจริง แต่ ไม่เกิน 15,000 บาท<br> - บิดา/มารดา ต้องมีเลขประจำตัวประชาชนตามกฎหมายว่าด้วยการทะเบียนราษฎร<br> - ต้องเป็นเบี้ยประกันสุขภาพ ไม่ใช่เบี้ยประกันชีวิต (หากเป็นกรมธรรม์ประกันชีวิต และมีการประกันสุขภาพเพิ่มเติม ไม่สามารถหักลดหย่อน)<br> - บิดา/มารดาต้องไม่มีเงินได้ในปีภาษีนั้นเกิน 30,000 บาท<br> - ผู้มีเงินได้หรือคู่สมรสต้องเป็นบุตรชอบด้วยกฎหมาย<br> - บุตรบุญธรรมไม่มีสิทธิยกเว้นฯ<br> - ภริยาไม่ใช้สิทธิแยกยื่นแบบเสียภาษี หรือใช้สิทธิก็ตาม ให้ต่างฝ่าย ต่างได้รับยกเว้นฯ ค่าเบี้ยประกันสุขภาพบิดา/มารดาของตน<br>');
+    $scope.double_donation = $sce.trustAsHtml('- หักได้ 2 เท่าของจำนวนเงินที่จ่ายไปจริง แต่ไม่เกินร้อยละ 10 ของ เงินได้หลังหักค่าใช้จ่ายและค่าลดหย่อน<br> - การบริจาคต้องเป็นการบริจาคเงินสดเท่านั้น<br> - เป็นค่าใช้จ่ายเพื่อการจัดหาหรือจัดสร้างอาคาร อาคารพร้อมที่ดิน ที่ดิน วัสดุอุปกรณ์เพื่อการศึกษา แบบเรียน หนังสือทางวิชาการ ตำรา ฯลฯ จัดหาครู อาจารย์ ฯลฯ หรือเป็นทุนการศึกษา การค้นคว้า การวิจัย ฯลฯ ทั้งนี้ตามหลักเกณฑ์วิธีการที่อธิบดีประกาศกำหนด<br> - ต้องเป็นสถานศึกษาที่กระทรวงศึกษาธิการประกาศกำหนด<br> - ต้องมีหลักฐานจากสถานศึกษา และเอกสารหลักฐานที่ได้รับต้อง ระบุว่าเป็นการสนับสนุนการศึกษาเพื่อ..............<br>');
+    $scope.donation = $sce.trustAsHtml('- หักได้ร้อยละ 10 ของเงินได้หลังหักค่าใช้จ่าย ค่าลดหย่อน และเงิน บริจาคสนับสนุนการศึกษา<br> - บริจาคเงินให้แก่วัดวาอาราม สภากาชาดไทย ฯลฯ สำหรับ มูลนิธิ สถานสาธารณกุศลที่สามารถหักลดหย่อนเงินบริจาคได้ สามารถค้นหา รายชื่อสถานสาธารณกุศลจาก www.rd.go.th<br>');
+    $scope.other = $sce.trustAsHtml('ค่าลดหย่อนอื่นๆ นอกเหนือจากรายการที่ระบุไว้');
+ 
+  }]);
+})();

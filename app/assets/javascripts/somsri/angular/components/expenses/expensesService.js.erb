@@ -1,0 +1,59 @@
+(function() {
+  'use strict';
+  angular.module('somsri.somsri.expenses.service', [
+  ])
+  .service('expensesService', ['$http', '$q', 'Upload', function($http, $q, Upload) {
+
+    var getExpensesCanceler = $q.defer()
+    this.getExpenses = function(searchKeyword, start_date, end_date, page, sort, order) {
+      getExpensesCanceler.resolve()
+      getExpensesCanceler = $q.defer()
+      return $http.get('/expenses', {
+        timeout: getExpensesCanceler.promise,
+        params: {
+          page: page,
+          search_keyword: searchKeyword,
+          start_date: start_date,
+          end_date: end_date,
+          sort: sort,
+          order: order
+        }
+      })
+    }
+
+    var getExpenseTagsCanceler = $q.defer()
+    this.getExpenseTags = function(params) {
+      getExpenseTagsCanceler.resolve()
+      getExpenseTagsCanceler = $q.defer()
+      return $http.get('/expense_tags/', {
+        timeout: getExpenseTagsCanceler.promise,
+        params: params
+      })
+    }
+
+    this.removeExpenses = function(id) {
+      return $http.delete('/expenses/' + id.id)
+    }
+
+    this.show = function(id) {
+      return $http.get('/expenses/' + id)
+    }
+
+    this.updateExpenses = function(data, id) {
+      return  Upload.upload({
+          url: '/expenses/' + id,
+          method: 'put',
+          data: { expense: data }
+        });
+    }
+
+    this.createExpenses = function(data) {
+      return Upload.upload({
+        url: '/expenses',
+        method: 'post',
+        data: { expense: data }
+      });
+    }
+
+  }]);
+})();

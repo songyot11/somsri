@@ -1,0 +1,55 @@
+<div ui-view></div>
+<%= render 'layouts/messages' %>
+<div class="container main-menu main">
+    <%= render 'layouts/menu', is_topbar: false%>
+</div>
+
+<% if @is_outstanding %>
+<!-- Modal -->
+<div id="outstandingModal" class="modal fade" role="dialog">
+  <div class="modal-dialog modal-lg">
+    <!-- Modal content-->
+    <div class="modal-content text-center px-20 pt-50 pb-20 mt-50 max-w-md custom-shadow text-color">
+      <div class="modal-body">
+        <div class="row">
+          <div class="col-md-12 mb-50">
+            <h1 class="letter-spacing-3"><b>โปรดตรวจสอบค่าบริการที่ค้างชำระของท่าน</b></h1>
+          </div>
+        </div>
+        <div class="row">
+          <div class="col-md-12 mb-50">
+            <button class="btn btn-custom btn-blue font-18" data-dismiss="modal">กลับสู่การใช้งาน</button>
+          </div>
+        </div>
+        <div class="row">
+          <div class="col-md-offset-2 col-md-8"><hr /></div>
+        </div>
+        <div class="row">
+          <div class="col-md-12 letter-spacing-3">
+            <h2>สมศรี ขออภัยหากท่านชำระค่าบริการดังกล่าวแล้ว</h2>
+          </div>
+        </div>
+        <div class="row">
+          <div class="col-md-12 letter-spacing-3">
+            <h4>หากพบปัญหาในการใช้งาน somsri.io สามารถติดต่อได้ที่เบอร์ <b>064-219-6125</b></h4>
+          </div>
+        </div>
+        <div class="row">
+          <div class="col-md-12">
+            <img class="pull-right" src="/somsri_logo.png" style="height: 100px;">
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+<script type="text/javascript">
+  $( document ).ready(function() {
+    $('#outstandingModal').modal({
+      backdrop: 'static',
+      keyboard: false
+    })
+    $('#outstandingModal').modal('show');
+  });
+</script>
+<% end %>

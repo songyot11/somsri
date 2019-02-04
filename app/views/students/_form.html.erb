@@ -1,0 +1,257 @@
+<%= javascript_include_tag 'preview_image' %>
+
+<%= form_for @student, :html => { :class => "form-horizontal student" } do |f| %>
+<% if @student.errors.any? %>
+<div id="error_expl" class="panel panel-danger">
+  <div class="panel-heading">
+    <h3 class="panel-title"><%= t('student_info_cannot_save') %></h3>
+  </div>
+  <div class="panel-body">
+    <ul>
+      <% @student.errors.full_messages.each do |msg| %>
+      <li><%= msg %></li>
+      <% end %>
+    </ul>
+  </div>
+</div>
+<% end %>
+
+<div class="content-student-parent">
+  <div class="row add-st-pr">
+
+    <div class="col-md-8">
+      <div class="row add-st-pr">
+        <div class="col-md-6">
+          <div class="form-group">
+            <%= f.label :full_name, :class => 'control-label'%>
+            <div class="col-md-12">
+              <%= f.text_field :full_name, :class => 'form-control' , autocomplete: "off" %>
+            </div>
+          </div>
+        </div>
+        <div class="col-md-6">
+          <div class="form-group">
+            <%= f.label :nickname, :class => 'control-label' %>
+            <div class="col-md-12">
+              <%= f.text_field :nickname, :class => 'form-control' , autocomplete: "off" %>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="row add-st-pr">
+        <div class="col-md-6">
+          <div class="form-group ">
+            <%= f.label :full_name_english, :class => 'control-label' %>
+            <div class="col-md-12">
+              <%= f.text_field :full_name_english, :class => 'form-control' , autocomplete: "off"%>
+            </div>
+          </div>
+        </div>
+        <div class="col-md-6">
+          <div class="form-group">
+            <%= f.label :nickname_english, :class => 'control-label' %>
+            <div class="col-md-12">
+              <%= f.text_field :nickname_english, :class => 'form-control' , autocomplete: "off" %>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="row add-st-pr">
+        <div class="col-md-3">
+          <div class="form-group ">
+            <%= f.label :gender_id, :class => 'control-label' %>
+            <div class="col-md-12">
+              <%= f.collection_select :gender_id, Gender.all_cached, :id, :name, {prompt: "โปรดเลือกเพศ"}, {class: "form-control"}%>
+            </div>
+          </div>
+        </div>
+        <div class="col-md-4">
+          <div class="form-group">
+            <%= f.label :birthdate, :class => 'control-label' %>
+            <div class="col-md-12">
+              <%= f.date_field :birthdate, :class => 'form-control',:data => {:provide => :datepicker} %>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="col-md-4">
+      <% if @student.img_url.blank? %>
+        <label for="imageUpload" class="img-default">
+          <i class="fa fa-user icons-default-img" aria-hidden="true"></i>
+          <div class="img-bg bg-light-gray circle" id="img-change"></div>
+        </label>
+      <% else %>
+      <label for="imageUpload" class="img-default">
+        <div class="img-upload-display hide">
+          <%= image_tag(@student.img_url.expiring_url(10, :medium), id:'img-change') if @student.img_url.exists? %>
+        </div>
+      </label>
+      <% end %>
+      <div class="space20"></div>
+      <div class="row">
+        <div class="col-md-12">
+          <div class="form-group">
+            <%= f.file_field :img_url, class: 'border-none pointer-cursor', id: 'imageUpload', style:'display:none;', onchange:'readURL(this);' %>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="row add-st-pr">
+    <div class="col-md-3">
+      <div class="form-group ">
+        <%= f.label :grade_id, :class => 'control-label' %>
+        <div class="col-md-12">
+          <%= f.collection_select :grade_id, Grade.all, :id, :name, {prompt: "โปรดเลือกระดับชั้น"}, {class: "form-control"} %>
+        </div>
+      </div>
+    </div>
+    <div class="col-md-2">
+      <div class="form-group">
+        <%= f.label :classroom_id, :class => 'control-label' %>
+        <div class="col-md-12">
+          <%= f.collection_select :classroom_id, Classroom.all, :id, :name, {prompt: "โปรดเลือกห้อง"}, {class: "form-control"} %>
+        </div>
+      </div>
+    </div>
+    <div class="col-md-2">
+      <div class="form-group">
+        <%= f.label :classroom_number, :class => 'control-label ' %>
+        <div class="col-md-12">
+          <%= f.text_field :classroom_number, :class => 'form-control', autocomplete: "off"%>
+        </div>
+      </div>
+    </div>
+    <div class="col-md-5">
+      <div class="form-group">
+        <%= f.label :student_number,  :class => 'control-label ' %>
+        <div class="col-md-12">
+          <%= f.text_field :student_number, :class => 'form-control' , autocomplete: "off"%>
+        </div>
+      </div>
+    </div>
+  </div>
+
+
+  <div class="row add-st-pr">
+    <div class="col-md-12">
+      <div class="form-group ">
+        <%= f.label :national_id,  :class => 'control-label' %>
+        <div class="col-md-12">
+          <%= f.text_field :national_id, :class => 'form-control' , autocomplete: "off"%>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="row add-st-pr">
+    <label for="parent" class="control-label"><%= t('parent') %></label>
+  </div>
+  <% if @student.new_record? || @student.parents.size == 0 %>
+    <% 1.times do |index| %>
+      <%= render :partial => 'add_parent', :locals => {:index => index, :ps => nil} %>
+      <% @round = index %>
+    <% end %>
+  <% else %>
+    <% @student.parents.each_with_index do |ps, index| %>
+      <%= render :partial => 'add_parent', :locals => {:index => index, :ps => ps} %>
+      <% @round = index %>
+    <% end %>
+  <% end %>
+
+  <div id="add-parent"></div>
+  <a id="parent-link" class="btn btn-custom sm btn-green"><%= t('add_parent') %></a>
+
+  <div class="row add-st-pr">
+    <div class="col-md-12">
+      <div class="form-group">
+        <%= f.label :remark, :class => 'control-label' %>
+        <div class="col-md-12">
+          <%= f.text_area :remark, :class => 'form-control' %>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="form-group somsri-invoice" style="margin-top: 25px; text-align:center">
+    <%= f.submit 'บันทึก', :class => 'btn btn-submit' %>
+    <%= link_to t('.cancel', :default => t("helpers.links.cancel")),
+                "", onclick: "goToUrl('#{students_path}')", :class => 'btn btn-cancel' %>
+  </div>
+</div>
+<% end %>
+
+<script>
+function remove_parent(i) {
+    $('#add-prn-'+i+'').remove();
+}
+function gen_selectize(round) {
+  for (i = 0; i <= round; i++) {
+    $('#parent'+i).selectize({
+      create: true,
+      sortField: 'text'
+    });
+  }
+}
+
+function parentChanged(target){
+  var index = $(target).attr("index")
+
+  // enable relationship and mobile
+  if($(target).val()){
+    $("#relationship" + index).prop("disabled", false)
+    $("#mobile" + index).prop("disabled", false)
+  }else{
+    $("#relationship" + index).prop("disabled", true)
+    $("#mobile" + index).prop("disabled", true)
+  }
+
+  // autocomplete mobile
+  var parentMobile = []
+  <% @parents.each do |ps| %>
+    parentMobile.push({id: '<%= ps.id %>', mobile: '<%= ps.mobile %>'})
+  <% end %>
+  var parentId = $(target).val()
+  for(var i = 0; i<parentMobile.length; i++){
+    if(parentMobile[i]["id"] == parentId){
+      $('#mobile' + index).val(parentMobile[i]["mobile"])
+    }
+  }
+}
+$(function() {
+  var round = <%= @round %>;
+  gen_selectize(round);
+  $('#parent-link').click( function() {
+    round = round + 1;
+    $('#add-parent').append(
+      '<div class="form-group" id="add-prn-'+round+'">\
+        <div class="row add-st-pr">\
+          <div class="col-md-5" style="margin-left:15px;">\
+            <select id="parent'+round+'" name="parent[]" index="'+round+'" onchange="parentChanged(this)"  placeholder="Select parent...">\
+              <option value="" disabled selected></option>\
+              <% @parents.each do |p| %>\
+                <option value="<%= p.id %>"><%= p.full_name %></option>\
+              <% end %>\
+            </select>\
+          </div>\
+          <div class="col-md-2">\
+            <select id="relationship'+round+'" name="relationship[]" class="form-control" disabled="true">\
+              <% @relations.each do |r| %>\
+                <option value="<%= r.id %>"><%= t(r.name) %></option>\
+              <% end %>\
+            </select>\
+          </div>\
+          <div class="col-md-3">\
+            <input type="text" id="mobile'+round+'" placeholder="โทรศัพท์" name="mobile[]" class="form-control" disabled="true">\
+          </div>\
+          <div class="col-md-1">\
+            <button type="button" class="btn btn-delete-sp" onclick="remove_parent('+round+')"><i class="fa fa-times"></i></button>\
+          </div>\
+        </div>\
+      </div>'
+    );
+    gen_selectize(round);
+  });
+});
+</script>

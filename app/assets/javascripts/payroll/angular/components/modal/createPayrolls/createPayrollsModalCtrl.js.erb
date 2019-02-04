@@ -1,0 +1,49 @@
+(function() {
+  'use strict';
+  angular.module('somsri.payroll.create_payrolls_modal', [
+  ])
+  .controller('createPayrollsModalCtrl', ['$uibModalInstance', '$state', '$log', 'createPayrollsModalService', '$rootScope', '$scope', 'translateFilter', function($uibModalInstance, $state, $log, service, $rootScope, $scope, translateFilter) {
+    var ctrl = this;
+    $rootScope.loadAndAuthorizeResource("payroll", function(){
+      ctrl.isSaving = false
+      function isSameDate(effective_date){
+        for(var i = 0; i < $scope.effectiveDates.length; i++){
+          var end_date = Date.parse($scope.effectiveDates[i]['date_time'])
+          var new_end_date = Date.parse(ctrl.effective_date)
+          if(end_date == new_end_date){
+            return true
+          }
+        }
+        return false
+      }
+      ctrl.submit = function(){
+        if(Date.parse(ctrl.effective_date)){
+          if(isSameDate(ctrl.effective_date)){
+            $rootScope.openWarningModal(translateFilter("cannot_pay_out"));
+          }else{
+            $rootScope.openConfirmationModal(translateFilter("confirm_pay_out"), function(){
+              ctrl.isSaving = true
+              var params = { create: { effective_date: ctrl.effective_date }, option: {force_create: false} };
+              service.createPayrolls(params).then(function(resp) {
+                $uibModalInstance.close(params["create"]["effective_date"]);
+                ctrl.isSaving = false
+              });
+            });
+          }
+        }
+      }
+
+      ctrl.cancel = function () {
+        $uibModalInstance.close(false);
+      };
+
+      ctrl.openEffectiveDatePopup = function() {
+        ctrl.effectiveDatePopup.opened = true;
+      };
+
+      ctrl.effectiveDatePopup = {
+        opened: false
+      };
+    });
+  }]);
+})();

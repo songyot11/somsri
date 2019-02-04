@@ -1,0 +1,15 @@
+<table class="table">
+	<tfoot>
+		<tr>
+			<td></td>
+			<td class="report_for_print_hide"></td>
+			<td class="text-center forprint-h_table"><strong>{{ 'total' | translate }}</strong></td>
+			<td class="report_for_print_hide numberic" style="text-align: right;">{{report.total.salary | currency: ""}}</td>
+			<td class="text-green report_for_print_hide numberic" style="text-align: right;">{{report.total.extraPay | currency: ""}}</td>
+			<td class="text-red report_for_print_hide numberic" style="text-align: right;">{{report.total.extraFee | currency: ""}}</td>
+			<td class="text-green numberic" style="text-align: right;">{{report.total.netSalary | currency: ""}}</td>
+			<td class="report_for_print_hide"></td>
+			<td class="report_for_print_hide"></td>
+		</tr>
+	</tfoot>
+</table>

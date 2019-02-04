@@ -1,0 +1,337 @@
+/*
+ * This is a manifest file that'll be compiled into application.css, which will include all the files
+ * listed below.
+ *
+ * Any CSS and SCSS file within this directory, lib/assets/stylesheets, vendor/assets/stylesheets,
+ * or any plugin's vendor/assets/stylesheets directory can be referenced here using a relative path.
+ *
+ * You're free to add application-wide styles to this file and they'll appear at the bottom of the
+ * compiled file so the styles you add here take precedence over styles defined in any other CSS/SCSS
+ * files in this directory. Styles in this file should be added after the last require_* statement.
+ * It is generally better to create a new file per style scope.
+ *
+ *= require bootstrap/dist/css/bootstrap.min.css
+ *= require angular-xeditable/dist/css/xeditable
+ *= require font-awesome
+ *= require_self
+ *= require bootstrap-table
+ *= require bootstrap-select/sass/bootstrap-select
+ *= require angular-ui-select
+ *= require angular-ui-tree
+ *= require fullcalendar
+ */
+@import "navigation_menu";
+@import "application_payroll";
+
+.col-xs-5ths,
+.col-sm-5ths,
+.col-md-5ths,
+.col-lg-5ths {
+    position: relative;
+    min-height: 1px;
+    padding-right: 5px;
+    padding-left: 5px;
+}
+
+.col-xs-5ths {
+    width: 20%;
+    float: left;
+}
+
+@media (min-width: 768px) {
+    .col-sm-5ths {
+        width: 20%;
+        float: left;
+    }
+}
+
+@media (min-width: 992px) {
+    .col-md-5ths {
+        width: 20%;
+        float: left;
+    }
+}
+
+@media (min-width: 1200px) {
+    .col-lg-5ths {
+        width: 20%;
+        float: left;
+    }
+}
+
+.form-control{
+  border-radius: inherit;
+  border: inherit;
+  border-bottom: 1px solid #ddd;
+  line-height: 27.5px;
+  box-shadow: none !important;
+}
+
+.form-control:disabled{
+  background: transparent;
+}
+
+.circle{
+  border-radius: 50%;
+}
+
+.bg-light-gray {
+  background-color: #DDD;
+}
+
+.img-bg {
+  width: 100%;
+  padding-bottom: 100%;
+  background-size: 100% !important;
+  background-repeat: no-repeat !important;
+  background-position: center top !important;
+}
+
+.icon-default-img{
+ margin: auto;
+ transform: translate(90%, 40%);
+ color: #fff;
+}
+
+.paragraph.bg-setting{
+  padding: 50px 30px;
+  background-color: #fff;
+  max-height: 630px;
+  padding-bottom: 30px;
+  margin-top: 30px;
+  box-shadow: 0 5px 13px 0 rgba(0, 0, 0, 0.3);
+}
+.navbar-custom .logo{
+  width: 180px;
+  height: 91px;
+  margin-left: -15px;
+  background-color: #3fa1e6;
+}
+
+.btn-up-classroom,
+.btn-up-classroom:focus{
+  margin-bottom: 10px;
+  margin-top: 10px;
+  padding: 12px 32px;
+  font-weight: lighter;
+  background-color: #3fa1e6;
+  border: 2px solid #3fa1e6;
+  color: #fff;
+  font-size: 16px;
+  border-radius: 0px;
+  cursor: pointer;
+  transition: all 0.25s ease;
+
+  &:hover{
+    color: #3fa1e6;
+    background-color: transparent;
+    border: 2px solid #3fa1e6;
+  }
+}
+
+.content-box {
+  padding: 30px;
+  font-size: 14px;
+  background-color: #fff;
+  box-shadow: 0 5px 13px 0 rgba(0, 0, 0, 0.3);
+}
+
+.btn-primary, .btn-primary:focus{
+  font-family: 'Maitree', serif;
+  background-color: #5bab67;
+  color: #fff;
+  font-size: 16px;
+  padding: 12px 32px;
+  letter-spacing: 1px;
+  border: 2px solid #5bab67;
+  border-radius: 0px;
+  transition: all 0.25s ease;
+  &:hover{
+    background-color: transparent;
+    border:2px solid #6fc178;
+    color: #6fc178;
+  }
+}
+
+.space30{
+  height: 30px;
+}
+
+.font1_2em {
+  font-size: 1.2em;
+}
+
+#classroom-edit .center-vertical-padding {
+  padding-top: 14px;
+}
+
+#classroom-edit th.center-vertical-padding {
+  padding-top: 0px;
+}
+
+.img-34x34 {
+  width: 34px;
+  height: 34px;
+}
+
+.table-with-img-profile .fix-img {
+  padding-bottom: 0px !important;
+}
+
+.color-red {
+  color: #DD5A2B;
+}
+
+.color-red.hover:hover {
+  color: #a50115;
+}
+
+.hover-pointer:hover {
+  cursor: pointer;
+}
+
+#classroom-edit .tab-content{
+  margin-top: 20px;
+}
+
+.btn-white{
+  font-family: 'Maitree', serif;
+  padding: 12px 32px;
+  font-size: 16px;
+  letter-spacing: 1px;
+  background-color: #9D9D9D;
+  color: #FFFFFF;
+  border: 2px solid #9D9D9D;
+  border-radius: 0px;
+  transition: all 0.25s ease;
+
+  &:hover{
+    background-color: transparent;
+    border:2px solid #9D9D9D;
+    color: #9D9D9D;
+  }
+}
+
+.btn-disable{
+  font-family: 'Maitree', serif;
+  padding: 12px 32px;
+  font-size: 16px;
+  letter-spacing: 1px;
+  background-color: transparent;
+  color: #9D9D9D;
+  border:2px solid #9D9D9D;
+  border-radius: 0px;
+  transition: all 0.25s ease;
+  &:hover{
+    background-color: transparent;
+    border:2px solid #9D9D9D;
+    color: #9D9D9D;
+  }
+}
+
+.btn-disable{
+  font-family: 'Maitree', serif;
+  padding: 12px 32px;
+  font-size: 16px;
+  letter-spacing: 1px;
+  background-color: transparent;
+  color: #9D9D9D;
+  border:2px solid #9D9D9D;
+  border-radius: 0px;
+  transition: all 0.25s ease;
+  &:hover{
+    background-color: transparent;
+    border:2px solid #9D9D9D;
+    color: #9D9D9D;
+  }
+}
+
+.cursor-pointer {
+  cursor: pointer;
+}
+
+th.img-column {
+  width: 50% !important;
+}
+
+th.name-column {
+  width: 10% !important;
+}
+
+th.unselect-column {
+  width: 40% !important;
+}
+
+th.img-column-with-checkbox {
+  width: 50% !important;
+  font-size: 16px;
+}
+
+th.name-column-with-checkbox {
+  width: 45% !important;
+  font-size: 16px;
+  text-align: right;
+}
+
+table.classroom-table {
+  width: 100%;
+}
+
+.classroom-table thead,
+.classroom-table tbody,
+.classroom-table tr,
+.classroom-table td,
+.classroom-table th {
+  display: block;
+}
+
+.classroom-table tr:after {
+    content: ' ';
+    display: block;
+    visibility: hidden;
+    clear: both;
+}
+
+.classroom-table thead th {
+    height: 35px !important;
+}
+
+.classroom-table tbody {
+    max-height: 270px;
+    overflow-y: auto;
+}
+
+.classroom-table thead { }
+
+
+.classroom-table tbody td,
+.classroom-table thead th {
+    width: 100%;
+    float: left;
+}
+
+.classroom-table .check-box {
+  width: 5%;
+}
+
+.classroom-table td.check-box input {
+  margin-top: 10px !important;
+}
+
+.fixed-table-container .classroom-table tbody .selected td {
+  background-color: transparent;
+}
+
+.btn-grades{
+  font-family: 'Maitree', serif;
+  background-color: transparent;
+  margin-top: -3px;
+}
+
+.m-left-10{
+  margin-left: 10px;
+}
+
+.m-bottom-15{
+  margin-bottom: 15px;
+}
