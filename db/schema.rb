@@ -257,9 +257,9 @@ ActiveRecord::Schema.define(version: 20190115072425) do
 
   create_table "expense_items", force: :cascade do |t|
     t.integer "expense_id"
-    t.string  "detail"
-    t.integer "amount"
-    t.float   "cost"
+    t.string  "detail",     null: false
+    t.integer "amount",     null: false
+    t.float   "cost",       null: false
     t.index ["expense_id"], name: "index_expense_items_on_expense_id", using: :btree
   end
 
@@ -276,9 +276,9 @@ ActiveRecord::Schema.define(version: 20190115072425) do
   end
 
   create_table "expenses", force: :cascade do |t|
-    t.datetime "effective_date"
+    t.datetime "effective_date",       null: false
     t.string   "expenses_id"
-    t.string   "detail"
+    t.string   "detail",               null: false
     t.datetime "created_at",           null: false
     t.datetime "updated_at",           null: false
     t.datetime "deleted_at"
@@ -495,6 +495,8 @@ ActiveRecord::Schema.define(version: 20190115072425) do
     t.string   "round"
     t.string   "check_date"
     t.integer  "list_id"
+    t.datetime "deleted_at"
+    t.index ["deleted_at"], name: "index_roll_calls_on_deleted_at", using: :btree
     t.index ["list_id"], name: "index_roll_calls_on_list_id", using: :btree
     t.index ["student_id", "list_id", "check_date", "round"], name: "index_roll_calls_uniq_roll", unique: true, using: :btree
     t.index ["student_id"], name: "index_roll_calls_on_student_id", using: :btree
@@ -524,6 +526,7 @@ ActiveRecord::Schema.define(version: 20190115072425) do
     t.integer  "logo_file_size"
     t.datetime "logo_updated_at"
     t.text     "payroll_slip_header"
+    t.string   "account_number"
   end
 
   create_table "site_configs", force: :cascade do |t|
@@ -541,11 +544,18 @@ ActiveRecord::Schema.define(version: 20190115072425) do
     t.boolean "export_ktb_payroll",                   default: false
     t.boolean "outstanding_notification",             default: false
     t.boolean "slip_carbon",                          default: false
+<<<<<<< HEAD
     t.string  "default_locale",                       default: "th"
     t.boolean "enable_expenses",                      default: false
     t.string  "expense_tag_tree"
     t.boolean "export_kbank_payroll",                 default: false
     t.boolean "enable_quotation",                     default: false
+=======
+    t.boolean "export_kbank_payroll",                 default: false
+    t.string  "default_locale",                       default: "th"
+    t.boolean "enable_expenses",                      default: false
+    t.string  "expense_tag_tree"
+>>>>>>> expenses-v2
   end
 
   create_table "skills", force: :cascade do |t|

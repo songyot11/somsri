@@ -435,6 +435,34 @@ describe 'Abilities', js: true do
       expect(page).to have_content 'Keep me signed in'
     end
 
+    it 'can goto setting expense tags' do
+      visit "/somsri#/setting/expenses_tag"
+      sleep(1)
+      expect(page).to have_current_path '/users/sign_in'
+      expect(page).to have_content 'Keep me signed in'
+    end
+
+    it 'can goto expenses list' do
+      visit "/somsri#/expenses"
+      sleep(1)
+      expect(page).to have_current_path '/users/sign_in'
+      expect(page).to have_content 'Keep me signed in'
+    end
+
+    it 'can goto create expenses' do
+      visit "/somsri#/expenses/new"
+      sleep(1)
+      expect(page).to have_current_path '/users/sign_in'
+      expect(page).to have_content 'Keep me signed in'
+    end
+
+    it 'can goto edit expenses' do
+      visit "/somsri#/expenses/1"
+      sleep(1)
+      expect(page).to have_current_path '/users/sign_in'
+      expect(page).to have_content 'Keep me signed in'
+    end
+
   end
 
 end
