@@ -43,7 +43,6 @@ describe 'Abilities', js: true do
       sleep(1)
       expect(page).to have_current_path '/?locale=en#'
       expect(page).to have_content 'Payroll Invoice Attendance Employee Parent Student Alumnu'
-
     end
 
     it 'can goto payroll menu' do

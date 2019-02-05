@@ -1,0 +1,20 @@
+(function() {
+  'use strict';
+  angular.module('somsri.somsri.dashboard.service', [
+  ])
+  .service('vacationService', ['$http', function($http) {
+
+    this.getVacations = function() {
+      return $http.get('/vacations/dashboard')
+    }
+    this.newVacation = function(data) {
+      return $http.post('/vacations', data)
+    }
+    this.deleteVacation = function(id) {
+      return $http.delete('/vacations/' + id)
+    }
+    this.getVacationConfigs = function() {
+      return $http.get('/vacation_configs')
+    }
+  }]);
+})();

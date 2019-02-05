@@ -1,0 +1,31 @@
+(function() {
+  'use strict';
+  angular.module('somsri.payroll.repair_modal', [
+  ])
+  .controller('repairModalCtrl', ['$scope', '$uibModalInstance','$rootScope', function($scope, $uibModalInstance ,$rootScope) {
+    this.message = $scope.message;
+    this.name = $rootScope.item_name_repair
+    this.serial_number = $rootScope.serial_number_repair
+    this.reason = $rootScope.reason_repair
+    $rootScope.item_name_repair = null
+    $rootScope.serial_number_repair = null
+    $rootScope.reason_repair = null
+
+    this.ok = function() {
+
+      $rootScope.repair_item_name = this.name
+      $rootScope.repair_serial_number = this.serial_number
+      if (!this.serial_number) {
+        $rootScope.repair_serial_number = "-"
+      }
+      $rootScope.repair_reason = this.reason
+
+      $uibModalInstance.close(true);
+    };
+
+    this.close = function () {
+      $uibModalInstance.close(false);
+    };
+
+  }]);
+})();

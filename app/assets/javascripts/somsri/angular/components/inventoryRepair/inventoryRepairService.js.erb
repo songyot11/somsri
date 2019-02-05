@@ -1,0 +1,66 @@
+(function() {
+	'use strict';
+	angular.module('somsri.somsri.inventory.repair.service', [])
+	.service('inventoryRepairService', ['$http', 'Upload', function($http, Upload) {
+		
+		this.newInventoryRepair = function(data) {
+			return $http.post('/inventory_repairs', data)
+		};
+
+		this.getInventoryRepair = function(page) {
+			return $http.get('/inventory_repairs',{
+				params: {
+					page: page
+				}
+			})
+		}
+		this.show = function(id) {
+   		return $http.get('/inventory_repairs/' + id)
+    };
+
+		this.removeInventoryRepair = function(id) {
+			return $http.delete('/inventory_repairs/' + id)
+		};
+
+		this.updateInventoryRepair = function(data, id) {
+			return Upload.upload({
+							url: '/inventory_repairs/' + id,
+							method: 'put',
+							data: { inventory_repairs: data }
+						});
+		};
+
+		// [:repair_notification, :confirm_accept, :rejected ,:sent_repair, :repairs_completed, :dispatch_to_employees]
+		this.repair_notification = function(id) {
+			return $http.put('/inventory_repairs/' + id + '/repair_notification')
+		}
+
+		this.rejected = function(id) {
+			return $http.put('/inventory_repairs/' + id + '/rejected')
+		}
+
+		this.confirm_accept = function(id) {
+			return $http.put('/inventory_repairs/' + id + '/confirm_accept')
+		}
+
+		this.sent_repair = function(id) {
+			return $http.put('/inventory_repairs/' + id + '/sent_repair')
+		}
+
+		this.repairs_completed = function(id) {
+			return $http.put('/inventory_repairs/' + id + '/repairs_completed')
+		}
+
+		this.dispatch_to_employees = function(id) {
+			return $http.put('/inventory_repairs/' + id + '/dispatch_to_employees')
+		}
+
+		this.createManageInventoryRepair = function(data, inventory_repair_id) {
+			return $http.post('/inventory_repairs/' + inventory_repair_id + '/manage_inventory_repairs', data)
+		}
+
+		this.updateManageInventoryRepair = function(data, inventory_repair_id ,id) {
+			return $http.put('/inventory_repairs/' + inventory_repair_id + '/manage_inventory_repairs/' + id, data)
+		}
+  }]);
+})();

@@ -1,20 +1,51 @@
 pipeline:
+  restore-cache:
+    image: drillster/drone-volume-cache
+    restore: true
+    mount:
+      - ./bundler
+    volumes:
+      - /tmp/cache:/cache
   build:
     image: plugins/docker
-    repo: aong/app
+    repo: bananacoding/somsri-business
     tags:
-      - 2.5
+      - 1.0.3
       - latest
     secrets: [ DOCKER_USERNAME, DOCKER_PASSWORD ]
-  kubectl:
-    image: komljen/drone-kubectl-helm
-    secrets: [ KUBERNETES_SERVER, KUBERNETES_CERT, KUBERNETES_TOKEN ]
-    kubectl: "get pods"
+    when:
+      branch: [feature/somsri_for_business]
+  rebuild-cache:
+    image: drillster/drone-volume-cache
+    rebuild: true
+    mount:
+      - ./bundler
+    volumes:
+      - /tmp/cache:/cache      
   deploy:
     image: sh4d1/drone-kubernetes
     kubernetes_template: deployment.yml
     kubernetes_namespace: default
     secrets: [ KUBERNETES_SERVER, KUBERNETES_CERT, KUBERNETES_TOKEN ]
+    when:
+      branch: [feature/somsri_for_business]
+  notify:
+    image: drillster/drone-email
+    from: noreply-drone@bananacoding.com
+    host: $EMAIL_HOST
+    username: $EMAIL_USERNAME
+    password: $EMAIL_PASSWORD
+    recipients:
+      - kraiwut@bananacoding.com
+      - wiriya@bananacoding.com
+      - tawan@bananacoding.com
+      - jirapong@bananacoding.com
+      - manit@bananacoding.com
+      - sawakit@bananacoding.com
+    secrets: [ EMAIL_HOST, EMAIL_USERNAME, EMAIL_PASSWORD ]
+    when:
+      status: [ success, failure ]
+
 services:
   database:
     image: postgres

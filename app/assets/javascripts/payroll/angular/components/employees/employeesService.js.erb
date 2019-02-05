@@ -13,11 +13,17 @@
       return $http.get('/employees/' + id + '/calculate_deduction', { params: {payroll: data.payroll,employee_type: data.employee.employee_type,employee_pay_pvf: data.employee.pay_pvf,employee_pay_s_ins: data.employee.pay_social_insurance} } );
     };
 
-    this.getEmployee = function(id, payroll_id) {
-      if(payroll_id){
-        return $http.get('/employees/' + id, { params: { payroll_id: payroll_id } });
+    this.getEmployee = function(id, payroll_id, current_employee) {
+      if (!id) {
+        return $http.get('/employees/me')
       } else {
-        return $http.get('/employees/' + id);
+        if (id && id != 0) {
+          if(payroll_id){
+            return $http.get('/employees/' + id, { params: { payroll_id: payroll_id } });
+          } else {
+            return $http.get('/employees/' + id);
+          }
+        }
       }
     };
 

@@ -12,8 +12,9 @@
       </div>
     </div>
     <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
-      <% if current_page?("/") %><ul class="nav navbar-nav" style="display:none;"><% else %><ul class="nav navbar-nav"><% end %>
-        <li class="dropdown">
+      <% if user_signed_in? || employee_signed_in? %>
+        <ul class="nav navbar-nav">
+          <li class="dropdown">
           <a id="menu" class="dropdown-toggle text-navbar-left" data-toggle="dropdown" href="">
             <span ng-show="menu" ng-bind="menu"></span>
             <span ng-hide="menu"><%= @menu %></span>
@@ -23,6 +24,7 @@
             <%= render 'layouts/menu', is_topbar: true %>
           </ul>
         </li>
+      <% end %>
       </ul>
       <ul class="nav navbar-nav navbar-right dropdown" role="menu" aria-labelledby="dLabel">
           <% if user_signed_in? %>
@@ -54,6 +56,20 @@
               <% end %>
               <li><a class="dropdown-item" href="<%= destroy_user_session_path %>" rel="nofollow" data-method="DELETE">
                 <i class="fa fa-sign-out"></i> <%= t("sign_out")%></a></li>
+            </div>
+          <% elsif employee_signed_in? %>
+            <a class="nav-user avatar" href="javascript:void(0)" id="navbarDropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+              <%= current_employee.full_name.blank? ? current_employee.email : current_employee.full_name %>
+              <i class="fa fa-angle-down"></i>
+            </a>
+            <div class="dropdown-menu on-nav-bar" aria-labelledby="navbarDropdownMenuLink">
+              <li><a class="dropdown-item" href=""><i class="fa fa-building-o" aria-hidden="true"></i> <%= t("company")%></a></li>
+              <li class="divider"></li>
+              <li><a class="dropdown-item" href="/main#/profile"><i class="fa fa-user" aria-hidden="true"></i></i> <%= t("profile")%></a></li>
+                            <li class="divider"></li>
+              <li><a class="dropdown-item" href="/somsri_payroll#/employees/<%= current_employee.id %>"><i class="fa fa-user" aria-hidden="true"></i></i> <%= t("profile1")%></a></li>
+              <li class="divider"></li>
+              <li><a class="dropdown-item" href="<%= destroy_employee_session_path %>" rel="nofollow" data-method="DELETE"><i class="fa fa-sign-out"></i> <%= t("sign_out")%></a></li>
             </div>
           <% else %>
 

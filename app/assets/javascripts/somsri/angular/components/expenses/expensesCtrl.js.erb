@@ -2,7 +2,7 @@
   'use strict';
   angular.module('somsri.somsri.expenses', [])
   .controller('expensesCtrl', ['$compile', '$scope', '$window', '$filter', '$rootScope', 'expensesService', '$timeout', 'translateFilter', '$uibModal', 'Upload', function($compile, $scope, $window, $filter, $rootScope, service, $timeout, translateFilter, $uibModal, Upload) {
-    $rootScope.menu = translateFilter("expense")
+    $rootScope.menu = translateFilter("receipt")
     var ctrl = this
     var angularScopeRoot = 'angular.element(document.getElementById("angularCtrl")).scope().$root'
     var angularScopeExpenses = 'angular.element(document.getElementById("angularCtrl")).scope().expensesCtrl'

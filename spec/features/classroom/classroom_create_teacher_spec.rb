@@ -76,10 +76,10 @@ describe 'Classroom Create Teacher', js: true do
     click_button("+ เลือกคุณครู")
     eventually { expect(page).to have_content("นาย สมจิตร เป็นนักมวย") }
     eventually { expect(page).to have_content("นาง สมใจ เป็นคน") }
-    click_button("+ สร้าง คุณครู")
+    click_button("+ สร้างคุณครูใหม่")
     sleep(1.5)
     within('div#create-member-modal') do
-      eventually { expect(page).to have_content("สร้าง คุณครู") }
+      eventually { expect(page).to have_content("สร้างคุณครูใหม่") }
       fill_in "ชื่อ - นามสกุล",  with: "นางสาว ครูใหม่ ไฟแรง"
       fill_in "ชื่อเล่น",  with: "ไฟแรงๆ"
       click_button('บันทึก')
@@ -101,10 +101,10 @@ describe 'Classroom Create Teacher', js: true do
     click_button("+ เลือกคุณครู")
     eventually { expect(page).to have_content("นาย สมจิตร เป็นนักมวย") }
     eventually { expect(page).to have_content("นาง สมใจ เป็นคน") }
-    click_button("+ สร้าง คุณครู")
+    click_button("+ สร้างคุณครูใหม่")
     sleep(1)
     within('div#create-member-modal') do
-      eventually { expect(page).to have_content("สร้าง คุณครู") }
+      eventually { expect(page).to have_content("สร้างคุณครูใหม่") }
       click_button('ยกเลิก')
     end
     sleep(1)

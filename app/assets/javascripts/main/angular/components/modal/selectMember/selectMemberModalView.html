@@ -1,17 +1,17 @@
 <div id="select-member-modal" class="modal-body">
   <div class="row">
     <div class="col-xs-12">
-      <h3>{{ 'chose_type' | translate }} {{ selectMember.options.label }}</h3>
+      <h3>{{ 'select' | translate }}{{ selectMember.options.label }}</h3>
     </div>
   </div>
   <div class="row bt-toolbar">
     <div class="col-xs-6 col-xs-offset-6">
-      <button ng-click="selectMember.createMember()" class="btn btn-custom btn-blue pull-right">+ {{ 'create' | translate }} {{ selectMember.options.label }}</button>
+      <button ng-click="selectMember.createMember()" class="btn btn-custom btn-blue pull-right">+ {{ 'create' | translate }}{{ selectMember.options.label }}{{ 'new' | translate }}</button>
     </div>
   </div>
   <div class="row">
     <div class="col-xs-12">
-      <table id="member-select-list" class="classroom-table table-with-img-profile table table-striped" data-toggle="table" data-locale="{{ 'locale' | translate }}"></table>
+      <table id="member-select-list" class="classroom-table table-with-img-profile table table-striped" data-toggle="table"></table>
     </div>
   </div>
   <div class="space30"></div>

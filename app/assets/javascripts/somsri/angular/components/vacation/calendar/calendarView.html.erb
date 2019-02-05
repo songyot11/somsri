@@ -1,0 +1,137 @@
+<div class="container">
+  <div class="row mt-5">
+    <div class="col-md-5 col-sm-7 heading">
+      {{ 'holiday_calendar' | translate }} <span><i class="fa fa-share-alt color-light-blue" style="cursor: pointer;" data-toggle="modal" data-target="#shareHolidayModal"aria-hidden="true"></i> </span>
+    </div>
+    <div class="col-md-1 col-sm-1 p-0 text-center">
+      <p class="font-13 mt-60"><span class="dot purple mr-5"></span>{{ 'sick_leave' | translate }}</p>
+    </div>
+    <div class="col-md-1 col-sm-1 p-0 text-center">
+      <p class="font-13 mt-60"><span class="dot blue mr-5"></span>{{ 'vacation_leave' | translate }}</p>
+    </div>
+    <div class="col-md-1 col-sm-1 p-0 text-center">
+      <p class="font-13 mt-60"><span class="dot green mr-5"></span>{{ 'switch_date' | translate }}</p>
+    </div>
+    <div class="col-md-1 col-sm-1 p-0 text-center">
+      <p class="font-13 mt-60"><span class="dot dark-gray mr-5"></span>{{ 'sick_leave' | translate }}</p>
+    </div>
+    <div class="col-md-3 col-sm-0"></div>
+  </div>
+  <div class="row">
+    <div class="col-md-9 content-wrapper mt-5">
+      <div id="calendar"></div>
+    </div>
+    <div class="col-md-3 pl-20 pt-10 pr-0">
+      <div class="row">
+        <div class="col-md-7 pr-0 font-16 color-orange">
+          {{ 'holiday_of_year' | translate }} {{ calendar.year }}
+        </div>
+        <div class="col-md-5 font-14 text-right">
+          <a class="color-light-green" style="cursor: pointer;" data-toggle="modal" data-target="#addHolidayModal" ng-show="calendar.isAdmin"><i class="fa fa-plus" aria-hidden="true"></i> {{ 'create_holiday' | translate }}</a>
+        </div>
+      </div>
+      <hr class="dark mt-5 mb-5 mr-0" />
+      <div class="row" ng-repeat="holiday in calendar.holidays">
+        <div class="col-md-1"><span class="dot small blue"></span></div>
+        <div class="col-md-2 p-0">{{ holiday.days }}</div>
+        <div class="col-md-3 pl-0">{{ holiday.month }}</div>
+        <div class="col-md-4 pl-0 pr-0">{{ holiday.name }}</div>
+        <div class="col-md-1 text-right" ng-click="calendar.deleteHoliday(holiday.id)" ng-show="calendar.isAdmin">
+          <a class="color-red" style="cursor: pointer;"><i class="fa fa-trash" aria-hidden="true"></i></a>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- Add Holiday Modal -->
+<div class="modal" id="addHolidayModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header pl-0 pb-5">
+        <button type="button" class="close" data-dismiss="modal" aria-hidden="true" ng-disabled="calendar.isSaving">&times;</button>
+        <h4 class="modal-title font-21 color-light-green"><span><i class="fa fa-magic" aria-hidden="true"></i> </span>{{ 'create_holiday' | translate }}</h4>
+      </div>
+      <div class="modal-body px-0">
+        <div class="row">
+          <div class="col-md-6">
+            <div class="form-group">
+              <label class="font-12" for="start_date" ng-show="calendar.selectedVacationType != 'switch_date'">{{ 'vacation_from_date' | translate }}</label>
+              <label class="font-12" for="start_date" ng-show="calendar.selectedVacationType == 'switch_date'">{{ 'switch_from_date' | translate }}</label>
+              <input placeholder="&#61447;" id="start_date" type="text" class="form-control datepicker" uib-datepicker-popup="dd/MM/yyyy" datepicker-options="{showWeeks:false}" ng-model="calendar.start_date" is-open="calendar.startDatePopup.opened" close-text="Close" ng-change="calendar.optionsChange()" ng-click="calendar.openStartDatePopup()"/>
+              <span class="fa fa-calendar datepicker"></span>
+            </div>
+          </div>
+          <div class="col-md-6">
+            <div class="form-group">
+              <label class="font-12" for="end_date" ng-show="calendar.selectedVacationType != 'switch_date'">{{ 'vacation_to_date' | translate }}</label>
+              <label class="font-12" for="end_date" ng-show="calendar.selectedVacationType == 'switch_date'">{{ 'switch_to_date' | translate }}</label>
+              <input placeholder="&#61447;" id="end_date" type="text" class="form-control datepicker" uib-datepicker-popup="dd/MM/yyyy" datepicker-options="{showWeeks:false}" ng-model="calendar.end_date" is-open="calendar.endDatePopup.opened" close-text="Close" ng-change="calendar.optionsChange()" ng-click="calendar.openEndDatePopup()"/>
+              <span class="fa fa-calendar datepicker"></span>
+            </div>
+          </div>
+        </div>
+        <div class="row">
+          <div class="col-md-12">
+            <div class="form-group">
+              <label class="font-12" for="detail">{{ 'detail' | translate }}</label>
+              <textarea class="form-control border no-resize" ng-model="calendar.name"></textarea>
+            </div>
+          </div>
+        </div>
+        <div class="row">
+          <div class="col-md-12">
+            <label class="pl-5">
+                <input type="radio" name="yearType" value="thisYear" checked/>
+                {{ 'this_year' | translate }}
+            </label>
+            <label class="ml-5 pl-5">
+                <input type="radio" name="yearType" value="everyYear" disabled/>
+                {{ 'every_year' | translate }}
+            </label>
+          </div>
+        </div>
+      </div>
+      <div class="modal-footer">
+        <a class="btn btn-submit btn-light-green" ng-click="calendar.submitNewHoliday();" ng-disabled="calendar.isSaving">{{ 'save' | translate }}</a>
+        <button type="button" class="btn btn-cancel-outline" data-dismiss="modal" ng-disabled="calendar.isSaving">{{ 'cancel' | translate }}</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- Share Holiday Modal -->
+<div class="modal" id="shareHolidayModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-body" id="modal-body">
+        <div class="row">
+          <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+        </div>
+        <div class="space20"></div>
+        <div class="row">
+          <h3 class="font-weight-bold text-center">Your calendar Sharing URL</h3>
+        </div>
+        <div class="row">
+          <p class="font-14 text-center color-gray">Copy and paste the line below into email, chats or browsers.</p>
+        </div>
+        <div class="row mt-5">
+          <div class="col-md-1"></div>
+          <div class="col-md-10 fa-border">
+            <h5 class="font-weight-bold text-center color-light-blue"><a href="{{calendar.shareHolidayUrl}}" id="shareHolidayUrl">{{ calendar.shareHolidayUrl }}</a><span><i class="fa fa-files-o fa-pull-right mr-5" style="cursor: pointer;" ng-click="calendar.copyToClipboard()"></i></span></h5>
+          </div>
+          <div class="col-md-1"></div>
+        </div>
+        <div class="space20"></div>
+        <div class="space20"></div>
+        <div class="row">
+          <div class="col-md-4"></div>
+          <div class="col-md-4 justify-content-center">
+            <button class="btn btn-custom lg btn-light-green" data-dismiss="modal">{{ 'close' | translate }}</button>
+          </div>
+          <div class="col-md-4"></div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

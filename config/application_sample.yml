@@ -6,6 +6,7 @@ AWS_REGION: ap-southeast-1
 S3_BUCKET_NAME: somsri-dev
 AWS_ACCESS_KEY_ID:
 AWS_SECRET_ACCESS_KEY:
+BIND_ON: 3000
 
 production:
  PDFTK_PATH: /usr/local/bin/pdftk

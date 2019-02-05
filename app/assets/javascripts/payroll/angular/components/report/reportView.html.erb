@@ -49,6 +49,12 @@
                   <button>{{ "export_ktb_payroll" | translate }}</button>
                 </a>
               </li>
+              <li ng-show="report.export_kbank_payroll">
+                <a ng-href="/payrolls?effective_date={{report.currentEffectiveDate['date_time'] | encodeString }}&kbank_salary_txt=true"
+                  target="_blank">
+                  <button>{{ "export_kbank_payroll" | translate }}</button>
+                </a>
+              </li>
             </ul>
           </div>
         </div>

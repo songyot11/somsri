@@ -17,6 +17,7 @@ function printStudent(){
           '<div class="list-page">' +
             '<div class="row">' +
               '<div id="student-list-header" class="col-xs-12 text-center">' +I18n.t("topic")+ data.school_year +
+
               '</div>' +
             '</div>' +
             '<div class="space10"></div>' +
