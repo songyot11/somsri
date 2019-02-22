@@ -86,7 +86,9 @@ class EmployeesController < ApplicationController
       employee: @employee,
       employee_display_name: @employee.full_name,
       payroll: payroll,
-      tax_reduction: tax_reduction
+      tax_reduction: tax_reduction,
+      current_employee: current_employee.present?,
+      current_user: current_user.present?
     }
   end
 
@@ -189,6 +191,27 @@ class EmployeesController < ApplicationController
     render json: result, status: :ok
   end
 
+  def me
+    authorize! :manage, Employee
+    @employee = Employee.with_deleted.find(current_employee.id)
+    tax_reduction = @employee.tax_reduction
+    if params[:payroll_id]
+      payroll = @employee.payroll(params[:payroll_id])
+    else
+      payroll = @employee.lastest_payroll
+    end
+    render json: {
+      enable_rollcall: SiteConfig.get_cache.enable_rollcall,
+      img_url: @employee.img_url.exists? ? @employee.img_url.expiring_url(10, :medium) : nil ,
+      employee: @employee,
+      employee_display_name: @employee.full_name,
+      payroll: payroll,
+      tax_reduction: tax_reduction,
+      current_employee: current_employee.present?,
+      current_user: current_user.present?
+    }
+  end
+
   private
   def employee_params
     result = params.require(:employee).permit([
@@ -219,7 +242,10 @@ class EmployeesController < ApplicationController
       :pay_pvf,
       :pay_social_insurance,
       :grade_id,
-      :classroom_id
+      :classroom_id,
+      :password,
+      :note,
+      :comment
     ]).to_h
     return result
   end

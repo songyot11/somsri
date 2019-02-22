@@ -1,0 +1,222 @@
+(function() {
+	angular.module('somsri.somsri.update_inventory_request_step5', [])
+    .controller('updateInventoryRequestStep5Ctrl', ['$compile', '$scope', '$window', '$filter', '$rootScope', '$timeout', 'translateFilter', '$uibModal', 'Upload', '$state', "inventoryRequestService", "settingService" ,
+     function($compile, $scope, $window, $filter, $rootScope, $timeout, translateFilter, $uibModal, Upload, $state, service, settingService) {
+	$rootScope.menu = translateFilter("inventory_request")
+		var ctrl = this
+		ctrl.real_id = $state.params.id;
+		ctrl.step = $rootScope.step
+
+		function initData() {
+      if (!ctrl.real_id) { 
+        return
+      }
+
+      service.show(ctrl.real_id).then(function(resp) {
+        var value = resp.data
+        ctrl.datas = resp.data
+        ctrl.name = value.item_name
+        ctrl.description = value.description
+        ctrl.price = value.price
+        ctrl.user_name = value.user_name
+        ctrl.request_date = new Date(value.request_date)
+        ctrl.employee_id_request = value.employee_id
+        ctrl.inventory_status = value.inventory_status
+        ctrl.manage_inventory = value.manage_inventory
+        ctrl.step_to = ctrl.manage_inventory.step
+        ctrl.manage_inventory_id = ctrl.manage_inventory.id
+        ctrl.request_type = value.request_type
+        if (ctrl.request_type == "request") {
+          ctrl.show_text = false
+          ctrl.change_request_type = translateFilter("withdraw_equipment")
+        } else {
+          ctrl.show_text = true
+          ctrl.change_request_type = translateFilter("new_request_inventory")
+        }
+        if (value.request_date) {
+          ctrl.datas.request_date = new Date(ctrl.datas.request_date)
+        } else {
+          ctrl.datas.request_date = null
+        }
+
+        if (value.define_return_date) {
+          ctrl.define_return_date = $filter('date')(new Date(value.define_return_date), 'dd/MM/yyyy')
+        } else {
+          ctrl.define_return_date = "-"
+        }
+        checkStep()
+      })
+    }
+
+    function setData() {
+    	//step1
+			ctrl.save_by = ctrl.manage_inventory.step1.save_by
+			//step2
+			ctrl.save_by_step2 = ctrl.manage_inventory.step2.save_by
+			ctrl.date_purchase_save = ctrl.manage_inventory.step2.date_purchase//$filter('date')(new Date(ctrl.manage_inventory.step2.date_purchase), 'dd/MM/yyyy')
+			ctrl.date_send_save = ctrl.manage_inventory.step2.date_send//$filter('date')(new Date(ctrl.manage_inventory.step2.date_send), 'dd/MM/yyyy')
+      ctrl.date_purchase = $filter('date')(new Date(ctrl.manage_inventory.step2.date_purchase), 'dd/MM/yyyy')
+      ctrl.date_send = $filter('date')(new Date(ctrl.manage_inventory.step2.date_send), 'dd/MM/yyyy')
+			ctrl.price_step2 = ctrl.manage_inventory.step2.price
+			//step3
+			ctrl.get_date_save	= ctrl.manage_inventory.step3.get_date
+      ctrl.get_date = $filter('date')(new Date(ctrl.manage_inventory.step3.get_date), 'dd/MM/yyyy')
+  		ctrl.buy_slip =	ctrl.manage_inventory.step3.buy_slip
+      if (ctrl.manage_inventory.step3.end_warranty) {
+        ctrl.end_warranty_save  = ctrl.manage_inventory.step3.end_warranty 
+        ctrl.end_warranty =  $filter('date')(new Date(ctrl.manage_inventory.step3.end_warranty), 'dd/MM/yyyy') 
+      } else {
+        ctrl.end_warranty_save = undefined
+        ctrl.end_warranty = "-"
+      }
+
+  		ctrl.save_by_step3 = ctrl.manage_inventory.step3.save_by
+  		//step4
+  		ctrl.employee_name = ctrl.manage_inventory.step4.send_to_employee_name
+  		ctrl.employee_id = ctrl.manage_inventory.step4.send_to_employee_id
+  		ctrl.save_by_step4 = ctrl.manage_inventory.step4.save_by
+    }
+
+		function checkStep() {
+			if(!ctrl.step) {
+				
+				if (ctrl.step_to == 4 || ctrl.step_to == 5) {
+					
+					setData()
+				} else {
+					if (ctrl.real_id) {
+						$rootScope.updateInventoryRequest(ctrl.real_id)
+					}
+				}
+			} else {
+				//step1
+				ctrl.save_by = ctrl.step.step1.save_by
+				//step2
+				ctrl.save_by_step2 = ctrl.step.step2.save_by
+        ctrl.date_purchase_save = ctrl.step.step2.date_purchase
+        ctrl.date_send_save = ctrl.step.step2.date_send
+				ctrl.date_purchase = $filter('date')(new Date(ctrl.step.step2.date_purchase), 'dd/MM/yyyy')
+				ctrl.date_send = $filter('date')(new Date(ctrl.step.step2.date_send), 'dd/MM/yyyy')
+				ctrl.price_step2 = ctrl.step.step2.price
+				//step3
+        ctrl.get_date_save = ctrl.step.step3.get_date
+				ctrl.get_date	= $filter('date')(new Date(ctrl.step.step3.get_date), 'dd/MM/yyyy')
+    		ctrl.buy_slip =	ctrl.step.step3.buy_slip
+        if (ctrl.step.step3.end_warranty) {
+          ctrl.end_warranty_save = ctrl.step.step3.end_warranty
+          ctrl.end_warranty =  $filter('date')(new Date(ctrl.step.step3.end_warranty), 'dd/MM/yyyy') 
+        } else {
+          ctrl.end_warranty_save = undefined
+          ctrl.end_warranty = "-"
+        }
+       
+    		ctrl.save_by_step3 = ctrl.step.step3.save_by
+    		//step4
+    		ctrl.employee_name = ctrl.step.step4.send_to_employee_name
+    		ctrl.employee_id = ctrl.step.step4.send_to_employee_id
+    		ctrl.save_by_step4 = ctrl.step.step4.save_by
+			}
+		}
+
+		ctrl.save = function() {
+      var changePrice = parseFloat(ctrl.price)
+      if (ctrl.price_step2) {
+        changePrice = parseFloat(ctrl.price_step2)
+      }
+      var checngeRequestDate = ctrl.datas.request_date//$filter('date')(new Date(ctrl.datas.request_date), 'yyyy-MM-ddTh:MM:ss')
+
+      var inventory_datas = {
+        user_name: ctrl.user_name,
+        item_name: ctrl.name,
+        description: ctrl.description,
+        price: changePrice,
+        request_date: checngeRequestDate,
+        employee_id: ctrl.employee_id_request
+      }
+
+      if (ctrl.real_id) {
+        updateInventoryRequest(inventory_datas, ctrl.real_id)
+      } 
+    }
+
+    function updateInventoryRequest(inventory_datas, id) {
+      var data = {
+        manage_inventories_requests: {
+          step: 5,
+          accept: "accept",
+          save_by: ctrl.save_by,
+          save_by_step2: ctrl.save_by_step2,
+          date_purchase: ctrl.date_purchase_save,
+          date_send: ctrl.date_send_save,
+          price: ctrl.price_step2,
+          save_by_step3: ctrl.save_by_step4,
+          get_date: ctrl.get_date_save,
+          buy_slip: ctrl.buy_slip,
+          end_warranty: ctrl.end_warranty_save,
+          save_by_step4: ctrl.save_by_step4,
+          send_to_employee_name: ctrl.employee_name,
+          send_to_employee_id: ctrl.employee_id,
+          save_by_step5: "Admin"//ctrl.name_setting
+        }
+      }
+      $rootScope.step = null
+      service.updateInventoryRequest(inventory_datas, id).then(function(resp) {
+        if (!ctrl.manage_inventory_id) {
+          updateManageInventory(data)
+        } else {
+          createManageInventory(data)
+        }
+      }, function(e){
+
+      })
+    }
+
+    ctrl.backToRooView = function() {
+      $rootScope.openInventory(1)
+    }
+
+    function beforeBackToRootView() {
+      if (ctrl.step_to == 1) {
+        service.pending(ctrl.real_id).then(function(resp) {
+          $rootScope.openInventory(1)
+        })
+      } else if (ctrl.step_to == 2) {
+        service.purchasing(ctrl.real_id).then(function(resp) {
+          $rootScope.openInventory(1)
+        })
+      } else if (ctrl.step_to == 3) {
+        service.done(ctrl.real_id).then(function(resp) {
+          $rootScope.openInventory(1)
+        })
+      } else {
+        $rootScope.openInventory(1)
+      }
+    }
+
+    ctrl.cancel = function() {
+      beforeBackToRootView()
+      // $window.history.back();
+    }
+
+    function createManageInventory(data) {
+      service.createManageInventoryRequest(data, ctrl.real_id).then(function(resp) {
+        $rootScope.openInventory(1)
+      })
+    }
+
+    function updateManageInventory(data) {
+      service.updateManageInventoryRequest(data, ctrl.real_id , ctrl.manage_inventory_id).then(function(resp) {
+        $rootScope.openInventory(1)
+      })
+    }
+
+		function getSetting() {
+      settingService.getSetting().then(function(resp) {
+        ctrl.name_setting = resp.data.user.full_name
+      })
+    }
+
+    getSetting()
+    initData()
+	}]);
+})();

@@ -252,6 +252,7 @@ describe 'Student Report', js: true do
       expect(page).to have_selector("tr.ng-scope", count: 10)
       expect(page).to have_selector(".pagination-prev.ng-scope a")
       expect(page).to have_selector(".pagination-next.ng-scope a")
+
       expect(page).to have_content("96,000.00 13,750.00 109,750.00")
     end
 

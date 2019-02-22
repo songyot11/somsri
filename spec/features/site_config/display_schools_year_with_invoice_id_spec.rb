@@ -71,6 +71,6 @@ describe 'SiteConfig Display Schools Year With Invoice Id', js: true do
     not_display_schools_year_with_invoice_id
     visit "/invoices/#{invoice.id}/slip.pdf?show_as_html=true"
     sleep(1)
-    expect(page).to have_content("เลขใบเสร็จ #{invoice.id}") 
+    expect(page).to have_content("เลขใบเสร็จ #{invoice.id}")
   end
 end

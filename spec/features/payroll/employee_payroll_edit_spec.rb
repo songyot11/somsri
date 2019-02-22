@@ -140,7 +140,6 @@ describe 'Payroll Edit', js: true do
     eventually { expect(payroll.position_allowance).to eq 0.00 }
     eventually { expect(page).to have_content /นาง สมศรี เป็นชื่อแอพ.*1,000.00 0.00 0.00 0.00 0.00 0.00 0.00 0.00 0.00 0.00 0.00 0.00 0.00 0.00 1,000.00/i }
     eventually { expect(page).to have_content /รวมทั้งหมด.*2,000.00 0.00 0.00 0.00 0.00 0.00 0.00 0.00 0.00 0.00 0.00 0.00 0.00 0.00 2,000.00/i }
-    
     sleep(1)
     first('a[editable-number="employee.position_allowance"]').click
     sleep(1)
@@ -148,8 +147,10 @@ describe 'Payroll Edit', js: true do
     sleep(1)
     find('button[type="submit"]').click
     sleep(1)
-    eventually { expect(payroll.position_allowance).to eq 0.00 }
-    eventually { expect(page).to have_content ("5,000.00") }
+
+    payroll = Payroll.find(payrolls[0].id)
+
+    eventually { expect(payroll.position_allowance).to eq 5000.0 }
     eventually { expect(page).to have_content /สมศรี เป็นชื่อแอพ.*1,000.00 0.00 5,000.00 0.00 0.00 0.00 0.00 0.00 0.00 0.00 0.00 0.00 0.00 0.00 6,000.00/i }
     eventually { expect(page).to have_content /รวมทั้งหมด.*2,000.00 0.00 5,000.00 0.00 0.00 0.00 0.00 0.00 0.00 0.00 0.00 0.00 0.00 0.00 7,000.00/i }
   end

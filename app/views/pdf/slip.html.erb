@@ -62,6 +62,9 @@
               <td class="text-right font-roboto">
                 <% employee[:payroll][:pay_orders].each_with_index do |pay_order, i| %>
                   <div><%= number_with_precision(pay_order[1][:value], precision: 2, delimiter: ',') %></div>
+                  <% if pay_order[1][:name].include? "เงินสอนพิเศษ" %>
+                    <div>&nbsp;</div>
+                  <% end %>
                 <% end %>
               </td>
 
@@ -73,6 +76,9 @@
               <td class="text-right font-roboto">
                 <% employee[:payroll][:fee_orders].each do |fee_order| %>
                   <div><%= number_with_precision(fee_order[1][:value], precision: 2, delimiter: ',') %></div>
+                  <% if fee_order[1][:name].include? "เงินสะสมกองทุนสงเคราะห์" %>
+                    <div>&nbsp;</div>
+                  <% end %>
                 <% end %>
               </td>
             </tr>

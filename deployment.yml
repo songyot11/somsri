@@ -7,10 +7,10 @@ metadata:
     kompose.version: 1.13.0 (84fa826)
   creationTimestamp: null
   labels:
-    io.kompose.service: app
-  name: app
+    io.kompose.service: business
+  name: business
 spec:
-  replicas: 2
+  replicas: 1
   minReadySeconds: 5
   strategy:
     type: RollingUpdate
@@ -23,14 +23,15 @@ spec:
     metadata:
       creationTimestamp: null
       labels:
-        io.kompose.service: app
+        io.kompose.service: business
     spec:
       containers:
-      - name: app
-        image: aong/app:2.4
+      - name: business
+        image: bananacoding/somsri-business:1.0.3
+        imagePullPolicy: Always
         env:
         - name: DB_HOST
-          value: postgres
+          value: pg-business
         - name: DB_PASS
           valueFrom:
             secretKeyRef:
@@ -46,9 +47,13 @@ spec:
         - name: PDFTK_PATH
           value: ''''''
         - name: SENDGRID_PASSWORD
-          value: ''''''
+        - name: SENDGRID_PASSWORD
+          valueFrom:
+            secretKeyRef:
+              name: "sendgrid-password"
+              key: "sendgrid-password"
         - name: SENDGRID_USERNAME
-          value: ''''''
+          value: 'apikey'
         - name: RAILS_ENV
           value: "production"
         - name: BIND_ON
@@ -74,4 +79,6 @@ spec:
             cpu: 700m
             memory: 700Mi
       restartPolicy: Always
+      imagePullSecrets:
+        - name: myregistrykey
 status: {}

@@ -59,6 +59,45 @@
         }
       }).
       state({
+        url: '/employees/me',
+        name: 'employee_me',
+        templateUrl: "<%= asset_path('payroll/angular/components/employees/employee/employeeDetailsView.html') %>",
+        controller: 'employeeDetailsCtrl as employee',
+        resolve: {
+          resources: ['$ocLazyLoad', function($ocLazyLoad) {
+            return $ocLazyLoad.load([
+              ASSETS.somsri.payroll.employee_details
+            ]);
+          }]
+        }
+      }).
+      state({
+        url: '/employees/:id/add_inventory_request',
+        name: 'add_inventory_request',
+        templateUrl: "<%= asset_path('payroll/angular/components/employees/employee/addInventory/employeeAddRequestView.html') %>",
+        controller: 'employeeAddRequestCtrl as inventory',
+        resolve: {
+          resources: ['$ocLazyLoad', function($ocLazyLoad) {
+            return $ocLazyLoad.load([
+              ASSETS.somsri.payroll.add_inventory_request
+            ]);
+          }]
+        }
+      }).
+      state({
+        url: '/employees/:id/inventory_details/:inventory_id',
+        name: 'employee_inventory_details',
+        templateUrl: "<%= asset_path('payroll/angular/components/employees/employee/inventoryDetails/inventoryDetailsView.html') %>",
+        controller: 'inventoryDetailsCtrl as inventory',
+        resolve: {
+          resources: ['$ocLazyLoad', function($ocLazyLoad) {
+            return $ocLazyLoad.load([
+              ASSETS.somsri.payroll.employee_inventory_details
+            ]);
+          }]
+        }
+      }).
+      state({
         url: '/report',
         name: 'report',
         templateUrl: "<%= asset_path('payroll/angular/components/report/reportView.html') %>",

@@ -1,0 +1,145 @@
+<div class="container" >
+	<div class="row">
+		<div id="inventory">
+			<div class="col-xs-12">
+				<div class="row">
+					<div class="col-xs-6 mb-20 pl-0">
+						<h1>{{ "detal_repair" | translate }}</h1>
+					</div>
+				</div>
+				<form ng-submit="inventory.save()">
+					<button type="submit" class="submit" style="display: none;"></button>
+					<div class="row report-content container-fluid panel-board">
+						<div class="tab-content">
+							<div class="row">
+								<div class="col-md-3">
+									<div class="form-group">
+										<label class="control-label" for="employee_name">{{"employee_name" | translate}}</label>
+										<div class="col-md-12">
+											<input class="form-control" autocomplete="off" type="text" id="employee_name" ng-model="inventory.employee_name" required="true">
+										</div>
+									</div>
+								</div>
+								<div class="col-md-3">
+									<div class="form-group">
+										<label class="control-label" for="item_name">{{"item_name" | translate}}</label>
+										<div class="col-md-12">
+											<input class="form-control" autocomplete="off" type="text" id="item_name" ng-model="inventory.item_name" required="true">
+										</div>
+									</div>
+								</div>
+								<div class="col-md-6">
+									<div class="form-group">
+										<label class="control-label" for="serial_number">{{"serial_number" | translate}}</label>
+										<div class="col-md-12">
+											<input class="form-control" autocomplete="off" type="text" id="inventory_serial_number" ng-model="inventory.serial_number" required="true">
+										</div>
+									</div>
+								</div>
+							</div>
+							<div class="row mt-20">
+								<div class="col-md-6">
+									<div class="form-group">
+										<label class="control-label" for="reason">{{"reason" | translate}}</label>
+										<div class="col-md-12">
+											<input class="form-control" autocomplete="off" type="text" id="reason" ng-model="inventory.reason" required="true">
+										</div>
+									</div>
+								</div>
+							</div>
+						</div>
+					</div>
+				</form>
+				<div class="row mt-20">
+						<div class="report-content container-fluid panel-board">
+							<ul class="step d-flex flex-nowrap">
+								<li class="step-item">
+									<a href="#!" class="">
+										<i class="fa fa-check fa-2x icon-in-step-repair1"></i>
+										<!-- <h3 class="text-in-step mt-0">1</h3>  -->
+										{{ "confirm_accept" | translate }}
+									</a>
+								</li>
+								<li class="step-item">
+									<a href="#!" class="">
+										<i class="fa fa-check fa-2x icon-in-step-repair1"></i>
+										<!--  <h3 class="text-in-step-repair2 mt-0">2</h3> -->
+										{{ "sent_repair" | translate }}
+									</a>
+								</li>
+								<li class="step-item active">
+									<a href="#!" class="">
+										<!-- <i class="fa fa-check fa-2x icon-in-step2"></i> --> 
+										<h3 class="text-in-step-repair3 mt-0">3</h3>
+										{{ "repairs_completed" | translate }}
+									</a>
+								</li>
+								<li class="step-item ">
+									<a href="#!" class="">
+										<!-- <i class="fa fa-check fa-2x icon-in-step"></i>  -->
+										<h3 class="text-in-step4 mt-0">4</h3>
+										{{ "dispatch_to_employees" | translate }}    
+									</a>
+								</li>
+							</ul> 
+							<form ng-submit="inventory.continue()">
+								<div class="row mt-50">
+									<div class="col-md-3">
+										<div class="form-group">
+											<label class="control-label" for="date">วันที่รับคืน</label>
+											<p class="input-group">
+												<input id="date" type="text" class="form-control numberic" uib-datepicker-popup="dd/MM/yyyy" ng-model="inventory.return_date" is-open="inventory.returnDatePopup.opened" close-text="Close" required="true"/>
+												<span class="input-group-btn">
+													<button type="button" class="btn btn-default" ng-click="inventory.openReturnDatePopup()"><i class="fa fa-calendar"></i></button>
+												</span>
+											</p>
+										</div>
+									</div>
+									<div class="col-md-3">
+										<div class="form-group">
+											<label class="control-label" for="price">ค่าใช้จ่าย</label>
+											<div class="col-md-12">
+												<input class="form-control" autocomplete="off" type="number" id="price" ng-model="inventory.price" ng-validate="number" ng-pattern="/^[0-9]+(\.[0-9]{1,2})?$/" step="0.01" required="true" parseFloat>
+											</div>
+										</div>
+									</div>
+									<div class="col-md-3">
+										<div class="form-group">
+											<label class="control-label" for="price">เลขที่ใบเสร็จ</label>
+											<div class="col-md-12">
+												<input class="form-control" autocomplete="off" type="text" id="" ng-model="inventory.receipt" required="true">
+											</div>
+										</div>
+									</div>
+								</div>
+								<div class="row mt-20">
+									<div class="col-md-2">
+										<button type="submit" class="btn btn-custom btn-continue ng-binding btn-block  padding-left10">{{ "continue" | translate }}</button>
+									</div>
+									<div class="col-md-2 pl-0">
+										<button type="button" class="btn btn-custom btn-gray ng-binding btn-block  padding-left10" ng-click="inventory.cancel()">{{ "cancel" | translate }}</button>
+									</div>
+								</div>
+							</form>
+							<div class="row mt-20">
+								<p class="pl-20" style="color: #B6B6B6;" >{{ "repair_date" | translate }} {{ inventory.repair_date }}  </p>
+								<p class="pl-20" style="color: #B6B6B6;" >{{ "supplier" | translate }} {{ inventory.supplier_name }}  </p>
+								<p class="pl-20" style="color: #B6B6B6;" >{{ "appointment_date" | translate }} {{ inventory.appointment_date }} ({{ "save_by" | translate }} {{ inventory.step2_save_by }})  </p>
+							</div>
+						</div>
+					</div>
+				<div class="footer-menu row mt-20">
+					<div class="pull-right text-right padding-left10">
+						<button type="button" class="btn btn-custom btn-gray ng-binding" ng-click="inventory.cancel()">{{ "cancel" | translate }}</button>
+					</div>
+					<div class="pull-right text-right padding-left10">
+						<button type="button" class="btn btn-custom btn-blue ng-binding" onclick="$('.submit').trigger('click')">{{ "save" | translate }}</button>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+</div>
+				
+				
+								

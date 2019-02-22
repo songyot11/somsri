@@ -1,0 +1,54 @@
+(function() {
+  'use strict';
+  angular.module('somsri.somsri.add_supplier_modal', [
+  ])
+  .controller('addSupplierModalCtrl', ['$scope', '$uibModalInstance','$rootScope','inventorySupplierService', function($scope, $uibModalInstance, $rootScope, inventorySupplierService) {
+    var ctrl = this
+    this.message = $scope.message;
+    this.detail = $scope.detail;
+    this.comment = ""
+
+    ctrl.addSupplier = function() {
+
+      if (!ctrl.supplierName) {
+        ctrl.supplierName = "-"
+      }
+
+      if (!ctrl.address) {
+        ctrl.address = "-"
+      }
+
+      if (!ctrl.phone_number) {
+        ctrl.phone_number = "-"
+      }
+
+      if (!ctrl.email) {
+        ctrl.email = "-"
+      }
+
+      var datas = {
+        suppiler: {
+          name: ctrl.supplierName,
+          address: ctrl.address,
+          phone_number: ctrl.phone_number,
+          email: ctrl.email
+        }
+      }
+      createSuppliers(datas)
+    }
+
+    function createSuppliers(data) {
+      inventorySupplierService.newSuppliers(data).then(function(resp) {
+        $rootScope.supplier_id = resp.data.id
+        $rootScope.supplier_name = resp.data.name
+        $uibModalInstance.close(true);
+      })
+    }
+
+    this.close = function () {
+      $uibModalInstance.close(false);
+    };
+    
+
+  }]);
+})();

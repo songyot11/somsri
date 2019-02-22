@@ -1,0 +1,56 @@
+<div id="supplier-modal-body">
+  <form ng-submit="supplier.addSupplier()">
+    <div class="modal-header">
+      <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true" ng-click="supplier.close()">&times;</span></button>
+      <h4 class="modal-title color-orange" id="supplier-modal">เพิ่มร้านค้า</h4>
+    </div>
+    <div class="modal-body">
+      <div class="row">
+        <div class="col-md-4">
+          <div class="form-group">
+            <label class="control-label" for="supplier-modal">{{ "supplier" | translate }}</label>
+            <div class="col-md-12">
+              <input class="form-control" autocomplete="off" type="text" id="supplier-modal" ng-model="supplier.supplierName" required="true">
+            </div>
+          </div>
+        </div>
+        <div class="col-md-8">
+          <div class="form-group">
+            <label class="control-label" for="address">{{ "address" | translate }}</label>
+
+            <div class="col-md-12">
+              <input class="form-control" autocomplete="off" type="text" id="address" ng-model="supplier.address">
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="row mt-20">
+        <div class="col-md-4">
+          <div class="form-group">
+            <label class="control-label" for="phone">{{ "phone_number" | translate }}</label>
+
+            <div class="col-md-12">
+              <input class="form-control" autocomplete="off" type="text" id="phone" ng-model="supplier.phone_number">
+            </div>
+          </div>
+        </div>
+        <div class="col-md-8">
+          <div class="form-group">
+            <label class="control-label" for="email">{{ "email" | translate }}</label>
+
+            <div class="col-md-12">
+              <input class="form-control" autocomplete="off" type="text" id="email" ng-model="supplier.email">
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="modal-footer">
+      <button type="submit" class="btn btn-custom btn-blue ng-binding" >{{ 'add' | translate}}</button>
+      <button type="button" class="btn btn-custom btn-gray ng-binding" ng-click="supplier.close()">{{ "cancel" | translate }}</button>
+    </div>
+  </form>
+</div>
+ 
+
+
