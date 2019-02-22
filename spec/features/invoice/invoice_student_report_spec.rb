@@ -250,7 +250,9 @@ describe 'Student Report', js: true do
       visit 'somsri_invoice#/student_report'
       sleep(5)
       expect(page).to have_selector("tr.ng-scope", count: 10)
-      expect(page).to have_content("First Previous 12 Next Last")
+      expect(page).to have_selector(".pagination-prev.ng-scope a")
+      expect(page).to have_selector(".pagination-next.ng-scope a")
+
       expect(page).to have_content("96,000.00 13,750.00 109,750.00")
     end
 
@@ -260,7 +262,8 @@ describe 'Student Report', js: true do
       all('li.pagination-page.ng-scope a').last.click
       sleep(5)
       expect(page).to have_selector("tr.ng-scope", count: 1)
-      expect(page).to have_content("First Previous 12 Next Last")
+      expect(page).to have_selector(".pagination-prev.ng-scope a")
+      expect(page).to have_selector(".pagination-next.ng-scope a")
       expect(page).to have_content("96,000.00 13,750.00 109,750.00")
     end
 

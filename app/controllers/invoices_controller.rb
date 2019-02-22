@@ -226,6 +226,19 @@ class InvoicesController < ApplicationController
         }) if pm[:is_cheque]
 
       invoice.save
+      
+      unless params['quotation'].blank? 
+        quotation_param = params['quotation']
+        
+        @quotation = Quotation.find(quotation_param['id'])
+        @quotation.update({quotation_status: 1}) if quotation_param['amount'] >= quotation_param['outstanding']
+        
+        QuotationInvoice.create({
+          quotation_id: quotation_param['id'],
+          invoice_id: invoice.id
+        })
+      end
+
       render json: { id: invoice.id }, status: :ok
     end
   end
@@ -279,7 +292,7 @@ class InvoicesController < ApplicationController
       semester: @invoice.semester,
       school_year: @invoice.school_year,
       school_year_en: (@invoice.school_year.to_i - 543).to_s,
-      create_year: @invoice.created_at.year + 543, 
+      create_year: @invoice.created_at.year + 543,
       payment_methods: [],
       remark: @invoice.remark,
       grade_name: grade_name,

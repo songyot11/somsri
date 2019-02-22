@@ -173,6 +173,7 @@
           title: translateFilter("total_cost"),
           sortable: true,
           align: "right",
+          formatter: filterCurrency
         },{
           field: 'menu',
           sortable: false,
@@ -210,6 +211,11 @@
               ctrl.paginateButtonMaxSize = 5;
               main_table.bootstrapTable('load', ctrl.datas);
             });
+      }
+
+      function filterCurrency(value, row, index) {
+        if (!value) { value = 0 }
+        return $filter('number')(value.toFixed(2), 2);
       }
 
       ctrl.optionsChange = function() {

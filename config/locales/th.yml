@@ -20,6 +20,181 @@
 # available at http://guides.rubyonrails.org/i18n.html.
 
 th:
+  user_name: ชื่อผู้ใช้
+  password: รหัสผ่าน
+  keep_me_signed_in: ให้ฉันอยู่ในระบบต่อไป
+  sign_in: เข้าสู่ระบบ
+  download_somsri_rollcall: ดาวน์โหลดโปรแกรมสมศรีสำหรับแอนดรอย
+  #Payroll
+  roll_download : ดาวน์โหลดโปรแกรมเช็คชื่อ
+  switch_language : เปลี่ยนภาษา
+  emp_name : ชื่อ
+  find : ค้นหา
+  current_month : เดือนปัจจุบัน
+  title : สมศรี - ระบบบริหารโรงเรียน 4.0
+  export: นำข้อมูลออก
+  date:
+    abbr_day_names:
+    - อา
+    - จ
+    - อ
+    - พ
+    - พฤ
+    - ศ
+    - ส
+    abbr_month_names:
+    -
+    - ม.ค.
+    - ก.พ.
+    - มี.ค.
+    - เม.ย.
+    - พ.ค.
+    - มิ.ย.
+    - ก.ค.
+    - ส.ค.
+    - ก.ย.
+    - ต.ค.
+    - พ.ย.
+    - ธ.ค.
+    day_names:
+    - อาทิตย์
+    - จันทร์
+    - อังคาร
+    - พุธ
+    - พฤหัสบดี
+    - ศุกร์
+    - เสาร์
+    formats:
+      default: "%d-%m-%Y"
+      long: "%d %B %Y"
+      short: "%d %b"
+    month_names:
+    -
+    - มกราคม
+    - กุมภาพันธ์
+    - มีนาคม
+    - เมษายน
+    - พฤษภาคม
+    - มิถุนายน
+    - กรกฎาคม
+    - สิงหาคม
+    - กันยายน
+    - ตุลาคม
+    - พฤศจิกายน
+    - ธันวาคม
+  datetime:
+    distance_in_words:
+      about_x_hours: ประมาณ %{count} ชั่วโมง
+      about_x_months: ประมาณ %{count} เดือน
+      about_x_years: ประมาณ %{count} ปี
+      almost_x_years: เกือบ %{count} ปี
+      half_a_minute: ครึ่งนาที
+      less_than_x_minutes: น้อยกว่า %{count} นาที
+      less_than_x_seconds: น้อยกว่า %{count} วินาที
+      over_x_years: มากกว่า %{count} ปี
+      x_days: "%{count} วัน"
+      x_minutes: "%{count} นาที"
+      x_months: "%{count} เดือน"
+      x_seconds: "%{count} วินาที"
+    prompts:
+      day: วัน
+      hour: ชั่วโมง
+      minute: นาที
+      month: เดือน
+      second: วินาที
+      year: ปี
+  errors:
+    format: "%{attribute} %{message}"
+    messages:
+      accepted: ต้องถูกยอมรับ
+      blank: ต้องไม่เว้นว่างเอาไว้
+      confirmation: ไม่ตรงกับการยืนยัน
+      empty: ต้องไม่เว้นว่างเอาไว้
+      equal_to: ต้องมีค่าเท่ากับ %{count}
+      even: ต้องเป็นจำนวนคู่
+      exclusion: ไม่ได้รับอนุญาตให้ใช้
+      greater_than: ต้องมากกว่า %{count}
+      greater_than_or_equal_to: ต้องมากกว่าหรือเท่ากับ %{count}
+      in_between: "ต้องอยู่ระหว่าง %{min} และ %{max}"
+      inclusion: ไม่ได้อยู่ในรายการ
+      invalid: ไม่ถูกต้อง
+      less_than: ต้องมีค่าน้อยกว่า %{count}
+      less_than_or_equal_to: ต้องมีค่าน้อยกว่าหรือเท่ากับ %{count}
+      not_a_number: ไม่ใช่ตัวเลข
+      not_an_integer: ไม่ใช่จำนวนเต็ม
+      odd: ต้องเป็นจำนวนคี่
+      taken: ถูกใช้ไปแล้ว
+      too_long: ยาวเกินไป (ต้องไม่เกิน %{count} ตัวอักษร)
+      too_short: สั้นเกินไป (ต้องยาวกว่า %{count} ตัวอักษร)
+      wrong_length: มีความยาวไม่ถูกต้อง (ต้องมีความยาว %{count} ตัวอักษร)
+    template:
+      body: 'โปรดตรวจสอบข้อมูลในช่องต่อไปนี้:'
+      header: พบข้อผิดพลาด %{count} ประการ ทำให้ไม่สามารถบันทึก%{model}ได้
+  helpers:
+    select:
+      prompt: โปรดเลือก
+    submit:
+      create: สร้าง%{model}
+      submit: บันทึก%{model}
+      update: ปรับปรุง%{model}
+  number:
+    currency:
+      format:
+        delimiter: ","
+        format: "%n %u"
+        precision: 2
+        separator: "."
+        significant: false
+        strip_insignificant_zeros: false
+        unit: บาท
+    format:
+      delimiter: ","
+      precision: 3
+      separator: "."
+      significant: false
+      strip_insignificant_zeros: false
+    human:
+      decimal_units:
+        format: "%n %u"
+        units:
+          billion: พันล้าน
+          million: ล้าน
+          quadrillion: พันล้านล้าน
+          thousand: พัน
+          trillion: ล้านล้าน
+          unit: ''
+      format:
+        delimiter: ''
+        precision: 3
+        significant: true
+        strip_insignificant_zeros: true
+      storage_units:
+        format: "%n %u"
+        units:
+          byte: ไบต์
+          gb: จิกะไบต์
+          kb: กิโลไบต์
+          mb: เมกะไบต์
+          tb: เทระไบต์
+    percentage:
+      format:
+        delimiter: ''
+    precision:
+      format:
+        delimiter: ''
+  support:
+    array:
+      last_word_connector: ", และ "
+      two_words_connector: " และ "
+      words_connector: ", "
+  time:
+    am: ก่อนเที่ยง
+    formats:
+      default: "%A %d %b %Y %H:%M"
+      long: "%d %B %Y %H:%M น."
+      short: "%d %b %H:%M น."
+    pm: หลังเที่ยง
+
   #Payroll
   export: Export
   salary: เงินเดือน
@@ -42,6 +217,8 @@ th:
   employee_pvf: "เงินสะสมเข้ากองทุนสงเคราะห์"
   employee_extra_etc: รายได้อื่นๆ
   employee_fee_etc: รายหักอื่นๆ
+  select_employee: "เลือกพนักงาน"
+  no_employee_selection: "ไม่เลือกพนักงาน"
   ot: "เงินสอนพิเศษ"
   position_allowance: "ค่าตำแหน่ง"
   allowance: "เบี้ยเลี้ยง"
@@ -74,11 +251,23 @@ th:
   log_in: "เข้าสู่ระบบ"
   sign_out: "ออกระบบ"
   profile: "ข้อมูลส่วนตัว"
+  company: "ข้อมูลองค์กร"
+  comment: "ความคิดเห็น"
 
   mr: นาย
   ms: นาง
   miss: นางสาว
 
+  signature: "ผู้มีอํานาจลงนาม"
+  private_teacher_fund: "เงินสะสมกองทุนสงเคราะห์"
+  acc_social: "เงินประกันสังคมสะสมต่อปี"
+  acc_tax: "ภาษีสะสมต่อปี"
+  acc_income: "รายได้สะสมต่อปี"
+  net_income: "เงินรับสุทธิ"
+  day_month_year: วัน / เดือน / ปี
+  total_deduction: "รวมรายการหัก"
+  total_income: "รวมรายได้"
+  deduction: "รายการเงินหัก"
   add_new_employee: "เพิ่มพนักงานใหม่"
   full_name: "ชื่อ-นามสกุล"
   position: "ตำแหน่ง"
@@ -123,11 +312,11 @@ th:
   confirm_recovery_employee: "คุณต้องการนำข้อมูลพนักงานกลับมาหรือไม่"
   confirm_delete_employee: "คุณต้องการลบข้อมูลพนักงานออกถาวรหรือไม่?"
   confirm_delete_record: "คุณต้องการลบราการนี้หรือไม่?"
-  first_name_thai: ชื่อจริง
-  last_name_thai: นามสกุล
-  first_name_en: Name
-  middle_name_en: Middle Name
-  last_name_en: Surname
+  first_name_thai: ชื่อ (ไทย)
+  last_name_thai: นามสกุล (ไทย)
+  first_name_en: ชื่อ (อังกฤษ)
+  middle_name_en: ชื่อกลาง (อังกฤษ)
+  last_name_en: นามสกุล (อังกฤษ)
 
   # tax
   other_deduction: "ค่าลดหย่อนอื่นๆ"
@@ -178,10 +367,12 @@ th:
   print_receipt: "พิมพ์ใบเสร็จ"
   delivery_note: "นำส่งเงิน"
   payment_report: "รายงานการชำระ"
-  classification_report: "รายงานแยกตามประเภท"
+  classification_report_1: "รายงานแยกตามประเภท 1"
+  classification_report_2: "รายงานแยกตามประเภท 2"
   grade: "ชั้น"
   item_no: "ลำดับที่"
   item_desc: "รายการ"
+  choose_level: "ระบุชั้นเรียน"
 
   invoice_form: "แบบชำระเงิน"
   date1: "วันที่"
@@ -192,10 +383,15 @@ th:
   item: "รายการ"
   add_item: "เพิ่มรายการ"
   net: "ยอดรวมสุทธิ"
+  outstanding: "ยอดค้างชำระ"
   payment_channel: "ชำระเงินโดย"
   cash: "เงินสด"
   pay_error: "ผลรวมของจำนวนเงินแต่ละประเภทไม่ตรงกับจำนวนเงินสุทธิ"
   sum: "ยอดรวม"
+  list_invoices: "รายการใบเสร็จรับเงิน"
+  cancle_quotation: "ยกเลิกใบแจ้งชำระเงิน"
+  cancle_quotation_detail: "ต้องการยกเลิกใบแจ้งชำระเงิน"
+  no_data: "ไม่พบข้อมูล"
 
   receipt_search: "ค้นหาตามเลขที่ใบเสร็จ, ชื่อนักเรียน, ชื่อผู้ปกครอง"
   receipt_report: "รายงานใบเสร็จ"
@@ -217,6 +413,7 @@ th:
   remark: "หมายเหตุ"
 
   semester: "ภาคการศึกษา"
+  semester_nofix: "ทั้งหมด"
   semester_nofix: "ไม่ระบุภาคการเรียน"
   payment_status: "สถานะการชำระ"
   number1: "เลขที่"
@@ -225,6 +422,7 @@ th:
   year_paid_amount: "ยอดชำระทั้งปี"
   total_paid: "รวมยอดชำระทั้งหมด"
   paid_date: "วันที่ชำระ"
+  all_semesters: "ทั้งหมด"
 
   show_invoices: "แสดงรายการใบเสร็จ"
   chose_type: "เลือกประเภท"
@@ -257,9 +455,38 @@ th:
   create: สร้าง
   select: เลือก
   select_all: เลือกทั้งหมด
-  close_without_save: "คุณต้องการออกจากหน้านี้โดยไม่บันทึกค่าหรือไม่?"
+  save_data: "คุณต้องการบันทึกการเปลี่ยนแปลงนี้หรือไม่?"
+
+  # Quotation
+  quotation_link_nav: "ใบแจ้งการชำระเงินค่าเทอม"
+  quotation_new: "ออกใบวางบิล"
+  quotation_no: 'เลขใบวางบิล #'
+  quotation_outstanding_balance: 'ยอดค้างชำระ'
+  quotation_amount: 'ยอดเรียกเก็บ'
+  quotation_printed_at: 'วันที่พิมพ์ใบชำระ'
+  quotation_unpaid: 'ชำระเงิน'
+  quotation_active: 'ชำระแล้ว'
+  search_quotation_no: 'ค้นหาตามเลขที่ใบวางบิล'
+  can_payment: "สามารถชำระได้ตั้งแต่วันที่"
+  can_payment_school: "สามารถชำระเงินได้ที่โรงเรียน"
+  add_bank: "เพิ่มธนาคาร"
+  add_bank_account: "เพิ่มบัญชีธนาคาร"
+  bank_account_number: "เลขที่บัญชี"
+  account_name: "ชื่อบัญชี"
+  add_quotation: "เพิ่มใบวางบิล"
+  choose_level: "ระบุชั้นเรียน"
+  quotation_print: "พิมพ์ใบวางบิล"
+
+  # Quotation bill
+  quotation_receipt: "ใบแจ้งการชำระเงิน"
+  payment_method: "ช่องทางการชำระเงิน *หมายเหตุ สามารถชำระเงินได้ "
+  date_start: "ตั้งแต่วันที่ "
+  date_last: "ถึงวันที่ "
 
   hello: "สวัสดีครับ"
+  print_delivery_money: "พิมพ์ใบนำส่งเงิน"
+  close_with_save: "คุณต้องการบันทึกค่าหรือไม่?"
+  close_without_save: "คุณต้องการออกจากหน้านี้โดยไม่บันทึกค่าหรือไม่?"
 
   #Menu
   payroll: "เงินเดือน"
@@ -272,6 +499,9 @@ th:
   setting: 'การตั้งค่า'
   class_management: จัดการชั้นเรียน
   expense: "บันทึกค่าใช้จ่าย"
+  quotation: 'วางบิล'
+  inventory: "พัสดุ"
+  vacation: "วันลา"
 
   activerecord:
     attributes:
@@ -295,21 +525,22 @@ th:
         student_number: "เลขประจำตัวนักเรียน"
         national_id: "รหัสประจำตัวประชาชน"
         remark: "หมายเหตุ / remark"
+        nationality: "สัญชาติ"
       payroll:
-        salary: "เงินเดือน / Salary"
-        allowance: "เบี้ยเลี้ยง / Shift"
-        attendance_bonus: "เบี้ยขยัน / Attendance Bonus"
-        ot: "เงินสอนพิเศษ / After School Class"
-        bonus: "โบนัส / Bonus"
-        position_allowance: "ค่าตำแหน่ง / Posticion"
-        extra_etc: "รายได้อื่นๆ / Etc."
-        absence: "ขาดงาน / Absence"
-        late: "สาย / Late"
-        tax: "ภาษี / Tax"
-        social_insurance: "ประกันสังคม / Social Sec."
-        fee_etc: "หักอื่นๆ / Etc."
-        pvf: "เงินสะสมกองทุนสงเคราะห์ / Private Teacher Aid fund"
-        advance_payment: "เบิกล่วงหน้า / Adv. Payment"
+        salary: "เงินเดือน"
+        allowance: "เบี้ยเลี้ยง"
+        attendance_bonus: "เบี้ยขยัน"
+        ot: "เงินสอนพิเศษ"
+        bonus: "โบนัส"
+        position_allowance: "ค่าตำแหน่ง"
+        extra_etc: "รายได้อื่นๆ"
+        absence: "ขาดงาน"
+        late: "สาย"
+        tax: "ภาษี"
+        social_insurance: "ประกันสังคม"
+        fee_etc: "หักอื่นๆ"
+        pvf: "เงินสะสมกองทุนสงเคราะห์"
+        advance_payment: "เบิกล่วงหน้า"
 
   date:
     month_names: [~, มกราคม, กุมภาพันธ์, มีนาคม, เมษายน, พฤษภาคม, มิถุนายน, กรกฎาคม, สิงหาคม, กันยายน, ตุลาคม, พฤศจิกายน, ธันวาคม]
@@ -384,6 +615,8 @@ th:
   parent_info_cannot_save: "ข้อมูลของผู้ปกครองไม่สามารถบันทึกได้ : "
   parent_info_success_save: "บันทึกผู้ปกครองสำเร็จ"
   parent_delete_success: "ลบผู้ปกครองสำเร็จ"
+  search_parent: "ค้นหาชื่อผู้ปกครอง"
+  select_parent: "เลือกผู้ปกครอง..."
 
   #Students
   add_parent: "+ เพิ่มชื่อผู้ปกครอง"
@@ -423,12 +656,116 @@ th:
   birthday_1: "วันเดือนปีเกิด"
   student_male: "ด.ช."
   student_female: "ด.ญ."
+  topic: "บัญชีรายชื่อนักเรียน  ชั้น .......................................... ภาคเรียนที่ ..../"
+  select_gender: "โปรดเลือกเพศ"
+  select_grade: "โปรดเลือกระดับชั้น"
+  select_class: "โปรดเลือกห้อง"
+  search_student: "ค้นหาชื่อนักเรียน"
+  select_students: "เลือกนักเรียน..."
 
   #Alumni
   year_of_graduation: "จบปีการศึกษา"
   status: "สถานะ"
   graduated_semester: "ภาคเรียนที่"
   grade_classroom: "ระดับชั้นเรียน"
+  locale: "th"
+
+  #Inventory
+  inventory_list: "รายการพัสดุ"
+  inventory_details: "รายละเอียดพัสดุ"
+  inventory_request: "คำขอใช้พัสดุ"
+  detal_inventory: "รายละเอียดพัสดุ"
+  add_inventory: "+ เพิ่มพัสดุ"
+  inventory_request: "คำขอใช้พัสดุ"
+  item_name: "ชื่อพัสดุ"
+  serial_number: "หมายเลขซีเรียล"
+  model: "รุ่น"
+  description: "ลักษณะ"
+  price: "ราคา"
+  date_purchase: "วันที่ซื้อ" 
+  category: "ประเภท"
+  date_add: "วันที่เพิ่ม"
+  inventory_data: "ข้อมูลพัสดุ"
+  select_category: "เลือกประเภท"
+  end_warranty: "วันสิ้นสุดการรับประกัน"
+  office_furniture: "เฟอร์นิเจอร์สำนักงาน"
+  equipment_computer: "อุปกรณ์คอมพิวเตอร์"
+  office_supplies: "อุปกรณ์สำนักงานเบ็ดเตล็ด"
+  maintenance_equipment: "อุปกรณ์ซ่อมบำรุง"
+  cleaning_products: "แคนทีนและผลิตภัณฑ์ทำความสะอาด"
+  electronic_office_equipment: "อุปกรณ์สำนักงานอิเล็กทรอนิกส์"
+  paper_products: "ผลิตภัณฑ์กระดาษ"
+  meeting_presentation_equipment: "อุปกรณ์เพื่อการประชุมและนำเสนอ"
+  inventory_search: "ค้นหาจากชื่อ รุ่น หมายเลขซีเรียล วันที่ซื้อ ชื่อคนใช้งาน"
+  inventory_request_search: "ค้นหาจากชื่อ วันที่ส่งคำขอ ชื่อคนใช้งาน"
+
+   #InventoryRequest
+  list_request: "รายการคำขอใช้พัสดุ"
+  add_request: "+ เพิ่มคำขอใช้พัสดุ"
+  add_request_employee: "เพิ่มคำขอใช้พัสดุ"
+  user_request: "ชื่อผู้ขอ"
+  request_date: "วันที่ขอ"
+  return_date: "วันที่คืน"
+  return_inventory: "คืนพัสดุ"
+  define_return_date: "กำหนดวันที่ส่งคืน"
+  amount: "จำนวน"
+  reject: "ปฏิเสธ"
+  approve: "อนุมัติ"
+  pending: "รอการอนุมัติ"
+  accept: "ยอมรับ"
+  purchasing: "ทำการสั่งซื้อ"
+  done: "เสร็จ"
+  assigned: "ได้รีบเรียบร้อย"
+  request_inventory: "เบิกพัสดุ"
+  new_request: "เพิ่มคำขอ"
+  repair: "แจ้งซ่อม"
+  delete: "ลบข้อมูล"
+  add_button: "บันทึก"
+  reason: "เหตุผล"
+  request_type: "ประเภทคำขอ"
+  withdraw_equipment: "เบิกพัสดุ"
+  new_request_inventory: "คำขอใช้พัสดุใหม่"
+
+  #Update inventory request
+  details_inventory_request: "รายละเอียดคำขอใช้อุปกรณ์"
+  approve_request: "อนุมัติคำขอ"
+  inventory_purchase: "สั่งซื้อพัสดุ"
+  get_inventory: "รับพัสดุ"
+  dispatch_to_employees: "จัดส่งให้พนักงาน"
+  date_get_inventory: "วันที่ได้รับ"
+  date_purchase_inventory: "ได้ทำการสั่งซื้อวันที่"
+  date_send_inventory: "จัดส่งในวันที่"
+  save_by: "บันทึกโดย"
+  request_approval: "ได้ทำการอนุมัติคำขอ"
+  bath: "บาท"
+  receive_products_on_date: "ได้รับสินค้าในวันที่"
+  continue: "ต่อไป"
+  completed: "เรียบร้อยแล้ว"
+  send_the_package_to: "ได้ทำการส่งมอบพัสดุให้กับ"
+
+  #Repair
+  list_repair: "แจ้งซ่อม"
+  employee_name: "พนักงาน"
+  reason_for_repair: "เหตุผลที่ส่งซ่อม"
+  repair_date: "วันที่ส่งซ่อม"
+  repair_return_date: "วันที่ซ่อมเสร็จ"
+  bill: "ใบเสร็จ"
+  detal_repair: "รายละเอียดแจ้งซ่อม"
+  approve_repair: "ยืนยันการแจ้งซ่อม"
+  confirm_accept: "รับเรื่อง"
+  sent_repair: "ส่งซ่อม"
+  repairs_completed: "ซ่อมเสร็จ"
+  repair_notification: "แจ้งซ่อม"
+  accept_repair: "อนุมัติการแจ้งซ่อม"
+  receive_parcel_at_date: "ได้รับพัสดุในวันที่"
+
+  #inventory supplier
+  inventory_supplier: "ร้านค้า"
+  list_supplier: "รายการร้านค้า"
+  add_supplier: "+ เพิ่มร้านค้า"
+  supplier_details: "รายละเอียดร้านค้า"
+  supplier: "ชื่อร้านค้า"
+  appointment_date: "วันที่นัดรับ"
 
   # Rollcall
   monthly: ประจำเดือน
@@ -474,11 +811,31 @@ th:
   select_teacher: "+ เลือกคุณครู"
   teacher: คุณครู
   student: นักเรียน
-  classroom_is_exist: "*มีห้องเรียนนี้ในระบบแล้ว"
+  classroom_is_exist: "* มีห้องเรียนนี้ในระบบแล้ว"
+  next_classroom: "ระดับชั้นเรียนใหม่"
 
+  social_insurance_pdf: "ไม่มีพนักงานที่ต้องเสียค่าประกันสังคม"
   skill: ทักษะ
   score: คะแนน
   add: เพิ่ม
+  
+  confirm_delete: คุณต้องการลบห้องเรียนใช่หรือไม่? (การลบห้องเรียนจะไม่ทำให้นักเรียนและคุณครูที่อยู่ในห้องหายไป)
+  bringback: นำกลับเข้าระบบ
+  # Option menu
+  choice: "ตัวเลือก"
+  edit: "แก้ไข"
+  resign: "ลาออกจากโรงเรียน"
+  delete: "ลบข้อมูล"
+  del_student: "คุณต้องการลบนักเรียนคนนี้ใช่หรือไม่?"
+  change_status_student_graduated: 'คุณต้องการเปลี่ยนสถานะนักเรียนคนนี้เป็น "จบการศึกษา" ใช่หรือไม่?'
+  change_status_student_resign: 'คุณต้องการเปลี่ยนสถานะนักเรียนคนนี้เป็น "ลาออก" ใช่หรือไม่?'
+  del_parent: "คุณต้องการลบผู้ปกครองคนนี้ใช่หรือไม่?"
+
+  #Alert Payment
+  alertpayment: โปรดตรวจสอบค่าบริการที่ค้างชำระของท่าน
+  back_to_menu: กลับสู่การใช้งาน
+  sorry_to_pay: สมศรี ขออภัยหากท่านชำระค่าบริการดังกล่าวแล้ว
+  application_issue: หากพบปัญหาในการใช้งาน somsri.io สามารถติดต่อได้ที่เบอร์
 
   # Expenses
   create_new_expenses: "เพิ่มรายการค่าใช้จ่าย"
@@ -493,6 +850,7 @@ th:
   expense_create_success: "บันทึกรายการค่าใช้จ่ายสำเร็จ"
   search: "ค้นหา"
   choose_file: "เลือกไฟล์"
+  expenses: "ค่าใช้จ่าย"
 
   #expense
   expense_delete_success: "ลบข้อมูลใบเสร็จเรียบร้อยแล้ว"
@@ -520,6 +878,48 @@ th:
   print_expenses_payment_report: "พิมพ์รายงานค่าใช้จ่ายแยกตามการชำระเงิน"
   expense_category_placeholder: "ชื่อประเภทค่าใช้จ่าย"
   expense_category_already_used: "ไม่สามารถลบประเภทค่าใช้จ่ายที่ยังถูกใช้งานอยู่ได้"
+
+  # Vacation
+  day: "วัน"
+  dashboard: "ลางาน"
+  calendar: "ปฏิทิน"
+  leave_rules: "ระเบียบวันลา"
+  remaining_day: "วันหยุดคงเหลือ"
+  sick_leave: "ลาป่วย"
+  vacation_leave: "ลากิจ"
+  switch_date: "สลับวันทำงาน"
+  work_at_home: "ทำงานที่บ้าน"
+  full_day: "เต็มวัน"
+  half_day_morning: "ครึ่งวัน (ช่วงเช้า)"
+  half_day_afternoon: "ครึ่งวัน (ช่วงบ่าย)"
+  vacation_type: "ประเภทการลา"
+  vacation_leave_type: "แบบการลากิจ"
+  vcation_and_request_list: "รายการวันหยุดและคำขอ"
+  holiday_list_in_this_week: "รายการวันหยุดใน 7 วันข้างหน้า"
+  send_request: "ส่งคำขอ"
+  vacation_from_date: "จากวันที่"
+  vacation_to_date: "ถึงวันที่"
+  switch_from_date: "สลับจากวันหยุดที่"
+  switch_to_date: "มาเป็นวันที่"
+  pending: "รออนุมัติ"
+  approved: "อนุมัติแล้ว"
+  rejected: "ไม่อนุมัติ"
+  vacation_was_approved: "อนุมัติคำขอสำเร็จแล้ว"
+  vacation_was_rejected: "ยกเลิกคำขอสำเร็จแล้ว"
+  vacation_save_error: "เกิดข้อผิดพลาด กรุณาลองอีกครั้ง"
+  vacation_saved_success: "ส่งคำขอสำเร็จแล้ว"
+  vacation_deleted_success: "ลบคำขอสำเสร็จแล้ว"
+  confirm_delete_vacation: "คุณต้องการที่จะลบคำขอนี้?"
+  updated_by: "อัพเดทโดย:"
+  updated_at: "อัพเดทเมื่อ:"
+  holiday_calendar: "ปฏิทินวันหยุด"
+  holiday_of_year: "วันหยุดประจำปี"
+  create_holiday: "สร้างวันหยุด"
+  this_year: "เฉพาะปีนี้"
+  every_year: "ทุกปี"
+  confirm_delete_holiday: "คุณต้องการที่จะลบวันหยุดนี้?"
+  holiday_delete_success: "ลบวันหยุดสำเร็จ"
+  holiday_delete_failed: "ลบวันหยุดสำเร็จไม่สำเร็จ"
 
   # All
   save_change_confirmation: "คุณต้องการบันทึกการเปลี่ยนแปลงนี้หรือไม่"

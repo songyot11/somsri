@@ -78,6 +78,13 @@ describe 'Student', js: true do
     ]
   end
 
+  let(:gender)do
+    [
+      Gender.make!(name: "Female"),
+      Gender.make!(name: "Male")
+    ]
+  end
+
   let(:studentsparent) do
     [
       StudentsParent.make!({student_id: student[0].id , parent_id: parent[0].id, relationship_id: relationships[0].id})
@@ -176,6 +183,7 @@ describe 'Student', js: true do
     invoice_status_1
     invoice_status_2
     invoice
+    gender
   end
 
   it 'should access to student page' do
@@ -491,6 +499,28 @@ describe 'Student', js: true do
     expect(page).to have_content(I18n.t('student_info_cannot_save'))
   end
 
+  it 'should create student and gender when locale=th' do
+    visit '/students/new#/'
+    find('#student_full_name').set("นักเรียน สมศรี")
+    page.select 'หญิง', :from => 'student_gender_id'
+    sleep(1)
+    click_button("บันทึก")
+    sleep(1)
+    expect(page).to have_content('หญิง')
+  end  
+
+  it 'should create student and gender when locale=en' do
+    visit '/students/new/?locale=en#'
+    find('#student_full_name').set("นักเรียน สมศรี")
+    page.select 'Female', :from => 'student_gender_id'
+    click_button("Save")
+    find("#navbarDropdownMenuLink").click
+    find('.fa-commenting-o').hover
+    find("a", :text => "English").click
+    sleep(1)
+    expect(page).to have_content('Female')
+  end   
+
   it 'should create list when add classroom to student' do
     visit "/students/#{student[0].id}/edit#/"
     sleep(1)
@@ -517,6 +547,27 @@ describe 'Student', js: true do
     visit "/students/#{student[0].id}/edit#/"
     sleep(1)
     eventually { expect(find('#mobile0').value).to eq("080-000000") }
+  end
+
+  it 'should edit gender student when locale=th' do
+    visit "/students/#{student[0].id}/edit#/"
+    page.select 'ชาย', :from => 'student_gender_id'
+    sleep(1)
+    click_button("บันทึก")
+    sleep(1)
+    expect(page).to have_content('ชาย')
+  end
+
+  it 'should edit gender student when locale=en' do
+    visit "/students/#{student[0].id}/edit/?locale=en#"
+    page.select 'Male', :from => 'student_gender_id'
+    click_button("Save")
+    sleep(1)
+    find("#navbarDropdownMenuLink").click
+    find('.fa-commenting-o').hover
+    find("a", :text => "English").click
+    sleep(1)
+    expect(page).to have_content('Male')
   end
 
   it 'should disable parent\'s mobile and relationship when not select parent' do
@@ -575,5 +626,41 @@ describe 'Student', js: true do
 
     eventually { expect(page).to_not have_content("Kindergarten 2 (2B)") }
     eventually { expect(page).to_not have_content("152,500.00") }
+  end
+
+  it 'should traslate table page parents when locale=th' do
+    visit "/parents#/"
+    sleep(1)
+    find('input[placeholder="ค้นหา"]').set("หาผู้ปกครองไม่เจอหรอก")
+    eventually { expect(page).to have_content("ไม่พบรายการที่ค้นหา !") }
+  end
+
+  it 'should traslate table page parents when locale=en' do
+    visit "/parents#/"
+    sleep(1)
+    find("#navbarDropdownMenuLink").click
+    find('.fa-commenting-o').hover
+    find("a", :text => "English").click
+    sleep(1)
+    find('input[placeholder="Search"]').set("หาผู้ปกครองไม่เจอหรอก")
+    eventually { expect(page).to have_content("No matching records found") }
+  end
+
+  it 'should traslate table page students when locale=th' do
+    visit "/students#/"
+    sleep(1)
+    find('input[placeholder="ค้นหา"]').set("หานักเรียนไม่เจอหรอก")
+    eventually { expect(page).to have_content("ไม่พบรายการที่ค้นหา !") }
+  end
+
+  it 'should traslate table page students when locale=en' do
+    visit "/students#/"
+    sleep(1)
+    find("#navbarDropdownMenuLink").click
+    find('.fa-commenting-o').hover
+    find("a", :text => "English").click
+    sleep(1)
+    find('input[placeholder="Search"]').set("หานักเรียนไม่เจอหรอก")
+    eventually { expect(page).to have_content("No matching records found") }
   end
 end

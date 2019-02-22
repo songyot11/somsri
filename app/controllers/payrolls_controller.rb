@@ -22,7 +22,7 @@ class PayrollsController < ApplicationController
       (tmp_path, filename) = generate_ktb_salary_xls(effective_date, payrolls)
       send_file(tmp_path + filename, filename: filename, :disposition => 'inline', :type => 'application/xls')
     elsif params[:kbank_salary_txt] && effective_date
-        # generate K-Biz salary txt
+      # generate K-Biz salary txt
       (tmp_path, filename) = generate_kbiz_salary_txt(effective_date, payrolls)
       send_file(tmp_path + filename, filename: filename, :disposition => 'inline', :type => 'application/text')
     else
@@ -87,7 +87,7 @@ class PayrollsController < ApplicationController
               @effective_date_str = to_thai_date(effective_date).join(" ")
             else
               filename = "เงินเดือน-เดือนปัจจุบัน"
-              @effective_date_str = "เดือนปัจจุบัน"
+              @effective_date_str = t('this_month')
             end
           end
           render pdf: filename,
@@ -127,7 +127,7 @@ class PayrollsController < ApplicationController
     payrolls = Payroll.where(employee_id: employees, effective_date: effective_date.beginning_of_day..effective_date.end_of_day)
                       .where("social_insurance > ?", 0)
                       .order('employee_id').to_a
-    render plain: "ไม่มีพนักงานที่ต้องเสียค่าประกันสังคม", status: :ok and return if payrolls.size == 0 || payrolls.blank?
+    render plain: I18n.t('social_insurance_pdf'), status: :ok and return if payrolls.size == 0 || payrolls.blank?
     employee_count = payrolls.size
     sum_salary = 0
     sum_insurance = 0
@@ -307,7 +307,7 @@ class PayrollsController < ApplicationController
       payroll_dates.to_a.each do |payroll_date|
         effective_dates.push({
           date_time: payroll_date ? payroll_date.in_time_zone(time_zone) : "lasted",
-          date_string: payroll_date ? to_thai_date(payroll_date.in_time_zone(time_zone)).join(" ") : "เดือนปัจจุบัน",
+          date_string: payroll_date ? to_thai_date(payroll_date.in_time_zone(time_zone)).join(" ") : t('current_month'),
         })
       end
       return effective_dates
@@ -324,7 +324,7 @@ class PayrollsController < ApplicationController
       effective_dates = []
       payrolls.to_a.each do |payroll|
         effective_dates.push({
-          date_string: payroll.effective_date ? to_thai_date(payroll.effective_date.in_time_zone(time_zone)).join(" ") : "เดือนปัจจุบัน",
+          date_string: payroll.effective_date ? to_thai_date(payroll.effective_date.in_time_zone(time_zone)).join(" ") : t('current_month'),
           payroll_id: payroll.id
         })
       end
@@ -407,7 +407,7 @@ class PayrollsController < ApplicationController
           sum_salary += payroll.net_salary
           account_number = payroll.employee.account_number
           account_number.gsub!("-", "") if account_number
-          
+
           net_salary = sprintf("%.2f", payroll.net_salary)
           total = net_salary.split('.')[0]
           decimal = net_salary.split('.')[1]

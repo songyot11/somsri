@@ -335,6 +335,16 @@ h2#month-list{
   }
 }
 
+.btn-cancel-outline {
+  background-color: white;
+  color: #9D9D9D;
+  border: 2px solid #9D9D9D;
+  font-size: 18px;
+  border-radius: 0px;
+  padding: 16px 32px;
+  transition: all 0.25s ease;
+}
+
 .btn-danger {
   border-radius: 0px
 }
@@ -834,35 +844,35 @@ table.scrollable-header {
   padding-right: 0px;
 }
 
-.employee-details .paragraph ul {
+.employee-details .paragraph ul.tabs-left {
   list-style-type: none;
   padding-left: 0px;
   border-bottom: none;
 }
 
-.employee-details .paragraph ul li {
+.employee-details .paragraph ul.tabs-left li {
   padding-top: 2px;
   font-size: 16px;
   width: 100%;
 }
 
-.employee-details .paragraph ul li.active {
+.employee-details .paragraph ul.tabs-left li.active {
   border: 2px solid #FFAB04;
   background-color: #FFAB04;
 }
 
-.employee-details .paragraph ul li a {
+.employee-details .paragraph ul.tabs-left li a {
   color: #333;
   border: none;
 }
 
-.employee-details .paragraph ul li.active a {
+.employee-details .paragraph ul.tabs-left li.active a {
   color: #FFFFFF;
   border: none;
   background-color: #FFAB04;
 }
 
-.employee-details .paragraph ul li a:hover {
+.employee-details .paragraph ul.tabs-left li a:hover {
   background-color: transparent;
   border: none;
 }
@@ -1073,6 +1083,7 @@ a.dropdown-item{
 .row-centered {
   text-align:center;
 }
+
 .col-centered {
   display:inline-block;
   float:none;
@@ -1096,7 +1107,7 @@ a.dropdown-item{
 }
 .thead > span {
   display: inline-block;
-  width: 115px;
+  width: 160px;
   line-height: 40px;
   text-align: center;
   border-top: 1px solid #cccccc;
@@ -1116,7 +1127,7 @@ a.dropdown-item{
 }
 
 .theadtop > span.income {
-  width: 798px;
+  width: 1113px;
   border-right: 1px solid #cccccc;
 }
 
@@ -1157,7 +1168,7 @@ a.dropdown-item{
 }
 .trow > span {
   display: inline-block;
-  width: 115px;
+  width: 160px;
   border-right: 1px solid #cccccc;
   border-bottom: 1px solid #cccccc;
   border-left: 1px solid #cccccc;

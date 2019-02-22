@@ -78,7 +78,7 @@ describe 'invoice report(ใบเสร็จ)', js: true do
 
   it 'can see all invoices' do
     visit 'somsri_invoice#/invoice_report'
-    sleep(1)
+    sleep(2)
     # have 10 invoices on the first page
     eventually do
       expect( all('#invoice-table > tbody > tr').count ).to eq(10)
@@ -244,7 +244,8 @@ describe 'invoice report(ใบเสร็จ)', js: true do
     visit 'somsri_invoice#/invoice_report'
     sleep(5)
     expect(page).to have_selector("#invoice-table > tbody > tr", count: 10)
-    expect(page).to have_content("‹ 12 ›")
+    expect(page).to have_selector(".pagination-prev.ng-scope a")
+    expect(page).to have_selector(".pagination-next.ng-scope a")
   end
 
   it 'should display page 2' do
@@ -254,7 +255,8 @@ describe 'invoice report(ใบเสร็จ)', js: true do
     find('#student-report > div > div.row.report-content.container-fluid > div.row.row-centered > div > ul > li.pagination-next.ng-scope > a').click
     sleep(1)
     expect(page).to have_selector("#invoice-table > tbody > tr", count: 1)
-    expect(page).to have_content("‹ 12 ›")
+    expect(page).to have_selector(".pagination-prev.ng-scope a")
+    expect(page).to have_selector(".pagination-next.ng-scope a")
   end
 
   it 'canceled must blank', :skip_before do
@@ -275,4 +277,23 @@ describe 'invoice report(ใบเสร็จ)', js: true do
     expect(page).to_not have_content("ยกเลิกใบเสร็จ")
   end
 
+  it 'should traslate table page invoice report when locale=th' do
+    visit "/somsri_invoice#/invoice_report"
+    sleep(1)
+    find('#searchField').set("หาใบเสร็จไม่เจอหรอก")
+    eventually { expect(page).to have_content("ไม่พบรายการที่ค้นหา !") }
+  end
+
+  it 'should traslate table page invoice report when locale=en' do
+    visit "/somsri_invoice#/invoice_report"
+    sleep(1)
+    find("#navbarDropdownMenuLink").click
+    find('.fa-commenting-o').hover
+    find("a", :text => "English").click
+    sleep(1)
+    visit "/somsri_invoice#/invoice_report"
+    sleep(1)
+    find('#searchField').set("หาใบเสร็จไม่เจอหรอก")
+    eventually { expect(page).to have_content("No matching records found") }
+  end 
 end

@@ -140,7 +140,7 @@ describe 'Classroom Edit', js: true do
 
   it 'should display all student in classroom' do
     visit "/main#/classroom/#{classrooms[0].id}"
-    sleep(1)
+    sleep(4)
     click_link("นักเรียน")
     sleep(1)
     eventually { expect(page).to have_content("สมศรี3 ใบเสร็จ สมศรี2 ใบเสร็จ สมศรี1 ใบเสร็จ") }

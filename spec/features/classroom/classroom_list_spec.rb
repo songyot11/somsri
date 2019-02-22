@@ -108,7 +108,7 @@ describe 'Classroom', js: true do
     find('input#classroom').set("2A")
     click_button('บันทึก')
     sleep(1)
-    eventually { expect(page).to have_content("*มีห้องเรียนนี้ในระบบแล้ว") }
+    eventually { expect(page).to have_content("* มีห้องเรียนนี้ในระบบแล้ว") } 
   end
 
   it 'should not create dupplicate classroom with case insensitive' do
@@ -121,7 +121,7 @@ describe 'Classroom', js: true do
     find('input#classroom').set("2a")
     click_button('บันทึก')
     sleep(1)
-    eventually { expect(page).to have_content("*มีห้องเรียนนี้ในระบบแล้ว") }
+    eventually { expect(page).to have_content("* มีห้องเรียนนี้ในระบบแล้ว") }
   end
 
   it 'should filter by grade id' do

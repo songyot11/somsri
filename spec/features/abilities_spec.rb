@@ -58,6 +58,18 @@ describe 'Abilities', js: true do
       expect(page).to have_content 'เงินสอนพิเศษ ค่าตำแหน่ง เบี้ยเลี้ยง เบี้ยขยัน โบนัส อื่นๆ'
     end
 
+    it 'can goto payroll when locale=en' do
+      visit "/somsri_payroll#/payroll"
+      sleep(1)
+      find("#navbarDropdownMenuLink").click
+      find('.fa-commenting-o').hover
+      find("a", :text => "English").click
+      sleep(1)
+      visit "/somsri_payroll#/payroll"
+      sleep(1)
+      expect(page).to have_content 'Fullname Total IncomeOutcome Salary OverTime Position'
+    end
+
     it 'can goto main menu' do
       visit "/"
       sleep(1)
@@ -293,102 +305,130 @@ describe 'Abilities', js: true do
       visit "/"
       sleep(1)
       expect(page).to have_current_path '/users/sign_in'
-      expect(page).to have_content 'Keep me signed in'
+      expect(page).to have_content 'ให้ฉันอยู่ในระบบต่อไป'
     end
 
     it 'cant goto payroll menu' do
       visit "/somsri_payroll"
       sleep(1)
       expect(page).to have_current_path '/users/sign_in'
-      expect(page).to have_content 'Keep me signed in'
+      expect(page).to have_content 'ให้ฉันอยู่ในระบบต่อไป'
     end
 
     it 'cant goto payroll' do
       visit "/somsri_payroll#/payroll"
       sleep(1)
       expect(page).to have_current_path '/users/sign_in'
-      expect(page).to have_content 'Keep me signed in'
+      expect(page).to have_content 'ให้ฉันอยู่ในระบบต่อไป'
     end
 
     it 'cant goto payroll report' do
       visit "/somsri_payroll#/report"
       sleep(1)
       expect(page).to have_current_path '/users/sign_in'
-      expect(page).to have_content 'Keep me signed in'
+      expect(page).to have_content 'ให้ฉันอยู่ในระบบต่อไป'
     end
 
     it 'cant goto profile' do
       visit "/main#/profile"
       sleep(1)
       expect(page).to have_current_path '/users/sign_in'
-      expect(page).to have_content 'Keep me signed in'
+      expect(page).to have_content 'ให้ฉันอยู่ในระบบต่อไป'
     end
 
     it 'cant goto profile' do
       visit "/main#/setting"
       sleep(1)
       expect(page).to have_current_path '/users/sign_in'
-      expect(page).to have_content 'Keep me signed in'
+      expect(page).to have_content 'ให้ฉันอยู่ในระบบต่อไป'
     end
 
     it 'cant goto invoice menu' do
       visit "/somsri_invoice"
       sleep(1)
       expect(page).to have_current_path '/users/sign_in'
-      expect(page).to have_content 'Keep me signed in'
+      expect(page).to have_content 'ให้ฉันอยู่ในระบบต่อไป'
     end
 
     it 'cant goto invoice create' do
       visit "/somsri_invoice#/invoice"
       sleep(1)
       expect(page).to have_current_path '/users/sign_in'
-      expect(page).to have_content 'Keep me signed in'
+      expect(page).to have_content 'ให้ฉันอยู่ในระบบต่อไป'
     end
 
     it 'cant goto invoice report menu' do
       visit "/somsri_invoice#/report"
       sleep(1)
       expect(page).to have_current_path '/users/sign_in'
-      expect(page).to have_content 'Keep me signed in'
+      expect(page).to have_content 'ให้ฉันอยู่ในระบบต่อไป'
     end
 
     it 'cant goto invoice student report' do
       visit "/somsri_invoice#/student_report"
       sleep(1)
       expect(page).to have_current_path '/users/sign_in'
-      expect(page).to have_content 'Keep me signed in'
+      expect(page).to have_content 'ให้ฉันอยู่ในระบบต่อไป'
     end
 
     it 'cant goto invoice daily report' do
       visit "/somsri_invoice#/daily_report"
       sleep(1)
       expect(page).to have_current_path '/users/sign_in'
-      expect(page).to have_content 'Keep me signed in'
+      expect(page).to have_content 'ให้ฉันอยู่ในระบบต่อไป'
     end
 
     it 'cant goto invoice report' do
       visit "/somsri_invoice#/invoice_report"
       sleep(1)
       expect(page).to have_current_path '/users/sign_in'
-      expect(page).to have_content 'Keep me signed in'
+      expect(page).to have_content 'ให้ฉันอยู่ในระบบต่อไป'
     end
 
     it 'cant goto employees' do
       visit "/somsri_payroll#/employees"
       sleep(1)
       expect(page).to have_current_path '/users/sign_in'
-      expect(page).to have_content 'Keep me signed in'
+      expect(page).to have_content 'ให้ฉันอยู่ในระบบต่อไป'
     end
 
     it 'cant goto parents' do
       visit "/parents"
       sleep(1)
       expect(page).to have_current_path '/users/sign_in'
-      expect(page).to have_content 'Keep me signed in'
+      expect(page).to have_content 'ให้ฉันอยู่ในระบบต่อไป'
     end
 
     it 'cant goto students' do
       visit "/students"
+      sleep(1)
+      expect(page).to have_current_path '/users/sign_in'
+      expect(page).to have_content 'ให้ฉันอยู่ในระบบต่อไป'
+    end
+
+    it 'can goto setting expense tags' do
+      visit "/somsri#/setting/expenses_tag"
+      sleep(1)
+      expect(page).to have_current_path '/users/sign_in'
+      expect(page).to have_content 'Keep me signed in'
+    end
+
+    it 'can goto expenses list' do
+      visit "/somsri#/expenses"
+      sleep(1)
+      expect(page).to have_current_path '/users/sign_in'
+      expect(page).to have_content 'Keep me signed in'
+    end
+
+    it 'can goto create expenses' do
+      visit "/somsri#/expenses/new"
+      sleep(1)
+      expect(page).to have_current_path '/users/sign_in'
+      expect(page).to have_content 'Keep me signed in'
+    end
+
+    it 'can goto edit expenses' do
+      visit "/somsri#/expenses/1"
       sleep(1)
       expect(page).to have_current_path '/users/sign_in'
       expect(page).to have_content 'Keep me signed in'

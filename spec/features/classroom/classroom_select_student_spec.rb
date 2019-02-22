@@ -141,7 +141,7 @@ describe 'Classroom Select Student', js: true do
 
   it 'should search teachers' do
     within('div#select-member-modal') do
-      find('input[placeholder="Search"]').set("5")
+      find('input[placeholder="ค้นหา"]').set("5")
       eventually { expect(page).to have_content("สมศรี5 ใบเสร็จ") }
       eventually { expect(page).to_not have_content("สมศรี4 ใบเสร็จ") }
     end

@@ -29,6 +29,7 @@ Employee.blueprint do
   status { 'โสด' }
   email { Faker::Internet.email }
   employee_type { 'ลูกจ้างประจำ' }
+  password { 'password' }
 end
 
 Payroll.blueprint do
@@ -164,4 +165,14 @@ ExpenseTag.blueprint do
 end
 
 ExpenseTagItem.blueprint do
+end
+
+Quotation.blueprint do
+  school_year       { Time.current.year + 543 }
+  semester          { 1 }
+  parent_id         { object.parent&.id&.presence || Parent.make!.id }
+  student_id        { object.student&.id&.presence || Student.make!.id }
+  quotation_status { :unpaid }
+  payment_date_start { Date.today - 3.months }
+  payment_date_end { Date.today }
 end

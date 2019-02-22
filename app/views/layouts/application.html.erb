@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html lang="<%= @locale %>">
     <head>
-        <title>สมศรี - ระบบบริหารโรงเรียน 4.0</title>
+        <title><%= t('title') %></title>
         <%= csrf_meta_tags %>
 
         <%= favicon_link_tag 'apple-touch-icon-57x57.png', rel: 'apple-touch-icon-precomposed', type: 'image/png', size: '57x57' %>
@@ -31,13 +31,17 @@
         <%= stylesheet_link_tag 'application_somsri', media: 'all' %>
         <%= javascript_include_tag 'application' %>
         <script src="//rawgit.com/hhurz/tableExport.jquery.plugin/master/tableExport.js"></script>
+        <%= render 'layouts/translates' %>
+        <%= javascript_include_tag 'application_translates' %>
+        <%= javascript_include_tag 'bootstrap-table-en-US' %>
+        <%= javascript_include_tag 'bootstrap-table-th-TH' %> 
     </head>
-    <% if !user_signed_in? %>
+    <% if !user_signed_in? && !employee_signed_in? %>
       <body ng-controller="mainCtrl as main">
     <% else %>
       <body ng-controller="mainCtrl as main" style="background:#fff !important;">
     <%end%>
-    <% if !user_signed_in? %>
+    <% if !user_signed_in? && !employee_signed_in? %>
       <header style="display:none;">
     <% else %>
       <header>

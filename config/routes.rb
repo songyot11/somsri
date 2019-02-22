@@ -1,6 +1,7 @@
 Rails.application.routes.draw do
   mount RailsAdmin::Engine => '/admin', as: 'rails_admin'
   devise_for :users, :skip => [:registrations]
+  devise_for :employees, path: 'employees', :skip => [:registrations]
 
   get 'changelog', to: 'home#changelog'
   get "/menu" => "menu#index"
@@ -11,6 +12,14 @@ Rails.application.routes.draw do
   get "/main" => "menu#landing_main"
   get "/language" => "home#language"
   get "/locale" => "home#locale"
+  get 'holiday.ics' => 'holidays#share'
+
+  resources :users, only: [] do
+    collection do
+      get "me"
+      get "site_config"
+    end
+  end
 
   resources :users, only: [] do
     collection do
@@ -52,6 +61,7 @@ Rails.application.routes.draw do
     resources :employee_skills, except: %i[show new edit]
 
     collection do
+      get 'me'
       get 'slips'
       post 'create_by_name'
     end
@@ -147,10 +157,80 @@ Rails.application.routes.draw do
     end
   end
 
+  resources :quotations do
+    member do
+      get "bill"
+    end
+  end
+
+  resources :banks
+  resources :vacations, only: [:index, :create, :destroy] do
+    collection do
+      get 'dashboard'
+    end
+    member do
+      get 'approve'
+      get 'reject'
+    end
+  end
+
+  resources :vacation_configs, only: [:index] do
+  end
+
+  resources :vacation_leave_rules, only: [:index, :update] do
+  end
+
+  resources :holidays, only: [:index, :create, :destroy] do
+  end
+
   devise_scope :user do
     get "/sign_in" => "devise/sessions#new"
   end
   comfy_route :cms, :path => '/homepage', :sitemap => false
   comfy_route :cms_admin, :path => '/cms_admin'
   root to: 'home#index'
+
+  resources :inventories do
+    resources :categories
+  end
+  
+  resources :inventory_requests do 
+    collection do
+    end
+    
+    member do
+      put 'approve'  
+      put 'reject'
+      put 'pending'
+      put 'accept'
+      put 'purchasing'
+      put 'done'
+      put 'assigned'
+      put 'delete_inventory'
+      put 'wait'
+      put 'repair'
+    end
+
+    # POST: /inventories_requests/:inventories_request_id/manage_inventories_requests
+    resources :manage_inventories_requests
+  end
+
+  resources :suppliers
+
+  resources :inventory_repairs do 
+    collection do
+    end
+    # [:repair_notification, :confirm_accept, :rejected ,:sent_repair, :repairs_completed, :dispatch_to_employees]
+    member do
+      put 'repair_notification'
+      put 'confirm_accept'  
+      put 'rejected'
+      put 'sent_repair'
+      put 'repairs_completed'
+      put 'dispatch_to_employees'
+    end
+
+    # POST: /inventories_repairs/:inventories_repair_id/manage_inventory_repair
+    resources :manage_inventory_repairs
+  end
 end

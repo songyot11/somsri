@@ -1,5 +1,4 @@
 source 'https://rubygems.org'
-
 gem "table_print"
 # Bundle edge Rails instead: gem 'rails', github: 'rails/rails'
 gem 'rails', '~> 5.0.0', '>= 5.0.0.1'
@@ -8,7 +7,7 @@ gem 'figaro'
 # Use postgresql as the database for Active Record
 gem 'pg'
 # Use Puma as the app server
-gem 'puma', '~> 3.0'
+gem 'puma', '~> 3.10'
 # Use SCSS for stylesheets
 gem 'sass-rails', '~> 5.0'
 # Use Uglifier as compressor for JavaScript assets
@@ -60,7 +59,7 @@ gem 'comfortable_mexican_sofa', '~> 1.12.0'
 #Paranoia
 gem 'paranoia', '~> 2.1', '>= 2.1.5'
 
-gem "aws-sdk"
+gem "aws-sdk", '~> 2.3.12'
 gem "paperclip", "~> 5.0.0"
 
 gem "bootstrap-table-rails"
@@ -73,6 +72,10 @@ gem 'spreadsheet'
 
 gem 'bootstrap-sass', '~> 3.3.7'
 gem 'numbers_in_words'
+
+gem 'ckeditor'
+
+gem 'icalendar'
 
 group :development, :test do
   # Call 'byebug' anywhere in the code to stop execution and get a debugger console
@@ -113,8 +116,14 @@ group :development do
 end
 
 group :production do
-  #gem 'unicorn'
+  gem 'unicorn'
 end
 
 # Windows does not include zoneinfo files, so bundle the tzinfo-data gem
 gem 'tzinfo-data', platforms: [:mingw, :mswin, :x64_mingw, :jruby]
+
+gem "i18n-js"
+
+# print log ruby
+gem 'awesome_print', :require => 'ap'
+ruby '2.3.1'

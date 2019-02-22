@@ -285,7 +285,7 @@ describe 'Alumni', js: true do
   it 'should search rows' do
     visit '/somsri_invoice#/alumni'
     sleep(1)
-    page.find('input[placeholder="Search"]').set("สมศรี1")
+    page.find('input[placeholder="ค้นหา"]').set("สมศรี1")
     eventually { expect(page).to have_content("สมศรี1 ใบเสร็จ หนึ่ง 9006 2560 1 Kindergarten 1 (1A) ลาออก") }
     eventually { expect(page).to_not have_content("สมศรี2 ใบเสร็จ สอง 9007 2561 1 Kindergarten 1 (1A) ลาออก") }
     eventually { expect(page).to_not have_content("สมศรี3 ใบเสร็จ สาม 9008 2560 2 Kindergarten 2 (2A) จบการศึกษา") }
@@ -323,5 +323,29 @@ describe 'Alumni', js: true do
     eventually { expect(page).to have_css("table#alumni-table tbody tr", count: 10) }
     eventually { expect(Student.where(id: students[0].id).count).to eq 1 }
     eventually { expect(Alumni.where(student_id: students[0].id).count).to eq 0 }
+  end
+
+  it 'should traslate table page alumni when locale=th' do
+    visit '/somsri_invoice#/alumni'
+    sleep(1)
+    find('input[placeholder="ค้นหา"]').set("หาศิษย์เก่าไม่เจอหรอก")
+    eventually { expect(page).to have_content("ไม่พบรายการที่ค้นหา !") }
+    find('input[placeholder="ค้นหา"]').set("สมศรี1")
+    eventually { expect(page).to have_content("นำกลับเข้าระบบ") }
+  end
+
+  it 'should traslate table page alumni when locale=en' do
+    visit '/somsri_invoice#/alumni'
+    sleep(1)
+    find("#navbarDropdownMenuLink").click
+    find('.fa-commenting-o').hover
+    find("a", :text => "English").click
+    sleep(1)
+    visit '/somsri_invoice#/alumni'
+    sleep(1)
+    find('input[placeholder="Search"]').set("หาศิษย์เก่าไม่เจอหรอก")
+    eventually { expect(page).to have_content("No matching records found") }
+    find('input[placeholder="Search"]').set("สมศรี1")
+    eventually { expect(page).to have_content("Bring back to system") }
   end
 end

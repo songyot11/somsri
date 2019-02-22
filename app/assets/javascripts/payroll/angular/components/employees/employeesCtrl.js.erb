@@ -1,9 +1,8 @@
 (function() {
   'use strict';
-  angular.module('somsri.payroll.employees', [
-    ])
+  angular.module('somsri.payroll.employees', [])
   .controller('employeesCtrl', ['employeesService','$log', '$rootScope', 'translateFilter', function(employeeService, $log, $rootScope, translateFilter) {
-    $rootScope.menu = translateFilter('employee')
+    $rootScope.menu = I18n.t('employee')
     var ctrl = this
     var dateNow = new Date();
     var $table = $('#employeesTable')
@@ -40,30 +39,30 @@
 
     function salary(value, row, index){
       if (value) {
-        return '<div class="text-blue text-right" ><span class="numberic">'+ value.toLocaleString() +'</span> ' + translateFilter("baht") + '</div>';
+        return '<div class="text-blue text-right" ><span class="numberic">'+ value.toLocaleString() +'</span> ' + I18n.t("baht") + '</div>';
       }
-      return '<div class="text-blue text-right" ><span class="numberic">0</span> ' + translateFilter("baht") + '</div>';
+      return '<div class="text-blue text-right" ><span class="numberic">0</span> ' + I18n.t("baht") + '</div>';
     }
 
     function extra(value, row, index){
       if (value) {
-        return '<div class="text-green text-right" ><span class="numberic">'+ value.toLocaleString() +'</span> ' + translateFilter("baht") + '</div>';
+        return '<div class="text-green text-right" ><span class="numberic">'+ value.toLocaleString() +'</span> ' + I18n.t("baht") + '</div>';
       }
-      return '<div class="text-green text-right" ><span class="numberic">0</span> ' + translateFilter("baht") + '</div>';
+      return '<div class="text-green text-right" ><span class="numberic">0</span> ' + I18n.t("baht") + '</div>';
     }
 
     function fee(value, row, index){
       if (value) {
-        return '<div class="text-red text-right" ><span class="numberic">'+ value.toLocaleString() +'</span> ' + translateFilter("baht") + '</div>';
+        return '<div class="text-red text-right" ><span class="numberic">'+ value.toLocaleString() +'</span> ' + I18n.t("baht") + '</div>';
       }
-      return '<div class="text-red text-right" ><span class="numberic">0</span> ' + translateFilter("baht") + '</div>';
+      return '<div class="text-red text-right" ><span class="numberic">0</span> ' + I18n.t("baht") + '</div>';
     }
 
     var angularScopeEmployees = "angular.element(document.getElementById('angularCtrl')).scope().employees";
 
     function edit(value, row, index){
       if (row) {
-        return '<a href="javascript:void(0)" class="td-edit-employee-link text-center" onclick="'+ angularScopeEmployees +'.openEmployeeDetails('+row.id+')"><i class="fa fa-pencil-square-o"></i>' + translateFilter("edit") + '</a>';
+        return '<a href="javascript:void(0)" class="td-edit-employee-link text-center" onclick="'+ angularScopeEmployees +'.openEmployeeDetails('+row.id+')"><i class="fa fa-pencil-square-o"></i>' + I18n.t("edit") + '</a>';
       }
     }
 
@@ -100,7 +99,7 @@
         $('#employeesTable > tbody').removeClass('bootstrapCardView');
       }
     }
-
+    
     $table.bootstrapTable({
       onToggle: cardViewToggle,
       sortName: 'full_name',
@@ -110,28 +109,28 @@
         field: 'imgUrl',
         formatter: imgTag,
       },{
-        title: translateFilter("full_name"),
+        title: I18n.t("full_name"),
         field: 'full_name',
         sortable: true,
         formatter: linkName,
       },{
-        title: translateFilter("position"),
+        title: I18n.t("position"),
         field: 'position',
         sortable: true,
       },{
-        title: translateFilter("payroll"),
+        title: I18n.t("payroll"),
         field: 'salary',
         align: 'right',
         formatter: salary,
         sortable: true,
       },{
-        title: translateFilter("extra_money"),
+        title: I18n.t("extra_money"),
         field: 'extra',
         align: 'right',
         formatter: extra,
         sortable: true,
       },{
-        title: translateFilter("deduct_money"),
+        title: I18n.t("deduct_money"),
         field: 'fee',
         align: 'right',
         formatter: fee,
@@ -206,7 +205,5 @@
         $table.bootstrapTable('showColumn', 'edit');
       }
     })
-
-
   }]);
 })();

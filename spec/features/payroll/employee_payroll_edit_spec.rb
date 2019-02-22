@@ -140,7 +140,6 @@ describe 'Payroll Edit', js: true do
     eventually { expect(payroll.position_allowance).to eq 0.00 }
     eventually { expect(page).to have_content /นาง สมศรี เป็นชื่อแอพ.*1,000.00 0.00 0.00 0.00 0.00 0.00 0.00 0.00 0.00 0.00 0.00 0.00 0.00 0.00 1,000.00/i }
     eventually { expect(page).to have_content /รวมทั้งหมด.*2,000.00 0.00 0.00 0.00 0.00 0.00 0.00 0.00 0.00 0.00 0.00 0.00 0.00 0.00 2,000.00/i }
-
     sleep(1)
     first('a[editable-number="employee.position_allowance"]').click
     sleep(1)

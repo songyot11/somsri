@@ -95,7 +95,7 @@ describe 'RollCall report', js: true do
 
   it 'should go to rollcall report' do
     visit "/somsri_rollcall#/report"
-    sleep(1)
+    sleep(4)
     expect(page).to have_selector('.fa.fa-check', count: 1)
     expect(page).to have_selector('.fa.fa-times', count: 1)
   end
@@ -112,6 +112,7 @@ describe 'RollCall report', js: true do
   end
 
   it 'should go to rollcall report' do
+    skip("Capybara webkit doesn't support date.toLocaleDateString()")
     visit "/somsri_rollcall#/report"
     sleep(1)
     find('.ng-binding', :text => 'มีนาคม 2560').click
@@ -122,4 +123,20 @@ describe 'RollCall report', js: true do
     expect(page).not_to have_selector('.fa.fa-times')
   end
 
+  it 'should go to rollcall report' do 
+    skip("Capybara webkit doesn't support date.toLocaleDateString()")
+    visit "/somsri_rollcall#/report"
+    find("#navbarDropdownMenuLink").click
+    find('.fa-commenting-o').hover
+    find("#en").click
+    sleep(1) 
+    sleep(1)
+    visit "/somsri_rollcall#/report"
+    find('.ng-binding', :text => 'March 2017').click
+    sleep(1)
+    click_link('April 2017')
+    sleep(1)
+    expect(page).to have_selector('.fa.fa-check', count: 1)
+    expect(page).not_to have_selector('.fa.fa-times')
+  end
 end

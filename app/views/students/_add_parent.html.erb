@@ -1,7 +1,7 @@
     <div class="form-group" id="add-prn-<%= index %>">
       <div class="row">
         <div class="col-md-5" style="margin-left:15px;">
-          <select id="parent<%= index %>" name="parent[]" index="<%= index %>" onchange="parentChanged(this)" placeholder="Select parent...">
+          <select id="parent<%= index %>" name="parent[]" index="<%= index %>" onchange="parentChanged(this)" placeholder="<%=t('select_parent')%>">
             <option value="" disabled selected></option>
             <% @parents.each do |p| %>
               <option value="<%= p.id %>" <%= set_option_selected(p, ps) %>><%= p.full_name %></option>
@@ -15,8 +15,11 @@
             <% end %>
           </select>
         </div>
-        <div class="col-md-3">
+        <div class="col-md-2">
           <input type="text" id="mobile<%= index %>" placeholder="โทรศัพท์"  name="mobile[]" class="form-control" value="<%= ps.mobile if ps %>" <%= "disabled='true'" if !ps %>>
+        </div>
+        <div class="col-md-3">
+          <input type="text" id="email<%= index %>" placeholder="อีเมล์"  name="email[]" class="form-control" value="<%= ps.email if ps %>" <%= "disabled='true'" if !ps %>>
         </div>
         <div class="col-md-1">
           <button type="button" class="btn btn-delete-sp" onclick="remove_parent(<%= index %>)"><i class="fa fa-times"></i></button>

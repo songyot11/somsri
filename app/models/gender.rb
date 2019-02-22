@@ -32,4 +32,8 @@ class Gender < ApplicationRecord
       Gender.all.to_a
     end
   end
+
+  def translated_gender
+    I18n.t(self[:name])
+  end  
 end

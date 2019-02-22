@@ -82,7 +82,7 @@
         var tableColumnSetting = [
           { field: 'classroom', formatter: classroomFormatter, title: translateFilter('current_grade_classroom'), class: "col-xs-5"},
           { field: 'arrow', formatter: arrowFormatter, class: "col-xs-2 text-center"},
-          { field: 'next_classroom', formatter: nextClassroomFormatter, title: translateFilter('grade_classroom') + "<span class='color-blue-link'>" + translateFilter('new') + "</span>", class: "col-xs-5"}
+          { field: 'next_classroom', formatter: nextClassroomFormatter, title: "<span class='color-blue-link'>" + translateFilter('next_classroom') + "</span>", class: "col-xs-5"}
         ]
         $('#next-classroom-list').bootstrapTable({
           data: classrooms,

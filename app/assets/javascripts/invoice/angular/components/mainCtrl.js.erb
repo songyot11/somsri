@@ -69,8 +69,25 @@
       $state.go('grouping_report2')
     };
 
+    $rootScope.openQuotationNew = function () {
+      $state.go('quotation_new')
+    };
+
+    $rootScope.openQuotation = function () {
+      $state.go('quotation')
+    };
+
+
     $rootScope.openSlip = function (id, page) {
       return openInNewTab("/invoices/" + id + "/slip.pdf")
+    };
+
+    $rootScope.openQuotationSlip = function (id, page) {
+      return openInNewTab("/quotations/" + id + "/bill.pdf")
+    };
+
+    $rootScope.openInvoicePaid = function (id, page) {
+      return openInNewTab("/somsri_invoice#/invoice/" + id)
     };
 
     $rootScope.openDailyReportPreview = function (id) {

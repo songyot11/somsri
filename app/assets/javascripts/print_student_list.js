@@ -16,8 +16,8 @@ function printStudent(){
         html +=
           '<div class="list-page">' +
             '<div class="row">' +
-              '<div id="student-list-header" class="col-xs-12 text-center">' +
-                'บัญชีรายชื่อนักเรียน  ชั้น .......................................... ภาคเรียนที่ ..../'+ data.school_year +
+              '<div id="student-list-header" class="col-xs-12 text-center">' +I18n.t("topic")+ data.school_year +
+
               '</div>' +
             '</div>' +
             '<div class="space10"></div>' +
@@ -26,11 +26,11 @@ function printStudent(){
                 '<table style="width:100%">' +
                   '<thead>' +
                     '<tr>' +
-                      '<th class="text-center">ลำดับ</th>' +
-                      '<th class="text-center">เลขประจำตัว</th>' +
-                      '<th class="text-center">ชื่อ - นามสกุล</th>' +
-                      '<th class="text-center">รหัสเลขประจำตัวประชาชน 13 หลัก</th>' +
-                      '<th class="text-center">วัน เดือน ปีเกิด</th>' +
+                      '<th class="text-center">'+I18n.t("item_no")+'</th>' +
+                      '<th class="text-center">'+I18n.t("student_id1")+'</th>' +
+                      '<th class="text-center">'+I18n.t("full_name")+'</th>' +
+                      '<th class="text-center">'+I18n.t("personal_id")+'</th>' +
+                      '<th class="text-center">'+I18n.t("birthday_1")+'</th>' +
                     '</tr>' +
                   '</thead>' +
                   '<tbody>';

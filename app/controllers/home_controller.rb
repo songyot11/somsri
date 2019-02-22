@@ -1,6 +1,6 @@
 class HomeController < ApplicationController
-  def index
-    if !current_user
+  def index 
+    if !current_user && !current_employee
       if SiteConfig.get_cache.web_cms
         redirect_to comfy_cms_render_page_path
       else
@@ -17,7 +17,7 @@ class HomeController < ApplicationController
   def language
     session['locale'] = params[:locale] || I18n.default_locale
     I18n.locale = session['locale']
-    redirect_to params[:redirect]
+    redirect_to params[:weburl]
   end
 
   def locale

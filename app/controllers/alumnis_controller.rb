@@ -2,8 +2,8 @@ class AlumnisController < ApplicationController
   load_and_authorize_resource
   def index
     alumnis = Alumni.all
-    alumnis = alumnis.where(graduated_year: params[:year]) if params[:year] && params[:year] != "ทั้งหมด"
-    alumnis = alumnis.where(status: params[:status]) if params[:status] && params[:status] != "ทั้งหมด"
+    alumnis = alumnis.where(graduated_year: params[:year]) if params[:year] && !["all", "ทั้งหมด"].include?(params[:year].downcase) 
+    alumnis = alumnis.where(status: params[:status]) if params[:status] && !["all", "ทั้งหมด"].include?(params[:status].downcase)
     alumnis = alumnis.order("#{params[:sort]} #{params[:order]}") if params[:sort]
     alumnis = alumnis.search(params[:search]) if params[:search]
     if params[:limit] && params[:offset]

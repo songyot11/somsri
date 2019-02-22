@@ -5,6 +5,7 @@ class Invoice < ApplicationRecord
   belongs_to :invoice_status
   has_many :line_items
   has_many :payment_methods
+  has_many :quotation_invoices
 
   self.per_page = 10
 
@@ -17,11 +18,11 @@ class Invoice < ApplicationRecord
   end
 
   def parent
-     Parent.with_deleted.where(id: self.parent_id).first
+    Parent.with_deleted.where(id: self.parent_id).first
   end
 
   def student
-     Student.with_deleted.where(id: self.student_id).first
+    Student.with_deleted.where(id: self.student_id).first
   end
 
   def total_amount
@@ -88,7 +89,8 @@ class Invoice < ApplicationRecord
   def self.search(keyword)
     if keyword.to_s != ''
       joins(:parent, :student).where(
-        "CAST(invoices.id AS TEXT) LIKE ? OR students.full_name LIKE ? OR students.nickname LIKE ? OR parents.full_name LIKE ?",
+        "CAST(invoices.id AS TEXT) LIKE ? OR students.full_name LIKE ? OR students.full_name_english LIKE ? OR students.nickname LIKE ? OR parents.full_name LIKE ?",
+        "%#{keyword}%",
         "%#{keyword}%",
         "%#{keyword}%",
         "%#{keyword}%",

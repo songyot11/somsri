@@ -12,6 +12,19 @@
       var PERSONAL_LEAVE = ['2'];
       var CHECKED = ['3','4','5'];
 
+      function localedate(currentdate){
+        var language = $('html').attr('lang');
+        var current = new Date()
+        if (currentdate){
+          current = new Date(currentdate)
+        }
+        if (language == "en"){   
+         return  current.toLocaleDateString('en-US', {month: "long",  year: 'numeric'})
+          }else{
+         return  current.toLocaleDateString('th-TH', {month: "long",  year: 'numeric'}) 
+        }
+      }
+
       function getDateInMonth(month) {
         service.getDateInMonth(new Date(month.date)).then(function(resp){
           ctrl.dates = resp.data;
@@ -70,8 +83,9 @@
           }
           ctrl.currentList = list;
           ctrl.displayListName = ctrl.currentList.name;
-          ctrl.currentMonth = month;
           ctrl.displayMonth = ctrl.currentMonth.name;
+          ctrl.currentMonth = month;
+          ctrl.displayMonth = localedate(ctrl.currentMonth.date)
         });
       }
 
@@ -118,11 +132,18 @@
         ctrl.currentList = ctrl.lists[0];
         if(!ctrl.currentList){ ctrl.currentList = { id: 0, name: '' } }
         ctrl.displayListName = ctrl.currentList.name;
-        service.getMonths().then(function(resp_month){
+        service.getMonths().then(function(resp_month){    
+          resp_month.data.forEach(function(element,i){
+            resp_month.data[i].name = localedate(resp_month.data[i].date)  
+          }); 
           ctrl.months = resp_month.data;
           ctrl.currentMonth = ctrl.months[0];
-          if(!ctrl.currentMonth){ ctrl.currentMonth = { date: new Date(), name: moment(new Date()).format('MMMM YYYY') } }
-          ctrl.displayMonth = ctrl.currentMonth.name;
+          if(!ctrl.currentMonth){ 
+            ctrl.currentMonth = { 
+              date: new Date(), name: moment(new Date()).format('MMMM YYYY') 
+            }
+            ctrl.displayMonth = localedate()
+          }
           getRollCall(ctrl.currentList, ctrl.currentMonth);
           getDateInMonth(ctrl.currentMonth);
         });

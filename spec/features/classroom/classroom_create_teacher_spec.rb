@@ -111,5 +111,27 @@ describe 'Classroom Create Teacher', js: true do
     eventually { expect(page).to_not have_content("ชื่อเล่น") }
   end
 
+  it 'should traslate table page teacher classroom when locale=th' do
+    visit "/main#/classroom/#{classrooms[0].id}"
+    sleep(1)
+    find('button.btn-primary').click
+    sleep(1)
+    find('input[placeholder="ค้นหา"]').set("หาห้องเรียนไม่เจอหรอก")
+    eventually { expect(page).to have_content("ไม่พบรายการที่ค้นหา !") }
+  end
 
+  it 'should traslate table page teacher classroom when locale=en' do
+    visit "/main#/classroom/#{classrooms[0].id}"
+    sleep(1)
+    find("#navbarDropdownMenuLink").click
+    find('.fa-commenting-o').hover
+    find("a", :text => "English").click
+    sleep(1)
+    visit "/main#/classroom/#{classrooms[0].id}"
+    sleep(1)
+    find('button.btn-primary').click
+    sleep(1)
+    find('input[placeholder="Search"]').set("หาห้องเรียนไม่เจอหรอก")
+    eventually { expect(page).to have_content("No matching records found") }
+  end
 end
