@@ -1,0 +1,48 @@
+(function() {
+	'use strict';
+
+	angular.module('somsri.somsri.inventory.supplier.service', [])
+	.service('inventorySupplierService', ['$http', 'Upload', function($http, Upload) {
+
+		this.newSuppliers = function(data) {
+			return $http.post('/suppliers', data)
+		}
+
+		this.getAllSuppliers = function() {
+			return $http.get('/suppliers')
+		}
+
+		this.getSuppliers = function(page) {
+			return $http.get('/suppliers', {
+				params: {
+					page: page,
+				}
+			})
+		}
+
+		this.show = function(id, page) {
+			if (page) {
+				 return $http.get('/suppliers/' + id, {
+	   	 		params: {
+	   	 			page: page,
+	   	 		}
+	   	 })
+			} else {
+				return $http.get('/suppliers/' + id)
+			}
+  	};
+
+  	this.removeSuppliers = function(id) {
+			return $http.delete('/suppliers/' + id)
+		};
+
+		this.updateSuppliers = function(data, id) {
+			return Upload.upload({
+							url: '/suppliers/' + id,
+							method: 'put',
+							data: data 
+						});
+		};
+
+   }]);
+})();

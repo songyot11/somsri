@@ -1,11 +1,16 @@
 (function() {
   'use strict';
-  angular.module('somsri.payroll.employee_details', [
-  ])
-  .controller('employeeDetailsCtrl', ['employeesService', 'studentReportService', '$log', '$state', '$rootScope','$scope', '$uibModal', 'reportService', '$filter', '$location', 'individualsService', 'Upload', 'translateFilter', function(service, studentReportService, $log, $state, $rootScope, $scope, $uibModal, reportService, $filter, $location, individualsService, Upload, translateFilter) {
+  angular.module('somsri.payroll.employee_details', [])
+  .controller('employeeDetailsCtrl', ['employeesService', 'studentReportService', '$log', '$state', '$rootScope','$scope', '$uibModal', 'reportService', '$filter', '$location', 'individualsService', 'Upload', 'translateFilter','inventoryRequestService', 
+    function(service, studentReportService, $log, $state, $rootScope, $scope, $uibModal, reportService, $filter, $location, individualsService, Upload, translateFilter, inventoryRequestService) {
     $rootScope.menu = translateFilter('employee');
     var ctrl = this;
+    var angularScopeRoot = 'angular.element(document.getElementById("angularCtrl")).scope().$root'
+    var angularScopeInventory = 'angular.element(document.getElementById("angularCtrl")).scope().employeeDetailsCtrl'
+    var angularCtrlStr = "angular.element(document.getElementById('angularCtrl')).scope().employee"
+
     $rootScope.loadAndAuthorizeResource("employee", function(){
+
       var dateNow = new Date();
       var employeeId = $state.params.id;
       ctrl.currentEffectiveDate = "";
@@ -20,6 +25,33 @@
       ctrl.pinChars = [];
       ctrl.filterKeyword = '';
       ctrl.total = '';
+
+      ctrl.add_button = "add_new_employee"
+      var employee_inventory_table = $('#employee-inventory-table');
+      ctrl.getActiveTab = $rootScope.activeTab
+      ctrl.show_note_and_comment = true
+      $rootScope.activeTab = null
+
+      if (!ctrl.getActiveTab) {
+        ctrl.activeTab = 'general'
+        ctrl.add_button = "add_new_employee"
+      } else {
+        ctrl.activeTab = ctrl.getActiveTab
+        if (ctrl.activeTab == 'inventory') {
+          ctrl.add_button = "add_request_employee"
+        } else {
+          ctrl.add_button = "add_new_employee"
+        }
+      }
+
+      ctrl.selectTab = function(str) {
+        settingButton()
+        if (str == 'inventory') {
+          ctrl.add_button = "add_request_employee"
+        } else {
+          ctrl.add_button = "add_new_employee"
+        }
+      }
 
       studentReportService.getGrades().then(function(grade_resp) {
         // remove option 'All'
@@ -218,8 +250,30 @@
             ctrl.pinChars = []
           }
 
+          if (!ctrl.datas.employee.note) {
+            ctrl.datas.employee.note = "-"
+          }
+
+          if (!ctrl.datas.employee.comment) {
+            ctrl.datas.employee.comment = "-"
+          }
 
 
+          ctrl.current_employee = ctrl.datas.current_employee
+          ctrl.current_user = ctrl.datas.current_user
+          if (ctrl.current_user) {
+            ctrl.show_note_and_comment = true
+            // ctrl.disabled_dropdown = true
+            // document.getElementById("employeeName").disabled=true
+            // console.log("admin")
+          } else {
+            ctrl.show_note_and_comment = false
+            // document.getElementById("employeeName").disabled=false
+            // ctrl.disabled_dropdown = false
+            // console.log("employee")
+          }
+
+          settingButton()
           ctrl.displayName = e.id + ': ' + ctrl.datas.employee_display_name;
 
           // init tax reduction default
@@ -257,6 +311,28 @@
         });
       }
 
+      function settingButton() {
+        if (ctrl.current_user) {
+          ctrl.showButton = true
+          ctrl.showDeleteButton = true
+          ctrl.showCancelButton = true
+          ctrl.showSaveButton = true
+        } else if (ctrl.current_employee && ctrl.activeTab == 'inventory') {
+          ctrl.showButton = true
+          ctrl.showSaveButton = false
+        } else if (ctrl.current_employee && ctrl.activeTab == 'private'){
+          ctrl.showDeleteButton = false
+          ctrl.showCancelButton = false
+          ctrl.showSaveButton = true
+          ctrl.showButton = false
+        } else {
+          ctrl.showDeleteButton = false
+          ctrl.showCancelButton = false
+          ctrl.showSaveButton = false
+          ctrl.showButton = false
+        }
+      }
+
       function switchMonth(effectiveDate) {
         var payroll_id = effectiveDate.payroll_id;
         service.getEmployee(employeeId, payroll_id).then(function(resp) {
@@ -272,7 +348,7 @@
         });
       }
 
-      ctrl.openEmployeeDetails = function(id){
+      ctrl.slectDropDown = function(id) {
         if(isDataChange()){
           openConfirmationModal(translateFilter("close_without_save"), function(){
             $rootScope.openEmployeeDetails(id);
@@ -281,23 +357,19 @@
           })
         }else{
           $rootScope.openEmployeeDetails(id);
+        }
+      }
+
+      ctrl.openEmployeeDetails = function(id){
+        if (ctrl.add_button == "add_request_employee") { 
+          $rootScope.openAddInventoryRequest(ctrl.empId);
+        } else {
+          ctrl.slectDropDown(id)
         }
       }
 
       ctrl.changeSalary = function(){
         ctrl.datas.employee.salary = ctrl.datas.payroll.salary;
-      }
-
-      ctrl.openEmployeeDetails = function(id){
-        if(isDataChange()){
-          openConfirmationModal(translateFilter("close_without_save"), function(){
-            $rootScope.openEmployeeDetails(id);
-          }, function(){
-            $log.info("DISMISS!!");
-          })
-        }else{
-          $rootScope.openEmployeeDetails(id);
-        }
       }
 
       ctrl.cancel = function(){
@@ -335,7 +407,7 @@
           ctrl.isSubmit = true
           if (ctrl.isEdit) {
             if(isDataChange()){
-              openConfirmationModal(translateFilter("save_data"), function(){
+              openConfirmationModal(translateFilter("close_with_save"), function(){
                 var datas_result = $.extend(true, {}, ctrl.datas);
                 service.saveEmployee(ctrl.datas.employee.id, datas_result).then(function(resp) {
                   ctrl.isSubmit = false;
@@ -576,6 +648,153 @@
       $scope.set_cripple_alimony = function(value) {
         ctrl.datas.tax_reduction.cripple_alimony = 60000*value;
       };
+
+      function filterDate(value, row, index) {
+        if (value) {
+          return $filter('date')(Date.parse(value), 'dd/MM/yyyy');
+        }
+        return "-";
+      }
+
+      function formatePrice(value, row, index) {
+        if (value) {
+            return $filter('number')(value.toFixed(2), 2);
+        }
+        return "-"
+      }
+      var bootstrapTableOptionsInvetoryRequest = {
+        sortName: 'updated_at',
+        sortOrder: 'desc',
+        columns : [{
+          field: 'number',
+          title: '#',
+          classes: 'text-right',
+          sortable: true,
+        },{
+          field: 'item_name',
+          title: translateFilter("item_name"),
+          sortable: true,
+        },{
+          field: 'serial_number',
+          title: translateFilter("serial_number"),
+          sortable: true,
+          class: 'font-weight-bold'
+        },{
+          field: 'model',
+          title: translateFilter("model"),
+          class: 'text-currency',
+          align: 'right',
+          sortable: true,
+        },{
+          field: 'description',
+          title: translateFilter("description"),
+          sortable: true,
+        },{
+          field: 'inventory_status',
+          title: translateFilter("status"),
+          align: 'center',
+          formatter: statusFormmatter,
+          sortable: true,
+          class: 'font-weight-bold',
+        },{
+          field: 'edit',
+          title: "",
+          class: 'text-right',
+          sortable: false,
+          formatter : editInventoryRequestFormatter
+        }]
+      }
+
+      function editInventoryRequestFormatter(value, row, index) {
+        return '<a id="editInventory' + row['id'] + '" onclick="' + angularCtrlStr + '.editInventory(' + row['id'] + ')"> <i class=\'fa fa-pencil-square-o fa-fw color-orange cursor-pointer\'></i> </a>';
+      } 
+
+      ctrl.editInventory = function(inventory_id) {
+        $rootScope.openInventoryDetails(ctrl.empId,inventory_id)
+      }
+
+      function statusFormmatter(value, row, index) {
+        var color = ""
+        if (row['inventory_status'] == "delete") {
+          color = "color-red"
+        } else if (row['inventory_status'] == "waiting repair") {
+          color = "color-orange"
+        }
+
+        if (row['inventory_status'] == 'rejected' || row['inventory_status'] == "delete") {
+          return '<span class="cursor-pointer" data-trigger="hover" data-container="body" data-toggle="popover" data-placement="top" title="Reason" data-content="' + row['comment'] + '">' +  row['inventory_status'] + '</span>' 
+        } else {
+          return '<span class="'+ color + '" tyep="text">' + row['inventory_status'] + '</span>'
+        }
+      }
+
+      employee_inventory_table.bootstrapTable($.extend(bootstrapTableOptionsInvetoryRequest, {toolbar: "date-filter"}));
+
+      function getInventoryRequest() {
+        if(!ctrl.requestCurrentPage){ ctrl.requestCurrentPage = 1 }
+          inventoryRequestService.getInventoryRequest(ctrl.requestCurrentPage, ctrl.empId).then(function(resp) {
+            
+            ctrl.datasReuestExport = [];
+            if (resp.data) {
+              ctrl.requestTotalItems = resp.data.total_records;
+              ctrl.requestCurrentPage = resp.data.current_page;
+              ctrl.datasReuestExport = resp.data.inventories_requests
+              var datas = []
+              var count = ctrl.datasReuestExport.length
+              for(var i = 0; i<count; i++) {
+                var status = ctrl.datasReuestExport[i].inventory_status
+                if (ctrl.datasReuestExport[i].inventory_status == "wait") {
+                  status = "-"
+                } else if (ctrl.datasReuestExport[i].inventory_status == "delete_inventory") {
+                  status = "delete"
+                } else if (ctrl.datasReuestExport[i].inventory_status == "repair") {
+                  status = "waiting repair"
+                }
+
+                var serial_number = "-"
+                var model = "-"
+                var description = ctrl.datasReuestExport[i].description
+                if (ctrl.datasReuestExport[i].inventory) {
+                  if (ctrl.datasReuestExport[i].inventory.serial_number) {
+                    serial_number = ctrl.datasReuestExport[i].inventory.serial_number
+                  }
+                
+                  if (ctrl.datasReuestExport[i].inventory.model) {
+                    model = ctrl.datasReuestExport[i].inventory.model
+                  }
+                  if (ctrl.datasReuestExport[i].inventory.description) {
+                    description = ctrl.datasReuestExport[i].inventory.description
+                  }
+                }
+
+                datas.push({
+                  number: ((ctrl.requestCurrentPage - 1) * 10) + i + 1,
+                  id: ctrl.datasReuestExport[i].id,
+                  item_name: ctrl.datasReuestExport[i].item_name,
+                  serial_number: serial_number,
+                  model: model,
+                  description: description,
+                  inventory_status: status,
+                  comment: ctrl.datasReuestExport[i].comment,
+                  created_at: ctrl.datasReuestExport[i].created_at,
+                  updated_at: ctrl.datasReuestExport[i].updated_at
+                })
+              }
+              ctrl.datasReuestExport = datas
+            } else {
+              ctrl.requestTotalItems = 0;
+              ctrl.requestCurrentPage = 0;
+            }
+            ctrl.paginateButtonMaxSize = 5;
+            employee_inventory_table.bootstrapTable('load', ctrl.datasReuestExport);
+          });
+      }
+
+      ctrl.pageRequestChanged = function() {
+        getInventoryRequest()
+      };
+
+      getInventoryRequest()
     });
   }])
   .directive('stringToNumber', function() {

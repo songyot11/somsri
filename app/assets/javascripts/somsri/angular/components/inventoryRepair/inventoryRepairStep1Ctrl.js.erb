@@ -1,0 +1,108 @@
+(function() {
+  'use strict';
+    angular.module('somsri.somsri.update_inventory_repair', [])
+    .controller('inventoryRepairStep1Ctrl', ['$compile', '$scope', '$window', '$filter', '$rootScope', '$timeout', 'translateFilter', '$uibModal', 'Upload', '$state','inventoryRepairService', 'settingService' ,'inventoryRequestService',
+    function($compile, $scope, $window, $filter, $rootScope, $timeout, translateFilter, $uibModal, Upload, $state, inventoryRepairService, settingService, inventoryRequestService) {
+    $rootScope.menu = translateFilter("inventory_request")
+    var ctrl = this
+    var angularScopeRoot = 'angular.element(document.getElementById("angularCtrl")).scope().$root'
+    var angularScopeInventoryNew = 'angular.element(document.getElementById("angularCtrl")).scope().inventoryRepairCtrl'
+    var angularCtrlStr = 'angular.element(document.getElementById("angularCtrl")).scope().inventoryRepair'
+    ctrl.real_id = $state.params.id;
+
+    initData()
+    getSetting()
+
+    function initData() {
+      inventoryRepairService.show(ctrl.real_id).then(function(resp) {
+        var value = resp.data
+        ctrl.employee_id = value.employee_id
+        ctrl.employee_name = value.employee_name
+        ctrl.item_name = value.item_name
+        ctrl.serial_number = value.serial_number
+        ctrl.reason = value.reason
+        ctrl.manage_inventory_repair = value.manage_inventory_repair
+        if (ctrl.manage_inventory_repair) {
+          ctrl.step = ctrl.manage_inventory_repair.step
+          checkStep()
+        }
+        
+      })
+    }
+    
+    function checkStep() {
+      if (ctrl.step == 2) {
+        $rootScope.updateInventoryRepairStep2(ctrl.real_id)
+      } else if (ctrl.step == 3) {
+        $rootScope.updateInventoryRepairStep3(ctrl.real_id)
+      } else if (ctrl.step == 4) {
+        $rootScope.updateInventoryRepairStep4(ctrl.real_id)
+      } else if (ctrl.step == 5) {
+        $rootScope.updateInventoryRepairStep5(ctrl.real_id)
+      }
+    }
+
+    function getSetting() {
+      settingService.getSetting().then(function(resp) {
+        ctrl.name_setting  = resp.data.user.full_name
+      })
+    }
+
+    ctrl.save = function() {
+      beforeSave()
+    }
+
+    function beforeSave() {
+      if (!ctrl.serial_number) {
+        ctrl.serial_number = "-"
+      }
+
+      var datas = {
+        employee_id: ctrl.employee_id,
+        employee_name: ctrl.employee_name,
+        item_name: ctrl.item_name,
+        serial_number: ctrl.serial_number,
+        reason: ctrl.reason
+      }
+
+      updateInventoryRepair(datas)
+
+    }
+
+    function updateInventoryRepair(datas) {
+      inventoryRepairService.updateInventoryRepair(datas, ctrl.real_id).then(function(resp) {
+        $rootScope.openInventory(3)
+      })
+    }
+
+    function createManageInventoryRepair(data) {
+      inventoryRepairService.createManageInventoryRepair(data, ctrl.real_id).then(function(resp) {
+        $rootScope.updateInventoryRepairStep2(ctrl.real_id)
+      })
+    }
+
+    ctrl.accept = function() {
+      var data = {
+        manage_inventory_repair: {
+          step: 2,
+          step1_save_by: ctrl.name_setting  
+        }
+      }
+
+      inventoryRepairService.confirm_accept(ctrl.real_id).then(function(resp) {
+        createManageInventoryRepair(data)
+      })
+    }
+      
+    ctrl.reject = function() {
+      inventoryRepairService.rejected(ctrl.real_id).then(function(resp) {
+        $rootScope.openInventory(3)
+      })
+    }
+
+    ctrl.cancel = function() {
+      $rootScope.openInventory(3)
+    } 
+
+  }]);
+})();

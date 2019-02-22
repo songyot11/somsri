@@ -1,7 +1,6 @@
 (function() {
   'use strict';
-  angular.module('somsri.payroll.employees', [
-    ])
+  angular.module('somsri.payroll.employees', [])
   .controller('employeesCtrl', ['employeesService','$log', '$rootScope', 'translateFilter', function(employeeService, $log, $rootScope, translateFilter) {
     $rootScope.menu = I18n.t('employee')
     var ctrl = this
@@ -206,7 +205,5 @@
         $table.bootstrapTable('showColumn', 'edit');
       }
     })
-
-
   }]);
 })();

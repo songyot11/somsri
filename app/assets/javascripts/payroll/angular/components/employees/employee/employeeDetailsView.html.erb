@@ -5,17 +5,16 @@
       <div class="col-md-12">
         <div class="row" ng-show="employee.isEdit">
           <div class="col-md-6">
-            <div class="dropdown">
+            <div class="dropdown" >
               <small>Select employee</small>
-              <h1 id="employeeName" onclick="window.setTimeout(function(){ $('#employeeFilter').val('').trigger('change').focus()}, 100)" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="true">
+              <h1 id="employeeName" onclick="window.setTimeout(function(){ $('#employeeFilter').val('').trigger('change').focus()}, 100)" class="dropdown-toggle" ng-class="{ 'disabled' : employee.current_employee }" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="true">
                 <span ng-bind="employee.displayName"></span>
-                <span class="fa fa-angle-down"></span>
+                <span class="fa fa-angle-down" ng-hide="employee.current_employee" ></span>
               </h1>
-              <ul class="dropdown-menu">
+              <ul class="dropdown-menu" ng-disabled="employee.disabled_dropdown">
                 <li ng-show="employee.employee_lists.length > 0"><input class="employee-filter" id="employeeFilter" type="text" ng-model="employee.filterKeyword" /></li>
                 <li ng-repeat="data in employee.employee_lists | filter:employee.filterKeyword">
-                  <a class="py-5" ng-click="employee.openEmployeeDetails(data.id)" href="javascript:void(0)">
-
+                  <a class="py-5" ng-click="employee.slectDropDown(data.id)" href="javascript:void(0)">
                     <span ng-show="data.img != null" class="bg-img-dropdown mr-10 circle" style="background: url('{{ data.img }}')"></span>
                     <span class="img-employee-dropdown mr-10" ng-show="data.img == null">
                       <i class="fa fa-user font-white" aria-hidden="true"></i>
@@ -33,22 +32,26 @@
               <span class="pin-char" ng-show="employee.pinChars.length > 0" ng-repeat="pinChar in employee.pinChars track by $index">{{pinChar}}</span>
             </div>
           </div>
-          <div class="col-md-3" style="margin-top:10px;">
-            <a ng-click="employee.openEmployeeDetails(0)" href="javascript:void(0)" class="btn btn-custom btn-orange pull-right">
-              + {{ "add_new_employee" | translate }}
-            </a>
-          </div>
+          
+            <div class="col-md-3" style="margin-top:10px;">
+              <a ng-click="employee.openEmployeeDetails(0)" ng-show="employee.showButton" href="javascript:void(0)" class="btn btn-custom btn-orange pull-right">
+                + {{ employee.add_button | translate }}
+              </a>
+            </div>
         </div>
         <div class="row">
           <ul class="nav nav-tabs main">
             <li class="cyan" ng-class="{ 'active' : employee.activeTab === 'general' }">
-              <a data-toggle="tab" ng-click="employee.activeTab = 'general'" href="javascript:void(0)">{{ "general_data" | translate }}</a>
+              <a data-toggle="tab" ng-click="employee.activeTab = 'general'; employee.selectTab('general')" href="javascript:void(0)">{{ "general_data" | translate }}</a>
             </li>
             <li class="cyan" ng-class="{ 'active' : employee.activeTab === 'salary' }" ng-show="employee.hasPayroll && employee.isEdit">
-              <a data-toggle="tab" ng-click="employee.activeTab = 'salary'; employee.calTotal();" href="javascript:void(0)">{{ "salary" | translate }}</a>
+              <a data-toggle="tab" ng-click="employee.activeTab = 'salary'; employee.selectTab('salary'); employee.calTotal();" href="javascript:void(0)">{{ "salary" | translate }}</a>
             </li>
             <li class="orange" ng-class="{ 'active' : employee.activeTab === 'private' }" ng-show="employee.isEdit">
-              <a data-toggle="tab" ng-click="employee.activeTab = 'private'" href="javascript:void(0)">{{ "personal_data" | translate }}</a>
+              <a data-toggle="tab" ng-click="employee.activeTab = 'private'; employee.selectTab('private')" href="javascript:void(0)">{{ "personal_data" | translate }}</a>
+            </li>
+            <li class="cyan" ng-class="{ 'active' : employee.activeTab === 'inventory' }" ng-show="employee.isEdit">
+              <a data-toggle="tab" ng-click="employee.activeTab = 'inventory'; employee.selectTab('inventory')" href="">{{ "inventory_data" | translate }}</a>
             </li>
           </ul>
         </div>
@@ -762,6 +765,30 @@
           </div>
         </div>
       </div>
+      <div ng-class="{ 'in active' : employee.activeTab === 'inventory' }" id="inventoryInfo" class="tab-pane fade">
+        <div class="paragraph cyan tab-content inventory">
+          <div class="row mt-50" >
+            <table class="table" id="employee-inventory-table">
+              <thead>
+                <tr>
+                  <th data-field="invetory_id">#</th>
+                  <th data-field="item_name">Device</th>
+                  <th data-field="serial_number">Serial Number</th>
+                  <th data-field="model">Model</th>
+                  <th data-field="description">Description</th>
+                  <th data-field="status">status</th>
+                  <th data-field="search"> <i class="fa fa-search-plus color-blue"> </th>
+                </tr>
+              </thead>
+            </table>
+              <div class="row row-centered for-display">
+                <div class="col-centered">
+                  <ul uib-pagination ng-change="employee.pageRequestChanged()" total-items="employee.requestTotalItems" ng-model="employee.requestCurrentPage" max-size="employee.paginateButtonMaxSize" class="pagination-md" num-pages="numPages" previous-text="‹" next-text="›" boundary-link-numbers='true' rotate='false'></ul>
+                </div>
+              </div>
+          </div>
+        </div>
+      </div>
     </div>
     <div class="footer-menu row">
       <div class="col-md-4">
@@ -779,16 +806,16 @@
 
         <div ng-if="employee.datas.employee.deleted_at == nil">
           <div ng-show="employee.isEdit" class="pull-right text-right padding-left10">
-            <button type="button" class="btn btn-custom btn-red" ng-click="employee.archiveEmployee(employee.empId)"><i class="fa fa-trash"></i> {{ "delete" | translate }}</button>
+            <button type="button" class="btn btn-custom btn-red" ng-show="employee.showDeleteButton" ng-click="employee.archiveEmployee(employee.empId)"><i class="fa fa-trash"></i> {{ "delete" | translate }}</button>
           </div>
         </div>
 
         <div class="pull-right text-right padding-left10">
-          <button type="button" class="btn btn-custom btn-gray" ng-click="employee.cancel()">{{ "cancel" | translate }}</button>
+          <button type="button" class="btn btn-custom btn-gray" ng-show="employee.showCancelButton" ng-click="employee.cancel()">{{ "cancel" | translate }}</button>
         </div>
 
         <div class="pull-right text-right padding-left10">
-          <button type="submit" class="btn btn-custom btn-green" ng-disabled="employee.isSubmit">{{ "save" | translate }}</button>
+          <button type="submit" class="btn btn-custom btn-green" ng-show="employee.showSaveButton" ng-disabled="employee.isSubmit">{{ "save" | translate }}</button>
         </div>
       </div>
     </div>

@@ -28,5 +28,4 @@ class School < ApplicationRecord
     end
     return self.payroll_slip_header
   end
-
 end

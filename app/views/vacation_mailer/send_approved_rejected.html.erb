@@ -1,0 +1,9 @@
+คำขอโดย: <%= @vacation.requester.full_name %>
+<br/><br/>
+ผลคำขอ<%= @vacation.vacation_type.name %>: <%= I18n.t(@vacation.status) %>
+<br/><br/>
+เหตุผล: <%= @vacation.detail %>
+<br/><br/>
+อนุมัติโดย: <%= @vacation.approver.full_name %>
+<br/><br/>
+ดูรายละเอียดเต็มที่ <a href="<%= @dashboard_url %>">Admin Dashboard</a>

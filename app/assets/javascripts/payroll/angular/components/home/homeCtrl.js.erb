@@ -7,8 +7,10 @@
 
   homeCtrl.$inject = ['$rootScope', 'translateFilter']
 
-
   function homeCtrl ($rootScope, translateFilter) {
     $rootScope.menu = translateFilter('payroll');
+    $rootScope.loadAndAuthorizeResource("employee_me", function(){ 
+    	// $rootScope.openMyProfile()
+  	})
   }
 })();

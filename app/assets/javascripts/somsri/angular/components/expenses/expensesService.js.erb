@@ -49,10 +49,10 @@
 
     this.createExpenses = function(data) {
       return Upload.upload({
-          url: '/expenses',
-          method: 'post',
-          data: { expense: data }
-        });
+        url: '/expenses',
+        method: 'post',
+        data: { expense: data }
+      });
     }
 
   }]);

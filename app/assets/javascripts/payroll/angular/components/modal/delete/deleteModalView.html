@@ -1,0 +1,16 @@
+<div>
+  <div class="modal-body" id="delete_data">
+    <div class="row">
+      <div class="col-md-12">
+        <h4 class="modal-title" id="modal-title">{{confirm.message}}</h4>
+      </div>
+    </div>
+    <div class="space20"></div>
+    <div class="space20"></div>
+    <div class="space20"></div>
+  	<div class="modal-footer">
+			<button type="submit" class="btn btn-custom btn-red ng-binding" ng-click="confirm.ok()">{{"delete" | translate}} </button>
+			<button type="button" class="btn btn-custom btn-gray ng-binding" ng-click="confirm.close()">{{ "cancel" | translate }}</button>
+		</div>
+  </div>
+</div>

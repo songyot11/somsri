@@ -21,5 +21,4 @@ class User < ApplicationRecord
   def finance_officer?
     self.has_role? :finance_officer
   end
-
 end

@@ -51,6 +51,7 @@
         reportService.getPayroll(effectiveDate['date_time']).then(function(resp) {
           ctrl.employees = resp.data.payrolls
           ctrl.export_ktb_payroll = resp.data.export_ktb_payroll
+          ctrl.export_kbank_payroll = resp.data.export_kbank_payroll
           ctrl.employees_origin = JSON.parse(JSON.stringify(ctrl.employees));
           ctrl.total = getTotalSalary(ctrl.employees);
           ctrl.currentDateString = effectiveDate["date_string"];
@@ -152,6 +153,7 @@
             reportService.getPayroll(current['date_time']).then(function(resp) {
               ctrl.employees = resp.data.payrolls
               ctrl.export_ktb_payroll = resp.data.export_ktb_payroll
+              ctrl.export_kbank_payroll = resp.data.export_kbank_payroll
               ctrl.employees_origin = JSON.parse(JSON.stringify(ctrl.employees));
               ctrl.total = getTotalSalary(ctrl.employees);
               getTotalSalary(ctrl.employees)
@@ -172,16 +174,16 @@
       ctrl.employeeTypeFilter = function (){
         var mode = [];
         if(ctrl.employeeTypeMode.normal){
-          mode.push("ลูกจ้างประจำ");
+          mode.push(translateFilter('employee_full_time'));
         }
         if(ctrl.employeeTypeMode.temporary){
-          mode.push("ลูกจ้างชั่วคราว");
+          mode.push(translateFilter('employee_part_time'));
         }
         if(ctrl.employeeTypeMode.probationary){
-          mode.push("ลูกจ้างทดลองงาน");
+          mode.push(translateFilter('employee_probation'));
         }
         if(ctrl.employeeTypeMode.daily){
-          mode.push("ลูกจ้างรายวัน");
+          mode.push(translateFilter('employee_daily'));
         }
         var employees = JSON.parse(JSON.stringify(ctrl.employees_origin));
         for(var i = 0; i < employees.length; i++){

@@ -1,0 +1,89 @@
+(function() {
+  'use strict';
+    angular.module('somsri.somsri.inventory_supplier_new', [])
+    .controller('inventoryNewSupplierCtrl', ['$compile', '$scope', '$window', '$filter', '$rootScope', '$timeout', 'translateFilter', '$uibModal', 'Upload', '$state' ,'inventorySupplierService', function($compile, $scope, $window, $filter, $rootScope, $timeout, translateFilter, $uibModal, Upload, $state, service) {
+    $rootScope.menu = translateFilter("inventory_supplier")
+    var ctrl = this
+    var angularScopeRoot = 'angular.element(document.getElementById("angularCtrl")).scope().$root'
+    var angularScopeInventoryNew = 'angular.element(document.getElementById("angularCtrl")).scope().inventoryNewSupplierCtrl'
+    var angularCtrlStr = 'angular.element(document.getElementById("angularCtrl")).scope().inventoryNewSupplier'
+    ctrl.real_id = $state.params.id;
+    ctrl.name = ""
+    ctrl.address = ""
+    ctrl.phone_number = ""
+    ctrl.email = ""
+    ctrl.add_button = "add"
+
+    initData()
+
+    function initData() {
+      if (!ctrl.real_id) { 
+        return
+      }
+
+      ctrl.add_button = "edit"
+
+      service.show(ctrl.real_id).then(function(resp) {
+        var value = resp.data.suppliers
+        ctrl.datas = resp.data.suppliers
+        ctrl.name = value.name
+        ctrl.address = value.address
+        ctrl.phone_number = value.phone_number
+        ctrl.email = value.email
+      })
+    }
+
+    ctrl.cancel = function() {
+      $rootScope.openInventory(2)
+    }
+
+    ctrl.save = function() {
+
+      if (!ctrl.name) {
+        ctrl.name = "-"
+      }
+
+      if (!ctrl.address) {
+        ctrl.address = "-"
+      }
+
+      if (!ctrl.phone_number) {
+        ctrl.phone_number = "-"
+      }
+
+      if (!ctrl.email) {
+        ctrl.email = "-"
+      }
+
+      var datas = {
+        suppiler: {
+          name: ctrl.name,
+          address: ctrl.address,
+          phone_number: ctrl.phone_number,
+          email: ctrl.email
+        }
+      }
+
+      if (!ctrl.real_id) {
+        createSuppliers(datas)
+      } else {
+        updateSuppliers(datas, ctrl.real_id)
+      }
+    }
+
+    function createSuppliers(data) {
+      service.newSuppliers(data).then(function(resp) {
+        $rootScope.openInventory(2)
+      })
+    }
+
+    function updateSuppliers(data, id) {
+      service.updateSuppliers(data,id).then(function(resp) {
+        $rootScope.openInventory(2)
+      })
+    }
+
+    
+
+  }]);
+})();
