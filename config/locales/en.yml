@@ -78,6 +78,7 @@ en:
   print_social_insurance: "Print Social Security"
   export_kbank_payroll: "Export to K-Biz"
   export_ktb_payroll: "Export to KTB"
+  export_kbank_payroll: "Export to K-Biz"
   pay_date: "Payment effective date"
   cannot_pay_out: "Cannot issue payroll twince"
   confirm_pay_out: "Do you want to continue?"
