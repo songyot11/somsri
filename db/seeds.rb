@@ -23,19 +23,13 @@ if !SchoolSetting.first[:semesters]
   sc.save
 end
 
-if User.count == 0
-  User.create!([
+if Employee.count == 0
+  Employee.create!([
     {email: "test@test.com", password: "password", password_confirmation: "password", reset_password_token: nil, reset_password_sent_at: nil, remember_created_at: nil, sign_in_count: 0, current_sign_in_at: nil, last_sign_in_at: nil, current_sign_in_ip: nil, last_sign_in_ip: nil, school_id: schools[0].id, name: nil},
     {email: "admin@bananacoding.com", password: "password", password_confirmation: "password", reset_password_token: nil, reset_password_sent_at: nil, remember_created_at: nil, sign_in_count: 2, current_sign_in_at: "2016-12-26 07:33:11", last_sign_in_at: "2016-12-26 07:28:33", current_sign_in_ip: "180.183.204.78", last_sign_in_ip: "180.183.204.78", school_id: schools[0].id, name: 'Admin'},
     {email: "manit@bananacoding.com", password: "password", password_confirmation: "password", reset_password_token: nil, reset_password_sent_at: nil, remember_created_at: nil, sign_in_count: 3, current_sign_in_at: "2016-12-26 10:25:26", last_sign_in_at: "2016-12-26 08:19:32", current_sign_in_ip: "::1", last_sign_in_ip: "58.11.94.19", school_id: schools[0].id, name: nil},
     {email: "putamthong@gmail.com", password: "password", password_confirmation: "password", reset_password_token: nil, reset_password_sent_at: nil, remember_created_at: nil, sign_in_count: 1, current_sign_in_at: "2016-12-27 02:20:42", last_sign_in_at: "2016-12-27 02:20:42", current_sign_in_ip: "::1", last_sign_in_ip: "::1", school_id: schools[0].id, name: nil},
-    {email: "admin@sunshinekindergarten.com", password: "password", password_confirmation: "password", reset_password_token: nil, reset_password_sent_at: nil, remember_created_at: nil, sign_in_count: 0, current_sign_in_at: nil, last_sign_in_at: nil, current_sign_in_ip: nil, last_sign_in_ip: nil, school_id: schools[0].id, name: nil}
-  ])
-end
-users = User.all
-
-if Employee.count == 0
-  Employee.create!([
+    {email: "admin@sunshinekindergarten.com", password: "password", password_confirmation: "password", reset_password_token: nil, reset_password_sent_at: nil, remember_created_at: nil, sign_in_count: 0, current_sign_in_at: nil, last_sign_in_at: nil, current_sign_in_ip: nil, last_sign_in_ip: nil, school_id: schools[0].id, name: nil},
     {school_id: schools[0].id, first_name: "Christine", last_name: "Pronske", middle_name: "Michelle", prefix: "Ms", sex: 0, position: "ครูผู้สอน", personal_id: "", passport_number: "0-9910-08688-37-3", race: "", nationality: "", bank_name: "", bank_branch: "", account_number: "000-0-00000-0", salary: "0.0", img_url: "", first_name_thai: nil, last_name_thai: nil, prefix_thai: nil, nickname: "Christine", start_date: "2016-10-31 08:48:03", email: "employee1@somsri.com", password: "password", password_confirmation: "password" },
     {school_id: schools[0].id, first_name: "", last_name: "", middle_name: "", prefix: "", sex: 0, position: "ครูผู้สอน", personal_id: "1-9098-00264-76-1", passport_number: "", race: "", nationality: "", bank_name: "", bank_branch: "", account_number: "000-0-00000-0", salary: "0.0", img_url: "", first_name_thai: "ปรารถนา", last_name_thai: "วารีดำ", prefix_thai: "นางสาว", nickname: "Shaylene", start_date: "2014-05-25 17:00:00", email: "employee2@somsri.com", password: "password", password_confirmation: "password" },
     {school_id: schools[0].id, first_name: "", last_name: "", middle_name: "", prefix: "", sex: 0, position: "ครูคู่ชั้น", personal_id: "1-5602-00071-31-2", passport_number: "", race: "", nationality: "", bank_name: "", bank_branch: "", account_number: "000-0-00000-0", salary: "0.0", img_url: "", first_name_thai: "พรศิรินทร์", last_name_thai: "กล้วยไม้ ณ อยุธยา", prefix_thai: "นางสาว", nickname: "ปูเป้", start_date: "2016-10-30 17:00:00", email: "employee3@somsri.com", password: "password", password_confirmation: "password" },
@@ -72,11 +66,14 @@ if Employee.count == 0
     {school_id: schools[0].id, first_name: "Nan  Hseng", last_name: "Mwam", middle_name: "", prefix: "Ms", sex: 0, position: "แม่บ้าน", personal_id: "", passport_number: "", race: "", nationality: "", bank_name: "", bank_branch: "", account_number: "000-0-00000-0", salary: "0.0", img_url: "", first_name_thai: "", last_name_thai: nil, prefix_thai: nil, nickname: "หนิง", start_date: "2015-05-18 17:00:00", email: "employee34@somsri.com", password: "password", password_confirmation: "password" },
     {school_id: schools[0].id, first_name: "Samantha", last_name: "Loyd", middle_name: "Natasha", prefix: "Ms", sex: 0, position: "ครูผู้สอน", personal_id: "", passport_number: "0-9910-09778-98-8", race: "", nationality: "", bank_name: "", bank_branch: "", account_number: "000-0-00000-0", salary: "0.0", img_url: "", first_name_thai: nil, last_name_thai: nil, prefix_thai: nil, nickname: "Sammy", start_date: nil, email: "employee35@somsri.com", password: "password", password_confirmation: "password" },
     {school_id: schools[0].id, first_name: "Approver", last_name: "", middle_name: "", prefix: "", sex: 0, position: "ครูผู้สอน", personal_id: "3-5012-00772-20-0", passport_number: "", race: "", nationality: "", bank_name: "", bank_branch: "", account_number: "000-0-00000-0", salary: "0.0", img_url: "", first_name_thai: "พจนีย์", last_name_thai: "ศรีปา", prefix_thai: "นางสาว", nickname: "แวว", start_date: "2016-11-13 17:00:00", email: "employee36@somsri.com", password: "password", password_confirmation: "password" }
+    
   ])
 end
 
-approver = Employee.where(email: 'employee36@somsri.com').first
-approver.add_role :approver unless approver.has_any_role?
+approver = User.where(email: 'employee36@somsri.com').first
+approver.add_role("approver") 
+approver.add_role("employee")
+  
 
 if Payroll.count == 0
 date_now = DateTime.now
@@ -237,8 +234,6 @@ if Student.where(student_number: 2001..2040).count == 0 && Student.where(student
   b49 = Student.create({ student_number: 2039, prefix: "ด.ช.", first_name: "นิรวิทธ์", last_name: "แช่ซ้ง", school_id: school_a.id, number: 39 })
   b50 = Student.create({ student_number: 2040, prefix: "ด.ญ.", first_name: "ชัยวัฒน์", last_name: "เลาย่าง", school_id: school_a.id, number: 40 })
 
-  user_a = users[0]
-  user_b = users.count > 1 ? users[1] : users[0]
   l11 = List.create({ name: "ม. 1/1", category: "roll_call" })
   l12 = List.create({ name: "ม. 1/2", category: "roll_call" })
 
@@ -330,6 +325,12 @@ User.find(2).add_role "admin" if !User.find(2).has_any_role?
 User.find(3).add_role "finance_officer" if !User.find(3).has_any_role?
 User.find(4).add_role "finance_officer" if !User.find(4).has_any_role?
 User.find(5).add_role "admin" if !User.find(5).has_any_role?
+User.find(6).add_role "employee" if !User.find(6).has_any_role?
+User.find(7).add_role "account_holder" if !User.find(7).has_any_role?
+User.find(8).add_role "human_resource" if !User.find(8).has_any_role?
+User.find(9).add_role "procurement_officer" if !User.find(9).has_any_role?
+User.find(10).add_role "teacher" if !User.find(10).has_any_role?
+
 
 if LtBank.count == 0
   LtBank.create!([

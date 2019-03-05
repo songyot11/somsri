@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20190130042831) do
+ActiveRecord::Schema.define(version: 20190212073157) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -67,12 +67,12 @@ ActiveRecord::Schema.define(version: 20190130042831) do
   end
 
   create_table "class_permisions", force: :cascade do |t|
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
+    t.datetime "created_at",  null: false
+    t.datetime "updated_at",  null: false
     t.integer  "list_id"
-    t.integer  "user_id"
+    t.integer  "employee_id"
+    t.index ["employee_id"], name: "index_class_permisions_on_employee_id", using: :btree
     t.index ["list_id"], name: "index_class_permisions_on_list_id", using: :btree
-    t.index ["user_id"], name: "index_class_permisions_on_user_id", using: :btree
   end
 
   create_table "classrooms", force: :cascade do |t|
@@ -272,6 +272,8 @@ ActiveRecord::Schema.define(version: 20190130042831) do
     t.integer  "leave_allowance",        default: 0
     t.string   "note"
     t.string   "comment"
+    t.string   "name"
+    t.string   "full_name"
     t.index ["classroom_id"], name: "index_employees_on_classroom_id", using: :btree
     t.index ["deleted_at"], name: "index_employees_on_deleted_at", using: :btree
     t.index ["email"], name: "index_employees_on_email", unique: true, using: :btree
@@ -289,9 +291,9 @@ ActiveRecord::Schema.define(version: 20190130042831) do
 
   create_table "expense_items", force: :cascade do |t|
     t.integer "expense_id"
-    t.string  "detail",     null: false
-    t.integer "amount",     null: false
-    t.float   "cost",       null: false
+    t.string  "detail"
+    t.integer "amount"
+    t.float   "cost"
     t.index ["expense_id"], name: "index_expense_items_on_expense_id", using: :btree
   end
 
@@ -308,9 +310,9 @@ ActiveRecord::Schema.define(version: 20190130042831) do
   end
 
   create_table "expenses", force: :cascade do |t|
-    t.datetime "effective_date",       null: false
+    t.datetime "effective_date"
     t.string   "expenses_id"
-    t.string   "detail",               null: false
+    t.string   "detail"
     t.datetime "created_at",           null: false
     t.datetime "updated_at",           null: false
     t.datetime "deleted_at"
@@ -640,8 +642,6 @@ ActiveRecord::Schema.define(version: 20190130042831) do
     t.string   "round"
     t.string   "check_date"
     t.integer  "list_id"
-    t.datetime "deleted_at"
-    t.index ["deleted_at"], name: "index_roll_calls_on_deleted_at", using: :btree
     t.index ["list_id"], name: "index_roll_calls_on_list_id", using: :btree
     t.index ["student_id", "list_id", "check_date", "round"], name: "index_roll_calls_uniq_roll", unique: true, using: :btree
     t.index ["student_id"], name: "index_roll_calls_on_student_id", using: :btree
@@ -671,7 +671,6 @@ ActiveRecord::Schema.define(version: 20190130042831) do
     t.integer  "logo_file_size"
     t.datetime "logo_updated_at"
     t.text     "payroll_slip_header"
-    t.string   "account_number"
   end
 
   create_table "site_configs", force: :cascade do |t|
@@ -693,11 +692,8 @@ ActiveRecord::Schema.define(version: 20190130042831) do
     t.boolean "enable_expenses",                      default: false
     t.string  "expense_tag_tree"
     t.boolean "enable_quotation",                     default: false
-    t.string  "bank_account"
     t.boolean "export_kbank_payroll",                 default: false
-    t.string  "default_locale",                       default: "th"
-    t.boolean "enable_expenses",                      default: false
-    t.string  "expense_tag_tree"
+    t.string  "bank_account"
   end
 
   create_table "skills", force: :cascade do |t|
@@ -873,8 +869,8 @@ ActiveRecord::Schema.define(version: 20190130042831) do
     t.index ["vacation_type_id"], name: "index_vacations_on_vacation_type_id", using: :btree
   end
 
+  add_foreign_key "class_permisions", "employees"
   add_foreign_key "class_permisions", "lists"
-  add_foreign_key "class_permisions", "users"
   add_foreign_key "classrooms", "classrooms", column: "next_id", on_delete: :nullify
   add_foreign_key "employee_skills", "employees"
   add_foreign_key "employee_skills", "skills"
