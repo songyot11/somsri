@@ -8,8 +8,9 @@ class ApplicationController < ActionController::Base
   def set_locale
     @locale = params[:locale] || session['locale'] ||
               SiteConfig.get_cache.default_locale || I18n.default_locale
-
-    I18n.locale = @locale
+    if @locale
+      I18n.locale = @locale
+    end
   end
 
   rescue_from CanCan::AccessDenied do |exception|
