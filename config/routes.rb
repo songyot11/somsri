@@ -1,7 +1,7 @@
 Rails.application.routes.draw do
   mount RailsAdmin::Engine => '/admin', as: 'rails_admin'
   devise_for :users, :skip => [:registrations]
-  devise_for :employees, path: 'employees', :skip => [:registrations]
+  # devise_for :employees, path: 'employees', :skip => [:registrations]
 
   get 'changelog', to: 'home#changelog'
   get "/menu" => "menu#index"

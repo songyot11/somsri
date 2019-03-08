@@ -87,7 +87,7 @@ class EmployeesController < ApplicationController
       employee_display_name: @employee.full_name,
       payroll: payroll,
       tax_reduction: tax_reduction,
-      current_employee: current_employee.present?,
+      current_employee: current_user.employee?,
       current_user: current_user.present?
     }
   end
@@ -193,7 +193,7 @@ class EmployeesController < ApplicationController
 
   def me
     authorize! :manage, Employee
-    @employee = Employee.with_deleted.find(current_employee.id)
+    @employee = Employee.with_deleted.find(current_user.id)
     tax_reduction = @employee.tax_reduction
     if params[:payroll_id]
       payroll = @employee.payroll(params[:payroll_id])
@@ -207,7 +207,7 @@ class EmployeesController < ApplicationController
       employee_display_name: @employee.full_name,
       payroll: payroll,
       tax_reduction: tax_reduction,
-      current_employee: current_employee.present?,
+      current_employee: current_user.employee?,
       current_user: current_user.present?
     }
   end

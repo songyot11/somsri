@@ -22,9 +22,7 @@ class ApplicationController < ActionController::Base
 
   def current_ability
     if current_user.present?
-      @current_ability ||= Ability.new(current_user)
-    elsif current_employee.present?
-      @current_ability ||= Ability.new(current_employee)
+      @current_ability ||= Ability.new(current_user) 
     else
       @current_ability ||= Ability.new(nil)
     end

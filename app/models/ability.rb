@@ -3,6 +3,7 @@ class Ability
 
   def initialize(user)
     case user
+
     when User
       if user.admin?
         can :access, :rails_admin
@@ -11,7 +12,6 @@ class Ability
 
         can :manage, SiteConfig
         can :update, VacationLeaveRule
-        # cannot :manage, InventoryRequest, inventory_status: [:repair]
 
       elsif  user.finance_officer?
         can :manage, :menu
@@ -31,37 +31,57 @@ class Ability
         can :manage, ExpenseItem
         can :manage, Bank
         can :manage, Quotation
-      end
-    when Employee
-      can :manage, [:menu, :setting]
-      can :manage, Invoice
-      can :manage, DailyReport
-      can :read, Grade
-      can :manage, Student
-      can :manage, Parent
-      can :read, School
-      can :manage, :setting
-      can :manage, Classroom
-      can :manage, Alumni
-      can :read, SiteConfig
-      can :manage, Expense
-      can :manage, ExpenseTag
-      can :manage, ExpenseTagItem
-      can :manage, ExpenseItem
-      can :manage, Vacation, :requester_id => user.id
-      can :read, Inventory
-      can :read, EmployeeSkill
-      can :read, Skill
-      can :read, RollCall
-      can :manage, Payroll, employee_id: user.id
-      can :read, Individual
-      can :manage, Employee, id: user.id
-      can :manage, InventoryRequest, employee_id: user.id
-      if user.approver?
+      elsif user.human_resource?
+        can :manage, [:menu, :setting]
+        can :manage, Invoice
+        can :manage, Payroll
+        can :manage, Employee
+        can :manage, Vacation
         can :manage, VacationConfig
-        can [:approve, :reject], Vacation
-      else
-        can :read, VacationConfig
+        can :manage, Individual
+        can :manage, EmployeeSkill
+        can :manage, Skill
+        can :manage, RollCall
+        can :read, Inventory
+        can :manage, InventoryRequest
+      elsif user.procurement_officer?
+        can :manage, [:menu, :setting]
+        can :manage, Inventory
+        can :manage, InventoryRequest
+        can :manage, InventoryRepair
+        can :manage, Employee
+        can :manage, Supplier
+      elsif user.employee?
+        can :manage, [:menu, :setting]
+        can :manage, Invoice
+        can :manage, DailyReport
+        can :read, Grade
+        can :manage, Student
+        can :manage, Parent
+        can :read, School
+        can :manage, :setting
+        can :manage, Classroom
+        can :manage, Alumni
+        can :read, SiteConfig
+        can :manage, Expense
+        can :manage, ExpenseTag
+        can :manage, ExpenseTagItem
+        can :manage, ExpenseItem
+        can :manage, Vacation, :requester_id => user.id
+        can :read, Inventory
+        can :read, EmployeeSkill
+        can :read, Skill
+        can :read, RollCall
+        can :manage, Payroll, employee_id: user.id
+        can :read, Individual
+        can :manage, Employee, id: user.id
+        can :manage, InventoryRequest, employee_id: user.id
+        if user.approver?
+          can :manage, VacationConfig
+          can [:approve, :reject], Vacation
+        else
+          can :read, VacationConfig
+        end
       end
     end
   end
@@ -86,6 +106,7 @@ class Ability
     manage[:employee] = true if self.can? :manage, Employee
     manage[:employee_me] = true
     update[:vacation_leave_rules] = true if self.can? :update, VacationLeaveRule
+    manage[:supplier_details] = true if self.can :manage, Supplier
     result = {
       update: update,
       manage: manage

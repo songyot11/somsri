@@ -1,29 +1,29 @@
 <div class="<%= is_topbar ? 'menu-dropdown' : '' %>">
   <div class="<%= is_topbar ? 'col-xs-12' : '' %>">
-      <% if current_user.present? %>
+      <% if current_user.admin? || current_user.human_resource?%>
         <% if can? :manage, Payroll %>
           <div class="col-xs-4 col-centered menu-icon">
-              <div class="<%= is_topbar ? 'dropdown-menu-btn' : 'menu-btn' %> payrolls">
-                  <a href="/somsri_payroll">
-                    <div class="wraptocenter">
-                      <%= image_tag 'payroll-icon.png', class: (is_topbar ? 'img-menu-nav' : '') %>
-                    </div>
-                  </a>
-              </div>
-              <%= content_tag(:p, t('.payroll', :default => t("payroll")) ) %>
-          </div>
-        <% end %>
-      <% end %>
-      <% if can? :manage, Invoice %>
-        <div class="col-xs-4 col-centered menu-icon">
-            <div class="<%= is_topbar ? 'dropdown-menu-btn' : 'menu-btn' %> invoices">
-                <a href="/somsri_invoice">
+            <div class="<%= is_topbar ? 'dropdown-menu-btn' : 'menu-btn' %> payrolls">
+                <a href="/somsri_payroll">
                   <div class="wraptocenter">
-                    <%= image_tag 'fee-icon.png', class: (is_topbar ? 'img-menu-nav' : '') %>
+                    <%= image_tag 'payroll-icon.png', class: (is_topbar ? 'img-menu-nav' : '') %>
                   </div>
                 </a>
             </div>
-            <%= content_tag(:p, t('.invoices', :default => t("invoices")) ) %>
+            <%= content_tag(:p, t('.payroll', :default => t("payroll")) ) %>
+          </div>
+        <% end %>
+      <% end %>
+      <% if can? :manage, Invoice && !current_user.employee? %>
+        <div class="col-xs-4 col-centered menu-icon">
+          <div class="<%= is_topbar ? 'dropdown-menu-btn' : 'menu-btn' %> invoices">
+              <a href="/somsri_invoice">
+                <div class="wraptocenter">
+                  <%= image_tag 'fee-icon.png', class: (is_topbar ? 'img-menu-nav' : '') %>
+                </div>
+              </a>
+          </div>
+          <%= content_tag(:p, t('.invoices', :default => t("invoices")) ) %>
         </div>
       <% end %>
       <% if (SiteConfig.get_cache.enable_rollcall) && (can? :manage, RollCall) %>
@@ -38,11 +38,12 @@
             <%= content_tag(:p, t('.rollcall', :default => t("rollcall")) ) %>
         </div>
       <% end %>
-      <% if can? :manage, Employee %>
-        <div class="col-xs-4 col-centered menu-icon">
+      <% if current_user.admin? || current_user.employee? || current_user.human_resource? %>
+        <% if can? :manage, Employee %>
+         <div class="col-xs-4 col-centered menu-icon">
             <div class="<%= is_topbar ? 'dropdown-menu-btn' : 'menu-btn' %> employees">
             
-                <a href="/somsri_payroll#/employees<%= current_employee.present? ? "/#{current_employee.id}" : '' %>" >
+                <a href="/somsri_payroll#/employees<%= current_user.employee? ? "/#{current_user.id}" : '' %>" >
               
                   <div class="wraptocenter">
                     <%= image_tag 'hr-icon.png', class: (is_topbar ? 'img-menu-nav' : '') %>
@@ -52,9 +53,10 @@
             </div>
             
             <%= content_tag(:p, t('.employee', :default => t("employee")) ) %>
-        </div>
+          </div>
+        <% end %>
       <% end %>
-      <% if can? :manage, Parent %>
+      <% if can? :manage, Parent && !current_user.employee? %>
         <div class="col-xs-4 col-centered  menu-icon">
             <div class="<%= is_topbar ? 'dropdown-menu-btn' : 'menu-btn' %> parents">
                 <a href="/parents">
@@ -66,7 +68,7 @@
             <%= content_tag(:p, t('.parent', :default => t("parent")) ) %>
         </div>
       <% end %>
-      <% if can? :manage, Student %>
+      <% if can? :manage, Student && !current_user.employee? %>
         <div class="col-xs-4 col-centered menu-icon">
             <div class="<%= is_topbar ? 'dropdown-menu-btn' : 'menu-btn' %>">
                 <a href="/students">
@@ -78,7 +80,7 @@
             <%= content_tag(:p, t('.student', :default => t("student")) ) %>
         </div>
       <% end %>
-      <% if can? :manage, Alumni %>
+      <% if can? :manage, Alumni && !current_user.employee? %>
         <div class="col-xs-4 col-centered menu-icon">
             <div class="<%= is_topbar ? 'dropdown-menu-btn' : 'menu-btn' %> alumni">
                 <a href="/somsri_invoice#/alumni">
@@ -90,19 +92,21 @@
             <%= content_tag(:p, t('.alumni', :default => t("alumni")) ) %>
         </div>
       <% end %>
-      <% if current_user.present? %>
-        <div class="col-xs-4 col-centered menu-icon">
-            <div class="<%= is_topbar ? 'dropdown-menu-btn' : 'menu-btn' %> inventory">
-                <a href="/somsri#/inventory">
-                  <div class="wraptocenter">
-                    <%= image_tag 'inventory.png', class: (is_topbar ? 'img-menu-nav' : ''), width: is_topbar ? 50 : 80 %>
-                  </div>
-                </a>
-            </div>
-            <%= content_tag(:p, t('.inventory', :default => t("inventory")) ) %>
-        </div>
+      <% if current_user.procurement_officer? || current_user.admin? %>
+        <% if can? :manage, Inventory %>
+          <div class="col-xs-4 col-centered menu-icon">
+              <div class="<%= is_topbar ? 'dropdown-menu-btn' : 'menu-btn' %> inventory">
+                  <a href="/somsri#/inventory">
+                    <div class="wraptocenter">
+                      <%= image_tag 'inventory.png', class: (is_topbar ? 'img-menu-nav' : ''), width: is_topbar ? 50 : 80 %>
+                    </div>
+                  </a>
+              </div>
+              <%= content_tag(:p, t('.inventory', :default => t("inventory")) ) %>
+          </div>
+        <% end %>
       <% end %>
-      <% if (SiteConfig.get_cache.enable_expenses) && (can? :manage, Expense) %>
+      <% if (SiteConfig.get_cache.enable_expenses) && (can? :manage, Expense) && !current_user.employee? %>
         <div class="col-xs-4 col-centered menu-icon">
             <div class="<%= is_topbar ? 'dropdown-menu-btn' : 'menu-btn' %> alumni">
                 <a href="/somsri#/expenses">
@@ -114,7 +118,7 @@
             <%= content_tag(:p, t('.expense', :default => t("expense")) ) %>
         </div>
       <% end %>
-      <% if SiteConfig.get_cache.enable_quotation && can?(:manage, Quotation) %>
+      <% if SiteConfig.get_cache.enable_quotation && can?(:manage, Quotation) && !current_user.employee? %>
         <div class="col-xs-4 col-centered menu-icon">
           <div class="<%= is_topbar ? 'dropdown-menu-btn' : 'menu-btn' %> quotation">
               <a href="/somsri_invoice#/quotation">

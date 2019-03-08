@@ -2,16 +2,12 @@ module ApplicationHelper
   def authenticate_authorizer!
     if current_user.present?
       authenticate_user!
-    elsif current_employee.present?
-      authenticate_employee!
     end
   end
 
   def current_authorizer
     if current_user.present?
       current_user
-    elsif current_employee.present?
-      current_employee
     end
   end
 
@@ -94,7 +90,4 @@ module ApplicationHelper
       return ""
     end
   end
-
-
-
 end

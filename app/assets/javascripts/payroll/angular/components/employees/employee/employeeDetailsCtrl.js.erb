@@ -32,9 +32,14 @@
       ctrl.show_note_and_comment = true
       $rootScope.activeTab = null
 
+
       if (!ctrl.getActiveTab) {
         ctrl.activeTab = 'general'
         ctrl.add_button = "add_new_employee"
+        if (ctrl.activeTab == "general" && ctrl.empId == 0){ 
+          ctrl.showSaveButton = true
+          ctrl.showCancelButton = true
+        }
       } else {
         ctrl.activeTab = ctrl.getActiveTab
         if (ctrl.activeTab == 'inventory') {
@@ -131,6 +136,9 @@
       }
 
       function isTaxReductionChange(){
+        if (!ctrl.datas_original.tax_reduction) {
+          return false
+        }
         var keys = Object.keys(ctrl.datas_original.tax_reduction)
         for(var i = 1; i < keys.length; i++){
           if(ctrl.datas.tax_reduction[keys[i]] != ctrl.datas_original.tax_reduction[keys[i]]){ return true }
@@ -263,34 +271,31 @@
           ctrl.current_user = ctrl.datas.current_user
           if (ctrl.current_user) {
             ctrl.show_note_and_comment = true
-            // ctrl.disabled_dropdown = true
-            // document.getElementById("employeeName").disabled=true
-            // console.log("admin")
           } else {
             ctrl.show_note_and_comment = false
-            // document.getElementById("employeeName").disabled=false
-            // ctrl.disabled_dropdown = false
-            // console.log("employee")
           }
 
           settingButton()
           ctrl.displayName = e.id + ': ' + ctrl.datas.employee_display_name;
 
           // init tax reduction default
-          if(ctrl.datas.tax_reduction.no_income_spouse > 0)
-            $scope.cbox_no_income_spouse = true;
-          if(ctrl.datas.tax_reduction.father_alimony > 0)
-            $scope.cbox_father_alimony = true;
-          if(ctrl.datas.tax_reduction.mother_alimony > 0)
-            $scope.cbox_mother_alimony = true;
-          if(ctrl.datas.tax_reduction.spouse_father_alimony > 0)
-            $scope.cbox_spouse_father_alimony = true;
-          if(ctrl.datas.tax_reduction.spouse_mother_alimony > 0)
-            $scope.cbox_spouse_mother_alimony = true;
-          if(ctrl.datas.tax_reduction.child > 0)
-            $scope.numchild = (ctrl.datas.tax_reduction.child/30000);
-          if(ctrl.datas.tax_reduction.cripple_alimony > 0)
-            $scope.numcripple_alimony = (ctrl.datas.tax_reduction.cripple_alimony/60000);
+          if (ctrl.datas.tax_reduction) {
+            if(ctrl.datas.tax_reduction.no_income_spouse > 0)
+              $scope.cbox_no_income_spouse = true;
+            if(ctrl.datas.tax_reduction.father_alimony > 0)
+              $scope.cbox_father_alimony = true;
+            if(ctrl.datas.tax_reduction.mother_alimony > 0)
+              $scope.cbox_mother_alimony = true;
+            if(ctrl.datas.tax_reduction.spouse_father_alimony > 0)
+              $scope.cbox_spouse_father_alimony = true;
+            if(ctrl.datas.tax_reduction.spouse_mother_alimony > 0)
+              $scope.cbox_spouse_mother_alimony = true;
+            if(ctrl.datas.tax_reduction.child > 0)
+              $scope.numchild = (ctrl.datas.tax_reduction.child/30000);
+            if(ctrl.datas.tax_reduction.cripple_alimony > 0)
+              $scope.numcripple_alimony = (ctrl.datas.tax_reduction.cripple_alimony/60000);
+          }
+          
 
           // get others employee
           service.getAllEmployee().then(function(resp) {
@@ -312,7 +317,7 @@
       }
 
       function settingButton() {
-        if (ctrl.current_user) {
+        if (ctrl.current_user && !ctrl.current_employee) {
           ctrl.showButton = true
           ctrl.showDeleteButton = true
           ctrl.showCancelButton = true
@@ -325,6 +330,8 @@
           ctrl.showCancelButton = false
           ctrl.showSaveButton = true
           ctrl.showButton = false
+        } else if (ctrl.activeTab == "general" && ctrl.empId == 0){ 
+          ctrl.showSaveButton = true
         } else {
           ctrl.showDeleteButton = false
           ctrl.showCancelButton = false
@@ -733,7 +740,6 @@
       function getInventoryRequest() {
         if(!ctrl.requestCurrentPage){ ctrl.requestCurrentPage = 1 }
           inventoryRequestService.getInventoryRequest(ctrl.requestCurrentPage, ctrl.empId).then(function(resp) {
-            
             ctrl.datasReuestExport = [];
             if (resp.data) {
               ctrl.requestTotalItems = resp.data.total_records;
