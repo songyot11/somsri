@@ -303,3 +303,114 @@ input[type='radio']:checked:after {
     display: inline-block;
     visibility: visible;
 }
+
+.nav-tabs.main > li > a {
+  padding: 20px 40px 20px 40px;
+}
+
+.nav-tabs.main > li > a {
+  font-size: 22px;
+}
+
+.nav-tabs.main {
+  margin-left: 15px;
+  margin-right: 15px;
+}
+
+.nav-tabs.main > li.cyan > a {
+  color: #62C4CC;
+}
+
+.nav-tabs.main > li.orange > a {
+  color: #F59C0B;
+}
+
+.nav-tabs.main > li.active.cyan > a,
+.nav-tabs.main > li.active.orange > a {
+  color: #333;
+}
+
+.nav-tabs.main > li.active > a,
+.nav-tabs.main > li.active > a:hover,
+.nav-tabs.main > li.active > a:focus {
+  margin-top: 2px;
+  background-color: white;
+}
+
+.nav-tabs.main > li > a {
+  margin-top: 2px;
+  transition: all 0.25s ease;
+
+  &:hover{
+    background-color: #f1f1f1;
+  }
+}
+
+.paragraph.private {
+  padding-left: 30px;
+  padding-top: 35px;
+}
+
+.vacation-setting .paragraph .sub-menu {
+  padding-right: 0px;
+}
+
+.vacation-setting .paragraph ul {
+  list-style-type: none;
+  padding-left: 0px;
+  border-bottom: none;
+}
+
+.vacation-setting .paragraph ul li {
+  padding-top: 2px;
+  font-size: 16px;
+  width: 100%;
+}
+
+.vacation-setting .paragraph ul li.active {
+  border: 2px solid #FFAB04;
+  background-color: #FFAB04;
+}
+
+.vacation-setting .paragraph ul li a {
+  color: #333;
+  border: none;
+}
+
+.vacation-setting .paragraph ul li.active a {
+  color: #FFFFFF;
+  border: none;
+  background-color: #FFAB04;
+}
+
+.vacation-setting .paragraph ul li a:hover {
+  background-color: transparent;
+  border: none;
+}
+
+.vacation-setting .private .tab-content {
+  height: 100%;
+  border-left: 2px solid #FFAB04;
+  margin-top: 0px;
+  padding: 0px 40px;
+}
+
+.vacation-setting .panel-default a {
+  color: #333;
+  border: none;
+  text-decoration: none !important;
+}
+
+.vacation-setting .panel-default.ng-scope.ng-isolate-scope.panel {
+  box-shadow: none;
+  border: none;
+}
+
+.vacation-setting .panel-default>.panel-heading{
+  background: none;
+  border-bottom: 1px solid #ddd;
+}
+
+.vacation-setting .accordion-selected {
+  color: #F59C0B !important;
+}

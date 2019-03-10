@@ -12,7 +12,7 @@
             <h5 class="title">{{ 'remaining_day' | translate }}:</h5>
             <div class="count orange">
               {{ dashboard.vacation.remaining_day }}
-              <span class="quota m-0">/ {{ dashboard.vacation.leave_allowance }}</span>
+              <span class="quota m-0">/ {{ dashboard.vacation.maximum_leave }}</span>
             </div>
           </div>
         </div>
@@ -89,7 +89,7 @@
         </div>
         <div class="row" ng-repeat="vacation in dashboard.vacation.vacations">
           <div class="col-md-9 p-0">
-            <b class="font-12 orange m-0"><span class="font-16 color-orange">{{ vacation.start_date }}</span> - {{ vacation.vacation_type.name }}</b>
+            <b class="font-12 orange m-0"><span class="font-16 color-orange">{{ vacation.start_date }} - {{ vacation.end_date }}</span> - {{ vacation.vacation_type.name }}</b>
             <p class="color-gray mt-5 mb-0">{{ vacation.detail }}</p>
           </div>
           <div class="col-md-2 pr-0">
@@ -120,21 +120,21 @@
           </div>
         </div>
         </div>
-        <div class="row">
-          <div class="col-md-12 p-0">
-            <b class="orange m-0">
-              <span class="font-16 color-orange">23/11/2561</span>
-              <span class="font-14 color-gary">กมลกวรรณ ยอดใจ</span>
-              <span class="font-12 color-purple">- ลาป่วย</span>
-            </b>
-            <p class="color-gray mt-5 mb-5">เป็นไข้หวัดใหญ่สายพันธุ์ผสมระหว่างไข้หวัดนกกับไข้หวัดเป็ด</p>
+          <div class="row" ng-repeat="vacation in dashboard.vacation.vacations | filter:next7Days()">
+            <div class="col-md-12 p-0">
+              <b class="orange m-0">
+                <span class="font-16 color-orange">{{ vacation.start_date }}</span>
+                <span class="font-14 color-gary">{{ vacation.requester }}</span>
+                <span class="font-12 color-purple">{{ vacation.vacation_type.name }}</span>
+              </b>
+              <p class="color-gray mt-5 mb-5">{{ vacation.detail }}</p>
+            </div>
+            <div class="row">
+              <div class="col-md-12 p-0">
+                <hr class="light m-5" />
+              </div>
+            </div>
           </div>
-        </div>
-        <div class="row">
-          <div class="col-md-12 p-0">
-            <hr class="light mt-0" />
-          </div>
-        </div>
       </div>
     </div>
   </div>
@@ -156,18 +156,18 @@
               <select class="form-control dropdown" ng-change="dashboard.vacationTypeChanged(dashboard.selectedVacationType)" ng-model="dashboard.selectedVacationType" >
                 <option selected value="sick_leave" class="fa-align-left">{{ 'sick_leave' | translate }}</option>
                 <option value="vacation_leave">{{ 'vacation_leave' | translate }}</option>
-                <option value="switch_date">{{ 'switch_date' | translate }}</option>
-                <option value="work_at_home">{{ 'work_at_home' | translate }}</option>
+                <option value="switch_date" ng-disabled="!dashboard.vacationConfig.switching_day_allow" >{{ 'switch_date' | translate }}</option>
+                <option value="work_at_home" ng-disabled="!dashboard.vacationConfig.work_at_home_allow" >{{ 'work_at_home' | translate }}</option>
               </select>
             </div>
           </div>
           <div class="col-md-6">
             <div class="form-group" ng-show="dashboard.showVacationLeaveType">
               <label class="font-12" for="vacation_leave_type">{{ 'vacation_leave_type' | translate }}</label>
-              <select class="form-control dropdown" ng-change="dashboard.vacationLeaveTypeChanged(dashboard.selectedVacationLeaveType)" ng-model="dashboard.selectedVacationLeaveType" ng-disabled="!dashboard.vacationConfig.can_leave_half_day">
+              <select class="form-control dropdown" ng-change="dashboard.vacationLeaveTypeChanged(dashboard.selectedVacationLeaveType)" ng-model="dashboard.selectedVacationLeaveType">
                 <option selected value="vacation_leave_full_day">{{ 'full_day' | translate }}</option>
-                <option value="vacation_leave_half_day_morning">{{ 'half_day_morning' | translate }}</option>
-                <option value="vacation_leave_half_day_afternoon">{{ 'half_day_afternoon' | translate }}</option>
+                <option value="vacation_leave_half_day_morning" ng-disabled="!dashboard.vacationConfig.personal_leave_allow_morning">{{ 'half_day_morning' | translate }}</option>
+                <option value="vacation_leave_half_day_afternoon" ng-disabled="!dashboard.vacationConfig.personal_leave_allow_afternoon">{{ 'half_day_afternoon' | translate }}</option>
               </select>
             </div>
           </div>

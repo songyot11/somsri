@@ -1,0 +1,193 @@
+<div class="container" style="width: 960px;">
+  <div class="row mt-5">
+    <div class="col-md-12 heading">
+      {{ 'setting' | translate }}
+    </div>
+  </div>
+</div>
+<form name="createProjectForm" ng-submit="setting.submit(setting.datas)">
+<div class="container vacation-setting" >
+    <div class="tab-content">
+        <div class="paragraph tab-content shadow setting private">
+            <div class="row">
+                <div class="col-md-3 sub-menu">
+                    <ul class="nav nav-tabs tabs-left">
+                        <li class="active" ng-class="{ 'active' : setting.activeTab === 'sick_leave' }">
+                            <a data-toggle="tab" ng-click="setting.activeTab = 'sick_leave'" href="javascript:void(0)">
+                            {{ "sick_leave" | translate }}
+                            </a>
+                        </li>
+                        <li ng-class="{ 'active' : setting.activeTab === 'vacation_leave' }">
+                            <a data-toggle="tab" ng-click="setting.activeTab = 'vacation_leave'" href="javascript:void(0)">
+                            {{ "vacation_leave" | translate }}
+                            </a>
+                        </li>
+                        <li ng-class="{ 'active' : setting.activeTab === 'switch_date' }">
+                            <a data-toggle="tab" ng-click="setting.activeTab = 'switch_date'" href="javascript:void(0)">
+                            {{ "switch_date" | translate }}
+                            </a>
+                        </li>
+                        <li ng-class="{ 'active' : setting.activeTab === 'work_at_home' }">
+                            <a data-toggle="tab" ng-click="setting.activeTab = 'work_at_home'" href="javascript:void(0)">
+                            {{ "work_at_home" | translate }}
+                            </a>
+                        </li>
+                    </ul>
+                </div>
+                <div class="col-md-9 tab-content">
+                    <div ng-class="{ 'in active' : setting.activeTab === 'sick_leave' }" class="tab-pane fade">
+                        <label for="sick_leave_maximum_days_per_year">{{ "sick_leave_max_per_year" | translate }}</label>
+                        <div class="row">
+                            <div class="col-md-4">
+                                <input class="form-control" autocomplete="off" type="number" id="sick_leave_maximum_days_per_year" ng-model="setting.datas.sick_leave_maximum_days_per_year" ng-validate="number" ng-pattern="/^[0-9]*$/" step="1" parseFloat>
+                            </div>
+                        </div>
+                        <br/>
+                        <div class="row">
+                            <div class="col-md-1">
+                                <input type="checkbox" class="form-control cbox numberic" id="sick_leave_require_approval" ng-model="setting.datas.sick_leave_require_approval" />
+                            </div>
+                            <div class="col-md-3">
+                                <label for="sick_leave_require_approval">{{ "sick_leave_approve_need" | translate }}</label>
+                            </div>
+                            <div class="col-md-1">
+                                <input type="checkbox" class="form-control cbox numberic" id="sick_leave_require_medical_certificate" ng-model="setting.datas.sick_leave_require_medical_certificate" />
+                            </div>
+                            <div class="col-md-3">
+                                <label for="sick_leave_require_medical_certificate">{{ "sick_leave_medical_certificate" | translate }}</label>
+                            </div>
+                        </div>
+                        <br/>
+                        <label for="sick_leave_note">{{ "sick_leave_note" | translate }}</label>
+                        <div class="row">
+                            <textarea id="sick_leave_note" ng-model="setting.datas.sick_leave_note" rows="5" cols="80" contenteditable="false" redactor></textarea>
+                        </div>
+                    </div>
+                    <div ng-class="{ 'in active' : setting.activeTab === 'vacation_leave' }" class="tab-pane fade">
+                        <div class="row">
+                            <div class="col-md-4">
+                                <label for="personal_leave_maximum_days_per_year">{{ "vacation_leave_max_per_year" | translate }}</label>
+                            </div>
+                            <div class="col-md-4">
+                                <input class="form-control" autocomplete="off" type="number" id="personal_leave_maximum_days_per_year" ng-model="setting.datas.personal_leave_maximum_days_per_year" ng-validate="number" ng-pattern="/^[0-9]*$/" step="1" parseFloat>
+                            </div>
+                        </div>
+                        <br/>
+                        <div class="row">
+                            <div class="col-md-4">
+                                <label for="vacation_leave_submission_days">{{ "vacation_leave_submission_days" | translate }}</label>
+                            </div>
+                            <div class="col-md-4">
+                                <input class="form-control" autocomplete="off" type="number" id="personal_leave_submission_days" ng-model="setting.datas.personal_leave_submission_days" ng-validate="number" ng-pattern="/^[0-9]*$/" step="1" parseFloat>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-md-1">
+                                <input type="checkbox" class="form-control cbox numberic" id="personal_leave_allow_morning" ng-model="setting.datas.personal_leave_allow_morning" />
+                            </div>
+                            <div class="col-md-3">
+                                <label for="personal_leave_allow_morning">{{ "vacation_leave_morning" | translate }}</label>
+                            </div>
+                            <div class="col-md-1">
+                                <input type="checkbox" class="form-control cbox numberic" id="personal_leave_allow_afternoon" ng-model="setting.datas.personal_leave_allow_afternoon" />
+                            </div>
+                            <div class="col-md-3">
+                                <label for="personal_leave_allow_afternoon">{{ "vacation_leave_afternoon" | translate }}</label>
+                            </div>
+                        </div>
+                        <br/>
+                        <label for="personal_leave_note">{{ "vacation_leave_note" | translate }}</label>
+                        <div class="row">
+                            <textarea id="personal_leave_note" ng-model="setting.datas.personal_leave_note" rows="5" cols="80" contenteditable="false" redactor></textarea>
+                        </div>
+                    </div>
+                    <div ng-class="{ 'in active' : setting.activeTab === 'switch_date' }" class="tab-pane fade">
+                        <div class="row">
+                            <div class="col-md-1">
+                                <input type="checkbox" class="form-control cbox numberic" id="switching_day_allow" ng-model="setting.datas.switching_day_allow" />
+                            </div>
+                            <div class="col-md-4">
+                                <label for="switching_day_allow">{{ "switching_day_allow" | translate }}</label>
+                            </div>
+                            <div class="col-md-3">
+                                <label for="switching_day_maximum_days_per_year">{{ "switching_day_maximum_days_per_year" | translate }}</label>
+                            </div>
+                            <div class="col-md-4">
+                                <input class="form-control" autocomplete="off" type="number" id="switching_day_maximum_days_per_year" ng-model="setting.datas.switching_day_maximum_days_per_year" ng-validate="number" ng-pattern="/^[0-9]*$/" step="1" parseFloat>
+                            </div>
+                        </div>
+                        <br/>
+                        <div class="row">
+                            <div class="col-md-1">
+                                <input type="checkbox" class="form-control cbox numberic" id="switching_day_require_approval" ng-model="setting.datas.switching_day_require_approval" />
+                            </div>
+                            <div class="col-md-4">
+                                <label for="switching_day_require_approval">{{ "switching_day_require_approval" | translate }}</label>
+                            </div>
+                            <div class="col-md-3">
+                                <label for="switching_day_submission_days">{{ "switching_day_submission_days" | translate }}</label>
+                            </div>
+                            <div class="col-md-4">
+                                <input class="form-control" autocomplete="off" type="number" id="switching_day_submission_days" ng-model="setting.datas.switching_day_submission_days" ng-validate="number" ng-pattern="/^[0-9]*$/" step="1" parseFloat>
+                            </div>
+                        </div>
+                        <br/>
+                        <label for="switching_day_note">{{ "switching_day_note" | translate }}</label>
+                        <div class="row">
+                            <textarea id="switching_day_note" ng-model="setting.datas.switching_day_note" rows="5" cols="80" contenteditable="false" redactor></textarea>
+                        </div>
+                    </div>
+                    <div ng-class="{ 'in active' : setting.activeTab === 'work_at_home' }" class="tab-pane fade">
+                        <div class="row">
+                            <div class="col-md-1">
+                                <input type="checkbox" class="form-control cbox numberic" id="work_at_home_allow" ng-model="setting.datas.work_at_home_allow" />
+                            </div>
+                            <div class="col-md-3">
+                                <label for="work_at_home_allow">{{ "work_at_home_allow" | translate }}</label>
+                            </div>
+                        </div>
+                        <br/>
+                        <div class="row">
+                            <div class="col-md-3">
+                                <label for="work_at_home_maximum_days_per_week">{{ "work_at_home_maximum_days_per_week" | translate }}</label>
+                            </div>
+                            <div class="col-md-4">
+                                <input class="form-control" autocomplete="off" type="number" id="work_at_home_maximum_days_per_week" ng-model="setting.datas.work_at_home_maximum_days_per_week" ng-validate="number" ng-pattern="/^[0-9]*$/" step="1" parseFloat>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-md-1">
+                                <input type="checkbox" class="form-control cbox numberic" id="work_at_home_require_approval" ng-model="setting.datas.work_at_home_require_approval" />
+                            </div>
+                            <div class="col-md-4">
+                                <label for="work_at_home_require_approval">{{ "work_at_home_require_approval" | translate }}</label>
+                            </div>
+                            <div class="col-md-3">
+                                <label for="work_at_home_submission_days">{{ "work_at_home_submission_days" | translate }}</label>
+                            </div>
+                            <div class="col-md-3">
+                                <input class="form-control" autocomplete="off" type="number" id="work_at_home_submission_days" ng-model="setting.datas.work_at_home_submission_days" ng-validate="number" ng-pattern="/^[0-9]*$/" step="1" parseFloat>
+                            </div>
+                        </div>
+                        <br/>
+                        <label for="work_at_home_note">{{ "work_at_home_note" | translate }}</label>
+                        <div class="row">
+                            <textarea id="work_at_home_note" ng-model="setting.datas.work_at_home_note" rows="5" cols="80" contenteditable="false" redactor></textarea>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="space20"></div>
+<div class="footer-menu row mt-20">
+    <div class="pull-right text-right padding-left10">
+    <button type="button" class="btn btn-custom btn-gray btn-block">{{ 'cancel' | translate }}</button>
+    </div>
+    <div class="pull-right text-right padding-left10">
+    <button type="submit" ng-disabled="setting.isSubmit" class="btn btn-custom btn-blue btn-block">{{ 'save' | translate }}</button>
+    </div>
+</div>
+</form>
