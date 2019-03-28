@@ -116,6 +116,7 @@ class EmployeesController < ApplicationController
   end
 
   def create
+    roles = params[:role] || []
     if current_user.present?
       vacationSetting = VacationSetting.where(school_id: current_user.school_id).first
       if !vacationSetting.nil?
@@ -129,6 +130,10 @@ class EmployeesController < ApplicationController
     end
 
     if @employee.save
+      user = User.find(@employee.id)
+      roles.each do |role|
+        user.add_role(role)
+      end
       render json: {
         employee: @employee
       }, status: :ok
@@ -153,9 +158,18 @@ class EmployeesController < ApplicationController
 
   # PATCH /employees/:id
   def update
+    roles = params[:role] || []
+
+    user = User.find(@employee.id)
+    user.roles = []
+ 
     employee_data = employee_params
     @employee.attributes = employee_data
     @employee.save
+    
+    roles.each do |role|
+      user.add_role(role)
+    end
 
     if params[:payroll]
       payroll_datas = payroll_params

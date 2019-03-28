@@ -42,16 +42,20 @@
         <% if can? :manage, Employee %>
          <div class="col-xs-4 col-centered menu-icon">
             <div class="<%= is_topbar ? 'dropdown-menu-btn' : 'menu-btn' %> employees">
-            
-                <a href="/somsri_payroll#/employees<%= current_user.employee? ? "/#{current_user.id}" : '' %>" >
-              
+              <% if (current_user.admin? || current_user.human_resource?) && current_user.employee? %>
+                <a href="/somsri_payroll#/employees" >
                   <div class="wraptocenter">
                     <%= image_tag 'hr-icon.png', class: (is_topbar ? 'img-menu-nav' : '') %>
                   </div>
                 </a>
-
+              <% else %>
+                <a href="/somsri_payroll#/employees<%= current_user.employee? ? "/#{current_user.id}" : '' %>" >
+                  <div class="wraptocenter">
+                    <%= image_tag 'hr-icon.png', class: (is_topbar ? 'img-menu-nav' : '') %>
+                  </div>
+                </a>
+              <% end %>
             </div>
-            
             <%= content_tag(:p, t('.employee', :default => t("employee")) ) %>
           </div>
         <% end %>

@@ -35,8 +35,12 @@
       return $http.patch('/employees/' + id, data);
     };
 
-    this.createEmployee = function(data) {
-      return $http.post('/employees/', data);
+    this.createEmployee = function(data, role) {
+      return $http.post('/employees/', data, {
+        params : {
+          'roles[]': role
+        }
+      });
     };
 
     this.archiveEmployee = function(employee_id) {

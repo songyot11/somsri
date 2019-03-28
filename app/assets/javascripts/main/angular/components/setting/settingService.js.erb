@@ -16,5 +16,17 @@
       return $http.get('/users/site_config');
     };
 
+    this.getRole = function() {
+      return $http.get('/users/me')
+    }
+
+    this.getRoleEmployee = function(id) {
+      return $http.get('users/role_employees', {
+        params: {
+          id: id
+        }
+      })
+    }
+
   }]);
 })();

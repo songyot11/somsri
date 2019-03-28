@@ -212,6 +212,13 @@
                 </select>
               </div>
             </div>
+            <div class="col-md-4">
+              <label for="role">{{ "role" | translate }}</label>
+              <tags-input type="text" class="somsri-select bootstrap" id="role" placeholder="Add a role" ng-model="employee.select_role" required="true">
+                <auto-complete source="employee.role" min-length="0" debounce-delay="0" max-results="10"></auto-complete>
+              </tags-input>
+            
+            </div>
           </div>
           <div class="row">
             <div class="col-md-4">
