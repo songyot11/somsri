@@ -36,7 +36,6 @@
     };
 
     this.createEmployee = function(data, role) {
-      console.log("3",role)
       return $http.post('/employees/', data, {
         params : {
           'roles[]': role

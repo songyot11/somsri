@@ -116,7 +116,7 @@ class EmployeesController < ApplicationController
   end
 
   def create
-    roles = params[:roles]
+    roles = params[:role] || []
     if current_user.present?
       vacationSetting = VacationSetting.where(school_id: current_user.school_id).first
       if !vacationSetting.nil?
@@ -158,7 +158,7 @@ class EmployeesController < ApplicationController
 
   # PATCH /employees/:id
   def update
-    roles = params[:role]
+    roles = params[:role] || []
 
     user = User.find(@employee.id)
     user.roles = []

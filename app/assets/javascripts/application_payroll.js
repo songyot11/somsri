@@ -34,8 +34,6 @@
 //= require angular-translate/angular-translate
 //= require angular-translate-loader-url/angular-translate-loader-url
 //= require ng-tags-input
-//= require select2/select2
-//= require angular-ui-select2/src/select2
 
 //= require translate/app.module
 //= require_tree ./translate
