@@ -1,6 +1,6 @@
 <div class="container main-menu main">
 
-    <div class="col-xs-4">
+    <div class="col-xs-4" ng-show="!menu.isAdmin">
         <div class="menu-btn" ng-click="openVacationDashboard()">
             <div class="wraptocenter">
                 <%= image_tag 'vacation-dashboard-icon.png', class: "" %>

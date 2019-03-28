@@ -27,6 +27,7 @@
       ctrl.total = '';
       ctrl.role = ['account_holder','admin', 'approver','employee', 'finance_officer', 'human_resource', 'procurement_officer', 'teacher']                      
       ctrl.select_role = []
+      ctrl.current_role = []
       ctrl.get_role = []
 
 
@@ -57,9 +58,9 @@
 
       function getRole() {
         settingService.getRoleEmployee(ctrl.empId).then(function(resp) {
-          console.log(resp.data)
           if (ctrl.empId != 0) {
             ctrl.select_role = resp.data.roles
+            ctrl.current_role = resp.data.roles
           } else {
             ctrl.select_role = ["employee"]
           }
@@ -171,8 +172,15 @@
         return false;
       }
 
+      function isRoleChange() {
+        if (ctrl.current_role != ctrl.get_role) {
+          return true
+        }
+        return false
+      }
+
       function isDataChange(){
-        return ctrl.isEdit && (isPayrollChange() || isEmployeeChange() || isTaxReductionChange());
+        return ctrl.isEdit && (isPayrollChange() || isEmployeeChange() || isTaxReductionChange() || isRoleChange());
       }
 
       // convert string to float
@@ -435,14 +443,15 @@
 
       function onChangeSelectRole() {
         ctrl.get_role = []
-        console.log(ctrl.select_role)
         var object = ctrl.select_role
         angular.forEach(object,function(values,keys){
           angular.forEach(values,function(value,key){
               ctrl.get_role.push(value)
           });
         });
-        console.log("1",ctrl.get_role)
+        if (ctrl.current_role != ctrl.get_role) {
+          ctrl.isEdit = true
+        }
       }
 
       ctrl.submit = function(parm){

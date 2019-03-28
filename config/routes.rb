@@ -78,6 +78,7 @@ Rails.application.routes.draw do
   end
 
   resources :site_configs, only: [:index]
+  resources :vacation_settings
   resources :individuals, only: [:create, :update, :destroy, :index]
 
   resources :invoices do
