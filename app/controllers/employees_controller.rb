@@ -80,6 +80,28 @@ class EmployeesController < ApplicationController
     else
       payroll = @employee.lastest_payroll
     end
+
+    vacationSetting = VacationSetting.where(school_id: @employee.school_id).first
+    # Set default vacation day
+    if @employee.sick_leave_maximum_days_per_year.nil? && !vacationSetting.nil?
+      @employee.sick_leave_maximum_days_per_year = vacationSetting.sick_leave_maximum_days_per_year
+    end
+    if @employee.personal_leave_maximum_days_per_year.nil? && !vacationSetting.nil?
+      @employee.personal_leave_maximum_days_per_year = vacationSetting.personal_leave_maximum_days_per_year
+    end
+    if @employee.switching_day_allow.nil? && !vacationSetting.nil?
+      @employee.switching_day_allow = vacationSetting.switching_day_allow
+    end
+    if @employee.switching_day_maximum_days_per_year.nil? && !vacationSetting.nil?
+      @employee.switching_day_maximum_days_per_year = vacationSetting.switching_day_maximum_days_per_year
+    end
+    if @employee.work_at_home_allow.nil? && !vacationSetting.nil?
+      @employee.work_at_home_allow = vacationSetting.work_at_home_allow
+    end
+    if @employee.work_at_home_maximum_days_per_week.nil? && !vacationSetting.nil?
+      @employee.work_at_home_maximum_days_per_week = vacationSetting.work_at_home_maximum_days_per_week
+    end
+
     render json: {
       enable_rollcall: SiteConfig.get_cache.enable_rollcall,
       img_url: @employee.img_url.exists? ? @employee.img_url.expiring_url(10, :medium) : nil ,
@@ -88,11 +110,24 @@ class EmployeesController < ApplicationController
       payroll: payroll,
       tax_reduction: tax_reduction,
       current_employee: current_user.employee?,
+      vacationSetting: vacationSetting,
       current_user: current_user.present?
     }
   end
 
   def create
+    if current_user.present?
+      vacationSetting = VacationSetting.where(school_id: current_user.school_id).first
+      if !vacationSetting.nil?
+        @employee.sick_leave_maximum_days_per_year = vacationSetting.sick_leave_maximum_days_per_year
+        @employee.personal_leave_maximum_days_per_year = vacationSetting.personal_leave_maximum_days_per_year
+        @employee.switching_day_allow = vacationSetting.switching_day_allow
+        @employee.switching_day_maximum_days_per_year = vacationSetting.switching_day_maximum_days_per_year
+        @employee.work_at_home_allow = vacationSetting.work_at_home_allow
+        @employee.work_at_home_maximum_days_per_week = vacationSetting.work_at_home_maximum_days_per_week
+      end
+    end
+
     if @employee.save
       render json: {
         employee: @employee
@@ -245,7 +280,13 @@ class EmployeesController < ApplicationController
       :classroom_id,
       :password,
       :note,
-      :comment
+      :comment,
+      :sick_leave_maximum_days_per_year,
+      :personal_leave_maximum_days_per_year,
+      :switching_day_allow,
+      :switching_day_maximum_days_per_year,
+      :work_at_home_allow,
+      :work_at_home_maximum_days_per_week
     ]).to_h
     return result
   end

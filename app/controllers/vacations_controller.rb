@@ -6,12 +6,38 @@ class VacationsController < ApplicationController
   end
 
   def create
+    send_approve_mail = true
     vacation = Vacation.new(vacation_params)
     vacation.requester = current_user.employee
     vacation.vacation_type = get_vacation_type(params[:vacation_type])
 
+    vacation_setting = VacationSetting.where(school_id: current_user.employee.school_id).first
+    # Check require approve
+    case vacation.vacation_type.name
+    when 'ลาป่วย'
+      if !vacation_setting.nil? and !vacation_setting.sick_leave_require_approval
+        vacation.status = 'approved'
+        vacation.approver = current_user.employee
+        send_approve_mail = false
+      end
+    when 'สลับวันทำงาน'
+      if !vacation_setting.nil? and !vacation_setting.switching_day_require_approval
+        vacation.status = 'approved'
+        vacation.approver = current_user.employee
+        send_approve_mail = false
+      end
+    when 'ทำงานที่บ้าน'
+      if !vacation_setting.nil? and !vacation_setting.work_at_home_require_approval
+        vacation.status = 'approved'
+        vacation.approver = current_user.employee
+        send_approve_mail = false
+      end
+    end
+
     if vacation.save
-      send_vacation_request(vacation)
+      if send_approve_mail
+        send_vacation_request(vacation)
+      end
       render json: vacation, status: :ok
     else
       render json: { error_message: vacation.errors }, status: 500
@@ -39,7 +65,7 @@ class VacationsController < ApplicationController
     work_at_home_count = @vacations.work_at_home.count
 
     render json: {
-      leave_allowance: current_user.employee.leave_allowance,
+      maximum_leave: current_user.employee.maximum_leave,
       remaining_day: current_user.employee.leave_remaining,
       sick_leave: sick_leave_count,
       vacation_leave: vacation_leave_count,

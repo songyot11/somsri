@@ -2,7 +2,76 @@
   'use strict';
   angular.module('somsri.somsri.vacation.setting', [
   ])
-  .controller('vacationSettingCtrl', ['$rootScope', 'translateFilter', function ($rootScope, translateFilter) {
+  .controller('vacationSettingCtrl', ['$rootScope','$scope', '$uibModal', 'translateFilter', 'settingService' ,
+    function ($rootScope, $scope, $uibModal, translateFilter, service) {
+    
     $rootScope.menu = translateFilter('setting');
+    var ctrl = this;
+    var angularScopeRoot = 'angular.element(document.getElementById("angularCtrl")).scope().$root'
+    var angularScopeInventory = 'angular.element(document.getElementById("angularCtrl")).scope().vacationSettingCtrl'
+    var angularCtrlStr = "angular.element(document.getElementById('angularCtrl')).scope().vacationsetting"
+
+    $rootScope.loadAndAuthorizeResource("setting", function(){
+      ctrl.activeTab = 'sick_leave';
+
+      ctrl.getActiveTab = $rootScope.activeTab
+      $rootScope.activeTab = null
+
+      ctrl.datas = {};
+      ctrl.isEdit = false;
+      ctrl.isSubmit = false;
+
+
+      service.getVacationSetting().then(function(setting_resp) {        
+        ctrl.datas = setting_resp.data;
+        ctrl.isEdit = setting_resp.data.id > 0 ? true : false;
+      });
+
+      ctrl.submit = function(parm){
+        ctrl.isSubmit = true;
+
+      openConfirmationModal(translateFilter("close_with_save"), function(){
+          if (ctrl.isEdit) {
+            var datas_result = $.extend(true, {}, ctrl.datas);
+            service.saveVacationSetting(ctrl.datas.id, datas_result).then(function(resp) {
+              ctrl.isSubmit = false;
+            });
+          } else {
+            service.createVacationSetting(parm).then(function(resp) {
+              ctrl.isSubmit = false;
+            });
+          }
+        }, function(){
+          ctrl.isSubmit = false
+        });
+      }
+
+      function openConfirmationModal(message, success, dismiss) {
+        $scope.message = message;
+        $uibModal.open({
+          animation: true,
+          backdrop: 'static',
+          keyboard: false,
+          scope: $scope,
+          templateUrl: "<%= asset_path('somsri/angular/components/modal/confirm/confirmModalView.html') %>",
+          controller: 'confirmModalCtrl as confirm',
+          size: 'md',
+          resolve: {
+            resources: ['$ocLazyLoad', 'ASSETS', function($ocLazyLoad, ASSETS) {
+              return $ocLazyLoad.load([
+                ASSETS.somsri.somsri.confirm_modal
+              ]);
+            }]
+          }
+        }).result.then(function (isConfirm) {
+          if (isConfirm) {
+            if(success){ success() }
+          }else{
+            if(dismiss){ dismiss() }
+          }
+        });
+      }
+
+    });
   }]);
 })();

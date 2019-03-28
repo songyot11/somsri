@@ -267,13 +267,17 @@ class Employee < ApplicationRecord
   end
 
   def leave_remaining
-    self.vacations = self.vacations.this_year
-    sick_leave_count = self.vacations.sick_leave.map(&:deduce_days).inject(0, &:+)
-    full_day_leave_count = self.vacations.vacation_full_day.not_rejected.map(&:deduce_days).inject(0, &:+)
-    half_day_morning_leave_count = self.vacations.vacation_half_day_morning.not_rejected.map(&:deduce_days).inject(0, &:+)
-    half_day_afternoon_leave_count = self.vacations.vacation_half_day_afternoon.not_rejected.map(&:deduce_days).inject(0, &:+)
-    switch_date_count = self.vacations.switch_date.map(&:deduce_days).inject(0, &:+)
-    work_at_home_count = self.vacations.work_at_home.map(&:deduce_days).inject(0, &:+)
+    vacation_setting = VacationSetting.where(school_id: self.school_id).first
+    vacations = self.vacations.this_year
+    sick_leave_count = vacations.sick_leave.map(&:deduce_days).inject(0, &:+)
+    full_day_leave_count = vacations.vacation_full_day.not_rejected.map(&:deduce_days).inject(0, &:+)
+    half_day_morning_leave_count = vacations.vacation_half_day_morning.not_rejected.map(&:deduce_days).inject(0, &:+)
+    half_day_afternoon_leave_count = vacations.vacation_half_day_afternoon.not_rejected.map(&:deduce_days).inject(0, &:+)
+    switch_date_count = vacations.switch_date.map(&:deduce_days).inject(0, &:+)
+    work_at_home_count = vacations.work_at_home.map(&:deduce_days).inject(0, &:+)
+
+    max_leave = (!self.sick_leave_maximum_days_per_year.nil?) ? self.sick_leave_maximum_days_per_year : vacation_setting.sick_leave_maximum_days_per_year
+    max_leave += (!self.personal_leave_maximum_days_per_year.nil?) ? self.personal_leave_maximum_days_per_year : vacation_setting.personal_leave_maximum_days_per_year
 
     deduce_days = 0
     deduce_days += sick_leave_count
@@ -282,10 +286,82 @@ class Employee < ApplicationRecord
     deduce_days += half_day_afternoon_leave_count
     deduce_days += switch_date_count
     deduce_days += work_at_home_count
-    remaining_day = self.leave_allowance - deduce_days
+    remaining_day = max_leave - deduce_days
 
     i, f = remaining_day.to_i, remaining_day.to_f
     i == f ? i : f
+  end
+
+  def sick_leave_remaining
+    vacation_setting = VacationSetting.where(school_id: self.school_id).first
+    vacations = self.vacations.this_year
+    sick_leave_count = vacations.sick_leave.map(&:deduce_days).inject(0, &:+)
+
+    max_leave = (!self.sick_leave_maximum_days_per_year.nil?) ? self.sick_leave_maximum_days_per_year : vacation_setting.sick_leave_maximum_days_per_year
+
+    deduce_days = 0
+    deduce_days += sick_leave_count
+    remaining_day = max_leave - deduce_days
+
+    i, f = remaining_day.to_i, remaining_day.to_f
+    i == f ? i : f
+  end
+
+  def personal_leave_remaining
+    vacation_setting = VacationSetting.where(school_id: self.school_id).first
+    vacations = self.vacations.this_year
+    full_day_leave_count = vacations.vacation_full_day.not_rejected.map(&:deduce_days).inject(0, &:+)
+    half_day_morning_leave_count = vacations.vacation_half_day_morning.not_rejected.map(&:deduce_days).inject(0, &:+)
+    half_day_afternoon_leave_count = vacations.vacation_half_day_afternoon.not_rejected.map(&:deduce_days).inject(0, &:+)
+
+    max_leave = (!self.personal_leave_maximum_days_per_year.nil?) ? self.personal_leave_maximum_days_per_year : vacation_setting.personal_leave_maximum_days_per_year
+
+    deduce_days = 0
+    deduce_days += full_day_leave_count
+    deduce_days += half_day_morning_leave_count
+    deduce_days += half_day_afternoon_leave_count
+    remaining_day = max_leave - deduce_days
+
+    i, f = remaining_day.to_i, remaining_day.to_f
+    i == f ? i : f
+  end
+
+  def switch_day_remaining
+    vacation_setting = VacationSetting.where(school_id: self.school_id).first
+    vacations = self.vacations.this_year
+    switch_date_count = vacations.switch_date.map(&:deduce_days).inject(0, &:+)
+
+    max_leave = (!self.switching_day_maximum_days_per_year.nil?) ? self.switching_day_maximum_days_per_year : vacation_setting.switching_day_maximum_days_per_year
+
+    deduce_days = 0
+    deduce_days += switch_date_count
+    remaining_day = max_leave - deduce_days
+
+    i, f = remaining_day.to_i, remaining_day.to_f
+    i == f ? i : f
+  end
+
+  def work_at_home_remaining
+    vacations = self.vacations.this_year
+    vacation_setting = VacationSetting.where(school_id: self.school_id).first
+    work_at_home_count = vacations.work_at_home.map(&:deduce_days).inject(0, &:+)
+
+    max_leave = (!self.work_at_home_maximum_days_per_week.nil?) ? self.work_at_home_maximum_days_per_week : vacation_setting.work_at_home_maximum_days_per_week
+
+    deduce_days = 0
+    deduce_days += work_at_home_count
+    remaining_day = max_leave - deduce_days
+
+    i, f = remaining_day.to_i, remaining_day.to_f
+    i == f ? i : f
+  end
+
+  def maximum_leave
+    vacation_setting = VacationSetting.where(school_id: self.school_id).first
+    max_leave = (!self.sick_leave_maximum_days_per_year.nil?) ? self.sick_leave_maximum_days_per_year : vacation_setting.sick_leave_maximum_days_per_year
+    max_leave += (!self.personal_leave_maximum_days_per_year.nil?) ? self.personal_leave_maximum_days_per_year : vacation_setting.personal_leave_maximum_days_per_year
+
+    return max_leave
   end
 
   private
