@@ -16,5 +16,9 @@
       return $http.get('/users/site_config');
     };
 
+    this.getRole = function() {
+      return $http.get('/users/me')
+    }
+
   }]);
 })();

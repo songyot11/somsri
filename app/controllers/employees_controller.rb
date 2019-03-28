@@ -118,29 +118,52 @@ class EmployeesController < ApplicationController
 
   # PATCH /employees/:id
   def update
-    employee_data = employee_params
-    @employee.attributes = employee_data
-    @employee.save
+    roles = params[:role]
+    user = User.find(@employee.id)
+    get_role = user.roles.collect { |r| r.name }
 
-    if params[:payroll]
-      payroll_datas = payroll_params
-      payroll_id = payroll_datas[:id]
-      payroll_datas.delete(:id)
-      payroll = Payroll.update(payroll_id, payroll_datas)
+ 
+    # employee_data = employee_params
+    # @employee.attributes = employee_data
+    # @employee.save
+    
+    for role in roles do
+      check = true
+      get_role.each do |r|
+        if r == role
+          check = false
+        end
+      end
+
+      if check
+        user.add_role(role)
+      end
+
     end
 
-    if params[:tax_reduction]
-      tax_reduction_datas = tax_reduction_params
-      tax_reduction_id = tax_reduction_datas[:id]
-      tax_reduction = TaxReduction.update(tax_reduction_id, tax_reduction_datas)
-    end
 
-    render json: {
-      img_url: @employee.img_url.exists? ? @employee.img_url.expiring_url(10, :medium) : nil ,
-      employee: @employee,
-      payroll: @employee.lastest_payroll,
-      tax_reduction: @employee.tax_reduction
-    }
+    # if params[:payroll]
+    #   payroll_datas = payroll_params
+    #   payroll_id = payroll_datas[:id]
+    #   payroll_datas.delete(:id)
+    #   payroll = Payroll.update(payroll_id, payroll_datas)
+    # end
+
+    # if params[:tax_reduction]
+    #   tax_reduction_datas = tax_reduction_params
+    #   tax_reduction_id = tax_reduction_datas[:id]
+    #   tax_reduction = TaxReduction.update(tax_reduction_id, tax_reduction_datas)
+    # end
+
+    # render json: {
+    #   img_url: @employee.img_url.exists? ? @employee.img_url.expiring_url(10, :medium) : nil ,
+    #   employee: @employee,
+    #   payroll: @employee.lastest_payroll,
+    #   tax_reduction: @employee.tax_reduction
+    # }
+
+
+
   end
 
   # DELETE /employees/:id

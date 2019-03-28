@@ -1,8 +1,8 @@
 (function() {
   'use strict';
   angular.module('somsri.payroll.employee_details', [])
-  .controller('employeeDetailsCtrl', ['employeesService', 'studentReportService', '$log', '$state', '$rootScope','$scope', '$uibModal', 'reportService', '$filter', '$location', 'individualsService', 'Upload', 'translateFilter','inventoryRequestService', 
-    function(service, studentReportService, $log, $state, $rootScope, $scope, $uibModal, reportService, $filter, $location, individualsService, Upload, translateFilter, inventoryRequestService) {
+  .controller('employeeDetailsCtrl', ['employeesService', 'studentReportService', '$log', '$state', '$rootScope','$scope', '$uibModal', 'reportService', '$filter', '$location', 'individualsService', 'Upload', 'translateFilter','inventoryRequestService', 'settingService',
+    function(service, studentReportService, $log, $state, $rootScope, $scope, $uibModal, reportService, $filter, $location, individualsService, Upload, translateFilter, inventoryRequestService, settingService) {
     $rootScope.menu = translateFilter('employee');
     var ctrl = this;
     var angularScopeRoot = 'angular.element(document.getElementById("angularCtrl")).scope().$root'
@@ -25,6 +25,10 @@
       ctrl.pinChars = [];
       ctrl.filterKeyword = '';
       ctrl.total = '';
+      ctrl.role = ['account_holder','admin', 'approver','employee', 'finance_officer', 'human_resource', 'procurement_officer', 'teacher']                      
+      ctrl.select_role = []
+      ctrl.get_role = []
+
 
       ctrl.add_button = "add_new_employee"
       var employee_inventory_table = $('#employee-inventory-table');
@@ -48,6 +52,22 @@
           ctrl.add_button = "add_new_employee"
         }
       }
+
+       getRole()
+
+      function getRole() {
+        settingService.getRole().then(function(resp) {
+          console.log("role", resp)
+        })
+      }
+
+      ctrl.tagTransform = function (newTag) {
+        var item = {
+           name: newTag
+         };
+         return item;
+      };
+
 
       ctrl.selectTab = function(str) {
         settingButton()
@@ -408,14 +428,29 @@
         });
       };
 
+      function onChangeSelectRole() {
+        ctrl.get_role = []
+        console.log(ctrl.select_role)
+        var object = ctrl.select_role
+        angular.forEach(object,function(values,keys){
+          angular.forEach(values,function(value,key){
+              ctrl.get_role.push(value)
+          });
+        });
+        console.log("1",ctrl.get_role)
+      }
+
       ctrl.submit = function(parm){
+        onChangeSelectRole()
         var isValid = true
+
         if (isValid) {
           ctrl.isSubmit = true
           if (ctrl.isEdit) {
             if(isDataChange()){
               openConfirmationModal(translateFilter("close_with_save"), function(){
-                var datas_result = $.extend(true, {}, ctrl.datas);
+                var datas_result = $.extend(true, {role: ctrl.get_role}, ctrl.datas);
+
                 service.saveEmployee(ctrl.datas.employee.id, datas_result).then(function(resp) {
                   ctrl.isSubmit = false;
                   ctrl.datas_original = $.extend(true, {}, ctrl.datas);
@@ -427,7 +462,7 @@
               ctrl.isSubmit = false
             }
           } else {
-            service.createEmployee(parm).then(function(resp) {
+            service.createEmployee(parm, ctrl.get_role).then(function(resp) {
               ctrl.isSubmit = false
               $rootScope.openEmployees();
             });
