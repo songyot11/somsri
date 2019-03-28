@@ -31,8 +31,7 @@
     "angular-ui-tree": "",
     "ng-ckeditor": "ng.ckeditor#^2.0.5",
     "fullcalendar": "^3.9.0",
-    "ng-tags-input": "3.2.0",
-    "select2": "3.4.8"
+    "ng-tags-input": "3.2.0"
   },
   "resolutions": {
     "angular": "1.5.9"
