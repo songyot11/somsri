@@ -93,7 +93,13 @@ class EmployeesController < ApplicationController
   end
 
   def create
+    roles = params[:roles]
+
     if @employee.save
+      user = User.find(@employee.id)
+      roles.each do |role|
+        user.add_role(role)
+      end
       render json: {
         employee: @employee
       }, status: :ok
@@ -119,51 +125,38 @@ class EmployeesController < ApplicationController
   # PATCH /employees/:id
   def update
     roles = params[:role]
+
     user = User.find(@employee.id)
     get_role = user.roles.collect { |r| r.name }
-
+    user.roles = []
  
-    # employee_data = employee_params
-    # @employee.attributes = employee_data
-    # @employee.save
+    employee_data = employee_params
+    @employee.attributes = employee_data
+    @employee.save
     
-    for role in roles do
-      check = true
-      get_role.each do |r|
-        if r == role
-          check = false
-        end
-      end
-
-      if check
-        user.add_role(role)
-      end
-
+    roles.each do |role|
+      user.add_role(role)
     end
 
+    if params[:payroll]
+      payroll_datas = payroll_params
+      payroll_id = payroll_datas[:id]
+      payroll_datas.delete(:id)
+      payroll = Payroll.update(payroll_id, payroll_datas)
+    end
 
-    # if params[:payroll]
-    #   payroll_datas = payroll_params
-    #   payroll_id = payroll_datas[:id]
-    #   payroll_datas.delete(:id)
-    #   payroll = Payroll.update(payroll_id, payroll_datas)
-    # end
+    if params[:tax_reduction]
+      tax_reduction_datas = tax_reduction_params
+      tax_reduction_id = tax_reduction_datas[:id]
+      tax_reduction = TaxReduction.update(tax_reduction_id, tax_reduction_datas)
+    end
 
-    # if params[:tax_reduction]
-    #   tax_reduction_datas = tax_reduction_params
-    #   tax_reduction_id = tax_reduction_datas[:id]
-    #   tax_reduction = TaxReduction.update(tax_reduction_id, tax_reduction_datas)
-    # end
-
-    # render json: {
-    #   img_url: @employee.img_url.exists? ? @employee.img_url.expiring_url(10, :medium) : nil ,
-    #   employee: @employee,
-    #   payroll: @employee.lastest_payroll,
-    #   tax_reduction: @employee.tax_reduction
-    # }
-
-
-
+    render json: {
+      img_url: @employee.img_url.exists? ? @employee.img_url.expiring_url(10, :medium) : nil ,
+      employee: @employee,
+      payroll: @employee.lastest_payroll,
+      tax_reduction: @employee.tax_reduction
+    }
   end
 
   # DELETE /employees/:id

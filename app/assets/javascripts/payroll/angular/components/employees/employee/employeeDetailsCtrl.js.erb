@@ -53,11 +53,16 @@
         }
       }
 
-       getRole()
+      getRole()
 
       function getRole() {
-        settingService.getRole().then(function(resp) {
-          console.log("role", resp)
+        settingService.getRoleEmployee(ctrl.empId).then(function(resp) {
+          console.log(resp.data)
+          if (ctrl.empId != 0) {
+            ctrl.select_role = resp.data.roles
+          } else {
+            ctrl.select_role = ["employee"]
+          }
         })
       }
 

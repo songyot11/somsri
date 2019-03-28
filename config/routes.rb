@@ -24,6 +24,7 @@ Rails.application.routes.draw do
   resources :users, only: [] do
     collection do
       get "me"
+      get "role_employees"
       get "site_config"
     end
   end
