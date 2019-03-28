@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20190212073157) do
+ActiveRecord::Schema.define(version: 20190214212740) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -222,22 +222,22 @@ ActiveRecord::Schema.define(version: 20190212073157) do
 
   create_table "employees", force: :cascade do |t|
     t.integer  "school_id"
-    t.string   "first_name",             default: "",             null: false
-    t.string   "last_name",              default: "",             null: false
-    t.string   "middle_name",            default: "",             null: false
-    t.string   "prefix",                 default: "",             null: false
-    t.integer  "sex",                    default: 0,              null: false
-    t.string   "position",               default: ""
-    t.string   "personal_id",            default: ""
-    t.string   "passport_number",        default: ""
-    t.string   "race",                   default: ""
-    t.string   "nationality",            default: ""
-    t.string   "bank_name",              default: ""
-    t.string   "bank_branch",            default: ""
-    t.string   "account_number",         default: ""
-    t.decimal  "salary",                 default: "0.0",          null: false
-    t.datetime "created_at",                                      null: false
-    t.datetime "updated_at",                                      null: false
+    t.string   "first_name",                           default: "",             null: false
+    t.string   "last_name",                            default: "",             null: false
+    t.string   "middle_name",                          default: "",             null: false
+    t.string   "prefix",                               default: "",             null: false
+    t.integer  "sex",                                  default: 0,              null: false
+    t.string   "position",                             default: ""
+    t.string   "personal_id",                          default: ""
+    t.string   "passport_number",                      default: ""
+    t.string   "race",                                 default: ""
+    t.string   "nationality",                          default: ""
+    t.string   "bank_name",                            default: ""
+    t.string   "bank_branch",                          default: ""
+    t.string   "account_number",                       default: ""
+    t.decimal  "salary",                               default: "0.0",          null: false
+    t.datetime "created_at",                                                    null: false
+    t.datetime "updated_at",                                                    null: false
     t.string   "first_name_thai"
     t.string   "last_name_thai"
     t.string   "prefix_thai"
@@ -248,7 +248,7 @@ ActiveRecord::Schema.define(version: 20190212073157) do
     t.string   "tel"
     t.string   "status"
     t.string   "email"
-    t.string   "employee_type",          default: "ลูกจ้างประจำ", null: false
+    t.string   "employee_type",                        default: "ลูกจ้างประจำ", null: false
     t.boolean  "pay_social_insurance"
     t.boolean  "pay_pvf"
     t.string   "pin"
@@ -260,20 +260,26 @@ ActiveRecord::Schema.define(version: 20190212073157) do
     t.datetime "img_url_updated_at"
     t.datetime "deleted_at"
     t.integer  "classroom_id"
-    t.string   "encrypted_password",     default: "",             null: false
+    t.string   "encrypted_password",                   default: "",             null: false
     t.string   "reset_password_token"
     t.datetime "reset_password_sent_at"
     t.datetime "remember_created_at"
-    t.integer  "sign_in_count",          default: 0,              null: false
+    t.integer  "sign_in_count",                        default: 0,              null: false
     t.datetime "current_sign_in_at"
     t.datetime "last_sign_in_at"
     t.inet     "current_sign_in_ip"
     t.inet     "last_sign_in_ip"
-    t.integer  "leave_allowance",        default: 0
+    t.integer  "leave_allowance",                      default: 0
     t.string   "note"
     t.string   "comment"
     t.string   "name"
     t.string   "full_name"
+    t.integer  "sick_leave_maximum_days_per_year"
+    t.integer  "personal_leave_maximum_days_per_year"
+    t.integer  "switching_day_maximum_days_per_year"
+    t.integer  "work_at_home_maximum_days_per_week"
+    t.boolean  "switching_day_allow"
+    t.boolean  "work_at_home_allow"
     t.index ["classroom_id"], name: "index_employees_on_classroom_id", using: :btree
     t.index ["deleted_at"], name: "index_employees_on_deleted_at", using: :btree
     t.index ["email"], name: "index_employees_on_email", unique: true, using: :btree
@@ -846,6 +852,30 @@ ActiveRecord::Schema.define(version: 20190212073157) do
     t.datetime "created_at",    null: false
     t.datetime "updated_at",    null: false
     t.index ["updated_by_id"], name: "index_vacation_leave_rules_on_updated_by_id", using: :btree
+  end
+
+  create_table "vacation_settings", force: :cascade do |t|
+    t.integer "school_id"
+    t.integer "sick_leave_maximum_days_per_year",       default: 30
+    t.boolean "sick_leave_require_approval"
+    t.boolean "sick_leave_require_medical_certificate"
+    t.string  "sick_leave_note"
+    t.integer "personal_leave_maximum_days_per_year",   default: 15
+    t.integer "personal_leave_submission_days",         default: 2
+    t.boolean "personal_leave_allow_morning",           default: true
+    t.boolean "personal_leave_allow_afternoon",         default: true
+    t.string  "personal_leave_note"
+    t.boolean "switching_day_allow",                    default: true
+    t.integer "switching_day_maximum_days_per_year",    default: 15
+    t.boolean "switching_day_require_approval",         default: true
+    t.integer "switching_day_submission_days",          default: 2
+    t.string  "switching_day_note"
+    t.boolean "work_at_home_allow",                     default: true
+    t.integer "work_at_home_maximum_days_per_week",     default: 2
+    t.boolean "work_at_home_require_approval"
+    t.integer "work_at_home_submission_days"
+    t.string  "work_at_home_note"
+    t.index ["school_id"], name: "index_vacation_settings_on_school_id", using: :btree
   end
 
   create_table "vacation_types", force: :cascade do |t|

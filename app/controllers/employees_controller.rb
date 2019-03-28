@@ -161,7 +161,6 @@ class EmployeesController < ApplicationController
     roles = params[:role]
 
     user = User.find(@employee.id)
-    get_role = user.roles.collect { |r| r.name }
     user.roles = []
  
     employee_data = employee_params
