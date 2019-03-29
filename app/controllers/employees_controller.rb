@@ -116,7 +116,6 @@ class EmployeesController < ApplicationController
   end
 
   def create
-    roles = params[:role] || []
     if current_user.present?
       vacationSetting = VacationSetting.where(school_id: current_user.school_id).first
       if !vacationSetting.nil?
@@ -128,6 +127,8 @@ class EmployeesController < ApplicationController
         @employee.work_at_home_maximum_days_per_week = vacationSetting.work_at_home_maximum_days_per_week
       end
     end
+
+    roles = params[:role] || []
 
     if @employee.save
       user = User.find(@employee.id)
