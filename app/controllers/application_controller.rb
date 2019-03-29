@@ -4,6 +4,7 @@ class ApplicationController < ActionController::Base
   protect_from_forgery with: :exception
   before_action :set_cache_buster, :set_locale
   after_action :set_csrf_cookie_for_ng
+  before_action :set_raven_context
 
   def set_locale
     @locale = params[:locale] || session['locale'] ||
@@ -84,6 +85,12 @@ class ApplicationController < ActionController::Base
     else
       return I18n.t('from_all')
     end
+  end
+
+  private
+  def set_raven_context
+    Raven.user_context(id: session[:current_user_id]) # or anything else in session
+    Raven.extra_context(params: params.to_unsafe_h, url: request.url)
   end
 
   protected
