@@ -76,19 +76,19 @@
                 <div class="col-md-2">
                   <div class="form-group">
                     <label for="prefix_thai">{{ "pre_name" | translate }}</label>
-                    <input type="text" class="form-control" id="prefix_thai" ng-model="employee.datas.employee.prefix_thai" ng-blur="employee.calTotal()">
+                    <input type="text" class="form-control" id="prefix_thai" ng-model="employee.datas.employee.prefix_thai" ng-blur="employee.calTotal()"  ng-readonly="!(employee.can_edit)">
                   </div>
                 </div>
                 <div class="col-md-5">
                   <div class="form-group">
                     <label for="first_name_thai">{{ "name" | translate }}</label>
-                    <input type="text" class="form-control" id="first_name_thai" ng-model="employee.datas.employee.first_name_thai">
+                    <input type="text" class="form-control" id="first_name_thai" ng-model="employee.datas.employee.first_name_thai" ng-readonly="!(employee.can_edit)">
                   </div>
                 </div>
                 <div class="col-md-5">
                   <div class="form-group">
                     <label for="last_name_thai">{{ "last_name" | translate }}</label>
-                    <input type="text" class="form-control" id="last_name_thai" ng-model="employee.datas.employee.last_name_thai">
+                    <input type="text" class="form-control" id="last_name_thai" ng-model="employee.datas.employee.last_name_thai" ng-readonly="!(employee.can_edit)">
                   </div>
                 </div>
               </div>
@@ -96,25 +96,25 @@
                 <div class="col-md-2">
                   <div class="form-group">
                     <label for="prefix">Prefix</label>
-                    <input type="text" class="form-control" id="prefix" ng-model="employee.datas.employee.prefix">
+                    <input type="text" class="form-control" id="prefix" ng-model="employee.datas.employee.prefix" ng-readonly="!(employee.can_edit)">
                   </div>
                 </div>
                 <div class="col-md-3">
                   <div class="form-group">
                     <label for="first_name">First Name</label>
-                    <input type="text" class="form-control" id="first_name" ng-model="employee.datas.employee.first_name">
+                    <input type="text" class="form-control" id="first_name" ng-model="employee.datas.employee.first_name" ng-readonly="!(employee.can_edit)">
                   </div>
                 </div>
                 <div class="col-md-3">
                   <div class="form-group">
                     <label for="middle_name">Middle Name</label>
-                    <input type="text" class="form-control" id="middle_name" ng-model="employee.datas.employee.middle_name">
+                    <input type="text" class="form-control" id="middle_name" ng-model="employee.datas.employee.middle_name" ng-readonly="!(employee.can_edit)">
                   </div>
                 </div>
                 <div class="col-md-4">
                   <div class="form-group">
                     <label for="last_name">Surname</label>
-                    <input type="text" class="form-control" id="last_name" ng-model="employee.datas.employee.last_name">
+                    <input type="text" class="form-control" id="last_name" ng-model="employee.datas.employee.last_name" ng-readonly="!(employee.can_edit)">
                   </div>
                 </div>
               </div>
@@ -122,13 +122,13 @@
                 <div class="col-md-6">
                   <div class="form-group">
                     <label for="personal_id">{{ "personal_id" | translate }}</label>
-                    <input type="text" class="form-control numberic" id="personal_id" ng-model="employee.datas.employee.personal_id">
+                    <input type="text" class="form-control numberic" id="personal_id" ng-model="employee.datas.employee.personal_id" ng-readonly="!(employee.can_edit)">
                   </div>
                 </div>
                 <div class="col-md-6">
                   <div class="form-group">
                     <label for="passport_number">{{ "passport" | translate }}</label>
-                    <input type="text" class="form-control numberic" id="passport_number" ng-model="employee.datas.employee.passport_number">
+                    <input type="text" class="form-control numberic" id="passport_number" ng-model="employee.datas.employee.passport_number" ng-readonly="!(employee.can_edit)">
                   </div>
                 </div>
               </div>
@@ -151,16 +151,16 @@
             <div class="col-md-4">
               <div class="form-group">
                 <label for="nickname">{{ "nick_name" | translate }}</label>
-                <input type="text" class="form-control" id="nickname" ng-model="employee.datas.employee.nickname">
+                <input type="text" class="form-control" id="nickname" ng-model="employee.datas.employee.nickname" ng-readonly="!(employee.can_edit)">
               </div>
             </div>
             <div class="col-md-4">
               <div class="form-group">
                 <label for="start_date">{{ " start_date" | translate }}</label>
                 <p class="input-group">
-                  <input id="start_date" type="text" class="form-control numberic" uib-datepicker-popup="dd/MM/yyyy" ng-model="employee.datas.employee.start_date" is-open="employee.startDatePopup.opened" close-text="Close"/>
+                  <input id="start_date" type="text" class="form-control numberic" uib-datepicker-popup="dd/MM/yyyy" ng-model="employee.datas.employee.start_date" is-open="employee.startDatePopup.opened" close-text="Close" ng-readonly="!(employee.can_edit)"/>
                   <span class="input-group-btn">
-                    <button type="button" class="btn btn-default" ng-click="employee.openStartDatePopup()"><i class="fa fa-calendar"></i></button>
+                    <button type="button" class="btn btn-default" ng-click="employee.openStartDatePopup()" ng-disabled="!(employee.can_edit)"><i class="fa fa-calendar"></i></button>
                   </span>
                 </p>
               </div>
@@ -168,7 +168,7 @@
             <div class="col-md-4">
               <div class="form-group">
                 <label for="position">{{ "position" | translate }}</label>
-                <input type="text" class="form-control" id="position" ng-model="employee.datas.employee.position">
+                <input type="text" class="form-control" id="position" ng-model="employee.datas.employee.position" ng-readonly="!(employee.can_edit)">
               </div>
             </div>
           </div>
@@ -176,19 +176,19 @@
             <div class="col-md-4">
               <div class="form-group">
                 <label for="race">{{ "race" | translate }}</label>
-                <input type="text" class="form-control" id="race" ng-model="employee.datas.employee.race">
+                <input type="text" class="form-control" id="race" ng-model="employee.datas.employee.race" ng-readonly="!(employee.can_edit)">
               </div>
             </div>
             <div class="col-md-4">
               <div class="form-group">
                 <label for="nationality">{{ "nation" | translate }}</label>
-                <input type="text" class="form-control" id="nationality" ng-model="employee.datas.employee.nationality">
+                <input type="text" class="form-control" id="nationality" ng-model="employee.datas.employee.nationality" ng-readonly="!(employee.can_edit)">
               </div>
             </div>
             <div class="col-md-4">
               <div class="form-group">
                 <label for="employeetype">{{ "employee_type" | translate }}</label>
-                <select class="form-control somsri-select" id="employeetype" ng-model="employee.datas.employee.employee_type" ng-blur="employee.calTotal()">
+                <select class="form-control somsri-select" id="employeetype" ng-model="employee.datas.employee.employee_type" ng-blur="employee.calTotal()" ng-disabled="!(employee.can_edit)">
                   <option value="ลูกจ้างประจำ">{{ "employee_full_time" | translate }}</option>
                   <option value="ลูกจ้างชั่วคราว">{{ "employee_part_time" | translate }}</option>
                   <option value="ลูกจ้างทดลองงาน">{{ "employee_probation" | translate }}</option>
@@ -201,20 +201,20 @@
             <div class="col-md-4">
               <div class="form-group">
                 <label for="grade_id">{{ "level" | translate }}</label>
-                <select class="form-control somsri-select" ng-options="item.id as item.name for item in employee.grades" id="grade_id" ng-model="employee.datas.employee.grade_id">
+                <select class="form-control somsri-select" ng-options="item.id as item.name for item in employee.grades" id="grade_id" ng-model="employee.datas.employee.grade_id" ng-disabled="!(employee.can_edit)">
                 </select>
               </div>
             </div>
             <div class="col-md-4">
               <div class="form-group">
                 <label for="classroom_id">{{ "room" | translate }}</label>
-                <select class="form-control somsri-select" ng-options="item.id as item.name for item in employee.classrooms" id="classroom_id" ng-model="employee.datas.employee.classroom_id">
+                <select class="form-control somsri-select" ng-options="item.id as item.name for item in employee.classrooms" id="classroom_id" ng-model="employee.datas.employee.classroom_id" ng-disabled="!(employee.can_edit)">
                 </select>
               </div>
             </div>
             <div class="col-md-4">
               <label for="role">{{ "role" | translate }}</label>
-              <tags-input type="text" class="somsri-select bootstrap" id="role" placeholder="Add a role" ng-model="employee.select_role" required="true">
+              <tags-input type="text" class="somsri-select bootstrap" id="role" placeholder="Add a role" ng-model="employee.select_role" required="true" ng-disabled="!(employee.can_edit)">
                 <auto-complete source="employee.role" min-length="0" debounce-delay="0" max-results="10"></auto-complete>
               </tags-input>
             
@@ -224,19 +224,19 @@
             <div class="col-md-4">
               <div class="form-group">
                 <label for="bank_name">{{ "bank" | translate }}</label>
-                <input type="text" class="form-control" id="bank_name" ng-model="employee.datas.employee.bank_name">
+                <input type="text" class="form-control" id="bank_name" ng-model="employee.datas.employee.bank_name" ng-readonly="!(employee.can_edit)">
               </div>
             </div>
             <div class="col-md-4">
               <div class="form-group">
                 <label for="bank_branch">{{ "branch" | translate }}</label>
-                <input type="text" class="form-control" id="bank_branch" ng-model="employee.datas.employee.bank_branch">
+                <input type="text" class="form-control" id="bank_branch" ng-model="employee.datas.employee.bank_branch" ng-readonly="!(employee.can_edit)">
               </div>
             </div>
             <div class="col-md-4">
               <div class="form-group">
                 <label for="account_number">{{ "bank_account" | translate }}</label>
-                <input type="text" class="form-control numberic" id="account_number" ng-model="employee.datas.employee.account_number">
+                <input type="text" class="form-control numberic" id="account_number" ng-model="employee.datas.employee.account_number" ng-readonly="!(employee.can_edit)">
               </div>
             </div>
           </div>
@@ -246,7 +246,7 @@
                 <table class="checkbox-group">
                   <tr>
                     <td>
-                      <input type="checkbox" class="form-control cbox numberic" id="pay_social_insurance" ng-model="employee.datas.employee.pay_social_insurance" ng-change="employee.calTotal()"/>
+                      <input type="checkbox" class="form-control cbox numberic" id="pay_social_insurance" ng-model="employee.datas.employee.pay_social_insurance" ng-change="employee.calTotal()" ng-disabled="!(employee.can_edit)"/>
                     </td>
                     <td>
                       <label for="pay_social_insurance">{{ "pay_social_insurance" | translate }}</label>
@@ -260,7 +260,7 @@
                 <table class="checkbox-group">
                   <tr>
                     <td>
-                      <input type="checkbox" class="form-control cbox numberic" id="pay_pvf" ng-model="employee.datas.employee.pay_pvf" ng-change="employee.calTotal()"/>
+                      <input type="checkbox" class="form-control cbox numberic" id="pay_pvf" ng-model="employee.datas.employee.pay_pvf" ng-change="employee.calTotal()" ng-disabled="!(employee.can_edit)"/>
                     </td>
                     <td>
                       <label for="pay_pvf">{{ "pay_pvf" | translate }}</label>
@@ -659,13 +659,13 @@
             <div class="col-md-4">
               <div class="form-group">
                 <label for="salary">{{ "current_payroll" | translate }}</label>
-                <input step="0.01" ng-disabled="employee.payroll_closed" type="number" class="form-control text-green numberic" id="salary" ng-model="employee.datas.payroll.salary" ng-blur="employee.calTotal(); employee.changeSalary()">
+                <input step="0.01" ng-disabled="employee.payroll_closed" type="number" class="form-control text-green numberic" id="salary" ng-model="employee.datas.payroll.salary" ng-blur="employee.calTotal(); employee.changeSalary()" ng-readonly="!(employee.can_edit)">
               </div>
             </div>
             <div class="col-md-4">
               <div class="form-group">
                 <label for="absence">{{ "absence" | translate }}</label>
-                <input step="0.01" ng-disabled="employee.payroll_closed" type="number" class="form-control text-red numberic" id="absence" ng-model="employee.datas.payroll.absence" ng-blur="employee.calTotal()">
+                <input step="0.01" ng-disabled="employee.payroll_closed" type="number" class="form-control text-red numberic" id="absence" ng-model="employee.datas.payroll.absence" ng-blur="employee.calTotal()" ng-readonly="!(employee.can_edit)">
               </div>
             </div>
             <div class="col-md-4">
@@ -679,13 +679,13 @@
             <div class="col-md-4">
               <div class="form-group">
                 <label for="ot">{{ "ot" | translate }}</label>
-                <input step="0.01" ng-disabled="employee.payroll_closed" type="number" class="form-control text-green numberic" id="ot" ng-model="employee.datas.payroll.ot" ng-blur="employee.calTotal()">
+                <input step="0.01" ng-disabled="employee.payroll_closed" type="number" class="form-control text-green numberic" id="ot" ng-model="employee.datas.payroll.ot" ng-blur="employee.calTotal()" ng-readonly="!(employee.can_edit)">
               </div>
             </div>
             <div class="col-md-4">
               <div class="form-group">
                 <label for="late">{{ "late" | translate }}</label>
-                <input step="0.01" ng-disabled="employee.payroll_closed" type="number" class="form-control text-red numberic" id="late" ng-model="employee.datas.payroll.late" ng-blur="employee.calTotal()">
+                <input step="0.01" ng-disabled="employee.payroll_closed" type="number" class="form-control text-red numberic" id="late" ng-model="employee.datas.payroll.late" ng-blur="employee.calTotal()" ng-readonly="!(employee.can_edit)">
               </div>
             </div>
             <div class="col-md-4">
@@ -702,7 +702,7 @@
             <div class="col-md-4">
               <div class="form-group">
                 <label for="position_allowance">{{ "position_allowance" | translate }}</label>
-                <input step="0.01" ng-disabled="employee.payroll_closed" type="number" class="form-control text-green numberic" id="position_allowance" ng-model="employee.datas.payroll.position_allowance" ng-blur="employee.calTotal()">
+                <input step="0.01" ng-disabled="employee.payroll_closed" type="number" class="form-control text-green numberic" id="position_allowance" ng-model="employee.datas.payroll.position_allowance" ng-blur="employee.calTotal()" ng-readonly="!(employee.can_edit)">
               </div>
             </div>
             <div class="col-md-4">
@@ -716,7 +716,7 @@
             <div class="col-md-4">
               <div class="form-group">
                 <label for="allowance">{{ "employee_allowance" | translate }}</label>
-                <input step="0.01" ng-disabled="employee.payroll_closed" type="number" class="form-control text-green numberic" id="allowance" ng-model="employee.datas.payroll.allowance" ng-blur="employee.calTotal()">
+                <input step="0.01" ng-disabled="employee.payroll_closed" type="number" class="form-control text-green numberic" id="allowance" ng-model="employee.datas.payroll.allowance" ng-blur="employee.calTotal()" ng-readonly="!(employee.can_edit)">
               </div>
             </div>
             <div class="col-md-4">
@@ -730,7 +730,7 @@
             <div class="col-md-4">
               <div class="form-group">
                 <label for="attendace_bonus">{{ "attendance_bonus" | translate }}</label>
-                <input step="0.01" ng-disabled="employee.payroll_closed" type="number" class="form-control text-green numberic" id="attendace_bonus" ng-model="employee.datas.payroll.attendance_bonus" ng-blur="employee.calTotal()">
+                <input step="0.01" ng-disabled="employee.payroll_closed" type="number" class="form-control text-green numberic" id="attendace_bonus" ng-model="employee.datas.payroll.attendance_bonus" ng-blur="employee.calTotal()" ng-readonly="!(employee.can_edit)">
               </div>
             </div>
             <div class="col-md-4">
@@ -744,13 +744,13 @@
             <div class="col-md-4">
               <div class="form-group">
                 <label for="bonus">{{ "bonus" | translate }}</label>
-                <input step="0.01" ng-disabled="employee.payroll_closed" type="number" class="form-control text-green numberic" id="bonus" ng-model="employee.datas.payroll.bonus" ng-blur="employee.calTotal()">
+                <input step="0.01" ng-disabled="employee.payroll_closed" type="number" class="form-control text-green numberic" id="bonus" ng-model="employee.datas.payroll.bonus" ng-blur="employee.calTotal()" ng-readonly="!(employee.can_edit)">
               </div>
             </div>
             <div class="col-md-4">
               <div class="form-group">
                 <label for="advance_payment">{{ "advance_payment" | translate }}</label>
-                <input step="0.01" ng-disabled="employee.payroll_closed" type="number" class="form-control text-red numberic" id="advance_payment" ng-model="employee.datas.payroll.advance_payment" ng-blur="employee.calTotal()">
+                <input step="0.01" ng-disabled="employee.payroll_closed" type="number" class="form-control text-red numberic" id="advance_payment" ng-model="employee.datas.payroll.advance_payment" ng-blur="employee.calTotal()" ng-readonly="!(employee.can_edit)">
               </div>
             </div>
           </div>
@@ -758,20 +758,20 @@
             <div class="col-md-4">
               <div class="form-group">
                 <label for="extra_etc">{{ "employee_extra_etc" | translate }}</label>
-                <input step="0.01" ng-disabled="employee.payroll_closed" type="number" class="form-control text-green numberic" id="extra_etc" ng-model="employee.datas.payroll.extra_etc" ng-blur="employee.calTotal()">
+                <input step="0.01" ng-disabled="employee.payroll_closed" type="number" class="form-control text-green numberic" id="extra_etc" ng-model="employee.datas.payroll.extra_etc" ng-blur="employee.calTotal()" ng-readonly="!(employee.can_edit)">
               </div>
             </div>
             <div class="col-md-4">
               <div class="form-group">
                 <label for="fee_etc">{{ "employee_fee_etc" | translate }}</label>
-                <input step="0.01" ng-disabled="employee.payroll_closed" type="number" class="form-control text-red numberic" id="fee_etc" ng-model="employee.datas.payroll.fee_etc" ng-blur="employee.calTotal()">
+                <input step="0.01" ng-disabled="employee.payroll_closed" type="number" class="form-control text-red numberic" id="fee_etc" ng-model="employee.datas.payroll.fee_etc" ng-blur="employee.calTotal()" ng-readonly="!(employee.can_edit)">
               </div>
             </div>
           </div>
           <div class="row">
             <div class="col-md-8 note-employees">
               <label for="comment">{{ "remind_note" | translate }}</label>
-              <textarea id="comment" ng-hide="employee.payroll_closed" rows="5" ng-model="employee.datas.payroll.note" contenteditable="false" redactor></textarea>
+              <textarea id="comment" ng-hide="employee.payroll_closed" rows="5" ng-model="employee.datas.payroll.note" contenteditable="false" ng-disabled="true" redactor ></textarea>
             </div>
           </div>
         </div>

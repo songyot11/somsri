@@ -111,7 +111,8 @@ class EmployeesController < ApplicationController
       tax_reduction: tax_reduction,
       current_employee: current_user.employee?,
       vacationSetting: vacationSetting,
-      current_user: current_user.present?
+      current_admin: current_user.admin?,
+      current_human_resource: current_user.human_resource?
     }
   end
 
@@ -258,7 +259,8 @@ class EmployeesController < ApplicationController
       payroll: payroll,
       tax_reduction: tax_reduction,
       current_employee: current_user.employee?,
-      current_user: current_user.present?
+      current_admin: current_user.admin?,
+      current_human_resource: current_user.human_resource?
     }
   end
 

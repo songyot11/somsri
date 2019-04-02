@@ -29,6 +29,7 @@
       ctrl.select_role = []
       ctrl.current_role = []
       ctrl.get_role = []
+      ctrl.can_edit = true
 
 
       ctrl.add_button = "add_new_employee"
@@ -61,6 +62,7 @@
           if (ctrl.empId != 0) {
             ctrl.select_role = resp.data.roles
             ctrl.current_role = resp.data.roles
+
           } else {
             ctrl.select_role = ["employee"]
           }
@@ -261,6 +263,7 @@
             disableRedactorIfNeeded();
             payrollToFloat();
           }else{
+            console.log(false)
             ctrl.hasPayroll = false;
           }
 
@@ -301,8 +304,9 @@
 
 
           ctrl.current_employee = ctrl.datas.current_employee
-          ctrl.current_user = ctrl.datas.current_user
-          if (ctrl.current_user) {
+          ctrl.current_admin = ctrl.datas.current_admin
+          ctrl.current_human_resource = ctrl.datas.current_human_resource
+          if (ctrl.current_admin || ctrl.current_human_resource) {
             ctrl.show_note_and_comment = true
           } else {
             ctrl.show_note_and_comment = false
@@ -350,26 +354,39 @@
       }
 
       function settingButton() {
-        if (ctrl.current_user && !ctrl.current_employee) {
+        console.log("employee", ctrl.current_employee)
+        console.log("admin", ctrl.current_admin)
+        console.log("human_resource", ctrl.current_human_resource)
+        if (ctrl.current_admin || ctrl.current_human_resource) {
+          console.log("1")
           ctrl.showButton = true
           ctrl.showDeleteButton = true
           ctrl.showCancelButton = true
           ctrl.showSaveButton = true
-        } else if (ctrl.current_employee && ctrl.activeTab == 'inventory') {
-          ctrl.showButton = true
-          ctrl.showSaveButton = false
-        } else if (ctrl.current_employee && ctrl.activeTab == 'private'){
-          ctrl.showDeleteButton = false
-          ctrl.showCancelButton = false
-          ctrl.showSaveButton = true
-          ctrl.showButton = false
+          ctrl.can_edit = true
         } else if (ctrl.activeTab == "general" && ctrl.empId == 0){ 
+          console.log("3")
           ctrl.showSaveButton = true
+          ctrl.can_edit = true
         } else {
-          ctrl.showDeleteButton = false
-          ctrl.showCancelButton = false
-          ctrl.showSaveButton = false
-          ctrl.showButton = false
+          ctrl.can_edit = false
+          if (ctrl.activeTab == 'inventory') {
+            console.log("4")
+            ctrl.showButton = true
+            ctrl.showSaveButton = false
+          } else if (ctrl.activeTab == 'private'){
+            console.log("5")
+            ctrl.showDeleteButton = false
+            ctrl.showCancelButton = false
+            ctrl.showSaveButton = true
+            ctrl.showButton = false
+          } else {
+            console.log("6")
+            ctrl.showDeleteButton = false
+            ctrl.showCancelButton = false
+            ctrl.showSaveButton = false
+            ctrl.showButton = false
+          }
         }
       }
 
