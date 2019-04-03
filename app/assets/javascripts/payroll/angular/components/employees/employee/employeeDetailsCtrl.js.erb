@@ -58,15 +58,14 @@
       getRole()
 
       function getRole() {
-        settingService.getRoleEmployee(ctrl.empId).then(function(resp) {
-          if (ctrl.empId != 0) {
+        if (ctrl.empId != 0) {
+          settingService.getRoleEmployee(ctrl.empId).then(function(resp) {
             ctrl.select_role = resp.data.roles
             ctrl.current_role = resp.data.roles
-
-          } else {
-            ctrl.select_role = ["employee"]
-          }
-        })
+          })
+        } else {
+          ctrl.select_role = ["employee"]
+        }
       }
 
       ctrl.tagTransform = function (newTag) {
@@ -263,7 +262,6 @@
             disableRedactorIfNeeded();
             payrollToFloat();
           }else{
-            console.log(false)
             ctrl.hasPayroll = false;
           }
 
@@ -354,34 +352,26 @@
       }
 
       function settingButton() {
-        console.log("employee", ctrl.current_employee)
-        console.log("admin", ctrl.current_admin)
-        console.log("human_resource", ctrl.current_human_resource)
         if (ctrl.current_admin || ctrl.current_human_resource) {
-          console.log("1")
           ctrl.showButton = true
           ctrl.showDeleteButton = true
           ctrl.showCancelButton = true
           ctrl.showSaveButton = true
           ctrl.can_edit = true
         } else if (ctrl.activeTab == "general" && ctrl.empId == 0){ 
-          console.log("3")
           ctrl.showSaveButton = true
           ctrl.can_edit = true
         } else {
           ctrl.can_edit = false
           if (ctrl.activeTab == 'inventory') {
-            console.log("4")
             ctrl.showButton = true
             ctrl.showSaveButton = false
           } else if (ctrl.activeTab == 'private'){
-            console.log("5")
             ctrl.showDeleteButton = false
             ctrl.showCancelButton = false
             ctrl.showSaveButton = true
             ctrl.showButton = false
           } else {
-            console.log("6")
             ctrl.showDeleteButton = false
             ctrl.showCancelButton = false
             ctrl.showSaveButton = false
@@ -466,9 +456,6 @@
               ctrl.get_role.push(value)
           });
         });
-        if (ctrl.current_role != ctrl.get_role) {
-          ctrl.isEdit = true
-        }
       }
 
       ctrl.submit = function(parm){

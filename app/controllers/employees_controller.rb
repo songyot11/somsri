@@ -55,7 +55,7 @@ class EmployeesController < ApplicationController
         date = I18n.l(employees[0][:payroll][:date], format: "%d-%m-#{employees[0][:payroll][:date].year + 543}")
         render pdf: "ใบเสร็จเงินเดือน_#{date}",
                 template: "pdf/slip.html.erb",
-                encoding: "UTF-8",
+                encoding: "utf8",
                 layout: 'pdf.html',
                 show_as_html: params[:show_as_html].present?
       end
@@ -129,8 +129,7 @@ class EmployeesController < ApplicationController
       end
     end
 
-    roles = params[:role] || []
-
+    roles = params[:roles] || []
     if @employee.save
       user = User.find(@employee.id)
       roles.each do |role|

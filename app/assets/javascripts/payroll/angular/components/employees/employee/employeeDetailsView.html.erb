@@ -7,7 +7,7 @@
           <div class="col-md-6">
             <div class="dropdown" >
               <small>Select employee</small>
-              <h1 id="employeeName" onclick="window.setTimeout(function(){ $('#employeeFilter').val('').trigger('change').focus()}, 100)" class="dropdown-toggle" ng-class="{ 'disabled' : employee.current_employee }" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="true">
+              <h1 id="employeeName" onclick="window.setTimeout(function(){ $('#employeeFilter').val('').trigger('change').focus()}, 100)" class="dropdown-toggle" ng-class="{ 'disabled' : !(employee.can_edit) }" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="true">
                 <span ng-bind="employee.displayName"></span>
                 <span class="fa fa-angle-down" ng-hide="employee.current_employee" ></span>
               </h1>
