@@ -155,13 +155,14 @@
       };
 
       ctrl.validatePaymentMethod = function(){
-        var pm = ctrl.datas.payment_method;
-        if(pm){
-          return pm.is_cash || pm.is_credit_card || pm.is_cheque || pm.is_transfer;
-        }else{
-          return false;
+        if (ctrl.datas) {
+          var pm = ctrl.datas.payment_method;
+          if(pm){
+            return pm.is_cash || pm.is_credit_card || pm.is_cheque || pm.is_transfer;
+          }else{
+            return false;
+          }
         }
-
       };
 
       (function init() {
