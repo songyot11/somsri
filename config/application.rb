@@ -14,7 +14,9 @@ module SomsriPayroll
     config.time_zone = 'Bangkok'
     config.i18n.default_locale = :th
     config.i18n.available_locales = [:th, :en]
+    config.filter_parameters << :password
   end
 end
 
 Dir["#{Rails.root}/lib/modules/*.rb"].each {|file| require file }
+

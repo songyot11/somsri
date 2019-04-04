@@ -37,6 +37,8 @@ gem 'rmagick'
 
 gem 'rails_admin'
 
+gem "sentry-raven"
+
 # Exception Notification
 gem 'exception_notification'
 gem 'slack-notifier'
