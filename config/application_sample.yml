@@ -16,3 +16,4 @@ production:
  AWS_ACCESS_KEY_ID:
  AWS_SECRET_ACCESS_KEY:
  AWS_REGION: ap-southeast-1
+ SENTRY_KEY: 'https://faab377947e64262931aebdeea6156f9@sentry.io/1422822'
