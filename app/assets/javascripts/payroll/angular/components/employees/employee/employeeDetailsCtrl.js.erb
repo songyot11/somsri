@@ -29,6 +29,7 @@
       ctrl.select_role = []
       ctrl.current_role = []
       ctrl.get_role = []
+      ctrl.can_edit = true
 
 
       ctrl.add_button = "add_new_employee"
@@ -57,14 +58,14 @@
       getRole()
 
       function getRole() {
-        settingService.getRoleEmployee(ctrl.empId).then(function(resp) {
-          if (ctrl.empId != 0) {
+        if (ctrl.empId != 0) {
+          settingService.getRoleEmployee(ctrl.empId).then(function(resp) {
             ctrl.select_role = resp.data.roles
             ctrl.current_role = resp.data.roles
-          } else {
-            ctrl.select_role = ["employee"]
-          }
-        })
+          })
+        } else {
+          ctrl.select_role = ["employee"]
+        }
       }
 
       ctrl.tagTransform = function (newTag) {
@@ -301,8 +302,9 @@
 
 
           ctrl.current_employee = ctrl.datas.current_employee
-          ctrl.current_user = ctrl.datas.current_user
-          if (ctrl.current_user) {
+          ctrl.current_admin = ctrl.datas.current_admin
+          ctrl.current_human_resource = ctrl.datas.current_human_resource
+          if (ctrl.current_admin || ctrl.current_human_resource) {
             ctrl.show_note_and_comment = true
           } else {
             ctrl.show_note_and_comment = false
@@ -350,26 +352,31 @@
       }
 
       function settingButton() {
-        if (ctrl.current_user && !ctrl.current_employee) {
+        if (ctrl.current_admin || ctrl.current_human_resource) {
           ctrl.showButton = true
           ctrl.showDeleteButton = true
           ctrl.showCancelButton = true
           ctrl.showSaveButton = true
-        } else if (ctrl.current_employee && ctrl.activeTab == 'inventory') {
-          ctrl.showButton = true
-          ctrl.showSaveButton = false
-        } else if (ctrl.current_employee && ctrl.activeTab == 'private'){
-          ctrl.showDeleteButton = false
-          ctrl.showCancelButton = false
-          ctrl.showSaveButton = true
-          ctrl.showButton = false
+          ctrl.can_edit = true
         } else if (ctrl.activeTab == "general" && ctrl.empId == 0){ 
           ctrl.showSaveButton = true
+          ctrl.can_edit = true
         } else {
-          ctrl.showDeleteButton = false
-          ctrl.showCancelButton = false
-          ctrl.showSaveButton = false
-          ctrl.showButton = false
+          ctrl.can_edit = false
+          if (ctrl.activeTab == 'inventory') {
+            ctrl.showButton = true
+            ctrl.showSaveButton = false
+          } else if (ctrl.activeTab == 'private'){
+            ctrl.showDeleteButton = false
+            ctrl.showCancelButton = false
+            ctrl.showSaveButton = true
+            ctrl.showButton = false
+          } else {
+            ctrl.showDeleteButton = false
+            ctrl.showCancelButton = false
+            ctrl.showSaveButton = false
+            ctrl.showButton = false
+          }
         }
       }
 
@@ -449,9 +456,6 @@
               ctrl.get_role.push(value)
           });
         });
-        if (ctrl.current_role != ctrl.get_role) {
-          ctrl.isEdit = true
-        }
       }
 
       ctrl.submit = function(parm){

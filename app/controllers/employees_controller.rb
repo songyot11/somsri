@@ -55,7 +55,7 @@ class EmployeesController < ApplicationController
         date = I18n.l(employees[0][:payroll][:date], format: "%d-%m-#{employees[0][:payroll][:date].year + 543}")
         render pdf: "ใบเสร็จเงินเดือน_#{date}",
                 template: "pdf/slip.html.erb",
-                encoding: "UTF-8",
+                encoding: "utf8",
                 layout: 'pdf.html',
                 show_as_html: params[:show_as_html].present?
       end
@@ -111,7 +111,8 @@ class EmployeesController < ApplicationController
       tax_reduction: tax_reduction,
       current_employee: current_user.employee?,
       vacationSetting: vacationSetting,
-      current_user: current_user.present?
+      current_admin: current_user.admin?,
+      current_human_resource: current_user.human_resource?
     }
   end
 
@@ -128,8 +129,7 @@ class EmployeesController < ApplicationController
       end
     end
 
-    roles = params[:role] || []
-
+    roles = params[:roles] || []
     if @employee.save
       user = User.find(@employee.id)
       roles.each do |role|
@@ -258,7 +258,8 @@ class EmployeesController < ApplicationController
       payroll: payroll,
       tax_reduction: tax_reduction,
       current_employee: current_user.employee?,
-      current_user: current_user.present?
+      current_admin: current_user.admin?,
+      current_human_resource: current_user.human_resource?
     }
   end
 
