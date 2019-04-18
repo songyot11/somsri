@@ -1148,13 +1148,16 @@ a.dropdown-item{
 .thead > span.name {
   width: 320px;
 }
+
 .trow.tfoot> span{
   border-bottom: 2px solid #9d9d9d;
   background-color: #fdfdfd;
 }
+
 .trow.tfoot> span.free-space-table{
   border: none;
 }
+
 .thead > span.gap {
   width: 150px;
   border-top: 1px solid #fff;
@@ -1164,9 +1167,11 @@ a.dropdown-item{
 .trow {
   white-space: nowrap;
 }
+
 .hilight{
   background-color: AntiqueWhite !important;
 }
+
 .trow > span {
   display: inline-block;
   width: 160px;

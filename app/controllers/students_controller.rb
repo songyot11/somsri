@@ -50,7 +50,7 @@ class StudentsController < ApplicationController
       invoices.each do |invoice|
         invoice.line_items.each do |item|
           if !semester_exclude.include?(invoice.semester)
-            if item.detail =~ /Tuition Fee/
+            if item.detail =~ /(Tuition Fee)|(ค่าธรรมเนียมการศึกษา)/
               tuition_fee += item.amount
               paid = true
             else
