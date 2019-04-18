@@ -181,6 +181,15 @@
       })
     }
 
+    ctrl.openRequestDatePopup = function() {
+      ctrl.requestDatePopup.opened = true;
+    };
+
+    ctrl.requestDatePopup = {
+      opened: false
+    };
+
+
     getSetting()
     initData()
 

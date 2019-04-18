@@ -1039,44 +1039,85 @@ tags-input .tags .tag-item .remove-button{
   position: absolute;
   top: 0;
   z-index: 999;
-  transform: translate(70%,30%);
-}
-.text-in-step{
-  color: #FFFFFF;
-  position: absolute;
-  top: 0;
-  z-index: 999;
-  width: 30px;
-  transform: translate(60%, 40%);
+  
+
+  &.en{
+    transform: translate(135%, 30%);
+  }
+
+  &.th{
+    transform: translate(70%,30%);
+  }
 }
 .icon-in-step2{
   color: #FFFFFF;
   position: absolute;
   top: 0;
   z-index: 999;
-  transform: translate(60%,30%);
+  &.en{
+    transform: translate(175%, 30%);
+  }
+
+  &.th{
+    transform: translate(60%,30%);
+  }
 }
 .icon-in-step3{
   color: #FFFFFF;
   position: absolute;
   top: 0;
   z-index: 999;
-  transform: translate(30%,30%);
+  &.en{
+    transform: translate(105%, 30%);
+  }
+
+  &.th{
+    transform: translate(30%,30%);
+  }
 }
 .icon-in-step4{
   color: #FFFFFF;
   position: absolute;
   top: 0;
   z-index: 999;
-  transform: translate(125%,30%);
+  &.en{
+    transform: translate(210%, 30%);
+  }
+
+  &.th{
+    transform: translate(125%,30%);
+  }
 }
+
+.text-in-step{
+  color: #FFFFFF;
+  position: absolute;
+  top: 0;
+  z-index: 999;
+  width: 30px;
+
+  &.en{
+    transform: translate(125%, 40%);
+  }
+
+  &.th{
+    transform: translate(60%, 40%);
+  }
+}
+
 .text-in-step2{
   color: #FFFFFF;
   position: absolute;
   top: 0;
   z-index: 999;
   width: 27px;
-  transform: translate(60%, 40%);
+  &.en{
+    transform: translate(180%, 40%);
+  }
+
+  &.th{
+    transform: translate(60%, 40%);
+  }
 }
 .text-in-step3{
   color: #FFFFFF;
@@ -1084,7 +1125,13 @@ tags-input .tags .tag-item .remove-button{
   top: 0;
   z-index: 999;
   width: 20px;
-  transform: translate(60%, 40%);
+  &.en{
+    transform: translate(170%, 40%);
+  }
+
+  &.th{
+    transform: translate(60%, 40%);
+  }
 }
 .text-in-step4{
   color: #FFFFFF;
@@ -1092,7 +1139,13 @@ tags-input .tags .tag-item .remove-button{
   top: 0;
   z-index: 999;
   width: 44px;
-  transform: translate(60%, 40%);
+  &.en{
+    transform: translate(115%, 40%);
+  }
+
+  &.th{
+    transform: translate(60%, 40%);
+  }
 }
 .text-in-step-repair1{
   color: #FFFFFF;
@@ -1100,7 +1153,13 @@ tags-input .tags .tag-item .remove-button{
   top: 0;
   z-index: 999;
   width: 30px;
-  transform: translate(20%, 40%);
+  &.en{
+    transform: translate(110%, 40%);
+  }
+
+  &.th{
+    transform: translate(20%, 40%);
+  }
 }
 .text-in-step-repair2{
   color: #FFFFFF;
@@ -1108,7 +1167,13 @@ tags-input .tags .tag-item .remove-button{
   top: 0;
   z-index: 999;
   width: 27px;
-  transform: translate(25%, 40%);
+  &.en{
+    transform: translate(90%, 40%);
+  }
+
+  &.th{
+    transform: translate(25%, 40%);
+  }
 }
 .text-in-step-repair3{
   color: #FFFFFF;
@@ -1116,28 +1181,65 @@ tags-input .tags .tag-item .remove-button{
   top: 0;
   z-index: 999;
   width: 20px;
-  transform: translate(85%, 40%);
+  &.en{
+    transform: translate(240%, 40%);
+  }
+
+  &.th{
+    transform: translate(85%, 40%);
+  }
 }
 .icon-in-step-repair1{
   color: #FFFFFF;
   position: absolute;
   top: 0;
   z-index: 999;
-  transform: translate(25%,30%);
+  &.en{
+    transform: translate(125%, 30%);
+  }
+
+  &.th{
+    transform: translate(25%, 30%);
+  }
 }
 .icon-in-step-repair2{
   color: #FFFFFF;
   position: absolute;
   top: 0;
   z-index: 999;
-  transform: translate(50%,30%);
+  &.en{
+    transform: translate(90%, 30%);
+  }
+
+  &.th{
+    transform: translate(25%, 30%);
+  }
 }
-.icon-in-step-repair5{
+.icon-in-step-repair3{
   color: #FFFFFF;
   position: absolute;
   top: 0;
   z-index: 999;
-  transform: translate(125%,30%);
+  &.en{
+    transform: translate(155%, 30%);
+  }
+
+  &.th{
+    transform: translate(45%, 30%);
+  }
+}
+.icon-in-step-repair4{
+  color: #FFFFFF;
+  position: absolute;
+  top: 0;
+  z-index: 999;
+  &.en{
+    transform: translate(215%, 30%);
+  }
+
+  &.th{
+    transform: translate(125%, 30%);
+  }
 }
 .step-item.active .text-in-step,
 .step-item.active .icon-in-step{
