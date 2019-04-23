@@ -25,11 +25,100 @@
       }
 
       ctrl.createExpenses = function() {
-        $rootScope.openNewExpenses();
+        service.cheackSetting().then( function(resp){
+          if (resp.data != 0 ){
+          ctrl.case_edit = false;
+          ctrl.data = {};
+          ctrl.data.expense_items = [{amount:0, detail:"", cost:0.00, total_price:0.00}];
+          ctrl.data.effective_date = new Date();
+          $uibModal.open({
+            animation: true,
+            backdrop: 'static',
+            keyboard: false,
+            scope: $scope,
+            templateUrl: "<%= asset_path('rollcall/angular/components/modal/createExpenses/createExpensesModalView.html') %>",
+            controller: 'createExpensesModalCtrl as create',
+            size: 'lg',
+            resolve: {
+              resources: ['$ocLazyLoad', 'ASSETS', function($ocLazyLoad, ASSETS) {
+                return $ocLazyLoad.load([
+                  ASSETS.somsri.rollcall.create_expenses_modal
+                  ]);
+              }]
+            }
+          }).result.then(function (result) {
+            if (result) {
+              ctrl.items = result.expense_items_attributes.filter(function(item) {
+              return item.detail || item.amount || item.cost
+              });
+              service.createExpenses({
+                effective_date: new Date(result.effective_date),
+                expenses_id: result.expenses_id,
+                detail: result.detail,
+                total_cost: result.total_cost,
+                expense_items_attributes: ctrl.items,
+                img_url: result.img_url
+              }).then(function(resp) {
+                ctrl.message = translateFilter('expense_create_success');
+                ctrl.typeSuccess = true;
+                getExpenses();
+              }, function(e){
+                ctrl.message = translateFilter('expenses_create_failed')
+                ctrl.typeSuccess = false;
+              });
+            }
+          });
+        } else {
+          displayFlashMessage('โปรดตั้งค่าประเภทค่าใช้จ่าย', false);
+        }
+      });
       }
 
       ctrl.edit = function(item) {
-        $rootScope.openUpdateExpenses(item.id);
+        ctrl.case_edit = true;
+        service.show(item).then( function(resp){
+          ctrl.data = resp.data
+          if (ctrl.data.expense_items.length == 0)
+            ctrl.data.expense_items = [{amount:0, detail:"", cost:0.00, total_price:0.00}];
+            $uibModal.open({
+              animation: true,
+              backdrop: 'static',
+              keyboard: false,
+              scope: $scope,
+              templateUrl: "<%= asset_path('rollcall/angular/components/modal/createExpenses/createExpensesModalView.html') %>",
+              controller: 'createExpensesModalCtrl as create',
+              size: 'lg',
+              resolve: {
+                resources: ['$ocLazyLoad', 'ASSETS', function($ocLazyLoad, ASSETS) {
+                  return $ocLazyLoad.load([
+                    ASSETS.somsri.rollcall.create_expenses_modal
+                  ]);
+                }]
+              }
+            }).result.then(function (result) {
+              if (result) {
+                ctrl.items = result.expense_items_attributes.filter(function(item) {
+                 return item.detail || item.amount || item.cost
+                });
+                service.editExpenses({
+                  item_id: resp.data.id,
+                  effective_date: new Date(result.effective_date),
+                  expenses_id: result.expenses_id,
+                  detail: result.detail,
+                  total_cost: result.total_cost,
+                  expense_items_attributes: ctrl.items,
+                  img_url: result.img_url
+                }).then(function(resp) {
+                  ctrl.message = translateFilter('expense_edit_success');
+                  ctrl.typeSuccess = true;
+                  getExpenses();
+                }, function(e){
+                  ctrl.message = translateFilter('expenses_edit_failed')
+                  ctrl.typeSuccess = false;
+                });
+              }
+            });
+        });
       }
 
       ctrl.print_report = function() {
@@ -164,6 +253,7 @@
           field: 'expenses_id',
           title: translateFilter("buy_slip"),
           sortable: true,
+          formatter: linkName
         },{
           field: 'detail',
           title: translateFilter("expense_detail"),
@@ -241,5 +331,17 @@
       getExpenses();
 
     });
-}]);
+
+    function linkName(name, row, index) {
+      let edit = angularCtrlStr + '.edit('+ angularCtrlStr+ '.datas['+ index +'])';
+      let link = "<a href='javascript:void(0)' class='ml-20 mr-20 color-dark-green' onclick='" + edit + "'>" + name + "</a>" ;
+      return link
+    }
+
+    function displayFlashMessage(message, typeSuccess){
+      ctrl.message = message;
+      ctrl.typeSuccess = typeSuccess;
+      $window.scrollTo(0, 0);
+    }
+  }]);
 })();

@@ -48,6 +48,7 @@ Rails.application.routes.draw do
       patch 'upload_photo'
     end
     collection do
+      get "check_setting"
       get "report_by_tag"
       get "report_by_payment"
     end
@@ -195,13 +196,13 @@ Rails.application.routes.draw do
   resources :inventories do
     resources :categories
   end
-  
-  resources :inventory_requests do 
+
+  resources :inventory_requests do
     collection do
     end
-    
+
     member do
-      put 'approve'  
+      put 'approve'
       put 'reject'
       put 'pending'
       put 'accept'
@@ -219,20 +220,4 @@ Rails.application.routes.draw do
 
   resources :suppliers
 
-  resources :inventory_repairs do 
-    collection do
-    end
-    # [:repair_notification, :confirm_accept, :rejected ,:sent_repair, :repairs_completed, :dispatch_to_employees]
-    member do
-      put 'repair_notification'
-      put 'confirm_accept'  
-      put 'rejected'
-      put 'sent_repair'
-      put 'repairs_completed'
-      put 'dispatch_to_employees'
-    end
-
-    # POST: /inventories_repairs/:inventories_repair_id/manage_inventory_repair
-    resources :manage_inventory_repairs
-  end
 end

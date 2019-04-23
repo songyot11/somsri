@@ -122,12 +122,14 @@ class ExpensesController < ApplicationController
       cost = expense_item.cost * expense_item.amount
       set_cost_to_tag_tree(tag_tree, tag_id, cost)
     end
+    
     @results = tag_tree
     @lv_max = tag_tree[0][:lv]
     @total_cost = expenses.inject(0){|sum, e| sum += e.total_cost }
     @other_cost = @total_cost - @results.inject(0){|sum, r| sum += (r[:lv] == @lv_max) ? r[:cost] : 0  }
     @date_time_string = start_end_date_to_string_display(@start_date_time, @end_date_time)
     filename = "#{I18n.t('expenses_classification_report')} #{@date_time_string}"
+
     respond_to do |format|
       format.pdf do
         render pdf: filename,
@@ -198,6 +200,11 @@ class ExpensesController < ApplicationController
         send_data(io_buffer.read, filename: "#{filename}.xls")
       end
     end
+  end
+
+  def check_setting
+    setting = ExpenseTag.all.count
+    render json: setting, status: :ok
   end
 
   private

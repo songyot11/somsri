@@ -5,7 +5,7 @@ class Expense < ApplicationRecord
   accepts_nested_attributes_for :expense_items
   before_save :clean_payment_method
 
-  has_attached_file :img_url, styles: { medium: "300x300>", thumb: "100x100>" }
+  has_attached_file :img_url, styles: { medium: "300x300", thumb: "100x100" }
   validates_attachment_content_type :img_url, content_type: /\Aimage\/.*\z/
 
   def clean_payment_method
