@@ -1,14 +1,14 @@
 class EmployeeSkillsController < ApplicationController
-  load_and_authorize_resource :employee
-  load_and_authorize_resource :employee_skill, through: :employee
   skip_before_action :verify_authenticity_token, :only => [:update, :create, :destroy]
 
   def index
-    render json: @employee.employee_skills.joins(:skill).order('skills.name asc')
+    employee = Employee.with_deleted.find(params[:employee_id])
+    render json: employee.employee_skills.joins(:skill).order('skills.name asc')
   end
 
   def create
-    p @employee_skill
+    employee = Employee.with_deleted.find(params[:employee_id])
+    @employee_skill = employee.employee_skills.new(employee_skill_params)
     if @employee_skill.save
       render json: @employee_skill, status: :ok
     else
@@ -17,6 +17,8 @@ class EmployeeSkillsController < ApplicationController
   end
 
   def update
+    employee = Employee.with_deleted.find(params[:employee_id])
+    @employee_skill = employee.employee_skills.find(params[:id])
     if @employee_skill.update(params_employee_skill)
       render json: @employee_skill, status: :ok
     else
@@ -25,6 +27,8 @@ class EmployeeSkillsController < ApplicationController
   end
 
   def destroy
+    employee = Employee.with_deleted.find(params[:employee_id])
+    @employee_skill = employee.employee_skills.find(params[:id])
     @employee_skill.destroy
     render json: {status: 'success' }, status: :ok
   end

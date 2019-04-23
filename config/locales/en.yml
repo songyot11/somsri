@@ -90,6 +90,7 @@ en:
   profile: "Profile"
   company: "Company"
   comment: "Comment"
+  show_data_delete: "Show data delete"
 
   mr: Mr.
   ms: Ms.

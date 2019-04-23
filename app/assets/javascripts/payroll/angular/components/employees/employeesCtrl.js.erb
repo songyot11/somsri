@@ -8,29 +8,62 @@
     var $table = $('#employeesTable')
     var displayMode = 'grid';
     var initDisplay = true;
+    $rootScope.archive_employee = "color"
 
     getPayroll(dateNow.getMonth() + 1, dateNow.getFullYear());
     function getPayroll(month, year){
       employeeService.getAllEmployee().then(function(resp) {
         ctrl.datas = resp.data;
         ctrl.display_datas = [];
+        ctrl.delete_datas = [];
         for(var i = 0; i < ctrl.datas.length; i++) {
           var data = ctrl.datas[i];
           if (data['id']) {
-            ctrl.display_datas.push({
-              full_name: data['name'],
-              id: data['id'],
-              position: data['position'],
-              salary: data['salary'],
-              fee: data['extra_fee'],
-              extra: data['extra_pay'],
-              imgUrl: data['img'],
-              deleted_at: data['deleted_at']
-            });
+            if (!data['deleted_at']) {
+              ctrl.display_datas.push({
+                full_name: data['name'],
+                id: data['id'],
+                position: data['position'],
+                salary: data['salary'],
+                fee: data['extra_fee'],
+                extra: data['extra_pay'],
+                imgUrl: data['img'],
+                deleted_at: data['deleted_at']
+              });
+            } else {
+              ctrl.delete_datas.push({
+                full_name: data['name'],
+                id: data['id'],
+                position: data['position'],
+                salary: data['salary'],
+                fee: data['extra_fee'],
+                extra: data['extra_pay'],
+                imgUrl: data['img'],
+                deleted_at: data['deleted_at']
+              });
+            }
           }
         }
+        
         $table.bootstrapTable('load', ctrl.display_datas);
       });
+    }
+
+    ctrl.employeeTypeMode = {
+      delete: false,
+    }
+
+    ctrl.employeeTypeFilter = function (){
+      if(ctrl.employeeTypeMode.delete){
+        $rootScope.archive_employee = "gray"
+        $table.bootstrapTable('load',ctrl.delete_datas);
+        $table.bootstrapTable('toggleView');
+      } else {
+        $rootScope.archive_employee = "color"
+        $table.bootstrapTable('load',ctrl.display_datas);
+        $table.bootstrapTable('toggleView');
+      }
+      $table.bootstrapTable('toggleView');
     }
 
     ctrl.openEmployeeDetails = function(id){

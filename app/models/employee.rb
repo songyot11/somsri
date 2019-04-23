@@ -53,6 +53,13 @@ class Employee < ApplicationRecord
     end
   end
 
+  def has_last_salary
+    has_last_closed_payroll = self.payrolls.size > 0 && self.last_closed_payroll
+    {
+      salary: (has_last_closed_payroll ? self.last_closed_payroll.salary.to_f : 0) > 0 
+    }
+  end
+
   def last_closed_payroll
     self.payrolls.where(closed: true).order(effective_date: :desc).first
   end

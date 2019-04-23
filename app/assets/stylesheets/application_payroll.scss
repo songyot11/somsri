@@ -428,6 +428,18 @@ input.btn-prefix.active:-moz-placeholder { /* Firefox 18- */
   margin-bottom: 10px;
 }
 
+
+
+.employees-list {
+  &.gray .card {
+    border-bottom: 5px solid gray;
+  }
+
+  &.color .card { 
+    border-bottom: 5px solid #1cc5db;
+  }
+}
+
 .employees-list .card {
   margin: 15px 11px;
   background-color: #FFF;
@@ -435,7 +447,8 @@ input.btn-prefix.active:-moz-placeholder { /* Firefox 18- */
   padding-right: 20px;
   padding-top: 15px;
   padding-bottom: 15px;
-  border-bottom: 5px solid #1cc5db;
+
+  
   margin-top: 15px;
   margin-bottom: 15px;
   height: 100%;
