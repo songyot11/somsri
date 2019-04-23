@@ -12,7 +12,7 @@
       for(; i < datas.length; i++){
         var data = datas[i];
         if(currentLv == data.lv){
-          results.push({ "name": data.name, "id": data.id, "nodes": [] });
+          results.push({ "name": data.name, "id": data.id, "nodes": [] , "lv": data.lv});
         }else if(currentLv > data.lv){
           i = datasToTree(datas, results[results.length - 1].nodes, data.lv, i);
         }else if(currentLv < data.lv){

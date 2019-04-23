@@ -1,7 +1,7 @@
 <div>
   <h3 class="pt-10"><%= I18n.t('expense_list') %></h3>
   <hr class="my-5">
-  <%= @date_time_string %>
+  <label class="font-weight-normal mb-20"><%= @date_time_string %></label>
 </div>
 <table class="font-12 header-table-page">
   <tbody>
@@ -22,11 +22,11 @@
         <% end %>
         </td>
         <td class="border-bottom-1 text-left p-5 font-roboto"><%= result.detail %></td>
-        <td class="border-bottom-1 text-right p-5 font-roboto"><%= result.total_cost %></td>
+        <td class="border-bottom-1 text-right p-5 font-roboto"><%= number_with_precision(result.total_cost, precision: 2, delimiter: ',') %></td>
       </tr>
     <% end %>
   </tbody>
 </table>
 <div class="text-right pt-20">
-  <label class="text-currency numberic"><%= I18n.t('total_price') %> : <%= @total_price.round(2) %></label>
+  <label class="text-currency numberic"><%= I18n.t('total_price') %> : <%= number_with_precision(@total_price, precision: 2, delimiter: ',') %></label>
 </div>

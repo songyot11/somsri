@@ -31,12 +31,12 @@
   </div>
 </div>
 <script type="text/ng-template" id="nodes_renderer.html">
-  <div class="form-inline border-1 p-10 my-10 border-color-gray bg-white">
+  <div class="form-inline p-10 my-10 color-l{{ node.lv }}">
     <div ui-tree-handle class="d-inline-block w-100p">
       <a class="btn px-0" ng-if="node.nodes && node.nodes.length > 0" data-nodrag ng-click="tag.toggle(this)">
         <i class="fa fa-fw font-21" ng-class="{ 'fa-angle-right': collapsed, 'fa-angle-down': !collapsed }"></i>
       </a>
-      <input type="text" class="form-control w-70p border-b-0 border-b-1-hover" data-nodrag ng-model="node.name" placeholder="{{ 'expense_category_placeholder' | translate }}">
+      <input type="text" class="form-control w-70p border-b-0 border-b-1-hover bg-transparent" data-nodrag ng-model="node.name" placeholder="{{ 'expense_category_placeholder' | translate }}">
       <div class="pull-right">
         <a class="btn px-0" data-nodrag ng-click="tag.newSubItem(this)"><i class="fa fa-plus color-green text-center font-21 fa-fw" aria-hidden="true"></i></a>
         <a href ng-click="tag.removeItem(this)" class="btn px-0" data-nodrag><span class="fa fa-times color-red text-center font-21 fa-fw"></span></a>
