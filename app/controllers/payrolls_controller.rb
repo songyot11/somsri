@@ -6,7 +6,7 @@ class PayrollsController < ApplicationController
 
   # GET /payrolls
   def index
-    employees = Employee.with_deleted.to_a
+    employees = Employee.all
     qry_payrolls = Payroll.where(employee_id: employees)
     effective_date = nil
     if params[:effective_date] != "lasted"

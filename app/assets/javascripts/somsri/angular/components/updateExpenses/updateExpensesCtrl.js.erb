@@ -15,11 +15,13 @@
   function initData() {
     if (!ctrl.real_id) {
       service.getExpenseTags({ autocomplete: true }).then(function(resp){
-        ctrl.itemTypes = resp.data;
-        ctrl.lvMax = ctrl.itemTypes[0].lv;
-        ctrl.payment_method = "เงินสด";
-        ctrl.itemTypes.unshift({ name: "-", lv: ctrl.lvMax, ids: [], id: null, is_leaf: true });
-        addItem();
+        if (resp.data.length > 0) {
+          ctrl.itemTypes = resp.data;
+          ctrl.lvMax = ctrl.itemTypes[0].lv;
+          ctrl.payment_method = "เงินสด";
+          ctrl.itemTypes.unshift({ name: "-", lv: ctrl.lvMax, ids: [], id: null, is_leaf: true });
+          addItem();
+        }
       });
       return;
     }

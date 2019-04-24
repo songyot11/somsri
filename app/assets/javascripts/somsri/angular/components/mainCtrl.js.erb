@@ -3,7 +3,8 @@
   angular.module('somsri.somsri.main', [
   ])
   .controller('mainCtrl', ['$rootScope','$state', '$http', '$window', '$scope', '$uibModal', function($rootScope, $state, $http, $window, $scope, $uibModal) {
-
+    $rootScope.currentLang = $('html').attr('lang');
+    
     function checkAbility(model, success, fail) {
       if ($rootScope.abilities.manage && $rootScope.abilities.manage.all) {
         success();

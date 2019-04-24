@@ -163,7 +163,7 @@ class Payroll < ApplicationRecord
 
   private
     def set_default_val
-      if !self.closed
+      if defined?(self.closed) && !self.closed
         e = Employee.find(self.employee_id)
         self.tax = Payroll.generate_tax(self, e)
         self.social_insurance = Payroll.generate_social_insurance(self, e)

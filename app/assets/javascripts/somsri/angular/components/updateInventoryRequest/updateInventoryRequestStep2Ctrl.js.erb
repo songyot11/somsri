@@ -27,6 +27,14 @@
       opened: false
     };
 
+    ctrl.openRequestDatePopup = function() {
+      ctrl.requestDatePopup.opened = true;
+    };
+
+    ctrl.requestDatePopup = {
+      opened: false
+    };
+
     ctrl.continue = function() {
     	ctrl.step.step2.date_purchase = ctrl.date_purchase
     	ctrl.step.step2.date_send = ctrl.date_send

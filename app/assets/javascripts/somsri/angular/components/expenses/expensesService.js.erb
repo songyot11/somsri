@@ -55,5 +55,9 @@
       });
     }
 
+    this.cheackSetting = function() {
+      return $http.get('/expenses/check_setting');
+    }
+
   }]);
 })();

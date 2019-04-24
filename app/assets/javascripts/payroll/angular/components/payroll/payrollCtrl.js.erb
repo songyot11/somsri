@@ -101,6 +101,7 @@
       reportService.getPayroll(effectiveDate["date_time"]).then(function(resp) {
         ctrl.employees = resp.data.payrolls
         ctrl.employees_origin = JSON.parse(JSON.stringify(ctrl.employees));
+        setupName()
         getTotalSalary(ctrl.employees)
         ctrl.currentDateString = effectiveDate["date_string"];
         ctrl.currentEffectiveDate = effectiveDate;
@@ -155,6 +156,14 @@
       $('#print-payroll').attr("href", "/payrolls.pdf?effective_date=" + encodeURIComponent(ctrl.currentEffectiveDate['date_time']));
     }
 
+    function setupName() {
+      for(var i = 0; i < ctrl.employees.length; i++) {
+        if (ctrl.employees[i].name == "  " || ctrl.employees[i].name == " " || ctrl.employees[i].name == "" || !ctrl.employees[i].name) {
+          ctrl.employees[i].name = "Unknow"
+        }
+      }
+    }
+
     function getAll() {
       reportService.getMonths().then(function(resp) {
         if (resp.data.length > 0) {
@@ -174,6 +183,7 @@
             ctrl.employees = resp.data.payrolls
             ctrl.employees_origin = JSON.parse(JSON.stringify(ctrl.employees));
 
+            setupName()
             getTotalSalary(ctrl.employees)
             ctrl.currentDateString = current['date_string'];
             ctrl.currentEffectiveDate = current;

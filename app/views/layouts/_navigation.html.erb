@@ -50,7 +50,7 @@
               <li class="divider"></li>
               <li><a class="dropdown-item" href="/main#/profile"><i class="fa fa-user" aria-hidden="true"></i></i> <%= t("profile")%></a></li>
               <li class="divider"></li>
-              <% if current_user.has_role?(:admin) %>
+              <% if current_user.admin? || current_user.finance_officer? %>
                 <li><a class="dropdown-item" href="/main#/setting"><i class="fa fa-cog"></i> <%= t("settings")%></a></li>
                 <li class="divider"></li>
               <% end %>

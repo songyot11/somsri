@@ -14,7 +14,7 @@
           </div>
         <% end %>
       <% end %>
-      <% if can? :manage, Invoice && !current_user.employee? %>
+      <% if current_user.admin? || current_user.finance_officer? %>
         <div class="col-xs-4 col-centered menu-icon">
           <div class="<%= is_topbar ? 'dropdown-menu-btn' : 'menu-btn' %> invoices">
               <a href="/somsri_invoice">
@@ -39,15 +39,14 @@
         </div>
       <% end %>
       <% if current_user.admin? || current_user.employee? || current_user.human_resource? %>
-        <% if can? :manage, Employee %>
          <div class="col-xs-4 col-centered menu-icon">
             <div class="<%= is_topbar ? 'dropdown-menu-btn' : 'menu-btn' %> employees">
-              <% if (current_user.admin? || current_user.human_resource?) && current_user.employee? %>
-                <a href="/somsri_payroll#/employees" >
-                  <div class="wraptocenter">
-                    <%= image_tag 'hr-icon.png', class: (is_topbar ? 'img-menu-nav' : '') %>
-                  </div>
-                </a>
+              <% if (current_user.admin? || current_user.human_resource?) %>
+                  <a href="/somsri_payroll#/employees" >
+                    <div class="wraptocenter">
+                      <%= image_tag 'hr-icon.png', class: (is_topbar ? 'img-menu-nav' : '') %>
+                    </div>
+                  </a>
               <% else %>
                 <a href="/somsri_payroll#/employees<%= current_user.employee? ? "/#{current_user.id}" : '' %>" >
                   <div class="wraptocenter">
@@ -58,9 +57,8 @@
             </div>
             <%= content_tag(:p, t('.employee', :default => t("employee")) ) %>
           </div>
-        <% end %>
       <% end %>
-      <% if can? :manage, Parent && !current_user.employee? %>
+      <% if can? :manage, Parent || current_user.teacher? %>
         <div class="col-xs-4 col-centered  menu-icon">
             <div class="<%= is_topbar ? 'dropdown-menu-btn' : 'menu-btn' %> parents">
                 <a href="/parents">
@@ -72,7 +70,7 @@
             <%= content_tag(:p, t('.parent', :default => t("parent")) ) %>
         </div>
       <% end %>
-      <% if can? :manage, Student && !current_user.employee? %>
+      <% if can? :manage, Student || current_user.teacher? %>
         <div class="col-xs-4 col-centered menu-icon">
             <div class="<%= is_topbar ? 'dropdown-menu-btn' : 'menu-btn' %>">
                 <a href="/students">
@@ -84,7 +82,7 @@
             <%= content_tag(:p, t('.student', :default => t("student")) ) %>
         </div>
       <% end %>
-      <% if can? :manage, Alumni && !current_user.employee? %>
+      <% if can? :manage, Alumni || current_user.teacher? %>
         <div class="col-xs-4 col-centered menu-icon">
             <div class="<%= is_topbar ? 'dropdown-menu-btn' : 'menu-btn' %> alumni">
                 <a href="/somsri_invoice#/alumni">
@@ -110,7 +108,7 @@
           </div>
         <% end %>
       <% end %>
-      <% if (SiteConfig.get_cache.enable_expenses) && (can? :manage, Expense) && !current_user.employee? %>
+      <% if (SiteConfig.get_cache.enable_expenses) && (can? :manage, Expense) || current_user.finance_officer?%>
         <div class="col-xs-4 col-centered menu-icon">
             <div class="<%= is_topbar ? 'dropdown-menu-btn' : 'menu-btn' %> alumni">
                 <a href="/somsri#/expenses">
@@ -122,7 +120,7 @@
             <%= content_tag(:p, t('.expense', :default => t("expense")) ) %>
         </div>
       <% end %>
-      <% if SiteConfig.get_cache.enable_quotation && can?(:manage, Quotation) && !current_user.employee? %>
+      <% if SiteConfig.get_cache.enable_quotation && can?(:manage, Quotation)%>
         <div class="col-xs-4 col-centered menu-icon">
           <div class="<%= is_topbar ? 'dropdown-menu-btn' : 'menu-btn' %> quotation">
               <a href="/somsri_invoice#/quotation">

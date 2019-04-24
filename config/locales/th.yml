@@ -253,6 +253,7 @@ th:
   profile: "ข้อมูลส่วนตัว"
   company: "ข้อมูลองค์กร"
   comment: "ความคิดเห็น"
+  show_data_delete: "แสดงข้อมูลที่ถูกลบ"
 
   mr: นาย
   ms: นาง

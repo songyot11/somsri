@@ -18,7 +18,7 @@ class SiteConfig < ApplicationRecord
     return Rails.cache.fetch(:site_config) do
       site_config = SiteConfig.first
       site_config.update(default_locale: 'th') if site_config&.default_locale&.blank?
-      site_config = SiteConfig.create(default_locale: 'th') if site_config.reload.blank?
+      site_config = SiteConfig.create(default_locale: 'th') if site_config.blank?
       site_config
     end
   end

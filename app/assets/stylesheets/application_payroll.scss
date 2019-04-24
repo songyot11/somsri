@@ -428,6 +428,18 @@ input.btn-prefix.active:-moz-placeholder { /* Firefox 18- */
   margin-bottom: 10px;
 }
 
+
+
+.employees-list {
+  &.gray .card {
+    border-bottom: 5px solid gray;
+  }
+
+  &.color .card { 
+    border-bottom: 5px solid #1cc5db;
+  }
+}
+
 .employees-list .card {
   margin: 15px 11px;
   background-color: #FFF;
@@ -435,7 +447,8 @@ input.btn-prefix.active:-moz-placeholder { /* Firefox 18- */
   padding-right: 20px;
   padding-top: 15px;
   padding-bottom: 15px;
-  border-bottom: 5px solid #1cc5db;
+
+  
   margin-top: 15px;
   margin-bottom: 15px;
   height: 100%;
@@ -1148,13 +1161,16 @@ a.dropdown-item{
 .thead > span.name {
   width: 320px;
 }
+
 .trow.tfoot> span{
   border-bottom: 2px solid #9d9d9d;
   background-color: #fdfdfd;
 }
+
 .trow.tfoot> span.free-space-table{
   border: none;
 }
+
 .thead > span.gap {
   width: 150px;
   border-top: 1px solid #fff;
@@ -1164,9 +1180,11 @@ a.dropdown-item{
 .trow {
   white-space: nowrap;
 }
+
 .hilight{
   background-color: AntiqueWhite !important;
 }
+
 .trow > span {
   display: inline-block;
   width: 160px;

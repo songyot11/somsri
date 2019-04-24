@@ -55,29 +55,29 @@
 							<ul class="step d-flex flex-nowrap">
 								<li class="step-item">
 									<a href="#!" class="">
-										<i class="fa fa-check fa-2x icon-in-step-repair1"></i>
+										<i class="fa fa-check fa-2x icon-in-step-repair1 {{ currentLang }}"></i>
 										<!-- <h3 class="text-in-step mt-0">1</h3>  -->
 										{{ "confirm_accept" | translate }}
 									</a>
 								</li>
 								<li class="step-item active">
 									<a href="#!" class="">
-										<i class="fa fa-check fa-2x icon-in-step-repair1"></i>
-										<!--  <h3 class="text-in-step-repair2 mt-0">2</h3> -->
+										<!-- <i class="fa fa-check fa-2x icon-in-step-repair1 {{ currentLang }}"></i> -->
+										 <h3 class="text-in-step-repair2 mt-0 {{ currentLang }}">2</h3>
 										{{ "sent_repair" | translate }}
 									</a>
 								</li>
 								<li class="step-item">
 									<a href="#!" class="">
 										<!-- <i class="fa fa-check fa-2x icon-in-step2"></i> -->
-										<h3 class="text-in-step-repair3 mt-0">3</h3>
+										<h3 class="text-in-step-repair3 mt-0 {{ currentLang }}">3</h3>
 										{{ "repairs_completed" | translate }}
 									</a>
 								</li>
 								<li class="step-item ">
 									<a href="#!" class="">
 										<!-- <i class="fa fa-check fa-2x icon-in-step"></i>  -->
-										<h3 class="text-in-step4 mt-0">4</h3>
+										<h3 class="text-in-step4 mt-0 {{ currentLang }}">4</h3>
 										{{ "dispatch_to_employees" | translate }}    
 									</a>
 								</li>

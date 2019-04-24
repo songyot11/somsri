@@ -14,17 +14,16 @@ class Ability
         can :update, VacationLeaveRule
 
       elsif  user.finance_officer?
-        can :manage, :menu
+        can :manage, [:menu, :setting]
         can :manage, Invoice
         can :manage, DailyReport
-        can :read, Grade
+        can :manage, Grade #read
         can :manage, Student
         can :manage, Parent
-        can :read, School
-        can :manage, :setting
+        can :manage, School #read
         can :manage, Classroom
         can :manage, Alumni
-        can :read, SiteConfig
+        can :manage, SiteConfig #read
         can :manage, Expense
         can :manage, ExpenseTag
         can :manage, ExpenseTagItem
@@ -51,9 +50,21 @@ class Ability
         can :manage, InventoryRepair
         can :manage, Employee
         can :manage, Supplier
-      elsif user.employee?
+      elsif user.teacher?
         can :manage, [:menu, :setting]
         can :manage, Invoice
+        can :manage, Alumni
+        can :manage, Student
+        can :manage, Parent
+        can :manage, Employee, id: user.id
+        can :manage, Payroll, employee_id: user.id
+        can :manage, Inventory
+        can :read, EmployeeSkill
+        can :read, Individual
+        can :read, InventoryRequest, employee_id: user.id
+      elsif user.employee?
+        can :manage, [:menu, :setting]
+        can :read, Invoice
         can :manage, DailyReport
         can :read, Grade
         can :manage, Student
