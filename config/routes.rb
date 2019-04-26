@@ -224,7 +224,7 @@ Rails.application.routes.draw do
     collection do
     end
     # [:repair_notification, :confirm_accept, :rejected ,:sent_repair, :repairs_completed, :dispatch_to_employees]
-    member dog
+    member do
       put 'repair_notification'
       put 'confirm_accept'  
       put 'rejected'
