@@ -220,4 +220,21 @@ Rails.application.routes.draw do
 
   resources :suppliers
 
+  resources :inventory_repairs do 
+    collection do
+    end
+    # [:repair_notification, :confirm_accept, :rejected ,:sent_repair, :repairs_completed, :dispatch_to_employees]
+    member do
+      put 'repair_notification'
+      put 'confirm_accept'  
+      put 'rejected'
+      put 'sent_repair'
+      put 'repairs_completed'
+      put 'dispatch_to_employees'
+    end
+
+    # POST: /inventories_repairs/:inventories_repair_id/manage_inventory_repair
+    resources :manage_inventory_repairs
+  end
+
 end
