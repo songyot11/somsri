@@ -37,9 +37,7 @@
               ctrl.isSubmit = false;
             });
           } else {
-            console.log("parm",parm)
             service.createVacationSetting(parm).then(function(resp) {
-              console.log("resp", resp)
               ctrl.isSubmit = false;
             });
           }
