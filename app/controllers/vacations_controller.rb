@@ -54,6 +54,13 @@ class VacationsController < ApplicationController
   end
 
   def dashboard
+
+    is_me = params["me"].present?
+
+    if is_me && (current_user.admin? || current_user.human_resource?)
+      @vacations = @vacations.where(requester_id: current_user.id)
+    end
+
     @vacations = @vacations.this_year.order('created_at DESC')
 
     sick_leave_count = @vacations.sick_leave.count

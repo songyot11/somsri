@@ -4,8 +4,12 @@
   ])
   .service('vacationService', ['$http', function($http) {
 
-    this.getVacations = function() {
-      return $http.get('/vacations/dashboard')
+    this.getVacations = function(is_me) {
+      return $http.get('/vacations/dashboard', {
+        params: {
+          me: is_me
+        }
+      })
     }
     this.newVacation = function(data) {
       return $http.post('/vacations', data)

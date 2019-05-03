@@ -2,7 +2,8 @@
   'use strict';
   angular.module('somsri.somsri.vacation.dashboard', [
   ])
-  .controller('vacationDashboardCtrl', ['$rootScope', '$window', '$sce', 'moment', 'translateFilter', 'vacationService', function ($rootScope, $window, $sce, moment, translateFilter, service) {
+  .controller('vacationDashboardCtrl', ['$rootScope', '$window', '$sce', 'moment', 'translateFilter', 'vacationService', 'settingService',
+    function ($rootScope, $window, $sce, moment, translateFilter, service, settingService) {
     var ctrl = this;
 
     var status = window.location.href.substr(window.location.href.lastIndexOf('/') + 1);
@@ -17,7 +18,9 @@
     }
 
     $rootScope.menu = translateFilter('dashboard');
+
     $rootScope.loadAndAuthorizeResource("vacation", function() {
+      getRole()
       loadVacationDashboard();
     });
 
@@ -152,6 +155,7 @@
     ctrl.deleteVacation = function(vacationId) {
       $rootScope.openConfirmationModal(translateFilter("confirm_delete_vacation"), '', function() {
         service.deleteVacation(vacationId).then(function(response) {
+          getRole()
           loadVacationDashboard();
           $rootScope.openSuccessModal(translateFilter('vacation_deleted_success'));
         }, function(e) {
@@ -160,8 +164,50 @@
       });
     };
 
-    function loadVacationDashboard() {
+    function getRole() {
+      settingService.getRole().then(function(response) {
+        onChangeSelectRole(response.data.roles)
+      })
+    }
+
+    function onChangeSelectRole(roles) {
+      ctrl.is_me = false 
+      var object = roles
+
+      for (var i = 0; i < roles.length; i++) {
+        if (roles[i] == 'human_resource' || roles[i] == 'admin') {
+          ctrl.is_me = true
+          break
+        } else {
+          ctrl.is_me = false
+        }
+      }
+
+      if (ctrl.is_me) {
+        loadVacationAll()
+      }
+    }
+
+    function loadVacationAll() {
+      ctrl.vacation_is_me = []
       service.getVacations().then(function(response) {
+        var vc = response.data
+        angular.forEach(vc.vacations,function(value,key){
+          if (value.status == "pending") {
+            ctrl.vacation_is_me.push(value)
+          }
+        });
+        // if (vc.vacation.status == "pending") {
+        //   console.log("pending")
+        // }
+        // ctrl.vacation_is_me = response.data;
+      }, function(e) {
+        console.log(e)
+      });
+    }
+
+    function loadVacationDashboard() {
+      service.getVacations(true).then(function(response) {
         ctrl.vacation = response.data;
       }, function(e) {
         console.log(e)
@@ -182,6 +228,7 @@
         end_date: moment(ctrl.end_date).format('DD/MM/YYYY'),
         detail: ctrl.detail
       }).then(function(response) {
+        getRole()
         loadVacationDashboard();
         angular.element('#leaveSubmissionModal').modal('hide');
         if (vacationType == 'sick_leave' && ctrl.vacationConfig !== undefined && ctrl.vacationConfig.sick_leave_require_medical_certificate)
