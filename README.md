@@ -76,7 +76,7 @@ example: rake payroll:generate:on[1,2016]
 rake user:create[<email>,<password>]
 ```
 
-### install wkhtmltopdf 
+### install wkhtmltopdf
 For rendering pdf file. We need to install wkhtmltopdf
 ```
 yum install wkhtmltopdf
@@ -115,3 +115,5 @@ PG is need to be
 -------
 กรณีที่มีการ update site_config หลังจาก deploy server แล้วต้องทำการ clear crash ด้วยทุกครั้งบน rails c
 Rails.cache.delete(:site_config)
+
+Test
