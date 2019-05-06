@@ -91,12 +91,12 @@ class VacationsController < ApplicationController
       vacation.approver = current_user.employee
       if vacation.save
         VacationMailer.approved_rejected(vacation)
-        redirect_to '/somsri#/vacation/dashboard/approved'
+        # redirect_to '/somsri#/vacation/dashboard/approved'
       else
-        redirect_to '/somsri#/vacation/dashboard/error'
+        # redirect_to '/somsri#/vacation/dashboard/error'
       end
     else
-      redirect_to '/somsri#/vacation/dashboard/'
+      # redirect_to '/somsri#/vacation/dashboard/'
     end
   end
 
@@ -109,12 +109,12 @@ class VacationsController < ApplicationController
       vacation.approver = current_user.employee
       if vacation.save
         VacationMailer.approved_rejected(vacation)
-        redirect_to '/somsri#/vacation/dashboard/rejected'
+        # redirect_to '/somsri#/vacation/dashboard/rejected'
       else
-        redirect_to '/somsri#/vacation/dashboard/error'
+        # redirect_to '/somsri#/vacation/dashboard/error'
       end
     else
-      redirect_to '/somsri#/vacation/dashboard/'
+      # redirect_to '/somsri#/vacation/dashboard/'
     end
   end
 

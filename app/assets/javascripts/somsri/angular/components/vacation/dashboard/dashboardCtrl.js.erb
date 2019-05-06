@@ -164,6 +164,30 @@
       });
     };
 
+    ctrl.approvedVacation = function(vacationId) {
+      $rootScope.openConfirmationModal(translateFilter("confirm_approve_vacation"), '', function() {
+        service.approvedVacation(vacationId).then(function(response) {
+          getRole()
+          loadVacationDashboard();
+          $rootScope.openSuccessModal(translateFilter('vacation_was_approved'));
+        }, function(e) {
+          console.log(e)
+        });
+      });
+    }
+
+    ctrl.rejectedVacation = function(vacationId) {
+      $rootScope.openConfirmationModal(translateFilter("confirm_reject_vacation"), '', function() {
+        service.rejectedVacation(vacationId).then(function(response) {
+          getRole()
+          loadVacationDashboard();
+          $rootScope.openSuccessModal(translateFilter('vacation_was_rejected'));
+        }, function(e) {
+          console.log(e)
+        });
+      });
+    }
+
     function getRole() {
       settingService.getRole().then(function(response) {
         onChangeSelectRole(response.data.roles)
