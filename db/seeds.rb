@@ -486,6 +486,33 @@ if school
   end
 end
 
+if VacationSetting.count == 0 
+  VacationSetting.create!({
+    id: 1,
+    personal_leave_allow_afternoon: true,
+    personal_leave_allow_morning: true,
+    personal_leave_maximum_days_per_year: 15,
+    personal_leave_note: nil,
+    personal_leave_submission_days: 2,
+    school_id: 1,
+    sick_leave_maximum_days_per_year: 30,
+    sick_leave_note: nil,
+    sick_leave_require_approval: nil,
+    sick_leave_require_medical_certificate: nil,
+    switching_day_allow: true,
+    switching_day_maximum_days_per_year: 15,
+    switching_day_note: nil,
+    switching_day_require_approval: true,
+    switching_day_submission_days: 2,
+    work_at_home_allow: true,
+    work_at_home_maximum_days_per_week: 2,
+    work_at_home_note: nil,
+    work_at_home_require_approval: nil,
+    work_at_home_submission_days: nil
+  })
+end
+
+
 if VacationType.count == 0
   VacationType.create!([
    { id: 1, name: "ลาป่วย", deduce_days: 0 },

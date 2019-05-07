@@ -22,7 +22,7 @@
       ctrl.isSubmit = false;
 
 
-      service.getVacationSetting().then(function(setting_resp) {        
+      service.getVacationSetting().then(function(setting_resp) {      
         ctrl.datas = setting_resp.data;
         ctrl.isEdit = setting_resp.data.id > 0 ? true : false;
       });

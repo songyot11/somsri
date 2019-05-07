@@ -58,7 +58,7 @@
             <%= content_tag(:p, t('.employee', :default => t("employee")) ) %>
           </div>
       <% end %>
-      <% if can? :manage, Parent || current_user.teacher? %>
+      <% if can? :manage, Parent && (current_user.teacher? || current_user.admin?) %>
         <div class="col-xs-4 col-centered  menu-icon">
             <div class="<%= is_topbar ? 'dropdown-menu-btn' : 'menu-btn' %> parents">
                 <a href="/parents">
@@ -70,7 +70,7 @@
             <%= content_tag(:p, t('.parent', :default => t("parent")) ) %>
         </div>
       <% end %>
-      <% if can? :manage, Student || current_user.teacher? %>
+      <% if can? :manage, Student && (current_user.teacher? || current_user.admin?) %>
         <div class="col-xs-4 col-centered menu-icon">
             <div class="<%= is_topbar ? 'dropdown-menu-btn' : 'menu-btn' %>">
                 <a href="/students">
@@ -82,7 +82,7 @@
             <%= content_tag(:p, t('.student', :default => t("student")) ) %>
         </div>
       <% end %>
-      <% if can? :manage, Alumni || current_user.teacher? %>
+      <% if can? :manage, Alumni && (current_user.teacher? || current_user.admin?) %>
         <div class="col-xs-4 col-centered menu-icon">
             <div class="<%= is_topbar ? 'dropdown-menu-btn' : 'menu-btn' %> alumni">
                 <a href="/somsri_invoice#/alumni">

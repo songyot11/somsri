@@ -84,7 +84,7 @@
         </div>
         <div class="row">
           <div class="col-md-12 p-0">
-              <hr class="mt-2" />
+            <hr class="mt-2" />
           </div>
         </div>
         <div class="row" ng-repeat="vacation in dashboard.vacation.vacations">
@@ -106,6 +106,9 @@
         </div>
       </div>
     </div>
+
+
+
     <div class="col-md-6 p-5">
       <div class="content-wrapper min-h-350 px-50 pt-20">
         <div class="row">
@@ -135,6 +138,41 @@
               </div>
             </div>
           </div>
+      </div>
+    </div>
+
+  </div>
+  <div class="row mt-15" ng-show="dashboard.is_me"> 
+    <div class="col-md-6 p-5">
+      <div class="content-wrapper min-h-350 px-50 pt-20">
+        <div class="row">
+          <div class="col-md-6 p-0">
+            <h4 class="mb-5">{{ 'vcation_and_request_check_list' | translate }}</h4>
+          </div>
+        </div>
+        <div class="row">
+          <div class="col-md-12 p-0">
+            <hr class="mt-2" />
+          </div>
+        </div>
+        <div class="row" ng-repeat="vacation in dashboard.vacation_is_me" >
+          <div class="col-md-9 p-0">
+            <b class="font-12 orange m-0"><span class="font-16 color-orange">{{ vacation.requester }}</b>
+            <p class="font-8 orange m-0"><span class="font-12 color-black">{{ vacation.start_date }} - {{ vacation.end_date }}</span> - {{ vacation.vacation_type.name }}</p>
+            <p class="color-gray mt-5 mb-0">{{ vacation.detail }}</p>
+          </div>
+          <div class="col-md-2 icon-check" ng-show="vacation.status == 'pending'">
+            <i class='fa fa-check color-green fa-lg' aria-hidden='true' ng-click="dashboard.approvedVacation(vacation.id)"></i>
+          </div>
+          <div class="col-md-1" ng-show="vacation.status == 'pending'">
+            <i class='fa fa-times color-red fa-lg' aria-hidden='true' ng-click="dashboard.rejectedVacation(vacation.id)"></i>
+          </div>
+          <div class="row">
+            <div class="col-md-12 p-0">
+              <hr class="light m-5" />
+            </div>
+          </div>
+        </div>
       </div>
     </div>
   </div>
@@ -194,7 +232,7 @@
         <div class="row">
           <div class="col-md-12">
             <div class="form-group">
-              <label class="font-12" for="detail">เหตุผล</label>
+              <label class="font-12" for="detail">{{ 'reason' | translate }}</label>
               <textarea class="form-control border no-resize" ng-model="dashboard.detail"></textarea>
             </div>
           </div>

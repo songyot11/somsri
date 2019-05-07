@@ -272,7 +272,6 @@ ActiveRecord::Schema.define(version: 20190214212740) do
     t.integer  "leave_allowance",                      default: 0
     t.string   "note"
     t.string   "comment"
-    t.integer  "user_id"
     t.string   "name"
     t.string   "full_name"
     t.integer  "sick_leave_maximum_days_per_year"
@@ -286,7 +285,6 @@ ActiveRecord::Schema.define(version: 20190214212740) do
     t.index ["email"], name: "index_employees_on_email", unique: true, using: :btree
     t.index ["reset_password_token"], name: "index_employees_on_reset_password_token", unique: true, using: :btree
     t.index ["school_id"], name: "index_employees_on_school_id", using: :btree
-    t.index ["user_id"], name: "index_employees_on_user_id", using: :btree
   end
 
   create_table "employees_roles", id: false, force: :cascade do |t|
@@ -542,7 +540,7 @@ ActiveRecord::Schema.define(version: 20190214212740) do
     t.string   "save_by_step5"
     t.datetime "created_at",            null: false
     t.datetime "updated_at",            null: false
-    t.string   "inventory_id"
+    t.integer  "inventory_id"
     t.index ["inventory_request_id"], name: "index_manage_inventory_requests_on_inventory_request_id", using: :btree
   end
 
@@ -915,4 +913,5 @@ ActiveRecord::Schema.define(version: 20190214212740) do
   add_foreign_key "roll_calls", "lists"
   add_foreign_key "students", "classrooms", on_delete: :nullify
   add_foreign_key "students", "schools"
+  add_foreign_key "users", "schools"
 end
