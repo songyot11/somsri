@@ -71,7 +71,7 @@ en:
   net_salary: "Net Salary"
   total: "Total"
   note: "Note"
-  print_report: "Print"
+  print_report: "Print report"
   print_summary: "Summary Print"
   print_slip_all: "Print all Slips"
   print_slip_carbon: "Print all Carbon slips"
@@ -321,7 +321,7 @@ en:
   quotation_print: "Print Quotation"
 
   # Quotation bill
-  quotation_receipt: "ใบแจ้งการชำระเงิน"
+  quotation_receipt: "Payment receipt"
   payment_method: "ช่องทางการชำระเงิน *หมายเหตุ สามารถชำระเงินได้ "
   date_start: "ตั้งแต่วันที่ "
   date_last: "ถึงวันที่ "

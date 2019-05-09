@@ -184,7 +184,6 @@
           ctrl.datas.payment_method.is_transfer = resp.data.default_transfer_payment_method;
           ctrl.datas.payment_method.is_cheque = resp.data.default_cheque_payment_method;
           ctrl.datas.invoice.school_year = resp.data.school_year;
-          ctrl.datas.invoice.grade_name = resp.data.grades[0];
 
           ctrl.date_display = nowDate.getDate() + "/" + (nowDate.getMonth() + 1) + "/" + (nowDate.getFullYear() + 543);
           ctrl.availableCurrencies = Currency.all();
