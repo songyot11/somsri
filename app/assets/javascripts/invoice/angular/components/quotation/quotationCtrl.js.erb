@@ -10,7 +10,7 @@
     var quotationsTable = $('#quotations-table');
     var angularScopeRoot = 'angular.element(document.getElementById("angularCtrl")).scope().$root';
 
-    $rootScope.menu = translateFilter('quotation_link_nav')
+    $rootScope.menu = translateFilter('quotation_receipt')
     $rootScope.loadAndAuthorizeResource("invoice", function() {
       vm.currentPage = 1;
       vm.quotations = []
@@ -80,7 +80,7 @@
         customSort: function() { },
         columns: [{
           field: 'id',
-          title: translateFilter('quotation_no'),
+          title: translateFilter('buy_slip'),
           sortable: true,
           formatter: linkToQuotationDetailFormatter
         }, {
