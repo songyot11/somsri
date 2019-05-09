@@ -304,7 +304,7 @@
     function beforeUpdateInventoryRequest() {
 
       var changePrice = parseFloat(ctrl.price)
-      if (ctrl.price_step2) {
+      if (changePrice == ctrl.price_step2) {
         changePrice = parseFloat(ctrl.price_step2)
       }
       var checngeRequestDate = ctrl.datas_step.request_date//$filter('date')(new Date(ctrl.datas.request_date), 'yyyy-MM-ddTh:MM:ss')
