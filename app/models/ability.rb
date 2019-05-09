@@ -16,6 +16,7 @@ class Ability
       elsif  user.finance_officer?
         can :manage, [:menu, :setting]
         can :manage, Invoice
+        can :manage, InvoiceStatus
         can :manage, DailyReport
         can :manage, Grade #read
         can :manage, Student
@@ -30,6 +31,8 @@ class Ability
         can :manage, ExpenseItem
         can :manage, Bank
         can :manage, Quotation
+        can :manage, QuotationInvoice
+        can :manage, LineItemQuotation
       elsif user.human_resource?
         can :manage, [:menu, :setting]
         can :manage, Invoice

@@ -32,8 +32,6 @@
         <div class="row form-1_2">
           <div class="col-md-3">
             <div class="form-group">
-              <!-- <select class="btn btn-grades" ng-model="invoice.datas.invoice.grade_name" ng-init="invoice.datas.invoice.grade_name = invoice.grades[0]" ng-options=" obj.value for obj in invoice.grades">
-              </select> -->
               <select id="grade" class="btn btn-grades" ng-model="invoice.datas.invoice.grade_name" ng-options=" obj.value for obj in invoice.grades" required="required">
                 <option value>{{ 'choose_level' | translate }}</option>
               </select>
