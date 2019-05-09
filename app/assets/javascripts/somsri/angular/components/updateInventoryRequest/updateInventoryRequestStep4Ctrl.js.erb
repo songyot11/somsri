@@ -289,7 +289,6 @@
       var inventory_datas = {
         employee_id: ctrl.employee_id
       }
-      console.log(ctrl.inventory_id)
       updateInventory(inventory_datas, ctrl.inventory_id)
     }
 
@@ -400,9 +399,11 @@
     }
 
     ctrl.cancel = function() {
-      service.done(ctrl.real_id).then(function(resp) {
+      service.purchasing(ctrl.real_id).then(function(resp) {
+        $rootScope.backToDeleteInventory = true
+        $rootScope.inventory_id_for_delete = ctrl.inventory_id
         $window.history.back();
-      })
+      })   
     }
 
     function beforeBackToRootView() {

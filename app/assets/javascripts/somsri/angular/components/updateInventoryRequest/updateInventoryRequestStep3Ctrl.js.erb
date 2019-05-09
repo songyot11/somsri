@@ -161,7 +161,7 @@
   	}
 
     function checkGetDatePurchase() {
-      if(ctrl.date_get_inventory) {
+      if(ctrl.date_get_inventory && !ctrl.is_save) {
         service.done(ctrl.real_id).then(function(resp) {
           beforeSave()
         })
@@ -221,7 +221,7 @@
           category_barcode: ctrl.category_barcode
         }
       }
-    
+
       createInventory(inventory_datas, category_datas)
     }
 
@@ -266,7 +266,7 @@
     
     function updateInventoryRequest(inventory_datas, id, inventory_id) {
       var step = 2
-      if (ctrl.date_get_inventory) {
+      if (ctrl.date_get_inventory && !ctrl.is_save) {
         step = 3
       }
  
@@ -463,10 +463,24 @@
       opened: false
     };
 
+    function deleteInventory() {
+      ctrl.deleteInventory = $rootScope.backToDeleteInventory
+      var inventory_id_for_delete = $rootScope.inventory_id_for_delete
+      $rootScope.backToDeleteInventory = null
+      $rootScope.inventory_id_for_delete = null
+      if(ctrl.deleteInventory && inventory_id_for_delete) {
+        inventoryService.removeInventory(inventory_id_for_delete).then(function(resp) {
+      
+          }, function(e){
+        })
+      }
+    }
+
     
     getSupplierList()
     getInventoryList()
     getSetting()
     initData()
+    deleteInventory()
 	}]);
 })();
