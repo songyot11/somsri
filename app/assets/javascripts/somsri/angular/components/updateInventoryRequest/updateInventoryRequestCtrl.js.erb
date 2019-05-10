@@ -64,6 +64,8 @@
     }
 
     function checkStep() {
+      $rootScope.backToDeleteInventory = null
+      $rootScope.inventory_id_for_delete = null
       if (ctrl.step_to == 1) {
         //2
         if (ctrl.request_type == "request") {
