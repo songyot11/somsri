@@ -22,7 +22,7 @@
             <label id="print-report-btn" class="btn btn-custom btn-black" style="border-radius: 0px; margin-left:30px;" data-toggle="dropdown">{{ "print_report" | translate }}&nbsp;&nbsp;<span class="fa fa-angle-down"></span></label>
             <ul class="dropdown-menu" aria-labelledby="print-report-btn">
               <li>
-                <a ng-href="/payrolls.pdf?effective_date={{report.currentEffectiveDate['date_time'] | encodeString }}&payroll_report=true"
+                <a ng-href="/payrolls.pdf?effective_date={{report.currentEffectiveDate['date_time'] | encodeString }}&payroll_report=true&normal={{ report.employeeTypeMode.normal }}&temporary={{ report.employeeTypeMode.temporary }}&probationary={{ report.employeeTypeMode.probationary }}&daily={{ report.employeeTypeMode.daily }}"
                   target="_blank">
                   <button>{{ "print_summary" | translate }}</button>
                 </a>
