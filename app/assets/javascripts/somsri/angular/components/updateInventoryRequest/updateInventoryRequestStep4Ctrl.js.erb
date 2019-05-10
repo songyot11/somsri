@@ -289,7 +289,6 @@
       var inventory_datas = {
         employee_id: ctrl.employee_id
       }
-      console.log(ctrl.inventory_id)
       updateInventory(inventory_datas, ctrl.inventory_id)
     }
 
@@ -305,7 +304,7 @@
     function beforeUpdateInventoryRequest() {
 
       var changePrice = parseFloat(ctrl.price)
-      if (ctrl.price_step2) {
+      if (changePrice == ctrl.price_step2) {
         changePrice = parseFloat(ctrl.price_step2)
       }
       var checngeRequestDate = ctrl.datas_step.request_date//$filter('date')(new Date(ctrl.datas.request_date), 'yyyy-MM-ddTh:MM:ss')
@@ -400,9 +399,11 @@
     }
 
     ctrl.cancel = function() {
-      service.done(ctrl.real_id).then(function(resp) {
+      service.purchasing(ctrl.real_id).then(function(resp) {
+        $rootScope.backToDeleteInventory = true
+        $rootScope.inventory_id_for_delete = ctrl.inventory_id
         $window.history.back();
-      })
+      })   
     }
 
     function beforeBackToRootView() {
