@@ -7,8 +7,26 @@ class PayrollsController < ApplicationController
   # GET /payrolls
   def index
     employees = Employee.all
+
+    payroll_report = params[:payroll_report]
+    normal = params[:normal]
+    temporary = params[:temporary]
+    probationary = params[:probationary]
+    daily = params[:daily]
+
+    type = []
+    if payroll_report
+      
+      type.push("ลูกจ้างประจำ") if normal == 'true'
+      type.push("ลูกจ้างชั่วคราว") if temporary == 'true'
+      type.push("ลูกจ้างทดลองงาน") if probationary == 'true'
+      type.push("ลูกจ้างรายวัน") if daily == 'true'
+
+      employees = employees.where(employee_type: type)
+    end
+
     qry_payrolls = Payroll.where(employee_id: employees)
-    effective_date = nil
+    effective_date = nil 
     if params[:effective_date] != "lasted"
       effective_date = DateTime.parse(params[:effective_date])
       qry_payrolls = qry_payrolls.where(effective_date: effective_date.beginning_of_day..effective_date.end_of_day)
