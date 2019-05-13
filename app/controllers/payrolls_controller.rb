@@ -25,6 +25,10 @@ class PayrollsController < ApplicationController
       employees = employees.where(employee_type: type)
     end
 
+    if params[:effective_date] != "lasted"
+      employees = Employee.with_deleted.all
+    end
+
     qry_payrolls = Payroll.where(employee_id: employees)
     effective_date = nil 
     if params[:effective_date] != "lasted"
