@@ -2,7 +2,7 @@
   'use strict';
   angular.module('somsri.somsri.vacation.setting', [
   ])
-  .controller('vacationSettingCtrl', ['$rootScope','$scope', '$uibModal', 'translateFilter', 'settingService' ,
+  .controller('vacationSettingCtrl', ['$rootScope','$scope', '$uibModal', 'translateFilter', 'vacationSettingService' ,
     function ($rootScope, $scope, $uibModal, translateFilter, service) {
     
     $rootScope.menu = translateFilter('setting');
