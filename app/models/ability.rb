@@ -13,7 +13,8 @@ class Ability
         can :manage, SiteConfig
         can :update, VacationLeaveRule
 
-      elsif  user.finance_officer?
+      end
+      if  user.finance_officer?
         can :manage, [:menu, :setting]
         can :manage, Invoice
         can :manage, InvoiceStatus
@@ -33,7 +34,8 @@ class Ability
         can :manage, Quotation
         can :manage, QuotationInvoice
         can :manage, LineItemQuotation
-      elsif user.human_resource?
+      end
+      if user.human_resource?
         can :manage, [:menu, :setting]
         can :manage, Invoice
         can :manage, Payroll
@@ -46,26 +48,24 @@ class Ability
         can :manage, RollCall
         can :read, Inventory
         can :manage, InventoryRequest
-      elsif user.procurement_officer?
+      end
+      if user.procurement_officer?
         can :manage, [:menu, :setting]
         can :manage, Inventory
         can :manage, InventoryRequest
         can :manage, InventoryRepair
         can :manage, Employee
         can :manage, Supplier
-      elsif user.teacher?
+      end
+      if user.teacher?
         can :manage, [:menu, :setting]
         can :manage, Invoice
         can :manage, Alumni
         can :manage, Student
         can :manage, Parent
-        can :manage, Employee, id: user.id
-        can :manage, Payroll, employee_id: user.id
-        can :manage, Inventory
-        can :read, EmployeeSkill
         can :read, Individual
-        can :read, InventoryRequest, employee_id: user.id
-      elsif user.employee?
+      end
+      if user.employee?
         can :manage, [:menu, :setting]
         can :read, Invoice
         can :manage, DailyReport
