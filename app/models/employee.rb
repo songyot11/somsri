@@ -61,7 +61,7 @@ class Employee < ApplicationRecord
   end
 
   def last_closed_payroll
-    self.payrolls.where(closed: true).order(effective_date: :desc).first
+    self.payrolls.order(effective_date: :desc).first
   end
 
   def new_payroll

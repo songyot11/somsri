@@ -2,19 +2,17 @@
   'use strict';
   angular.module('somsri.somsri.vacation.setting.service', [
   ])
-  .service('settingService', ['$http', '$q', function($http, $q) {
+  .service('vacationSettingService', ['$http', '$q', function($http, $q) {
     
     this.getVacationSetting = function() {
       return $http.get('/vacation_settings')
     }
 
     this.saveVacationSetting = function(id, data) {
-      console.log(data);
       return $http.patch('/vacation_settings/' + id, data);
     };
 
     this.createVacationSetting = function(data) {
-      console.log(data);
       return $http.post('/vacation_settings/', data);
     };
 
