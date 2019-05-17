@@ -38,26 +38,24 @@
         <%= content_tag(:p, t('.rollcall', :default => t("rollcall")) ) %>
       </div>
     <% end %>
-    <% if (current_user.employee?) %>
-      <div class="col-xs-4 col-centered menu-icon">
-        <div class="<%= is_topbar ? 'dropdown-menu-btn' : 'menu-btn' %> employees">
-          <% if (current_user.admin? || current_user.human_resource?) && (can? :manage, Employee) %>
-            <a href="/somsri_payroll#/employees" >
-              <div class="wraptocenter">
-                <%= image_tag 'hr-icon.png', class: (is_topbar ? 'img-menu-nav' : '') %>
-              </div>
-            </a>
-          <% else %>
-            <a href="/somsri_payroll#/employees<%= current_user.employee? ? "/#{current_user.id}" : '' %>" >
-              <div class="wraptocenter">
-                <%= image_tag 'hr-icon.png', class: (is_topbar ? 'img-menu-nav' : '') %>
-              </div>
-            </a>
-          <% end %>
-        </div>
-        <%= content_tag(:p, t('.employee', :default => t("employee")) ) %>
+    <div class="col-xs-4 col-centered menu-icon">
+      <div class="<%= is_topbar ? 'dropdown-menu-btn' : 'menu-btn' %> employees">
+        <% if (current_user.admin? || current_user.human_resource?) && (can? :manage, Employee) %>
+          <a href="/somsri_payroll#/employees" >
+            <div class="wraptocenter">
+              <%= image_tag 'hr-icon.png', class: (is_topbar ? 'img-menu-nav' : '') %>
+            </div>
+          </a>
+        <% else %>
+          <a href="/somsri_payroll#/employees<%= current_user.employee? ? "/#{current_user.id}" : '' %>" >
+            <div class="wraptocenter">
+              <%= image_tag 'hr-icon.png', class: (is_topbar ? 'img-menu-nav' : '') %>
+            </div>
+          </a>
+        <% end %>
       </div>
-    <% end -%>
+      <%= content_tag(:p, t('.employee', :default => t("employee")) ) %>
+    </div>
     <% if (current_user.teacher? || current_user.admin?) && (can? :manage, Parent) %>
       <div class="col-xs-4 col-centered  menu-icon">
         <div class="<%= is_topbar ? 'dropdown-menu-btn' : 'menu-btn' %> parents">

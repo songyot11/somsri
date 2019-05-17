@@ -301,22 +301,13 @@ class PayrollsController < ApplicationController
       Payroll.with_deleted.where(closed: [nil, false]).update_all(closed: true, effective_date: DateTime.parse(create_params[:effective_date]))
       employees = Employee.with_deleted.where(deleted_at: Date.today.beginning_of_month..Date.today.end_of_month)
                           .or(Employee.with_deleted.where(deleted_at: nil))
-
-      # ap employees
       
       employees.to_a.each do |employee|
-
-        puts "------------>"
-        puts employee.id
-        puts employee.lastest_payroll.salary
-
         if employee.lastest_payroll.nil?
-          puts "------------>lastest_payroll nil"
           payroll = Payroll.new({
             employee_id: employee.id
           })
         else
-          puts "------------>lastest_payroll have"
           payroll = Payroll.new({
             employee_id: employee.id,
             salary: employee.lastest_payroll.salary,
