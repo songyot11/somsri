@@ -10,7 +10,16 @@
 
     this.getEmployeeDeduction = function(id, payroll_id, data) {
       data.payroll.note = ''
-      return $http.get('/employees/' + id + '/calculate_deduction', { params: {payroll: data.payroll,employee_type: data.employee.employee_type,employee_pay_pvf: data.employee.pay_pvf,employee_pay_s_ins: data.employee.pay_social_insurance} } );
+      return $http.get('/employees/' + id + '/calculate_deduction', 
+        { 
+          params: { 
+            payroll: data.payroll,
+            employee_type: data.employee.employee_type,
+            employee_pay_pvf: data.employee.pay_pvf,
+            employee_pay_s_ins: data.employee.pay_social_insurance 
+          } 
+        } 
+      );
     };
 
     this.getEmployee = function(id, payroll_id, current_employee) {

@@ -11,7 +11,7 @@ class Payroll < ApplicationRecord
 
   def update_employee_salary
     if self.salary_changed? && self.employee && self.employee.lastest_payroll.id == self.id
-      Employee.update(self.employee.id, {salary: self.salary})
+      Employee.with_deleted.update(self.employee.id, {salary: self.salary})
     end
   end
 
@@ -164,7 +164,7 @@ class Payroll < ApplicationRecord
   private
     def set_default_val
       if defined?(self.closed) && !self.closed
-        e = Employee.find(self.employee_id)
+        e = Employee.with_deleted.find(self.employee_id)
         self.tax = Payroll.generate_tax(self, e)
         self.social_insurance = Payroll.generate_social_insurance(self, e)
         self.pvf = Payroll.generate_pvf(self, e)
