@@ -10,8 +10,8 @@ class PayrollsController < ApplicationController
     effective_date = nil
     if params[:effective_date] != "lasted"
       effective_date = DateTime.parse(params[:effective_date])
-      payroll = Payroll.where(effective_date: effective_date.beginning_of_day..effective_date.end_of_day).pluck(:employee_id)
-      employees = Employee.with_deleted.where(id: payroll)
+      employee_ids = Payroll.where(effective_date: effective_date.beginning_of_day..effective_date.end_of_day).pluck(:employee_id)
+      employees = Employee.with_deleted.where(id: employee_ids)
     else
       employees = Employee.all
     end
@@ -24,7 +24,6 @@ class PayrollsController < ApplicationController
 
     type = []
     if payroll_report
-      
       type.push("ลูกจ้างประจำ") if normal == 'true'
       type.push("ลูกจ้างชั่วคราว") if temporary == 'true'
       type.push("ลูกจ้างทดลองงาน") if probationary == 'true'
