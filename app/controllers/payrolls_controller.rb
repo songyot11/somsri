@@ -6,7 +6,15 @@ class PayrollsController < ApplicationController
 
   # GET /payrolls
   def index
-    employees = Employee.all
+   
+    effective_date = nil
+    if params[:effective_date] != "lasted"
+      effective_date = DateTime.parse(params[:effective_date])
+      employee_ids = Payroll.where(effective_date: effective_date.beginning_of_day..effective_date.end_of_day).pluck(:employee_id)
+      employees = Employee.with_deleted.where(id: employee_ids)
+    else
+      employees = Employee.all
+    end
 
     payroll_report = params[:payroll_report]
     normal = params[:normal]
@@ -16,24 +24,14 @@ class PayrollsController < ApplicationController
 
     type = []
     if payroll_report
-      
       type.push("ลูกจ้างประจำ") if normal == 'true'
       type.push("ลูกจ้างชั่วคราว") if temporary == 'true'
       type.push("ลูกจ้างทดลองงาน") if probationary == 'true'
       type.push("ลูกจ้างรายวัน") if daily == 'true'
-
       employees = employees.where(employee_type: type)
     end
 
-     if params[:effective_date] != "lasted"
-      employees = Employee.with_deleted.all
-    else
-      employees = Employee.with_deleted.where(deleted_at: Date.today.beginning_of_month..Date.today.end_of_month)
-                          .or(Employee.with_deleted.where(deleted_at: nil))
-    end
-
-    qry_payrolls = Payroll.with_deleted.where(employee_id: employees)
-
+    qry_payrolls = Payroll.with_deleted.where(employee_id: employees.ids)
 
     effective_date = nil 
     if params[:effective_date] != "lasted"
@@ -298,11 +296,8 @@ class PayrollsController < ApplicationController
     effective_date = DateTime.parse(create_params[:effective_date])
     if effective_date
       render json: [] and return if Payroll.where(effective_date: effective_date).count > 0
-      Payroll.with_deleted.where(closed: [nil, false]).update_all(closed: true, effective_date: DateTime.parse(create_params[:effective_date]))
-      employees = Employee.with_deleted.where(deleted_at: Date.today.beginning_of_month..Date.today.end_of_month)
-                          .or(Employee.with_deleted.where(deleted_at: nil))
-      
-      employees.to_a.each do |employee|
+      Payroll.where(closed: [nil, false]).update_all(closed: true, effective_date: DateTime.parse(create_params[:effective_date]))
+      Employee.all.without_deleted.to_a.each do |employee|
         if employee.lastest_payroll.nil?
           payroll = Payroll.new({
             employee_id: employee.id
