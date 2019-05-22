@@ -1,5 +1,5 @@
 class EmployeesController < ApplicationController
-  load_and_authorize_resource except: [:slip, :show]
+  load_and_authorize_resource except: [:slip, :show, :payrolls, :calculate_deduction]
   skip_before_action :verify_authenticity_token, :only => [:update, :create, :destroy]
 
   # GET /employees
@@ -64,7 +64,7 @@ class EmployeesController < ApplicationController
 
   # GET /employees/:id/payrolls
   def payrolls
-    payrolls = Employee.find(params[:id]).payrolls
+    payrolls = Employee.with_deleted.find(params[:id]).payrolls
                        .order("created_at desc")
                        .as_json("history")
     render json: payrolls, status: :ok
@@ -147,7 +147,7 @@ class EmployeesController < ApplicationController
   # POST /employees/:id/calculate_deduction
   def calculate_deduction
     p = JSON.parse(params[:payroll])
-    e = Employee.find(params[:id])
+    e = Employee.with_deleted.find(params[:id])
     e.employee_type = params[:employee_type]
     e.pay_pvf = params[:employee_pay_pvf]
     e.pay_social_insurance = params[:employee_pay_s_ins]

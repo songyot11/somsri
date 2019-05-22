@@ -25,7 +25,16 @@ class PayrollsController < ApplicationController
       employees = employees.where(employee_type: type)
     end
 
-    qry_payrolls = Payroll.where(employee_id: employees)
+     if params[:effective_date] != "lasted"
+      employees = Employee.with_deleted.all
+    else
+      employees = Employee.with_deleted.where(deleted_at: Date.today.beginning_of_month..Date.today.end_of_month)
+                          .or(Employee.with_deleted.where(deleted_at: nil))
+    end
+
+    qry_payrolls = Payroll.with_deleted.where(employee_id: employees)
+
+
     effective_date = nil 
     if params[:effective_date] != "lasted"
       effective_date = DateTime.parse(params[:effective_date])
@@ -289,8 +298,11 @@ class PayrollsController < ApplicationController
     effective_date = DateTime.parse(create_params[:effective_date])
     if effective_date
       render json: [] and return if Payroll.where(effective_date: effective_date).count > 0
-      Payroll.where(closed: [nil, false]).update_all(closed: true, effective_date: DateTime.parse(create_params[:effective_date]))
-      Employee.all.without_deleted.to_a.each do |employee|
+      Payroll.with_deleted.where(closed: [nil, false]).update_all(closed: true, effective_date: DateTime.parse(create_params[:effective_date]))
+      employees = Employee.with_deleted.where(deleted_at: Date.today.beginning_of_month..Date.today.end_of_month)
+                          .or(Employee.with_deleted.where(deleted_at: nil))
+      
+      employees.to_a.each do |employee|
         if employee.lastest_payroll.nil?
           payroll = Payroll.new({
             employee_id: employee.id
