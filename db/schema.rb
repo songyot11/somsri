@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20190214212740) do
+ActiveRecord::Schema.define(version: 20190620024845) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -54,6 +54,26 @@ ActiveRecord::Schema.define(version: 20190214212740) do
     t.datetime "created_at",   null: false
     t.datetime "updated_at",   null: false
     t.string   "bank_id"
+  end
+
+  create_table "candidates", force: :cascade do |t|
+    t.string   "full_name"
+    t.string   "nick_name"
+    t.string   "email"
+    t.string   "phone"
+    t.string   "from"
+    t.string   "school_year"
+    t.string   "note"
+    t.datetime "created_at",         null: false
+    t.datetime "updated_at",         null: false
+    t.string   "image_file_name"
+    t.string   "image_content_type"
+    t.integer  "image_file_size"
+    t.datetime "image_updated_at"
+    t.string   "file_file_name"
+    t.string   "file_content_type"
+    t.integer  "file_file_size"
+    t.datetime "file_updated_at"
   end
 
   create_table "categories", force: :cascade do |t|
@@ -208,6 +228,13 @@ ActiveRecord::Schema.define(version: 20190214212740) do
     t.integer  "user_id"
     t.datetime "created_at",                     null: false
     t.datetime "updated_at",                     null: false
+  end
+
+  create_table "design_skills", force: :cascade do |t|
+    t.string  "skill_name"
+    t.integer "skill_point"
+    t.integer "candidate_id"
+    t.index ["candidate_id"], name: "index_design_skills_on_candidate_id", using: :btree
   end
 
   create_table "employee_skills", force: :cascade do |t|
@@ -560,7 +587,9 @@ ActiveRecord::Schema.define(version: 20190214212740) do
     t.string   "img_url_content_type"
     t.integer  "img_url_file_size"
     t.datetime "img_url_updated_at"
+    t.integer  "school_id"
     t.index ["deleted_at"], name: "index_parents_on_deleted_at", using: :btree
+    t.index ["school_id"], name: "index_parents_on_school_id", using: :btree
   end
 
   create_table "payment_methods", force: :cascade do |t|
@@ -598,6 +627,13 @@ ActiveRecord::Schema.define(version: 20190214212740) do
     t.boolean  "closed"
     t.index ["deleted_at"], name: "index_payrolls_on_deleted_at", using: :btree
     t.index ["employee_id"], name: "index_payrolls_on_employee_id", using: :btree
+  end
+
+  create_table "programming_skills", force: :cascade do |t|
+    t.string  "skill_name"
+    t.integer "skill_point"
+    t.integer "candidate_id"
+    t.index ["candidate_id"], name: "index_programming_skills_on_candidate_id", using: :btree
   end
 
   create_table "quotation_invoices", force: :cascade do |t|
@@ -654,9 +690,11 @@ ActiveRecord::Schema.define(version: 20190214212740) do
   end
 
   create_table "school_settings", force: :cascade do |t|
-    t.string "school_year",      default: ""
-    t.string "semesters"
-    t.string "current_semester"
+    t.string  "school_year",      default: ""
+    t.string  "semesters"
+    t.string  "current_semester"
+    t.integer "school_id"
+    t.index ["school_id"], name: "index_school_settings_on_school_id", using: :btree
   end
 
   create_table "schools", force: :cascade do |t|
@@ -677,6 +715,10 @@ ActiveRecord::Schema.define(version: 20190214212740) do
     t.integer  "logo_file_size"
     t.datetime "logo_updated_at"
     t.text     "payroll_slip_header"
+    t.string   "name_eng"
+    t.string   "note"
+    t.string   "subdomain_name"
+    t.string   "branch"
   end
 
   create_table "site_configs", force: :cascade do |t|
@@ -706,6 +748,13 @@ ActiveRecord::Schema.define(version: 20190214212740) do
     t.string   "name"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+  end
+
+  create_table "soft_skills", force: :cascade do |t|
+    t.string  "skill_name"
+    t.integer "skill_point"
+    t.integer "candidate_id"
+    t.index ["candidate_id"], name: "index_soft_skills_on_candidate_id", using: :btree
   end
 
   create_table "student_lists", force: :cascade do |t|
@@ -902,6 +951,7 @@ ActiveRecord::Schema.define(version: 20190214212740) do
   add_foreign_key "class_permisions", "employees"
   add_foreign_key "class_permisions", "lists"
   add_foreign_key "classrooms", "classrooms", column: "next_id", on_delete: :nullify
+  add_foreign_key "design_skills", "candidates"
   add_foreign_key "employee_skills", "employees"
   add_foreign_key "employee_skills", "skills"
   add_foreign_key "employees", "classrooms", on_delete: :nullify
@@ -910,7 +960,11 @@ ActiveRecord::Schema.define(version: 20190214212740) do
   add_foreign_key "individuals", "employees", column: "friend_id"
   add_foreign_key "individuals", "employees", column: "parent_id"
   add_foreign_key "individuals", "employees", column: "spouse_id"
+  add_foreign_key "parents", "schools"
+  add_foreign_key "programming_skills", "candidates"
   add_foreign_key "roll_calls", "lists"
+  add_foreign_key "school_settings", "school_settings", column: "school_id"
+  add_foreign_key "soft_skills", "candidates"
   add_foreign_key "students", "classrooms", on_delete: :nullify
   add_foreign_key "students", "schools"
   add_foreign_key "users", "schools"
