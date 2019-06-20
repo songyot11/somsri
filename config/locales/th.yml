@@ -503,6 +503,7 @@ th:
   quotation: 'วางบิล'
   inventory: "พัสดุ"
   vacation: "วันลา"
+  scout: "แมวมอง"
 
   activerecord:
     attributes:
