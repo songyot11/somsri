@@ -951,3 +951,9 @@ th:
   save_change_confirmation: "คุณต้องการบันทึกการเปลี่ยนแปลงนี้หรือไม่"
   save_success: "บันทึกข้อมูลเรียบร้อยแล้ว"
   save_falied: "ไม่สามารถบันทึกข้อมูลได้"
+
+  #candidate
+  current_ability: "ความสามารถปัจจุบัน"
+  learn_ability: "ความสามารถในการเรียนรู้"
+  new_create: "สร้างรายชื่อใหม่"
+

@@ -1,0 +1,136 @@
+(function() {
+  'use strict';
+    angular.module('somsri.somsri.candidate', [])
+    .controller('candidateCtrl', ['$scope', '$rootScope', 'translateFilter','candidateService', function($scope, $rootScope, translateFilter, candidateService) {
+    var ctrl = this;
+    ctrl.activeTab = 'table'
+    ctrl.selectTab = 'table'
+    ctrl.hide = false
+    $rootScope.loadAndAuthorizeResource("candidate", function(){
+    $rootScope.menu = translateFilter('scout')
+      
+      candidateService.data().then(function(resp) {
+        console.log(resp)
+        //create update
+      });
+
+      
+      ctrl.selectTab = function(str) {
+      console.log(str)
+        if (str == 'candidateshortlist') {
+          ctrl.hide = true
+        } else {
+          ctrl.hide = false
+        }
+      }
+
+      var candidateTable = $('#candidate-table')
+      var candidateTableOptions = {
+        sidePagination: "server", 
+        pagination: true,
+        search: true,
+        toolbar: ".toolbar",
+        url: "/candidates",
+        columns: [{
+          field: 'id',
+          title: translateFilter("#"),
+          sortable: true
+        },{
+          field: 'link_full_name',
+          title: translateFilter("full_name"),
+          sortable: true
+        },{
+          field: 'nick_name',
+          title: translateFilter("nick_name"),
+          sortable: true
+        },{
+          field: 'school_year',
+          title: translateFilter("school_year"),
+          sortable: true
+        },{
+          field: 'current_ability',
+          title: translateFilter("current_ability"),
+          sortable: true
+        },{
+          field: 'learn_ability',
+          title: translateFilter("learn_ability"),
+          sortable: true
+        },{
+          field: 'email',
+          title: translateFilter("email"),
+          sortable: true
+        },{
+          field: 'email',
+          title: translateFilter("date_add"),
+          sortable: true
+        },{
+          field: 'from',
+          title: translateFilter("from"),
+          sortable: true
+        },{
+          field: 'detail',
+          title: '',
+          sortable: true
+        }]
+      }
+      candidateTable.bootstrapTable(candidateTableOptions)
+
+
+      var candidateshortlistTable = $('#candidate-shortlist-table')
+      var candidateshortlistTableOptions = {
+        sidePagination: "server", 
+        pagination: true,
+        search: true,
+        toolbar: ".toolbar",
+        url: "/candidates",
+        columns: [{
+          field: 'id',
+          title: translateFilter("#"),
+          sortable: true
+        },{
+          field: 'link_full_name',
+          title: translateFilter("full_name"),
+          sortable: true
+        },{
+          field: 'nick_name',
+          title: translateFilter("nick_name"),
+          sortable: true
+        },{
+          field: 'school_year',
+          title: translateFilter("school_year"),
+          sortable: true
+        },{
+          field: 'current_ability',
+          title: translateFilter("current_ability"),
+          sortable: true
+        },{
+          field: 'learn_ability',
+          title: translateFilter("learn_ability"),
+          sortable: true
+        },{
+          field: 'email',
+          title: translateFilter("email"),
+          sortable: true
+        },{
+          field: 'email',
+          title: translateFilter("date_add"),
+          sortable: true
+        },{
+          field: 'from',
+          title: translateFilter("from"),
+          sortable: true
+        },{
+          field: 'detail',
+          title: '',
+          sortable: true
+        }]
+      }
+      candidateshortlistTable.bootstrapTable(candidateshortlistTableOptions)
+
+
+
+
+
+    })
+  }]);
+})();

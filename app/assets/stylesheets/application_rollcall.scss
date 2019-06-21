@@ -19,20 +19,23 @@
 
 @import "application_invoice";
 @import "navigation_menu";
-body{
+body {
   margin-bottom: 50px;
   margin-top: 100px;
 }
-.form-sign-in{
+
+.form-sign-in {
   background: #fff;
   padding: 80px 100px;
   box-shadow: 0 2px 4px 0 rgba(0, 0, 0, 0.3);
   left: 25px;
 }
-.logo-login{
+
+.logo-login {
   padding-bottom: 40px;
 }
-.input-login{
+
+.input-login {
   font-family: 'Maitree', serif;
   border: inherit;
   border-radius: inherit;
@@ -41,17 +44,20 @@ body{
   font-size: 18px;
   box-shadow: none;
 }
-.form-control .input-login:focus{
+
+.form-control .input-login:focus {
   background: none;
 }
-.text-remember{
+
+.text-remember {
   font-weight: normal;
   font-size: 16px;
   color: #888;
   margin-bottom: 50px;
   letter-spacing: 1px;
 }
-.btn-signin{
+
+.btn-signin {
   background-color: #3fa1e6;
   color: #fff !important;
   padding: 8px 46px;
@@ -62,134 +68,159 @@ body{
   font-size: 16px;
   font-weight: lighter;
 }
-ul.nav.navbar-nav.navbar-right.dropdown{
+
+ul.nav.navbar-nav.navbar-right.dropdown {
   margin-top: 35px;
 }
-.sign-in.actions{
+
+.sign-in.actions {
   margin-top: 10px;
 }
-.main-menu .main{
+
+.main-menu .main {
   margin-left: -15px;
 }
+
 .container.main-menu {
-    margin-top: calc(50vh - 20px);
+  margin-top: calc(50vh - 20px);
 }
+
 .somsri-rollcall .logo.text-center {
-    background: #5bab67;
+  background: #5bab67;
 }
 
 .disabled {
   cursor: not-allowed !important;
 }
+
 .hide {
   display: none;
 }
 
 .row-centered {
-    text-align:center;
-}
-.col-centered {
-    display:inline-block;
-    float:none;
-    /* reset the text-align */
-    text-align:left;
-    /* inline-block space fix */
-    margin-right:-4px;
+  text-align: center;
 }
 
-.form_1{
+.col-centered {
+  display: inline-block;
+  float: none;
+  /* reset the text-align */
+  text-align: left;
+  /* inline-block space fix */
+  margin-right: -4px;
+}
+
+.form_1 {
   margin-top: 10px;
 }
-.head_title_rollcall{
+
+.head_title_rollcall {
   color: #5a5a5a;
   font-size: 24px;
   margin-bottom: 30px;
   border-bottom: 2px solid #ddd;
 }
-.time_half{
+
+.time_half {
   color: #337ab7;
   font-weight: bold;
 }
-.fa.fa-heartbeat,.fa.fa-briefcase{
-  color:#FFAA00;
+
+.fa.fa-heartbeat,
+.fa.fa-briefcase {
+  color: #FFAA00;
 }
-.fa.fa-times{
-  color:#E70A0E;
+
+.fa.fa-times {
+  color: #E70A0E;
 }
-.fa.fa-trophy,.fa.fa-clock-o{
+
+.fa.fa-trophy,
+.fa.fa-clock-o {
   color: #0b999c;
 }
-.fa.fa-check{
+
+.fa.fa-check {
   color: #5bab67;
 }
-.fa.fa-minus{
+
+.fa.fa-minus {
   color: #ddd;
 }
-th.name_student.ng-binding{
+
+th.name_student.ng-binding {
   vertical-align: inherit;
   border-top: 2px solid #c5c2c2;
   border-bottom: 2px solid #c5c2c2;
 }
-#rollcall-report .table>tbody>tr>td{
+
+#rollcall-report .table>tbody>tr>td {
   padding: 0px;
   border-right: 1px solid #ddd;
   border-left: 1px solid #ddd;
   border-top: 2px solid #c5c2c2;
   border-bottom: 2px solid #c5c2c2;
 }
-table.status_rollcall{
+
+table.status_rollcall {
   width: 100%;
 }
-#rollcall-report table.status_rollcall>tbody>tr>td{
+
+#rollcall-report table.status_rollcall>tbody>tr>td {
   padding: 5px 10px 5px 10px;
   text-align: center;
 }
 
-#rollcall-report table.status_rollcall>tbody>tr:first-child>td{
+#rollcall-report table.status_rollcall>tbody>tr:first-child>td {
   border-bottom: 1px solid #ddd;
 }
-table.time_rollcall{
+
+table.time_rollcall {
   width: 100%;
 }
-#rollcall-report table.time_rollcall>tbody>tr>td{
+
+#rollcall-report table.time_rollcall>tbody>tr>td {
   padding: 5px 10px 5px 10px;
   text-align: center;
 }
-#rollcall-report table.time_rollcall>tbody>tr:first-child>td{
+
+#rollcall-report table.time_rollcall>tbody>tr:first-child>td {
   border-bottom: 1px solid #ddd;
 }
+
 td.time_half {
   border-right: none !important;
   border-left: none !important;
 }
 
-#rollcall-report td.status_rollcall_data>table>tbody>tr>td{
+#rollcall-report td.status_rollcall_data>table>tbody>tr>td {
   padding: 5px 10px 5px 10px;
 }
 
-#rollcall-report td.status_rollcall_data>table>tbody>tr:first-child>td{
+#rollcall-report td.status_rollcall_data>table>tbody>tr:first-child>td {
   border-bottom: 1px solid #ddd;
 }
 
-td.status_rollcall_data{
+td.status_rollcall_data {
   border-right: none !important;
   border-left: none !important;
 }
 
-.row.head-sp{
+.row.head-sp {
   font-size: 16px;
 }
 
-.only-print-table, .only-print{
+.only-print-table,
+.only-print {
   display: none;
 }
 
-.only-view-table{
+.only-view-table {
   display: table-header-group;
 }
 
 .table>thead>tr>th {
-    border-top: 0px solid #ddd;
+  border-top: 0px solid #ddd;
 }
 
 #rollcall-report .name-th {
@@ -201,82 +232,70 @@ td.status_rollcall_data{
 }
 
 @media print {
-  .only-print{
+  .only-print {
     display: none;
   }
-
-  .only-print-table{
+  .only-print-table {
     display: table-header-group;
   }
-
-  .only-print{
+  .only-print {
     display: block;
   }
-
-  .only-view-table, .only-view{
+  .only-view-table,
+  .only-view {
     display: none;
   }
-
   body {
     margin: 0px;
     padding-right: 15px;
     padding-left: 40px;
   }
-
   .table>caption+thead>tr:first-child>td,
   .table>caption+thead>tr:first-child>th,
   .table>colgroup+thead>tr:first-child>td,
   .table>colgroup+thead>tr:first-child>th,
   .table>thead:first-child>tr:first-child>td,
-  .table>thead:first-child>tr:first-child>th {
-
-  }
-
-  #rollcall-report .table>tbody>tr>td{
+  .table>thead:first-child>tr:first-child>th {}
+  #rollcall-report .table>tbody>tr>td {
     padding: 0px 3px !important
   }
-
-  #rollcall-report .text-center{
+  #rollcall-report .text-center {
     text-align: center !important;
   }
-
   #rollcall-report .table>thead>tr>th,
   #rollcall-report .table>tbody>tr>td,
-  #rollcall-report .table>tbody>tr>th, {
+  #rollcall-report .table>tbody>tr>th,
+  {
     vertical-align: bottom !important;
     border: 1px solid #000 !important;
     margin: 0px auto !important;
   }
-
   #rollcall-report .table>thead>tr>th,
-  #rollcall-report .table>tbody>tr>td{
+  #rollcall-report .table>tbody>tr>td {
     text-align: center !important;
     vertical-align: middle !important;
   }
-
   #rollcall-report th {
     font-weight: normal;
   }
-
-  #rollcall-report .table>tbody>tr>td, #rollcall-report .table>tbody>tr>th,
-  #rollcall-report .table>tfoot>tr>td, #rollcall-report .table>tfoot>tr>th,
-  #rollcall-report .table>thead>tr>td, #rollcall-report .table>thead>tr>th {
+  #rollcall-report .table>tbody>tr>td,
+  #rollcall-report .table>tbody>tr>th,
+  #rollcall-report .table>tfoot>tr>td,
+  #rollcall-report .table>tfoot>tr>th,
+  #rollcall-report .table>thead>tr>td,
+  #rollcall-report .table>thead>tr>th {
     padding: 0px;
   }
-
   #rollcall-report .row.head-sp {
     font-size: 12px;
   }
-
   #rollcall-report td {
     padding: 0px !important;
     border-bottom: 0px !important;
   }
-
   .container-rollcall-report {
     margin: 0px;
   }
-
   #rollcall-report.form_1 {
     margin: 0px;
     margin-top: 5px;
@@ -285,89 +304,72 @@ td.status_rollcall_data{
     box-shadow: 0px;
     background-color: #FFF;
   }
-
   .status_rollcall .fa-times:before {
     content: "X";
   }
-
   #rollcall-report .fa-clock-o:before,
   #rollcall-report .fa-trophy:before,
   #rollcall-report .fa-check:before {
     content: "✓";
     text-align: center !important;
   }
-
   #rollcall-report .fa-heartbeat:before {
     content: "ป";
     text-align: center !important;
   }
-
   #rollcall-report .fa-briefcase:before {
     content: "ก";
     text-align: center !important;
   }
-
   #rollcall-report h2.text-center {
     font-size: 14px;
     margin: 0px;
     margin-bottom: 5px;
     font-weight: bold;
   }
-
-
-  #rollcall-report .fa-minus:before  {
+  #rollcall-report .fa-minus:before {
     content: " ";
   }
-
   #rollcall-report .classroom-number-th {
     width: 15px;
   }
-
   #rollcall-report .date-th {
     width: 15px;
   }
-
   #rollcall-report .name-th {
     min-width: 100px;
   }
-
   #rollcall-report .checked-th {
     width: 15px;
   }
-
   #rollcall-report .classroom-number-th {
     min-width: 0px;
   }
-
   #rollcall-report .late-th {
     width: 15px;
   }
-
-  #rollcall-report .sick-th{
+  #rollcall-report .sick-th {
     width: 15px;
   }
-
-  #rollcall-report .private-th{
+  #rollcall-report .private-th {
     width: 15px;
   }
-
-  #rollcall-report .missing-th{
+  #rollcall-report .missing-th {
     width: 15px;
   }
-
-  #rollcall-report .name_student{
+  #rollcall-report .name_student {
     padding-left: 3px !important;
     font-size: 14px;
     line-height: 14px;
     height: 20px;
   }
-  .btn-to-print-rollcall{
+  .btn-to-print-rollcall {
     display: none;
   }
 }
 
 .btn-to-print-rollcall,
-.btn-to-print-rollcall:focus{
+.btn-to-print-rollcall:focus {
   background-color: #5B5B5B;
   color: #ffffff;
   border: 2px solid #5B5B5B;
@@ -377,14 +379,14 @@ td.status_rollcall_data{
   font-size: 16px;
   float: right;
   margin-top: 20px;
-
-  &:hover{
+  &:hover {
     background-color: transparent;
     color: #5B5B5B;
     border: 2px solid #5B5B5B;
   }
 }
-.somsri-rollcall .modal-content flash-message-content .alert{
+
+.somsri-rollcall .modal-content flash-message-content .alert {
   position: absolute;
   width: 90%;
   top: 15px;
