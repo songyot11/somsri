@@ -177,6 +177,8 @@ Rails.application.routes.draw do
     end
   end
 
+  resources :scouts
+  
   resources :vacation_configs, only: [:index] do
   end
 

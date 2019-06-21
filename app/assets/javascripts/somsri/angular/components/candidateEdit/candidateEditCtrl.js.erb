@@ -1,0 +1,18 @@
+(function() {
+  'use strict';
+  angular.module('somsri.somsri.candidateEdit', [])
+  .controller('candidateEditCtrl', ['$scope', '$rootScope', "candidateEditService", function($scope, $rootScope, candidateEditService) {
+    var ctrl = this;
+
+    $rootScope.loadAndAuthorizeResource("candidateEdit", function(){
+      candidateEditService.getCandidate().then(function(resp) {
+        console.log(resp);
+        ctrl.data = resp;
+        
+
+       
+      });
+    });
+
+  }]);
+})();
