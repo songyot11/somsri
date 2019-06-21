@@ -9,5 +9,18 @@
 			});
 		};
 
+		this.saveCandidate = function(id, params) {
+			return $http.patch('/scouts/'+ id +'/update_candidate', params);
+		};
+
+
+
+
+
+
+
+
+
+
 	 }]);
 })();

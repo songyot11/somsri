@@ -43,6 +43,12 @@ Rails.application.routes.draw do
     end
   end
 
+  resources :scouts do
+    member do
+      patch 'update_candidate'
+    end
+  end
+
   resources :expenses, only: [:index, :create, :destroy, :show, :update] do
     member do
       patch 'upload_photo'
@@ -176,8 +182,6 @@ Rails.application.routes.draw do
       get 'reject'
     end
   end
-
-  resources :scouts
   
   resources :vacation_configs, only: [:index] do
   end

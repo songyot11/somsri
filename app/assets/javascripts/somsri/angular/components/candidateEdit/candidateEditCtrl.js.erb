@@ -8,10 +8,35 @@
       candidateEditService.getCandidate().then(function(resp) {
         console.log(resp);
         ctrl.data = resp;
-        
-
-       
       });
+
+    ctrl.submit = function(param){
+      candidateEditService.saveCandidate(ctrl.data.id, {
+          candidate:{
+            full_name: param.full_name,
+            nick_name: param.nick_name,
+            email: param.email
+
+          }
+        }).then(function (isSuccess) {
+          if (isSuccess) {
+            console.log('Update complete!');
+          }else{
+            console.log('Update fail!'); 
+        }
+      });
+  }
+
+
+
+
+
+
+
+
+
+
+
     });
 
   }]);
