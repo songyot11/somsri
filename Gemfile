@@ -26,7 +26,7 @@ gem 'devise'
 
 gem 'cancancan'
 
-gem 'font-awesome-rails'
+gem 'font_awesome5_rails'
 
 gem 'rails-i18n', '~> 5.0.0'
 

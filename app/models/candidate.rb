@@ -13,14 +13,15 @@ class Candidate < ApplicationRecord
   def as_json
     return {
       id: id,
-      link_full_name: helpers.link_to_full_name(self),
-      nick_name: nick_name,
-      school_year: school_year,
-      current_ability: current_ability,
-      learn_ability: learn_ability,
-      email: email,
-      from: from,
-      detail: "<a href = "">รายละเอียด</a> <a href = ""><i class='fa fa-trash'></i><a>"
+      link_full_name: helpers.link_to_path(full_name, id),
+      nick_name: helpers.link_to_path(nick_name, id),
+      school_year: helpers.link_to_path(school_year, id),
+      current_ability: helpers.link_to_path(current_ability, id),
+      learn_ability: helpers.link_to_path(learn_ability, id),
+      email: helpers.link_to_path(email, id),
+      from: helpers.link_to_path(from, id),
+      created_at: helpers.date_formatter(created_at),
+      detail: "<a href = "">รายละเอียด</a> <a href = ""><i class='fas fa-trash-alt color-red'></i><a>"
     }
   end  
 end

@@ -1,5 +1,6 @@
 module CandidatesHelper
-	def link_to_full_name(candidate)
-		link_to candidate.full_name, "/scouts/#{candidate.id}"
+	def link_to_path(name, id)
+		link_to name || '', "/somsri#/candidate/#{id}"
 	end	
+	
 end

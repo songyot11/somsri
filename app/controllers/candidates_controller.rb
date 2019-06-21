@@ -4,6 +4,7 @@ class CandidatesController < ApplicationController
     @candidate = Candidate.all
     total = @candidate.size
     @candidate = @candidate.offset(params[:offset]).limit(params[:limit])
+    
     render json: {
       rows: @candidate.as_json,
       total: total

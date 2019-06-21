@@ -16,7 +16,6 @@
 
       
       ctrl.selectTab = function(str) {
-      console.log(str)
         if (str == 'candidateshortlist') {
           ctrl.hide = true
         } else {
@@ -60,7 +59,7 @@
           title: translateFilter("email"),
           sortable: true
         },{
-          field: 'email',
+          field: 'created_at',
           title: translateFilter("date_add"),
           sortable: true
         },{
@@ -112,7 +111,7 @@
           title: translateFilter("email"),
           sortable: true
         },{
-          field: 'email',
+          field: 'created_at',
           title: translateFilter("date_add"),
           sortable: true
         },{
