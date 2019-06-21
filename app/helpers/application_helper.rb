@@ -90,4 +90,8 @@ module ApplicationHelper
       return ""
     end
   end
+
+  def date_formatter(date)
+    date.strftime('%d/%m/%Y')
+  end
 end

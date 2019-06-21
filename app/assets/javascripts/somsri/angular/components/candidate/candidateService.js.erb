@@ -1,0 +1,14 @@
+(function() {
+  'use strict';
+
+  angular.module('somsri.somsri.candidate.service', [])
+  .service('candidateService', ['$http', function($http) {
+
+  this.data = function(){
+    return $http.get('/candidates').then(function(resp) {
+      return resp.data
+    });
+  }
+
+  }]);
+})();

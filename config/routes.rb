@@ -7,7 +7,7 @@ Rails.application.routes.draw do
   get "/menu" => "menu#index"
   get "/somsri_invoice" => "menu#landing_invoice"
   get "/somsri_payroll" => "menu#landing_payroll"
-  get "/somsri_rollcall" => "menu#landing_rollcall"
+  get "/somsri_rollcall" => "menu#landing_rollcall" 
   get "/somsri" => "menu#landing_somsri"
   get "/main" => "menu#landing_main"
   get "/language" => "home#language"
@@ -237,4 +237,5 @@ Rails.application.routes.draw do
     resources :manage_inventory_repairs
   end
 
+  resources :candidates
 end
