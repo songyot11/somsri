@@ -11,6 +11,7 @@ class CandidatesController < ApplicationController
     }, status: :ok
   end
 
+<<<<<<< HEAD
   def create
     @candidate = Candidate.new(candidate_params)
     @candidate.save
@@ -53,6 +54,10 @@ class CandidatesController < ApplicationController
           @candidate = Candidate.where(shortlist: params[:shortlist]).order(created_at: params[:order])
         end
       end
+=======
+  def show
+    ap 5555555555555555555555555555555555555
+>>>>>>> edit show action in candidateController
   end  
   
   private
