@@ -1,0 +1,13 @@
+(function() {
+  'use strict';
+    angular.module('somsri.somsri.candidate_detail', [])
+    .controller('candidateDetailCtrl', ['$scope', '$rootScope', 'translateFilter','candidateDetailService','$state', function($scope, $rootScope, translateFilter, candidateDetailService, $state) {
+      var ctrl = this;
+
+      candidateDetailService.getById($state.params.id).then(function(resp) {
+        console.log("-------")
+        console.log(resp)
+      });
+
+    }]);
+})();

@@ -6,7 +6,11 @@ class CandidatesController < ApplicationController
     @candidate = @candidate.offset(params[:offset]).limit(params[:limit])
     
     render json: {
+<<<<<<< HEAD
       rows: @candidate.as_json('data-table'),
+=======
+      rows: @candidate.as_json('data_table'),
+>>>>>>> edit as_json
       total: total
     }, status: :ok
   end
@@ -56,8 +60,14 @@ class CandidatesController < ApplicationController
       end
 =======
   def show
+<<<<<<< HEAD
     ap 5555555555555555555555555555555555555
 >>>>>>> edit show action in candidateController
+=======
+    detail = Candidate.find(params[:id])
+    ap detail
+    render json: detail, status: :ok
+>>>>>>> edit as_json
   end  
   
   private

@@ -14,7 +14,7 @@ class Candidate < ApplicationRecord
   end  
 
   def as_json(options = {})
-    if(options['data-table'])
+    if options['data_table']
       {
         id: id,
         link_full_name: helpers.link_to_path(full_name, id),
