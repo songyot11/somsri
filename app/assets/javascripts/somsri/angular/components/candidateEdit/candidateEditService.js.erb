@@ -4,13 +4,13 @@
 	.service('candidateEditService', ['$http', function($http) {
 	
 		this.getCandidate = function(id) {
-			return $http.get('/scouts/' + id +'/edit').then(function(resp) {
+			return $http.get('/candidates/' + id +'/edit').then(function(resp) {
 			  return resp.data;
 			});
 		};
 
 		this.saveCandidate = function(id, params) {
-			return $http.patch('/scouts/'+ id +'/update_candidate', params);
+			return $http.patch('/candidates/'+ id +'/update_candidate', params);
 		};
 
 

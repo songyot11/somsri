@@ -43,12 +43,6 @@ Rails.application.routes.draw do
     end
   end
 
-  resources :scouts do
-    member do
-      patch 'update_candidate'
-    end
-  end
-
   resources :expenses, only: [:index, :create, :destroy, :show, :update] do
     member do
       patch 'upload_photo'
@@ -243,5 +237,10 @@ Rails.application.routes.draw do
     resources :manage_inventory_repairs
   end
 
-  resources :candidates 
+  resources :candidates do
+    member do
+      patch 'update_candidate'
+    end
+  end
+
 end

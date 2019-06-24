@@ -11,8 +11,9 @@ class Candidate < ApplicationRecord
     ApplicationController.helpers
   end  
 
-  def as_json
-    return {
+  def as_json(options = {})
+    if(options['data-table'])
+      {
       id: id,
       link_full_name: helpers.link_to_path(full_name, id),
       nick_name: helpers.link_to_path(nick_name, id),
@@ -24,5 +25,8 @@ class Candidate < ApplicationRecord
       created_at: helpers.date_formatter(created_at),
       detail: helpers.link_to_path("รายละเอียด", id)
     }
+    else
+      super
+    end
   end  
 end

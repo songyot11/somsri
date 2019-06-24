@@ -6,7 +6,7 @@ class CandidatesController < ApplicationController
     @candidate = @candidate.offset(params[:offset]).limit(params[:limit])
     
     render json: {
-      rows: @candidate.as_json,
+      rows: @candidate.as_json('data-table'),
       total: total
     }, status: :ok
   end
@@ -51,5 +51,56 @@ class CandidatesController < ApplicationController
   end  
 
   
+  def edit
+    render json: getInfo(params[:id]), status: :ok
+  end
+  
+  def update_candidate
+    @candidate = Candidate.find_by(id: params[:id])
+    @candidate.update(params_candidate)
+    @programming_skill = ProgrammingSkill.find_by(id: params[:id])
+    @programming_skill.update(params_programming_skill)
+    @soft_skill = SoftSkill.find_by(id: params[:id])
+    @soft_skill.update(params_soft_skill)
+    @design_skill = DesignSkill.find_by(id: params[:id])
+    @design_skill.update(params_design_skill)
+  end
+
+  def rollback
+    @candidate = Candidate.find(params[:id])
+    version = @candidate.versions.find(params[:version])
+    if version.reify.save
+      redirect_to @candidate, notice: 'User was Successfully rollbacked.'
+    else
+      render :show
+    end
+  end
+
+  private
+
+  def getInfo(id)
+    {
+      candidate: Candidate.find_by(id: id),
+      programming_skill: ProgrammingSkill.find_by(id: id),
+      soft_skill: SoftSkill.find_by(id: id),
+      design_skill: DesignSkill.find_by(id: id)
+    }
+  end
+
+  def params_candidate
+    params.require(:candidate).permit(:full_name, :nick_name, :email)
+  end
+
+  def params_programming_skill
+    params.require(:programming_skill).permit(:skill_name, :skill_point, :candidate_id)
+  end
+
+  def params_soft_skill
+    params.require(:soft_skill).permit(:skill_name, :skill_point, :candidate_id)
+  end
+
+  def params_design_skill
+    params.require(:design_skill).permit(:skill_name, :skill_point, :candidate_id)
+  end
 
 end
