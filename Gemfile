@@ -129,3 +129,4 @@ gem "i18n-js"
 # print log ruby
 gem 'awesome_print', :require => 'ap'
 ruby '2.3.1'
+gem 'acts_as_paranoid'

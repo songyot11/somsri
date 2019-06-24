@@ -1,4 +1,5 @@
 class Candidate < ApplicationRecord
+  acts_as_paranoid
   has_many :programming_skills
   has_many :soft_skills
   has_many :design_skills
@@ -21,7 +22,7 @@ class Candidate < ApplicationRecord
       email: helpers.link_to_path(email, id),
       from: helpers.link_to_path(from, id),
       created_at: helpers.date_formatter(created_at),
-      detail: "<a href = "">รายละเอียด</a> <a href = ""><i class='fas fa-trash-alt color-red'></i><a>"
+      detail: helpers.link_to_path("รายละเอียด", id)
     }
   end  
 end

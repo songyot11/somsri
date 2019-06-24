@@ -237,5 +237,6 @@ Rails.application.routes.draw do
     resources :manage_inventory_repairs
   end
 
-  resources :candidates
+  resources :candidates 
+
 end

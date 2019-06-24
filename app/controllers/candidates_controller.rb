@@ -10,8 +10,10 @@ class CandidatesController < ApplicationController
       total: total
     }, status: :ok
   end
+  
+  def destroy
+    @candidate = Candidate.find_by(id: params[:id])
+    @candidate.destroy
+  end
 
-  def show
-    ap 'show >>>>>>>>>'
-  end  
 end

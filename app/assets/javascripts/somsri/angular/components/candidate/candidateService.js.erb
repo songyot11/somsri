@@ -9,6 +9,10 @@
       return resp.data
     });
   }
+  
+  this.removeCandidate = function(id) {
+      return $http.delete('/candidates/' + id)
+    }
 
   }]);
 })();

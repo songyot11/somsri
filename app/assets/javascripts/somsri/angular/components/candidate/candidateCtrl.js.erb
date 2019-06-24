@@ -1,28 +1,56 @@
 (function() {
   'use strict';
     angular.module('somsri.somsri.candidate', [])
-    .controller('candidateCtrl', ['$scope', '$rootScope', 'translateFilter','candidateService', function($scope, $rootScope, translateFilter, candidateService) {
+    .controller('candidateCtrl', ['$scope', '$rootScope', 'translateFilter',
+                'candidateService', '$uibModal', 'candidateService', '$window', 
+                function($scope, $rootScope, translateFilter, candidateService, $uibModal, service, $window) {
     var ctrl = this;
-    ctrl.activeTab = 'table'
-    ctrl.selectTab = 'table'
     ctrl.hide = false
+    ctrl.hide2 = true
     $rootScope.loadAndAuthorizeResource("candidate", function(){
     $rootScope.menu = translateFilter('scout')
-      
       candidateService.data().then(function(resp) {
         console.log(resp)
         //create update
       });
-
-      
+      //table hide
       ctrl.selectTab = function(str) {
         if (str == 'candidateshortlist') {
           ctrl.hide = true
+          ctrl.hide2 = false
         } else {
+          ctrl.hide2 = true
           ctrl.hide = false
         }
       }
-
+      //Show Modal
+      function openConfirmationModal(message, success, dismiss) {
+      $scope.message = message;
+      console.log($scope.message)
+      $uibModal.open({
+        animation: true,
+        backdrop: 'static',
+        keyboard: false,
+        scope: $scope,
+        templateUrl: "<%= asset_path('main/angular/components/modal/confirm/confirmModalView.html') %>",
+        controller: 'confirmModalCtrl as confirm',
+        size: 'md',
+        resolve: {
+          resources: ['$ocLazyLoad', 'ASSETS', function($ocLazyLoad, ASSETS) {
+            return $ocLazyLoad.load([
+              ASSETS.somsri.somsri.confirm_modal
+            ]);
+          }]
+        }
+      }).result.then(function (isConfirm) {
+        if (isConfirm) {
+          if(success){ success() }
+        }else{
+          if(dismiss){ dismiss() }
+        }
+      });
+    }
+      // table #1
       var candidateTable = $('#candidate-table')
       var candidateTableOptions = {
         sidePagination: "server", 
@@ -36,7 +64,7 @@
           sortable: true
         },{
           field: 'link_full_name',
-          title: translateFilter("full_name"),
+          title: translateFilter("full_name"),  
           sortable: true
         },{
           field: 'nick_name',
@@ -69,12 +97,14 @@
         },{
           field: 'detail',
           title: '',
-          sortable: true
+        },{
+          field: 'bring_back',
+          formatter: editBtnFormattertable1
         }]
       }
       candidateTable.bootstrapTable(candidateTableOptions)
 
-
+      //table #2
       var candidateshortlistTable = $('#candidate-shortlist-table')
       var candidateshortlistTableOptions = {
         sidePagination: "server", 
@@ -121,14 +151,30 @@
         },{
           field: 'detail',
           title: '',
-          sortable: true
+        },{
+          field: 'bring_back',
+          formatter: editBtnFormattertable2
         }]
       }
       candidateshortlistTable.bootstrapTable(candidateshortlistTableOptions)
 
+      var angularCtrlStr = "angular.element(document.getElementById('angularCtrl')).scope().candidate"
+      function editBtnFormattertable1(index, row, element){
+      var html =  '<a href="javascript:void(0)" class="color-red hover" onclick="' + angularCtrlStr + '.removeCandidate(' + row.id + ')"><i class="fas fa-trash-alt color-red"></i></a>';
+      return html;
+    }
+      function editBtnFormattertable2(index, row, element){
+      var html =  '<a href="javascript:void(0)" class="color-red hover" onclick="' + angularCtrlStr + '.removeCandidate(' + row.id + ')"><i class="fas fa-trash-alt color-red"></i></a>';
+      return html;
+    }
 
-
-
+      ctrl.removeCandidate = function(id){
+      openConfirmationModal(translateFilter('confirmdelete'), function(){
+        service.removeCandidate(id).then(function(resp) {
+          $window.location.reload();
+        });
+      })
+    }
 
     })
   }]);
