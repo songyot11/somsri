@@ -961,3 +961,21 @@ th:
   candidateshortlist: "รายชื่อผู้ที่ได้รับความสนใจ"
   schoolyear: "ปีที่เข้าเรียน"
 
+  #candidateFrom(En)
+  nameE: "Name"
+        nicknameE: "Nickname"
+        id_card_no: "เลขบัตรประชาชน"
+        mobileE: "Phone Number"
+        emailE: "Email"
+        line_id: "Line ID"
+        schoolE: "From"
+        grade_idE: "Year"
+        NoteE: "Note"
+        CurrentAbility: "Current Ability"
+        LearnAbility: "Learn Ability"
+        AttentionAbility: "Attention"
+        Interest: "Interest"
+        resumetranscriptPDF: "Resume/Transcript (PDF)"
+        picture: "Picture"
+
+

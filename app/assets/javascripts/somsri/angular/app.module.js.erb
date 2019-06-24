@@ -391,6 +391,18 @@
           }]
         }
     }).state({
+        url: '/candidateaddview',
+        name: 'candidateaddview',
+        templateUrl: "<%= asset_path('somsri/angular/components/candidate/candidateaddview/candidateFrom.html') %>",
+        controller: 'candidateCtrl2 as candidate2',
+        resolve: {
+          resources: ['$ocLazyLoad', function($ocLazyLoad) {
+            return $ocLazyLoad.load([
+              ASSETS.somsri.somsri.candidateaddview
+            ]);
+          }]
+        }
+    }).state({
       url: '/vacation/dashboard/:status',
       name: 'vacation_dashboard',
       templateUrl: "<%= asset_path('somsri/angular/components/vacation/dashboard/dashboardView.html') %>",
