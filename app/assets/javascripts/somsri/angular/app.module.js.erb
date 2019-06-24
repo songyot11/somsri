@@ -406,7 +406,7 @@
       url: '/candidate/detail/:id',
         name: 'candidate_detail',
         templateUrl: "<%= asset_path('somsri/angular/components/candidate/candidateDetail/candidateDetailView.html') %>",
-        controller: 'candidateDetailCtrl as detail',
+        controller: 'candidateDetailCtrl as candidateDetail',
         resolve: {
           resources: ['$ocLazyLoad', function($ocLazyLoad) {
             return $ocLazyLoad.load([
