@@ -3,8 +3,8 @@
 	angular.module('somsri.somsri.candidateEdit.service', [])
 	.service('candidateEditService', ['$http', function($http) {
 	
-		this.getCandidate = function() {
-			return $http.get('/scouts').then(function(resp) {
+		this.getCandidate = function(id) {
+			return $http.get('/scouts/' + id +'/edit').then(function(resp) {
 			  return resp.data;
 			});
 		};
