@@ -53,7 +53,8 @@
       // table #1
       var candidateTable = $('#candidate-table')
       var candidateTableOptions = {
-        sidePagination: "server", 
+        sidePagination: "server",
+        pageSize: 20, 
         pagination: true,
         search: true,
         toolbar: ".toolbar",
@@ -72,7 +73,7 @@
           sortable: true
         },{
           field: 'school_year',
-          title: translateFilter("school_year"),
+          title: translateFilter("schoolyear"),
           sortable: true
         },{
           field: 'current_ability',
@@ -108,6 +109,7 @@
       var candidateshortlistTable = $('#candidate-shortlist-table')
       var candidateshortlistTableOptions = {
         sidePagination: "server", 
+        pageSize: 20,
         pagination: true,
         search: true,
         toolbar: ".toolbar",
@@ -126,7 +128,7 @@
           sortable: true
         },{
           field: 'school_year',
-          title: translateFilter("school_year"),
+          title: translateFilter("schoolyear"),
           sortable: true
         },{
           field: 'current_ability',
