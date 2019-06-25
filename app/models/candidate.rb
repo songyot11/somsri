@@ -6,7 +6,7 @@ class Candidate < ApplicationRecord
   accepts_nested_attributes_for :programming_skills
   accepts_nested_attributes_for :soft_skills
   accepts_nested_attributes_for :design_skills
-  has_attached_file :image, styles: { medium: "300x300>", thumb: "100x100>" }, default_url: "/somsri_logo"
+  has_attached_file :image, styles: { medium: "300x300>", thumb: "100x100>" }, default_url: "http://chittagongit.com/images/icon-file-size/icon-file-size-10.jpg"
   validates_attachment_content_type :image, content_type: /\Aimage\/.*\z/
   has_attached_file :file, styles: { medium: "300x300>", thumb: "100x100>" }, default_url: "/images/:style/missing.png"
   validates_attachment_content_type :file, content_type: /\Aimage\/.*\z/

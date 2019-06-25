@@ -9,20 +9,16 @@
 			});
 		};
 
-		this.Upload_image = function(id, file){
-			Upload.upload(
-			{
+		this.uploadImage = function(id, file){
+			return Upload.upload({
 				url: '/candidates/' + id + '/upload_photo',
 				method: 'PATCH',
-				data: { candidate: {
-					file: file
-					}
-				}
+				data: { candidate: { file: file } }
 			})
 		}
 
 		this.saveCandidate = function(id, params) {
-			return $http.patch('/candidates/'+ id +'/update_candidate', params);
+			return $http.patch('/candidates/'+ id +'/update_candidate', params)
 		};
 
 

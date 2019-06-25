@@ -1,7 +1,6 @@
   <div class="col-md-4">
-    <div class="img-profile cursor-pointer" ngf-select="candidate.showImage($event)">
-      <div class="img-bg bg-light-gray circle"></div>
-      <img src="" id="imgs">
+    <div class="img-profile cursor-pointer" id="image" ngf-select="candidate.showImage($event, 'pic')">
+      <img src="{{candidate.data.pic}}" id="pic" class="img-lg">
     </div>
   </div>
-  <button type="submit" ng-click="candidate.uploadPhoto($file)" class="btn btn-custom btn-green btn-block">Upload</button>
+  <button type="submit" ng-click="candidate.uploadPhoto()" class="btn btn-custom btn-green btn-block">Upload</button>

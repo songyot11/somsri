@@ -68,7 +68,7 @@ class CandidatesController < ApplicationController
 
   def upload_photo
     @candidate = Candidate.find_by(id: params[:id])
-    @candidate.update( image: upload_photo_params[:file] )
+    @candidate.update( image: upload_photo_params[:file])
   end
 
   def rollback
@@ -86,6 +86,7 @@ class CandidatesController < ApplicationController
   def getInfo(id)
     {
       candidate: Candidate.find_by(id: id),
+      pic: Candidate.find_by(id: id).image.expiring_url(10),
       programming_skill: ProgrammingSkill.find_by(id: id),
       soft_skill: SoftSkill.find_by(id: id),
       design_skill: DesignSkill.find_by(id: id)

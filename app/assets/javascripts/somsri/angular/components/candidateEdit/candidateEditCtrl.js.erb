@@ -3,7 +3,7 @@
   angular.module('somsri.somsri.candidateEdit', [])
   .controller('candidateEditCtrl', ['$scope', '$rootScope', 'candidateEditService', '$state', function($scope, $rootScope, candidateEditService, $state) {
     var ctrl = this;
-
+    var imagefile;
     $rootScope.loadAndAuthorizeResource("candidateEdit", function(){
       candidateEditService.getCandidate($state.params.id).then(function(resp) {
         ctrl.data = resp;
@@ -26,26 +26,20 @@ $scope.point = [
     { 'id': 19, 'value' : '19' },{ 'id': 20, 'value' : '20' }
     ];
 
- ctrl.uploadPhoto = function(file) {
-  console.log(file);
-  candidateEditService.Upload_image(ctrl.data.candidate.id, file).then(function(resp) {
-    console.log('Upload complete!');
+ ctrl.uploadPhoto = function() {
+  candidateEditService.uploadImage(ctrl.data.candidate.id, imagefile).then(function(resp) {
+    console.log('Upload Success!');
   });
-};
+  }
 
-ctrl.showImage = function(event){
-  console.log(event)
+
+ctrl.showImage = function(event, id){
   console.log(event.target.files[0]);
   var img = URL.createObjectURL(event.target.files[0]);
-  console.log(img)
-  $('#' + imgs).attr('src', img);
-
+  $('#' + id).attr('src', img);
+  imagefile = event.target.files[0];
 }
 
-$scope.openFileWindow = function () {
-  angular.element( document.querySelector( '#fileUpload' ) ).trigger('click');
-  console.log('triggering click');
-};
 
 
 
