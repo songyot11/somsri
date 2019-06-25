@@ -1,15 +1,7 @@
-            <div class="col-md-4">
-              <div class="img-profile cursor-pointer" ngf-select="candidate.showImage($event)">
-                <div ng-switch on="candidate.data.candidate.image.length > 0">
-                  <div ng-switch-when="true">
-                    <div class="img-bg circle" style="background: url('{{ candidate.data.candidate.image.url }}')"></div>
-                  </div>
-                  <div ng-switch-default>
-                    <i class="fa fa-user center font-size-icon font-white" aria-hidden="true"></i>
-                    <div class="img-bg bg-light-gray circle"></div>
-                  </div>
-                </div>
-              </div>
-            </div>
-          </div>
-          <button type="submit" ng-click="candidate.uploadPhoto($file)" class="btn btn-custom btn-green btn-block">Upload</button>
+  <div class="col-md-4">
+    <div class="img-profile cursor-pointer" ngf-select="candidate.showImage($event)">
+      <div class="img-bg bg-light-gray circle"></div>
+      <img src="" id="imgs">
+    </div>
+  </div>
+  <button type="submit" ng-click="candidate.uploadPhoto($file)" class="btn btn-custom btn-green btn-block">Upload</button>

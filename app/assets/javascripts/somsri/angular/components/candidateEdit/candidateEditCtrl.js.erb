@@ -36,6 +36,9 @@ $scope.point = [
 ctrl.showImage = function(event){
   console.log(event)
   console.log(event.target.files[0]);
+  var img = URL.createObjectURL(event.target.files[0]);
+  console.log(img)
+  $('#' + imgs).attr('src', img);
 
 }
 
