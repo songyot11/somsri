@@ -1,8 +1,7 @@
 class CandidatesController < ApplicationController
 
   def index
-    @candidate = Candidate.all.order(created_at: 'desc')
-    filter_parents
+    filter_candidates
     total = @candidate.size
     @candidate = @candidate.offset(params[:offset]).limit(params[:limit])
     
@@ -17,13 +16,18 @@ class CandidatesController < ApplicationController
     @candidate.destroy
   end
 
-  def filter_parents
+  def filter_candidates
+    @candidate = if params[:shortlist].present?
+                  Candidate.where(shortlist: true).order(created_at: 'desc')
+                 else 
+                  Candidate.where(shortlist: false).order(created_at: 'desc')
+                 end 
     if params[:search].present?
       search = "%#{params[:search]}%"
       @candidate = @candidate.where('full_name LIKE :search OR
                                   nick_name LIKE :search OR
-                                  email LIKE :search
-                                  ',
+                                  email LIKE :search OR
+                                  candidates.from LIKE :search',
                                   search: search)
     end
       # sort and order
