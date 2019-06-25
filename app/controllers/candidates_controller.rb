@@ -66,6 +66,11 @@ class CandidatesController < ApplicationController
     @design_skill.update(params_design_skill)
   end
 
+  def upload_photo
+    @candidate = Candidate.find_by(id: params[:id])
+    @candidate.update( image: upload_photo_params[:file] )
+  end
+
   def rollback
     @candidate = Candidate.find(params[:id])
     version = @candidate.versions.find(params[:version])
@@ -101,6 +106,10 @@ class CandidatesController < ApplicationController
 
   def params_design_skill
     params.require(:design_skill).permit(:skill_name, :skill_point, :candidate_id)
+  end
+
+  def upload_photo_params
+    params.require(:candidate).permit(:file)
   end
 
 end

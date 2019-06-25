@@ -1,52 +1,15 @@
-<form name="candidateForm" ng-submit="candidate.submit(candidate.data)">
-    <div class="form-group">
-        <label for="full_name">{{ 'full_name' | translate }}</label>    
-        <input type="text" class="form-control" id="full_name" ng-model="candidate.data.candidate.full_name">
-    </div>
-    <div class="form-group">
-        <label for="nick_name">{{ 'nick_name' | translate }}</label>    
-        <input type="text" class="form-control" id="nick_name" ng-model="candidate.data.candidate.nick_name">
-    </div>
-    <div class="form-group">
-        <label for="email">{{ 'email' | translate }}</label>    
-        <input type="text" class="form-control" id="email" ng-model="candidate.data.candidate.email">
-    </div>
-    <strong>programming_skill</strong><br>
-    <div class="form-group">
-			<label for="skillname">skillname</label>    
-			<input type="text" class="form-control" id="skillname" ng-model="candidate.data.programming_skill.skill_name">				
-			<select ng-model="candidate.data.programming_skill.skill_point">
-				<option value="{{candidate.data.programming_skill.skill_point}}" selected>{{candidate.data.programming_skill.skill_point}}</option>
-				<option ng-repeat="value in point" value="{{value.id}}">{{value.value}}</option>
-			</select>
-    </div>
-
-		<strong>soft_skill</strong><br>
-    <div class="form-group">
-			<label for="skillname">skillname</label>    
-			<input type="text" class="form-control" id="skillname" ng-model="candidate.data.soft_skill.skill_name">				
-			<select ng-model="candidate.data.soft_skill.skill_point">
-				<option value="{{candidate.data.soft_skill.skill_point}}" selected>{{candidate.data.soft_skill.skill_point}}</option>
-				<option ng-repeat="value in point" value="{{value.id}}">{{value.value}}</option>
-			</select>
-    </div>
-
-		<strong>design_skill</strong><br>
-    <div class="form-group">
-			<label for="skillname">skillname</label>    
-			<input type="text" class="form-control" id="skillname" ng-model="candidate.data.design_skill.skill_name">				
-			<select ng-model="candidate.data.design_skill.skill_point">
-				<option value="{{candidate.data.design_skill.skill_point}}" selected>{{candidate.data.design_skill.skill_point}}</option>
-				<option ng-repeat="value in point" value="{{value.id}}">{{value.value}}</option>
-			</select>
-    </div>
-
-
-
-
-
-
-
-
-    <button type="submit" class="btn btn-custom btn-green btn-block">update</button>
-</form>
+            <div class="col-md-4">
+              <div class="img-profile cursor-pointer" ngf-select="candidate.showImage($event)">
+                <div ng-switch on="candidate.data.candidate.image.length > 0">
+                  <div ng-switch-when="true">
+                    <div class="img-bg circle" style="background: url('{{ candidate.data.candidate.image.url }}')"></div>
+                  </div>
+                  <div ng-switch-default>
+                    <i class="fa fa-user center font-size-icon font-white" aria-hidden="true"></i>
+                    <div class="img-bg bg-light-gray circle"></div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+          <button type="submit" ng-click="candidate.uploadPhoto($file)" class="btn btn-custom btn-green btn-block">Upload</button>

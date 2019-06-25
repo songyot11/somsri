@@ -1,13 +1,25 @@
 (function() {
 	'use strict';
 	angular.module('somsri.somsri.candidateEdit.service', [])
-	.service('candidateEditService', ['$http', function($http) {
+	.service('candidateEditService', ['$http', 'Upload', function($http, Upload) {
 	
 		this.getCandidate = function(id) {
 			return $http.get('/candidates/' + id +'/edit').then(function(resp) {
 			  return resp.data;
 			});
 		};
+
+		this.Upload_image = function(id, file){
+			Upload.upload(
+			{
+				url: '/candidates/' + id + '/upload_photo',
+				method: 'PATCH',
+				data: { candidate: {
+					file: file
+					}
+				}
+			})
+		}
 
 		this.saveCandidate = function(id, params) {
 			return $http.patch('/candidates/'+ id +'/update_candidate', params);
