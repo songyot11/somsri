@@ -1,6 +1,6 @@
 class ProgrammingSkill < ApplicationRecord
 
-belongs_to :candidates
-accepts_nested_attributes_for :candidates
+belongs_to :candidate
+accepts_nested_attributes_for :candidate
     
 end

@@ -32,17 +32,20 @@ class CandidatesController < ApplicationController
     end
       # sort and order
       if params[:sort].present?
+        if params[:shortlist] == nil
+          params[:shortlist] = false
+        end
         case params[:sort]
         when 'link_full_name'
-          @candidate = Candidate.order(full_name: params[:order])
+          @candidate = Candidate.where(shortlist: params[:shortlist]).order(full_name: params[:order])
         when 'school_year'
-          @candidate = Candidate.order(school_year: params[:order])
+          @candidate = Candidate.where(shortlist: params[:shortlist]).order(school_year: params[:order])
         when 'current_ability'
-          @candidate = Candidate.order(current_ability: params[:order])
+          @candidate = Candidate.where(shortlist: params[:shortlist]).order(current_ability: params[:order])
         when 'learn_ability'
-          @candidate = Candidate.order(learn_ability: params[:order])
+          @candidate = Candidate.where(shortlist: params[:shortlist]).order(learn_ability: params[:order])
         when 'created_at'
-          @candidate = Candidate.order(created_at: params[:order])
+          @candidate = Candidate.where(shortlist: params[:shortlist]).order(created_at: params[:order])
         end
       end
   end  
