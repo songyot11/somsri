@@ -1,1 +1,29 @@
-sddddddddddddddddddddddddddddddddddddddd
+<div ng-repeat="item in candidateDetail.listSkill">
+  <span style="margin-right: 50px;">{{item.skill}}</span>
+  <span>{{item.value}}</span>
+  <button ng-click="candidateDetail.deleteSkill($index)">delete</button>
+</div>
+<div class="row">
+  <div class="col-md-1">
+    <input style="width: 100%;" ng-model="candidateDetail.skill">
+  </div>
+  <div class="col-md-1" >
+     <div class="form-group">
+          <select class="form-control" ng-model="candidateDetail.valueSkill">
+            <option ng-repeat="i in candidateDetail.score">{{i}}</option>
+            
+          </select>
+      </div> 
+  </div>
+  <div class="col-md-1">
+    <button ng-click="candidateDetail.addSkill()">add</button>
+  <div>
+</div>
+
+{{candidateDetail.listSkill}}
+
+<div class="progress" style="height: 8px;  border-radius: 0px">
+  <div class="progress-bar" style="width: 80%; height: 8px; background-color: #99ff33;">
+  </div>
+</div>
+

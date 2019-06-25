@@ -3,11 +3,28 @@
     angular.module('somsri.somsri.candidate_detail', [])
     .controller('candidateDetailCtrl', ['$scope', '$rootScope', 'translateFilter','candidateDetailService','$state', function($scope, $rootScope, translateFilter, candidateDetailService, $state) {
       var ctrl = this;
-
+      ctrl.score = Array.from({length: 21}, (v, k) => k); 
+      ctrl.valueSkill = "0";
+      ctrl.skill = "";
+      ctrl.listSkill = [];
       candidateDetailService.getById($state.params.id).then(function(resp) {
         console.log("-------")
         console.log(resp)
       });
+
+      ctrl.addSkill = function(){
+        if(ctrl.skill){
+          ctrl.listSkill.splice(0, 0, {skill : ctrl.skill, value : ctrl.valueSkill})
+          ctrl.valueSkill = "0";
+          ctrl.skill = "";
+        }
+      }
+
+      ctrl.deleteSkill = function(i){
+        ctrl.listSkill.splice(i, 1);
+      }
+
+
 
     }]);
 })();
