@@ -1,14 +1,14 @@
-<div class="container-fluid padding30">
+  <div class="container-fluid padding30">
   <div class="col-xs-6 px-0 mt-15 pull-right " style="text-align: right; ">
     <a class="btn btn-custom btn-orange ng-binding"><i class="fas fa-folder-plus"></i>  {{ 'new_create' | translate }}</a>
     <!-- <button class="btn btn-custom btn-orange ng-binding">Create</button> -->
   </div>
   <ul class="nav nav-tabs main">
     <li class="active">
-      <a class="tab-label" ng-click="candidate.activeTab = 'table'; candidate.selectTab('table')" data-toggle="tab" href="javascript:void(0)"><i class="fas fa-cat"></i> {{ 'student_info' | translate }}</a>
+      <a class="tab-label" ng-click="candidate.activeTab = 'table'; candidate.selectTab('table')" data-toggle="tab" href="javascript:void(0)"><i class="fas fa-cat"></i> {{ 'candidate' | translate }}</a>
     </li>
     <li>
-      <a class="tab-label" ng-click="candidate.activeTab = 'test'; candidate.selectTab('candidateshortlist')" data-toggle="tab" href="javascript:void(0)"><i class="far fa-list-alt"></i> {{ 'receipts_info' | translate }}</a>
+      <a class="tab-label" ng-click="candidate.activeTab = 'test'; candidate.selectTab('candidateshortlist')" data-toggle="tab" href="javascript:void(0)"><i class="far fa-list-alt"></i> {{ 'candidateshortlist' | translate }}</a>
     </li>
   </ul>
   <div ng-class="{ 'in active' : candidate.activeTab === 'table' }" id="info" class="tab-pane fade in active">
@@ -20,7 +20,7 @@
     </div>
   </div>
   <div ng-class="{ 'in active' : candidate.activeTab ==='test' }" id="invoices" class="tab-pane fade">
-    <div class="container-fluid " id="2">
+    <div class="container-fluid " ng-hide=candidate.hide2>
       <div class="row paper-white container-fluid">
         <table id="candidate-shortlist-table" data-locale="{{ 'locale' | translate }} ">
         </table>
