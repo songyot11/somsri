@@ -391,14 +391,14 @@
           }]
         }
     }).state({
-        url: '/candidateaddview',
-        name: 'candidateaddview',
-        templateUrl: "<%= asset_path('somsri/angular/components/candidate/candidateaddview/candidateFrom.html') %>",
-        controller: 'candidateCtrl2 as candidate2',
+        url: '/candidate/new',
+        name: 'create_candidate',
+        templateUrl: "<%= asset_path('somsri/angular/components/candidate/createCandidate/createCandidateView.html') %>",
+        controller: 'createCandidateCtrl as createCandidate',
         resolve: {
           resources: ['$ocLazyLoad', function($ocLazyLoad) {
             return $ocLazyLoad.load([
-              ASSETS.somsri.somsri.candidateaddview
+              ASSETS.somsri.somsri.create_candidate
             ]);
           }]
         }

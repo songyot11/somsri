@@ -1,0 +1,52 @@
+(function() {
+  'use strict';
+    angular.module('somsri.somsri.create_candidate', [])
+    .controller('createCandidateCtrl', ['$scope', '$rootScope', 'translateFilter',
+                '$uibModal', 'candidateService',   
+                 function($scope, $rootScope, translateFilter, $uibModal, service) {
+  var ctrl = this;
+  ctrl.select_role = []
+  ctrl.get_role = []
+  $rootScope.menu = translateFilter('scout')
+
+    ctrl.submit = function(parm){  
+        openConfirmationModal(translateFilter("close_with_save"), function(){
+        service.saveCandidate(parm).then(function(resp) {
+          window.location.href = "/somsri#/candidate";
+      });
+    });
+  }
+
+        function openConfirmationModal(message, success, dismiss) {
+        $scope.message = message;
+        $uibModal.open({
+          animation: true,
+          backdrop: 'static',
+          keyboard: false,
+          scope: $scope,
+          templateUrl: "<%= asset_path('payroll/angular/components/modal/confirm/confirmModalView.html') %>",
+          controller: 'confirmModalCtrl as confirm',
+          size: 'md',
+          resolve: {
+            resources: ['$ocLazyLoad', 'ASSETS', function($ocLazyLoad, ASSETS) {
+              return $ocLazyLoad.load([
+                ASSETS.somsri.somsri.confirm_modal
+              ]);
+            }]
+          }
+        }).result.then(function (isConfirm) {
+          if (isConfirm) {
+            if(success){ success() }
+          }else{
+            if(dismiss){ dismiss() }
+          }
+        });
+      }
+
+
+
+  }]);
+})();
+
+
+

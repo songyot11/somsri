@@ -78,5 +78,24 @@ class CandidatesController < ApplicationController
       soft_skills_attributes: [:id, :skill_name, :skill_point],
       design_skills_attributes: [:id, :skill_name, :skill_point]
     )
+  def create
+    @candidate = Candidate.new(candidate_params)
+    @candidate.save
+
+  end
+
+  def candidate_params
+    params.require(:candidate).permit(
+      :full_name, 
+      :nick_name,
+      :email,
+      :phone, 
+      :from,
+      :school_year,
+      :note,
+      :current_ability,
+      :learn_ability,
+      :attention
+      )
   end
 end
