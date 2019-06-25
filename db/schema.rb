@@ -56,6 +56,15 @@ ActiveRecord::Schema.define(version: 20190626020645) do
     t.string   "bank_id"
   end
 
+  create_table "candidate_files", force: :cascade do |t|
+    t.string   "files_file_name"
+    t.string   "files_content_type"
+    t.integer  "files_file_size"
+    t.datetime "files_updated_at"
+    t.integer  "candidate_id"
+    t.index ["candidate_id"], name: "index_candidate_files_on_candidate_id", using: :btree
+  end
+
   create_table "candidates", force: :cascade do |t|
     t.string   "full_name"
     t.string   "nick_name"
@@ -957,6 +966,7 @@ ActiveRecord::Schema.define(version: 20190626020645) do
     t.index ["item_type", "item_id"], name: "index_versions_on_item_type_and_item_id", using: :btree
   end
 
+  add_foreign_key "candidate_files", "candidates"
   add_foreign_key "class_permisions", "employees"
   add_foreign_key "class_permisions", "lists"
   add_foreign_key "classrooms", "classrooms", column: "next_id", on_delete: :nullify

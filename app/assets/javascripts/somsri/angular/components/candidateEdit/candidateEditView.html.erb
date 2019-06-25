@@ -3,4 +3,20 @@
       <img src="{{candidate.data.pic}}" id="pic" class="img-lg">
     </div>
   </div>
+
   <button type="submit" ng-click="candidate.uploadPhoto()" class="btn btn-custom btn-green btn-block">Upload</button>
+
+
+  <div class="container1">
+    <div ng-repeat="item in candidate.files">
+      <div class="img-profile cursor-pointer" ng-model="item.file" id="add-files" ngf-select>
+        ADD FILE
+      </div>  
+    </div>
+    <button ng-click="candidate.addFile()">add</button></div>
+</div>
+
+
+
+
+

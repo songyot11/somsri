@@ -3,7 +3,10 @@
   angular.module('somsri.somsri.candidateEdit', [])
   .controller('candidateEditCtrl', ['$scope', '$rootScope', 'candidateEditService', '$state', function($scope, $rootScope, candidateEditService, $state) {
     var ctrl = this;
+    ctrl.files = [{ file: "" }]
     var imagefile;
+
+
     $rootScope.loadAndAuthorizeResource("candidateEdit", function(){
       candidateEditService.getCandidate($state.params.id).then(function(resp) {
         ctrl.data = resp;
@@ -40,15 +43,10 @@ ctrl.showImage = function(event, id){
   imagefile = event.target.files[0];
 }
 
-
-
-
-
-
-
-
-
-
+ctrl.addFile = function(){
+   ctrl.files.push({ file: "" });
+   console.log(ctrl.files)
+}
 
 
     });
