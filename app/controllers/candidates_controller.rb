@@ -71,16 +71,6 @@ class CandidatesController < ApplicationController
     @candidate.update( image: upload_photo_params[:file])
   end
 
-  def rollback
-    @candidate = Candidate.find(params[:id])
-    version = @candidate.versions.find(params[:version])
-    if version.reify.save
-      redirect_to @candidate, notice: 'User was Successfully rollbacked.'
-    else
-      render :show
-    end
-  end
-
   private
 
   def getInfo(id)
