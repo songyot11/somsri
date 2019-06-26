@@ -175,10 +175,10 @@
         }]
       }
     }).state({
-      url: '/candidateEdit/:id',
+      url: '/candidate/:id/edit',
       name: 'candidateEdit',
-      templateUrl: "<%= asset_path('somsri/angular/components/candidateEdit/candidateEditView.html') %>",
-      controller: 'candidateEditCtrl as candidate',
+      templateUrl: "<%= asset_path('somsri/angular/components/candidate/candidateEdit/candidateEditView.html') %>",
+      controller: 'candidateEditCtrl as candidateEdit',
       resolve: {
         resources: ['$ocLazyLoad', function($ocLazyLoad) {
           return $ocLazyLoad.load([

@@ -1,0 +1,51 @@
+zsxdcfvgbyhnjmk{{ candidateEdit.point }}
+<form name="candidateEditForm" ng-submit="candidateEdit.submit(candidateEdit.data)">
+    <div class="form-group">
+      <div class="img-profile cursor-pointer" id="image" ngf-select="candidateEdit.showImage($event, 'pic')">
+        <img src="{{candidateEdit.data.image}}" id="pic" class="img-lg">
+      </div>
+    </div>
+    <div class="form-group">
+        <label for="full_name">{{ 'full_name' | translate }}</label>    
+        <input type="text" class="form-control" id="full_name" ng-model="candidateEdit.data.full_name">
+    </div>
+    <div class="form-group">
+        <label for="nick_name">{{ 'nick_name' | translate }}</label>    
+        <input type="text" class="form-control" id="nick_name" ng-model="candidateEdit.data.nick_name">
+    </div>
+    <div class="form-group">
+        <label for="email">{{ 'email' | translate }}</label>    
+        <input type="text" class="form-control" id="email" ng-model="candidateEdit.data.email">
+    </div>
+
+    <strong>programming_skill</strong><br>
+    <div class="form-group"> 
+        <div ng-repeat="item in candidateEdit.data.programming_skills_attributes"> 
+          <input type="text" class="form-control" id="skillname" ng-model="item.skill_name">	
+          <select ng-model='item.skill_point' ng-options='point as point for point in points'></select>
+        </div>
+        <button type="button" ng-click="candidateEdit.addProgrammingskill()">Add</button>
+    </div>
+
+    <strong>soft_skill</strong><br>
+    <div class="form-group"> 
+        <div ng-repeat="item in candidateEdit.data.soft_skills_attributes"> 
+          <input type="text" class="form-control" id="skillname" ng-model="item.skill_name">	
+          <select ng-model='item.skill_point' ng-options='point as point for point in points'></select>
+        </div>
+        <button type="button" ng-click="candidateEdit.addSoftskill()">Add</button>
+    </div>
+
+    <strong>design_skill</strong><br>
+    <div class="form-group"> 
+        <div ng-repeat="item in candidateEdit.data.design_skills_attributes"> 
+          <input type="text" class="form-control" id="skillname" ng-model="item.skill_name">
+          <select ng-model='item.skill_point' ng-options='point as point for point in points'></select>
+        </div>
+        <button type="button" ng-click="candidateEdit.addDesignskill()">Add</button>
+    </div>
+
+    <button type="submit" class="btn btn-custom btn-green btn-block">Update</button>
+</form>
+
+
