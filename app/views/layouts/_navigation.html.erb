@@ -40,7 +40,7 @@
               <% end %>
 
               <li class="dropdown-submenu">
-                <a tabindex="-1"><i class="fa fa-commenting-o"></i> <%= t("switch_language")%></a>
+                <a tabindex="-1"><i class="fas fa-comments"></i> <%= t("switch_language")%></a>
                 <ul class="dropdown-menu">
                   <li><a onclick="localeTH()"><img src="/switch_language/flag-thailand.png" alt="flag-thailand">&nbsp;&nbsp; ภาษาไทย</a></li>
                   <li class="divider"></li>
@@ -55,7 +55,7 @@
                 <li class="divider"></li>
               <% end %>
               <li><a class="dropdown-item" href="<%= destroy_user_session_path %>" rel="nofollow" data-method="DELETE">
-                <i class="fa fa-sign-out"></i> <%= t("sign_out")%></a></li>
+                <i class="fas fa-sign-out-alt color-red"></i> <%= t("sign_out")%></a></li>
             </div>
           
           <% else %>
