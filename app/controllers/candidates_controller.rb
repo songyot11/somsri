@@ -6,7 +6,7 @@ class CandidatesController < ApplicationController
     @candidate = @candidate.offset(params[:offset]).limit(params[:limit])
     
     render json: {
-      rows: @candidate.as_json,
+      rows: @candidate.as_json('data-table'),
       total: total
     }, status: :ok
   end
@@ -51,5 +51,32 @@ class CandidatesController < ApplicationController
   end  
 
   
+  def edit
+    @candidate = Candidate.find(params[:id])
+    render json: @candidate.as_json('joins-table'), status: :ok
+  end
+  
+  def update_candidate
+    @candidate = Candidate.find_by(id: params[:id])
+    @candidate.update(candidate_params)
+  end
 
+  def upload_photo
+    @candidate = Candidate.find_by(id: params[:id])
+    @candidate.update( image: upload_photo_params[:file])
+  end
+
+  private
+
+  def upload_photo_params
+    params.require(:candidate).permit(:file)
+  end
+
+  def candidate_params
+    params.permit(:full_name, :nick_name, :email,
+      programming_skills_attributes: [:id, :skill_name, :skill_point],
+      soft_skills_attributes: [:id, :skill_name, :skill_point],
+      design_skills_attributes: [:id, :skill_name, :skill_point]
+    )
+  end
 end

@@ -176,7 +176,7 @@ Rails.application.routes.draw do
       get 'reject'
     end
   end
-
+  
   resources :vacation_configs, only: [:index] do
   end
 
@@ -237,5 +237,11 @@ Rails.application.routes.draw do
     resources :manage_inventory_repairs
   end
 
-  resources :candidates 
+  resources :candidates do
+    member do
+      patch 'upload_photo'
+      patch 'update_candidate'
+    end
+  end
+
 end
