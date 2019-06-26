@@ -1460,3 +1460,28 @@ tags-input .tags .tag-item .remove-button {
   padding: 30px;
   margin: 20px;
 }
+.form-control {
+  border-radius: inherit;
+  border: inherit;
+  border-bottom: 1px solid #ddd;
+  line-height: 27.5px;
+  box-shadow: none !important;
+}
+.btn-skill{
+  background-color: #FFAB04;
+  color: #fff !important;
+  border: 2px solid #FFAB04;
+  padding-top: 5px;
+  padding-bottom: 5px;
+  padding-left: 20px;
+  padding-right: 20px;
+  font-size: 14px;
+  box-shadow: 0 2px 4px 0 rgb(114, 76, 0);
+  &:hover {
+    border: 2px solid #FFAB04;
+    color: #FFAB04 !important;
+  }
+  &:focus {
+    color: #fff;
+  }
+}

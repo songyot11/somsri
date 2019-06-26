@@ -15,6 +15,25 @@
   ctrl.PhoneFill = false;
   ctrl.FromFill = false;
   ctrl.School_yearFill = false;
+
+  ctrl.score = Array.from({length: 21}, (v, k) => k); 
+  ctrl.listScoreSkill = ["","0","","0","","0"];
+  ctrl.listProgrammingSkill = [];
+  ctrl.listSoftSkill = [];
+  ctrl.listDesignSkill = [];
+
+
+    ctrl.addProgrammingSkill = function(){
+      if(ctrl.listScoreSkill[0]){
+        ctrl.listProgrammingSkill.splice(0, 0, {skill : ctrl.listScoreSkill[0], value : ctrl.listScoreSkill[1]})
+        ctrl.listScoreSkill[0] = "";
+        ctrl.listScoreSkill[1] = "0";
+      }
+    }
+
+    ctrl.deleteProgrammingSkill = function(i){
+      ctrl.listProgrammingSkill.splice(i, 1);
+    }
   
 
     ctrl.submit = function(parm){  

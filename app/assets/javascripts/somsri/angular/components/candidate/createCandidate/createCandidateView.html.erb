@@ -234,28 +234,61 @@
 
           <!--ProgramSkill -->
           <div class="col-md-6">
+          
+            <!-- List ProgramSkill -->
             <div class="form-group" style="padding-left:20px;margin:0px">
               <div class="row" style="border-bottom: 1px solid #ddd;padding-bottom:10px;margin:0px">
-                {{ 'NoteE'  | translate }}
+                {{ 'Program Skill'  | translate }}
               </div>
               <div class="row" style="padding-top:25px;margin:0px">
-                <textarea class="form-control" style="border:solid 1px #ddd;" rows="8" id="nosfate" rows="3" ng-model="createCandidate.datas.candidate.nasdasdote"></textarea>
+                <div ng-repeat="item in createCandidate.listProgrammingSkill">
+                  <div class="col-md-8" style="padding:5px;">
+                    <span style="margin-right: 50px;">{{item.skill}}</span>
+                  </div>
+                  <div class="col-md-2" style="padding:5px;">
+                    <span>{{item.value}}</span>
+                  </div>
+                  <div class="col-md-1" style="padding:5px;">
+                    <button type="button" class="close" aria-label="Close" ng-click="createCandidate.deleteProgrammingSkill($index)"><span aria-hidden="true">&times;</span></button>
+                  </div>
+                </div>
+              </div>
+
+              <!-- ADD ProgramSkill -->
+              <div class="row" style="margin:0px;">
+                <div class="form-group" style="margin:0px;">
+                  <div class="col-md-6" style="padding:5px;">
+                    <input type="text" class="form-control" ng-model="createCandidate.listScoreSkill[0]">
+                  </div>
+                  <div class="col-md-3" style="padding:5px;" >                
+                    <select class="form-control " ng-model="createCandidate.listScoreSkill[1]">
+                      <option ng-repeat="i in createCandidate.score">{{i}}</option>   
+                    </select>
+                  </div>
+                  <div class="col-md-3" style="padding:5px;">
+                    <button type="button" class ="btn btn-skill" ng-click="createCandidate.addProgrammingSkill()">+ {{ 'Add'  | translate }}</button>
+                  </div>
+                </div> 
+              </div>
+
+              <div class="row" style="margin:0px;">
+                {{createCandidate.listProgrammingSkill}}
               </div>
             </div>
           </div>
 
-          <!--ProgramSkill -->
+          <!--SoftSkill -->
           <div class="col-md-6" style="padding-right:0px;">
             <div class="form-group" style="margin:0px">
               <div class="row" style="border-bottom: 1px solid #ddd;padding-bottom:10px;margin:0px">
-                {{ 'NoteE'  | translate }}
+                {{ 'Soft Skill'  | translate }}
               </div>
               <div class="row" style="padding-top:25px;margin:0px">
                 <textarea class="form-control" style="border:solid 1px #ddd;" rows="8" id="exampleFormControlTextarea1" rows="3"></textarea>
               </div>
-
+              <!--DesignSkill -->
               <div class="row" style="padding-top:25px;border-bottom: 1px solid #ddd;padding-bottom:10px;margin:0px">
-                {{ 'NoteE'  | translate }}
+                {{ 'Design Skill'  | translate }}
               </div>
               <div class="row" style="padding-top:25px;margin:0px">
                 <textarea class="form-control" style="border:solid 1px #ddd;" rows="8" id="exampleFormControlTextarea1" rows="3"></textarea>
