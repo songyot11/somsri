@@ -8,14 +8,90 @@
   ctrl.select_role = []
   ctrl.get_role = []
   $rootScope.menu = translateFilter('scout')
+  ctrl.cannotSubmit = true;
+  ctrl.Full_nameFill = false;
+  ctrl.Nick_nameFill = false;
+  ctrl.EmailFill = false;
+  ctrl.PhoneFill = false;
+  ctrl.FromFill = false;
+  ctrl.School_yearFill = false;
+  
 
     ctrl.submit = function(parm){  
         openConfirmationModal(translateFilter("close_with_save"), function(){
+        ctrl.cannotSubmit = true
         service.saveCandidate(parm).then(function(resp) {
           window.location.href = "/somsri#/candidate";
       });
     });
   }
+        ctrl.isFull_nameFill= function(){
+          var value = ctrl.datas.candidate.full_name   
+          if (value != "" ){
+            ctrl.Full_nameFill = true;
+            canSubmit()
+          }else{
+            ctrl.Full_nameFill = false;
+            canSubmit();
+          }
+      }
+        ctrl.isNick_nameFill= function(){
+          var value = ctrl.datas.candidate.nick_name
+          if (value != "" ){
+            ctrl.Nick_nameFill = true;
+            canSubmit()
+          }else{
+          console.log("asda")
+          ctrl.Nick_nameFill = false;
+          canSubmit();
+          }
+      }
+        ctrl.isEmailFill= function(value){
+          var value = ctrl.datas.candidate.email
+          if (value != "" ){
+            ctrl.EmailFill = true;
+            canSubmit()
+          }else{
+          ctrl.EmailFill = false;
+          canSubmit();
+          }
+      }
+        ctrl.isPhoneFill= function(value){
+          var value = ctrl.datas.candidate.phone
+          if (value != "" ){
+            ctrl.PhoneFill = true;
+            canSubmit()
+          }else{
+          ctrl.PhoneFill = false;
+          canSubmit();
+          }
+      }
+        ctrl.isFromFill= function(value){
+          var value = ctrl.datas.candidate.from
+          if (value != "" ){
+            ctrl.FromFill = true;
+            canSubmit()
+          }else{
+          ctrl.FromFill = false;
+          canSubmit();
+          }
+      }
+        ctrl.isSchool_yearFill= function(value){
+          var value = ctrl.datas.candidate.school_year
+          if (value != "" ){
+            ctrl.School_yearFill = true;
+            canSubmit()
+          }else{
+          ctrl.School_yearFill = false;
+          canSubmit();
+          }
+      }
+
+        function canSubmit(){
+          if ( (ctrl.Full_nameFill || ctrl.Nick_nameFill) && (ctrl.EmailFill || ctrl.PhoneFill) && ctrl.School_yearFill && ctrl.FromFill){
+            ctrl.cannotSubmit = false ;}
+          else{ctrl.cannotSubmit= true;}
+      } 
 
         function openConfirmationModal(message, success, dismiss) {
         $scope.message = message;
