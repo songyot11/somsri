@@ -1,0 +1,185 @@
+(function() {
+  'use strict';
+    angular.module('somsri.somsri.create_candidate', [])
+    .controller('createCandidateCtrl', ['$scope', '$rootScope', 'translateFilter',
+                '$uibModal', 'candidateService',   
+                 function($scope, $rootScope, translateFilter, $uibModal, service) {
+  var ctrl = this;
+  ctrl.select_role = []
+  ctrl.get_role = []
+  $rootScope.menu = translateFilter('scout')
+  ctrl.cannotSubmit = true;
+  ctrl.Full_nameFill = false;
+  ctrl.Nick_nameFill = false;
+  ctrl.EmailFill = false;
+  ctrl.PhoneFill = false;
+  ctrl.FromFill = false;
+  ctrl.School_yearFill = false;
+  ctrl.datas = {};
+  ctrl.datas.candidate = {};
+  ctrl.datas.candidate.attention = 10;
+  ctrl.datas.candidate.learn_ability = 10;
+  ctrl.datas.candidate.current_ability = 10;
+
+  ctrl.score = Array.from({length: 21}, (v, k) => k); 
+  ctrl.listScoreSkill = ["","0","","0","","0"];
+  ctrl.listProgrammingSkill = [];
+  ctrl.listSoftSkill = [];
+  ctrl.listDesignSkill = [];
+
+  $scope.points = Array.from(Array(21).keys())
+
+
+    ctrl.addProgrammingSkill = function(){
+      if(ctrl.listScoreSkill[0]){
+        ctrl.listProgrammingSkill.splice(0, 0, {skill : ctrl.listScoreSkill[0], value : ctrl.listScoreSkill[1]})
+        ctrl.listScoreSkill[0] = "";
+        ctrl.listScoreSkill[1] = "0";
+      }
+    }
+
+    ctrl.deleteProgrammingSkill = function(i){
+      ctrl.listProgrammingSkill.splice(i, 1);
+    }
+
+    ctrl.addSoftSkill = function(){
+      if( ctrl.listScoreSkill[2]){
+        ctrl.listSoftSkill.splice(0, 0, {skill : ctrl.listScoreSkill[2], value : ctrl.listScoreSkill[3]})
+        ctrl.listScoreSkill[2] = "";
+        ctrl.listScoreSkill[3] = "0";
+      }
+    }
+
+    ctrl.deleteSoftSkill = function(i){
+      ctrl.listSoftSkill.splice(i, 1);
+    }
+
+    ctrl.addDesignSkill = function(){
+      if(ctrl.listScoreSkill[4]){
+        ctrl.listDesignSkill.splice(0, 0, {skill : ctrl.listScoreSkill[4], value : ctrl.listScoreSkill[5]})
+        ctrl.listScoreSkill[4] = "";
+        ctrl.listScoreSkill[5] = "0";
+      }
+    }
+
+    ctrl.deleteDesignSkill = function(i){
+      ctrl.listDesignSkill.splice(i, 1);
+    }
+
+    ctrl.cancelSubmit = function(){
+        openConfirmationModal(translateFilter("close_without_save"), function(){
+        ctrl.cannotSubmit = true ;
+        window.location.href = "/somsri#/candidate";
+
+    });
+  }
+
+    ctrl.submit = function(parm){  
+        openConfirmationModal(translateFilter("close_with_save"), function(){
+        ctrl.cannotSubmit = true
+        service.saveCandidate(parm).then(function(resp) {
+          window.location.href = "/somsri#/candidate";
+      });
+    });
+  }
+        ctrl.isFull_nameFill= function(){
+          var value = ctrl.datas.candidate.full_name   
+          if (value != "" ){
+            ctrl.Full_nameFill = true;
+            canSubmit()
+          }else{
+            ctrl.Full_nameFill = false;
+            canSubmit();
+          }
+      }
+        ctrl.isNick_nameFill= function(){
+          var value = ctrl.datas.candidate.nick_name
+          if (value != "" ){
+            ctrl.Nick_nameFill = true;
+            canSubmit()
+          }else{
+          console.log("asda")
+          ctrl.Nick_nameFill = false;
+          canSubmit();
+          }
+      }
+        ctrl.isEmailFill= function(value){
+          var value = ctrl.datas.candidate.email
+          if (value != "" ){
+            ctrl.EmailFill = true;
+            canSubmit()
+          }else{
+          ctrl.EmailFill = false;
+          canSubmit();
+          }
+      }
+        ctrl.isPhoneFill= function(value){
+          var value = ctrl.datas.candidate.phone
+          if (value != "" ){
+            ctrl.PhoneFill = true;
+            canSubmit()
+          }else{
+          ctrl.PhoneFill = false;
+          canSubmit();
+          }
+      }
+        ctrl.isFromFill= function(value){
+          var value = ctrl.datas.candidate.from
+          if (value != "" ){
+            ctrl.FromFill = true;
+            canSubmit()
+          }else{
+          ctrl.FromFill = false;
+          canSubmit();
+          }
+      }
+        ctrl.isSchool_yearFill= function(value){
+          var value = ctrl.datas.candidate.school_year
+          if (value != "" ){
+            ctrl.School_yearFill = true;
+            canSubmit()
+          }else{
+          ctrl.School_yearFill = false;
+          canSubmit();
+          }
+      }
+
+        function canSubmit(){
+          if ( (ctrl.Full_nameFill || ctrl.Nick_nameFill) && (ctrl.EmailFill || ctrl.PhoneFill) && ctrl.School_yearFill && ctrl.FromFill){
+            ctrl.cannotSubmit = false ;}
+          else{ctrl.cannotSubmit= true;}
+      } 
+
+        function openConfirmationModal(message, success, dismiss) {
+        $scope.message = message;
+        $uibModal.open({
+          animation: true,
+          backdrop: 'static',
+          keyboard: false,
+          scope: $scope,
+          templateUrl: "<%= asset_path('payroll/angular/components/modal/confirm/confirmModalView.html') %>",
+          controller: 'confirmModalCtrl as confirm',
+          size: 'md',
+          resolve: {
+            resources: ['$ocLazyLoad', 'ASSETS', function($ocLazyLoad, ASSETS) {
+              return $ocLazyLoad.load([
+                ASSETS.somsri.somsri.confirm_modal
+              ]);
+            }]
+          }
+        }).result.then(function (isConfirm) {
+          if (isConfirm) {
+            if(success){ success() }
+          }else{
+            if(dismiss){ dismiss() }
+          }
+        });
+      }
+
+
+
+  }]);
+})();
+
+
+

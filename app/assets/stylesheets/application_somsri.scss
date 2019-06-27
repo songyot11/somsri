@@ -1387,3 +1387,107 @@ tags-input .tags .tag-item .remove-button {
   //   padding-left: 20px;
   padding-top: 50px;
 }
+
+.btn-submit2{
+  font-family: 'Maitree', serif;
+  background-color: #FFAB04;
+  color: #fff;
+  font-size: 16px;
+  padding: 8px 40px;
+  margin-right: 15px;
+  letter-spacing: 1px;
+  border: 1px solid #FFAB04;
+  border-radius: 0px;
+  transition: all 0.25s ease;
+  box-shadow: 0 2px 4px 0 rgba(0, 0, 0, 0.3);
+  
+  &:hover{
+  background-color: transparent;
+  border:2px solid #FFAB04;
+  color: #FFAB04;
+  }
+}
+
+ .btn-cancel2{
+  background-color: transparent;
+  font-family: 'Maitree', serif;
+  padding: 8px 40px;
+  margin-right: 15px;
+  font-size: 16px;
+  letter-spacing: 1px;
+  background-color: #FFFFFF;
+  color: rgb(255, 0, 0);
+  border: 1px solid rgb(255, 0, 0);
+  border-radius: 0px;
+  transition: all 0.25s ease;
+  box-shadow: 0 2px 4px 0 rgba(0, 0, 0, 0.3);
+
+  &:hover{
+    background-color: transparent;
+    border:2px solid #9D9D9D;
+    color: #9D9D9D;
+  }
+}
+
+.icons-default-img2{
+  color: rgba(0, 0, 0, 0.637);
+  font-size: 3.5em;
+  position: absolute;
+  top: 45%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+}
+
+.fa-arrow-left{
+  color:#FFAB04
+}
+.blue-bg{
+  background-color: #eee;
+}
+.row-head-sp {
+  padding-top: 0px;
+  border: none;
+  margin-top: 50px;
+  color: #3fa0e6e3;
+  margin-right: 0px !important;
+  margin-left: 20px;
+  margin-bottom: 10px;
+  font-size:25px;
+  font-weight: bold;
+}
+.row-head {
+
+  color: #3fa0e6e3;
+  font-size:18px;
+  font-weight: bold;
+}
+.content-scout{
+  font-family: 'Maitree', serif;
+  background-color: #fff;
+  box-shadow: 0 5px 13px 0 rgba(0, 0, 0, 0.3);
+  padding: 30px;
+  margin: 20px;
+}
+.text-blue {
+  color:#3fa0e6e3;
+  font-size: 16px;
+  font-weight: lighter;
+}
+.btn-skill{
+  background-color: #FFAB04;
+  color: #fff !important;
+  border: 2px solid #FFAB04;
+  padding-top: 1px;
+  padding-bottom: 1px;
+  padding-left: 20px;
+  padding-right: 20px;
+  font-size: 14px;
+  box-shadow: 0 1px 1px 0 rgb(114, 76, 0);
+  &:hover {
+    border: 2px solid #FFAB04;
+    color: #FFAB04 !important;
+  }
+  &:focus {
+    color: #fff;
+  }
+}
