@@ -114,6 +114,7 @@
       // Adds an item to the invoice's items
       ctrl.addItem = function() {
         ctrl.datas.invoice.items.push({ amount:0, detail:"" });
+        console.log(ctrl.datas.invoice.items)
         ctrl.invoiceTotal();
       }
 

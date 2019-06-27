@@ -6,11 +6,16 @@ class CandidatesController < ApplicationController
     @candidate = @candidate.offset(params[:offset]).limit(params[:limit])
     
     render json: {
+<<<<<<< HEAD
       rows: @candidate.as_json('data-table'),
+=======
+      rows: @candidate.as_json('data_table'),
+>>>>>>> edit as_json
       total: total
     }, status: :ok
   end
 
+<<<<<<< HEAD
   def create
     @candidate = Candidate.new(candidate_params)
     @candidate.save
@@ -53,6 +58,21 @@ class CandidatesController < ApplicationController
           @candidate = Candidate.where(shortlist: params[:shortlist]).order(created_at: params[:order])
         end
       end
+=======
+  def show
+<<<<<<< HEAD
+<<<<<<< HEAD
+    ap 5555555555555555555555555555555555555
+>>>>>>> edit show action in candidateController
+=======
+    detail = Candidate.find(params[:id])
+    ap detail
+    render json: detail, status: :ok
+>>>>>>> edit as_json
+=======
+    # ap Candidate.find(params[:id]).as_json('show')
+    render json: Candidate.find(params[:id]).as_json('show'), status: :ok
+>>>>>>> temp view info candidate
   end  
   
   private

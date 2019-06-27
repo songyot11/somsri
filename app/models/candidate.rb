@@ -14,7 +14,7 @@ class Candidate < ApplicationRecord
   end  
 
   def as_json(options = {})
-    if(options['data-table'])
+    if options['data_table']
       {
         id: id,
         link_full_name: helpers.link_to_path(full_name, id),
@@ -45,6 +45,22 @@ class Candidate < ApplicationRecord
         candidate_files_attributes: candidate_files,
         candidate_files_url: candidate_files.map { |x| x.files }
      }
+    elsif options['show']
+      {
+        id: id,
+        full_name_and_nick_name: "#{full_name} (#{nick_name})",
+        email: email,
+        phone_number: phone,
+        from: from,
+        school_year: school_year,
+        current_ability: current_ability,
+        learn_ability: learn_ability,
+        attention_ability: attention,
+        programming_skills: programming_skills,
+        soft_skills: soft_skills,
+        design_skills: design_skills,
+        note: note    
+      }
     else
       super
     end

@@ -568,3 +568,8 @@ if VacationLeaveRule.count == 0
     &nbsp;
   """ })
 end
+
+if Candidate.count.zero?
+  array = (1..50).to_a
+  array.map { |x| Candidate.create(full_name: "test-#{x}") }
+end
