@@ -15,12 +15,17 @@
   ctrl.PhoneFill = false;
   ctrl.FromFill = false;
   ctrl.School_yearFill = false;
+  ctrl.datas = {};
+  ctrl.datas.candidate = {};
+  ctrl.datas.candidate.attention = 10;
 
   ctrl.score = Array.from({length: 21}, (v, k) => k); 
   ctrl.listScoreSkill = ["","0","","0","","0"];
   ctrl.listProgrammingSkill = [];
   ctrl.listSoftSkill = [];
   ctrl.listDesignSkill = [];
+
+  $scope.points = Array.from(Array(21).keys())
 
 
     ctrl.addProgrammingSkill = function(){
@@ -34,7 +39,38 @@
     ctrl.deleteProgrammingSkill = function(i){
       ctrl.listProgrammingSkill.splice(i, 1);
     }
-  
+
+    ctrl.addSoftSkill = function(){
+      if( ctrl.listScoreSkill[2]){
+        ctrl.listSoftSkill.splice(0, 0, {skill : ctrl.listScoreSkill[2], value : ctrl.listScoreSkill[3]})
+        ctrl.listScoreSkill[2] = "";
+        ctrl.listScoreSkill[3] = "0";
+      }
+    }
+
+    ctrl.deleteSoftSkill = function(i){
+      ctrl.listSoftSkill.splice(i, 1);
+    }
+
+    ctrl.addDesignSkill = function(){
+      if(ctrl.listScoreSkill[4]){
+        ctrl.listDesignSkill.splice(0, 0, {skill : ctrl.listScoreSkill[4], value : ctrl.listScoreSkill[5]})
+        ctrl.listScoreSkill[4] = "";
+        ctrl.listScoreSkill[5] = "0";
+      }
+    }
+
+    ctrl.deleteDesignSkill = function(i){
+      ctrl.listDesignSkill.splice(i, 1);
+    }
+
+    ctrl.cancelSubmit = function(){
+        openConfirmationModal(translateFilter("close_without_save"), function(){
+        ctrl.cannotSubmit = true ;
+        window.location.href = "/somsri#/candidate";
+
+    });
+  }
 
     ctrl.submit = function(parm){  
         openConfirmationModal(translateFilter("close_with_save"), function(){

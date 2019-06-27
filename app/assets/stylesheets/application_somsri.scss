@@ -1390,21 +1390,21 @@ tags-input .tags .tag-item .remove-button {
 
 .btn-submit2{
   font-family: 'Maitree', serif;
-  background-color: #3fa1e6;
+  background-color: #FFAB04;
   color: #fff;
   font-size: 16px;
   padding: 8px 40px;
   margin-right: 15px;
   letter-spacing: 1px;
-  border: 1px solid #3fa0e6e3;
+  border: 1px solid #FFAB04;
   border-radius: 0px;
   transition: all 0.25s ease;
   box-shadow: 0 2px 4px 0 rgba(0, 0, 0, 0.3);
   
   &:hover{
   background-color: transparent;
-  border:2px solid #3fa1e6;
-  color: #3fa1e6;
+  border:2px solid #FFAB04;
+  color: #FFAB04;
   }
 }
 
@@ -1444,14 +1444,22 @@ tags-input .tags .tag-item .remove-button {
 .blue-bg{
   background-color: #eee;
 }
-.row.head-sp {
+.row-head-sp {
   padding-top: 0px;
   border: none;
   margin-top: 50px;
-  color: #5b5b5b;
+  color: #3fa0e6e3;
   margin-right: 0px !important;
   margin-left: 20px;
   margin-bottom: 10px;
+  font-size:25px;
+  font-weight: bold;
+}
+.row-head {
+
+  color: #3fa0e6e3;
+  font-size:18px;
+  font-weight: bold;
 }
 .content-scout{
   font-family: 'Maitree', serif;
@@ -1460,23 +1468,21 @@ tags-input .tags .tag-item .remove-button {
   padding: 30px;
   margin: 20px;
 }
-.form-control {
-  border-radius: inherit;
-  border: inherit;
-  border-bottom: 1px solid #ddd;
-  line-height: 27.5px;
-  box-shadow: none !important;
+.text-blue {
+  color:#3fa0e6e3;
+  font-size: 16px;
+  font-weight: lighter;
 }
 .btn-skill{
   background-color: #FFAB04;
   color: #fff !important;
   border: 2px solid #FFAB04;
-  padding-top: 5px;
-  padding-bottom: 5px;
+  padding-top: 1px;
+  padding-bottom: 1px;
   padding-left: 20px;
   padding-right: 20px;
   font-size: 14px;
-  box-shadow: 0 2px 4px 0 rgb(114, 76, 0);
+  box-shadow: 0 1px 1px 0 rgb(114, 76, 0);
   &:hover {
     border: 2px solid #FFAB04;
     color: #FFAB04 !important;
