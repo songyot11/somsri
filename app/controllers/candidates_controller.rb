@@ -11,6 +11,11 @@ class CandidatesController < ApplicationController
     }, status: :ok
   end
 
+  def new
+    ap Candidate.new.as_json('joins-table')
+    render json: { candidate: Candidate.new.as_json('joins-table') }, status: :ok
+  end
+
   def create
     @candidate = Candidate.new(candidate_params)
     @candidate.save
@@ -81,7 +86,7 @@ class CandidatesController < ApplicationController
   end
 
   def candidate_params
-    params.permit(:full_name, :nick_name, :email, :phone, :from, :school_year, :note,
+    params.require(:candidate).permit(:full_name, :nick_name, :email, :phone, :from, :school_year, :note,
       :current_ability, :learn_ability, :attention, :interest,
       programming_skills_attributes: [:id, :skill_name, :skill_point, :_destroy],
       soft_skills_attributes: [:id, :skill_name, :skill_point, :_destroy],
