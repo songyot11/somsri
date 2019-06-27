@@ -3,64 +3,71 @@
   angular.module('somsri.somsri.candidateEdit', [])
   .controller('candidateEditCtrl', ['$scope', '$rootScope', 'candidateEditService', '$state', function($scope, $rootScope, candidateEditService, $state) {
     var ctrl = this;
-    ctrl.files = [{ file: "" }]
     var imagefile;
+    ctrl.points = Array.from(Array(21).keys())
 
     $rootScope.loadAndAuthorizeResource("candidateEdit", function(){
       candidateEditService.getCandidate($state.params.id).then(function(resp) {
         ctrl.data = resp;
-        console.log(ctrl.data)
-        console.log(ctrl.data.programming_skills_attributes);
       });
 
     ctrl.submit = function(params){
-    ctrl.uploadPhoto();
-    candidateEditService.saveCandidate(ctrl.data.id, params).then(function(resp){
-    console.log(params)
-            console.log('Update complete!'); 
+      ctrl.uploadPhoto(imagefile);
+      candidateEditService.saveCandidate(ctrl.data.id, params).then(function(resp){
+        window.location.reload()
       });
-  };
+    };
 
-  ctrl.uploadPhoto = function() {
-    candidateEditService.uploadImage(ctrl.data.id, imagefile).then(function(resp) {
-      console.log('Upload Success!');
-    });
+    ctrl.uploadPhoto = function(imagefile) {
+      candidateEditService.uploadImage(ctrl.data.id, imagefile)
     }
 
 
-  ctrl.showImage = function(event, id){
-    console.log(event.target.files[0]);
-    var img = URL.createObjectURL(event.target.files[0]);
-    $('#' + id).attr('src', img);
-    imagefile = event.target.files[0];
-  }
+    ctrl.showImage = function(event, id){
+      var img = URL.createObjectURL(event.target.files[0]);
+      $('#' + id).attr('src', img);
+      imagefile = event.target.files[0];
+    }
 
-  ctrl.addFile = function(){
-    ctrl.files.push({ file: "" });
-    console.log(ctrl.files)
-  }
+    ctrl.addFile = function(){
+      ctrl.data.candidate_files_attributes.push({ files_file_name: "" });
+    }
 
-  ctrl.addProgrammingskill = function(){
-    ctrl.data.programming_skills_attributes.push({ skill_name: "", skill_point: "" });
-  }
+    ctrl.onFileChange = function(index, event){
+      ctrl.data.candidate_files_attributes[index].files = event.target.files[0]
+    }
 
-  ctrl.addSoftskill = function(){
-    ctrl.data.soft_skills_attributes.push({ skill_name: "", skill_point: "" });
-  }
+    ctrl.removeCandidateFiles = function(index) {
+      if (ctrl.data.candidate_files_attributes[index].files) {
+        ctrl.data.candidate_files_attributes.splice(index, 1);
+      } else {
+        ctrl.data.candidate_files_attributes[index]._destroy = true
+      }
+    }
 
-  ctrl.addDesignskill = function(){
-    ctrl.data.design_skills_attributes.push({ skill_name: "", skill_point: "" });
-  }
+    ctrl.removeCandidateProgrammingSkill = function(index) {
+      ctrl.data.programming_skills_attributes[index]._destroy = true
+    }
 
-  $scope.points = [1,2,3,4,5];
+    ctrl.removeCandidateSoftSkill = function(index) {
+      ctrl.data.soft_skills_attributes[index]._destroy = true
+    }
 
+    ctrl.removeCandidateDesignSkill = function(index) {
+      ctrl.data.design_skills_attributes[index]._destroy = true
+    }
 
+    ctrl.addProgrammingskill = function(){
+      ctrl.data.programming_skills_attributes.push({ skill_name: "", skill_point: 0 });
+    }
 
+    ctrl.addSoftskill = function(){
+      ctrl.data.soft_skills_attributes.push({ skill_name: "", skill_point: 0 });
+    }
 
-
-
-
-    });
-
-  }]);
+    ctrl.addDesignskill = function(){
+      ctrl.data.design_skills_attributes.push({ skill_name: "", skill_point: 0 });
+    }
+      });
+    }]);
 })();

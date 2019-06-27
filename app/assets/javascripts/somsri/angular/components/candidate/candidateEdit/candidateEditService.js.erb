@@ -18,7 +18,11 @@
 		}
 
 		this.saveCandidate = function(id, params) {
-			return $http.patch('/candidates/'+ id +'/update_candidate', params)
+			return Upload.upload({
+				url: '/candidates/' + id + '/update_candidate',
+				method: 'PATCH',
+				data: params
+			})
 		};
 
 
