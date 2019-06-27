@@ -6,7 +6,7 @@ class CandidatesController < ApplicationController
     @candidate = @candidate.offset(params[:offset]).limit(params[:limit])
     
     render json: {
-      rows: @candidate.as_json,
+      rows: @candidate.as_json('data-table'),
       total: total
     }, status: :ok
   end

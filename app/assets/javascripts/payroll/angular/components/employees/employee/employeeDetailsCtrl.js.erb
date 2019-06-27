@@ -440,6 +440,7 @@
       }
 
       ctrl.uploadPhoto = function(file) {
+      console.log(file);
         Upload.upload({
             url: '/employees/' + ctrl.datas.employee.id + '/upload_photo',
             method: 'PATCH',

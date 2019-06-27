@@ -175,6 +175,18 @@
         }]
       }
     }).state({
+      url: '/candidate/:id/edit',
+      name: 'candidateEdit',
+      templateUrl: "<%= asset_path('somsri/angular/components/candidate/candidateEdit/candidateEditView.html') %>",
+      controller: 'candidateEditCtrl as candidateEdit',
+      resolve: {
+        resources: ['$ocLazyLoad', function($ocLazyLoad) {
+          return $ocLazyLoad.load([
+            ASSETS.somsri.somsri.candidateEdit
+          ]);
+        }]
+      }
+    }).state({
       url: '/inventory/new/request',
       name: 'new_inventory_request',
       templateUrl: "<%= asset_path('somsri/angular/components/inventoryNewRequest/inventoryNewRequestView.html') %>",
@@ -375,6 +387,18 @@
           resources: ['$ocLazyLoad', function($ocLazyLoad) {
             return $ocLazyLoad.load([
               ASSETS.somsri.somsri.candidate
+            ]);
+          }]
+        }
+    }).state({
+        url: '/candidate/new',
+        name: 'create_candidate',
+        templateUrl: "<%= asset_path('somsri/angular/components/candidate/createCandidate/createCandidateView.html') %>",
+        controller: 'createCandidateCtrl as createCandidate',
+        resolve: {
+          resources: ['$ocLazyLoad', function($ocLazyLoad) {
+            return $ocLazyLoad.load([
+              ASSETS.somsri.somsri.create_candidate
             ]);
           }]
         }

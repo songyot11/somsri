@@ -13,6 +13,9 @@
   this.removeCandidate = function(id) {
       return $http.delete('/candidates/' + id)
     }
+  this.saveCandidate = function(data){
+    return $http.post('/candidates/', data);
+  }
 
   }]);
 })();

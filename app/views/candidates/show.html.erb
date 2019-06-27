@@ -1,0 +1,34 @@
+<table class='table'>
+	<thead>
+		<tr>
+			<th>ID</td>
+			<th>Modifier</th>
+			<th>Action</th>
+			<th>Changes</th>
+		</tr>
+	</thead>
+	<tbody>
+		<% @candidate.versions.each do |version| %>
+			<%= tag.tr do %>
+				<%= tag.td version.id %>
+				<%= tag.td version.whodunnit %>
+				<%= tag.td link_to 'rollback', candidate_rollback_path(@candidate, version: version) %>
+				<%= tag.td do %>
+					<%= tag.ul class: 'list-group' do %>
+						<li class='list-group-item'>
+							<strong>Full Name:</strong>
+							<%= version.changed_object.full_name %>
+						</li>
+						<li class='list-group-item'>
+							<strong>Nick Name:</strong>
+							<%= version.changed_object.nick_name %>
+						</li>
+						<li class='list-group-item'>
+							<strong>Email:</strong>
+							<%= version.changed_object.email %>
+						</li>
+					<% end %>
+				<% end %>
+			<% end %>
+		<% end %>
+</table>

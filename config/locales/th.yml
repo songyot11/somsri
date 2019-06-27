@@ -968,7 +968,7 @@ th:
   phone: "หมายเลขโทรศัพท์"
   email: "อีเมล"
   from: "จาก"
-  school_year: "ที่เข้าเรียน"
+  school_year: "ปีที่เข้าเรียน"
   NoteE: "หมายเหตุ"
   CurrentAbility: "Current Ability"
   LearnAbility: "Learn Ability"

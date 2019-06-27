@@ -28,6 +28,8 @@ gem 'cancancan'
 
 gem 'font_awesome5_rails'
 
+gem 'paper_trail'
+
 gem 'rails-i18n', '~> 5.0.0'
 
 gem 'bower-rails'
