@@ -6,16 +6,11 @@ class CandidatesController < ApplicationController
     @candidate = @candidate.offset(params[:offset]).limit(params[:limit])
     
     render json: {
-<<<<<<< HEAD
-      rows: @candidate.as_json('data-table'),
-=======
       rows: @candidate.as_json('data_table'),
->>>>>>> edit as_json
       total: total
     }, status: :ok
   end
 
-<<<<<<< HEAD
   def create
     @candidate = Candidate.new(candidate_params)
     @candidate.save
@@ -40,39 +35,28 @@ class CandidatesController < ApplicationController
                                   candidates.from LIKE :search',
                                   search: search)
     end
-      # sort and order
-      if params[:sort].present?
-        if params[:shortlist] == nil
-          params[:shortlist] = false
-        end
-        case params[:sort]
-        when 'link_full_name'
-          @candidate = Candidate.where(shortlist: params[:shortlist]).order(full_name: params[:order])
-        when 'school_year'
-          @candidate = Candidate.where(shortlist: params[:shortlist]).order(school_year: params[:order])
-        when 'current_ability'
-          @candidate = Candidate.where(shortlist: params[:shortlist]).order(current_ability: params[:order])
-        when 'learn_ability'
-          @candidate = Candidate.where(shortlist: params[:shortlist]).order(learn_ability: params[:order])
-        when 'created_at'
-          @candidate = Candidate.where(shortlist: params[:shortlist]).order(created_at: params[:order])
-        end
+    # sort and order
+    if params[:sort].present?
+      if params[:shortlist] == nil
+        params[:shortlist] = false
       end
-=======
+      case params[:sort]
+      when 'link_full_name'
+        @candidate = Candidate.where(shortlist: params[:shortlist]).order(full_name: params[:order])
+      when 'school_year'
+        @candidate = Candidate.where(shortlist: params[:shortlist]).order(school_year: params[:order])
+      when 'current_ability'
+        @candidate = Candidate.where(shortlist: params[:shortlist]).order(current_ability: params[:order])
+      when 'learn_ability'
+        @candidate = Candidate.where(shortlist: params[:shortlist]).order(learn_ability: params[:order])
+      when 'created_at'
+        @candidate = Candidate.where(shortlist: params[:shortlist]).order(created_at: params[:order])
+      end
+    end
+  end
+
   def show
-<<<<<<< HEAD
-<<<<<<< HEAD
-    ap 5555555555555555555555555555555555555
->>>>>>> edit show action in candidateController
-=======
-    detail = Candidate.find(params[:id])
-    ap detail
-    render json: detail, status: :ok
->>>>>>> edit as_json
-=======
-    # ap Candidate.find(params[:id]).as_json('show')
     render json: Candidate.find(params[:id]).as_json('show'), status: :ok
->>>>>>> temp view info candidate
   end  
   
   private
