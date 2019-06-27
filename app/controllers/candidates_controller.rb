@@ -63,7 +63,7 @@ class CandidatesController < ApplicationController
 
   def upload_photo
     @candidate = Candidate.find_by(id: params[:id])
-    @candidate.update( image: upload_photo_params[:file])
+    @candidate.update(image: upload_photo_params[:file])
   end
 
   private
@@ -74,9 +74,10 @@ class CandidatesController < ApplicationController
 
   def candidate_params
     params.permit(:full_name, :nick_name, :email,
-      programming_skills_attributes: [:id, :skill_name, :skill_point],
-      soft_skills_attributes: [:id, :skill_name, :skill_point],
-      design_skills_attributes: [:id, :skill_name, :skill_point]
+      programming_skills_attributes: [:id, :skill_name, :skill_point, :_destroy],
+      soft_skills_attributes: [:id, :skill_name, :skill_point, :_destroy],
+      design_skills_attributes: [:id, :skill_name, :skill_point, :_destroy],
+      candidate_files_attributes: [:id, :files, :_destroy]
     )
   def create
     @candidate = Candidate.new(candidate_params)

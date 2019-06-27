@@ -4,7 +4,7 @@ class Candidate < ApplicationRecord
   has_many :soft_skills
   has_many :design_skills
   has_many :candidate_files
-  accepts_nested_attributes_for :programming_skills, :soft_skills, :design_skills, :candidate_files, reject_if: :all_blank
+  accepts_nested_attributes_for :programming_skills, :soft_skills, :design_skills, :candidate_files, reject_if: :all_blank, allow_destroy: true
   has_attached_file :image, styles: { medium: "300x300>", thumb: "100x100>" }, default_url: "http://chittagongit.com/images/icon-file-size/icon-file-size-10.jpg"
   validates_attachment_content_type :image, content_type: /\Aimage\/.*\z/
   has_attached_file :file, styles: { medium: "300x300>", thumb: "100x100>" }, default_url: "/images/:style/missing.png"
@@ -41,7 +41,9 @@ class Candidate < ApplicationRecord
         image: image.expiring_url(10),
         programming_skills_attributes: programming_skills,
         soft_skills_attributes: soft_skills,
-        design_skills_attributes: design_skills
+        design_skills_attributes: design_skills,
+        candidate_files_attributes: candidate_files,
+        candidate_files_url: candidate_files.map { |x| x.files }
      }
     else
       super
