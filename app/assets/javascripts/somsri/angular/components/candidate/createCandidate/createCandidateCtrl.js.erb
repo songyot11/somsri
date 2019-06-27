@@ -3,43 +3,48 @@
     angular.module('somsri.somsri.create_candidate', [])
     .controller('createCandidateCtrl', ['$scope', '$rootScope', 'translateFilter',
                 '$uibModal', 'candidateService',   
-                 function($scope, $rootScope, translateFilter, $uibModal, service) {
-  var ctrl = this;
-  ctrl.select_role = []
-  ctrl.get_role = []
-  $rootScope.menu = translateFilter('scout')
-  ctrl.cannotSubmit = true;
-  ctrl.Full_nameFill = false;
-  ctrl.Nick_nameFill = false;
-  ctrl.EmailFill = false;
-  ctrl.PhoneFill = false;
-  ctrl.FromFill = false;
-  ctrl.School_yearFill = false;
-  ctrl.datas = {};
-  ctrl.datas.candidate = {};
-  ctrl.datas.candidate.attention = 10;
-  ctrl.datas.candidate.learn_ability = 10;
-  ctrl.datas.candidate.current_ability = 10;
+                 function($scope, $rootScope, translateFilter, $uibModal, candidateService) {
+      var ctrl = this;
+      $rootScope.loadAndAuthorizeResource("candidate", function(){
+        $rootScope.menu = translateFilter('scout')
+        loadNewCandidate()
+      });
 
-  ctrl.score = Array.from({length: 21}, (v, k) => k); 
-  ctrl.listScoreSkill = ["","0","","0","","0"];
-  ctrl.listProgrammingSkill = [];
-  ctrl.listSoftSkill = [];
-  ctrl.listDesignSkill = [];
-
-  $scope.points = Array.from(Array(21).keys())
-
-
-    ctrl.addProgrammingSkill = function(){
-      if(ctrl.listScoreSkill[0]){
-        ctrl.listProgrammingSkill.splice(0, 0, {skill : ctrl.listScoreSkill[0], value : ctrl.listScoreSkill[1]})
-        ctrl.listScoreSkill[0] = "";
-        ctrl.listScoreSkill[1] = "0";
+      function loadNewCandidate() {
+        candidateService.new().then(function(resp) {
+          ctrl.datas = resp
+          console.log(ctrl.datas.candidate.programming_skills_attributes)
+        });
       }
-    }
+      ctrl.select_role = []
+      ctrl.get_role = []
+      ctrl.cannotSubmit = true;
+      ctrl.Full_nameFill = false;
+      ctrl.Nick_nameFill = false;
+      ctrl.EmailFill = false;
+      ctrl.PhoneFill = false;
+      ctrl.FromFill = false;
+      ctrl.School_yearFill = false;
+
+      ctrl.points = Array.from({length: 21}, (v, k) => k); 
+      ctrl.listScoreSkill = ["","0","","0","","0"];
+      ctrl.listProgrammingSkills = [];
+      ctrl.listSoftSkill = [];
+      ctrl.listDesignSkill = [];
+
+      $scope.points = Array.from(Array(21).keys())
+
+
+    // ctrl.addProgrammingSkill = function(){
+    //   if(ctrl.listScoreSkill[0]){
+    //     ctrl.listProgrammingSkills.splice(0, 0, {skill : ctrl.listScoreSkill[0], value : ctrl.listScoreSkill[1]})
+    //     ctrl.listScoreSkill[0] = "";
+    //     ctrl.listScoreSkill[1] = "0";
+    //   }
+    // }
 
     ctrl.deleteProgrammingSkill = function(i){
-      ctrl.listProgrammingSkill.splice(i, 1);
+      ctrl.listProgrammingSkills.splice(i, 1);
     }
 
     ctrl.addSoftSkill = function(){
@@ -74,14 +79,19 @@
     });
   }
 
-    ctrl.submit = function(parm){  
+    ctrl.submit = function(params){
         openConfirmationModal(translateFilter("close_with_save"), function(){
         ctrl.cannotSubmit = true
-        service.saveCandidate(parm).then(function(resp) {
+        candidateService.saveCandidate(params).then(function(resp) {
           window.location.href = "/somsri#/candidate";
       });
     });
   }
+
+  ctrl.addProgrammingskill = function(){
+    ctrl.datas.candidate.programming_skills_attributes.push({ skill_name: "", skill_point: 0 });
+  }
+
         ctrl.isFull_nameFill= function(){
           var value = ctrl.datas.candidate.full_name   
           if (value != "" ){
@@ -175,9 +185,6 @@
           }
         });
       }
-
-
-
   }]);
 })();
 

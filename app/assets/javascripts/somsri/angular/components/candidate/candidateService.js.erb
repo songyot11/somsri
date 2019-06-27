@@ -17,5 +17,11 @@
     return $http.post('/candidates/', data);
   }
 
+  this.new = function(){
+    return $http.get('/candidates/new').then(function(resp) {
+      return resp.data
+    });
+  }
+
   }]);
 })();
