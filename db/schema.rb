@@ -584,11 +584,6 @@ ActiveRecord::Schema.define(version: 20190626020645) do
     t.datetime "created_at",            null: false
     t.datetime "updated_at",            null: false
     t.integer  "inventory_id"
-    t.datetime "date_save_step1"
-    t.datetime "date_save_step2"
-    t.datetime "date_save_step3"
-    t.datetime "date_save_step4"
-    t.integer  "supplier_id"
     t.index ["inventory_request_id"], name: "index_manage_inventory_requests_on_inventory_request_id", using: :btree
   end
 
