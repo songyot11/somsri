@@ -16,6 +16,21 @@ class CandidatesController < ApplicationController
     @candidate.save
   end
   
+  def edit
+    @candidate = Candidate.find(params[:id])
+    render json: @candidate.as_json('joins-table'), status: :ok
+  end
+
+  def update_candidate
+    @candidate = Candidate.find_by(id: params[:id])
+    @candidate.update(candidate_params)
+  end
+
+  def upload_photo
+    @candidate = Candidate.find_by(id: params[:id])
+    @candidate.update( image: upload_photo_params[:file])
+  end
+
   def destroy
     @candidate = Candidate.find_by(id: params[:id])
     @candidate.destroy
@@ -57,7 +72,7 @@ class CandidatesController < ApplicationController
 
   def show
     render json: Candidate.find(params[:id]).as_json('show'), status: :ok
-  end  
+  end    
   
   private
 
@@ -71,7 +86,7 @@ class CandidatesController < ApplicationController
       programming_skills_attributes: [:id, :skill_name, :skill_point, :_destroy],
       soft_skills_attributes: [:id, :skill_name, :skill_point, :_destroy],
       design_skills_attributes: [:id, :skill_name, :skill_point, :_destroy],
-      candidate_files_attributes: [:id, :files, :_destroy]
+      candidate_files_attributes: [:id, :files, :_destroy]  
     )
   end
 end
