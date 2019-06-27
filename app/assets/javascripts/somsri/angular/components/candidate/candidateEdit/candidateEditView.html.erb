@@ -1,82 +1,316 @@
-<div class="container paper-white">
+<div class="container-fluid blue-bg"style="margin-left:0px;">
+  <div class="row-head-sp justify-content-between">
+     <i class="fas fa-arrow-left employee-view-icon.active" ng-click="createCandidate.cancelSubmit()"></i> &nbsp; Edit
+  </div>
+  <%= javascript_include_tag 'preview_image' %>
+  <script src="https://kit.fontawesome.com/1ffa964d13.js"></script>
+
+
+<style>
+.label{
+  color: #337ab7;
+  padding: 8px;
+}
+</style>
+
+  <div class="content-scout" style="padding:15px">
   <form name="candidateEditForm" ng-submit="candidateEdit.submit(candidateEdit.data)">
-    <div class="form-group">
-      <div class="img-profile cursor-pointer" id="image" ngf-select="candidateEdit.showImage($event, 'pic')">
-        <img src="{{candidateEdit.data.image}}" id="pic" class="img-lg">
-      </div>
-    </div>
-
-    <strong>files</strong><br>
-    <div class="form-group">
-      <div ng-repeat="item in candidateEdit.data.candidate_files_attributes">
-        <div class="row" ng-hide="item._destroy">
-          <div class="col-lg-4">
-            <span ng-hide="!item.files_file_name.name">{{ item.files.name }}</span>
-            <a ng-show="!item.files_file_name.name" target="_blank" href="{{ candidateEdit.data.candidate_files_url[$index] }}">{{ item.files_file_name }}</a>
-          </div>
-          <div class="col-lg-2">
-            <div class="button btn btn-info" ngf-select="candidateEdit.onFileChange($index, $event)" ng-model="item.files_file_name" name="file">โปรดเลือกไฟล์</div>
-          </div>
-          <div class="col-lg-2">
-            <button type="button" class="btn btn-danger" ng-click="candidateEdit.removeCandidateFiles($index)">Remove</button>
-          </div>
-        </div>
-      </div>
-      <button type="button" ng-click="candidateEdit.addFile()">Add</button>
-    </div>
+    <!-- Profile Img/ From / Btn -->
+    <div class="row">
     
-    <div class="form-group">
-        <label for="full_name">{{ 'full_name' | translate }}</label>    
-        <input type="text" class="form-control" id="full_name" ng-model="candidateEdit.data.full_name">
-    </div>
-    <div class="form-group">
-        <label for="nick_name">{{ 'nick_name' | translate }}</label>    
-        <input type="text" class="form-control" id="nick_name" ng-model="candidateEdit.data.nick_name">
-    </div>
-    <div class="form-group">
-        <label for="email">{{ 'email' | translate }}</label>    
-        <input type="text" class="form-control" id="email" ng-model="candidateEdit.data.email">
-    </div>
+      <!-- Profile Img -->
+      <div class="col-md-2"style="padding-left:20px">
+        <div class="col-md-12">
+          <label>{{ 'picture' | translate }}</label>
+        </div>
 
-    <strong>programming_skill</strong><br>
-    <div class="form-group"> 
-        <div ng-repeat="item in candidateEdit.data.programming_skills_attributes"> 
-          <div class="row" ng-hide="item._destroy">
-            <input type="text" class="form-control" required id="skillname" ng-model="item.skill_name">	
-            <select ng-model='item.skill_point' class="btn btn-grades" ng-options='point as point for point in candidateEdit.points'></select>
-            <button type="button" class="btn btn-danger" ng-click="candidateEdit.removeCandidateProgrammingSkill($index)">Remove</button>
+        <div class="col-md-12">
+          <div class="img-profile cursor-pointer" id="image" ngf-select="candidateEdit.showImage($event, 'pic')">
+            <img src="{{candidateEdit.data.image}}" id="pic" class="img-lg">
+          </div>
+
+          <!-- MultipleFiles -->
+              <div class="row" style="padding-top:25px;margin:0px">
+                <div ng-repeat="item in candidateEdit.data.candidate_files_attributes">
+                  <div ng-hide="item._destroy">
+                    <div style="padding:2px;">  
+                      <span ng-hide="!item.files_file_name.name">{{ item.files.name }}</span>
+                    </div>
+                    <div style="padding:2px;">
+                      <a ng-show="!item.files_file_name.name" target="_blank" href="{{ candidateEdit.data.candidate_files_url[$index] }}">{{ item.files_file_name }}</a>
+                    </div> 
+                  <div class="button btn btn-info" ngf-select="candidateEdit.onFileChange($index, $event)" ng-model="item.files_file_name" name="file">Change</div>   
+                    <button type="button" class="close" aria-label="Close" ng-click="candidateEdit.removeCandidateFiles($index)"><span aria-hidden="true">&times;</span></button>
+                  </div>
+                </div>
+              </div>
+              <div style="padding:2px;">
+              <button type="button" class="btn btn-skill" ng-click="candidateEdit.addFile()">+File</button>
+              </div>
+        </div>
+      </div><br>
+      <!-- From info -->
+      <div class="col-md-5">
+      
+        <!-- Name/NickName -->
+        <div class="row">
+          <div class="col-md-8" style="padding-left:0px; padding-rigth:0px;">
+            <div class="form-group">
+              <label for="full_name">{{ 'full_name' | translate }}</label>
+              <div class="col-md-12">   
+                <input type="text" class="form-control" id="full_name" ng-model="candidateEdit.data.full_name">
+              </div>
+            </div>
+          </div>
+          <div class="col-md-4" style="padding-left:0px; padding-rigth:0px;">
+            <div class="form-group">
+              <label for="nick_name">{{ 'nick_name' | translate }}</label>    
+              <div class="col-md-12">
+                <input type="text" class="form-control" id="nick_name" ng-model="candidateEdit.data.nick_name">
+              </div>
+            </div>
           </div>
         </div>
-        <button type="button" ng-click="candidateEdit.addProgrammingskill()">Add</button>
-    </div>
 
-    <strong>soft_skill</strong><br>
-    <div class="form-group"> 
-        <div ng-repeat="item in candidateEdit.data.soft_skills_attributes"> 
-          <div class="row" ng-hide="item._destroy">
-            <input type="text" class="form-control" required id="skillname" ng-model="item.skill_name">	
-            <select ng-model='item.skill_point' class="btn btn-grades" ng-options='point as point for point in candidateEdit.points'></select>
-            <button type="button" class="btn btn-danger" ng-click="candidateEdit.removeCandidateSoftSkill($index)">Remove</button>
+        <!-- Email/Mobile -->
+        <div class="row">
+          <div class="col-md-8" style="padding-left:0px; padding-rigth:0px;">
+              <div class="form-group">
+                <label>{{ 'email'  | translate}}</label>
+                <div class="col-md-12">
+                  <input type="text" class="form-control text-blue" id="email" ng-model="candidateEdit.data.email">
+                </div>
+              </div>
+            </div>
+            <div class="col-md-4" style="padding-left:0px; padding-rigth:0px;">
+              <div class="form-group">
+                <label>{{ 'mobileE'  | translate}}</label>
+                <div class="col-md-12">
+                  <input type="text" class="form-control text-blue" id="phone" ng-model="candidateEdit.data.phone">
+                </div>
+              </div>
+            </div>
+        </div>
+
+        <!-- From/Year -->
+        <div class="row">
+          <div class="col-md-8" style="padding-left:0px; padding-rigth:0px;">
+            <div class="form-group">
+              <label>{{ 'schoolE'  | translate}}</label>
+              <div class="col-md-12">
+                <input type="text" class="form-control text-blue" id="from" ng-model="candidateEdit.data.from">
+              </div>
+            </div>
+          </div>
+          <div class="col-md-4" style="padding-left:0px; padding-rigth:0px;">
+            <div class="form-group">
+              <label>{{ 'grade_idE'  | translate}}</label>
+              <div class="col-md-12">
+                <input type="text" class="form-control text-blue" id="school_year" ng-model="candidateEdit.data.school_year">
+              </div>
+            </div>
+          </div>
+
+        </div>
+
+        <!-- Current Ability/Learn Ability/Attention Ability -->
+        <div class="row">
+          <div class="col-md-4" style="padding-left:0px; padding-rigth:0px;">
+            <div class="form-group">
+              <label>{{ 'CurrentAbility'  | translate}}</label>
+              <div class="col-md-12" style="padding-left:0px; padding-rigth:0px;">
+                <select class="form-control text-blue somsri-select" id="current_ability" ng-options='point as point for point in candidateEdit.points' ng-model="candidateEdit.data.current_ability">
+                </select>
+              </div>
+            </div>
+          </div>
+          <div class="col-md-4" style="padding-left:0px; padding-rigth:0px;">
+            <div class="form-group">
+              <label>{{ 'LearnAbility'  | translate}}</label>
+              <div class="col-md-12" style="padding-left:0px; padding-rigth:0px;">
+                <select class="form-control text-blue somsri-select" id="learn_ability" ng-options='point as point for point in candidateEdit.points' ng-model="candidateEdit.data.learn_ability">
+                </select>
+              </div>
+            </div>
+          </div>
+          <div class="col-md-4" style="padding-left:0px; padding-rigth:0px;">
+            <div class="form-group">
+              <label>{{ 'AttentionAbility'  | translate}}</label>
+              <div class="col-md-12" style="padding-left:0px; padding-rigth:0px;">
+                <select class="form-control text-blue somsri-select" id="attention" 
+                ng-model="candidateEdit.data.attention"
+                ng-options='point as point for point in candidateEdit.points'
+                >
+
+                </select>
+              </div>
+            </div>
+          </div>
+
+        </div>
+
+        <!-- Interest -->
+        <div class="row">
+          <div class="col-md-8" style="padding-left:0px; padding-rigth:0px;">
+            <div class="form-group">
+              <label>{{ 'Interest'  | translate}}</label>
+              <div class="col-md-12" style="padding-left:0px; padding-rigth:0px;">
+                <input type="text" class="form-control text-blue" id="interest" ng-model="candidateEdit.data.interest">
+              </div>
+            </div>
           </div>
         </div>
-        <button type="button" ng-click="candidateEdit.addSoftskill()">Add</button>
+
+      </div>
+
+      <!-- Btn -->
+      <div class="col-md-5">
+        <div class="form-group somsri-invoice" style="margin-top: 25px; text-align:right">
+          <button type="submit" class ="btn btn-submit2" ><i class="fas fa-file-import"></i>&nbsp; Update </button><br><br>
+          <button type="button" class ="btn btn-cancel2" ><i class="fas fa-trash-alt"></i>&nbsp;{{ 'Cancel' | translate }}</button>
+        </div>
+      </div>
+
     </div>
 
-    <strong>design_skill</strong><br>
-    <div class="form-group"> 
-        <div ng-repeat="item in candidateEdit.data.design_skills_attributes"> 
-          <div class="row" ng-hide="item._destroy">
-            <input type="text" class="form-control" required id="skillname" ng-model="item.skill_name">
-            <select ng-model='item.skill_point' class="btn btn-grades" ng-options='point as point for point in candidateEdit.points'></select>
-            <button type="button" class="btn btn-danger" ng-click="candidateEdit.removeCandidateDesignSkill($index)">Remove</button>
+    <!-- Skill / Note -->
+    <div class="row" style="padding-top:35px" >
+
+      <!-- Skill -->
+      <div class="col-md-7">
+        <div class="row"style="margin:0px">
+
+          <!--ProgramSkill -->
+          <div class="col-md-6">  
+            <div class="form-group" style="padding-left:20px;margin:0px">
+              <div class="row-head" style="border-bottom: 1px solid #ddd;padding-bottom:10px;margin:0px">
+                {{ 'Programing Skill'  | translate }}
+              </div>
+
+          <!-- Edit-ProgramSkill -->
+              <div class="row" style="padding-top:25px;margin:0px">
+                  <div ng-repeat="item in candidateEdit.data.programming_skills_attributes"> 
+                    <div ng-hide="item._destroy">
+                      <div style="padding:5px;">  
+                      <input type="text" class="form-control" required id="skillname" ng-model="item.skill_name">	
+                      </div>
+                      <select ng-model='item.skill_point' class="btn btn-grades" ng-options='point as point for point in candidateEdit.points'></select>
+                      <button type="button" class="close" aria-label="Close" ng-click="candidateEdit.removeCandidateProgrammingSkill($index)"><span aria-hidden="true">&times;</span></button>
+                    </div>
+                  </div>
+                  <button type="button" class ="btn btn-skill" ng-click="candidateEdit.addProgrammingskill()">+{{ 'Add'  | translate }}</button>
+              </div>
+
+
+              <!-- Trash -->
+              <div class="row" style="margin:0px;">
+                <div class="form-group" style="margin:0px;">
+                  <div class="col-md-6" style="padding:5px;">
+                  </div>
+                  <div class="col-md-3" style="padding:5px;" >                
+                  </div>
+                  <div class="col-md-3" style="padding:5px;">
+                  </div>
+                </div> 
+              </div>
+            </div>
+          </div>
+
+          
+
+          <!--Soft/Design Skill -->
+          <div class="col-md-6" style="padding-right:0px;">
+            <div class="form-group" style="margin:0px">
+
+              <!--Soft Skill -->
+              <div class="row-head" style="border-bottom: 1px solid #ddd;padding-bottom:10px;margin:0px">
+                {{ 'Soft Skill'  | translate }}
+              </div>
+
+              <!-- Edit-SoftSkill -->
+              <div class="row" style="padding-top:25px;margin:0px">
+                  <div ng-repeat="item in candidateEdit.data.soft_skills_attributes"> 
+                    <div ng-hide="item._destroy">
+                    <div style="padding:5px;">  
+                      <input type="text" class="form-control" required id="skillname" ng-model="item.skill_name">	
+                      </div>
+                      <select ng-model='item.skill_point' class="btn btn-grades" ng-options='point as point for point in candidateEdit.points'></select>
+                      <button type="button" class="close" aria-label="Close" ng-click="candidateEdit.removeCandidateSoftSkill($index)"><span aria-hidden="true">&times;</span></button>
+                    </div>
+                  </div>
+                  <button type="button" class ="btn btn-skill" ng-click="candidateEdit.addSoftskill()">+{{ 'Add'  | translate }}</button>
+              </div>
+
+              <!-- Trash -->
+              <div class="row" style="margin:0px;">
+                <div class="form-group" style="margin:0px;">
+                  <div class="col-md-6" style="padding:5px;">
+                  </div>
+                  <div class="col-md-3" style="padding:5px;" >                    
+                  </div>
+                  <div class="col-md-3" style="padding:5px;"> 
+                  </div>
+                </div> 
+              </div>
+
+
+              <!--Design Skill -->
+              <div class="row-head" style="border-bottom: 1px solid #ddd;padding-bottom:10px;padding-top:35px;margin:0px">
+                {{ 'Design Skill'  | translate }}
+              </div>
+
+              <!-- Edit-DesignSkill -->
+              <div class="row" style="padding-top:25px;margin:0px">
+                  <div ng-repeat="item in candidateEdit.data.design_skills_attributes"> 
+                    <div ng-hide="item._destroy">
+                    <div style="padding:5px;">  
+                      <input type="text" class="form-control" required id="skillname" ng-model="item.skill_name">	
+                      </div>
+                      <select ng-model='item.skill_point' class="btn btn-grades" ng-options='point as point for point in candidateEdit.points'></select>
+                      <button type="button" class="close" aria-label="Close" ng-click="candidateEdit.removeCandidateDesignSkill($index)"><span aria-hidden="true">&times;</span></button>
+                    </div>
+                  </div>
+                  <button type="button" class ="btn btn-skill" ng-click="candidateEdit.addDesignskill()">+{{ 'Add'  | translate }}</button>
+              </div>
+
+              <!-- ADD DesignSkill -->
+              <div class="row" style="margin:0px;">
+                <div class="form-group" style="margin:0px;">
+                  <div class="col-md-6" style="padding:5px;">
+                  </div>
+                  <div class="col-md-3" style="padding:5px;" >                
+                  </div>
+                  <div class="col-md-3" style="padding:5px;">
+                  </div>
+                </div> 
+              </div>
+
+
+
+
+
+
+
+            </div>
+          </div>
+
+    
+        </div>
+      </div>
+
+      <!-- Note -->
+      <div class="col-md-5">
+        <div class="form-group"style="margin:0px">
+          <div class="row-head" style="border-bottom: 1px solid #ddd;padding-bottom:10px;;margin:0px">
+            {{ 'NoteE'  | translate }}
+          </div>
+          <div class="row" style="padding-top:25px;margin:0px">
+            <textarea class="form-control" style="border:solid 1px #ddd;" rows="30" id="note" ng-model="candidateEdit.data.note"></textarea>
           </div>
         </div>
-        <button type="button" ng-click="candidateEdit.addDesignskill()">Add</button>
+      </div>
     </div>
-
-    <button type="submit" class="btn btn-custom btn-green btn-block">Update</button>
   </form>
-</div>
-  
-
+  </div>
+  </div>
 

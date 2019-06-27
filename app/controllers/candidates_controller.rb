@@ -66,9 +66,8 @@ class CandidatesController < ApplicationController
   end
 
   def candidate_params
-    params.permit(:full_name, :nick_name, :email,:phone, 
-      :from, :school_year, :note, :current_ability,
-      :learn_ability, :attention, :interest,
+    params.permit(:full_name, :nick_name, :email, :phone, :from, :school_year, :note,
+      :current_ability, :learn_ability, :attention, :interest,
       programming_skills_attributes: [:id, :skill_name, :skill_point, :_destroy],
       soft_skills_attributes: [:id, :skill_name, :skill_point, :_destroy],
       design_skills_attributes: [:id, :skill_name, :skill_point, :_destroy],
