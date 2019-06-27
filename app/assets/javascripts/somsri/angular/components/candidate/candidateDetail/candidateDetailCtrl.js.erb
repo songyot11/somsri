@@ -3,28 +3,28 @@
     angular.module('somsri.somsri.candidate_detail', [])
     .controller('candidateDetailCtrl', ['$scope', '$rootScope', 'translateFilter','candidateDetailService','$state', function($scope, $rootScope, translateFilter, candidateDetailService, $state) {
       var ctrl = this;
-      ctrl.score = Array.from({length: 21}, (v, k) => k); 
-      ctrl.valueSkill = "0";
-      ctrl.skill = "";
-      ctrl.listSkill = [];
+      ctrl.buttonIcon = "fas fa-star color-yellow";
+      ctrl.icon = true;
       candidateDetailService.getById($state.params.id).then(function(resp) {
-        console.log("-------")
-        console.log(resp)
+        ctrl.datas = resp.data;
+        console.log(ctrl.datas)
       });
-
-      ctrl.addSkill = function(){
-        if(ctrl.skill){
-          ctrl.listSkill.splice(0, 0, {skill : ctrl.skill, value : ctrl.valueSkill})
-          ctrl.valueSkill = "0";
-          ctrl.skill = "";
+     
+      ctrl.changIcon = function(check){
+        if(check){
+          ctrl.buttonIcon = "far fa-star color-yellow";
+          ctrl.icon = false;
+        }
+        else{
+          ctrl.buttonIcon = "fas fa-star color-yellow";
+          ctrl.icon = true;
         }
       }
 
-      ctrl.deleteSkill = function(i){
-        ctrl.listSkill.splice(i, 1);
-      }
+      
+
+      
 
 
-
-    }]);
+  }]);
 })();

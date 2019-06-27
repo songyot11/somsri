@@ -61,6 +61,7 @@ class CandidatesController < ApplicationController
 =======
   def show
 <<<<<<< HEAD
+<<<<<<< HEAD
     ap 5555555555555555555555555555555555555
 >>>>>>> edit show action in candidateController
 =======
@@ -68,6 +69,10 @@ class CandidatesController < ApplicationController
     ap detail
     render json: detail, status: :ok
 >>>>>>> edit as_json
+=======
+    # ap Candidate.find(params[:id]).as_json('show')
+    render json: Candidate.find(params[:id]).as_json('show'), status: :ok
+>>>>>>> temp view info candidate
   end  
   
   private

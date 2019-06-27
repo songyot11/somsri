@@ -1,29 +1,169 @@
-<div ng-repeat="item in candidateDetail.listSkill">
-  <span style="margin-right: 50px;">{{item.skill}}</span>
-  <span>{{item.value}}</span>
-  <button ng-click="candidateDetail.deleteSkill($index)">delete</button>
-</div>
-<div class="row">
-  <div class="col-md-1">
-    <input style="width: 100%;" ng-model="candidateDetail.skill">
+<div class="container-fluid p-50">
+  <div class="row head-sp" style="margin-bottom: 20px;">
+    <h1><i class="fas fa-arrow-left" style="padding-right: 10px;"></i>Candidate Information</h1>
   </div>
-  <div class="col-md-1" >
-     <div class="form-group">
-          <select class="form-control" ng-model="candidateDetail.valueSkill">
-            <option ng-repeat="i in candidateDetail.score">{{i}}</option>
-            
-          </select>
-      </div> 
+  <div class="row paper-white container-fluid padding-30">
+    <div class="row">
+      <div class="col-sm-10">
+        <div class="row">
+          <div class="col-sm-2" >
+            <img src="https://www.menshairstyleguide.com/wp-content/uploads/2014/07/mens-undercut-26.jpg" class="picture"> 
+          </div>
+          <div class="col-sm-10">
+            <div class="row">
+              <h1 class="color-blue-light" style="margin-left: 20px;">{{candidateDetail.datas.full_name_and_nick_name}} <button ng-click="candidateDetail.changIcon(candidateDetail.icon)" class="button-star"><i class="{{candidateDetail.buttonIcon}}"></i></button></h1>
+            </div>
+            <div class="row">
+              <div class="col-sm-2 text-right">
+                <span class="font-roboto font-21">Email:</span>
+              </div>
+              <div class="col-sm-3">
+                <span class="font-roboto font-21 color-blue">{{candidateDetail.datas.email}}</span>
+              </div>
+              <div class="col-sm-2 text-right">
+                <span class="font-roboto font-21">Interview date :</span>
+              </div>
+              <div class="col-sm-3">
+                <span class="font-roboto font-21 color-blue">15/3/2020 9:00</span>
+              </div>
+            </div>
+            <div class="row">
+              <div class="col-sm-2 text-right">
+                <span class="font-roboto font-21">Phone Number:</span>
+              </div>
+              <div class="col-sm-4">
+                <span class="font-roboto font-21 color-blue">{{candidateDetail.datas.phone_number}}</span>
+              </div>
+            </div>
+            <div class="row">
+              <div class="col-sm-2 text-right">
+                <span class="font-roboto font-21">Form:</span>
+              </div>
+              <div class="col-sm-6">
+                <span class="font-roboto font-21 color-blue">{{candidateDetail.datas.from}}</span>
+              </div>
+            </div>
+            <div class="row">
+              <div class="col-sm-2 text-right">
+                <span class="font-roboto font-21">Year:</span>
+              </div>
+              <div class="col-sm-6">
+                 <span class="font-roboto font-21 color-blue">{{candidateDetail.datas.school_year}}</span>
+              </div>
+            </div>
+            <div class="row">
+              <div class="col-sm-2 text-right">
+                 <span class="font-roboto font-21">Interest:</span>
+              </div>
+              <div class="col-sm-6">
+                <span class="font-roboto font-21 color-blue">app</span>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="col-sm-2">
+        <div class="margin20" style="margin-left: 100px">
+          <button type="button" class="btn btn-custom btn-black">Interviwe</button>
+        </div>
+        <div class="margin20">
+          <button type="button" class="btn btn-custom btn-black">Edit</button>
+        </div>
+        <div class="margin20">
+          <button type="button" class="btn btn-custom btn-black">Delete</button> 
+        </div>
+      </div>
+    </div>
+    <div class="row">
+      <div class="col-sm-1" style="margin-right: 95px;">
+        <h3>Resume/Transcript</h3>
+          <p><a href="#" class="font-roboto font-21">Resume</a></p>
+          <p><a href="#" class="font-roboto font-21">Transcript</a></p>
+      </div>
+      <div class="col-sm-6">
+        <div class="row">
+          <div class="col-sm-3">
+            <h3>Current Ability</h3>
+          </div>
+          <div class="col-sm-9">
+            <div class="progress progress-bar-skill" style="margin-top: 30px;">
+              <div class="progress-bar bar-skill" role="progressbar" style="width: {{candidateDetail.datas.current_ability * 5}}%;"></div>
+            </div>
+          </div>
+        </div>
+        <div class="row">
+          <div class="col-sm-3">
+            <h3>Learn Ability</h3>
+          </div>
+          <div class="col-sm-9">
+            <div class="progress progress-bar-skill" style="margin-top: 30px;">
+              <div class="progress-bar bar-skill" role="progressbar" style="width: {{candidateDetail.datas.learn_ability * 5}}%;"></div>
+            </div>
+          </div>
+        </div>
+        <div class="row">
+          <div class="col-sm-3">
+            <h3>Attention</h3>
+          </div>
+          <div class="col-sm-9">
+            <div class="progress progress-bar-skill" style="margin-top: 30px;">
+              <div class="progress-bar bar-skill" role="progressbar" style="width: {{candidateDetail.datas.attention_ability * 5}}%;"></div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="row">
+      <div class="col-sm-7">
+        <div class="row">
+          <div class="col-sm-6">
+            <h3 class="hr-2">Programming skill</h3>
+            <div class="row" ng-repeat="item in candidateDetail.datas.programming_skills">
+              <div class="col-sm-3">
+                <h3>{{item.skill_name}}</h3>
+              </div>
+              <div class="col-sm-9">
+                <div class="progress progress-bar-skill" style="margin-top: 30px;">
+                  <div class="progress-bar bar-skill" role="progressbar" style="width: {{item.skill_point * 5}}%;"></div>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="col-sm-6">
+            <h3 class="hr-2">Soft skill</h3>
+            <div class="row" ng-repeat="item in candidateDetail.datas.soft_skills">
+              <div class="col-sm-3">
+                <h3>{{item.skill_name}}</h3>
+              </div>
+              <div class="col-sm-9">
+                <div class="progress progress-bar-skill" style="margin-top: 30px;">
+                  <div class="progress-bar bar-skill" role="progressbar" style="width: {{item.skill_point * 5}}%;"></div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="col-sm-5">
+        <h3 class="hr-2">Note</h3>
+        <div style="border: 1px solid #ddd; height: 350px; margin-top: 30px;">
+        </div>
+      </div>
+    </div>
+    <div class="row">
+      <div class="col-sm-6">
+        <h3 class="hr-2">Desing skill</h3>
+        <h4>C# (18/20)</h4>
+      </div>
+    </div>
+    <div class="row">
+      <div class="col-sm-6">
+        <h3 class="hr-2">History Log</h3>
+        <h4>Update {{name}} by {{role}} at {{time}}</h4>
+      </div>
+    </div>
   </div>
-  <div class="col-md-1">
-    <button ng-click="candidateDetail.addSkill()">add</button>
-  <div>
 </div>
 
-{{candidateDetail.listSkill}}
 
-<div class="progress" style="height: 8px;  border-radius: 0px">
-  <div class="progress-bar" style="width: 80%; height: 8px; background-color: #99ff33;">
-  </div>
-</div>
 
