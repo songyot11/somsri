@@ -233,8 +233,19 @@
                 {{ 'Soft Skill'  | translate }}
               </div>
 
+              <div class="form-group"> 
+                <div ng-repeat="item in createCandidate.datas.candidate.soft_skills_attributes"> 
+                  <div class="row" ng-hide="item._destroy">
+                    <input type="text" class="form-control" required id="skillname" ng-model="item.skill_name">	
+                    <select ng-model='item.skill_point' class="btn btn-grades" ng-options='point as point for point in createCandidate.points'></select>
+                    <button type="button" class="btn btn-danger" ng-click="createCandidate.removeCandidateSoftSkill($index)">Remove</button>
+                  </div>
+                </div>
+                <button type="button" ng-click="createCandidate.addSoftskill()">Add</button>
+              </div>
+
               <!-- List SoftSkill -->
-              <div class="row" style="padding-top:25px;margin:0px">
+              <!-- <div class="row" style="padding-top:25px;margin:0px">
                 <div ng-repeat="item in createCandidate.listSoftSkill">
                   <div class="col-md-8" style="padding:5px;">
                     <span style="margin-right: 50px;">{{item.skill}}</span>
@@ -246,10 +257,10 @@
                     <button type="button" class="close" aria-label="Close" ng-click="createCandidate.deleteSoftSkill($index)"><span aria-hidden="true">&times;</span></button>
                   </div>
                 </div>
-              </div>
+              </div> -->
 
               <!-- ADD SoftSkill -->
-              <div class="row" style="margin:0px;">
+              <!-- <div class="row" style="margin:0px;">
                 <div class="form-group" style="margin:0px;">
                   <div class="col-md-6" style="padding:5px;">
                     <input type="text" class="form-control" ng-model="createCandidate.listScoreSkill[2]">
@@ -263,7 +274,7 @@
                     <button type="button" class ="btn btn-skill" ng-click="createCandidate.addSoftSkill()">+ {{ 'Add'  | translate }}</button>
                   </div>
                 </div> 
-              </div>
+              </div> -->
 
 
               <!--Design Skill -->
@@ -271,8 +282,19 @@
                 {{ 'Design Skill'  | translate }}
               </div>
 
+              <div class="form-group"> 
+                <div ng-repeat="item in createCandidate.datas.candidate.design_skills_attributes"> 
+                  <div class="row" ng-hide="item._destroy">
+                    <input type="text" class="form-control" required id="skillname" ng-model="item.skill_name">	
+                    <select ng-model='item.skill_point' class="btn btn-grades" ng-options='point as point for point in createCandidate.points'></select>
+                    <button type="button" class="btn btn-danger" ng-click="createCandidate.removeCandidateDesignSkill($index)">Remove</button>
+                  </div>
+                </div>
+                <button type="button" ng-click="createCandidate.addDesignskill()">Add</button>
+              </div>
+
               <!-- List DesignSkill -->
-              <div class="row" style="padding-top:25px;margin:0px">
+              <!-- <div class="row" style="padding-top:25px;margin:0px">
                 <div ng-repeat="item in createCandidate.listDesignSkill">
                   <div class="col-md-8" style="padding:5px;">
                     <span style="margin-right: 50px;">{{item.skill}}</span>
@@ -284,10 +306,10 @@
                     <button type="button" class="close" aria-label="Close" ng-click="createCandidate.deleteDesignSkill($index)"><span aria-hidden="true">&times;</span></button>
                   </div>
                 </div>
-              </div>
+              </div> -->
 
               <!-- ADD DesignSkill -->
-              <div class="row" style="margin:0px;">
+              <!-- <div class="row" style="margin:0px;">
                 <div class="form-group" style="margin:0px;">
                   <div class="col-md-6" style="padding:5px;">
                     <input type="text" class="form-control" ng-model="createCandidate.listScoreSkill[4]">
@@ -301,13 +323,7 @@
                     <button type="button" class ="btn btn-skill" ng-click="createCandidate.addDesignSkill()">+ {{ 'Add'  | translate }}</button>
                   </div>
                 </div> 
-              </div>
-
-
-
-
-
-
+              </div> -->
 
             </div>
           </div>

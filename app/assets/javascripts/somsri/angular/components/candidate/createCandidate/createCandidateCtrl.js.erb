@@ -88,9 +88,29 @@
     });
   }
 
-  ctrl.addProgrammingskill = function(){
-    ctrl.datas.candidate.programming_skills_attributes.push({ skill_name: "", skill_point: 0 });
-  }
+   ctrl.removeCandidateProgrammingSkill = function(index) {
+      ctrl.datas.candidate.programming_skills_attributes[index]._destroy = true
+    }
+
+    ctrl.removeCandidateSoftSkill = function(index) {
+      ctrl.datas.candidate.soft_skills_attributes[index]._destroy = true
+    }
+
+    ctrl.removeCandidateDesignSkill = function(index) {
+      ctrl.datas.candidate.design_skills_attributes[index]._destroy = true
+    }
+
+    ctrl.addProgrammingskill = function(){
+      ctrl.datas.candidate.programming_skills_attributes.push({ skill_name: "", skill_point: 0 });
+    }
+
+    ctrl.addSoftskill = function(){
+      ctrl.datas.candidate.soft_skills_attributes.push({ skill_name: "", skill_point: 0 });
+    }
+
+    ctrl.addDesignskill = function(){
+      ctrl.datas.candidate.design_skills_attributes.push({ skill_name: "", skill_point: 0 });
+    }
 
         ctrl.isFull_nameFill= function(){
           var value = ctrl.datas.candidate.full_name   
