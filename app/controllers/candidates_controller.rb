@@ -54,9 +54,7 @@ class CandidatesController < ApplicationController
         end
       end
   end  
-
   
-
   private
 
   def upload_photo_params
