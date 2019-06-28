@@ -51,7 +51,6 @@
       ctrl.removeCandidate = function(id){
       openConfirmationModal(translateFilter('confirmdelete'), function(){
         service.removeCandidate(id).then(function(resp) {
-        console.log('delete')
           $window.location.reload();
           alert("ลบข้อมูลสำเร็จ");
         });
