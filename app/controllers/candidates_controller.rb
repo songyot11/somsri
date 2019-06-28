@@ -78,6 +78,14 @@ class CandidatesController < ApplicationController
   def show
     render json: { candidate: Candidate.with_deleted.where(id: params[:id]).first.as_json('show_or_edit') }, status: :ok
   end    
+
+  def edit_star
+    ap params[:id]
+    ap params[:bool]
+    # @candidate = Candidate.find_by(id: params[:id])
+    # @candidate.update()
+    render json: Candidate.find(params[:id]).as_json('show'), status: :ok
+  end
   
   private
 
@@ -90,4 +98,6 @@ class CandidatesController < ApplicationController
       candidate_files_attributes: [:files, :_destroy]  
     )
   end
+
+  
 end

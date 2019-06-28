@@ -7,6 +7,21 @@
   this.getById = function(id){
     return $http.get('/candidates/' + id);
   }
+  this.editStar = function(id, check){
+    return $http({
+      url: '/candidates/'+ id + '/edit_star/',
+      method: "POST",
+      params: {bool: check}
+    })
+  }
 
   }]);
 })();
+
+
+// $http({
+//       url: "login.php",
+//       method: "POST",
+//       params: data
+//     })
+// return $http.get('/candidates/'+ id + '/edit_star/');

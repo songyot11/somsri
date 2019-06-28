@@ -1,11 +1,13 @@
 class Candidate < ApplicationRecord
+
   acts_as_paranoid
   has_paper_trail
   has_many :programming_skills
   has_many :soft_skills
   has_many :design_skills
   has_many :candidate_files
-  accepts_nested_attributes_for :programming_skills, :soft_skills, :design_skills, :candidate_files, reject_if: :all_blank, allow_destroy: true
+  has_many :interviews
+  accepts_nested_attributes_for :interviews, :programming_skills, :soft_skills, :design_skills, :candidate_files, reject_if: :all_blank, allow_destroy: true
   has_attached_file :image, styles: { medium: "300x300>", thumb: "100x100>" }, default_url: "http://chittagongit.com/images/icon-file-size/icon-file-size-10.jpg"
   validates_attachment_content_type :image, content_type: /\Aimage\/.*\z/
   has_attached_file :file, styles: { medium: "300x300>", thumb: "100x100>" }, default_url: "/images/:style/missing.png"

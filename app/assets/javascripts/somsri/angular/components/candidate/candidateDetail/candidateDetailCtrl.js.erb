@@ -5,21 +5,41 @@
     'candidateDetailService','$state',  '$uibModal', 'candidateService', '$window', '$timeout',
     function($scope, $rootScope, translateFilter, candidateDetailService, $state,  $uibModal, service, $window, $timeout) {
       var ctrl = this;
-      ctrl.buttonIcon = "fas fa-star color-yellow";
-      ctrl.icon = true;
       candidateDetailService.getById($state.params.id).then(function(resp) {
         ctrl.datas = resp.data;
+
+        if(ctrl.datas.shortlist){
+          ctrl.buttonIcon = "fas fa-star color-yellow";
+          // ctrl.icon = true;
+        }else{
+          ctrl.buttonIcon = "far fa-star color-yellow";
+          // ctrl.icon = false;
+        }
+        console.log(ctrl.datas)
       });
-      ctrl.changIcon = function(check){
+     
+      ctrl.changStatus = function(check){
         if(check){
           ctrl.buttonIcon = "far fa-star color-yellow";
-          ctrl.icon = false;
+          // ctrl.icon = false;
+          ctrl.datas.shortlist = false;
         }
         else{
           ctrl.buttonIcon = "fas fa-star color-yellow";
-          ctrl.icon = true;
+          // ctrl.icon = true;
+          ctrl.datas.shortlist = true;
         }
+        candidateDetailService.editStar($state.params.id, ctrl.datas.shortlist).then(function(resp) {
+          // ctrl.datas = resp.data;
+          console.log(resp)
+        });
       }
+      // ctrl.changeStar = function(){
+      //   candidateDetailService.editStar($state.params.id).then(function(resp) {
+      //   ctrl.datas = resp.data;
+      //   console.log(ctrl.datas)
+      //   });
+      // }
 
       function openConfirmationModal(message, success, dismiss) {
       $scope.message = message;

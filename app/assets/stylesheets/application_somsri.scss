@@ -1419,8 +1419,14 @@ tags-input .tags .tag-item .remove-button {
   border: 1px solid rgb(255, 0, 0);
   border-radius: 0px;
   transition: all 0.25s ease;
+<<<<<<< HEAD
   box-shadow: 0 2px 4px 0 rgba(0, 0, 0, 0.3);
   &:hover {
+=======
+  box-shadow: 0 1px 1px 0 rgba(0, 0, 0, 0.3);
+
+  &:hover{
+>>>>>>> edit layout
     background-color: transparent;
     border: 2px solid #9D9D9D;
     color: #9D9D9D;
@@ -1517,8 +1523,13 @@ tags-input .tags .tag-item .remove-button {
 }
 
 .picture {
+<<<<<<< HEAD
   width: 220px !important;
   max-width: 300px !important;
+=======
+  width: 95%!important;
+  max-width: 300px !important; 
+>>>>>>> edit layout
 }
 
 .button-star {
@@ -1540,7 +1551,21 @@ tags-input .tags .tag-item .remove-button {
 .color-blue-light {
   color: #4A90E2;
 }
+<<<<<<< HEAD
 
 .ml-20 {
   margin-left: 20px !important;
 }
+=======
+.back-scout{
+  color: #3FA1E6;
+  font-family: Prompt;
+  font-size: 24px;
+  font-weight: 400;
+  line-height: 29px;
+  text-align: left;
+}
+.color-blue-button{
+  background-color: #3FA1E6;
+}
+>>>>>>> edit layout

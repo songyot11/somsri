@@ -241,6 +241,7 @@ Rails.application.routes.draw do
     member do
       patch 'upload_photo'
       patch 'update_candidate'
+      post 'edit_star'
     end
   end
 
