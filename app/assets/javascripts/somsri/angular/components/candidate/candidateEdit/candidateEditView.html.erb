@@ -14,7 +14,7 @@
 </style>
 
   <div class="content-scout" style="padding:15px">
-  <form name="candidateEditForm" ng-submit="candidateEdit.submit(candidateEdit.data)">
+  <form name="candidateEditForm" ng-submit="candidateEdit.submit(candidateEdit.datas)">
     <!-- Profile Img/ From / Btn -->
     <div class="row">
     
@@ -26,18 +26,18 @@
 
         <div class="col-md-12">
           <div class="img-profile cursor-pointer" id="image" ngf-select="candidateEdit.showImage($event, 'pic')">
-            <img src="{{candidateEdit.data.image}}" id="pic" class="img-lg">
+            <img src="{{candidateEdit.datas.candidate.image}}" id="pic" class="img-lg">
           </div>
 
           <!-- MultipleFiles -->
               <div class="row" style="padding-top:25px;margin:0px">
-                <div ng-repeat="item in candidateEdit.data.candidate_files_attributes">
+                <div ng-repeat="item in candidateEdit.datas.candidate.candidate_files_attributes">
                   <div ng-hide="item._destroy">
                     <div style="padding:2px;">  
                       <span ng-hide="!item.files_file_name.name">{{ item.files.name }}</span>
                     </div>
                     <div style="padding:2px;">
-                      <a ng-show="!item.files_file_name.name" target="_blank" href="{{ candidateEdit.data.candidate_files_url[$index] }}">{{ item.files_file_name }}</a>
+                      <a ng-show="!item.files_file_name.name" target="_blank" href="{{ candidateEdit.datas.candidate.candidate_files_url[$index] }}">{{ item.files_file_name }}</a>
                     </div> 
                   <div class="button btn btn-info" ngf-select="candidateEdit.onFileChange($index, $event)" ng-model="item.files_file_name" name="file">Change</div>   
                     <button type="button" class="close" aria-label="Close" ng-click="candidateEdit.removeCandidateFiles($index)"><span aria-hidden="true">&times;</span></button>
@@ -58,7 +58,7 @@
             <div class="form-group">
               <label for="full_name">{{ 'full_name' | translate }}</label>
               <div class="col-md-12">   
-                <input type="text" class="form-control" id="full_name" ng-model="candidateEdit.data.full_name">
+                <input type="text" class="form-control" id="full_name" ng-model="candidateEdit.datas.candidate.full_name">
               </div>
             </div>
           </div>
@@ -66,7 +66,7 @@
             <div class="form-group">
               <label for="nick_name">{{ 'nick_name' | translate }}</label>    
               <div class="col-md-12">
-                <input type="text" class="form-control" id="nick_name" ng-model="candidateEdit.data.nick_name">
+                <input type="text" class="form-control" id="nick_name" ng-model="candidateEdit.datas.candidate.nick_name">
               </div>
             </div>
           </div>
@@ -78,7 +78,7 @@
               <div class="form-group">
                 <label>{{ 'email'  | translate}}</label>
                 <div class="col-md-12">
-                  <input type="text" class="form-control text-blue" id="email" ng-model="candidateEdit.data.email">
+                  <input type="text" class="form-control text-blue" id="email" ng-model="candidateEdit.datas.candidate.email">
                 </div>
               </div>
             </div>
@@ -86,7 +86,7 @@
               <div class="form-group">
                 <label>{{ 'phone'  | translate}}</label>
                 <div class="col-md-12">
-                  <input type="text" class="form-control text-blue" id="phone" ng-model="candidateEdit.data.phone">
+                  <input type="text" class="form-control text-blue" id="phone" ng-model="candidateEdit.datas.candidate.phone">
                 </div>
               </div>
             </div>
@@ -98,7 +98,7 @@
             <div class="form-group">
               <label>{{ 'from'  | translate}}</label>
               <div class="col-md-12">
-                <input type="text" class="form-control text-blue" id="from" ng-model="candidateEdit.data.from">
+                <input type="text" class="form-control text-blue" id="from" ng-model="candidateEdit.datas.candidate.from">
               </div>
             </div>
           </div>
@@ -106,7 +106,7 @@
             <div class="form-group">
               <label>{{ 'schoolyear'  | translate}}</label>
               <div class="col-md-12">
-                <input type="text" class="form-control text-blue" id="school_year" ng-model="candidateEdit.data.school_year">
+                <input type="text" class="form-control text-blue" id="school_year" ng-model="candidateEdit.datas.candidate.school_year">
               </div>
             </div>
           </div>
@@ -119,7 +119,7 @@
             <div class="form-group">
               <label>{{ 'CurrentAbility'  | translate}}</label>
               <div class="col-md-12" style="padding-left:0px; padding-rigth:0px;">
-                <select class="form-control text-blue somsri-select" id="current_ability" ng-options='point as point for point in candidateEdit.points' ng-model="candidateEdit.data.current_ability">
+                <select class="form-control text-blue somsri-select" id="current_ability" ng-options='point as point for point in candidateEdit.points' ng-model="candidateEdit.datas.candidate.current_ability">
                 </select>
               </div>
             </div>
@@ -128,7 +128,7 @@
             <div class="form-group">
               <label>{{ 'LearnAbility'  | translate}}</label>
               <div class="col-md-12" style="padding-left:0px; padding-rigth:0px;">
-                <select class="form-control text-blue somsri-select" id="learn_ability" ng-options='point as point for point in candidateEdit.points' ng-model="candidateEdit.data.learn_ability">
+                <select class="form-control text-blue somsri-select" id="learn_ability" ng-options='point as point for point in candidateEdit.points' ng-model="candidateEdit.datas.candidate.learn_ability">
                 </select>
               </div>
             </div>
@@ -138,7 +138,7 @@
               <label>{{ 'AttentionAbility'  | translate}}</label>
               <div class="col-md-12" style="padding-left:0px; padding-rigth:0px;">
                 <select class="form-control text-blue somsri-select" id="attention" 
-                ng-model="candidateEdit.data.attention"
+                ng-model="candidateEdit.datas.candidate.attention"
                 ng-options='point as point for point in candidateEdit.points'
                 >
 
@@ -155,7 +155,7 @@
             <div class="form-group">
               <label>{{ 'Interest'  | translate}}</label>
               <div class="col-md-12" style="padding-left:0px; padding-rigth:0px;">
-                <input type="text" class="form-control text-blue" id="interest" ng-model="candidateEdit.data.interest">
+                <input type="text" class="form-control text-blue" id="interest" ng-model="candidateEdit.datas.candidate.interest">
               </div>
             </div>
           </div>
@@ -189,7 +189,7 @@
 
           <!-- Edit-ProgramSkill -->
               <div class="row" style="padding-top:25px;margin:0px">
-                  <div ng-repeat="item in candidateEdit.data.programming_skills_attributes"> 
+                  <div ng-repeat="item in candidateEdit.datas.candidate.programming_skills_attributes"> 
                     <div ng-hide="item._destroy">
                       <div style="padding:5px;">  
                       <input type="text" class="form-control" required id="skillname" ng-model="item.skill_name">	
@@ -229,7 +229,7 @@
 
               <!-- Edit-SoftSkill -->
               <div class="row" style="padding-top:25px;margin:0px">
-                  <div ng-repeat="item in candidateEdit.data.soft_skills_attributes"> 
+                  <div ng-repeat="item in candidateEdit.datas.candidate.soft_skills_attributes"> 
                     <div ng-hide="item._destroy">
                     <div style="padding:5px;">  
                       <input type="text" class="form-control" required id="skillname" ng-model="item.skill_name">	
@@ -261,7 +261,7 @@
 
               <!-- Edit-DesignSkill -->
               <div class="row" style="padding-top:25px;margin:0px">
-                  <div ng-repeat="item in candidateEdit.data.design_skills_attributes"> 
+                  <div ng-repeat="item in candidateEdit.datas.candidate.design_skills_attributes"> 
                     <div ng-hide="item._destroy">
                     <div style="padding:5px;">  
                       <input type="text" class="form-control" required id="skillname" ng-model="item.skill_name">	
@@ -305,7 +305,7 @@
             {{ 'NoteE'  | translate }}
           </div>
           <div class="row" style="padding-top:25px;margin:0px">
-            <textarea class="form-control" style="border:solid 1px #ddd;" rows="30" id="note" ng-model="candidateEdit.data.note"></textarea>
+            <textarea class="form-control" style="border:solid 1px #ddd;" rows="30" id="note" ng-model="candidateEdit.datas.candidate.note"></textarea>
           </div>
         </div>
       </div>

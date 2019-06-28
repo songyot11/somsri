@@ -25,17 +25,9 @@
         </div>
 
         <div class="col-md-12">
-          <div class="img-profile cursor-pointer" ngf-select="employee.uploadPhoto($file)">
-                  <div ng-switch on="employee.datas.img_url.length > 0">
-                    <div ng-switch-when="true">
-                      <div class="img-bg " style="background: url('{{ employee.datas.img_url }}')"></div>
-                    </div>
-                    <div ng-switch-default>
-                      <i class="fa fa-file-upload icons-default-img2 center font-size-icon font-white" aria-hidden="true"></i>
-                      <div class="img-bg bg-light-gray"></div>
-                    </div>
-                  </div>
-                </div>
+          <div class="img-profile cursor-pointer" id="image" ngf-select="createCandidate.showImage($event, 'pic')">
+            <img src="{{ createCandidate.datas.candidate.image }}" id="pic" class="">
+          </div>
         </div>
       </div>
 
@@ -48,7 +40,7 @@
             <div class="form-group">
               <label>{{ 'nameE' | translate }}</label>
               <div class="col-md-12">
-                <input type="text" class="form-control text-blue" id="full_name" ng-change="createCandidate.isFull_nameFill()" ng-model="createCandidate.datas.candidate.full_name">
+                <input type="text" class="form-control text-blue" id="full_name" ng-change="createCandidate.isNotBlank()" ng-model="createCandidate.datas.candidate.full_name">
               </div>
             </div>
           </div>
@@ -56,7 +48,7 @@
             <div class="form-group">
               <label>{{ 'nicknameE'  | translate}}</label>
               <div class="col-md-12">
-                <input type="text" class="form-control text-blue" id="nick_name" ng-change="createCandidate.isNick_nameFill()" ng-model="createCandidate.datas.candidate.nick_name">
+                <input type="text" class="form-control text-blue" id="nick_name" ng-change="createCandidate.isNotBlank()" ng-model="createCandidate.datas.candidate.nick_name">
               </div>
             </div>
           </div>
@@ -68,7 +60,7 @@
               <div class="form-group">
                 <label>{{ 'email'  | translate}}</label>
                 <div class="col-md-12">
-                  <input type="text" class="form-control text-blue" id="email" ng-change="createCandidate.isEmailFill()" ng-model="createCandidate.datas.candidate.email">
+                  <input type="text" class="form-control text-blue" id="email" ng-change="createCandidate.isNotBlank()" ng-model="createCandidate.datas.candidate.email">
                 </div>
               </div>
             </div>
@@ -76,7 +68,7 @@
               <div class="form-group">
                 <label>{{ 'phone'  | translate}}</label>
                 <div class="col-md-12">
-                  <input type="text" class="form-control text-blue" id="phone" ng-change="createCandidate.isPhoneFill()" ng-model="createCandidate.datas.candidate.phone">
+                  <input type="text" class="form-control text-blue" id="phone" ng-change="createCandidate.isNotBlank()" ng-model="createCandidate.datas.candidate.phone">
                 </div>
               </div>
             </div>
@@ -88,7 +80,7 @@
             <div class="form-group">
               <label>{{ 'from'  | translate}}</label>
               <div class="col-md-12">
-                <input type="text" class="form-control text-blue" id="from" ng-change="createCandidate.isFromFill()" ng-model="createCandidate.datas.candidate.from">
+                <input type="text" class="form-control text-blue" id="from" ng-change="createCandidate.isNotBlank()" ng-model="createCandidate.datas.candidate.from">
               </div>
             </div>
           </div>
@@ -96,7 +88,7 @@
             <div class="form-group">
               <label>{{ 'school_year'  | translate}}</label>
               <div class="col-md-12">
-                <input type="text" class="form-control text-blue" id="school_year" ng-change="createCandidate.isSchool_yearFill()" ng-model="createCandidate.datas.candidate.school_year">
+                <input type="text" class="form-control text-blue" id="school_year" ng-change="createCandidate.isNotBlank()" ng-model="createCandidate.datas.candidate.school_year">
               </div>
             </div>
           </div>
@@ -109,7 +101,7 @@
             <div class="form-group">
               <label>{{ 'CurrentAbility'  | translate}}</label>
               <div class="col-md-12" style="padding-left:0px; padding-rigth:0px;">
-                <select class="form-control text-blue somsri-select" id="current_ability" ng-options='point as point for point in points' ng-model="createCandidate.datas.candidate.current_ability">
+                <select class="form-control text-blue somsri-select" id="current_ability" ng-options='point as point for point in createCandidate.points' ng-model="createCandidate.datas.candidate.current_ability">
                 </select>
               </div>
             </div>
@@ -118,7 +110,7 @@
             <div class="form-group">
               <label>{{ 'LearnAbility'  | translate}}</label>
               <div class="col-md-12" style="padding-left:0px; padding-rigth:0px;">
-                <select class="form-control text-blue somsri-select" id="learn_ability" ng-options='point as point for point in points' ng-model="createCandidate.datas.candidate.learn_ability">
+                <select class="form-control text-blue somsri-select" id="learn_ability" ng-options='point as point for point in createCandidate.points' ng-model="createCandidate.datas.candidate.learn_ability">
                 </select>
               </div>
             </div>
@@ -128,10 +120,8 @@
               <label>{{ 'AttentionAbility'  | translate}}</label>
               <div class="col-md-12" style="padding-left:0px; padding-rigth:0px;">
                 <select class="form-control text-blue somsri-select" id="attention" 
-                ng-model="createCandidate.datas.candidate.attention"
-                ng-options='point as point for point in points'
-                >
-
+                        ng-model="createCandidate.datas.candidate.attention"
+                        ng-options='point as point for point in createCandidate.points'>
                 </select>
               </div>
             </div>

@@ -4,44 +4,30 @@
     .controller('createCandidateCtrl', ['$scope', '$rootScope', 'translateFilter',
                 '$uibModal', 'candidateService',   
                  function($scope, $rootScope, translateFilter, $uibModal, candidateService) {
-      var ctrl = this;
-      $rootScope.loadAndAuthorizeResource("candidate", function(){
-        $rootScope.menu = translateFilter('scout')
-        loadNewCandidate()
-      });
 
-      function loadNewCandidate() {
-        candidateService.new().then(function(resp) {
-          ctrl.datas = resp
-          console.log(ctrl.datas.candidate.programming_skills_attributes)
-        });
-      }
-      ctrl.select_role = []
-      ctrl.get_role = []
+    var ctrl = this;
+    ctrl.points = Array.from(Array(21).keys())
+
+    $rootScope.loadAndAuthorizeResource("candidate", function(){
+      $rootScope.menu = translateFilter('scout');
       ctrl.cannotSubmit = true;
-      ctrl.Full_nameFill = false;
-      ctrl.Nick_nameFill = false;
-      ctrl.EmailFill = false;
-      ctrl.PhoneFill = false;
-      ctrl.FromFill = false;
-      ctrl.School_yearFill = false;
+      loadNewCandidate();
+    });
 
-      ctrl.points = Array.from({length: 21}, (v, k) => k); 
-      ctrl.listScoreSkill = ["","0","","0","","0"];
-      ctrl.listProgrammingSkills = [];
-      ctrl.listSoftSkill = [];
-      ctrl.listDesignSkill = [];
-
-      $scope.points = Array.from(Array(21).keys())
+    function loadNewCandidate() {
+      candidateService.new().then(function(resp) {
+        ctrl.datas = resp
+      });
+    }
 
 
-    // ctrl.addProgrammingSkill = function(){
-    //   if(ctrl.listScoreSkill[0]){
-    //     ctrl.listProgrammingSkills.splice(0, 0, {skill : ctrl.listScoreSkill[0], value : ctrl.listScoreSkill[1]})
-    //     ctrl.listScoreSkill[0] = "";
-    //     ctrl.listScoreSkill[1] = "0";
-    //   }
-    // }
+  // ctrl.addProgrammingSkill = function(){
+  //   if(ctrl.listScoreSkill[0]){
+  //     ctrl.listProgrammingSkills.splice(0, 0, {skill : ctrl.listScoreSkill[0], value : ctrl.listScoreSkill[1]})
+  //     ctrl.listScoreSkill[0] = "";
+  //     ctrl.listScoreSkill[1] = "0";
+  //   }
+  // }
 
     ctrl.deleteProgrammingSkill = function(i){
       ctrl.listProgrammingSkills.splice(i, 1);
@@ -79,8 +65,8 @@
     });
   }
 
-    ctrl.submit = function(params){
-        openConfirmationModal(translateFilter("close_with_save"), function(){
+  ctrl.submit = function(params){
+    openConfirmationModal(translateFilter("close_with_save"), function(){
         ctrl.cannotSubmit = true
         candidateService.saveCandidate(params).then(function(resp) {
           window.location.href = "/somsri#/candidate";
@@ -88,123 +74,70 @@
     });
   }
 
-   ctrl.removeCandidateProgrammingSkill = function(index) {
-      ctrl.datas.candidate.programming_skills_attributes[index]._destroy = true
+  ctrl.showImage = function(event, id){
+    var img = URL.createObjectURL(event.target.files[0]);
+    $('#' + id).attr('src', img);
+    ctrl.datas.candidate.image = event.target.files[0];
+  }
+
+  ctrl.removeCandidateProgrammingSkill = function(index) {
+    ctrl.datas.candidate.programming_skills_attributes[index]._destroy = true
+  }
+
+  ctrl.removeCandidateSoftSkill = function(index) {
+    ctrl.datas.candidate.soft_skills_attributes[index]._destroy = true
+  }
+
+  ctrl.removeCandidateDesignSkill = function(index) {
+    ctrl.datas.candidate.design_skills_attributes[index]._destroy = true
+  }
+
+  ctrl.addProgrammingskill = function(){
+    ctrl.datas.candidate.programming_skills_attributes.push({ skill_name: "", skill_point: 0 });
+  }
+
+  ctrl.addSoftskill = function(){
+    ctrl.datas.candidate.soft_skills_attributes.push({ skill_name: "", skill_point: 0 });
+  }
+
+  ctrl.addDesignskill = function(){
+    ctrl.datas.candidate.design_skills_attributes.push({ skill_name: "", skill_point: 0 });
+  }
+
+  ctrl.isNotBlank = function(){
+    var candidate = ctrl.datas.candidate
+    if ((candidate.full_name || candidate.nick_name) && (candidate.email || candidate.phone) && candidate.school_year && candidate.from){
+      ctrl.cannotSubmit = false;
+    } else {
+      ctrl.cannotSubmit = true;
     }
+  } 
 
-    ctrl.removeCandidateSoftSkill = function(index) {
-      ctrl.datas.candidate.soft_skills_attributes[index]._destroy = true
-    }
-
-    ctrl.removeCandidateDesignSkill = function(index) {
-      ctrl.datas.candidate.design_skills_attributes[index]._destroy = true
-    }
-
-    ctrl.addProgrammingskill = function(){
-      ctrl.datas.candidate.programming_skills_attributes.push({ skill_name: "", skill_point: 0 });
-    }
-
-    ctrl.addSoftskill = function(){
-      ctrl.datas.candidate.soft_skills_attributes.push({ skill_name: "", skill_point: 0 });
-    }
-
-    ctrl.addDesignskill = function(){
-      ctrl.datas.candidate.design_skills_attributes.push({ skill_name: "", skill_point: 0 });
-    }
-
-        ctrl.isFull_nameFill= function(){
-          var value = ctrl.datas.candidate.full_name   
-          if (value != "" ){
-            ctrl.Full_nameFill = true;
-            canSubmit()
-          }else{
-            ctrl.Full_nameFill = false;
-            canSubmit();
-          }
+  function openConfirmationModal(message, success, dismiss) {
+    $scope.message = message;
+    $uibModal.open({
+      animation: true,
+      backdrop: 'static',
+      keyboard: false,
+      scope: $scope,
+      templateUrl: "<%= asset_path('payroll/angular/components/modal/confirm/confirmModalView.html') %>",
+      controller: 'confirmModalCtrl as confirm',
+      size: 'md',
+      resolve: {
+        resources: ['$ocLazyLoad', 'ASSETS', function($ocLazyLoad, ASSETS) {
+          return $ocLazyLoad.load([
+            ASSETS.somsri.somsri.confirm_modal
+          ]);
+        }]
       }
-        ctrl.isNick_nameFill= function(){
-          var value = ctrl.datas.candidate.nick_name
-          if (value != "" ){
-            ctrl.Nick_nameFill = true;
-            canSubmit()
-          }else{
-          console.log("asda")
-          ctrl.Nick_nameFill = false;
-          canSubmit();
-          }
+    }).result.then(function (isConfirm) {
+      if (isConfirm) {
+        if(success){ success() }
+      }else{
+        if(dismiss){ dismiss() }
       }
-        ctrl.isEmailFill= function(value){
-          var value = ctrl.datas.candidate.email
-          if (value != "" ){
-            ctrl.EmailFill = true;
-            canSubmit()
-          }else{
-          ctrl.EmailFill = false;
-          canSubmit();
-          }
-      }
-        ctrl.isPhoneFill= function(value){
-          var value = ctrl.datas.candidate.phone
-          if (value != "" ){
-            ctrl.PhoneFill = true;
-            canSubmit()
-          }else{
-          ctrl.PhoneFill = false;
-          canSubmit();
-          }
-      }
-        ctrl.isFromFill= function(value){
-          var value = ctrl.datas.candidate.from
-          if (value != "" ){
-            ctrl.FromFill = true;
-            canSubmit()
-          }else{
-          ctrl.FromFill = false;
-          canSubmit();
-          }
-      }
-        ctrl.isSchool_yearFill= function(value){
-          var value = ctrl.datas.candidate.school_year
-          if (value != "" ){
-            ctrl.School_yearFill = true;
-            canSubmit()
-          }else{
-          ctrl.School_yearFill = false;
-          canSubmit();
-          }
-      }
-
-        function canSubmit(){
-          if ( (ctrl.Full_nameFill || ctrl.Nick_nameFill) && (ctrl.EmailFill || ctrl.PhoneFill) && ctrl.School_yearFill && ctrl.FromFill){
-            ctrl.cannotSubmit = false ;}
-          else{ctrl.cannotSubmit= true;}
-      } 
-
-        function openConfirmationModal(message, success, dismiss) {
-        $scope.message = message;
-        $uibModal.open({
-          animation: true,
-          backdrop: 'static',
-          keyboard: false,
-          scope: $scope,
-          templateUrl: "<%= asset_path('payroll/angular/components/modal/confirm/confirmModalView.html') %>",
-          controller: 'confirmModalCtrl as confirm',
-          size: 'md',
-          resolve: {
-            resources: ['$ocLazyLoad', 'ASSETS', function($ocLazyLoad, ASSETS) {
-              return $ocLazyLoad.load([
-                ASSETS.somsri.somsri.confirm_modal
-              ]);
-            }]
-          }
-        }).result.then(function (isConfirm) {
-          if (isConfirm) {
-            if(success){ success() }
-          }else{
-            if(dismiss){ dismiss() }
-          }
-        });
-      }
+    });
+  }
   }]);
 })();
 

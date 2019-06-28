@@ -8,18 +8,19 @@
 
     $rootScope.loadAndAuthorizeResource("candidateEdit", function(){
       candidateEditService.getCandidate($state.params.id).then(function(resp) {
-        ctrl.data = resp;
+        ctrl.datas = resp;
+        console.log(ctrl.datas)
       });
 
     ctrl.submit = function(params){
       ctrl.uploadPhoto(imagefile);
-      candidateEditService.saveCandidate(ctrl.data.id, params).then(function(resp){
+      candidateEditService.saveCandidate(ctrl.datas.candidate.id, params).then(function(resp){
         window.location.reload()
       });
     };
 
     ctrl.uploadPhoto = function(imagefile) {
-      candidateEditService.uploadImage(ctrl.data.id, imagefile)
+      candidateEditService.uploadImage(ctrl.datas.candidate.id, imagefile)
     }
 
 
@@ -30,43 +31,43 @@
     }
 
     ctrl.addFile = function(){
-      ctrl.data.candidate_files_attributes.push({ files_file_name: "" });
+      ctrl.datas.candidate.candidate_files_attributes.push({ files_file_name: "" });
     }
 
     ctrl.onFileChange = function(index, event){
-      ctrl.data.candidate_files_attributes[index].files = event.target.files[0]
+      ctrl.datas.candidate.candidate_files_attributes[index].files = event.target.files[0]
     }
 
     ctrl.removeCandidateFiles = function(index) {
-      if (ctrl.data.candidate_files_attributes[index].files) {
-        ctrl.data.candidate_files_attributes.splice(index, 1);
+      if (ctrl.datas.candidate.candidate_files_attributes[index].files) {
+        ctrl.datas.candidate.candidate_files_attributes.splice(index, 1);
       } else {
-        ctrl.data.candidate_files_attributes[index]._destroy = true
+        ctrl.datas.candidate.candidate_files_attributes[index]._destroy = true
       }
     }
 
     ctrl.removeCandidateProgrammingSkill = function(index) {
-      ctrl.data.programming_skills_attributes[index]._destroy = true
+      ctrl.datas.candidate.programming_skills_attributes[index]._destroy = true
     }
 
     ctrl.removeCandidateSoftSkill = function(index) {
-      ctrl.data.soft_skills_attributes[index]._destroy = true
+      ctrl.datas.candidate.soft_skills_attributes[index]._destroy = true
     }
 
     ctrl.removeCandidateDesignSkill = function(index) {
-      ctrl.data.design_skills_attributes[index]._destroy = true
+      ctrl.datas.candidate.design_skills_attributes[index]._destroy = true
     }
 
     ctrl.addProgrammingskill = function(){
-      ctrl.data.programming_skills_attributes.push({ skill_name: "", skill_point: 0 });
+      ctrl.datas.candidate.programming_skills_attributes.push({ skill_name: "", skill_point: 0 });
     }
 
     ctrl.addSoftskill = function(){
-      ctrl.data.soft_skills_attributes.push({ skill_name: "", skill_point: 0 });
+      ctrl.datas.candidate.soft_skills_attributes.push({ skill_name: "", skill_point: 0 });
     }
 
     ctrl.addDesignskill = function(){
-      ctrl.data.design_skills_attributes.push({ skill_name: "", skill_point: 0 });
+      ctrl.datas.candidate.design_skills_attributes.push({ skill_name: "", skill_point: 0 });
     }
       });
     }]);
