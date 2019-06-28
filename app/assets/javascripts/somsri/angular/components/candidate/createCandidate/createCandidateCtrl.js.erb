@@ -17,44 +17,10 @@
     function loadNewCandidate() {
       candidateService.new().then(function(resp) {
         ctrl.datas = resp
+        ctrl.datas.candidate.programming_skills_attributes[0].skill_point = 0;
+        ctrl.datas.candidate.soft_skills_attributes[0].skill_point = 0;
+        ctrl.datas.candidate.design_skills_attributes[0].skill_point = 0;
       });
-    }
-
-
-  // ctrl.addProgrammingSkill = function(){
-  //   if(ctrl.listScoreSkill[0]){
-  //     ctrl.listProgrammingSkills.splice(0, 0, {skill : ctrl.listScoreSkill[0], value : ctrl.listScoreSkill[1]})
-  //     ctrl.listScoreSkill[0] = "";
-  //     ctrl.listScoreSkill[1] = "0";
-  //   }
-  // }
-
-    ctrl.deleteProgrammingSkill = function(i){
-      ctrl.listProgrammingSkills.splice(i, 1);
-    }
-
-    ctrl.addSoftSkill = function(){
-      if( ctrl.listScoreSkill[2]){
-        ctrl.listSoftSkill.splice(0, 0, {skill : ctrl.listScoreSkill[2], value : ctrl.listScoreSkill[3]})
-        ctrl.listScoreSkill[2] = "";
-        ctrl.listScoreSkill[3] = "0";
-      }
-    }
-
-    ctrl.deleteSoftSkill = function(i){
-      ctrl.listSoftSkill.splice(i, 1);
-    }
-
-    ctrl.addDesignSkill = function(){
-      if(ctrl.listScoreSkill[4]){
-        ctrl.listDesignSkill.splice(0, 0, {skill : ctrl.listScoreSkill[4], value : ctrl.listScoreSkill[5]})
-        ctrl.listScoreSkill[4] = "";
-        ctrl.listScoreSkill[5] = "0";
-      }
-    }
-
-    ctrl.deleteDesignSkill = function(i){
-      ctrl.listDesignSkill.splice(i, 1);
     }
 
     ctrl.cancelSubmit = function(){
@@ -72,6 +38,22 @@
           window.location.href = "/somsri#/candidate";
       });
     });
+  }
+
+  ctrl.addFile = function(){
+    ctrl.datas.candidate.candidate_files_attributes.push({ files_file_name: "" });
+  }
+
+  ctrl.onFileChange = function(index, event){
+    ctrl.datas.candidate.candidate_files_attributes[index].files = event.target.files[0]
+  }
+
+  ctrl.removeCandidateFiles = function(index) {
+    if (ctrl.datas.candidate.candidate_files_attributes[index].files) {
+      ctrl.datas.candidate.candidate_files_attributes.splice(index, 1);
+    } else {
+      ctrl.datas.candidate.candidate_files_attributes[index]._destroy = true
+    }
   }
 
   ctrl.showImage = function(event, id){

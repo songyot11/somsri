@@ -26,10 +26,28 @@
 
         <div class="col-md-12">
           <div class="img-profile cursor-pointer" id="image" ngf-select="createCandidate.showImage($event, 'pic')">
-            <img src="{{ createCandidate.datas.candidate.image }}" id="pic" class="">
+            <img src="{{ createCandidate.datas.candidate.image_url }}" id="pic" class="">
           </div>
-        </div>
-      </div>
+          <!-- MultipleFiles -->
+          <div class="row" style="padding-top:25px;margin:0px">
+            <div ng-repeat="item in createCandidate.datas.candidate.candidate_files_attributes">
+              <div ng-hide="item._destroy">
+                <div style="padding:2px;">  
+                  <span ng-hide="!item.files_file_name.name">{{ item.files.name }}</span>
+                </div>
+                <div style="padding:2px;">
+                  <a ng-show="!item.files_file_name.name" target="_blank" href="{{ createCandidate.datas.candidate.candidate_files_url[$index] }}">{{ item.files_file_name }}</a>
+                </div> 
+              <div class="button btn btn-info" ngf-select="createCandidate.onFileChange($index, $event)" ng-model="item.files_file_name" name="file">+</div>   
+                <button type="button" class="close" aria-label="Close" ng-click="createCandidate.removeCandidateFiles($index)"><span aria-hidden="true">&times;</span></button>
+              </div>
+            </div>
+          </div>
+          <div style="padding:2px;">
+          <button type="button" class="btn btn-skill" ng-click="createCandidate.addFile()">+File</button>
+          </div>
+    </div>
+    </div><br>
 
       <!-- From info -->
       <div class="col-md-5">
@@ -179,38 +197,6 @@
               </div>
         
 
-              <!-- List ProgramSkill -->
-              <!-- <div class="row" style="padding-top:25px;margin:0px">
-                <div ng-repeat="item in createCandidate.listProgrammingSkills">
-                  <div class="col-md-8" style="padding:5px;">
-                    <span style="margin-right: 50px;">{{item.skill}}</span>
-                  </div>
-                  <div class="col-md-2" style="padding:5px;">
-                    <span>{{item.value}}</span>
-                  </div>
-                  <div class="col-md-1" style="padding:5px;">
-                    <button type="button" class="close" aria-label="Close" ng-click="createCandidate.deleteProgrammingSkill($index)"><span aria-hidden="true">&times;</span></button>
-                  </div>
-                </div>
-              </div>
-
-              <!-- ADD ProgramSkill -->
-              <!-- <div class="row" style="margin:0px;">
-                <div class="form-group" style="margin:0px;">
-                  <div class="col-md-6" style="padding:5px;">
-                    <input type="text" class="form-control" ng-model="createCandidate.listScoreSkill[0]">
-                  </div>
-                  <div class="col-md-3" style="padding:5px;" >
-                    <select class="form-control " ng-model="createCandidate.listScoreSkill[1]">
-                      <option ng-repeat="i in createCandidate.score">{{i}}</option>   
-                    </select>
-                  </div>
-                  <div class="col-md-3" style="padding:5px;">
-                    <button type="button" class ="btn btn-skill" ng-click="createCandidate.addProgrammingSkill()">+ {{ 'Add'  | translate }}</button>
-                  </div>
-                </div> 
-              </div> -->
-
             </div>
           </div>
 
@@ -234,45 +220,13 @@
                 <button type="button" ng-click="createCandidate.addSoftskill()">Add</button>
               </div>
 
-              <!-- List SoftSkill -->
-              <!-- <div class="row" style="padding-top:25px;margin:0px">
-                <div ng-repeat="item in createCandidate.listSoftSkill">
-                  <div class="col-md-8" style="padding:5px;">
-                    <span style="margin-right: 50px;">{{item.skill}}</span>
-                  </div>
-                  <div class="col-md-2" style="padding:5px;">
-                    <span>{{item.value}}</span>
-                  </div>
-                  <div class="col-md-1" style="padding:5px;">
-                    <button type="button" class="close" aria-label="Close" ng-click="createCandidate.deleteSoftSkill($index)"><span aria-hidden="true">&times;</span></button>
-                  </div>
-                </div>
-              </div> -->
-
-              <!-- ADD SoftSkill -->
-              <!-- <div class="row" style="margin:0px;">
-                <div class="form-group" style="margin:0px;">
-                  <div class="col-md-6" style="padding:5px;">
-                    <input type="text" class="form-control" ng-model="createCandidate.listScoreSkill[2]">
-                  </div>
-                  <div class="col-md-3" style="padding:5px;" >                
-                    <select class="form-control " ng-model="createCandidate.listScoreSkill[3]">
-                      <option ng-repeat="i in createCandidate.score">{{i}}</option>   
-                    </select>
-                  </div>
-                  <div class="col-md-3" style="padding:5px;">
-                    <button type="button" class ="btn btn-skill" ng-click="createCandidate.addSoftSkill()">+ {{ 'Add'  | translate }}</button>
-                  </div>
-                </div> 
-              </div> -->
-
-
+              
               <!--Design Skill -->
               <div class="row-head" style="border-bottom: 1px solid #ddd;padding-bottom:10px;padding-top:35px;margin:0px">
                 {{ 'Design Skill'  | translate }}
               </div>
 
-              <div class="form-group"> 
+              <div class="form-group">
                 <div ng-repeat="item in createCandidate.datas.candidate.design_skills_attributes"> 
                   <div class="row" ng-hide="item._destroy">
                     <input type="text" class="form-control" required id="skillname" ng-model="item.skill_name">	
@@ -283,37 +237,7 @@
                 <button type="button" ng-click="createCandidate.addDesignskill()">Add</button>
               </div>
 
-              <!-- List DesignSkill -->
-              <!-- <div class="row" style="padding-top:25px;margin:0px">
-                <div ng-repeat="item in createCandidate.listDesignSkill">
-                  <div class="col-md-8" style="padding:5px;">
-                    <span style="margin-right: 50px;">{{item.skill}}</span>
-                  </div>
-                  <div class="col-md-2" style="padding:5px;">
-                    <span>{{item.value}}</span>
-                  </div>
-                  <div class="col-md-1" style="padding:5px;">
-                    <button type="button" class="close" aria-label="Close" ng-click="createCandidate.deleteDesignSkill($index)"><span aria-hidden="true">&times;</span></button>
-                  </div>
-                </div>
-              </div> -->
-
-              <!-- ADD DesignSkill -->
-              <!-- <div class="row" style="margin:0px;">
-                <div class="form-group" style="margin:0px;">
-                  <div class="col-md-6" style="padding:5px;">
-                    <input type="text" class="form-control" ng-model="createCandidate.listScoreSkill[4]">
-                  </div>
-                  <div class="col-md-3" style="padding:5px;" >                
-                    <select class="form-control " ng-model="createCandidate.listScoreSkill[5]">
-                      <option ng-repeat="i in createCandidate.score">{{i}}</option>   
-                    </select>
-                  </div>
-                  <div class="col-md-3" style="padding:5px;">
-                    <button type="button" class ="btn btn-skill" ng-click="createCandidate.addDesignSkill()">+ {{ 'Add'  | translate }}</button>
-                  </div>
-                </div> 
-              </div> -->
+              
 
             </div>
           </div>
