@@ -1,13 +1,14 @@
 (function() {
   'use strict';
     angular.module('somsri.somsri.candidate_detail', [])
-    .controller('candidateDetailCtrl', ['$scope', '$rootScope', 'translateFilter','candidateDetailService','$state', function($scope, $rootScope, translateFilter, candidateDetailService, $state) {
+    .controller('candidateDetailCtrl', ['$scope', '$rootScope', 'translateFilter',
+    'candidateDetailService','$state',  '$uibModal', 'candidateService', '$window',
+    function($scope, $rootScope, translateFilter, candidateDetailService, $state,  $uibModal, service, $window) {
       var ctrl = this;
       ctrl.buttonIcon = "fas fa-star color-yellow";
       ctrl.icon = true;
       candidateDetailService.getById($state.params.id).then(function(resp) {
         ctrl.datas = resp.data;
-        console.log(ctrl.datas)
       });
      
       ctrl.changIcon = function(check){
@@ -20,6 +21,42 @@
           ctrl.icon = true;
         }
       }
+
+      function openConfirmationModal(message, success, dismiss) {
+      $scope.message = message;
+      $uibModal.open({
+        animation: true,
+        backdrop: 'static',
+        keyboard: false,
+        scope: $scope,
+        templateUrl: "<%= asset_path('main/angular/components/modal/confirm/confirmModalView.html') %>",
+        controller: 'confirmModalCtrl as confirm',
+        size: 'md',
+        resolve: {
+          resources: ['$ocLazyLoad', 'ASSETS', function($ocLazyLoad, ASSETS) {
+            return $ocLazyLoad.load([
+              ASSETS.somsri.somsri.confirm_modal
+            ]);
+          }]
+        }
+      }).result.then(function (isConfirm) {
+        if (isConfirm) {
+          if(success){ success() }
+        }else{
+          if(dismiss){ dismiss() }
+        }
+      });
+    }
+
+      ctrl.removeCandidate = function(id){
+      openConfirmationModal(translateFilter('confirmdelete'), function(){
+        service.removeCandidate(id).then(function(resp) {
+        console.log('delete')
+          $window.location.reload();
+          alert("ลบข้อมูลสำเร็จ");
+        });
+      })
+    }
 
       
 

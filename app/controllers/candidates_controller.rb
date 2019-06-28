@@ -22,7 +22,11 @@ class CandidatesController < ApplicationController
   
   def edit
     @candidate = Candidate.find(params[:id])
+<<<<<<< HEAD
     render json: { candidate: @candidate.as_json('show_or_edit') }, status: :ok
+=======
+    render json: @candidate.as_json('show_or_edit'), status: :ok
+>>>>>>> modal delete
   end
 
   def update_candidate
@@ -75,7 +79,11 @@ class CandidatesController < ApplicationController
   end
 
   def show
+<<<<<<< HEAD
     render json: Candidate.find(params[:id]).as_json('show_or_edit'), status: :ok
+=======
+    render json: { candidate: Candidate.with_deleted.where(id: params[:id]).first.as_json('show_or_edit') }, status: :ok
+>>>>>>> modal delete
   end    
   
   private

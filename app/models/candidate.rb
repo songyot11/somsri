@@ -46,6 +46,7 @@ class Candidate < ApplicationRecord
         created_at: created_at,
         image: image,
         image_url: image.expiring_url(10),
+        deleted: deleted?,
         programming_skills_attributes: self.new_record? ? [programming_skills.build] : programming_skills,
         soft_skills_attributes: self.new_record? ? [soft_skills.build] : soft_skills,
         design_skills_attributes: self.new_record? ? [design_skills.build] : design_skills,

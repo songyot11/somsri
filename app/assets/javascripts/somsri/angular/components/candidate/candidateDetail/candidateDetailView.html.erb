@@ -11,14 +11,18 @@
           </div>
           <div class="col-sm-10">
             <div class="row">
-              <h1 class="color-blue-light" style="margin-left: 20px;">{{candidateDetail.datas.full_name_and_nick_name}} <button ng-click="candidateDetail.changIcon(candidateDetail.icon)" class="button-star"><i class="{{candidateDetail.buttonIcon}}"></i></button></h1>
+              <h1 class="color-blue-light" style="margin-left: 20px;">{{candidateDetail.datas.candidate.full_name_and_nick_name}} 
+              <button ng-click="candidateDetail.changIcon(candidateDetail.icon)" class="button-star">
+              <i class="{{candidateDetail.buttonIcon}}"></i>
+              </button>
+              </h1>
             </div>
             <div class="row">
               <div class="col-sm-2 text-right">
                 <span class="font-roboto font-21">Email:</span>
               </div>
               <div class="col-sm-3">
-                <span class="font-roboto font-21 color-blue">{{candidateDetail.datas.email}}</span>
+                <span class="font-roboto font-21 color-blue">{{candidateDetail.datas.candidate.email}}</span>
               </div>
               <div class="col-sm-2 text-right">
                 <span class="font-roboto font-21">Interview date :</span>
@@ -32,7 +36,7 @@
                 <span class="font-roboto font-21">Phone Number:</span>
               </div>
               <div class="col-sm-4">
-                <span class="font-roboto font-21 color-blue">{{candidateDetail.datas.phone_number}}</span>
+                <span class="font-roboto font-21 color-blue">{{candidateDetail.datas.candidate.phone_number}}</span>
               </div>
             </div>
             <div class="row">
@@ -40,7 +44,7 @@
                 <span class="font-roboto font-21">Form:</span>
               </div>
               <div class="col-sm-6">
-                <span class="font-roboto font-21 color-blue">{{candidateDetail.datas.from}}</span>
+                <span class="font-roboto font-21 color-blue">{{candidateDetail.datas.candidate.from}}</span>
               </div>
             </div>
             <div class="row">
@@ -48,7 +52,7 @@
                 <span class="font-roboto font-21">Year:</span>
               </div>
               <div class="col-sm-6">
-                 <span class="font-roboto font-21 color-blue">{{candidateDetail.datas.school_year}}</span>
+                 <span class="font-roboto font-21 color-blue">{{candidateDetail.datas.candidate.school_year}}</span>
               </div>
             </div>
             <div class="row">
@@ -64,13 +68,13 @@
       </div>
       <div class="col-sm-2">
         <div class="margin20" style="margin-left: 100px">
-          <button type="button" class="btn btn-custom btn-black">Interviwe</button>
+          <button type="button" class="btn btn-custom btn-black" ng-disabled="candidateDetail.datas.candidate.deleted">Interviwe</button>
         </div>
         <div class="margin20">
-          <button type="button" class="btn btn-custom btn-black">Edit</button>
+          <button type="button" class="btn btn-custom btn-black" ng-disabled="candidateDetail.datas.candidate.deleted">Edit</button>
         </div>
         <div class="margin20">
-          <button type="button" class="btn btn-custom btn-black">Delete</button> 
+          <button type="button" ng-disabled="candidateDetail.datas.candidate.deleted" class="btn btn-custom btn-black" ng-click="candidateDetail.removeCandidate(candidateDetail.datas.candidate.id)">Delete</button> 
         </div>
       </div>
     </div>
@@ -87,7 +91,7 @@
           </div>
           <div class="col-sm-9">
             <div class="progress progress-bar-skill" style="margin-top: 30px;">
-              <div class="progress-bar bar-skill" role="progressbar" style="width: {{candidateDetail.datas.current_ability * 5}}%;"></div>
+              <div class="progress-bar bar-skill" role="progressbar" style="width: {{candidateDetail.datas.candidate.current_ability * 5}}%;"></div>
             </div>
           </div>
         </div>
@@ -97,7 +101,7 @@
           </div>
           <div class="col-sm-9">
             <div class="progress progress-bar-skill" style="margin-top: 30px;">
-              <div class="progress-bar bar-skill" role="progressbar" style="width: {{candidateDetail.datas.learn_ability * 5}}%;"></div>
+              <div class="progress-bar bar-skill" role="progressbar" style="width: {{candidateDetail.datas.candidate.learn_ability * 5}}%;"></div>
             </div>
           </div>
         </div>
@@ -107,7 +111,7 @@
           </div>
           <div class="col-sm-9">
             <div class="progress progress-bar-skill" style="margin-top: 30px;">
-              <div class="progress-bar bar-skill" role="progressbar" style="width: {{candidateDetail.datas.attention_ability * 5}}%;"></div>
+              <div class="progress-bar bar-skill" role="progressbar" style="width: {{candidateDetail.datas.candidate.attention_ability * 5}}%;"></div>
             </div>
           </div>
         </div>
@@ -118,7 +122,7 @@
         <div class="row">
           <div class="col-sm-6">
             <h3 class="hr-2">Programming skill</h3>
-            <div class="row" ng-repeat="item in candidateDetail.datas.programming_skills">
+            <div class="row" ng-repeat="item in candidateDetail.datas.candidate.programming_skills">
               <div class="col-sm-3">
                 <h3>{{item.skill_name}}</h3>
               </div>
@@ -131,7 +135,7 @@
           </div>
           <div class="col-sm-6">
             <h3 class="hr-2">Soft skill</h3>
-            <div class="row" ng-repeat="item in candidateDetail.datas.soft_skills">
+            <div class="row" ng-repeat="item in candidateDetail.datas.candidate.soft_skills">
               <div class="col-sm-3">
                 <h3>{{item.skill_name}}</h3>
               </div>
@@ -164,6 +168,5 @@
     </div>
   </div>
 </div>
-
 
 
