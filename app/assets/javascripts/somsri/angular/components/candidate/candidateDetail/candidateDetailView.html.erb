@@ -11,10 +11,8 @@
           </div>
           <div class="col-sm-10">
             <div class="row">
-              <h1 class="color-blue-light" style="margin-left: 20px;">{{candidateDetail.datas.candidate.full_name_and_nick_name}} 
-              <button ng-click="candidateDetail.changIcon(candidateDetail.icon)" class="button-star">
-              <i class="{{candidateDetail.buttonIcon}}"></i>
-              </button>
+              <h1 class="color-blue-light">{{candidateDetail.datas.candidate.full_name_and_nick_name}} 
+              <i ng-click="candidateDetail.changIcon(candidateDetail.icon)" ng-class="candidateDetail.buttonIcon"></i>
               </h1>
             </div>
             <div class="row">
@@ -166,9 +164,8 @@
         <h4 data-ng-repeat="(index, data) in candidateDetail.datas.candidate.versions">
         {{candidateDetail.datas.candidate.versions[index].event}}  {{candidateDetail.datas.candidate.versions[index].object.full_name}}
          by {{candidateDetail.datas.candidate.versions[index].user.first_name}} 
-         at {{candidateDetail.datas.candidate.versions[index].created_at | date:'dd-MMM-yyyy h:mm a'}}
+         at {{candidateDetail.datas.candidate.versions[index].created_at | date:'dd/MM/yyyy HH:mm '}}
          </h4>
-
       </div>
     </div>
   </div>

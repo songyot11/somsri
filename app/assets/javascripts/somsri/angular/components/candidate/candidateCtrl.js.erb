@@ -161,6 +161,7 @@
       openConfirmationModal(translateFilter('confirmdelete'), function(){
         service.removeCandidate(id).then(function(resp) {
           $window.location.reload();
+          $rootScope.openSuccessModal(translateFilter('delete_success')) 
         });
       })
     }

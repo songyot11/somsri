@@ -38,6 +38,7 @@ class CandidatesController < ApplicationController
   def destroy
     @candidate = Candidate.find_by(id: params[:id])
     @candidate.destroy
+    render json: { candidate: @candidate.as_json('show_or_edit') }, status: :ok
   end
 
   def filter_candidates

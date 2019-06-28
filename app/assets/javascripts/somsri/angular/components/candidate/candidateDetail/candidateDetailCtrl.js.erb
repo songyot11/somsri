@@ -10,7 +10,6 @@
       candidateDetailService.getById($state.params.id).then(function(resp) {
         ctrl.datas = resp.data;
       });
-     
       ctrl.changIcon = function(check){
         if(check){
           ctrl.buttonIcon = "far fa-star color-yellow";
@@ -47,12 +46,13 @@
         }
       });
     }
+  
 
       ctrl.removeCandidate = function(id){
       openConfirmationModal(translateFilter('confirmdelete'), function(){
         service.removeCandidate(id).then(function(resp) {
-          $window.location.reload();
-          alert("ลบข้อมูลสำเร็จ");
+          ctrl.datas = resp.data;
+          $rootScope.openSuccessModal(translateFilter('delete_success')) 
         });
       })
     } 
