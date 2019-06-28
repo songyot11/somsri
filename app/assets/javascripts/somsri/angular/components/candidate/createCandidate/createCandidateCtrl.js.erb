@@ -17,6 +17,9 @@
     function loadNewCandidate() {
       candidateService.new().then(function(resp) {
         ctrl.datas = resp
+        ctrl.datas.candidate.programming_skills_attributes[0].skill_point = 0;
+        ctrl.datas.candidate.soft_skills_attributes[0].skill_point = 0;
+        ctrl.datas.candidate.design_skills_attributes[0].skill_point = 0;
       });
     }
 
@@ -24,7 +27,6 @@
         openConfirmationModal(translateFilter("close_without_save"), function(){
         ctrl.cannotSubmit = true ;
         window.location.href = "/somsri#/candidate";
-
     });
   }
 
@@ -46,12 +48,8 @@
   }
 
   ctrl.removeCandidateFiles = function(index) {
-    if (ctrl.datas.candidate.candidate_files_attributes[index].files) {
-      ctrl.datas.candidate.candidate_files_attributes.splice(index, 1);
-    } else {
       ctrl.datas.candidate.candidate_files_attributes[index]._destroy = true
     }
-  }
 
   ctrl.showImage = function(event, id){
     var img = URL.createObjectURL(event.target.files[0]);

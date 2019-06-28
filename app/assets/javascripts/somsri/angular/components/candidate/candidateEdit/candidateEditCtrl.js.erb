@@ -14,10 +14,14 @@
     ctrl.submit = function(params){
       ctrl.cannotUpdate = true;
       candidateEditService.saveCandidate(ctrl.datas.candidate.id, params).then(function(resp){
-        window.location.reload()
+        ctrl.goDetail();
       });
     };
     
+    ctrl.goDetail = function(){
+      window.location.href = '/somsri#/candidate/detail/' + ctrl.datas.candidate.id;
+    }
+
     ctrl.showImage = function(event, id){
       var img = URL.createObjectURL(event.target.files[0]);
       $('#' + id).attr('src', img);
@@ -33,12 +37,8 @@
     }
 
     ctrl.removeCandidateFiles = function(index) {
-      if (ctrl.datas.candidate.candidate_files_attributes[index].files) {
-        ctrl.datas.candidate.candidate_files_attributes.splice(index, 1);
-      } else {
         ctrl.datas.candidate.candidate_files_attributes[index]._destroy = true
       }
-    }
 
     ctrl.removeCandidateProgrammingSkill = function(index) {
       ctrl.datas.candidate.programming_skills_attributes[index]._destroy = true
