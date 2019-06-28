@@ -160,8 +160,9 @@
       ctrl.removeCandidate = function(id){
       openConfirmationModal(translateFilter('confirmdelete'), function(){
         service.removeCandidate(id).then(function(resp) {
-          $window.location.reload();
-          $rootScope.openSuccessModal(translateFilter('delete_success')) 
+        $rootScope.openSuccessModal(translateFilter('delete_success')) 
+          candidateshortlistTable.bootstrapTable("refresh");
+          candidateTable.bootstrapTable("refresh");
         });
       })
     }
