@@ -603,7 +603,9 @@ ActiveRecord::Schema.define(version: 20190626020645) do
     t.string   "img_url_content_type"
     t.integer  "img_url_file_size"
     t.datetime "img_url_updated_at"
+    t.integer  "school_id"
     t.index ["deleted_at"], name: "index_parents_on_deleted_at", using: :btree
+    t.index ["school_id"], name: "index_parents_on_school_id", using: :btree
   end
 
   create_table "payment_methods", force: :cascade do |t|
@@ -704,9 +706,11 @@ ActiveRecord::Schema.define(version: 20190626020645) do
   end
 
   create_table "school_settings", force: :cascade do |t|
-    t.string "school_year",      default: ""
-    t.string "semesters"
-    t.string "current_semester"
+    t.string  "school_year",      default: ""
+    t.string  "semesters"
+    t.string  "current_semester"
+    t.integer "school_id"
+    t.index ["school_id"], name: "index_school_settings_on_school_id", using: :btree
   end
 
   create_table "schools", force: :cascade do |t|
@@ -727,6 +731,10 @@ ActiveRecord::Schema.define(version: 20190626020645) do
     t.integer  "logo_file_size"
     t.datetime "logo_updated_at"
     t.text     "payroll_slip_header"
+    t.string   "name_eng"
+    t.string   "note"
+    t.string   "subdomain_name"
+    t.string   "branch"
   end
 
   create_table "site_configs", force: :cascade do |t|
@@ -957,11 +965,12 @@ ActiveRecord::Schema.define(version: 20190626020645) do
   end
 
   create_table "versions", force: :cascade do |t|
-    t.string   "item_type",  null: false
-    t.bigint   "item_id",    null: false
-    t.string   "event",      null: false
+    t.string   "item_type",      null: false
+    t.bigint   "item_id",        null: false
+    t.string   "event",          null: false
     t.string   "whodunnit"
-    t.text     "object"
+    t.json     "object"
+    t.json     "object_changes"
     t.datetime "created_at"
     t.index ["item_type", "item_id"], name: "index_versions_on_item_type_and_item_id", using: :btree
   end
@@ -979,8 +988,10 @@ ActiveRecord::Schema.define(version: 20190626020645) do
   add_foreign_key "individuals", "employees", column: "friend_id"
   add_foreign_key "individuals", "employees", column: "parent_id"
   add_foreign_key "individuals", "employees", column: "spouse_id"
+  add_foreign_key "parents", "schools"
   add_foreign_key "programming_skills", "candidates"
   add_foreign_key "roll_calls", "lists"
+  add_foreign_key "school_settings", "school_settings", column: "school_id"
   add_foreign_key "soft_skills", "candidates"
   add_foreign_key "students", "classrooms", on_delete: :nullify
   add_foreign_key "students", "schools"

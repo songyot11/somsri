@@ -163,7 +163,12 @@
     <div class="row">
       <div class="col-sm-6">
         <h3 class="hr-2">History Log</h3>
-        <h4>Update {{name}} by {{role}} at {{time}}</h4>
+        <h4 data-ng-repeat="(index, data) in candidateDetail.datas.candidate.versions">
+        {{candidateDetail.datas.candidate.versions[index].event}}  {{candidateDetail.datas.candidate.versions[index].object.full_name}}
+         by {{candidateDetail.datas.candidate.versions[index].user.first_name}} 
+         at {{candidateDetail.datas.candidate.versions[index].created_at | date:'dd-MMM-yyyy h:mm a'}}
+         </h4>
+
       </div>
     </div>
   </div>
