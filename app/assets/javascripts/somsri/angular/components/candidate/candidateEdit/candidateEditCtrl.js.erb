@@ -9,25 +9,19 @@
     $rootScope.loadAndAuthorizeResource("candidateEdit", function(){
       candidateEditService.getCandidate($state.params.id).then(function(resp) {
         ctrl.datas = resp;
-        console.log(ctrl.datas)
       });
 
     ctrl.submit = function(params){
-      ctrl.uploadPhoto(imagefile);
+      ctrl.cannotUpdate = true;
       candidateEditService.saveCandidate(ctrl.datas.candidate.id, params).then(function(resp){
         window.location.reload()
       });
     };
-
-    ctrl.uploadPhoto = function(imagefile) {
-      candidateEditService.uploadImage(ctrl.datas.candidate.id, imagefile)
-    }
     
-
     ctrl.showImage = function(event, id){
       var img = URL.createObjectURL(event.target.files[0]);
       $('#' + id).attr('src', img);
-      imagefile = event.target.files[0];
+      ctrl.datas.candidate.image = event.target.files[0];
     }
 
     ctrl.addFile = function(){
@@ -69,6 +63,15 @@
     ctrl.addDesignskill = function(){
       ctrl.datas.candidate.design_skills_attributes.push({ skill_name: "", skill_point: 0 });
     }
+
+    ctrl.isNotBlank = function(){
+      var candidate = ctrl.datas.candidate
+      if ((candidate.full_name || candidate.nick_name) && (candidate.email || candidate.phone) && candidate.school_year && candidate.from){
+        ctrl.cannotUpdate = false;
+      } else {
+        ctrl.cannotUpdate = true;
+      }
+    } 
       });
     }]);
 })();

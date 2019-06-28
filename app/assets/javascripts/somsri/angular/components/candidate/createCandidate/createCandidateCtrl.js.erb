@@ -17,9 +17,6 @@
     function loadNewCandidate() {
       candidateService.new().then(function(resp) {
         ctrl.datas = resp
-        ctrl.datas.candidate.programming_skills_attributes[0].skill_point = 0;
-        ctrl.datas.candidate.soft_skills_attributes[0].skill_point = 0;
-        ctrl.datas.candidate.design_skills_attributes[0].skill_point = 0;
       });
     }
 

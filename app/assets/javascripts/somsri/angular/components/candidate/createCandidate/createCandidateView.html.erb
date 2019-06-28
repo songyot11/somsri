@@ -58,7 +58,7 @@
             <div class="form-group">
               <label>{{ 'nameE' | translate }}</label>
               <div class="col-md-12">
-                <input type="text" class="form-control text-blue" id="full_name" ng-change="createCandidate.isNotBlank()" ng-model="createCandidate.datas.candidate.full_name">
+                <input type="text" class="form-control text-blue" id="full_name" ng-keyup="createCandidate.isNotBlank()" ng-model="createCandidate.datas.candidate.full_name">
               </div>
             </div>
           </div>
@@ -66,7 +66,7 @@
             <div class="form-group">
               <label>{{ 'nicknameE'  | translate}}</label>
               <div class="col-md-12">
-                <input type="text" class="form-control text-blue" id="nick_name" ng-change="createCandidate.isNotBlank()" ng-model="createCandidate.datas.candidate.nick_name">
+                <input type="text" class="form-control text-blue" id="nick_name" ng-keyup="createCandidate.isNotBlank()" ng-model="createCandidate.datas.candidate.nick_name">
               </div>
             </div>
           </div>
@@ -78,7 +78,7 @@
               <div class="form-group">
                 <label>{{ 'email'  | translate}}</label>
                 <div class="col-md-12">
-                  <input type="text" class="form-control text-blue" id="email" ng-change="createCandidate.isNotBlank()" ng-model="createCandidate.datas.candidate.email">
+                  <input type="text" class="form-control text-blue" id="email" ng-keyup="createCandidate.isNotBlank()" ng-model="createCandidate.datas.candidate.email">
                 </div>
               </div>
             </div>
@@ -86,7 +86,7 @@
               <div class="form-group">
                 <label>{{ 'phone'  | translate}}</label>
                 <div class="col-md-12">
-                  <input type="text" class="form-control text-blue" id="phone" ng-change="createCandidate.isNotBlank()" ng-model="createCandidate.datas.candidate.phone">
+                  <input type="text" class="form-control text-blue" id="phone" ng-keyup="createCandidate.isNotBlank()" ng-model="createCandidate.datas.candidate.phone">
                 </div>
               </div>
             </div>
@@ -98,7 +98,7 @@
             <div class="form-group">
               <label>{{ 'from'  | translate}}</label>
               <div class="col-md-12">
-                <input type="text" class="form-control text-blue" id="from" ng-change="createCandidate.isNotBlank()" ng-model="createCandidate.datas.candidate.from">
+                <input type="text" class="form-control text-blue" id="from" ng-keyup="createCandidate.isNotBlank()" ng-model="createCandidate.datas.candidate.from">
               </div>
             </div>
           </div>
@@ -106,7 +106,7 @@
             <div class="form-group">
               <label>{{ 'school_year'  | translate}}</label>
               <div class="col-md-12">
-                <input type="text" class="form-control text-blue" id="school_year" ng-change="createCandidate.isNotBlank()" ng-model="createCandidate.datas.candidate.school_year">
+                <input type="text" class="form-control text-blue" id="school_year" ng-keyup="createCandidate.isNotBlank()" ng-model="createCandidate.datas.candidate.school_year">
               </div>
             </div>
           </div>

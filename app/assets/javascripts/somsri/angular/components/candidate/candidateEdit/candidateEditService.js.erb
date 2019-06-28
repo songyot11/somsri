@@ -9,14 +9,6 @@
 			});
 		};
 
-		this.uploadImage = function(id, file){
-			return Upload.upload({
-				url: '/candidates/' + id + '/upload_photo',
-				method: 'PATCH',
-				data: { candidate: { file: file } }
-			})
-		}
-
 		this.saveCandidate = function(id, params) {
 			return Upload.upload({
 				url: '/candidates/' + id + '/update_candidate',
@@ -24,15 +16,6 @@
 				data: params
 			})
 		};
-
-
-
-
-
-
-
-
-
 
 	 }]);
 })();
