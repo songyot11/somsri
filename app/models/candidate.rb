@@ -1,5 +1,6 @@
 class Candidate < ApplicationRecord
   acts_as_paranoid
+  has_paper_trail
   has_many :programming_skills
   has_many :soft_skills
   has_many :design_skills
@@ -9,10 +10,10 @@ class Candidate < ApplicationRecord
   validates_attachment_content_type :image, content_type: /\Aimage\/.*\z/
   has_attached_file :file, styles: { medium: "300x300>", thumb: "100x100>" }, default_url: "/images/:style/missing.png"
   validates_attachment_content_type :file, content_type: /\Aimage\/.*\z/
-  
+
   def helpers
     ApplicationController.helpers
-  end  
+  end
 
   def as_json(options = {})
     if options['data_table']
@@ -47,6 +48,7 @@ class Candidate < ApplicationRecord
         image: image,
         image_url: image.expiring_url(10),
         deleted: deleted?,
+        versions: helpers.versions_with_user(versions),
         programming_skills_attributes: self.new_record? ? [programming_skills.build] : programming_skills,
         soft_skills_attributes: self.new_record? ? [soft_skills.build] : soft_skills,
         design_skills_attributes: self.new_record? ? [design_skills.build] : design_skills,

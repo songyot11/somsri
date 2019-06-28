@@ -2,9 +2,8 @@ class ApplicationController < ActionController::Base
   include ApplicationHelper
   include CanCan::ControllerAdditions
   protect_from_forgery with: :exception
-  before_action :set_cache_buster, :set_locale
+  before_action :set_cache_buster, :set_locale, :set_paper_trail_whodunnit, :set_raven_context
   after_action :set_csrf_cookie_for_ng
-  before_action :set_raven_context
 
   def set_locale
     @locale = params[:locale] || session['locale'] ||

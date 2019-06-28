@@ -80,8 +80,12 @@ class CandidatesController < ApplicationController
 
   def show
 <<<<<<< HEAD
+<<<<<<< HEAD
     render json: Candidate.find(params[:id]).as_json('show_or_edit'), status: :ok
 =======
+=======
+    ap Candidate.with_deleted.where(id: params[:id]).first.as_json('show_or_edit')
+>>>>>>> [Added] versions
     render json: { candidate: Candidate.with_deleted.where(id: params[:id]).first.as_json('show_or_edit') }, status: :ok
 >>>>>>> modal delete
   end    
