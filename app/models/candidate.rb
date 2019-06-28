@@ -9,6 +9,7 @@ class Candidate < ApplicationRecord
   validates_attachment_content_type :image, content_type: /\Aimage\/.*\z/
   has_attached_file :file, styles: { medium: "300x300>", thumb: "100x100>" }, default_url: "/images/:style/missing.png"
   validates_attachment_content_type :file, content_type: /\Aimage\/.*\z/
+  
   def helpers
     ApplicationController.helpers
   end  
@@ -27,9 +28,10 @@ class Candidate < ApplicationRecord
         created_at: helpers.date_formatter(created_at),
         detail: helpers.link_to_path("รายละเอียด", id)
       }
-    elsif(options['joins-table'])
+    elsif(options['show_or_edit'])
       {
         id: id,
+        full_name_and_nick_name: "#{full_name} (#{nick_name})",
         full_name: full_name,
         nick_name: nick_name,
         school_year: school_year,
@@ -42,29 +44,14 @@ class Candidate < ApplicationRecord
         attention: attention || 10,
         interest: interest,
         created_at: created_at,
-        image: image.expiring_url(10),
+        image: image,
+        image_url: image.expiring_url(10),
         programming_skills_attributes: self.new_record? ? [programming_skills.build] : programming_skills,
         soft_skills_attributes: self.new_record? ? [soft_skills.build] : soft_skills,
         design_skills_attributes: self.new_record? ? [design_skills.build] : design_skills,
         candidate_files_attributes: self.new_record? ? [candidate_files.build] : candidate_files,
         candidate_files_url: candidate_files.map { |x| x.files }
      }
-    elsif options['show']
-      {
-        id: id,
-        full_name_and_nick_name: "#{full_name} (#{nick_name})",
-        email: email,
-        phone_number: phone,
-        from: from,
-        school_year: school_year,
-        current_ability: current_ability,
-        learn_ability: learn_ability,
-        attention_ability: attention,
-        programming_skills: programming_skills,
-        soft_skills: soft_skills,
-        design_skills: design_skills,
-        note: note    
-      }
     else
       super
     end

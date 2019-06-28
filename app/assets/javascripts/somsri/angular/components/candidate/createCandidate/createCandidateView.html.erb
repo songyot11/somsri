@@ -25,19 +25,29 @@
         </div>
 
         <div class="col-md-12">
-          <div class="img-profile cursor-pointer" ngf-select="employee.uploadPhoto($file)">
-                  <div ng-switch on="employee.datas.img_url.length > 0">
-                    <div ng-switch-when="true">
-                      <div class="img-bg " style="background: url('{{ employee.datas.img_url }}')"></div>
-                    </div>
-                    <div ng-switch-default>
-                      <i class="fa fa-file-upload icons-default-img2 center font-size-icon font-white" aria-hidden="true"></i>
-                      <div class="img-bg bg-light-gray"></div>
-                    </div>
-                  </div>
+          <div class="img-profile cursor-pointer" id="image" ngf-select="createCandidate.showImage($event, 'pic')">
+            <img src="{{ createCandidate.datas.candidate.image_url }}" id="pic" class="">
+          </div>
+          <!-- MultipleFiles -->
+          <div class="row" style="padding-top:25px;margin:0px">
+            <div ng-repeat="item in createCandidate.datas.candidate.candidate_files_attributes">
+              <div ng-hide="item._destroy">
+                <div style="padding:2px;">  
+                  <span ng-hide="!item.files_file_name.name">{{ item.files.name }}</span>
                 </div>
-        </div>
-      </div>
+                <div style="padding:2px;">
+                  <a ng-show="!item.files_file_name.name" target="_blank" href="{{ createCandidate.datas.candidate.candidate_files_url[$index] }}">{{ item.files_file_name }}</a>
+                </div> 
+              <div class="button btn btn-info" ngf-select="createCandidate.onFileChange($index, $event)" ng-model="item.files_file_name" name="file">+</div>   
+                <button type="button" class="close" aria-label="Close" ng-click="createCandidate.removeCandidateFiles($index)"><span aria-hidden="true">&times;</span></button>
+              </div>
+            </div>
+          </div>
+          <div style="padding:2px;">
+          <button type="button" class="btn btn-skill" ng-click="createCandidate.addFile()">+File</button>
+          </div>
+    </div>
+    </div><br>
 
       <!-- From info -->
       <div class="col-md-5">
@@ -48,7 +58,7 @@
             <div class="form-group">
               <label>{{ 'nameE' | translate }}</label>
               <div class="col-md-12">
-                <input type="text" class="form-control text-blue" id="full_name" ng-change="createCandidate.isFull_nameFill()" ng-model="createCandidate.datas.candidate.full_name">
+                <input type="text" class="form-control text-blue" id="full_name" ng-change="createCandidate.isNotBlank()" ng-model="createCandidate.datas.candidate.full_name">
               </div>
             </div>
           </div>
@@ -56,7 +66,7 @@
             <div class="form-group">
               <label>{{ 'nicknameE'  | translate}}</label>
               <div class="col-md-12">
-                <input type="text" class="form-control text-blue" id="nick_name" ng-change="createCandidate.isNick_nameFill()" ng-model="createCandidate.datas.candidate.nick_name">
+                <input type="text" class="form-control text-blue" id="nick_name" ng-change="createCandidate.isNotBlank()" ng-model="createCandidate.datas.candidate.nick_name">
               </div>
             </div>
           </div>
@@ -68,7 +78,7 @@
               <div class="form-group">
                 <label>{{ 'email'  | translate}}</label>
                 <div class="col-md-12">
-                  <input type="text" class="form-control text-blue" id="email" ng-change="createCandidate.isEmailFill()" ng-model="createCandidate.datas.candidate.email">
+                  <input type="text" class="form-control text-blue" id="email" ng-change="createCandidate.isNotBlank()" ng-model="createCandidate.datas.candidate.email">
                 </div>
               </div>
             </div>
@@ -76,7 +86,7 @@
               <div class="form-group">
                 <label>{{ 'phone'  | translate}}</label>
                 <div class="col-md-12">
-                  <input type="text" class="form-control text-blue" id="phone" ng-change="createCandidate.isPhoneFill()" ng-model="createCandidate.datas.candidate.phone">
+                  <input type="text" class="form-control text-blue" id="phone" ng-change="createCandidate.isNotBlank()" ng-model="createCandidate.datas.candidate.phone">
                 </div>
               </div>
             </div>
@@ -88,7 +98,7 @@
             <div class="form-group">
               <label>{{ 'from'  | translate}}</label>
               <div class="col-md-12">
-                <input type="text" class="form-control text-blue" id="from" ng-change="createCandidate.isFromFill()" ng-model="createCandidate.datas.candidate.from">
+                <input type="text" class="form-control text-blue" id="from" ng-change="createCandidate.isNotBlank()" ng-model="createCandidate.datas.candidate.from">
               </div>
             </div>
           </div>
@@ -96,7 +106,7 @@
             <div class="form-group">
               <label>{{ 'school_year'  | translate}}</label>
               <div class="col-md-12">
-                <input type="text" class="form-control text-blue" id="school_year" ng-change="createCandidate.isSchool_yearFill()" ng-model="createCandidate.datas.candidate.school_year">
+                <input type="text" class="form-control text-blue" id="school_year" ng-change="createCandidate.isNotBlank()" ng-model="createCandidate.datas.candidate.school_year">
               </div>
             </div>
           </div>
@@ -109,7 +119,7 @@
             <div class="form-group">
               <label>{{ 'CurrentAbility'  | translate}}</label>
               <div class="col-md-12" style="padding-left:0px; padding-rigth:0px;">
-                <select class="form-control text-blue somsri-select" id="current_ability" ng-options='point as point for point in points' ng-model="createCandidate.datas.candidate.current_ability">
+                <select class="form-control text-blue somsri-select" id="current_ability" ng-options='point as point for point in createCandidate.points' ng-model="createCandidate.datas.candidate.current_ability">
                 </select>
               </div>
             </div>
@@ -118,7 +128,7 @@
             <div class="form-group">
               <label>{{ 'LearnAbility'  | translate}}</label>
               <div class="col-md-12" style="padding-left:0px; padding-rigth:0px;">
-                <select class="form-control text-blue somsri-select" id="learn_ability" ng-options='point as point for point in points' ng-model="createCandidate.datas.candidate.learn_ability">
+                <select class="form-control text-blue somsri-select" id="learn_ability" ng-options='point as point for point in createCandidate.points' ng-model="createCandidate.datas.candidate.learn_ability">
                 </select>
               </div>
             </div>
@@ -128,10 +138,8 @@
               <label>{{ 'AttentionAbility'  | translate}}</label>
               <div class="col-md-12" style="padding-left:0px; padding-rigth:0px;">
                 <select class="form-control text-blue somsri-select" id="attention" 
-                ng-model="createCandidate.datas.candidate.attention"
-                ng-options='point as point for point in points'
-                >
-
+                        ng-model="createCandidate.datas.candidate.attention"
+                        ng-options='point as point for point in createCandidate.points'>
                 </select>
               </div>
             </div>
@@ -189,38 +197,6 @@
               </div>
         
 
-              <!-- List ProgramSkill -->
-              <!-- <div class="row" style="padding-top:25px;margin:0px">
-                <div ng-repeat="item in createCandidate.listProgrammingSkills">
-                  <div class="col-md-8" style="padding:5px;">
-                    <span style="margin-right: 50px;">{{item.skill}}</span>
-                  </div>
-                  <div class="col-md-2" style="padding:5px;">
-                    <span>{{item.value}}</span>
-                  </div>
-                  <div class="col-md-1" style="padding:5px;">
-                    <button type="button" class="close" aria-label="Close" ng-click="createCandidate.deleteProgrammingSkill($index)"><span aria-hidden="true">&times;</span></button>
-                  </div>
-                </div>
-              </div>
-
-              <!-- ADD ProgramSkill -->
-              <!-- <div class="row" style="margin:0px;">
-                <div class="form-group" style="margin:0px;">
-                  <div class="col-md-6" style="padding:5px;">
-                    <input type="text" class="form-control" ng-model="createCandidate.listScoreSkill[0]">
-                  </div>
-                  <div class="col-md-3" style="padding:5px;" >
-                    <select class="form-control " ng-model="createCandidate.listScoreSkill[1]">
-                      <option ng-repeat="i in createCandidate.score">{{i}}</option>   
-                    </select>
-                  </div>
-                  <div class="col-md-3" style="padding:5px;">
-                    <button type="button" class ="btn btn-skill" ng-click="createCandidate.addProgrammingSkill()">+ {{ 'Add'  | translate }}</button>
-                  </div>
-                </div> 
-              </div> -->
-
             </div>
           </div>
 
@@ -244,45 +220,13 @@
                 <button type="button" ng-click="createCandidate.addSoftskill()">Add</button>
               </div>
 
-              <!-- List SoftSkill -->
-              <!-- <div class="row" style="padding-top:25px;margin:0px">
-                <div ng-repeat="item in createCandidate.listSoftSkill">
-                  <div class="col-md-8" style="padding:5px;">
-                    <span style="margin-right: 50px;">{{item.skill}}</span>
-                  </div>
-                  <div class="col-md-2" style="padding:5px;">
-                    <span>{{item.value}}</span>
-                  </div>
-                  <div class="col-md-1" style="padding:5px;">
-                    <button type="button" class="close" aria-label="Close" ng-click="createCandidate.deleteSoftSkill($index)"><span aria-hidden="true">&times;</span></button>
-                  </div>
-                </div>
-              </div> -->
-
-              <!-- ADD SoftSkill -->
-              <!-- <div class="row" style="margin:0px;">
-                <div class="form-group" style="margin:0px;">
-                  <div class="col-md-6" style="padding:5px;">
-                    <input type="text" class="form-control" ng-model="createCandidate.listScoreSkill[2]">
-                  </div>
-                  <div class="col-md-3" style="padding:5px;" >                
-                    <select class="form-control " ng-model="createCandidate.listScoreSkill[3]">
-                      <option ng-repeat="i in createCandidate.score">{{i}}</option>   
-                    </select>
-                  </div>
-                  <div class="col-md-3" style="padding:5px;">
-                    <button type="button" class ="btn btn-skill" ng-click="createCandidate.addSoftSkill()">+ {{ 'Add'  | translate }}</button>
-                  </div>
-                </div> 
-              </div> -->
-
-
+              
               <!--Design Skill -->
               <div class="row-head" style="border-bottom: 1px solid #ddd;padding-bottom:10px;padding-top:35px;margin:0px">
                 {{ 'Design Skill'  | translate }}
               </div>
 
-              <div class="form-group"> 
+              <div class="form-group">
                 <div ng-repeat="item in createCandidate.datas.candidate.design_skills_attributes"> 
                   <div class="row" ng-hide="item._destroy">
                     <input type="text" class="form-control" required id="skillname" ng-model="item.skill_name">	
@@ -293,37 +237,7 @@
                 <button type="button" ng-click="createCandidate.addDesignskill()">Add</button>
               </div>
 
-              <!-- List DesignSkill -->
-              <!-- <div class="row" style="padding-top:25px;margin:0px">
-                <div ng-repeat="item in createCandidate.listDesignSkill">
-                  <div class="col-md-8" style="padding:5px;">
-                    <span style="margin-right: 50px;">{{item.skill}}</span>
-                  </div>
-                  <div class="col-md-2" style="padding:5px;">
-                    <span>{{item.value}}</span>
-                  </div>
-                  <div class="col-md-1" style="padding:5px;">
-                    <button type="button" class="close" aria-label="Close" ng-click="createCandidate.deleteDesignSkill($index)"><span aria-hidden="true">&times;</span></button>
-                  </div>
-                </div>
-              </div> -->
-
-              <!-- ADD DesignSkill -->
-              <!-- <div class="row" style="margin:0px;">
-                <div class="form-group" style="margin:0px;">
-                  <div class="col-md-6" style="padding:5px;">
-                    <input type="text" class="form-control" ng-model="createCandidate.listScoreSkill[4]">
-                  </div>
-                  <div class="col-md-3" style="padding:5px;" >                
-                    <select class="form-control " ng-model="createCandidate.listScoreSkill[5]">
-                      <option ng-repeat="i in createCandidate.score">{{i}}</option>   
-                    </select>
-                  </div>
-                  <div class="col-md-3" style="padding:5px;">
-                    <button type="button" class ="btn btn-skill" ng-click="createCandidate.addDesignSkill()">+ {{ 'Add'  | translate }}</button>
-                  </div>
-                </div> 
-              </div> -->
+              
 
             </div>
           </div>

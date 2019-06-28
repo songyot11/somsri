@@ -12,8 +12,7 @@ class CandidatesController < ApplicationController
   end
 
   def new
-    ap Candidate.new.as_json('joins-table')
-    render json: { candidate: Candidate.new.as_json('joins-table') }, status: :ok
+    render json: { candidate: Candidate.new.as_json('show_or_edit') }, status: :ok
   end
 
   def create
@@ -23,7 +22,7 @@ class CandidatesController < ApplicationController
   
   def edit
     @candidate = Candidate.find(params[:id])
-    render json: @candidate.as_json('joins-table'), status: :ok
+    render json: { candidate: @candidate.as_json('show_or_edit') }, status: :ok
   end
 
   def update_candidate
@@ -31,10 +30,10 @@ class CandidatesController < ApplicationController
     @candidate.update(candidate_params)
   end
 
-  def upload_photo
-    @candidate = Candidate.find_by(id: params[:id])
-    @candidate.update( image: upload_photo_params[:file])
-  end
+  # def upload_photo
+  #   @candidate = Candidate.find_by(id: params[:id])
+  #   @candidate.update( image: upload_photo_params[:file])
+  # end
 
   def destroy
     @candidate = Candidate.find_by(id: params[:id])
@@ -76,22 +75,18 @@ class CandidatesController < ApplicationController
   end
 
   def show
-    render json: Candidate.find(params[:id]).as_json('show'), status: :ok
+    render json: Candidate.find(params[:id]).as_json('show_or_edit'), status: :ok
   end    
   
   private
 
-  def upload_photo_params
-    params.require(:candidate).permit(:file)
-  end
-
   def candidate_params
     params.require(:candidate).permit(:full_name, :nick_name, :email, :phone, :from, :school_year, :note,
-      :current_ability, :learn_ability, :attention, :interest,
-      programming_skills_attributes: [:id, :skill_name, :skill_point, :_destroy],
-      soft_skills_attributes: [:id, :skill_name, :skill_point, :_destroy],
-      design_skills_attributes: [:id, :skill_name, :skill_point, :_destroy],
-      candidate_files_attributes: [:id, :files, :_destroy]  
+      :current_ability, :learn_ability, :attention, :interest, :image,
+      programming_skills_attributes: [:skill_name, :skill_point, :_destroy],
+      soft_skills_attributes: [:skill_name, :skill_point, :_destroy],
+      design_skills_attributes: [:skill_name, :skill_point, :_destroy],
+      candidate_files_attributes: [:files, :_destroy]  
     )
   end
 end

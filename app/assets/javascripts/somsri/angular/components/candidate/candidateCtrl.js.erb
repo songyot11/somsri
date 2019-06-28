@@ -9,10 +9,6 @@
     ctrl.hide2 = true
     $rootScope.loadAndAuthorizeResource("candidate", function(){
     $rootScope.menu = translateFilter('scout')
-      candidateService.data().then(function(resp) {
-        console.log(resp)
-        //create update
-      });
       //table hide
       ctrl.selectTab = function(str) {
         if (str == 'candidateshortlist') {
@@ -26,7 +22,6 @@
       //Show Modal
       function openConfirmationModal(message, success, dismiss) {
       $scope.message = message;
-      console.log($scope.message)
       $uibModal.open({
         animation: true,
         backdrop: 'static',
