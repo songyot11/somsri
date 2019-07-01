@@ -38,6 +38,7 @@ class CandidatesController < ApplicationController
   def destroy
     @candidate = Candidate.find_by(id: params[:id])
     @candidate.destroy
+    render json: { candidate: @candidate.as_json('show_or_edit') }, status: :ok
   end
 
   def filter_candidates
@@ -75,7 +76,7 @@ class CandidatesController < ApplicationController
   end
 
   def show
-    render json: Candidate.find(params[:id]).as_json('show_or_edit'), status: :ok
+    render json: { candidate: Candidate.with_deleted.where(id: params[:id]).first.as_json('show_or_edit') }, status: :ok
   end    
   
   private
