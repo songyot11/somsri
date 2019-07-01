@@ -12,27 +12,16 @@
           </div>
           <div class="col-md-10">
             <div class="row">
-<<<<<<< HEAD
-              <h1 class="color-blue-light">{{candidateDetail.datas.candidate.full_name_and_nick_name}} 
-              <i ng-click="candidateDetail.changIcon(candidateDetail.icon)" ng-class="candidateDetail.buttonIcon"></i>
-              </h1>
-=======
-              <div class="col-md-12">
-                <p class="name-candidate">{{candidateDetail.datas.candidate.full_name_and_nick_name}} <button ng-click="candidateDetail.changStatus(candidateDetail.datas.candidate.shortlist)" class="button-star"><i class="{{candidateDetail.buttonIcon}}"></i></button></p>
-              </div>
->>>>>>> edit layout
+              <p class="name-candidate">{{candidateDetail.datas.candidate.full_name_and_nick_name}} 
+              <i ng-click="candidateDetail.changStatus(candidateDetail.icon)" ng-class="candidateDetail.buttonIcon"></i>
+              </p>
             </div>
             <div class="row mb-20 detail-candidate font-candidate">
               <div class="col-md-2 text-right">
                 <span>Email:</span>
               </div>
-<<<<<<< HEAD
-              <div class="col-sm-3">
-                <span class="font-roboto font-21 color-blue">{{candidateDetail.datas.candidate.email}}</span>
-=======
               <div class="col-md-3 break-word padding-left0">
                 <span class="color-blue-candidate">{{candidateDetail.datas.candidate.email}}</span>
->>>>>>> edit layoutdetail and interview
               </div>
               <div class="col-md-2 text-right padding-left0" ng-hide="candidateDetail.datas.candidate.interview.id == null">
                 <span>Interview date:</span>
@@ -45,39 +34,24 @@
               <div class="col-md-2 text-right padding-left0">
                 <span>Phone Number:</span>
               </div>
-<<<<<<< HEAD
-              <div class="col-sm-4">
-                <span class="font-roboto font-21 color-blue">{{candidateDetail.datas.candidate.phone_number}}</span>
-=======
               <div class="col-md-4 padding-left0">
                 <span class="color-blue-candidate">{{candidateDetail.datas.candidate.phone}}</span>
->>>>>>> edit layoutdetail and interview
               </div>
             </div>
             <div class="row mb-20 detail-candidate font-candidate">
               <div class="col-md-2 text-right">
                 <span>Form:</span>
               </div>
-<<<<<<< HEAD
-              <div class="col-sm-6">
-                <span class="font-roboto font-21 color-blue">{{candidateDetail.datas.candidate.from}}</span>
-=======
               <div class="col-md-6 padding-left0">
                 <span class="color-blue-candidate">{{candidateDetail.datas.candidate.from}}</span>
->>>>>>> edit layoutdetail and interview
               </div>
             </div>
             <div class="row mb-20 detail-candidate font-candidate">
               <div class="col-md-2 text-right">
                 <span>Year:</span>
               </div>
-<<<<<<< HEAD
-              <div class="col-sm-6">
-                 <span class="font-roboto font-21 color-blue">{{candidateDetail.datas.candidate.school_year}}</span>
-=======
               <div class="col-md-6 padding-left0">
                  <span class="color-blue-candidate">{{candidateDetail.datas.candidate.school_year}}</span>
->>>>>>> edit layoutdetail and interview
               </div>
             </div>
             <div class="row mb-20 detail-candidate font-candidate">
@@ -91,28 +65,16 @@
           </div>
         </div>
       </div>
-<<<<<<< HEAD
-      <div class="col-sm-2">
-        <div class="margin20" style="margin-left: 100px">
-          <button type="button" ng-disabled="candidateDetail.datas.candidate.deleted" class="btn btn-custom color-blue-button w-100p" data-toggle="modal" data-target="#interView">Interview</button>
+      <div class="col-sm-2 px-0">
+        <div class="margin20">
+          <button type="button" ng-disabled="candidateDetail.datas.candidate.deleted" class="btn btn-custom color-blue-button w-100p" data-toggle="modal" data-target="#interView"><i class="fas fa-comment-dots m-5"></i>Interview</button>
         </div>
         <div class="margin20">
-          <button type="button" class="btn btn-custom btn-black w-100p" ng-disabled="candidateDetail.datas.candidate.deleted">Edit</button>
+          <button type="button" class="btn btn-custom btn-black w-100p" ng-disabled="candidateDetail.datas.candidate.deleted"><i class="fas fa-pen-square m-5"></i>Edit</button>
         </div>
         <div class="margin20">
-          <button type="button" ng-disabled="candidateDetail.datas.candidate.deleted" class="btn btn-cancel2 w-100p" ng-click="candidateDetail.removeCandidate(candidateDetail.datas.candidate.id)">Delete</button> 
-=======
-      <div class="col-md-2 px-0">
-        <div class="margin20">
-          <button type="button" class="btn btn-custom color-blue-button w-100p" data-toggle="modal" data-target="#interView"><i class="fas fa-comment-dots m-5"></i>Interview</button>
+          <button type="button" ng-disabled="candidateDetail.datas.candidate.deleted" class="btn btn-cancel2 w-100p" ng-click="candidateDetail.removeCandidate(candidateDetail.datas.candidate.id)"><i class="fas fa-trash-alt m-5"></i>Delete</button> 
         </div>
-        <div class="margin20">
-          <button type="button" class="btn btn-custom btn-black w-100p"><i class="fas fa-pen-square m-5"></i>Edit</button>
-        </div>
-        <div class="margin20">
-          <button type="button" class="btn btn-cancel2 w-100p"><i class="fas fa-trash-alt m-5"></i>Delete</button> 
-        </div>
->>>>>>> edit layoutdetail and interview
       </div>
     </div>
     <div class="row">
@@ -126,13 +88,8 @@
           <div class="col-md-3 text-right">
             <span>Current Ability</span>
           </div>
-<<<<<<< HEAD
-          <div class="col-sm-4">
-            <div class="progress progress-bar-skill" style="margin-top: 30px;">
-=======
           <div class="col-md-4 mt-5">
             <div class="progress progress-bar-skill">
->>>>>>> edit layoutdetail and interview
               <div class="progress-bar bar-skill" role="progressbar" style="width: {{candidateDetail.datas.candidate.current_ability * 5}}%;"></div>
             </div>
           </div>
@@ -144,13 +101,8 @@
           <div class="col-md-3 text-right">
             <span>Learn Ability</span>
           </div>
-<<<<<<< HEAD
-          <div class="col-sm-4">
-            <div class="progress progress-bar-skill" style="margin-top: 30px;">
-=======
           <div class="col-md-4 mt-5">
             <div class="progress progress-bar-skill">
->>>>>>> edit layoutdetail and interview
               <div class="progress-bar bar-skill" role="progressbar" style="width: {{candidateDetail.datas.candidate.learn_ability * 5}}%;"></div>
             </div>
           </div>
@@ -162,15 +114,9 @@
           <div class="col-md-3 text-right">
             <span>Attention</span>
           </div>
-<<<<<<< HEAD
-          <div class="col-sm-4">
-            <div class="progress progress-bar-skill" style="margin-top: 30px;">
-              <div class="progress-bar bar-skill" role="progressbar" style="width: {{candidateDetail.datas.candidate.attention_ability * 5}}%;"></div>
-=======
           <div class="col-md-4 mt-5">
             <div class="progress progress-bar-skill">
               <div class="progress-bar bar-skill" role="progressbar" style="width: {{candidateDetail.datas.candidate.attention * 5}}%;"></div>
->>>>>>> edit layoutdetail and interview
             </div>
           </div>
           <div class="col-md-2">
@@ -183,17 +129,10 @@
       <div class="col-md-6">
         <div class="row">
           <div class="col-md-6">
-<<<<<<< HEAD
-            <h3 class="hr-2">Programming skill</h3>
-            <div class="row" ng-repeat="item in candidateDetail.datas.candidate.programming_skills">
-              <div class="col-sm-3">
-                <h3>{{item.skill_name}}</h3>
-=======
             <h3 class="hr-2 heading-candidate color-blue-candidate mb-30">Programming skill</h3>
             <div class="row detail-skill font-candidate mb-15" ng-repeat="item in candidateDetail.datas.candidate.programming_skills_attributes">
               <div class="col-md-3 text-right break-word padding-right0">
                 <span>{{item.skill_name}}</span>
->>>>>>> edit layoutdetail and interview
               </div>
               <div class="col-md-7 mt-5 padding-right0">
                 <div class="progress progress-bar-skill">
@@ -205,19 +144,11 @@
               </div>
             </div>
           </div>
-<<<<<<< HEAD
-          <div class="col-sm-6">
-            <h3 class="hr-2">Soft skill</h3>
-            <div class="row" ng-repeat="item in candidateDetail.datas.candidate.soft_skills">
-              <div class="col-sm-3">
-                <h3>{{item.skill_name}}</h3>
-=======
           <div class="col-md-6">
             <h3 class="hr-2 heading-candidate color-blue-candidate mb-30">Soft skill</h3>
             <div class="row detail-skill font-candidate mb-15" ng-repeat="item in candidateDetail.datas.candidate.soft_skills_attributes">
               <div class="col-sm-3 text-right break-word padding-right0">
                 <span>{{item.skill_name}}</span>
->>>>>>> edit layoutdetail and interview
               </div>
               <div class="col-md-7 mt-5 padding-right0">
                 <div class="progress progress-bar-skill">
@@ -259,19 +190,13 @@
       </div>
     </div>
     <div class="row">
-<<<<<<< HEAD
       <div class="col-sm-6">
-        <h3 class="hr-2">History Log</h3>
+        <h3 class="hr-2 heading-candidate color-blue-candidate">History Log</h3>
         <h4 data-ng-repeat="(index, data) in candidateDetail.datas.candidate.versions">
         {{candidateDetail.datas.candidate.versions[index].event}}  {{candidateDetail.datas.candidate.versions[index].object.full_name}}
          by {{candidateDetail.datas.candidate.versions[index].user.first_name}} 
          at {{candidateDetail.datas.candidate.versions[index].created_at | date:'dd/MM/yyyy HH:mm '}}
          </h4>
-=======
-      <div class="col-md-6">
-        <h3 class="hr-2 heading-candidate color-blue-candidate">History Log</h3>
-        <h4>Update {{name}} by {{role}} at {{time}}</h4>
->>>>>>> edit layoutdetail and interview
       </div>
     </div>
   </div>
