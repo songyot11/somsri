@@ -434,7 +434,8 @@ ActiveRecord::Schema.define(version: 20190628034658) do
 
   create_table "interviews", force: :cascade do |t|
     t.string   "email"
-    t.datetime "date_time"
+    t.datetime "date"
+    t.string   "location"
     t.integer  "candidate_id"
     t.index ["candidate_id"], name: "index_interviews_on_candidate_id", using: :btree
   end

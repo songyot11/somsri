@@ -5,23 +5,22 @@
   .service('candidateDetailService', ['$http', function($http) {
 
   this.getById = function(id){
-    return $http.get('/candidates/' + id);
+    return $http.get('/candidates/' + id)
   }
-  this.editStar = function(id, check){
+
+  this.updateShortlist = function(id, shortlist){
     return $http({
-      url: '/candidates/'+ id + '/edit_star/',
-      method: "POST",
-      params: {bool: check}
+      url: '/candidates/'+ id + '/update_star/',
+      method: "PATCH",
+      params: {shortlist: shortlist}
     })
+  }
+
+  this.saveInterview = function(params) {
+    return $http.post('/interviews/', { interview: params })
   }
 
   }]);
 })();
 
 
-// $http({
-//       url: "login.php",
-//       method: "POST",
-//       params: data
-//     })
-// return $http.get('/candidates/'+ id + '/edit_star/');

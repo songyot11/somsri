@@ -25,6 +25,11 @@ class CandidatesController < ApplicationController
     render json: { candidate: @candidate.as_json('show_or_edit') }, status: :ok
   end
 
+  def show
+    @candidate = Candidate.find(params[:id])
+    render json: { candidate: @candidate.as_json('show_or_edit') }, status: :ok
+  end    
+
   def update_candidate
     @candidate = Candidate.find_by(id: params[:id])
     @candidate.update(candidate_params)
@@ -75,6 +80,7 @@ class CandidatesController < ApplicationController
     end
   end
 
+<<<<<<< HEAD
   def show
     render json: { candidate: Candidate.with_deleted.where(id: params[:id]).first.as_json('show_or_edit') }, status: :ok
   end    
@@ -85,13 +91,19 @@ class CandidatesController < ApplicationController
     # @candidate = Candidate.find_by(id: params[:id])
     # @candidate.update()
     render json: Candidate.find(params[:id]).as_json('show'), status: :ok
+=======
+  def update_star
+    @candidate = Candidate.find_by(id: params[:id])
+    ap params[:shortlist] == "true"
+    @candidate.update(shortlist: params[:shortlist] == "true")
+>>>>>>> edit layoutdetail and interview
   end
   
   private
 
   def candidate_params
     params.require(:candidate).permit(:full_name, :nick_name, :email, :phone, :from, :school_year, :note,
-      :current_ability, :learn_ability, :attention, :interest, :image,
+      :current_ability, :learn_ability, :attention, :interest, :image, :shortlist,
       programming_skills_attributes: [:skill_name, :skill_point, :_destroy],
       soft_skills_attributes: [:skill_name, :skill_point, :_destroy],
       design_skills_attributes: [:skill_name, :skill_point, :_destroy],

@@ -1,38 +1,39 @@
 (function() {
   'use strict';
     angular.module('somsri.somsri.candidate_detail', [])
+<<<<<<< HEAD
     .controller('candidateDetailCtrl', ['$scope', '$rootScope', 'translateFilter',
     'candidateDetailService','$state',  '$uibModal', 'candidateService', '$window', '$timeout',
     function($scope, $rootScope, translateFilter, candidateDetailService, $state,  $uibModal, service, $window, $timeout) {
+=======
+    .controller('candidateDetailCtrl', ['$scope', '$rootScope', 'translateFilter','candidateDetailService','$state', 'candidateEditService', function($scope, $rootScope, translateFilter, candidateDetailService, $state, candidateEditService) {
+>>>>>>> edit layoutdetail and interview
       var ctrl = this;
+      ctrl.dateTime;
       candidateDetailService.getById($state.params.id).then(function(resp) {
         ctrl.datas = resp.data;
-
-        if(ctrl.datas.shortlist){
+        ctrl.datas.candidate.interview.candidate_id = ctrl.datas.candidate.id;
+        console.log(ctrl.datas.candidate)
+        if(ctrl.datas.candidate.shortlist){ctrl.dateTime
           ctrl.buttonIcon = "fas fa-star color-yellow";
-          // ctrl.icon = true;
         }else{
           ctrl.buttonIcon = "far fa-star color-yellow";
-          // ctrl.icon = false;
         }
-        console.log(ctrl.datas)
+        dateFormat()
+
+        console.log(ctrl.dateTime)
       });
      
       ctrl.changStatus = function(check){
         if(check){
           ctrl.buttonIcon = "far fa-star color-yellow";
-          // ctrl.icon = false;
-          ctrl.datas.shortlist = false;
+          ctrl.datas.candidate.shortlist = false;
         }
         else{
           ctrl.buttonIcon = "fas fa-star color-yellow";
-          // ctrl.icon = true;
-          ctrl.datas.shortlist = true;
+          ctrl.datas.candidate.shortlist = true;
         }
-        candidateDetailService.editStar($state.params.id, ctrl.datas.shortlist).then(function(resp) {
-          // ctrl.datas = resp.data;
-          console.log(resp)
-        });
+        candidateDetailService.updateShortlist($state.params.id, ctrl.datas.candidate.shortlist)
       }
       // ctrl.changeStar = function(){
       //   candidateDetailService.editStar($state.params.id).then(function(resp) {
@@ -41,6 +42,7 @@
       //   });
       // }
 
+<<<<<<< HEAD
       function openConfirmationModal(message, success, dismiss) {
       $scope.message = message;
       $uibModal.open({
@@ -86,6 +88,37 @@
         ctrl.timeout = true
       }, 5000);
     }
+=======
+      ctrl.openDatePopup = function() {
+        ctrl.datePopup.opened = true;
+      };
 
+      ctrl.datePopup = {
+        opened: false
+      };
+
+      ctrl.saveInterview = function() {
+    
+        ctrl.datas.candidate.interview.date= new Date(ctrl.datas.candidate.interview.date)
+        ctrl.dateTime = ctrl.datas.candidate.interview.date
+        ctrl.dateTime = ctrl.dateTime.getDate() + '/' + (ctrl.dateTime.getMonth()+ 1)+ '/' + ctrl.dateTime.getFullYear() + ' ' + (ctrl.dateTime.getHours()<10? '0'+ctrl.dateTime.getHours():ctrl.dateTime.getHours()) + ':' + (ctrl.dateTime.getMinutes()<10?'0' + ctrl.dateTime.getMinutes():ctrl.dateTime.getMinutes())
+        candidateDetailService.saveInterview(ctrl.datas.candidate.interview).then(function(resp) {
+        })
+      }
+
+      ctrl.back = function(){
+        window.location.href = '/somsri#/candidate';
+      }
+
+      function dateFormat(){
+        ctrl.datas.candidate.interview.date= new Date(ctrl.datas.candidate.interview.date)
+        ctrl.dateTime = ctrl.datas.candidate.interview.date
+        ctrl.dateTime = ctrl.dateTime.getDate() + '/' + (ctrl.dateTime.getMonth()+ 1)+ '/' + ctrl.dateTime.getFullYear() + ' ' + (ctrl.dateTime.getHours()<10? '0'+ctrl.dateTime.getHours():ctrl.dateTime.getHours()) + ':' + (ctrl.dateTime.getMinutes()<10?'0' + ctrl.dateTime.getMinutes():ctrl.dateTime.getMinutes())
+      }
+>>>>>>> edit layoutdetail and interview
+
+      ctrl.addInterviewer = function(){
+        ctrl.datas.candidate.interview.push({})
+      }
   }]);
 })();

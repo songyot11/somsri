@@ -6,8 +6,8 @@ class Candidate < ApplicationRecord
   has_many :soft_skills
   has_many :design_skills
   has_many :candidate_files
-  has_many :interviews
-  accepts_nested_attributes_for :interviews, :programming_skills, :soft_skills, :design_skills, :candidate_files, reject_if: :all_blank, allow_destroy: true
+  has_one :interview
+  accepts_nested_attributes_for :programming_skills, :soft_skills, :design_skills, :candidate_files, reject_if: :all_blank, allow_destroy: true
   has_attached_file :image, styles: { medium: "300x300>", thumb: "100x100>" }, default_url: "http://chittagongit.com/images/icon-file-size/icon-file-size-10.jpg"
   validates_attachment_content_type :image, content_type: /\Aimage\/.*\z/
   has_attached_file :file, styles: { medium: "300x300>", thumb: "100x100>" }, default_url: "/images/:style/missing.png"
@@ -51,11 +51,13 @@ class Candidate < ApplicationRecord
         image_url: image.expiring_url(10),
         deleted: deleted?,
         versions: versions.map{ |v| VersionUtil.with_user(v) },
+        interview: interview.present? ? interview : Interview.new,
         programming_skills_attributes: self.new_record? ? [programming_skills.build] : programming_skills,
         soft_skills_attributes: self.new_record? ? [soft_skills.build] : soft_skills,
         design_skills_attributes: self.new_record? ? [design_skills.build] : design_skills,
         candidate_files_attributes: self.new_record? ? [candidate_files.build] : candidate_files,
-        candidate_files_url: candidate_files.map { |x| x.files }
+        candidate_files_url: candidate_files.map { |x| x.files },
+        shortlist: shortlist
      }
     else
       super
