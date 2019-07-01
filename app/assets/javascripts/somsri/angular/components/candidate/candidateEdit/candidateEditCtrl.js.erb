@@ -1,18 +1,19 @@
 (function() {
   'use strict';
   angular.module('somsri.somsri.candidateEdit', [])
-  .controller('candidateEditCtrl', ['$scope', '$rootScope', 'candidateEditService', '$state', function($scope, $rootScope, candidateEditService, $state) {
+  .controller('candidateEditCtrl', ['$scope', '$rootScope', 'translateFilter', 'candidateEditService', '$state', function($scope, $rootScope, translateFilter, candidateEditService, $state) {
     var ctrl = this;
     var imagefile;
     ctrl.points = Array.from(Array(21).keys())
+    ctrl.interviews = [{email: "" }];
 
     $rootScope.loadAndAuthorizeResource("candidateEdit", function(){
+      $rootScope.menu = translateFilter('scout');
       candidateEditService.getCandidate($state.params.id).then(function(resp) {
         ctrl.datas = resp;
       });
 
     ctrl.submit = function(params){
-      ctrl.cannotUpdate = true;
       candidateEditService.saveCandidate(ctrl.datas.candidate.id, params).then(function(resp){
         ctrl.goDetail();
       });
@@ -65,13 +66,31 @@
     }
 
     ctrl.isNotBlank = function(){
-      var candidate = ctrl.datas.candidate
-      if ((candidate.full_name || candidate.nick_name) && (candidate.email || candidate.phone) && candidate.school_year && candidate.from){
+      var candidateEdit = ctrl.datas.candidate
+      if ((candidateEdit.full_name || candidateEdit.nick_name) && (candidateEdit.email || candidateEdit.phone) && candidateEdit.school_year && candidateEdit.from){
         ctrl.cannotUpdate = false;
       } else {
         ctrl.cannotUpdate = true;
       }
     } 
+
+    // Model Interview >>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
+
+    ctrl.reset = function () {
+      ctrl.interviews.length = 1
+      ctrl.interviews[0] =  [{email: "" }]
+    }; 
+
+    ctrl.addInterview = function(){
+      ctrl.interviews.push({ email: "" });
+    }
+
+    ctrl.removeInterview = function(index) {
+        ctrl.interviews[index]._destroy = true
+    }
+
+    // >>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
+
       });
     }]);
 })();

@@ -1,6 +1,6 @@
 <div class="container-fluid blue-bg"style="margin-left:0px;">
   <div class="row-head-sp justify-content-between">
-     <i class="fas fa-arrow-left employee-view-icon.active" ng-click="candidateEdit.cancelSubmit()"></i> &nbsp; Edit
+     <i class="fas fa-arrow-left employee-view-icon.active" ng-click="candidateEdit.goDetail()"></i> &nbsp; Edit Candidate
   </div>
   <%= javascript_include_tag 'preview_image' %>
   <script src="https://kit.fontawesome.com/1ffa964d13.js"></script>
@@ -65,7 +65,7 @@
           </div>
           <div class="col-md-4" style="padding-left:0px; padding-rigth:0px;">
             <div class="form-group">
-              <label for="nick_name">{{ 'nick_name' | translate }}</label>    
+                    
               <div class="col-md-12">
                 <input type="text" class="form-control text-blue" id="nick_name" ng-keyup="candidateEdit.isNotBlank()" ng-model="candidateEdit.datas.candidate.nick_name">
               </div>
@@ -271,4 +271,48 @@
   </form>
   </div>
   </div>
+
+
+
+
+
+
+
+
+
+
+
+
+
+  <button type="button" class ="btn btn-submit2"  data-toggle="modal" data-target="#myModal"> Show Modal </button>
+
+  <!-- Confirmation Dialog -->
+    <div class="modal" id="myModal" close="cancel()">
+      <div class="modal-dialog">
+        <div class="modal-content">
+          <div class="header">
+            <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+            <div class="row-head" style="border-bottom: 1px solid #ddd;padding-bottom:10px;margin:0px">
+                <i class="fas fa-comment-dots"></i>&nbsp; Interview form
+            </div>
+          </div>
+          <div class="modal-body">
+            <p class="text-blue">ผู้สัมภาษณ์</p>
+            <label for="nick_name">Email</label>
+            <div ng-repeat="item in candidateEdit.interviews"> 
+              <div ng-hide="item._destroy" class="row">
+                <input type="text" class="form-control" id="skillname" ng-model="item.email">	 
+                <button type="button" class="close" aria-label="Close" ng-click="candidateEdit.removeInterview($index)"><span aria-hidden="true">&times;</span></button>
+              </div>
+            </div>
+            <button type="button" class ="btn btn-interview-add" ng-click="candidateEdit.addInterview()">+{{ 'Add'  | translate }}</button>
+          </div>
+          <div class="modal-footer">
+            <button type="button" class="btn btn-interview-send" data-dismiss="modal" >Send</button>
+            <button type="button" class="btn btn-interview-reset" ng-click="candidateEdit.reset()"><i class="fas fa-trash-alt"></i>&nbsp; Reset</button>
+          </div>
+        </div>
+      </div>
+    </div>
+    <!-- End of Confirmation Dialog -->
 

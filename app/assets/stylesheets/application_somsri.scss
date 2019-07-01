@@ -1487,6 +1487,7 @@ tags-input .tags .tag-item .remove-button {
   padding-right: 20px;
   font-size: 14px;
   box-shadow: 0 1px 1px 0 rgb(114, 76, 0);
+
   &:hover {
     border: 2px solid #FFAB04;
     color: #FFAB04 !important;
@@ -1494,6 +1495,34 @@ tags-input .tags .tag-item .remove-button {
   &:focus {
     color: #fff;
   }
+}
+
+.btn-interview-add{
+  background-color: rgb(88, 194, 67);
+  color: #fff !important;
+  padding-left: 0.7cm;
+  padding-right: 0.7cm;
+  font-size: 13px;
+  font-weight:bold;
+  box-shadow: 0 1px 1px 0 rgb(12, 48, 5);
+}
+
+.btn-interview-send{
+  background-color: rgb(17, 135, 231);
+  color: #fff !important;
+  padding-left: 1.2cm;
+  padding-right: 1.2cm;
+  font-size: 15px;
+}
+
+.btn-interview-reset{
+  background-color: rgb(255, 255, 255);
+  color: rgb(163, 0, 0) !important;
+  border: 1px solid rgb(163, 0, 0);
+  padding-left: 1cm;
+  padding-right: 1cm;
+  font-size: 15px;
+  box-shadow: 0 1.5px 1.5px 0 rgb(163, 0, 0);
 }
 
 .padding-30 {
