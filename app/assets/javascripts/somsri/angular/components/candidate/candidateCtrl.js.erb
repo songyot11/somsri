@@ -2,11 +2,12 @@
   'use strict';
     angular.module('somsri.somsri.candidate', [])
     .controller('candidateCtrl', ['$scope', '$rootScope', 'translateFilter',
-                'candidateService', '$uibModal', 'candidateService', '$window', 
-                function($scope, $rootScope, translateFilter, candidateService, $uibModal, service, $window) {
+                'candidateService', '$uibModal', 'candidateService', '$window', '$timeout',
+                function($scope, $rootScope, translateFilter, candidateService, $uibModal, service, $window, $timeout) {
     var ctrl = this;
     ctrl.hide = false
     ctrl.hide2 = true
+    ctrl.message = '';
     $rootScope.loadAndAuthorizeResource("candidate", function(){
     $rootScope.menu = translateFilter('scout')
       //table hide
@@ -27,13 +28,13 @@
         backdrop: 'static',
         keyboard: false,
         scope: $scope,
-        templateUrl: "<%= asset_path('somsri/angular/components/modal/confirm/confirmModalView.html') %>",
-        controller: 'confirmModalCtrl as confirm',
+        templateUrl: "<%= asset_path('somsri/angular/components/modal/minimalConfirmModal/minimalConfirmModalView.html') %>",
+        controller: 'minimalConfirmModalCtrl as confirm',
         size: 'md',
         resolve: {
           resources: ['$ocLazyLoad', 'ASSETS', function($ocLazyLoad, ASSETS) {
             return $ocLazyLoad.load([
-              ASSETS.somsri.somsri.confirm_modal
+              ASSETS.somsri.somsri.minimal_confirm_modal
             ]);
           }]
         }
@@ -160,11 +161,21 @@
       ctrl.removeCandidate = function(id){
       openConfirmationModal(translateFilter('confirmdelete'), function(){
         service.removeCandidate(id).then(function(resp) {
-        $rootScope.openSuccessModal(translateFilter('delete_success')) 
+         displayFlashMessage(translateFilter('delete_success'), true);
           candidateshortlistTable.bootstrapTable("refresh");
           candidateTable.bootstrapTable("refresh");
         });
       })
+    }
+
+    function displayFlashMessage(message, typeSuccess){
+      ctrl.timeout = false
+      ctrl.message = message;
+      ctrl.typeSuccess = typeSuccess;
+      $window.scrollTo(0, 0);
+      $timeout( function(){
+        ctrl.timeout = true
+      }, 5000);
     }
 
     })

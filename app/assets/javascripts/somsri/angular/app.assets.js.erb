@@ -10,6 +10,18 @@
             "<%= asset_path('somsri/angular/components/modal/confirm/confirmModalCtrl.js') %>"
           ]
         },
+        'minimal_confirm_modal' : {
+          name: 'somsri.somsri.minimal_confirm_modal',
+          files: [
+            "<%= asset_path('somsri/angular/components/modal/minimalConfirmModal/minimalConfirmModalCtrl.js') %>"
+          ]
+        },
+        'delete_success_modal' : {
+          name: 'somsri.somsri.delete_success_modal',
+          files: [
+            "<%= asset_path('somsri/angular/components/modal/deleteSuccess/deleteSuccessModalCtrl.js') %>"
+          ]
+        },
         'confirm_inventory_modal' : {
           name: 'somsri.somsri.confirm_inventory_modal',
           files: [
@@ -208,7 +220,8 @@
             name: 'somsri.somsri.candidate',
             files: [
               "<%= asset_path('somsri/angular/components/candidate/candidateCtrl.js') %>",
-              "<%= asset_path('somsri/angular/components/candidate/candidateService.js') %>"
+              "<%= asset_path('somsri/angular/components/candidate/candidateService.js') %>",
+              "<%= asset_path('shared/angular/components/flash_message/flashMessageDirective.js') %>"
             ]       
         },
         'create_candidate': {
@@ -223,7 +236,8 @@
             files: [
               "<%= asset_path('somsri/angular/components/candidate/candidateDetail/candidateDetailCtrl.js') %>",
               "<%= asset_path('somsri/angular/components/candidate/candidateDetail/candidateDetailService.js') %>",
-              "<%= asset_path('somsri/angular/components/candidate/candidateService.js') %>"
+              "<%= asset_path('somsri/angular/components/candidate/candidateService.js') %>",
+              "<%= asset_path('shared/angular/components/flash_message/flashMessageDirective.js') %>"
             ]
         },
         'vacation': {

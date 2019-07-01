@@ -1,0 +1,17 @@
+(function() {
+  'use strict';
+  angular.module('somsri.somsri.minimal_confirm_modal', [
+  ])
+  .controller('minimalConfirmModalCtrl', ['$scope', '$uibModalInstance', function($scope, $uibModalInstance) {
+    this.message = $scope.message;
+
+    this.ok = function () {
+      $uibModalInstance.close(true);
+    };
+
+    this.close = function () {
+      $uibModalInstance.close(false);
+    };
+
+  }]);
+})();

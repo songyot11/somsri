@@ -2,8 +2,8 @@
   'use strict';
     angular.module('somsri.somsri.candidate_detail', [])
     .controller('candidateDetailCtrl', ['$scope', '$rootScope', 'translateFilter',
-    'candidateDetailService','$state',  '$uibModal', 'candidateService', '$window',
-    function($scope, $rootScope, translateFilter, candidateDetailService, $state,  $uibModal, service, $window) {
+    'candidateDetailService','$state',  '$uibModal', 'candidateService', '$window', '$timeout',
+    function($scope, $rootScope, translateFilter, candidateDetailService, $state,  $uibModal, service, $window, $timeout) {
       var ctrl = this;
       ctrl.buttonIcon = "fas fa-star color-yellow";
       ctrl.icon = true;
@@ -28,13 +28,13 @@
         backdrop: 'static',
         keyboard: false,
         scope: $scope,
-        templateUrl: "<%= asset_path('somsri/angular/components/modal/confirm/confirmModalView.html') %>",
-        controller: 'confirmModalCtrl as confirm',
+        templateUrl: "<%= asset_path('somsri/angular/components/modal/minimalConfirmModal/minimalConfirmModalView.html') %>",
+        controller: 'minimalConfirmModalCtrl as confirm',
         size: 'md',
         resolve: {
           resources: ['$ocLazyLoad', 'ASSETS', function($ocLazyLoad, ASSETS) {
             return $ocLazyLoad.load([
-              ASSETS.somsri.somsri.confirm_modal
+              ASSETS.somsri.somsri.minimal_confirm_modal
             ]);
           }]
         }
@@ -52,10 +52,20 @@
       openConfirmationModal(translateFilter('confirmdelete'), function(){
         service.removeCandidate(id).then(function(resp) {
           ctrl.datas = resp.data;
-          $rootScope.openSuccessModal(translateFilter('delete_success')) 
+           displayFlashMessage(translateFilter('delete_success'), true);
         });
       })
     } 
+
+    function displayFlashMessage(message, typeSuccess){
+      ctrl.timeout = false
+      ctrl.message = message;
+      ctrl.typeSuccess = typeSuccess;
+      $window.scrollTo(0, 0);
+      $timeout( function(){
+        ctrl.timeout = true
+      }, 5000);
+    }
 
   }]);
 })();
