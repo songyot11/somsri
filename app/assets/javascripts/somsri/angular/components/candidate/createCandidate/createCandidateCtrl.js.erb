@@ -17,6 +17,7 @@
     function loadNewCandidate() {
       candidateService.new().then(function(resp) {
         ctrl.datas = resp
+        ctrl.datas.candidate.candidate_files_attributes = [];
         ctrl.datas.candidate.programming_skills_attributes[0].skill_point = 0;
         ctrl.datas.candidate.soft_skills_attributes[0].skill_point = 0;
         ctrl.datas.candidate.design_skills_attributes[0].skill_point = 0;
@@ -32,11 +33,36 @@
 
   ctrl.submit = function(params){
     openConfirmationModal(translateFilter("close_with_save"), function(){
-        ctrl.cannotSubmit = true
+        ctrl.cannotSubmit = true;
+        ctrl.skillEmpty();
         candidateService.saveCandidate(params).then(function(resp) {
           window.location.href = "/somsri#/candidate";
       });
     });
+  }
+
+  ctrl.skillEmpty = function(){
+    var Ps = ctrl.datas.candidate.programming_skills_attributes
+    var Ss = ctrl.datas.candidate.soft_skills_attributes
+    var Ds = ctrl.datas.candidate.design_skills_attributes
+
+    for( var p=0; p < Ps.length; p++) {
+      if(Ps[p].skill_name == null || Ps[p].skill_name == "") {
+        Ps[p]._destroy = true 
+      }
+    }
+
+    for( var s=0; s < Ss.length; s++) {
+      if(Ss[s].skill_name == null || Ss[s].skill_name == "") {
+        Ss[s]._destroy = true 
+      }
+    }
+
+    for( var d=0; d < Ds.length; d++) {
+      if(Ds[d].skill_name == null || Ds[d].skill_name == "") {
+        Ds[d]._destroy = true 
+      }
+    }
   }
 
   ctrl.addFile = function(){
@@ -58,15 +84,15 @@
   }
 
   ctrl.removeCandidateProgrammingSkill = function(index) {
-    ctrl.datas.candidate.programming_skills_attributes[index]._destroy = true
+      ctrl.datas.candidate.programming_skills_attributes[index]._destroy = true
   }
 
   ctrl.removeCandidateSoftSkill = function(index) {
-    ctrl.datas.candidate.soft_skills_attributes[index]._destroy = true
+      ctrl.datas.candidate.soft_skills_attributes[index]._destroy = true
   }
 
   ctrl.removeCandidateDesignSkill = function(index) {
-    ctrl.datas.candidate.design_skills_attributes[index]._destroy = true
+      ctrl.datas.candidate.design_skills_attributes[index]._destroy = true 
   }
 
   ctrl.addProgrammingskill = function(){
@@ -89,6 +115,10 @@
       ctrl.cannotSubmit = true;
     }
   } 
+
+  
+
+
 
   function openConfirmationModal(message, success, dismiss) {
     $scope.message = message;

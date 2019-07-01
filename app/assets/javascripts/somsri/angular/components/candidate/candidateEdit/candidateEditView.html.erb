@@ -32,6 +32,7 @@
           <!-- MultipleFiles -->
             <div class="row" style="padding-top:25px;margin:0px">
               <label>{{ 'candidate_files' | translate }}</label>
+              <button type="button" class="btn btn-skill" ng-click="candidateEdit.addFile()">+File</button>
                 <div ng-repeat="item in candidateEdit.datas.candidate.candidate_files_attributes">
                   <div ng-hide="item._destroy">
                     <div style="padding:2px;">  
@@ -40,16 +41,13 @@
                     <div style="padding:2px;">
                       <a ng-show="!item.files_file_name.name" target="_blank" href="{{ candidateEdit.datas.candidate.candidate_files_url[$index] }}">{{ item.files_file_name }}</a>
                     </div> 
-                  <div class="button btn btn-info" ngf-select="candidateEdit.onFileChange($index, $event)" ng-model="item.files_file_name" name="file">+</div>   
-                    <button type="button" class="close" aria-label="Close" ng-click="candidateEdit.removeCandidateFiles($index)"><span aria-hidden="true">&times;</span></button>
+                    <div class="button btn btn-info" ngf-select="candidateEdit.onFileChange($index, $event)" ng-model="item.files_file_name" name="file">+</div>   
+                      <button type="button" class="close" aria-label="Close" ng-click="candidateEdit.removeCandidateFiles($index)"><span aria-hidden="true">&times;</span></button>
+                    </div>
                   </div>
                 </div>
               </div>
-              <div style="padding:2px;">
-              <button type="button" class="btn btn-skill" ng-click="candidateEdit.addFile()">+File</button>
-              </div>
-        </div>
-      </div><br>
+            </div><br>
       <!-- From info -->
       <div class="col-md-5">
       
@@ -65,7 +63,7 @@
           </div>
           <div class="col-md-4" style="padding-left:0px; padding-rigth:0px;">
             <div class="form-group">
-                    
+              <label for="full_name">{{ 'nick_name' | translate }}</label>
               <div class="col-md-12">
                 <input type="text" class="form-control text-blue" id="nick_name" ng-keyup="candidateEdit.isNotBlank()" ng-model="candidateEdit.datas.candidate.nick_name">
               </div>
@@ -183,17 +181,17 @@
               </div>
 
           <!-- Edit-ProgramSkill -->
-              <div class="row" style="padding-top:7px;margin:0px">
+              <div style="padding-top:7px;margin:0px">
+                <button type="button" class ="btn btn-skill" ng-click="candidateEdit.addProgrammingskill()">+{{ 'Add'  | translate }}</button>
                   <div ng-repeat="item in candidateEdit.datas.candidate.programming_skills_attributes"> 
                     <div ng-hide="item._destroy">
                       <div style="padding:5px;">  
-                      <input type="text" class="form-control" required id="skillname" ng-model="item.skill_name">	
+                      <input type="text" class="form-control" id="skillname" ng-model="item.skill_name">	
                       </div>
                       <select ng-model='item.skill_point' class="btn btn-grades" ng-options='point as point for point in candidateEdit.points'></select>
                       <button type="button" class="close" aria-label="Close" ng-click="candidateEdit.removeCandidateProgrammingSkill($index)"><span aria-hidden="true">&times;</span></button>
                     </div>
                   </div>
-                  <button type="button" class ="btn btn-skill" ng-click="candidateEdit.addProgrammingskill()">+{{ 'Add'  | translate }}</button>
               </div>
             </div>
           </div>
@@ -209,16 +207,16 @@
 
               <!-- Edit-SoftSkill -->
               <div class="row" style="padding-top:7px;margin:0px">
+                <button type="button" class ="btn btn-skill" ng-click="candidateEdit.addSoftskill()">+{{ 'Add'  | translate }}</button>
                   <div ng-repeat="item in candidateEdit.datas.candidate.soft_skills_attributes"> 
                     <div ng-hide="item._destroy">
                     <div style="padding:5px;">  
-                      <input type="text" class="form-control" required id="skillname" ng-model="item.skill_name">	
+                      <input type="text" class="form-control" id="skillname" ng-model="item.skill_name">	
                       </div>
                       <select ng-model='item.skill_point' class="btn btn-grades" ng-options='point as point for point in candidateEdit.points'></select>
                       <button type="button" class="close" aria-label="Close" ng-click="candidateEdit.removeCandidateSoftSkill($index)"><span aria-hidden="true">&times;</span></button>
                     </div>
                   </div>
-                  <button type="button" class ="btn btn-skill" ng-click="candidateEdit.addSoftskill()">+{{ 'Add'  | translate }}</button>
               </div>
 
               <!--Design Skill -->
@@ -228,29 +226,18 @@
 
               <!-- Edit-DesignSkill -->
               <div class="row" style="padding-top:7px;margin:0px">
-                  <div ng-repeat="item in candidateEdit.datas.candidate.design_skills_attributes"> 
-                    <div ng-hide="item._destroy">
-                    <div style="padding:5px;">  
-                      <input type="text" class="form-control" required id="skillname" ng-model="item.skill_name">	
-                      </div>
-                      <select ng-model='item.skill_point' class="btn btn-grades" ng-options='point as point for point in candidateEdit.points'></select>
-                      <button type="button" class="close" aria-label="Close" ng-click="candidateEdit.removeCandidateDesignSkill($index)"><span aria-hidden="true">&times;</span></button>
+                <button type="button" class ="btn btn-skill" ng-click="candidateEdit.addDesignskill()">+{{ 'Add'  | translate }}</button>
+                <div ng-repeat="item in candidateEdit.datas.candidate.design_skills_attributes"> 
+                  <div ng-hide="item._destroy">
+                  <div style="padding:5px;">  
+                    <input type="text" class="form-control" id="skillname" ng-model="item.skill_name">	
                     </div>
+                    <select ng-model='item.skill_point' class="btn btn-grades" ng-options='point as point for point in candidateEdit.points'></select>
+                    <button type="button" class="close" aria-label="Close" ng-click="candidateEdit.removeCandidateDesignSkill($index)"><span aria-hidden="true">&times;</span></button>
                   </div>
-                  <button type="button" class ="btn btn-skill" ng-click="candidateEdit.addDesignskill()">+{{ 'Add'  | translate }}</button>
+                </div>
               </div>
 
-              <!-- ADD DesignSkill -->
-              <div class="row" style="margin:0px;">
-                <div class="form-group" style="margin:0px;">
-                  <div class="col-md-6" style="padding:5px;">
-                  </div>
-                  <div class="col-md-3" style="padding:5px;" >                
-                  </div>
-                  <div class="col-md-3" style="padding:5px;">
-                  </div>
-                </div> 
-              </div>
             </div>
           </div>
         </div>
@@ -280,39 +267,4 @@
 
 
 
-
-
-
-
-  <button type="button" class ="btn btn-submit2"  data-toggle="modal" data-target="#myModal"> Show Modal </button>
-
-  <!-- Confirmation Dialog -->
-    <div class="modal" id="myModal" close="cancel()">
-      <div class="modal-dialog">
-        <div class="modal-content">
-          <div class="header">
-            <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
-            <div class="row-head" style="border-bottom: 1px solid #ddd;padding-bottom:10px;margin:0px">
-                <i class="fas fa-comment-dots"></i>&nbsp; Interview form
-            </div>
-          </div>
-          <div class="modal-body">
-            <p class="text-blue">ผู้สัมภาษณ์</p>
-            <label for="nick_name">Email</label>
-            <div ng-repeat="item in candidateEdit.interviews"> 
-              <div ng-hide="item._destroy" class="row">
-                <input type="text" class="form-control" id="skillname" ng-model="item.email">	 
-                <button type="button" class="close" aria-label="Close" ng-click="candidateEdit.removeInterview($index)"><span aria-hidden="true">&times;</span></button>
-              </div>
-            </div>
-            <button type="button" class ="btn btn-interview-add" ng-click="candidateEdit.addInterview()">+{{ 'Add'  | translate }}</button>
-          </div>
-          <div class="modal-footer">
-            <button type="button" class="btn btn-interview-send" data-dismiss="modal" >Send</button>
-            <button type="button" class="btn btn-interview-reset" ng-click="candidateEdit.reset()"><i class="fas fa-trash-alt"></i>&nbsp; Reset</button>
-          </div>
-        </div>
-      </div>
-    </div>
-    <!-- End of Confirmation Dialog -->
 

@@ -1497,12 +1497,33 @@ tags-input .tags .tag-item .remove-button {
   }
 }
 
+.btn-interview-form{
+  font-family: 'Maitree', serif;
+  background-color: rgb(88, 194, 67);
+  color: #fff;
+  font-size: 16px;
+  font-weight:bold;
+  padding: 8px 40px;
+  margin-right: 15px;
+  letter-spacing: 1px;
+  border: 1px solid rgb(88, 194, 67);
+  border-radius: 0px;
+  transition: all 0.25s ease;
+  box-shadow: 0 2px 4px 0 rgba(0, 0, 0, 0.3);
+  
+  &:hover{
+  background-color: transparent;
+  border:2px solid rgb(88, 194, 67);
+  color: rgb(88, 194, 67);
+  }
+}
+
 .btn-interview-add{
   background-color: rgb(88, 194, 67);
   color: #fff !important;
-  padding-left: 0.7cm;
-  padding-right: 0.7cm;
-  font-size: 13px;
+  padding-left: 0.5cm;
+  padding-right: 0.5cm;
+  font-size: 10px;
   font-weight:bold;
   box-shadow: 0 1px 1px 0 rgb(12, 48, 5);
 }

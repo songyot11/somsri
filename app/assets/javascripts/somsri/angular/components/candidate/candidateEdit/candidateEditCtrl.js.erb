@@ -5,7 +5,6 @@
     var ctrl = this;
     var imagefile;
     ctrl.points = Array.from(Array(21).keys())
-    ctrl.interviews = [{email: "" }];
 
     $rootScope.loadAndAuthorizeResource("candidateEdit", function(){
       $rootScope.menu = translateFilter('scout');
@@ -14,6 +13,7 @@
       });
 
     ctrl.submit = function(params){
+      ctrl.skillEmpty();
       candidateEditService.saveCandidate(ctrl.datas.candidate.id, params).then(function(resp){
         ctrl.goDetail();
       });
@@ -38,7 +38,7 @@
     }
 
     ctrl.removeCandidateFiles = function(index) {
-        ctrl.datas.candidate.candidate_files_attributes[index]._destroy = true
+      ctrl.datas.candidate.candidate_files_attributes[index]._destroy = true
       }
 
     ctrl.removeCandidateProgrammingSkill = function(index) {
@@ -74,22 +74,29 @@
       }
     } 
 
-    // Model Interview >>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
+    ctrl.skillEmpty = function(){
+      var Ps = ctrl.datas.candidate.programming_skills_attributes
+      var Ss = ctrl.datas.candidate.soft_skills_attributes
+      var Ds = ctrl.datas.candidate.design_skills_attributes
 
-    ctrl.reset = function () {
-      ctrl.interviews.length = 1
-      ctrl.interviews[0] =  [{email: "" }]
-    }; 
+      for( var p=0; p < Ps.length; p++) {
+        if(Ps[p].skill_name == "" || Ps[p].skill_name == null) {
+          Ps[p]._destroy = true 
+        }
+      }
 
-    ctrl.addInterview = function(){
-      ctrl.interviews.push({ email: "" });
+      for( var s=0; s < Ss.length; s++) {
+        if(Ss[s].skill_name == "" || Ss[s].skill_name == null) {
+          Ss[s]._destroy = true 
+        }
+      }
+
+      for( var d=0; d < Ds.length; d++) {
+        if(Ds[d].skill_name == "" || Ds[d].skill_name == null) {
+          Ds[d]._destroy = true 
+        }
+      }
     }
-
-    ctrl.removeInterview = function(index) {
-        ctrl.interviews[index]._destroy = true
-    }
-
-    // >>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
 
       });
     }]);
