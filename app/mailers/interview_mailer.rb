@@ -3,12 +3,12 @@ class InterviewMailer < ApplicationMailer
 
     def interview_notification(interview)
         @interview = interview
-        mail(to: @interview.candidate.email, subject: "นัดสัมภาษณ์ #{@interview.candidate.full_name}")
+        mail(to: @interview.email, subject: "นัดสัมภาษณ์ #{@interview.candidate.full_name}")
     end
 
     def edit_interview_notification(interview)
         @interview = interview
-        mail(to: @interview.candidate.email, subject: "ขอแก้ไขนัดสัมภาษณ์  #{@interview.candidate.full_name}")
+        mail(to: @interview.email, subject: "ขอแก้ไขนัดสัมภาษณ์  #{@interview.candidate.full_name}")
     end
 
 end
