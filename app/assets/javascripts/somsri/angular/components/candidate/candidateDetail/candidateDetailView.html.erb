@@ -8,7 +8,7 @@
       <div class="col-md-10">
         <div class="row">
           <div class="col-md-2 padding-right0">
-            <img ng-src="candidateDetail.datas.candidate.image_url" class="picture"> 
+            <img src="{{candidateDetail.datas.candidate.image_url}}" class="picture"> 
           </div>
           <div class="col-md-10">
             <div class="row">
@@ -69,10 +69,10 @@
       </div>
       <div class="col-sm-2 px-0">
         <div class="margin20">
-          <button type="button" ng-disabled="candidateDetail.datas.candidate.deleted" class="btn btn-custom color-blue-button w-100p" data-toggle="modal" data-target="#interView"><i class="fas fa-comment-dots m-5"></i>Interview</button>
+          <button type="button" ng-disabled="candidateDetail.datas.candidate.deleted" class="btn btn-custom btn-orange w-100p" data-toggle="modal" data-target="#interView"><i class="fas fa-comment-dots m-5"></i>Interview</button>
         </div>
         <div class="margin20">
-          <button type="button" class="btn btn-custom btn-black w-100p" ng-disabled="candidateDetail.datas.candidate.deleted"><i class="fas fa-pen-square m-5"></i>Edit</button>
+          <button type="button" class="btn btn-custom btn-black w-100p" ng-disabled="candidateDetail.datas.candidate.deleted" ng-click="candidateDetail.toEdit()" ><i class="fas fa-pen-square m-5"></i>Edit</button>
         </div>
         <div class="margin20">
           <button type="button" ng-disabled="candidateDetail.datas.candidate.deleted" class="btn btn-cancel2 w-100p" ng-click="candidateDetail.removeCandidate(candidateDetail.datas.candidate.id)"><i class="fas fa-trash-alt m-5"></i>Delete</button> 
@@ -165,7 +165,13 @@
           </div>
         </div>
       </div>
-      <div class="col-md-6">
+      <div ng-show="!candidateDetail.datas.candidate.interview.location" class="col-md-6">
+        <h3 class="hr-2 heading-candidate color-blue-candidate">Note</h3>
+        <div class="note-cadidate">
+          {{candidateDetail.datas.candidate.note}}
+        </div>
+      </div>
+      <div ng-show="candidateDetail.datas.candidate.interview.location" class="col-md-6">
         <h3 class="hr-2 heading-candidate color-blue-candidate">Note</h3>
         <div class="note-cadidate">
           {{candidateDetail.datas.candidate.note}}

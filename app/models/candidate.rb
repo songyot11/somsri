@@ -52,10 +52,10 @@ class Candidate < ApplicationRecord
         deleted: deleted?,
         versions: versions.map{ |v| VersionUtil.with_user(v) },
         interview: interview.present? ? interview : Interview.new,
-        programming_skills_attributes: self.new_record? ? [programming_skills.build.attributes.except('id')]] : programming_skills,
-        soft_skills_attributes: self.new_record? ? [soft_skills.build.attributes.except('id')]] : soft_skills,
-        design_skills_attributes: self.new_record? ? [design_skills.build.attributes.except('id')]] : design_skills,
-        candidate_files_attributes: self.new_record? ? [candidate_files.build.attributes.except('id')]] : candidate_files,
+        programming_skills_attributes: self.new_record? ? [programming_skills.build.attributes.except('id')] : programming_skills,
+        soft_skills_attributes: self.new_record? ? [soft_skills.build.attributes.except('id')] : soft_skills,
+        design_skills_attributes: self.new_record? ? [design_skills.build.attributes.except('id')] : design_skills,
+        candidate_files_attributes: self.new_record? ? [candidate_files.build.attributes.except('id')]   : candidate_files,
         candidate_files_url: candidate_files.map { |x| x.files },
         shortlist: shortlist
      }

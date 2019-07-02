@@ -36,6 +36,9 @@
         });
       }
       
+      ctrl.toEdit = function() {
+        window.location.href = '/somsri#/candidate/' + ctrl.datas.candidate.id + '/edit';
+      }
 
       function openConfirmationModal(message, success, dismiss) {
       $scope.message = message;
