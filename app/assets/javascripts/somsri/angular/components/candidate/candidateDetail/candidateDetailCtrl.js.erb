@@ -6,18 +6,20 @@
     function($scope, $rootScope, translateFilter, candidateDetailService, $state,  $uibModal, service, $window, $timeout, candidateEditService) {
       var ctrl = this;
       ctrl.dateTime;
+      ctrl.isValidDate = false;
       candidateDetailService.getById($state.params.id).then(function(resp) {
         ctrl.datas = resp.data;
         ctrl.datas.candidate.interview.candidate_id = ctrl.datas.candidate.id;
-        console.log(ctrl.datas.candidate)
-        if(ctrl.datas.candidate.shortlist){ctrl.dateTime
+    
+        if(ctrl.datas.candidate.shortlist){
           ctrl.buttonIcon = "fas fa-star color-yellow";
         }else{
           ctrl.buttonIcon = "far fa-star color-yellow";
         }
-        dateFormat()
-
-        console.log(ctrl.dateTime)
+        newDateType()
+        
+        console.log(ctrl.datas.candidate)
+        
       });
      
       ctrl.changStatus = function(check){
@@ -29,14 +31,11 @@
           ctrl.buttonIcon = "fas fa-star color-yellow";
           ctrl.datas.candidate.shortlist = true;
         }
-        candidateDetailService.updateShortlist($state.params.id, ctrl.datas.candidate.shortlist)
+        candidateDetailService.updateShortlist($state.params.id, ctrl.datas.candidate.shortlist).then(function(resp){
+
+        });
       }
-      // ctrl.changeStar = function(){
-      //   candidateDetailService.editStar($state.params.id).then(function(resp) {
-      //   ctrl.datas = resp.data;
-      //   console.log(ctrl.datas)
-      //   });
-      // }
+      
 
       function openConfirmationModal(message, success, dismiss) {
       $scope.message = message;
@@ -92,25 +91,28 @@
     };
 
     ctrl.saveInterview = function() {
-  
-      ctrl.datas.candidate.interview.date= new Date(ctrl.datas.candidate.interview.date)
-      ctrl.dateTime = ctrl.datas.candidate.interview.date
-      ctrl.dateTime = ctrl.dateTime.getDate() + '/' + (ctrl.dateTime.getMonth()+ 1)+ '/' + ctrl.dateTime.getFullYear() + ' ' + (ctrl.dateTime.getHours()<10? '0'+ctrl.dateTime.getHours():ctrl.dateTime.getHours()) + ':' + (ctrl.dateTime.getMinutes()<10?'0' + ctrl.dateTime.getMinutes():ctrl.dateTime.getMinutes())
       candidateDetailService.saveInterview(ctrl.datas.candidate.interview).then(function(resp) {
+        $('#interView').modal('hide');
       })
+    }
+
+    ctrl.checkDate = function() {
+      ctrl.isValidDate = !isValidDate(ctrl.datas.candidate.interview.date)
+    }
+
+    function isValidDate(date) {
+      return date instanceof Date && !isNaN(date);
     }
 
     ctrl.back = function(){
       window.location.href = '/somsri#/candidate';
     }
 
-    function dateFormat(){
+    function newDateType(){
       ctrl.datas.candidate.interview.date= new Date(ctrl.datas.candidate.interview.date)
-      ctrl.dateTime = ctrl.datas.candidate.interview.date
-      ctrl.dateTime = ctrl.dateTime.getDate() + '/' + (ctrl.dateTime.getMonth()+ 1)+ '/' + ctrl.dateTime.getFullYear() + ' ' + (ctrl.dateTime.getHours()<10? '0'+ctrl.dateTime.getHours():ctrl.dateTime.getHours()) + ':' + (ctrl.dateTime.getMinutes()<10?'0' + ctrl.dateTime.getMinutes():ctrl.dateTime.getMinutes())
     }
 
-    ctrl.addInterviewer = function(){
+    ctrl.addEamilInterviewer = function(){
       ctrl.datas.candidate.interview.push({})
     }
   }]);

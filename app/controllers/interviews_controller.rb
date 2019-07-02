@@ -1,7 +1,6 @@
 class InterviewsController < ApplicationController
 
   def create
-    ap interview_params[:date]
     if interview_params[:id].present?
       interview = Interview.find(interview_params[:id])
       interview.update(interview_params)

@@ -35,11 +35,6 @@ class CandidatesController < ApplicationController
     @candidate.update(candidate_params)
   end
 
-  # def upload_photo
-  #   @candidate = Candidate.find_by(id: params[:id])
-  #   @candidate.update( image: upload_photo_params[:file])
-  # end
-
   def destroy
     @candidate = Candidate.find_by(id: params[:id])
     @candidate.destroy
@@ -82,7 +77,6 @@ class CandidatesController < ApplicationController
 
   def update_star
     @candidate = Candidate.find_by(id: params[:id])
-    ap params[:shortlist] == "true"
     @candidate.update(shortlist: params[:shortlist] == "true")
   end
   

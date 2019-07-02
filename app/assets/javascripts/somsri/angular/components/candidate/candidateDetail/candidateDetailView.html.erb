@@ -8,13 +8,15 @@
       <div class="col-md-10">
         <div class="row">
           <div class="col-md-2 padding-right0">
-            <img src="{{candidateDetail.datas.candidate.image_url}}" class="picture"> 
+            <img ng-src="candidateDetail.datas.candidate.image_url" class="picture"> 
           </div>
           <div class="col-md-10">
             <div class="row">
-              <p class="name-candidate">{{candidateDetail.datas.candidate.full_name_and_nick_name}} 
-              <i ng-click="candidateDetail.changStatus(candidateDetail.icon)" ng-class="candidateDetail.buttonIcon"></i>
-              </p>
+              <div class="col-md-12">
+                <p class="name-candidate">{{candidateDetail.datas.candidate.full_name_and_nick_name}} 
+                 <i ng-click="candidateDetail.changStatus(candidateDetail.datas.candidate.shortlist)" ng-class="candidateDetail.buttonIcon"></i>
+                </p>
+              </div>
             </div>
             <div class="row mb-20 detail-candidate font-candidate">
               <div class="col-md-2 text-right">
@@ -27,7 +29,7 @@
                 <span>Interview date:</span>
               </div>
               <div class="col-md-3 padding-left0" ng-hide="candidateDetail.datas.candidate.interview.id == null">
-                <span class="color-blue-candidate">{{candidateDetail.dateTime}}</span>
+                <span class="color-blue-candidate">{{candidateDetail.datas.candidate.interview.date | date:"dd/MM/yyyy HH:mm"}}</span>
               </div>
             </div>
             <div class="row mb-20 detail-candidate font-candidate">
@@ -80,8 +82,9 @@
     <div class="row">
       <div class="col-md-2 break-word">
         <p class="heading-candidate">Resume/Transcript</p>
-        <p><a href="#" class="font-roboto font-21" target="_blank">Resume</a></p>
-        <p><a href="#" class="font-roboto font-21" target="_blank">Transcript</a></p>
+        <p ng-repeat="item in candidateEdit.datas.candidate.candidate_files_attributes">
+          <a ng-href="{{candidateDetail.datas.candidate.candidate_files_url[$index]}}" class="font-candidate detail-candidate" target="_blank">{{ item.files_file_name}}</a>
+        </p>
       </div>
       <div class="col-md-6">
         <div class="row detail-candidate font-candidate mb-15">
@@ -212,7 +215,7 @@
         </div>
       </div>
       <div class="modal-body">
-        <div class="row">
+        <div class="row mb-20">
           <div class="col-md-6">
             <h3 style="margin-top: 0px;">location</h3>
             <div class="col-md-12"style="padding:0px"> 
@@ -220,15 +223,19 @@
             </div>
           </div>
         </div>
-        <div class="row">
+        <div class="row mb-20">
           <div class="col-md-6">
             <div class="form-group">
               <p class="input-group">
-                <input id="start_date" type="text" class="form-control numberic" ng-model-options="{timezone: 'bangkok'}" uib-datepicker-popup="dd/MM/yyyy HH:mm" ng-model="candidateDetail.datas.candidate.interview.date" is-open="candidateDetail.datePopup.opened" close-text="Close" >
+                 <label>Date</label>
+                <input id="start_date" type="text" ng-change="candidateDetail.checkDate()" class="form-control numberic" ng-model-options="{timezone: 'bangkok'}" uib-datepicker-popup="dd/MM/yyyy HH:mm" ng-model="candidateDetail.datas.candidate.interview.date" is-open="candidateDetail.datePopup.opened" close-text="Close" >
                 <span class="input-group-btn">
                   <button type="button" class="btn btn-default" ng-click="candidateDetail.openDatePopup()"><i class="fa fa-calendar"></i></button>
                 </span>
               </p>
+              <span ng-show="candidateDetail.isValidDate" class="col">
+                กรุณากรอกวันที่ให้ถูกต้อง เช่น 01/07/2019 07:35
+              </span>
             </div>
           </div>
         </div>
@@ -244,8 +251,11 @@
       </div>
       <div class="modal-footer">
         <div class="row">
-          <div class="col-md-4 col-md-offset-4">
-            <button type="button" ng-click="candidateDetail.saveInterview()" class="btn btn-block btn-custom btn-gray" data-dismiss="modal">{{ "close" | translate }}</button>
+          <div class="col-md-4 pull-right">
+            <button type="button" class="btn btn-block btn-custom btn-gray" data-dismiss="modal">{{ "close" | translate }}</button>
+          </div>
+          <div class="col-md-4 pull-right">
+            <button type="button" ng-click="candidateDetail.saveInterview()" ng-disabled="candidateDetail.isValidDate" class="btn btn-block btn-custom btn-green">{{ "save" | translate }}</button>
           </div>
         </div>
       </div>
