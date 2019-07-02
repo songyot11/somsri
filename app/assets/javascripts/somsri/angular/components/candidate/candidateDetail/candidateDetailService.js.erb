@@ -5,8 +5,22 @@
   .service('candidateDetailService', ['$http', function($http) {
 
   this.getById = function(id){
-    return $http.get('/candidates/' + id);
+    return $http.get('/candidates/' + id)
+  }
+
+  this.updateShortlist = function(id, shortlist){
+    return $http({
+      url: '/candidates/'+ id + '/update_star/',
+      method: "PATCH",
+      params: {shortlist: shortlist}
+    })
+  }
+
+  this.saveInterview = function(params) {
+    return $http.post('/interviews/', { interview: params })
   }
 
   }]);
 })();
+
+

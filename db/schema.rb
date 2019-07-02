@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20190626020645) do
+ActiveRecord::Schema.define(version: 20190628034658) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -432,6 +432,14 @@ ActiveRecord::Schema.define(version: 20190626020645) do
     t.index ["spouse_id"], name: "index_individuals_on_spouse_id", using: :btree
   end
 
+  create_table "interviews", force: :cascade do |t|
+    t.string   "email"
+    t.datetime "date"
+    t.string   "location"
+    t.integer  "candidate_id"
+    t.index ["candidate_id"], name: "index_interviews_on_candidate_id", using: :btree
+  end
+
   create_table "inventories", force: :cascade do |t|
     t.string   "item_name"
     t.string   "serial_number"
@@ -603,9 +611,7 @@ ActiveRecord::Schema.define(version: 20190626020645) do
     t.string   "img_url_content_type"
     t.integer  "img_url_file_size"
     t.datetime "img_url_updated_at"
-    t.integer  "school_id"
     t.index ["deleted_at"], name: "index_parents_on_deleted_at", using: :btree
-    t.index ["school_id"], name: "index_parents_on_school_id", using: :btree
   end
 
   create_table "payment_methods", force: :cascade do |t|
@@ -706,11 +712,9 @@ ActiveRecord::Schema.define(version: 20190626020645) do
   end
 
   create_table "school_settings", force: :cascade do |t|
-    t.string  "school_year",      default: ""
-    t.string  "semesters"
-    t.string  "current_semester"
-    t.integer "school_id"
-    t.index ["school_id"], name: "index_school_settings_on_school_id", using: :btree
+    t.string "school_year",      default: ""
+    t.string "semesters"
+    t.string "current_semester"
   end
 
   create_table "schools", force: :cascade do |t|
@@ -731,10 +735,6 @@ ActiveRecord::Schema.define(version: 20190626020645) do
     t.integer  "logo_file_size"
     t.datetime "logo_updated_at"
     t.text     "payroll_slip_header"
-    t.string   "name_eng"
-    t.string   "note"
-    t.string   "subdomain_name"
-    t.string   "branch"
   end
 
   create_table "site_configs", force: :cascade do |t|
@@ -988,10 +988,9 @@ ActiveRecord::Schema.define(version: 20190626020645) do
   add_foreign_key "individuals", "employees", column: "friend_id"
   add_foreign_key "individuals", "employees", column: "parent_id"
   add_foreign_key "individuals", "employees", column: "spouse_id"
-  add_foreign_key "parents", "schools"
+  add_foreign_key "interviews", "candidates"
   add_foreign_key "programming_skills", "candidates"
   add_foreign_key "roll_calls", "lists"
-  add_foreign_key "school_settings", "school_settings", column: "school_id"
   add_foreign_key "soft_skills", "candidates"
   add_foreign_key "students", "classrooms", on_delete: :nullify
   add_foreign_key "students", "schools"

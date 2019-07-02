@@ -2,24 +2,40 @@
   'use strict';
     angular.module('somsri.somsri.candidate_detail', [])
     .controller('candidateDetailCtrl', ['$scope', '$rootScope', 'translateFilter',
-    'candidateDetailService','$state',  '$uibModal', 'candidateService', '$window', '$timeout',
-    function($scope, $rootScope, translateFilter, candidateDetailService, $state,  $uibModal, service, $window, $timeout) {
+    'candidateDetailService','$state',  '$uibModal', 'candidateService', '$window', '$timeout', 'candidateEditService',
+    function($scope, $rootScope, translateFilter, candidateDetailService, $state,  $uibModal, service, $window, $timeout, candidateEditService) {
       var ctrl = this;
-      ctrl.buttonIcon = "fas fa-star color-yellow";
-      ctrl.icon = true;
+      ctrl.dateTime;
+      ctrl.isValidDate = false;
       candidateDetailService.getById($state.params.id).then(function(resp) {
         ctrl.datas = resp.data;
+        ctrl.datas.candidate.interview.candidate_id = ctrl.datas.candidate.id;
+    
+        if(ctrl.datas.candidate.shortlist){
+          ctrl.buttonIcon = "fas fa-star color-yellow";
+        }else{
+          ctrl.buttonIcon = "far fa-star color-yellow";
+        }
+        newDateType()
+        
+        console.log(ctrl.datas.candidate)
+        
       });
-      ctrl.changIcon = function(check){
+     
+      ctrl.changStatus = function(check){
         if(check){
           ctrl.buttonIcon = "far fa-star color-yellow";
-          ctrl.icon = false;
+          ctrl.datas.candidate.shortlist = false;
         }
         else{
           ctrl.buttonIcon = "fas fa-star color-yellow";
-          ctrl.icon = true;
+          ctrl.datas.candidate.shortlist = true;
         }
+        candidateDetailService.updateShortlist($state.params.id, ctrl.datas.candidate.shortlist).then(function(resp){
+
+        });
       }
+      
 
       function openConfirmationModal(message, success, dismiss) {
       $scope.message = message;
@@ -66,6 +82,38 @@
         ctrl.timeout = true
       }, 5000);
     }
+    ctrl.openDatePopup = function() {
+      ctrl.datePopup.opened = true;
+    };
 
+    ctrl.datePopup = {
+      opened: false
+    };
+
+    ctrl.saveInterview = function() {
+      candidateDetailService.saveInterview(ctrl.datas.candidate.interview).then(function(resp) {
+        $('#interView').modal('hide');
+      })
+    }
+
+    ctrl.checkDate = function() {
+      ctrl.isValidDate = !isValidDate(ctrl.datas.candidate.interview.date)
+    }
+
+    function isValidDate(date) {
+      return date instanceof Date && !isNaN(date);
+    }
+
+    ctrl.back = function(){
+      window.location.href = '/somsri#/candidate';
+    }
+
+    function newDateType(){
+      ctrl.datas.candidate.interview.date= new Date(ctrl.datas.candidate.interview.date)
+    }
+
+    ctrl.addEamilInterviewer = function(){
+      ctrl.datas.candidate.interview.push({})
+    }
   }]);
 })();
