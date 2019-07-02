@@ -790,20 +790,76 @@ en:
   save_success: "Save successfully."
   save_falied: "Save failed."
 
-  #candidateFrom
-  nicknameE: "ชื่อเล่น"
-  id_card: "เลขบัตรประชาชน"
-  phone: "Tel."
-  email: "E-mail"
+  #candidate
+  current_ability: "Current Ability"
+  learn_ability: "Learn Ability"
+  new_create: "Create New Candidate"
+  confirmdelete: "Do you want to delete it? ( This deletion will still exit. But will not show in the table )"
+  candidate: "Candidate"
+  candidateshortlist: "Shortlist"
+  schoolyear: "Student Year"
+
+  #create new candidate
+  create_new_candidate: "Create New Candidate"
+
+  full_name: "Full Name"
+  nickname: "Nickname"
+  phone_number: "Phone Number"
+  email: "Email"
   from: "From"
-  school_year: "School Year"
-  NoteE: "หมายเหตุ"
-  CurrentAbility: "Current Ability"
-  LearnAbility: "Learn Ability"
-  AttentionAbility: "Attention"
-  Interest: "Interest"
+  school_year: "Student Year"
+  current_ability: "Current Ability"
+  learn_ability: "Learn Ability"
+  attention: "Attention"
+  interest: "Interest"
+
   resumetranscriptPDF: "Resume/Transcript (PDF)"
-  picture: "รูปภาพ"
-  NoteE: "Note"
-  candidate_files: "File"
-  new_create: "Create"
+  picture: "Picture"
+
+  programing_skill: "Programing Skill"
+  soft_skill: "Soft Skill"
+  design_skill: "Design Skill"
+  note: "Note"
+  
+  create: "Create"
+  cancel: "Cancel"
+
+  warning_empty_fullname_nickname: "*Please Enter Fullname or Nickname"
+  warning_empty_email_phone_number: "*Please Enter Email or Phone Number"
+  warning_empty_from: "*Please Enter School's name"
+  warning_empty_school_year: "*School year"
+
+  #view candidate
+  candidate_informatiom: "Candidate Information"
+  interview: "Interview"
+  interview_date: "Interview date"
+  date: "Date"
+  time: "Time"
+  interviewer: "Interviewer"
+  edit: "Edit"
+
+  delete: "Delete"
+  invite: "Invite"
+  save: "Save"
+  reset: "Reset"
+  hire: "Hire"
+  +add: "+ Add"
+  send: "Send"
+
+  #interview
+  send_interview_form: "Send interview form"
+  interview_score: "Interview Score" 
+  comment: "Comment"
+  history_log: "History Log"
+
+  starting_date: "Starting date"
+  position: "Position"
+  probation_date: "Probation date"
+  formdate: "From date"
+  todate: "To date"
+  add_to_shortlist: "Add to shortlist"
+  submit: "Submit"
+
+
+
+

@@ -962,20 +962,68 @@ th:
   schoolyear: "ปีที่เข้าเรียน"
   delete_success: "ลบข้อมูลสำเร็จ"
 
-  #candidateFrom(En)
-  nameE: "ชื่อ - สกุล"
-  nicknameE: "ชื่อเล่น"
-  id_card: "เลขบัตรประชาชน"
-  phone: "หมายเลขโทรศัพท์"
+  #create new candidate
+  create_new_candidate: "Create New Candidate"
+
+  full_name: "ชื่อ-นามสกุล"
+  nickname: "ชื่อเล่น"
   email: "อีเมล"
+  phone_number: "หมายเลขโทรศัพท์"
   from: "จาก"
   school_year: "ปีที่เข้าเรียน"
-  NoteE: "หมายเหตุ"
-  CurrentAbility: "Current Ability"
-  LearnAbility: "Learn Ability"
-  AttentionAbility: "Attention"
-  Interest: "สิ่งที่สนใจ"
-  resumetranscriptPDF: "Resume/Transcript (PDF)"
+  current_ability: "Current Ability"
+  learn_ability: "Learn Ability"
+  attention: "Attention"
+  interest: "สิ่งที่สนใจ"
+
   picture: "รูปภาพ"
   candidate_files: "ไฟล์แนบ"
   new_create: "สร้างผู้ใช้ใหม่"
+  CreateNewCandidate: "Create New Candidate"
+  resumetranscriptPDF: "Resume/Transcript (PDF)"
+
+  programing_skill: "Programing Skill"
+  soft_skill: "Soft Skill"
+  design_skill: "Design Skill"
+  note: "หมายเหตุ"
+
+  create: "Create"
+  cancel: "Cancel"
+
+  warning_empty_fullname_nickname: "*กรุณาใส่ชื่อ-นามสกุล หรื่อ ชื่อเล่น "
+  warning_empty_email_phone_number: "*กรุณาใส่อีเมล หรื่อ หมายเลขโทรศัพท์"
+  warning_empty_from: "*กรุณาใส่ชื่อโรงเรียน"
+  warning_empty_school_year: "*กรุณาใส่ปีที่เข้าศึกษา"
+
+  #view candidate
+  candidate_informatiom: "Candidate Information"
+  interview: "สัมภาษณ์"
+  interview_date: "วัน ัมภาษณ์"
+  date: "วัน"
+  time: "เวลา"
+  interviewer: "ผู้ัมภาษณ์"
+  edit: "แก้ไข"
+
+  delete: "ลบ"
+  invite: "เชิญ"
+  save: "บันทึก"
+  reset: "รีเซ็ต"
+  hire: "จ้าง"
+  +add: "+ เพิ่ม"
+  send: "ส่ง"
+
+  #interview
+  send_interview_form: "ส่งแบบสัมภาษณ์"
+  interview_score: "คะแนนสัมภาษณ์" 
+  comment: "ความคิดเห็น"
+  history_log: "ประวัติการแก้ไข"
+
+  startingdate: "วันที่เข้าทำงาน"
+  position: "ตำแนห่ง"
+  probationdate: "ช่วงเวลาทดลองงาน"
+  formdate: "ตั้งแต่วันที่"
+  todate: "ถึงวันที่"
+  add_to_shortlist: "เพิ่มในรายชื่อผู้ที่ได้รับความสนใจ"
+  submit: "เสนอ"
+
+

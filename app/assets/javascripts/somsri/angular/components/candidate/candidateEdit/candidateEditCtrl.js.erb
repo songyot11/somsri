@@ -5,7 +5,6 @@
     var ctrl = this;
     var imagefile;
     ctrl.points = Array.from(Array(21).keys())
-    ctrl.interviews = [{email: "" }];
 
     $rootScope.loadAndAuthorizeResource("candidateEdit", function(){
       $rootScope.menu = translateFilter('scout');
@@ -100,27 +99,7 @@
         }
       }
     }
-
-
-
-
-    ctrl.reset = function () {
-        ctrl.interviews.length = 1;
-        ctrl.interviews[0] =  {email: "" };
-    }; 
-
-    ctrl.addInterview = function(){
-        console.log(ctrl.interviews);
-        ctrl.interviews.push({ email: "" });
-    }
-
-    ctrl.removeInterview = function(index) {
-        ctrl.interviews[index]._destroy = true;
-    }
-
-
-
-
+    
       });
     }]);
 })();
