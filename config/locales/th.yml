@@ -974,8 +974,8 @@ th:
   CurrentAbility: "Current Ability"
   LearnAbility: "Learn Ability"
   AttentionAbility: "Attention"
-  Interest: "Interest"
+  Interest: "สิ่งที่สนใจ"
   resumetranscriptPDF: "Resume/Transcript (PDF)"
   picture: "รูปภาพ"
-
-
+  candidate_files: "ไฟล์แนบ"
+  new_create: "สร้างผู้ใช้ใหม่"

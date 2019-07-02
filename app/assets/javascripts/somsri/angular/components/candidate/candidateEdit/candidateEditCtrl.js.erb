@@ -1,33 +1,34 @@
 (function() {
   'use strict';
   angular.module('somsri.somsri.candidateEdit', [])
-  .controller('candidateEditCtrl', ['$scope', '$rootScope', 'candidateEditService', '$state', function($scope, $rootScope, candidateEditService, $state) {
+  .controller('candidateEditCtrl', ['$scope', '$rootScope', 'translateFilter', 'candidateEditService', '$state', function($scope, $rootScope, translateFilter, candidateEditService, $state) {
     var ctrl = this;
     var imagefile;
     ctrl.points = Array.from(Array(21).keys())
+    ctrl.interviews = [{email: "" }];
 
     $rootScope.loadAndAuthorizeResource("candidateEdit", function(){
+      $rootScope.menu = translateFilter('scout');
       candidateEditService.getCandidate($state.params.id).then(function(resp) {
         ctrl.datas = resp;
         console.log(ctrl.datas)
       });
 
     ctrl.submit = function(params){
-      ctrl.uploadPhoto(imagefile);
+      ctrl.skillEmpty();
       candidateEditService.saveCandidate(ctrl.datas.candidate.id, params).then(function(resp){
-        window.location.reload()
+        ctrl.goDetail();
       });
     };
-
-    ctrl.uploadPhoto = function(imagefile) {
-      candidateEditService.uploadImage(ctrl.datas.candidate.id, imagefile)
-    }
     
+    ctrl.goDetail = function(){
+      window.location.href = '/somsri#/candidate/detail/' + ctrl.datas.candidate.id;
+    }
 
     ctrl.showImage = function(event, id){
       var img = URL.createObjectURL(event.target.files[0]);
       $('#' + id).attr('src', img);
-      imagefile = event.target.files[0];
+      ctrl.datas.candidate.image = event.target.files[0];
     }
 
     ctrl.addFile = function(){
@@ -39,12 +40,8 @@
     }
 
     ctrl.removeCandidateFiles = function(index) {
-      if (ctrl.datas.candidate.candidate_files_attributes[index].files) {
-        ctrl.datas.candidate.candidate_files_attributes.splice(index, 1);
-      } else {
-        ctrl.datas.candidate.candidate_files_attributes[index]._destroy = true
+      ctrl.datas.candidate.candidate_files_attributes[index]._destroy = true
       }
-    }
 
     ctrl.removeCandidateProgrammingSkill = function(index) {
       ctrl.datas.candidate.programming_skills_attributes[index]._destroy = true
@@ -69,6 +66,61 @@
     ctrl.addDesignskill = function(){
       ctrl.datas.candidate.design_skills_attributes.push({ skill_name: "", skill_point: 0 });
     }
+
+    ctrl.isNotBlank = function(){
+      var candidateEdit = ctrl.datas.candidate
+      if ((candidateEdit.full_name || candidateEdit.nick_name) && (candidateEdit.email || candidateEdit.phone) && candidateEdit.school_year && candidateEdit.from){
+        ctrl.cannotUpdate = false;
+      } else {
+        ctrl.cannotUpdate = true;
+      }
+    } 
+
+    ctrl.skillEmpty = function(){
+      var Ps = ctrl.datas.candidate.programming_skills_attributes;
+      var Ss = ctrl.datas.candidate.soft_skills_attributes;
+      var Ds = ctrl.datas.candidate.design_skills_attributes;
+      var i;
+
+      for(i=0; i < Ps.length; i++) {
+        if(Ps[i].skill_name == "" || Ps[i].skill_name == null) {
+          Ps[i]._destroy = true 
+        }
+      }
+
+      for(i=0; i < Ss.length; i++) {
+        if(Ss[i].skill_name == "" || Ss[i].skill_name == null) {
+          Ss[i]._destroy = true 
+        }
+      }
+
+      for(i=0; i < Ds.length; i++) {
+        if(Ds[i].skill_name == "" || Ds[i].skill_name == null) {
+          Ds[i]._destroy = true 
+        }
+      }
+    }
+
+
+
+
+    ctrl.reset = function () {
+        ctrl.interviews.length = 1;
+        ctrl.interviews[0] =  {email: "" };
+    }; 
+
+    ctrl.addInterview = function(){
+        console.log(ctrl.interviews);
+        ctrl.interviews.push({ email: "" });
+    }
+
+    ctrl.removeInterview = function(index) {
+        ctrl.interviews[index]._destroy = true;
+    }
+
+
+
+
       });
     }]);
 })();

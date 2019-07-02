@@ -85,10 +85,10 @@ class CandidatesController < ApplicationController
   def candidate_params
     params.require(:candidate).permit(:full_name, :nick_name, :email, :phone, :from, :school_year, :note,
       :current_ability, :learn_ability, :attention, :interest, :image, :shortlist,
-      programming_skills_attributes: [:skill_name, :skill_point, :_destroy],
-      soft_skills_attributes: [:skill_name, :skill_point, :_destroy],
-      design_skills_attributes: [:skill_name, :skill_point, :_destroy],
-      candidate_files_attributes: [:files, :_destroy]  
+      programming_skills_attributes: [:id, :skill_name, :skill_point, :_destroy],
+      soft_skills_attributes: [:id, :skill_name, :skill_point, :_destroy],
+      design_skills_attributes: [:id, :skill_name, :skill_point, :_destroy],
+      candidate_files_attributes: [:id, :files, :_destroy]  
     )
   end
 
