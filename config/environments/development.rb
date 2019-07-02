@@ -67,4 +67,7 @@ Rails.application.configure do
   I18n.default_locale = :en
 
   config.web_console.whiny_requests = false
+
+  config.action_mailer.delivery_method = :letter_opener
+  config.action_mailer.perform_deliveries = true
 end

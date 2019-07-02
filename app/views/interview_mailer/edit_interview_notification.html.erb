@@ -7,9 +7,10 @@
   </head>
   <body>
    <div class="tab-content content-wall">
+   <img src = "/somsri_logo.png"><br>
     สวัสดีค่ะ
-    เนื่องจากนัดหมาย <%=type%> ของ 
-    <%=ชื่อ%> ได้ถูกแก้ไขเป็น <%=วันที่%> <%=เวลา%> <%=location%>
+    เนื่องจากนัดหมาย  ของ 
+    <%=@interview.candidate.full_name%> ได้ถูกแก้ไขเป็น <%=@interview.date.strftime("%d/%m/%Y เวลา %H:%M")%> สถานที่ <%=@interview.location%> 
     จึงขอให้เตรียมพร้อมสำหรับเวลานัดหมายดังกล่าวด้วย
     ขอบคุณค่ะ
     HR @BananaCoding

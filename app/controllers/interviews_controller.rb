@@ -4,8 +4,10 @@ class InterviewsController < ApplicationController
     if interview_params[:id].present?
       interview = Interview.find(interview_params[:id])
       interview.update(interview_params)
+      InterviewMailer.edit_interview_notification(interview).deliver
     else
-      Interview.create(interview_params)
+      interview = Interview.create(interview_params)
+      InterviewMailer.interview_notification(interview).deliver      
     end 
   end
 

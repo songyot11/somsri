@@ -206,6 +206,14 @@ GEM
     kaminari-core (1.1.1)
     kgio (2.11.2)
     kramdown (1.17.0)
+    launchy (2.4.3)
+      addressable (~> 2.3)
+    letter_opener (1.7.0)
+      launchy (~> 2.2)
+    letter_opener_web (1.3.4)
+      actionmailer (>= 3.2)
+      letter_opener (~> 1.0)
+      railties (>= 3.2)
     listen (3.0.8)
       rb-fsevent (~> 0.9, >= 0.9.4)
       rb-inotify (~> 0.9, >= 0.9.7)
@@ -462,6 +470,8 @@ DEPENDENCIES
   icalendar
   jbuilder (~> 2.5)
   jquery-rails
+  letter_opener
+  letter_opener_web (~> 1.0)
   listen (~> 3.0.5)
   machinist
   meta_request
