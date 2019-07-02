@@ -45,22 +45,23 @@
     var Ps = ctrl.datas.candidate.programming_skills_attributes
     var Ss = ctrl.datas.candidate.soft_skills_attributes
     var Ds = ctrl.datas.candidate.design_skills_attributes
+    var i;
 
-    for( var p=0; p < Ps.length; p++) {
-      if(Ps[p].skill_name == null || Ps[p].skill_name == "") {
-        Ps[p]._destroy = true 
+    for(i=0; i < Ps.length; i++) {
+      if(Ps[i].skill_name == "" || Ps[i].skill_name == null) {
+        Ps[i]._destroy = true 
       }
     }
 
-    for( var s=0; s < Ss.length; s++) {
-      if(Ss[s].skill_name == null || Ss[s].skill_name == "") {
-        Ss[s]._destroy = true 
+    for(i=0; i < Ss.length; i++) {
+      if(Ss[i].skill_name == "" || Ss[i].skill_name == null) {
+        Ss[i]._destroy = true 
       }
     }
 
-    for( var d=0; d < Ds.length; d++) {
-      if(Ds[d].skill_name == null || Ds[d].skill_name == "") {
-        Ds[d]._destroy = true 
+    for(i=0; i < Ds.length; i++) {
+      if(Ds[i].skill_name == "" || Ds[i].skill_name == null) {
+        Ds[i]._destroy = true 
       }
     }
   }
