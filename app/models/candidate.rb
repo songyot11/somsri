@@ -26,6 +26,7 @@ class Candidate < ApplicationRecord
         school_year: helpers.link_to_path(school_year, id),
         current_ability: helpers.link_to_path(current_ability, id),
         learn_ability: helpers.link_to_path(learn_ability, id),
+        attention: helpers.link_to_path(attention, id),
         email: helpers.link_to_path(email, id),
         from: helpers.link_to_path(from, id),
         created_at: helpers.date_formatter(created_at),

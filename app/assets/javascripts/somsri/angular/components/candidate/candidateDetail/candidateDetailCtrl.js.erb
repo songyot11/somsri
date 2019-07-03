@@ -2,8 +2,8 @@
   'use strict';
     angular.module('somsri.somsri.candidate_detail', [])
     .controller('candidateDetailCtrl', ['$scope', '$rootScope', 'translateFilter',
-    'candidateDetailService','$state',  '$uibModal', 'candidateService', '$window', '$timeout', 'candidateEditService',
-    function($scope, $rootScope, translateFilter, candidateDetailService, $state,  $uibModal, service, $window, $timeout, candidateEditService) {
+    'candidateDetailService','$state',  '$uibModal', 'candidateService', '$window', 'candidateEditService',
+    function($scope, $rootScope, translateFilter, candidateDetailService, $state,  $uibModal, service, $window, candidateEditService) {
       var ctrl = this;
       ctrl.dateTime;
       ctrl.isValidDate = false;
@@ -70,21 +70,11 @@
       ctrl.removeCandidate = function(id){
       openConfirmationModal(translateFilter('confirmdelete'), function(){
         service.removeCandidate(id).then(function(resp) {
-          ctrl.datas = resp.data;
-           displayFlashMessage(translateFilter('delete_success'), true);
+           window.location.href = "/somsri#/candidate";
         });
       })
     } 
 
-    function displayFlashMessage(message, typeSuccess){
-      ctrl.timeout = false
-      ctrl.message = message;
-      ctrl.typeSuccess = typeSuccess;
-      $window.scrollTo(0, 0);
-      $timeout( function(){
-        ctrl.timeout = true
-      }, 5000);
-    }
     ctrl.openDatePopup = function() {
       ctrl.datePopup.opened = true;
     };

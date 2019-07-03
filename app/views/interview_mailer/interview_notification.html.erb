@@ -3,10 +3,12 @@
   <head>
     <meta content='text/html; charset=UTF-8' http-equiv='Content-Type' />
         <link href="https://fonts.googleapis.com/css?family=Akronim" rel="stylesheet">
-        <%= render 'layouts/mailer_stylesheet' %>
+               <%= stylesheet_link_tag 'application_main', media: 'all' %>
+        <%= stylesheet_link_tag 'application_somsri', media: 'all' %>
+        <%= stylesheet_link_tag 'application_vacation', media: 'all' %>
+        <%= javascript_include_tag 'application_somsri' %>
   </head>
   <body>
-   <div class="tab-content content-wall">
    <img src = "/somsri_logo.png"><br>
     สวัสดีค่ะ<br>
     เนื่องจากคุณได้ถูกมอบหมาย ให้ทำหน้าที่ผู้สัมภาษณ์โดยมีรายละเอียดผู้ถูกสัมภาษณ์ดังนี้<br>
@@ -15,6 +17,192 @@
     ขอบคุณค่ะ<br>
     HR@BananaCoding<br>
 
+      <div class="container-fluid p-50">
+  <div class="row paper-white container-fluid padding-30">
+    <div class="row mb-15">
+      <div class="col-md-10">
+        <div class="row">
+          <div class="col-md-2 padding-right0">
+            <img src="<%=@interview.candidate.image.url%>" class="picture"> 
+          </div>
+          <div class="col-md-10">
+            <div class="row">
+              <div class="col-md-12">
+                <p class="name-candidate"><%=@interview.candidate.full_name%>
+                 <i ng-click="candidateDetail.changStatus(candidateDetail.datas.candidate.shortlist)" ng-class="candidateDetail.buttonIcon"></i>
+                </p>
+              </div>
+            </div>
+            <div class="row mb-20 detail-candidate font-candidate">
+              <div class="col-md-2 text-right">
+                <span>Email:</span>
+              </div>
+              <div class="col-md-3 break-word padding-left0">
+                <span class="color-blue-candidate"><%=@interview.candidate.email%></span>
+              </div>
+              <div class="col-md-2 text-right padding-left0">
+                <span>Interview date:</span>
+              </div>
+              <div class="col-md-3 padding-left0" ng-hide="candidateDetail.datas.candidate.interview.id == null">
+                <span class="color-blue-candidate"><%=@interview.date.strftime("%d/%m/%Y  %H:%M")%></span>
+              </div>
+            </div>
+            <div class="row mb-20 detail-candidate font-candidate">
+              <div class="col-md-2 text-right padding-left0">
+                <span>Phone Number:</span>
+              </div>
+              <div class="col-md-4 padding-left0">
+                <span class="color-blue-candidate"><%=@interview.candidate.phone%></span>
+              </div>
+            </div>
+            <div class="row mb-20 detail-candidate font-candidate">
+              <div class="col-md-2 text-right">
+                <span>Form:</span>
+              </div>
+              <div class="col-md-6 padding-left0">
+                <span class="color-blue-candidate"><%=@interview.candidate.from%></span>
+              </div>
+            </div>
+            <div class="row mb-20 detail-candidate font-candidate">
+              <div class="col-md-2 text-right">
+                <span>Year:</span>
+              </div>
+              <div class="col-md-6 padding-left0">
+                 <span class="color-blue-candidate"><%=@interview.candidate.school_year%></span>
+              </div>
+            </div>
+            <div class="row mb-20 detail-candidate font-candidate">
+              <div class="col-md-2 text-right">
+                 <span>Interest:</span>
+              </div>
+              <div class="col-md-6 padding-left0">
+                <span class="color-blue-candidate"><%=@interview.candidate.interest%></span>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
     </div>
+    <div class="row">
+      <div class="col-md-2 break-word">
+        <p class="heading-candidate">Resume/Transcript</p>
+        <% @interview.candidate.candidate_files.each do |candidate_file| %>
+          <a href="<%= candidate_file.files.url %>" class="font-candidate detail-candidate" target="_blank"><%= candidate_file.files_file_name %></a>
+        <% end %>
+      </div>
+      <div class="col-md-6">
+        <div class="row detail-candidate font-candidate mb-15">
+          <div class="col-md-3 text-right">
+            <span>Current Ability</span>
+          </div>
+          <div class="col-md-4 mt-5">
+<div class="progress">
+  <div class="progress-bar bar-skill" role="progressbar" style="width: <%=@interview.candidate.current_ability*5%>%" aria-valuenow="25" aria-valuemin="0" aria-valuemax="100"></div>
+</div>
+          </div>
+          <div class="col-md-2">
+            <span>(<%=@interview.candidate.current_ability%>/20)</span>
+          </div>
+        </div>
+        <div class="row detail-candidate font-candidate mb-15">
+          <div class="col-md-3 text-right">
+            <span>Learn Ability</span>
+          </div>
+          <div class="col-md-4 mt-5">
+<div class="progress">
+  <div class="progress-bar bar-skill" role="progressbar" style="width: <%=@interview.candidate.learn_ability*5%>%" aria-valuenow="25" aria-valuemin="0" aria-valuemax="100"></div>
+</div>
+          </div>
+          <div class="col-md-2">
+            <span>(<%=@interview.candidate.learn_ability%>/20)</span>
+          </div>
+        </div>
+        <div class="row detail-candidate font-candidate">
+          <div class="col-md-3 text-right">
+            <span>Attention</span>
+          </div>
+          <div class="col-md-4 mt-5">
+      <div class="progress">
+  <div class="progress-bar bar-skill" role="progressbar" style="width: <%=@interview.candidate.attention*5%>%" aria-valuenow="25" aria-valuemin="0" aria-valuemax="100"></div>
+</div>
+          </div>
+          <div class="col-md-2">
+            <span>(<%=@interview.candidate.attention%>/20)</span>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="row">
+      <div class="col-md-6">
+        <div class="row">
+          <div class="col-md-6">
+            <h3 class="hr-2 heading-candidate color-blue-candidate mb-30">Programming skill</h3>
+            <div class="row detail-skill font-candidate mb-15" ng-repeat="item in candidateDetail.datas.candidate.programming_skills_attributes">
+              <div class="col-md-3 text-right break-word padding-right0">
+                <span>{{item.skill_name}}</span>
+              </div>
+              <div class="col-md-7 mt-5 padding-right0">
+                <div class="progress progress-bar-skill">
+                  <div class="progress-bar bar-skill" role="progressbar" style="width: {{item.skill_point * 5}}%;"></div>
+                </div>
+              </div>
+              <div class="col-md-2 padding-left0">
+                <span>({{item.skill_point}}/20)</span>
+              </div>
+            </div>
+          </div>
+          <div class="col-md-6">
+            <h3 class="hr-2 heading-candidate color-blue-candidate mb-30">Soft skill</h3>
+            <div class="row detail-skill font-candidate mb-15" ng-repeat="item in candidateDetail.datas.candidate.soft_skills_attributes">
+              <div class="col-sm-3 text-right break-word padding-right0">
+                <span>{{item.skill_name}}</span>
+              </div>
+              <div class="col-md-7 mt-5 padding-right0">
+                <div class="progress progress-bar-skill">
+                  <div class="progress-bar bar-skill" role="progressbar" style="width: {{item.skill_point * 5}}%;"></div>
+                </div>
+              </div>
+              <div class="col-md-2 break-word padding-left0">
+                <span>({{item.skill_point}}/20)</span>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div ng-show="!candidateDetail.datas.candidate.interview.location" class="col-md-6">
+        <h3 class="hr-2 heading-candidate color-blue-candidate">Note</h3>
+        <div class="note-cadidate">
+          {{candidateDetail.datas.candidate.note}}
+        </div>
+      </div>
+      <div ng-show="candidateDetail.datas.candidate.interview.location" class="col-md-6">
+        <h3 class="hr-2 heading-candidate color-blue-candidate">Note</h3>
+        <div class="note-cadidate">
+          {{candidateDetail.datas.candidate.note}}
+        </div>
+      </div>
+    </div>
+    <div class="row">
+      <div class="col-md-6">
+        <div class="col-md-6 pull-right">
+          <h3 class="hr-2 heading-candidate color-blue-candidate mb-30">Design skill</h3>
+          <div class="row detail-skill font-candidate mb-15" ng-repeat="item in candidateDetail.datas.candidate.design_skills_attributes">
+            <div class="col-sm-3 text-right break-word padding-right0">
+              <span>{{item.skill_name}}</span>
+            </div>
+            <div class="col-md-7 mt-5 padding-right0">
+              <div class="progress progress-bar-skill">
+                <div class="progress-bar bar-skill" role="progressbar" style="width: {{item.skill_point * 5}}%;"></div>
+              </div>
+            </div>
+            <div class="col-md-2 padding-left0">
+              <span>({{item.skill_point}}/20)</span>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
   </body>
 </html>

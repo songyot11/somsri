@@ -69,6 +69,8 @@ class CandidatesController < ApplicationController
         @candidate = Candidate.where(shortlist: params[:shortlist]).order(current_ability: params[:order])
       when 'learn_ability'
         @candidate = Candidate.where(shortlist: params[:shortlist]).order(learn_ability: params[:order])
+      when 'attention'
+        @candidate = Candidate.where(shortlist: params[:shortlist]).order(created_at: params[:order])
       when 'created_at'
         @candidate = Candidate.where(shortlist: params[:shortlist]).order(created_at: params[:order])
       end
