@@ -12,8 +12,16 @@
           <div class="col-md-10">
             <div class="row">
               <div class="col-md-12">
-                <p class="name-candidate">{{candidateDetail.datas.candidate.full_name_and_nick_name}} 
-                 <i ng-click="candidateDetail.changStatus(candidateDetail.datas.candidate.shortlist)" ng-class="candidateDetail.buttonIcon"></i>
+                <p class="name-candidate color-red" ng-if="candidateDetail.datas.candidate.deleted == true">
+                {{candidateDetail.datas.candidate.full_name_and_nick_name}} รายชื่อนี้ถูกลบแล้ว
+                 <i ng-hide="candidateDetail.datas.candidate.deleted" 
+                 ng-click="candidateDetail.changStatus(candidateDetail.datas.candidate.shortlist)" 
+                 ng-class="candidateDetail.buttonIcon"></i> 
+                </p>
+                <p class="name-candidate" ng-if="candidateDetail.datas.candidate.deleted == false">{{candidateDetail.datas.candidate.full_name_and_nick_name}} 
+                 <i 
+                 ng-click="candidateDetail.changStatus(candidateDetail.datas.candidate.shortlist)" 
+                 ng-class="candidateDetail.buttonIcon"></i> 
                 </p>
               </div>
             </div>
