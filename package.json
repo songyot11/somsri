@@ -2,7 +2,7 @@
   "name": "somsri",
   "version": "0.0.1",
   "dependencies": {
-    "bower": "^1.8.4",
+    "bower": "^1.8.8",
     "phantomjs": "^2.1.7"
   },
   "engines": {
